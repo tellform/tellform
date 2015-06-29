@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="./modules/forms/css/form.css">
+
+<section data-ng-controller="SubmitFormController">
+	<form-directive form="form"></form-directive><hr>
+
+
+	<section class="navbar navbar-fixed-bottom" style="background-color:rgba(242,242,242,0.5); padding-top:15px;">
+    <div class="container" >
+        <nav role="navigation">
+            <ul class="nav navbar-nav navbar-left" >
+                <li class="">
+                    <!-- <p class="lead">{{form | formValidity}}   out of {{form.form_fields.length}} answered</p> -->
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li style="padding-right:20px" >
+                    <a href="/forms/create" class="btn btn-default" ng-hide="authentication.user">create a Medform</a>
+                </li>
+                <li style="padding-right:20px" ng-show="authentication.user">
+                    <a href="/forms/{{form._id}}/edit" class="btn btn-default">edit this Medform</a>
+                </li>
+                <li style="padding-left:5px">
+                    <div class="btn btn-info" id="focusDownButton">\/</div>
+                </li>
+                <li style="padding-left:5px">
+                    <div class="btn btn-info" id="focusUpButton">/\</div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+</section>
+

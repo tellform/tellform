@@ -1,0 +1,48 @@
+<h2>{{ form.form_name }}</h2>
+
+<div ng-show="!form.submitted">
+
+    <div class="field row">
+        <div class="col-sm-11 col-sm-offset-1"><h1>{{ form.title }}</h1>
+                <hr>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+
+    <form class="field row" name="form" ng-model="form" ng-repeat="field in form.form_fields" >
+        <!-- <ul class=" col-sm-11 col-sm-offset-1" style="margin-top: 50px; margin-bottom: 50px;" ng-repeat="field in form.form_fields" > -->
+            <field-directive field="field" >
+            </field-directive>
+        <!-- </ul> -->
+    </form>
+
+
+    <div class="row form-actions">
+        <p class="text-left col-sm-2 col-sm-offset-5">
+            <button class="btn btn-success right" type="button" ng-disabled="myForm.$valid" ng-click="submit()">
+                <i class="icon-edit icon-white"></i> Submit Form 
+            </button>
+        </p>
+    </div>
+</div>
+
+<div ng-show="form.submitted">
+    <h3>Form Successfully submitted</h3>
+    <br><br><br>
+    <div class="row form-actions">
+        <p class="text-left col-sm-2">
+            <button class="btn btn-primary left" type="button">
+                <a href="/form/{{form.id}}" style="color:white;"> Submit again?</a>
+            </button>
+        </p>
+    </div>
+
+    
+    <!-- <div ng-repeat="field in form.form_fields">
+        Field Title: {{ field.title }} <br>
+        Field Value: {{ field.fieldValue }} <br><br>
+    </div> -->
+</div>
