@@ -1,8 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('SubmitFormController', ['$scope', '$stateParams', '$state', 'Principal', 'Forms', 'CurrentForm','$http',
-	function($scope, $stateParams, $state, Principal, Forms, CurrentForm, $http) {
+angular.module('forms').controller('SubmitFormController', ['$scope', '$stateParams', '$state', 'Principal', 'Forms', 'CurrentForm',
+	function($scope, $stateParams, $state, Principal, Forms, CurrentForm) {
 
 		// Principal.identity().then(function(user){
   //           $scope.authentication.user = user;

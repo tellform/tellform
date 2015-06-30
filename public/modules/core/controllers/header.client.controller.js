@@ -7,17 +7,23 @@ angular.module('core').controller('HeaderController', ['$scope', 'Principal', 'M
 		$scope.hideNav = false;
 		$scope.menu = Menus.getMenu('topbar');
 
-		// Principal.identity().then(function(user){
-		// 	$scope.authentication.user = user;
-		// }).then(function(){
-			$scope.authentication.user = Principal.identity();
+		Principal.identity().then(function(user){
+			$scope.authentication.user = user;
+		}).then(function(){
 			$scope.signout = function() {
-				var response_obj = Principal.signout();
+				// $http.get('/auth/signout').success(function(response) {
+		  //         $state.go('home');
+		  //       }).error(function(error) {
+		  //         $scope.error = (error.message || error);
+		  //       });
+        		
+    			Principal.signout();
 				if( angular.isDefined(response_obj.error) ){
 					$scope.error = response_obj.error;
 				} else{
 					$state.go('home');
 				}
+
 			};
 
 			$scope.toggleCollapsibleMenu = function() {
@@ -35,7 +41,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Principal', 'M
 			        }
 			    }
 			});
-		// });
+		});
 
 	}
 ]);

@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 
 // Config HTTP Error Handling
 angular.module('users').config(['$httpProvider',
@@ -27,23 +27,4 @@ angular.module('users').config(['$httpProvider',
 			}
 		]);
 	}
-]).run(function(Permission, Principal) {
-		var User = Principal.identity();
-		Permission.defineRole('anonymous', function (stateParams) {
-	        // If the returned value is *truthy* then the user has the role, otherwise they don't
-	        if ( !User || !Principal.isInAnyRole() ) {
-	          return true; // Is anonymous
-	        }
-	        return false;
-	    }).defineRole('admin', function (stateParams) {
-	        if (Principal.isInRole('admin')) {
-	          return true; // Is admin
-	        }
-	        return false;
-	    }).defineRole('user', function (stateParams) {
-	        if (Principal.isInRole('user') && !Principal.isInRole('admin') ) {
-	          return true; // Is user
-	        }
-	        return false;
-	    });
-	});
+]);

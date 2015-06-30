@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('users').factory('Principal', ['$window', '$http', '$q', '$timeout',
-  function($window, $http, $q, $timeout) {
+angular.module('users').factory('Principal', ['$window', '$q', '$timeout',
+  function($window, $q, $timeout) {
 
     var service = {
       _currentUser: null,
 
       isIdentityResolved: function() {
-        if(service._currentUser === null) return false
+        if(service._currentUser === null) return false;
         return true;
       },
       isAuthenticated: function() {
@@ -74,39 +74,75 @@ angular.module('users').factory('Principal', ['$window', '$http', '$q', '$timeou
 
         return deferred.promise;
       },
+
+      resetPassword: function(scope) { 
+        var deferred = $q.defer();
+        $http.get('/auth/password'+_currentUser._id, scope.passwordDetails).success(function(response) {
+          // If successful show success message and clear form
+          scope.passwordDetails = null;
+
+          // Attach user profile
+          // Principal.user() = response;
+
+          // And redirect to the index page
+          $state.go('reset-success');
+          deferred.resolve();
+        }).error(function(error) {
+          deferred.reject(error.message || error);
+        });
+
+        return deferred.promise;
+      },
+
+      // Submit forgotten password account id
+      askForPasswordReset: function(credentials) {
+
+        $http.post('/auth/forgot', credentials).success(function(response) {
+          // Show user success message and clear form
+
+          deferred.resolve(response);
+
+        }).error(function(error) {
+          // Show user error message
+          deferred.reject(error.message || error);
+        });
+
+        return deferred.promise;
+      },
       identity: function() {
 
-        if (service.isAuthenticated()) {
-          return service._currentUser;
-        } else if($window.user){
-          service.authenticate($window.user);
-          return service._currentUser;
-        }else {
-            return $http.get('/user/me')
-              .success(function(response) {
-                service.authenticate(response.data.user);
-                return response.data.user;
-              })
-              .error(function() {
-                service.authenticate(null);
-                // $state.go('signin');
-                return null;
-              });
-        }
-
-        // var deferred = $q.defer();
-
-        // console.log($window.user);
-        // console.log(service.isAuthenticated());
-
-        // // check and see if we have retrieved the user data from the server. if we have, reuse it by immediately resolving
-        // if (service.isAuthenticated() === true ) {
-        //   deferred.resolve(service.currentUser);
-        // }else if($window.user){
-          
+        // if (service.isAuthenticated()) {
+        //   return service._currentUser;
+        // } else if($window.user){
         //   service.authenticate($window.user);
-        //   deferred.resolve(service._currentUser);
+        //   return service._currentUser;
         // }else {
+        //     return $http.get('/user/me')
+        //       .success(function(response) {
+        //         service.authenticate(response.data.user);
+        //         return response.data.user;
+        //       })
+        //       .error(function() {
+        //         service.authenticate(null);
+        //         // $state.go('signin');
+        //         return null;
+        //       });
+        // }
+
+        var deferred = $q.defer();
+
+        console.log($window.user);
+        console.log(service.isAuthenticated());
+
+        // check and see if we have retrieved the user data from the server. if we have, reuse it by immediately resolving
+        if (service.isAuthenticated() === true ) {
+          deferred.resolve(service.currentUser);
+        }else if($window.user){
+          
+          service.authenticate($window.user);
+          deferred.resolve(service._currentUser);
+        }
+        // else {
 
         // 	// otherwise, retrieve the user data from the server, update the user object, and then resolve.
         //   $http.get('/users/me')
@@ -120,7 +156,7 @@ angular.module('users').factory('Principal', ['$window', '$http', '$q', '$timeou
       		//   });
         // }
 
-        // return deferred.promise;
+        return deferred.promise;
 
       }
     };
