@@ -13,6 +13,8 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
 
                     console.log($scope.form.timeElapsed);
 
+                    // console.log($scope.form.form_fields[7]);
+
                     $http.post('/forms/'+$scope.form._id,$scope.form).
                     success(function(data, status, headers){
                         console.log('form submitted successfully');

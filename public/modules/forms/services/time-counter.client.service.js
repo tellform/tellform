@@ -4,7 +4,7 @@ angular.module('forms').service('timeCounter', [
 	function(){
 		var _startTime, _endTime, that=this;
 
-		this.timeSpent;
+		this.timeSpent = 0;
 
 		this.startClock = function(){
 			_startTime = Date.now();

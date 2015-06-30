@@ -41,7 +41,7 @@ var FormSchema = new Schema({
 	},
 	form_fields: [Schema.Types.Mixed],
 
-	submission: [{
+	submissions: [{
 		type: Schema.Types.ObjectId,
 		ref: 'FormSubmission'
 	}],
@@ -67,18 +67,17 @@ var FormSchema = new Schema({
 	},
 });
 
+//Move PDF to permanent location after first save
 FormSchema.pre('save', function (next) {
 	// console.log(this.pdf);
 	// debugger;
 
-	//Move PDF to permanent location after first save
 	if(this.pdf){
 		if(this.pdf.modified){
 
 			var new_filename = this.pdf.title.trim()+'_template.pdf';
 
-			// TODO: DAVID - need to remove dependence on relative paths
-		    var newDestination = path.join(config.pdfUploadPath+this.title+"/", this.pdf.title.trim()),
+		    var newDestination = path.join(config.pdfUploadPath, this.pdf.title.trim()),
 		    	stat = null;
 
 		    try {
@@ -92,17 +91,16 @@ FormSchema.pre('save', function (next) {
 		    }
 
 			console.log('about to move PDF');
-
-
 		    fs.move(this.pdf.path, path.join(newDestination, new_filename), function (err) {
 				if (err) {
 					console.error(err);
 					next( new Error(err.message) );
 				}
-				console.log('PDF file successfully moved');
 
 				this.pdf.path = path.join(newDestination, new_filename);
 				this.pdf.name = new_filename;
+
+				console.log('PDF file:'+this.pdf.name+' successfully moved to: '+this.pdf.path);
 
 				next();
 			});
@@ -113,55 +111,63 @@ FormSchema.pre('save', function (next) {
 	}
 });
 
-// FormSchema.pre('save', function (next) {
-// 	//Autogenerate FORM from PDF
-// 	if(this.isGenerated && this.pdf && this.autofillPDFs){
-//		this.autofillPDFs = false;
-// 		var _pdfConvMap = {
-// 			'Text': 'textfield',
-// 			'Button': 'checkbox'
-// 		};
 
-// 		var that = this;
-// 		console.log('autogenerating form');
+//Autogenerate FORM from PDF if 'isGenerated' flag is 'true'
+FormSchema.pre('save', function (next) {
+	var field; 
+	
+	if(this.isGenerated && this.pdf){
 
-// 		try {
-// 			pdfFiller.generateFieldJson(this.pdf.path, function(_form_fields){
+		var _typeConvMap = {
+			'Text': 'textfield',
+			'Button': 'checkbox'
+		};
 
-// 				_form_fields.forEach(function(field){
-// 					if(_pdfConvMap[ field.fieldType+'' ]){
-// 						field.fieldType = _pdfConvMap[ field.fieldType+'' ];
-// 					}
-// 					field.created = Date.now();
-// 					field.fieldValue = '';
-// 					field.required = true;
-//         			field.disabled  = false;
+		var that = this;
+		console.log('autogenerating form');
 
-// 					// field = new Field(field);
-// 					// field.save()
-// 				});
+		try {
+			pdfFiller.generateFieldJson(this.pdf.path, function(_form_fields){
 
-// 				// console.log('NEW FORM_FIELDS: ');
-// 				// console.log(_form_fields);
+				//Map PDF field names to FormField field names
+				for(var i = 0; i < _form_fields.length; i++){
+					field = _form_fields[i];
 
-// 				// console.log('\n\nOLD FORM_FIELDS: ');
-// 				// console.log(that.form_fields);
+					//Convert types from FDF to 'FormField' types
+					if(_typeConvMap[ field.fieldType+'' ]){
+						field.fieldType = _pdfConvMap[ field.fieldType+'' ];
+					}
 
-// 				that.form_fields = _form_fields;
-// 				next();
-// 			});
-// 		} catch(err){
-// 			next( new Error(err.message) );
-// 		}
+					field.created = Date.now();
+					field.fieldValue = '';
+					field.required = true;
+        			field.disabled  = false;
 
-// 	}	
+					// field = new Field(field);
+					// field.save()
+				}
 
-// 	//Throw error if we encounter form with invalid type
-// 	next();
+				console.log('NEW FORM_FIELDS: ');
+				console.log(_form_fields);
 
-// });
+				console.log('\n\nOLD FORM_FIELDS: ');
+				console.log(that.form_fields);
 
-FormSchema.methods.convertToJSON = function (cb) {
+				that.form_fields = _form_fields;
+				next();
+			});
+		} catch(err){
+			next( new Error(err.message) );
+		}
+
+	}	
+
+	//Throw error if we encounter form with invalid type
+	next();
+
+});
+
+FormSchema.methods.convertToFDF = function (cb) {
 	var _keys = _.pluck(this.form_fields, 'title'),
 		_values = _.pluck(this.form_fields, 'fieldValue');
 

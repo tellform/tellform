@@ -70,10 +70,11 @@ FormSubmissionSchema.pre('save', function (next){
 			});
 		}
 	}
-	console.log('ipAddr check');
+	// console.log('ipAddr check');
 	next();
 });
 
+//Generate autofilled PDF if flags are set 
 FormSubmissionSchema.pre('save', function (next) {
 	// debugger;
 	var fdfData, dest_filename, dest_path;
@@ -82,23 +83,31 @@ FormSubmissionSchema.pre('save', function (next) {
 	Form.findById(that.form, function(err, _form){
 		if(err) next( new Error(err.mesasge) );
 		
-		this.title = _form.title;
-		console.log(_form);
-		//Create filled-out PDF, if there is a pdf template
-		if(_form.autofillPDFs){
+		// that.title = _form.title;
+		// console.log(_form);
 
-			dest_filename = this.title.trim()+'_submission_'+Date.now()+'.pdf';
-			dest_path = path.join(config.pdfUploadPath, this.title.trim(), dest_filename);
+		if(true){ //_form.autofillPDFs){
+
+			dest_filename = _form.title.trim()+'_submission_'+Date.now()+'.pdf';
+			dest_path = path.join(config.pdfUploadPath, dest_filename);
 
 			this.pdfFilePath = dest_path;
 
-			console.log('autofillPDFs check');
+			// console.log('autofillPDFs check');
+
 
 			pdfFiller.fillForm(_form.pdf.path, dest_path, this.fdfData, function(err){
+				console.log("fdfData: \n");
+				console.log(that.fdfData);
 
-				if(err) next( new Error(err.message) );
+				// console.log("_form.pdf.path: "+_form.pdf.path);
+				// console.log("dest_path: "+dest_path);
 
-				console.log('Field data from Form: '+this.title.trim()+' outputed to new PDF: '+dest_path);
+				if(err) {
+					console.log("\n err.message: "+err.message);
+					next( new Error(err.message) );
+				}
+				console.log('Field data from Form: '+_form.title.trim()+' outputed to new PDF: '+dest_path);
 				next();
 			});
 		} else {

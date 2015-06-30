@@ -1,6 +1,6 @@
 <div class="field row">
 	<br>
-	<input ng-model="field.fieldValue" id="{{field.client_id}}" type="checkbox" ng-true-value="1" ng-false-value="0" ng-required="field.required" ng-disabled="field.disabled"/>
+	<input ng-model="field.fieldValue" id="{{field.client_id}}" type="checkbox" ng-init="field.fieldValue = false" ng-required="field.required" ng-disabled="field.disabled"/>
 	<label class="form-field-label" for="{{field.client_id}}" ng-cloak>{{field.title}}</label>
 	<span class="required-error" ng-show="field.required && field.fieldValue == 0">(* required)</span>
 <div class="field row">

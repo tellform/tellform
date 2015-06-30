@@ -1,4 +1,4 @@
-
+'use strict';
 
 /**
  * Module dependencies.
@@ -38,7 +38,7 @@ exports.create = function(req, res) {
 /**
  * Upload PDF 
  */
-exports.uploadPDF = function(req, res) {
+exports.uploadPDF = function(req, res, next) {
 	var parser = new PDFParser(),
 		pdfFile = req.files.file;
 
@@ -54,21 +54,21 @@ exports.uploadPDF = function(req, res) {
 		}
 		fs.exists(pdfFile.path, function(exists) { 
 			if(exists) { 
-				console.log("UPLOADING FILE \N\N");
-				// res.end('Got your file!');
-				// next()
-				return res.status(200); 
+				console.log('UPLOADING FILE \N\N');
+				res.end('Got your file!');
+				next();
+				// return res.status(200); 
 			} else { 
-				// res.end('DID NOT get your file!');
-				// next()
-				return res.status(400); 
+				res.end('DID NOT get your file!');
+				next();
+				// return res.status(400); 
 			} 
 		}); 
 	} 
 
-	// next(new Error('FILE NOT UPLOADED'));
+	next(new Error('FILE NOT UPLOADED'));
 
-	return res.status(400);
+	// return res.status(400);
 	// res.json(pdfFile);
 };
 
@@ -77,6 +77,7 @@ exports.uploadPDF = function(req, res) {
  */
 exports.read = function(req, res) {
 	// console.log(req.form);
+	console.log(req.form.form_fields[7]);
 	res.json(req.form);
 };
 
@@ -86,36 +87,38 @@ exports.read = function(req, res) {
 exports.createSubmission = function(req, res) {
 
 	var submission = new FormSubmission(),
-		form = req.form, fdfData;
+		form = req.form, 
+		fdfData,
+		fdfTemplate;
 
 	submission.form = form;
 	submission.admin = req.user;
 	submission.form_fields = req.body.form_fields;
 	submission.title = req.body.title;
 	submission.timeElapsed = req.body.timeElapsed;
+	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
 
 	if (form.isGenerated){
-		fdfData = form.convertToJSON();
+		fdfTemplate = form.convertToFDF();
 	} else {
 		try {
-			fdfData = pdfFiller.mapForm2PDF(form.convertToJSON(), form.pdfFieldMap);
+			fdfTemplate = pdfFiller.mapForm2PDF(form.convertToFDF(), form.pdfFieldMap);
 		} catch(err){
 			throw new Error(err.message);
 		}
 	}
 
+	fdfData = pdfFiller.fillFdfTemplate(fdfTemplate, submission.form_fields, null);
+
 	submission.fdfData = fdfData;
-
-
-
+	
 	//Create new file
-	pdfFiller.fillForm( form.pdf.path, config.pdfUploadPath+form.title+"/"+form.title+"_"+Date.now()+"_submission.pdf", fdfData, function() { 
-		console.log("\n\n\n fdfData");
-		console.log(fdfData);
-	});
-
-
-	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	// pdfFiller.fillForm( form.pdf.path, config.pdfUploadPath+form.title+'/'+form.title+'_'+Date.now()+'_submission.pdf', fdfData, function() { 
+		// console.log('\n\n\n fdfData');
+		// console.log(fdfData);
+		// console.log('\n\n\n :\n');
+		// console.log(req.body);
 
 	submission.save(function(err){
 		if (err) {
@@ -127,6 +130,7 @@ exports.createSubmission = function(req, res) {
 			return res.status(200);
 		}            
 	});	
+	// });
 };
 
 
