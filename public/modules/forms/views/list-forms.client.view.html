@@ -1,13 +1,15 @@
-<section data-ng-controller="ViewFormController" data-ng-init="findAll()">
-	<div class="page-header">
-		<h1>Forms</h1>
+<section data-ng-controller="ViewFormController" data-ng-init="findAll()" class="container">
+	<div class="row">
+		<div class="page-header col-xs-10 col-xs-offset-1">
+			<h1>My MedForms</h1>
+		</div>
 	</div>
-	<div class=" container">
-		<a data-ng-href="#!/forms/create" class="col-md-2 col-md-offset-1 form-item row create-new">
-			<div class="title-row col-md-12">
+	<div class="row container">
+		<a data-ng-href="#!/forms/create" class="col-xs-2 col-xs-offset-1 form-item row container create-new">
+			<div class="title-row col-xs-12">
 				<h4 class=" fa fa-plus fa-6"></h4>
 			</div>
-			<div class="col-md-12 details-row">
+			<div class="col-xs-12 details-row">
 				
 				<small class="list-group-item-text">
 					Create a new form
@@ -16,11 +18,11 @@
 			</div>
 			
 		</a>
-		<a data-ng-repeat="form in forms" data-ng-href="#!/forms/{{form._id}}/admin" class="col-md-2 col-md-offset-1 form-item row">
-			<div class="title-row col-md-12">
+		<a data-ng-repeat="form in forms" data-ng-href="#!/forms/{{form._id}}/admin" class="col-xs-2 col-xs-offset-1 form-item row">
+			<div class="title-row col-xs-12">
 				<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
 			</div>
-			<div class="col-md-12 details-row">
+			<div class="col-xs-12 details-row">
 				
 				<small class="list-group-item-text">
 					Created on
@@ -33,7 +35,7 @@
 			
 		</a>
 	</div>
-	<div class="alert alert-warning text-center" data-ng-if="forms.$resolved && !forms.length">
+<!-- 	<div class="alert alert-warning text-center" data-ng-if="forms.$resolved && !forms.length">
 		No forms yet, why don't you <a href="/#!/forms/create">create one</a>?
-	</div>
+	</div> -->
 </section>

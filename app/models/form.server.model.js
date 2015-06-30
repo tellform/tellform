@@ -23,11 +23,6 @@ var FormSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	// type: {
-	// 	type: String,
-	// 	default: 'template',
-	// 	enum: ['submission', 'template']
-	// },
 	title: {
 		type: String,
 		default: '',
@@ -39,7 +34,7 @@ var FormSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	form_fields: [Schema.Types.Mixed],
+	form_fields: [FieldSchema],
 
 	submissions: [{
 		type: Schema.Types.ObjectId,
@@ -56,6 +51,10 @@ var FormSchema = new Schema({
 	},
 	pdfFieldMap: {
 		type: Schema.Types.Mixed
+	},
+	hideFooter: {
+		type: Boolean,
+		default: true,
 	},
 	isGenerated: {
 		type: Boolean,
@@ -113,7 +112,7 @@ FormSchema.pre('save', function (next) {
 
 //Autogenerate FORM from PDF if 'isGenerated' flag is 'true'
 FormSchema.pre('save', function (next) {
-	var field; 
+	var field, _form_fields; 
 	
 	if(this.isGenerated && this.pdf){
 
@@ -137,13 +136,22 @@ FormSchema.pre('save', function (next) {
 						field.fieldType = _typeConvMap[ field.fieldType+'' ];
 					}
 
-					field.created = Date.now();
+					// field.created = Date.now();
 					field.fieldValue = '';
-					field.required = true;
-        			field.disabled  = false;
+					// field.required = true;
+    				//field.disabled  = false;
 
 					// field = new Field(field);
-					// field.save()
+					// field.save(function(err) {
+					// 	if (err) {
+					// 		console.error(err.message);
+					// 		throw new Error(err.message);
+					// 		});
+					// 	} else {
+					// 		_form_fields[i] = this;
+					// 	}
+					// });
+					_form_fields[i] = field;
 				}
 
 				console.log('NEW FORM_FIELDS: ');

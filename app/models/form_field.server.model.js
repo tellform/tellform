@@ -49,7 +49,7 @@ var FormFieldSchema = new Schema({
 	},
 	required: {
 		type: Boolean,
-		default: false,
+		default: true,
 	},
 	disabled: {
 		type: Boolean,
