@@ -16,11 +16,12 @@
 
 .form-item.row:hover, .form-item.row.create-new:hover {
     border-bottom: 6px inset #ccc;
+    background-color: #d9d9d9;
 }
 
 .form-item.row.create-new:hover {
-    color: rgb(51, 122, 183);
-    background-color: rgb(238, 238, 238);
+    /*color: #eee;*/
+    background-color: rgb(81,81,81);
 }
 
 

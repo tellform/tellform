@@ -1,3 +1,14 @@
+
+
+.navbar .navbar-brand {
+	font-size: 1.6em;
+	font-weight: 900;
+	color: #FA787E;
+}
+.navbar .navbar-brand span {
+	text-decoration: underline;
+}
+
 .content {
 	margin-top: 50px;
 }
@@ -21,4 +32,15 @@ body.ng-cloak
 
 section > .jumbotron {
 	padding-top: 15px;
+	background-image: url(http://yourplaceandmine.ie/wp-content/uploads/2014/09/Daingean-meeting-048_13-1080x675.jpg);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
 }
+
+	section > .jumbotron > .opacity-background {
+		background-color: rgba(70,51,51,0.5);
+		height:inherit;
+		width:inherit;
+		padding:inherit;
+	}

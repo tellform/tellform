@@ -1,30 +1,33 @@
 <section data-ng-controller="HomeController">
-	<div class="jumbotron text-center">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-				<!-- <img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/logo.png" /> -->
-			</div>
-		</div>
-		<br>
-		<div class="row" data-ng-if="!authentication.isAuthenticated()">
-			<p class="lead">
-				Make beautiful forms in a snap.
-			</p>
-			<br><br> <br><br>
-			<a class="btn btn-info">
-				Signup now
-			</a>
 
-		</div>
-		<div class="row" data-ng-if="authentication.isAuthenticated()">
-			<p class="lead">
-				Hi there {{authentication.user.displayName}}
-			</p>
-		</div>
-		<div class="row" data-ng-if="authentication.isAuthenticated()">
-			<p>
-				<a class="btn btn-primary btn-lg" href="http://meanjs.org" target="_blank">Learn more</a>
-			</p>
+	<div class="jumbotron text-center">
+		<div class="opacity-background jumbotron">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+					<!-- <img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/logo.png" /> -->
+				</div>
+			</div>
+			<br>
+			<div class="row" data-ng-if="!authentication.isAuthenticated()">
+				<p class="lead">
+					Make beautiful forms in a snap.
+				</p>
+				<br><br> <br><br>
+				<a class="btn btn-info">
+					Signup now
+				</a>
+
+			</div>
+			<div class="row" data-ng-if="authentication.isAuthenticated()">
+				<p class="lead">
+					Hi there {{authentication.user.displayName}}
+				</p>
+			</div>
+			<div class="row" data-ng-if="authentication.isAuthenticated()">
+				<p>
+					<a class="btn btn-primary btn-lg" href="http://meanjs.org" target="_blank">Learn more</a>
+				</p>
+			</div>
 		</div>
 	</div>
 
