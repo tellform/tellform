@@ -9,15 +9,15 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 		$locationProvider.hashPrefix('!');
 	}
 ]);
-angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Authorization', 'Principal',
-    function($rootScope, Authorization, Principal) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Principal',
+    function($rootScope, Principal) {
 		$rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
 			// track the state the user wants to go to; authorization service needs this
 			$rootScope.toState = toState;
 			$rootScope.toStateParams = toStateParams;
 			// if the principal is resolved, do an authorization check immediately. otherwise,
 			// it'll be done when the state it resolved.
-			if (Principal.isIdentityResolved()) Authorization.authorize();
+			// if (Principal.isIdentityResolved()) Authorization.authorize();
 		});
     }
 ]);

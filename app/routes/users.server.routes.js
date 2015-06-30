@@ -10,12 +10,12 @@ module.exports = function(app) {
 	var users = require('../../app/controllers/users.server.controller');
 
 	// Setting up the users profile api
-	app.route('/users/me').get(users.me);
-	app.route('/users').put(users.update);
-	app.route('/users/accounts').delete(users.removeOAuthProvider);
+	app.route('/users/me').get(users.requiresLogin, users.me);
+	app.route('/users').put(users.requiresLogin, users.update);
+	app.route('/users/accounts').delete(users.requiresLogin, users.removeOAuthProvider);
 
 	// Setting up the users password api
-	app.route('/users/password').post(users.changePassword);
+	app.route('/users/password').post(users.requiresLogin, users.changePassword);
 	app.route('/auth/forgot').post(users.forgot);
 	app.route('/auth/reset/:token').get(users.validateResetToken);
 	app.route('/auth/reset/:token').post(users.reset);

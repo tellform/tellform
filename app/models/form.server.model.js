@@ -134,7 +134,7 @@ FormSchema.pre('save', function (next) {
 
 					//Convert types from FDF to 'FormField' types
 					if(_typeConvMap[ field.fieldType+'' ]){
-						field.fieldType = _pdfConvMap[ field.fieldType+'' ];
+						field.fieldType = _typeConvMap[ field.fieldType+'' ];
 					}
 
 					field.created = Date.now();

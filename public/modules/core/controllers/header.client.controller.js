@@ -7,9 +7,10 @@ angular.module('core').controller('HeaderController', ['$scope', 'Principal', 'M
 		$scope.hideNav = false;
 		$scope.menu = Menus.getMenu('topbar');
 
-		Principal.identity().then(function(user){
-			$scope.authentication.user = user;
-		}).then(function(){
+		// Principal.identity().then(function(user){
+		// 	$scope.authentication.user = user;
+		// }).then(function(){
+			$scope.authentication.user = Principal.identity();
 			$scope.signout = function() {
 				var response_obj = Principal.signout();
 				if( angular.isDefined(response_obj.error) ){
@@ -34,7 +35,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Principal', 'M
 			        }
 			    }
 			});
-		});
+		// });
 
 	}
 ]);

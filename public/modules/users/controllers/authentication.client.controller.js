@@ -10,13 +10,14 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		if ($scope.authentication.isAuthenticated()) $state.go('home');
 
 		$scope.signup = function() {
-			var response_obj = Principal.signup($scope.credentials);
-			
-			if( angular.isDefined(response_obj.error) ){
-				$scope.error = response_obj.error;
-			} else{
-				$state.go('home');
-			}
+			Principal.signup($scope.credentials).then(
+				function(result){
+					$state.go('home');
+				},
+				function(rejection_reason){
+					$scope.error = rejection_reason;
+				}
+			);
 			// $http.post('/auth/signup', $scope.credentials).success(function(response) {
 			// 	// If successful we assign the response to the global user model
 			// 	$scope.authentication.user = response;
@@ -30,13 +31,22 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 
 		$scope.signin = function() {
 			console.log('signin');
-			var response_obj = Principal.signin($scope.credentials);
-			if( angular.isDefined(response_obj.error) ){
-				$scope.error = response_obj.error;
-				$location.path('/signin');
-			} else{
-				$location.path('/');
-			}
+
+			Principal.signin($scope.credentials).then(
+				function(result){
+					$state.go('home');
+				},
+				function(rejection_reason){
+					$scope.error = rejection_reason;
+				}
+			);
+			// var response_obj = Principal.signin($scope.credentials);
+			// if( angular.isDefined(response_obj.error) ){
+			// 	$scope.error = response_obj.error;
+			// 	$location.path('/signin');
+			// } else{
+			// 	$location.path('/');
+			// }
 			// $http.post('/auth/signin', $scope.credentials).success(function(response) {
 			// 	// If successful we assign the response to the global user model
 			// 	$scope.authentication.user = response;
