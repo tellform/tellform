@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').factory('Principal', ['$window', '$http', '$q', '$timeout', '$state',
-  function($window, $http, $q, $timeout, $state) {
+angular.module('users').factory('Principal', ['$window', '$http', '$q', '$timeout',
+  function($window, $http, $q, $timeout) {
 
     var service = {
       _currentUser: null,

@@ -10,18 +10,23 @@ var mongoose = require('mongoose'),
 function validateFormFieldType(value) {
   if (!value || typeof myVar !== 'string' ) { return false; }
 
-  var validTypes = [
+  var validHTMLTypes = [
         'textfield',
-        'email',
-        'url',
         'textarea',
+        'statement'
+        'email',
+        'legal',
+        'url',
+        'number',
+        'filefield',
+        'radio',
         'checkbox',
         'date',
         'dropdown',
         'hidden',
         'password',
-        'radio'
     ];
+
   if (validTypes.indexOf(value) > -1) { 
     return true;
   }

@@ -10,9 +10,8 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
-	fs = require('fs-extra');
-
-var Field = mongoose.model('Field', FieldSchema);
+	fs = require('fs-extra'),
+	Field = mongoose.model('Field', FieldSchema);
 
 
 /**
@@ -117,8 +116,13 @@ FormSchema.pre('save', function (next) {
 	if(this.isGenerated && this.pdf){
 
 		var _typeConvMap = {
+			'Multiline': 'textarea',
 			'Text': 'textfield',
-			'Button': 'checkbox'
+			'Button': 'checkbox',
+			'Choice': 'radio',
+			'Password': 'password',
+			'FileSelect': 'filefield',
+			'Radio': 'radio'
 		};
 
 		var that = this;
@@ -136,8 +140,8 @@ FormSchema.pre('save', function (next) {
 						field.fieldType = _typeConvMap[ field.fieldType+'' ];
 					}
 
-					// field.created = Date.now();
 					field.fieldValue = '';
+					// field.created = Date.now();
 					// field.required = true;
     				//field.disabled  = false;
 
