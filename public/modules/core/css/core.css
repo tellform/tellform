@@ -18,3 +18,7 @@ body.ng-cloak
 {
 	display: block;
 }
+
+section > .jumbotron {
+	padding-top: 15px;
+}

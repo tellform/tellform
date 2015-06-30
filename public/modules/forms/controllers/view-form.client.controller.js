@@ -10,7 +10,7 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
 		
 
 			// Return all user's Forms
-			$scope.find = function() {
+			$scope.findAll = function() {
 				$scope.forms = Forms.query();
 			};
 

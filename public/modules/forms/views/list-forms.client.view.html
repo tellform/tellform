@@ -1,16 +1,35 @@
-<section data-ng-controller="ViewFormController" data-ng-init="find()">
+<section data-ng-controller="ViewFormController" data-ng-init="findAll()">
 	<div class="page-header">
 		<h1>Forms</h1>
 	</div>
-	<div class="list-group">
-		<a data-ng-repeat="form in forms" data-ng-href="#!/forms/{{form._id}}/admin" class="list-group-item">
-			<small class="list-group-item-text">
-				Created on
-				<span data-ng-bind="form.created | date:'mediumDate'"></span>
-				by
-				<span data-ng-bind="form.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
+	<div class="list-group container">
+		<a data-ng-href="/forms/create" class="col-md-2 col-md-offset-1 form-item row create-new">
+			<div class="title-row col-md-12">
+				<h4 class=" fa fa-plus fa-6"></h4>
+			</div>
+			<div class="col-md-12 details-row">
+				
+				<small class="list-group-item-text">
+					Create a new form
+				</small>
+
+			</div>
+			
+		</a>
+		<a data-ng-repeat="form in forms" data-ng-href="#!/forms/{{form._id}}/admin" class="col-md-2 col-md-offset-1 form-item row">
+			<div class="title-row col-md-12">
+				<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
+			</div>
+			<div class="col-md-12 details-row">
+				
+				<small class="list-group-item-text">
+					Created on
+					<span data-ng-bind="form.created | date:'mediumDate'"></span>
+					by
+					<span data-ng-bind="form.user.displayName"></span>
+				</small>
+
+			</div>
 			
 		</a>
 	</div>
