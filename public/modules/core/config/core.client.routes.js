@@ -11,16 +11,16 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		state('home', {
 			url: '/',
 			templateUrl: 'modules/core/views/home.client.view.html'
-		}).
-		state('restricted', {
-		  	'abstract': true,
-			resolve: {
-				authorize: ['Authorization',
-					function(Authorization) {
-						return Authorization.authorize();
-					}
-				]
-			}
 		});
+		// state('restricted', {
+		//   	'abstract': true,
+		// 	resolve: {
+		// 		authorize: ['Authorization',
+		// 			function(Authorization) {
+		// 				return Authorization.authorize();
+		// 			}
+		// 		]
+		// 	}
+		// });
 	}
 ]);

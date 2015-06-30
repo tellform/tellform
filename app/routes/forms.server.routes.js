@@ -9,7 +9,7 @@ var users = require('../../app/controllers/users.server.controller'),
 module.exports = function(app) {
 	// Form Routes
 	app.route('/upload/pdf')
-		.post(forms.uploadPDF);
+		.post(users.requiresLogin, forms.uploadPDF);
 
 	app.route('/forms')
 		.get(forms.list)
@@ -19,7 +19,7 @@ module.exports = function(app) {
 		.get(forms.read)
 		.post(forms.createSubmission)
 		.put(users.requiresLogin, forms.hasAuthorization, forms.update)
-		.delete(users.requiresLogin, forms.delete);
+		.delete(users.requiresLogin, forms.hasAuthorization,forms.delete);
 
 	// Finish by binding the form middleware
 	app.param('formId', forms.formByID);

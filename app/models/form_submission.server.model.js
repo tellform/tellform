@@ -58,21 +58,21 @@ var FormSubmissionSchema = new Schema({
 
 });
 
+//Check for IP Address of submitting person 
+// FormSubmissionSchema.pre('save', function (next){
+// 	if(this.ipAddr){
+// 		if(this.ipAddr.modified){
+// 			satelize.satelize({ip: this.ipAddr}, function(err, geoData){
+// 				if (err) next( new Error(err.message) );
 
-FormSubmissionSchema.pre('save', function (next){
-	if(this.ipAddr){
-		if(this.ipAddr.modified){
-			satelize.satelize({ip: this.ipAddr}, function(err, geoData){
-				if (err) next( new Error(err.message) );
-
-				this.geoLocation = JSON.parse(geoData);
-				next();
-			});
-		}
-	}
-	// console.log('ipAddr check');
-	next();
-});
+// 				this.geoLocation = JSON.parse(geoData);
+// 				next();
+// 			});
+// 		}
+// 	}
+// 	console.log('ipAddr check');
+// 	next();
+// });
 
 //Generate autofilled PDF if flags are set 
 FormSubmissionSchema.pre('save', function (next) {

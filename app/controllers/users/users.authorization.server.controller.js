@@ -28,9 +28,9 @@ exports.requiresLogin = function(req, res, next) {
 		return res.status(401).send({
 			message: 'User is not logged in'
 		});
+	}else {
+		next();
 	}
-
-	next();
 };
 
 /**

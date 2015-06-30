@@ -67,45 +67,45 @@ var FormSchema = new Schema({
 	},
 });
 
-//Move PDF to permanent location after first save
+//Move PDF to permanent location after new PDF is uploaded
 FormSchema.pre('save', function (next) {
 	// console.log(this.pdf);
 	// debugger;
 
-	if(this.pdf){
-		if(this.pdf.modified){
+	if(this.pdf && this.isModified('pdf')){
+		console.log('Relocating PDF');
 
-			var new_filename = this.pdf.title.trim()+'_template.pdf';
+		var new_filename = this.pdf.title.trim()+'_template.pdf';
 
-		    var newDestination = path.join(config.pdfUploadPath, this.pdf.title.trim()),
-		    	stat = null;
+	    var newDestination = path.join(config.pdfUploadPath, this.pdf.title.trim()),
+	    	stat = null;
 
-		    try {
-		        stat = fs.statSync(newDestination);
-		    } catch (err) {
-		        fs.mkdirSync(newDestination);
-		    }
-		    if (stat && !stat.isDirectory()) {
-		    	console.log('Directory cannot be created');
-		        next( new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"') );
-		    }
+	    try {
+	        stat = fs.statSync(newDestination);
+	    } catch (err) {
+	        fs.mkdirSync(newDestination);
+	    }
+	    if (stat && !stat.isDirectory()) {
+	    	console.log('Directory cannot be created');
+	        next( new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"') );
+	    }
 
-			console.log('about to move PDF');
-		    fs.move(this.pdf.path, path.join(newDestination, new_filename), function (err) {
-				if (err) {
-					console.error(err);
-					next( new Error(err.message) );
-				}
+		console.log('about to move PDF');
+	    fs.move(this.pdf.path, path.join(newDestination, new_filename), function (err) {
+			if (err) {
+				console.error(err);
+				next( new Error(err.message) );
+			}
 
-				this.pdf.path = path.join(newDestination, new_filename);
-				this.pdf.name = new_filename;
+			this.pdf.path = path.join(newDestination, new_filename);
+			this.pdf.name = new_filename;
 
-				console.log('PDF file:'+this.pdf.name+' successfully moved to: '+this.pdf.path);
+			console.log('PDF file:'+this.pdf.name+' successfully moved to: '+this.pdf.path);
 
-				next();
-			});
+			next();
+		});
 
-		}
+
 	}else {
 		next();
 	}
@@ -134,9 +134,10 @@ FormSchema.pre('save', function (next) {
 
 					//Convert types from FDF to 'FormField' types
 					if(_typeConvMap[ field.fieldType+'' ]){
-						field.fieldType = _pdfConvMap[ field.fieldType+'' ];
+						field.fieldType = _typeConvMap[ field.fieldType+'' ];
 					}
 
+					//Set field defaults
 					field.created = Date.now();
 					field.fieldValue = '';
 					field.required = true;

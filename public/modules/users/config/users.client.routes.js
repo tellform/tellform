@@ -3,6 +3,7 @@
 // Setting up route
 angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
+
 		// Users state routing
 		$stateProvider.
 		state('profile', {
@@ -14,6 +15,9 @@ angular.module('users').config(['$stateProvider',
 			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
 		}).
 		state('password', {
+			// resolve: {
+			// 	checkLoggedin: Authorization.authorize
+			// },
 			// parent: 'restricted',
 			// data: {
 			// 	roles: ['user', 'admin'],

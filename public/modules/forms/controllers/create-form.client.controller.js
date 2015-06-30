@@ -34,9 +34,9 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', 'U
             };
 
             $scope.removePDF = function(){
-                $scope.form.pdf = null;
-
-                console.log('form.pdf exists: '+!!$scope.form.pdf);
+                $scope.form.pdf = undefined;
+                $scope.form.isGenerated = false;
+                $scope.form.autofillPDFs = false;
             };
 
             $scope.uploadPDF = function(files) {
@@ -57,7 +57,6 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', 'U
                                         evt.config.file.name + '\n' + $scope.log;
                         }).success(function (data, status, headers, config) {
                             $scope.log = 'file ' + data.originalname + 'uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
-                            $scope.pdf = data;
                             $scope.form.pdf = data;
 
                             if(!$scope.$$phase) {
@@ -85,7 +84,7 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', 'U
 
                     form.$save(function(response) {
 
-                        console.log('form created');
+                        console.log('create form');
                         // console.log(response.pdf);
 
                         // Clear form fields

@@ -42,10 +42,10 @@ exports.uploadPDF = function(req, res) {
 	var parser = new PDFParser(),
 		pdfFile = req.files.file;
 
-	console.log(pdfFile);
+	// console.log(pdfFile);
 
 	var form = Form.findById(req.body.form._id);
-	console.log(req.files);
+	// console.log(req.files);
 
 	if (req.files) { 
 		
@@ -55,16 +55,16 @@ exports.uploadPDF = function(req, res) {
 			});
 		}
 		fs.exists(pdfFile.path, function(exists) { 
-			if(exists) { 
-				// console.log('UPLOADING FILE \N\N');
-				return res.status(200).send({
-					message: 'Got your file!'
-				}); 
-			} else { 
-				return res.status(400).send({
-					message: 'Did NOT get your file!'
-				});
-			} 
+			console.log(pdfFile.path);
+
+			fs.open(pdfFile.path,'r',function(err,fd){
+			    if (err && err.code === 'ENOENT') { 
+			    	return res.status(400).send({
+						message: 'Did NOT get your file!'
+					});
+			    }
+			    return res.status(200); 
+			});
 		}); 
 	} 
 
@@ -134,7 +134,7 @@ exports.createSubmission = function(req, res) {
 
 
 /**
- * Get List of Submissions for a given Template Form
+ * Get List of Submissions for a given Form
  */
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
@@ -192,10 +192,10 @@ exports.delete = function(req, res) {
 };
 
 /**
- * Get List of Template Forms
+ * Get List of Forms
  */
 exports.list = function(req, res) {
-	Form.find({ type: 'template' }).sort('-created').populate('admin').exec(function(err, forms) {
+	Form.find().sort('-created').populate('admin').exec(function(err, forms) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

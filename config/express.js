@@ -118,11 +118,12 @@ module.exports = function(db) {
 		//     return newDestination;
 		// },
 		onFileUploadStart: function (file) {
-		  console.log(file.originalname + ' is starting ...');
+			//Check to make sure we can only upload images and pdfs
+		  	console.log(file.originalname + ' is starting ...');
 		},
 		onFileUploadComplete: function (file) {
-		  console.log(file.fieldname + ' uploaded to  ' + file.path);
-		  // done=true;
+		  	console.log(file.fieldname + ' has been uploaded to: ' + file.path);
+		  	// done=true;
 		}
 	}));
 
