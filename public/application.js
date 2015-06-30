@@ -9,8 +9,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 		$locationProvider.hashPrefix('!');
 	}
 ]);
-angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Principal',
-    function($rootScope, Principal) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope',
+    function($rootScope) {
 		$rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
 			// track the state the user wants to go to; authorization service needs this
 			$rootScope.toState = toState;

@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope','$scope', 'Principal', 'Menus', '$state',
-	function($rootScope, $scope, Auth, Menus, $state) {
-		$rootScope.authentication = Auth;
-		$rootScope.user = {},
+angular.module('core').controller('HeaderController', ['$rootScope','$scope','Menus', '$state',
+	function($rootScope, $scope, Menus, $state) {
+		// $rootScope.authentication = Auth;
+		// $rootScope.user = {},
 		$scope.isCollapsed = false;
 		$scope.hideNav = false;
 		$scope.menu = Menus.getMenu('topbar');
@@ -16,45 +16,45 @@ angular.module('core').controller('HeaderController', ['$rootScope','$scope', 'P
 		// function(error){
 		// 	console.log(error);
 		// }).then(function(){
-			$scope.signout = function() {
-				// $http.get('/auth/signout').success(function(response) {
-		  //         $state.go('home');
-		  //       }).error(function(error) {
-		  //         $scope.error = (error.message || error);
-		  //       });
+			// $scope.signout = function() {
+			// 	$http.get('/auth/signout').success(function(response) {
+		 //          $state.go('home');
+		 //        }).error(function(error) {
+		 //          $scope.error = (error.message || error);
+		 //        });
         		
-    			Principal.signout().then(
-					function(result){
-						$state.go('home');
-					},
-					function(error){
-						$scope.error = (error.message || error);
-					}
-				);
-				// if( angular.isDefined(response_obj.error) ){
+   			//  			Principal.signout().then(
+			// 		function(result){
+			// 			$state.go('home');
+			// 		},
+			// 		function(error){
+			// 			$scope.error = (error.message || error);
+			// 		}
+			// 	);
+			 	// if( angular.isDefined(response_obj.error) ){
 				// 	$scope.error = response_obj.error;
 				// } else{
 				// 	$state.go('home');
 				// }
 
-			};
+			// };
 
-			$scope.toggleCollapsibleMenu = function() {
-				$scope.isCollapsed = !$scope.isCollapsed;
-			};
+		$scope.toggleCollapsibleMenu = function() {
+			$scope.isCollapsed = !$scope.isCollapsed;
+		};
 
-			// Collapsing the menu after navigation
-			$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-				$scope.isCollapsed = false;
-				$scope.hideNav = false;
-				if ( angular.isDefined( toState.data ) ) {
+		// Collapsing the menu after navigation
+		$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+			$scope.isCollapsed = false;
+			$scope.hideNav = false;
+			if ( angular.isDefined( toState.data ) ) {
 
-					if ( angular.isDefined( toState.data.hideNav ) ) {
-			        	$scope.hideNav = toState.data.hideNav;
-			        }
-			    }
-			});
+				if ( angular.isDefined( toState.data.hideNav ) ) {
+		        	$scope.hideNav = toState.data.hideNav;
+		        }
+		    }
 		});
+		// });
 
 	}
 ]);

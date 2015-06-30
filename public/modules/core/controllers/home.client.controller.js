@@ -1,13 +1,13 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$rootScope', '$scope', 'Principal',
-	function($rootScope, $scope, Principal) {
+angular.module('core').controller('HomeController', ['$rootScope', '$scope',
+	function($rootScope, $scope) {
 		// This provides Principal context.
-		$scope.authentication = Principal;
+		// $scope.authentication = Principal;
 		// $scope.user = {};
 
-		$rootScope.user = $window.user;
+		// $rootScope.user = $window.user;
 		console.log($rootScope.user);
 
 		// Principal.identity().then(function(user){

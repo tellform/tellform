@@ -1,18 +1,18 @@
 'use strict';
 
-angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'Principal',
-	function($scope, $stateParams, $state, Principal) {
-		$scope.authentication = Principal;
+angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
+	function($scope, $stateParams, $state, User) {
+		// $scope.authentication = Principal;
 
 		//If user is signed in then redirect back home
 		if ($scope.authentication.isAuthenticated()) $state.go('home');
 
-		Principal.identity().then(function(response){
-			$scope.authentication.user = response;
+		// Principal.identity().then(function(response){
+			// $scope.authentication.user = response;
 
 			// Submit forgotten password account id
 			$scope.askForPasswordReset = function() {
-				Principal.askForPasswordReset($scope.credentials).then(
+				User.askForPasswordReset($scope.credentials).then(
 					function(response){
 						$scope.success = response.message;
 						$scope.credentials = null;
@@ -27,7 +27,7 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 			// Change user password
 			$scope.resetUserPassword = function() {
 				$scope.success = $scope.error = null;
-				Principal.resetPassword($scope.passwordDetails, $stateParams.token).then(
+				User.resetPassword($scope.passwordDetails, $stateParams.token).then(
 					function(response){
 						// If successful show success message and clear form
 						$scope.success = response.message;
@@ -56,6 +56,6 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 				// 	$scope.error = response.message;
 				// });
 			};
-		});
+		// });
 	}
 ]);

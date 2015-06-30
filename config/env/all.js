@@ -65,7 +65,8 @@ module.exports = {
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-				'public/lib/ng-file-upload/ng-file-upload-all.js'
+				'public/lib/ng-file-upload/ng-file-upload-all.js',
+				'public/lib/angular-cookies/angular-cookies.js',
 			]
 		},
 		css: [

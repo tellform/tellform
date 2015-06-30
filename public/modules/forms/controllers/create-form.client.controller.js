@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').controller('EditFormController', ['$scope', '$state', 'Upload', '$stateParams', 'Principal', 'FormFields', 'Forms', 'CurrentForm', '$modal', '$location',
-    function ($scope, $state, Upload, $stateParams, Principal, FormFields, Forms,  CurrentForm, $modal, $location) {
+angular.module('forms').controller('EditFormController', ['$scope', '$state', 'Upload', '$stateParams', 'FormFields', 'Forms', 'CurrentForm', '$modal', '$location',
+    function ($scope, $state, Upload, $stateParams, FormFields, Forms,  CurrentForm, $modal, $location) {
         // Principal.identity().then(function(user){
         //     $scope.authentication.user = user;
         // }).then(function(){

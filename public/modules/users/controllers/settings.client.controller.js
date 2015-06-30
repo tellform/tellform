@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$state', 'Users', 'Principal',
-	function($scope, $http, $state, Users, Principal) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$state', 'Users',
+	function($scope, $http, $state, Users) {
 
 		// Principal.identity().then(function(user){
   //           $scope.user = user;
   //       }).then(function(){
-  	$scope.user = Principal.identity();
+  	// $scope.user = Principal.identity();
 		
 			// If user is not signed in then redirect back home
 			if (!$scope.user) $state.go('home');

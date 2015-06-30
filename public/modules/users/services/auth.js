@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('AvianServer')
-  .factory('Auth', function($cookies) {
+angular.module('users')
+  .factory('Auth',  function() {
     var userState =
     {
       // isLoggedIn: $cookies.get('isLoggedIn')
       isLoggedIn: false
+      // user: null
     };
 
     return {
@@ -18,35 +19,37 @@ angular.module('AvianServer')
         if (this.currentUser) {
           console.log('Using cached current user.');
           console.log(this.currentUser);
+          return this.currentUser;
         } else{
           console.log('Fetching current user from the server.');
           this.currentUser = User.getCurrent(function() {
             // success
             userState.isLoggedIn = true; 
-            $cookies.put('isLoggedIn', 'true');           
+            // $cookies.put('isLoggedIn', 'true');  
+            return this.currentUser;         
           },
           function(response) {
             userState.isLoggedIn = false;
-            $cookies.put('isLoggedIn', 'false');
+            // $cookies.put('isLoggedIn', 'false');
             console.log('User.getCurrent() err', response);
+            return null;
           });
         }
       },
 
-      getUserState: function() {
+      getUserState: function(user) {
+        // userState.user = ensureHasCurrentUser(user);
         return userState;
       },
 
-      login: function() {
-        userState.isLoggedIn = true;
-        $cookies.put('isLoggedIn', 'true');
-        this.ensureHasCurrentUser(null);
+      login: function(user) {
+        // userState.isLoggedIn = true;
+        // $cookies.put('isLoggedIn', 'true');
+        this.ensureHasCurrentUser(user);
       },
 
       logout: function() {
-        this.currentUser = null;
-        userState.isLoggedIn = false;
-        $cookies.put('isLoggedIn', 'false');
+        this.ensureHasCurrentUser(null);   
       },
     };
   });

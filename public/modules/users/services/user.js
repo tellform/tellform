@@ -6,7 +6,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
     var userService = {
       getCurrent: function() {
-      	deferred = $q.defer();
+      	var deferred = $q.defer();
 
       	$http.get('/users/me')
     		  .success(function(response) {
@@ -15,6 +15,8 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
     		  .error(function() {
     		    deferred.reject("User's session has expired");
     		  });
+
+        return deferred.promise;
       },
       login: function(credentials) {
 
@@ -56,9 +58,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       resetPassword: function(passwordDetails, token) { 
         var deferred = $q.defer();
         $http.get('/auth/password/'+token, passwordDetails).success(function(response) {
-
-          // Attach user profile
-          service.authenticate(response);
 
           deferred.resolve();
         }).error(function(error) {
