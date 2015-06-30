@@ -1,31 +1,38 @@
-<section data-ng-controller="ViewFormController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="form.title"> Form Submissions</h1>
-	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == form.user._id">
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}">
-			View Public Form
-		</a>
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}/submissions">
-			View Form Submissions
-		</a>
-	</div>
+<section data-ng-controller="ViewSubmissionsController" data-ng-init="findAll()">
 	<div class="row">
-		<span class="col-md-5" data-ng-bind="form"></span>
+		<div class="page-header col-xs-10 col-xs-offset-1">
+			<h1>{{submissions[0].form.title}} submissions</h1>
+		</div>
 	</div>
-	<small>
-		<em class="text-muted">
-			Created on 
-			<span data-ng-bind="form.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="form.admin.displayName"></span>
-		</em>
-	</small>
-	<!-- <p class="lead" data-ng-bind="form.content"></p> -->
+	<div class="row container">
+		<a data-ng-href="#!/forms/create" class="col-xs-2 col-xs-offset-1 form-item row container create-new">
+			<div class="title-row col-xs-12">
+				<h4 class=" fa fa-plus fa-6"></h4>
+			</div>
+			<div class="col-xs-12 details-row">
+				
+				<small class="list-group-item-text">
+					Create a new form
+				</small>
+
+			</div>
+			
+		</a>
+		<a data-ng-repeat="form in forms" data-ng-href="#!/forms/{{form._id}}/admin" class="col-xs-2 col-xs-offset-1 form-item row">
+			<div class="title-row col-xs-12">
+				<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
+			</div>
+			<div class="col-xs-12 details-row">
+				
+				<small class="list-group-item-text">
+					Created on
+					<span data-ng-bind="form.created | date:'mediumDate'"></span>
+					by
+					<span data-ng-bind="form.user.displayName"></span>
+				</small>
+
+			</div>
+			
+		</a>
+	</div>
 </section>
