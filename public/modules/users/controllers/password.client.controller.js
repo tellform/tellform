@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$http', '$state', 'Principal',
-	function($scope, $stateParams, $http, $state, Principal) {
+angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'Principal',
+	function($scope, $stateParams, $state, Principal) {
 		$scope.authentication = Principal;
 		$scope.authentication.user = Principal.user();
 
