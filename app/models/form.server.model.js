@@ -33,7 +33,7 @@ var FormSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	form_fields: [FieldSchema],
+	form_fields: [{type: Schema.Types.Mixed}],
 
 	submissions: [{
 		type: Schema.Types.ObjectId,
@@ -141,9 +141,9 @@ FormSchema.pre('save', function (next) {
 					}
 
 					field.fieldValue = '';
-					// field.created = Date.now();
-					// field.required = true;
-    				//field.disabled  = false;
+					field.created = Date.now();
+					field.required = true;
+    				field.disabled  = false;
 
 					// field = new Field(field);
 					// field.save(function(err) {

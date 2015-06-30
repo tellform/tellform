@@ -35,7 +35,7 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
                         $state.go('listForms');
                     });
 
-                } else {
+                } else{
                     $scope.form.$remove(function() {
                     	console.log('remove');
                         $state.path('forms');

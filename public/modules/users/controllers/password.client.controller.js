@@ -14,7 +14,7 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 			$scope.askForPasswordReset = function() {
 				Principal.askForPasswordReset($scope.credentials).then(
 					function(response){
-						$scope.success = response.message
+						$scope.success = response.message;
 						$scope.credentials = null;
 					},
 					function(error){
@@ -26,13 +26,19 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 
 			// Change user password
 			$scope.resetUserPassword = function() {
-				Principal.askForPasswordReset($scope.credentials).then(
+				$scope.success = $scope.error = null;
+				Principal.resetPassword($scope.passwordDetails, $stateParams.token).then(
 					function(response){
-						$scope.credentials = null;
+						// If successful show success message and clear form
+						$scope.success = response.message;
+						$scope.passwordDetails = null;
+
+						// And redirect to the index page
+						$state.go('reset-success');
 					},
 					function(error){
-						$scope.error = error;
-						$scope.credentials = null;
+						$scope.error = error.message || error;
+						$scope.passwordDetails = null;
 					}
 				);
 				// $scope.success = $scope.error = null;

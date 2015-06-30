@@ -112,13 +112,6 @@ exports.createSubmission = function(req, res) {
 
 	submission.fdfData = fdfData;
 
-	//Create new file
-	// pdfFiller.fillForm( form.pdf.path, config.pdfUploadPath+form.title+'/'+form.title+'_'+Date.now()+'_submission.pdf', fdfData, function() { 
-		// console.log('\n\n\n fdfData');
-		// console.log(fdfData);
-		// console.log('\n\n\n :\n');
-		// console.log(req.body);
-
 	submission.save(function(err){
 		if (err) {
 			console.error(err);
@@ -129,7 +122,6 @@ exports.createSubmission = function(req, res) {
 			return res.status(200);
 		}            
 	});	
-	// });
 };
 
 
@@ -139,7 +131,7 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 
-	FormSubmission.find({ form: req.form }).exec(function(err, submissions) {
+	FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, submissions) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

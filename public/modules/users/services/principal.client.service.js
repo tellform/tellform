@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').factory('Principal', ['$window', '$q', '$timeout', '$http',
-  function($window, $q, $timeout, $http) {
+angular.module('users').factory('Principal', ['$window', '$q', '$timeout', '$http', '$state',
+  function($window, $q, $timeout, $http, $state) {
 
     var service = {
       _currentUser: null,
@@ -75,17 +75,13 @@ angular.module('users').factory('Principal', ['$window', '$q', '$timeout', '$htt
         return deferred.promise;
       },
 
-      resetPassword: function(scope) { 
+      resetPassword: function(passwordDetails, token) { 
         var deferred = $q.defer();
-        $http.get('/auth/password'+_currentUser._id, scope.passwordDetails).success(function(response) {
-          // If successful show success message and clear form
-          scope.passwordDetails = null;
+        $http.get('/auth/password/'+token, passwordDetails).success(function(response) {
 
           // Attach user profile
-          // Principal.user() = response;
+          service.authenticate(response);
 
-          // And redirect to the index page
-          $state.go('reset-success');
           deferred.resolve();
         }).error(function(error) {
           deferred.reject(error.message || error);
@@ -96,7 +92,7 @@ angular.module('users').factory('Principal', ['$window', '$q', '$timeout', '$htt
 
       // Submit forgotten password account id
       askForPasswordReset: function(credentials) {
-
+        var deferred = $q.defer();
         $http.post('/auth/forgot', credentials).success(function(response) {
           // Show user success message and clear form
 

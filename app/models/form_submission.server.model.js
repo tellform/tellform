@@ -11,6 +11,8 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	path = require('path'),
 	Form = mongoose.model('Form'),
+	FieldSchema = require('./form_field.server.model.js'),
+	Field = mongoose.model('Field', FieldSchema),
 	fs = require('fs-extra');
 
 /** 
@@ -30,7 +32,7 @@ var FormSubmissionSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 	},
-	form_fields: [Schema.Types.Mixed],
+	form_fields: [{type: Schema.Types.Mixed}],
 	form: {
 		type: Schema.Types.ObjectId,
 		ref: 'Form',

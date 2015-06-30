@@ -12,14 +12,17 @@ module.exports = function(app) {
 		.post(forms.uploadPDF);
 
 	app.route('/forms')
-		.get(forms.list)
+		.get(users.requiresLogin, forms.hasAuthorization, forms.list)
 		.post(users.requiresLogin, forms.create);
+
+	app.route('/forms/:formId/submissions')
+		.get(forms.listSubmissions);
 
 	app.route('/forms/:formId')
 		.get(forms.read)
 		.post(forms.createSubmission)
 		.put(users.requiresLogin, forms.hasAuthorization, forms.update)
-		.delete(users.requiresLogin, forms.delete);
+		.delete(users.requiresLogin, forms.hasAuthorization, forms.delete);
 
 	// Finish by binding the form middleware
 	app.param('formId', forms.formByID);

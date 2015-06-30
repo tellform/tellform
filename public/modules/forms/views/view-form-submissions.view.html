@@ -1,37 +1,16 @@
-<section data-ng-controller="ViewSubmissionsController" data-ng-init="findAll()">
-	<div class="row">
-		<div class="page-header col-xs-10 col-xs-offset-1">
-			<h1>{{submissions[0].form.title}} submissions</h1>
-		</div>
+<section data-ng-controller="ViewSubmissionController" data-ng-init="findAll()">
+	<div class="page-header">
+		<h1>{{form.title}} Submissions</h1>
 	</div>
-	<div class="row container">
-		<a data-ng-href="#!/forms/create" class="col-xs-2 col-xs-offset-1 form-item row container create-new">
-			<div class="title-row col-xs-12">
-				<h4 class=" fa fa-plus fa-6"></h4>
-			</div>
-			<div class="col-xs-12 details-row">
-				
-				<small class="list-group-item-text">
-					Create a new form
-				</small>
-
-			</div>
-			
-		</a>
-		<a data-ng-repeat="form in forms" data-ng-href="#!/forms/{{form._id}}/admin" class="col-xs-2 col-xs-offset-1 form-item row">
-			<div class="title-row col-xs-12">
-				<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
-			</div>
-			<div class="col-xs-12 details-row">
-				
-				<small class="list-group-item-text">
-					Created on
-					<span data-ng-bind="form.created | date:'mediumDate'"></span>
-					by
-					<span data-ng-bind="form.user.displayName"></span>
-				</small>
-
-			</div>
+	<div class="list-group">
+		<a data-ng-repeat="submission in submissions" data-ng-href="#!/forms/{{form._id}}/admin" class="list-group-item">
+			<small class="list-group-item-text">
+				Created on
+				<span data-ng-bind="submission.created | date:'mediumDate'"></span>
+				by
+				<span data-ng-bind="form.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="submission.title"></h4>
 			
 		</a>
 	</div>
