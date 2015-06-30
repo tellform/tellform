@@ -38,7 +38,7 @@ exports.create = function(req, res) {
 /**
  * Upload PDF 
  */
-exports.uploadPDF = function(req, res, next) {
+exports.uploadPDF = function(req, res) {
 	var parser = new PDFParser(),
 		pdfFile = req.files.file;
 
@@ -50,34 +50,33 @@ exports.uploadPDF = function(req, res, next) {
 	if (req.files) { 
 		
 		if (pdfFile.size === 0) {
-		    return next(new Error('Hey, first would you select a file?'));
+			return res.status(400).send({
+				message: 'Hey, first would you select a file?'
+			});
 		}
 		fs.exists(pdfFile.path, function(exists) { 
 			if(exists) { 
-				console.log('UPLOADING FILE \N\N');
-				res.end('Got your file!');
-				next();
-				// return res.status(200); 
+				// console.log('UPLOADING FILE \N\N');
+				return res.status(200).send({
+					message: 'Got your file!'
+				}); 
 			} else { 
-				res.end('DID NOT get your file!');
-				next();
-				// return res.status(400); 
+				return res.status(400).send({
+					message: 'Did NOT get your file!'
+				});
 			} 
 		}); 
 	} 
 
-	next(new Error('FILE NOT UPLOADED'));
-
-	// return res.status(400);
-	// res.json(pdfFile);
+	return res.status(400).send({
+		message: 'FILE NOT UPLOADED'
+	});
 };
 
 /**
  * Show the current form
  */
 exports.read = function(req, res) {
-	// console.log(req.form);
-	console.log(req.form.form_fields[7]);
 	res.json(req.form);
 };
 
@@ -112,7 +111,7 @@ exports.createSubmission = function(req, res) {
 	fdfData = pdfFiller.fillFdfTemplate(fdfTemplate, submission.form_fields, null);
 
 	submission.fdfData = fdfData;
-	
+
 	//Create new file
 	// pdfFiller.fillForm( form.pdf.path, config.pdfUploadPath+form.title+'/'+form.title+'_'+Date.now()+'_submission.pdf', fdfData, function() { 
 		// console.log('\n\n\n fdfData');

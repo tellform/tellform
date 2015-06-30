@@ -97,14 +97,14 @@ FormSubmissionSchema.pre('save', function (next) {
 
 
 			pdfFiller.fillForm(_form.pdf.path, dest_path, this.fdfData, function(err){
-				console.log("fdfData: \n");
+				console.log('fdfData: \n');
 				console.log(that.fdfData);
 
-				// console.log("_form.pdf.path: "+_form.pdf.path);
-				// console.log("dest_path: "+dest_path);
+				// console.log('_form.pdf.path: '+_form.pdf.path);
+				// console.log('dest_path: '+dest_path);
 
 				if(err) {
-					console.log("\n err.message: "+err.message);
+					console.log('\n err.message: '+err.message);
 					next( new Error(err.message) );
 				}
 				console.log('Field data from Form: '+_form.title.trim()+' outputed to new PDF: '+dest_path);

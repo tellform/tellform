@@ -111,7 +111,6 @@ FormSchema.pre('save', function (next) {
 	}
 });
 
-
 //Autogenerate FORM from PDF if 'isGenerated' flag is 'true'
 FormSchema.pre('save', function (next) {
 	var field; 
@@ -164,7 +163,6 @@ FormSchema.pre('save', function (next) {
 
 	//Throw error if we encounter form with invalid type
 	next();
-
 });
 
 FormSchema.methods.convertToFDF = function (cb) {
