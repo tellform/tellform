@@ -4,7 +4,6 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	function($scope, $location, Principal, $state) {
 
 		$scope.authentication = Principal;
-		// $scope.authentication.user = Principal.getUser();
 
 		// If user is signed in then redirect back home
 		if ($scope.authentication.isAuthenticated()) $state.go('home');

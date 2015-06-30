@@ -38,7 +38,7 @@ section.hero-section > .jumbotron {
 	background-image: url(http://yourplaceandmine.ie/wp-content/uploads/2014/09/Daingean-meeting-048_13-1080x675.jpg);
 	background-repeat: no-repeat;
 	background-position: 0 50%;
-	background-position-top: 0px;
+	/*background-position-top: 0px;*/
 	background-size: cover;
 }
 
@@ -47,4 +47,5 @@ section.hero-section > .jumbotron {
 		color: white;
 		padding: inherit;
 		height: inherit;
+		width: inherit;
 	}

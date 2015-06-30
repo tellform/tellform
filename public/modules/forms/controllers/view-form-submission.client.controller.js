@@ -12,14 +12,14 @@ angular.module('forms').controller('ViewSubmissionController', ['$scope', '$stat
 
 			// Return all form's submissions
 			$scope.findAll = function() {
-				$scope.submissions = submissions.query({
+				$scope.submissions = Submissions.query({
 					formId: $stateParams.formId
 				});
 			};
 
 			// Find a specific submission
 			$scope.findOne = function() {
-				$scope.submission = submissions.get({
+				$scope.submission = Submissions.get({
 					submissionId: $scope.submissionId,
 					formId: $stateParams.formId
 				});

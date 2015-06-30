@@ -13,14 +13,14 @@
 					Make beautiful forms in a snap.
 				</p>
 				<br><br> <br><br>
-				<a class="btn btn-info">
+				<a class="btn btn-info" href="/#!/signup">
 					Signup now
 				</a>
 
 			</div>
 			<div class="row" data-ng-if="authentication.isAuthenticated()">
 				<p class="lead">
-					Hi there {{authentication.user.displayName}}
+					Hi there {{user.displayName}}
 				</p>
 			</div>
 			<div class="row" data-ng-if="authentication.isAuthenticated()">

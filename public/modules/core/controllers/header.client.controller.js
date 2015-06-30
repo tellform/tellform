@@ -1,15 +1,21 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Principal', 'Menus', '$state',
-	function($scope, Principal, Menus, $state) {
-		$scope.authentication = Principal;
+angular.module('core').controller('HeaderController', ['$rootScope','$scope', 'Principal', 'Menus', '$state',
+	function($rootScope, $scope, Auth, Menus, $state) {
+		$rootScope.authentication = Auth;
+		$rootScope.user = {},
 		$scope.isCollapsed = false;
 		$scope.hideNav = false;
 		$scope.menu = Menus.getMenu('topbar');
 
-		Principal.identity().then(function(user){
-			$scope.authentication.user = user;
-		}).then(function(){
+		// Principal.identity().then(function(user){
+		// 	$rootScope.user = user;
+		// 	console.log('topbar')
+		// 	console.log($scope.user);
+		// },
+		// function(error){
+		// 	console.log(error);
+		// }).then(function(){
 			$scope.signout = function() {
 				// $http.get('/auth/signout').success(function(response) {
 		  //         $state.go('home');
@@ -17,12 +23,19 @@ angular.module('core').controller('HeaderController', ['$scope', 'Principal', 'M
 		  //         $scope.error = (error.message || error);
 		  //       });
         		
-    			Principal.signout();
-				if( angular.isDefined(response_obj.error) ){
-					$scope.error = response_obj.error;
-				} else{
-					$state.go('home');
-				}
+    			Principal.signout().then(
+					function(result){
+						$state.go('home');
+					},
+					function(error){
+						$scope.error = (error.message || error);
+					}
+				);
+				// if( angular.isDefined(response_obj.error) ){
+				// 	$scope.error = response_obj.error;
+				// } else{
+				// 	$state.go('home');
+				// }
 
 			};
 
