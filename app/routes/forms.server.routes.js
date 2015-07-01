@@ -12,7 +12,7 @@ module.exports = function(app) {
 		.post(forms.uploadPDF);
 
 	app.route('/forms')
-		.get(users.requiresLogin, forms.hasAuthorization, forms.list)
+		.get(users.requiresLogin, forms.list)
 		.post(users.requiresLogin, forms.create);
 
 	app.route('/forms/:formId/submissions')

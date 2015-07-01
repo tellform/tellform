@@ -1,12 +1,10 @@
 'use strict';
 
 angular.module('users')
-  .factory('Auth',  function() {
+  .factory('Auth',  function($window) {
     var userState =
     {
-      // isLoggedIn: $cookies.get('isLoggedIn')
       isLoggedIn: false
-      // user: null
     };
 
     return {
@@ -16,39 +14,52 @@ angular.module('users')
       // because that would create a circular dependency
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
-        if (this.currentUser) {
-          console.log('Using cached current user.');
+        if (this.currentUser && this.currentUser.displayName) {
+          console.log('Using local current user.');
           console.log(this.currentUser);
           return this.currentUser;
-        } else{
+        } 
+        else if ($window.user){
+          console.log('Using cached current user.');
+          console.log($window.user);
+          this.currentUser = $window.user;
+          return this.currentUser;
+        }
+        else{
           console.log('Fetching current user from the server.');
-          this.currentUser = User.getCurrent(function() {
+          User.getCurrent().then(function(user) {
             // success
+            this.currentUser = user;
             userState.isLoggedIn = true; 
-            // $cookies.put('isLoggedIn', 'true');  
+            $window.user = this.currentUser;
             return this.currentUser;         
           },
           function(response) {
             userState.isLoggedIn = false;
-            // $cookies.put('isLoggedIn', 'false');
+            this.currentUser = null;
+            $window.user = null;
             console.log('User.getCurrent() err', response);
             return null;
           });
         }
       },
 
-      getUserState: function(user) {
-        // userState.user = ensureHasCurrentUser(user);
+      isAuthenticated: function() {
+        return !!this.currentUser;
+      },
+
+      getUserState: function() {
         return userState;
       },
 
-      login: function(user) {
-        // userState.isLoggedIn = true;
-        // $cookies.put('isLoggedIn', 'true');
-        this.ensureHasCurrentUser(user);
+      login: function() {
+        userState.isLoggedIn = true;
       },
 
       logout: function() {
+        $window.user = null;
+        userState.isLoggedIn = false;
+        this.currentUser = null;
         this.ensureHasCurrentUser(null);   
       },
     };

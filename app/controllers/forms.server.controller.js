@@ -12,6 +12,7 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	fs = require('fs-extra'),
 	async = require('async'),
+	path = require('path'),
 	_ = require('lodash');
 
 /**
@@ -38,39 +39,53 @@ exports.create = function(req, res) {
 /**
  * Upload PDF 
  */
-exports.uploadPDF = function(req, res) {
-	var parser = new PDFParser(),
-		pdfFile = req.files.file;
+var upload_count = 0;
+exports.uploadPDF = function(files, user, cb) {
+	var parser = new PDFParser();
+	console.log("upload count: "+upload_count);
+	upload_count++;
+	if(files) { 
 
-	console.log(pdfFile);
+		console.log('inside uploadPDF');
+		console.log(files.file[0]);
+		var pdfFile = files.file[0];
 
-	var form = Form.findById(req.body.form._id);
-	console.log(req.files);
-
-	if (req.files) { 
-		
 		if (pdfFile.size === 0) {
-			return res.status(400).send({
-				message: 'Hey, first would you select a file?'
-			});
+			throw new Error('Files uploaded are EMPTY');
 		}
 		fs.exists(pdfFile.path, function(exists) { 
+			//If file exists move to user's tmp directory
 			if(exists) { 
-				// console.log('UPLOADING FILE \N\N');
-				return res.status(200).send({
-					message: 'Got your file!'
-				}); 
+
+				var newDestination = path.join(config.tmpUploadPath, user.username);
+			    var stat = null;
+			    try {
+			        stat = fs.statSync(newDestination);
+			    } catch (err) {
+			        fs.mkdirSync(newDestination);
+			    }
+			    if (stat && !stat.isDirectory()) {
+			    	console.log('Directory cannot be created');
+			        throw new Error('Directory cannot be created because an inode of a different type exists at "' + dest + '"');
+			    }
+			    
+			    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
+					if (err) {
+						throw new Error(err.message);
+					}
+					pdfFile.path = path.join(newDestination, pdfFile.name);
+
+					return cb(pdfFile);
+				});				
+
 			} else { 
-				return res.status(400).send({
-					message: 'Did NOT get your file!'
-				});
+				throw new Error('Did NOT get your file!');
 			} 
 		}); 
-	} 
+	}else {
+		throw new Error('File NOT uploaded');
+	}
 
-	return res.status(400).send({
-		message: 'FILE NOT UPLOADED'
-	});
 };
 
 /**

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').controller('EditFormController', ['$scope', '$state', 'Upload', '$stateParams', 'FormFields', 'Forms', 'CurrentForm', '$modal', '$location',
-    function ($scope, $state, Upload, $stateParams, FormFields, Forms,  CurrentForm, $modal, $location) {
+angular.module('forms').controller('EditFormController', ['$scope', '$rootScope', '$state', 'Upload', '$stateParams', 'FormFields', 'Forms', 'CurrentForm', '$modal', '$location',
+    function ($scope, $state, $rootScope, Upload, $stateParams, FormFields, Forms, CurrentForm, $modal, $location) {
         // Principal.identity().then(function(user){
         //     $scope.authentication.user = user;
         // }).then(function(){
@@ -9,6 +9,8 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', 'U
             // console.log('isAuthenticated(): '+Principal.isAuthenticated());\
             
             $scope.isNewForm = false;
+            $scope.pdfLoading = false;
+            var _current_upload = null;
             $scope.log = '';
 
             // Get current form if it exists, or create new one
@@ -28,46 +30,52 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', 'U
             }
 
             //PDF Functions
-
             $scope.cancelUpload = function(){
-                //TBD
+                _current_upload.abort();
+                $scope.pdfLoading = false;
             };
 
             $scope.removePDF = function(){
                 $scope.form.pdf = null;
+                $scope.isGenerated = false;
+                $scope.autofillPDFs = false;
 
-                console.log('form.pdf exists: '+!!$scope.form.pdf);
+                console.log('form.pdf: '+$scope.form.pdf+' REMOVED');
             };
 
             $scope.uploadPDF = function(files) {
 
                 if (files && files.length) {
-                    for (var i = 0; i < files.length; i++) {
-                        var file = files[i];
-                        Upload.upload({
-                            url: '/upload/pdf',
-                            fields: {
-                                'user': $scope.form.admin,
-                                'form': $scope.form
-                            },
-                            file: file
-                        }).progress(function (evt) {
-                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                            $scope.log = 'progress: ' + progressPercentage + '% ' +
-                                        evt.config.file.name + '\n' + $scope.log;
-                        }).success(function (data, status, headers, config) {
-                            $scope.log = 'file ' + data.originalname + 'uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
-                            $scope.pdf = data;
-                            $scope.form.pdf = data;
+                    // for (var i = 0; i < files.length; i++) {
+                    var file = files[0];
+                    _current_upload = Upload.upload({
+                        url: '/upload/pdf',
+                        fields: {
+                            'user': $scope.user,
+                            'form': $scope.form
+                        },
+                        file: file
+                    }).progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        $scope.log = 'progress: ' + progressPercentage + '% ' +
+                                    evt.config.file.name + '\n' + $scope.log;
+                        $scope.pdfLoading = true;
+                    }).success(function (data, status, headers, config) {
+                        $scope.log = 'file ' + data.originalname + 'uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
+                        $scope.form.pdf = data;
+                        $scope.pdfLoading = false;
 
-                            if(!$scope.$$phase) {
-                                $scope.$apply();
-                            }
-
-                            console.log($scope.log);
-                            console.log('$scope.pdf: '+$scope.pdf.name);
-                        });
-                    }
+                        console.log($scope.log);
+                        console.log('$scope.pdf: '+$scope.form.pdf.name);
+                        if(!$scope.$$phase) {
+                            $scope.$apply();
+                        }
+                    }).error(function(err){
+                        $scope.pdfLoading = false;
+                        console.log('Error occured during upload.\n');
+                        console.log(err);
+                    });
+                    // }
                 }
             };
 
@@ -82,7 +90,6 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', 'U
                     // Create new Form object
                     var form = new Forms($scope.form);
 
-
                     form.$save(function(response) {
 
                         console.log('form created');
@@ -92,7 +99,8 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', 'U
                         $scope.form = {};
 
                         // Redirect after save 
-                        $location.path('forms/' + response._id + '/admin');
+                        $scope.goToWithId('viewForm', response._id);
+                        // $location.path('forms/' + response._id + '/admin');
 
                     }, function(errorResponse) {
                         console.log(errorResponse.data.message);

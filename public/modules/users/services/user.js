@@ -13,7 +13,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
     		    deferred.resolve(response);
     		  })
     		  .error(function() {
-    		    deferred.reject("User's session has expired");
+    		    deferred.reject('User\'s session has expired');
     		  });
 
         return deferred.promise;
@@ -22,7 +22,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
         var deferred = $q.defer();
         $http.post('/auth/signin', credentials).success(function(response) {
-            console.log(response);
+            // console.log(response);
             deferred.resolve(response);
           }).error(function(error) {
 
