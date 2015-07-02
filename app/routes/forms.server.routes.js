@@ -9,7 +9,7 @@ var users = require('../../app/controllers/users.server.controller'),
 module.exports = function(app) {
 	// Form Routes
 	app.route('/upload/pdf')
-		.post(forms.uploadPDF);
+		.all(forms.uploadPDF);
 
 	app.route('/forms')
 		.get(users.requiresLogin, forms.list)
