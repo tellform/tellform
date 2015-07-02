@@ -41,14 +41,14 @@
     </div>
     <br><br><br><br><br>
     <div class="row form-actions">
-        <p class="text-center col-xs-3 col-xs-offset-2">
+        <p class="text-center col-xs-3 col-xs-offset-4">
             <button class="btn btn-success left" type="button">
-                <a href="/#!/form/{{form._id}}" style="color:white;"> Submit again?</a>
+                <a href="/#!/forms/{{form._id}}" style="color:white;"> Submit again?</a>
             </button>
         </p>
         <p class="text-center col-xs-2" ng-if="authentication.isAuthenticated()">
             <button class="btn btn-caution left" type="button">
-                <a href="/form/{{form.id}}/admin" style="color:white;">Edit Form</a>
+                <a href="/#!/forms/{{form._id}}/admin" style="color:white;">Edit Form</a>
             </button>
         </p>
     </div>

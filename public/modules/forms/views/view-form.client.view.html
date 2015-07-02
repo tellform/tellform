@@ -25,20 +25,32 @@
 			</p>
 		</div>
 		<div class="submissions-table col-xs-8" ng-if="viewSubmissions">
-			<table class="table table-striped">
+			<table class="table table-striped table-hover table-condensed">
 				<thead>
 					<tr>
 						<th>#</th>
-						<th data-ng-repeat="(key, val) in submissions[0].form_fields">
-							{{key}}
+						<th data-ng-repeat="(key, value) in submissions[0].form_fields">
+							{{value.title}}
+						</th>
+						<th>
+							Time Elapsed
+						</th>
+						<th>
+							Date Submitted (UTC)
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr data-ng-repeat="submission in submissions">
-						<td>{{$index+1}}</td>
-						<td data-ng-repeat="(key, val) in submission.form_fields">
-							{{value}}
+						<th class="scope">{{$index+1}}</th>
+						<td data-ng-repeat="(key, value) in submission.form_fields">
+							{{value.fieldValue}}
+						</td>
+						<td>
+							{{submission.timeElapsed}}
+						</th>
+						<td>
+							{{submission.created | date:'yyyy-MM-dd HH:mm:ss'}}
 						</td>
 					</tr>
 				</tbody>

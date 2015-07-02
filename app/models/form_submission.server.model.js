@@ -85,10 +85,10 @@ FormSubmissionSchema.pre('save', function (next) {
 	Form.findById(that.form, function(err, _form){
 		if(err) next( new Error(err.mesasge) );
 		
-		// that.title = _form.title;
+		that.title = _form.title;
 		// console.log(_form);
 
-		if(true){ //_form.autofillPDFs){
+		if(_form.autofillPDFs){
 
 			dest_filename = _form.title.trim()+'_submission_'+Date.now()+'.pdf';
 			dest_path = path.join(config.pdfUploadPath, dest_filename);
@@ -96,7 +96,6 @@ FormSubmissionSchema.pre('save', function (next) {
 			this.pdfFilePath = dest_path;
 
 			// console.log('autofillPDFs check');
-
 
 			pdfFiller.fillForm(_form.pdf.path, dest_path, this.fdfData, function(err){
 				console.log('fdfData: \n');
@@ -113,12 +112,10 @@ FormSubmissionSchema.pre('save', function (next) {
 				next();
 			});
 		} else {
-		
 			next();
 		}
 
 	});
-
 
 });
 

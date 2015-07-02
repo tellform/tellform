@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 
 /**
- * Create a new form manually
+ * Create a new form
  */
 exports.create = function(req, res) {
 	var form = new Form(req.body);
@@ -107,8 +107,8 @@ exports.createSubmission = function(req, res) {
 	submission.form_fields = req.body.form_fields;
 	submission.title = req.body.title;
 	submission.timeElapsed = req.body.timeElapsed;
+	console.log(req.body);
 	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
 
 	if (form.isGenerated){
 		fdfTemplate = form.convertToFDF();
@@ -120,9 +120,10 @@ exports.createSubmission = function(req, res) {
 		}
 	}
 
-	fdfData = pdfFiller.fillFdfTemplate(fdfTemplate, submission.form_fields, null);
-
-	submission.fdfData = fdfData;
+	if(form.autofillPDFs){
+		fdfData = pdfFiller.fillFdfTemplate(fdfTemplate, submission.form_fields, null);
+		submission.fdfData = fdfData;
+	}
 
 	submission.save(function(err){
 		if (err) {
@@ -146,10 +147,12 @@ exports.listSubmissions = function(req, res) {
 
 	FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, submissions) {
 		if (err) {
-			res.status(400).send({
+			console.log(err);
+			res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			console.log('hello');
 			res.json(submissions);
 		}
 	});
@@ -186,7 +189,7 @@ exports.delete = function(req, res) {
 	console.log('deleting form');
 	Form.remove({_id: form._id}, function(err) {
 		if (err) {
-			res.status(400).send({
+			res.status(500).send({
 				message: err.message
 			});
 		} else {
@@ -228,39 +231,42 @@ exports.formByID = function(req, res, next, id) {
 	}
 
 	Form.findById(id).populate('admin').exec(function(err, form) {
-		if (err) return next(err);
-		if (!form) {
+		if (err) {
+			return next(err);
+		} else if (!form || form === null) {
 			res.status(404).send({
 				message: 'Form not found'
 			});
 		}
-		if(!form.admin){
-			form.admin = req.user;
-			form.save(function(err) {
-				if (err) {
-					console.log(err);
-					res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				} else {
-					//Remove sensitive information from User object
-					form.admin.password = null;
-					form.admin.created = null;
-					form.admin.salt = null;
+		else {
+			if(!form.admin){
+				form.admin = req.user;
+				form.save(function(err) {
+					if (err) {
+						console.log(err);
+						res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						//Remove sensitive information from User object
+						form.admin.password = null;
+						form.admin.created = null;
+						form.admin.salt = null;
 
-					req.form = form;
-					next();
-				}
-			});
+						req.form = form;
+						next();
+					}
+				});
+			}
+
+			//Remove sensitive information from User object
+			form.admin.password = null;
+			form.admin.created = null;
+			form.admin.salt = null;
+
+			req.form = form;
+			next();
 		}
-
-		//Remove sensitive information from User object
-		form.admin.password = null;
-		form.admin.created = null;
-		form.admin.salt = null;
-
-		req.form = form;
-		next();
 	});
 };
 

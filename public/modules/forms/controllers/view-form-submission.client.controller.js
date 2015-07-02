@@ -33,9 +33,9 @@ angular.module('forms').controller('ViewSubmissionController', ['$scope', '$stat
 
                     $http.delete('/forms/'+$stateParams.formId+'submissions/'+$scope.submission._id).
                     	success(function(data, status, headers){
-                        console.log('submission deleted successfully');
-                        alert('submission deleted..');
-                    });
+	                        console.log('submission deleted successfully');
+	                        alert('submission deleted..');
+	                    });
 
                 } else {
                     $scope.submission.$remove(function() {
@@ -43,9 +43,9 @@ angular.module('forms').controller('ViewSubmissionController', ['$scope', '$stat
                         $state.path('submissions');
 	                    $http.delete('/forms/'+$stateParams.formId+'/submissions/'+$scope.submission._id).
 	                    	success(function(data, status, headers){
-	                        console.log('submission deleted successfully');
-	                        alert('submission deleted..');
-	                    });
+		                        console.log('submission deleted successfully');
+		                        alert('submission deleted..');
+		                    });
                     });
                 }
             };
