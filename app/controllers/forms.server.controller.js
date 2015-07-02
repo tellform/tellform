@@ -52,7 +52,6 @@ exports.uploadPDF = function(req, res, next) {
 				if(exists) { 
 
 					var newDestination = config.tmpUploadPath+_user.username;
-					var newFilename = String(Date.now() % 987598 * 32 % (a - Date.now()))+'.pdf';
 				    var stat = null;
 				    try {
 				        stat = fs.statSync(newDestination);
@@ -68,9 +67,8 @@ exports.uploadPDF = function(req, res, next) {
 						if (err) {
 							next(new Error(err.message));
 						}
-						pdfFile.name = newFilename;
 						pdfFile.path = path.join(newDestination, pdfFile.name);
-						console.log(pdfFile.name + ' uploaded to  ' + pdfFile.path);
+						console.log(pdfFile.name + ' uploaded to ' + pdfFile.path);
 						res.status(200).send(pdfFile);
 					});				
 
@@ -209,7 +207,8 @@ exports.listSubmissions = function(req, res) {
 exports.update = function(req, res) {
 	
 	var form = req.form;
-	form = _.extend(form, req.body);
+	console.log(req.body.form);
+	form = _.extend(form, req.body.form);
 	form.admin = req.user;
 
 	form.save(function(err) {

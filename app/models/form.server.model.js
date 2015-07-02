@@ -73,6 +73,25 @@ var FormSchema = new Schema({
 	},
 });
 
+//Create folder for user's pdfs
+FormSchema.pre('save', function (next) {
+	var newDestination = path.join(config.pdfUploadPath, this.admin.username.trim()),
+		stat = null;
+
+	try {
+        stat = fs.statSync(newDestination);
+    } catch (err) {
+        fs.mkdirSync(newDestination);
+    }
+    if (stat && !stat.isDirectory()) {
+    	console.log('Directory cannot be created');
+        next( new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"') );
+    }else{
+    	next();
+    }
+});
+
+
 //Update lastModified everytime we save
 FormSchema.pre('save', function (next) {
 	this.lastModified = Date.now();
@@ -82,12 +101,15 @@ FormSchema.pre('save', function (next) {
 //Move PDF to permanent location after new template is uploaded
 FormSchema.pre('save', function (next) {
 
+	console.log(this.pdf);
+	console.log("isModified: "+this.isModified('pdf'));
+	var that = this;
 	if(this.pdf){
-		if(this.pdf.modified){
+		if(this.isModified('pdf')){
 
-			var new_filename = this.pdf.title.trim()+'_template.pdf';
+			var new_filename = this.title.trim()+'_template.pdf';
 
-		    var newDestination = path.join(config.pdfUploadPath, this.pdf.title.trim()),
+		    var newDestination = path.join(config.pdfUploadPath, this.admin.username.trim(), this.title.trim()),
 		    	stat = null;
 
 		    try {
@@ -96,23 +118,35 @@ FormSchema.pre('save', function (next) {
 		        fs.mkdirSync(newDestination);
 		    }
 		    if (stat && !stat.isDirectory()) {
-		    	console.log('Directory cannot be created');
+		    	console.log('Directory '+newDestination+' cannot be created');
 		        next( new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"') );
 		    }
 
 			console.log('about to move PDF');
+			//Move pdf to permanent location
 		    fs.move(this.pdf.path, path.join(newDestination, new_filename), function (err) {
-				if (err) {
-					console.error(err);
-					next( new Error(err.message) );
-				}
+				// if (err) {
+				// 	console.error(err);
+				// 	next( new Error(err.message) );
+				// }
 
-				this.pdf.path = path.join(newDestination, new_filename);
-				this.pdf.name = new_filename;
+				// //Delete old pdf file
+				// fs.unlink(that.pdf.path, function(err){
+					if (err) {
+						console.error(err);
+						next( new Error(err.message) );
+					}
 
-				console.log('PDF file:'+this.pdf.name+' successfully moved to: '+this.pdf.path);
+				  	// console.log('successfully deleted', that.pdf.path);
 
-				next();
+					that.pdf.path = path.join(newDestination, new_filename);
+					that.pdf.name = new_filename;
+
+					console.log('\n\n PDF file:'+that.pdf.name+' successfully moved to: '+that.pdf.path);
+
+					next();
+				// });
+
 			});
 
 		}

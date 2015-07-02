@@ -12,10 +12,6 @@ angular.module('forms').config(['$stateProvider',
 		state('createForm', {
 			url: '/forms/create',
 			templateUrl: 'modules/forms/views/create-form.client.view.html',
-			// parent: 'restricted',
-			// data: {
-			// 	roles: ['user', 'admin'],
-			// },
 		}).
 		state('viewForm', {
 			url: '/forms/:formId/admin',
@@ -32,10 +28,6 @@ angular.module('forms').config(['$stateProvider',
 		state('editForm', {
 			url: '/forms/:formId/edit',
 			templateUrl: 'modules/forms/views/create-form.client.view.html',
-			// parent: 'restricted',
-			// data: {
-			// 	roles: ['user', 'admin'],
-			// },
 		});
 	}
 ]);

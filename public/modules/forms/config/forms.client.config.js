@@ -14,7 +14,7 @@ angular.module('forms').run(['Menus',
         return function(formObj){
 			//get keys
 			var formKeys = Object.keys(formObj);
-			// console.log(formKeys);
+
 			//we only care about things that don't start with $
 			var fieldKeys = formKeys.filter(function(key){
 			return key[0] !== '$';

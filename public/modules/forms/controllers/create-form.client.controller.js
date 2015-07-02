@@ -1,25 +1,21 @@
 'use strict';
 
-angular.module('forms').controller('EditFormController', ['$scope', '$state', '$rootScope', 'Upload', '$stateParams', 'FormFields', 'Forms', 'CurrentForm', '$modal', '$location',
-    function ($scope, $state, $rootScope, Upload, $stateParams, FormFields, Forms, CurrentForm, $modal, $location) {
+angular.module('forms').controller('EditFormController', ['$scope', '$state', '$rootScope', 'Upload', '$stateParams', 'FormFields', 'Forms', 'CurrentForm', '$modal', '$location', '$http',
+    function ($scope, $state, $rootScope, Upload, $stateParams, FormFields, Forms, CurrentForm, $modal, $location, $http) {
 
         $scope.isNewForm = false;
         $scope.pdfLoading = false;
         var _current_upload = null;
         $scope.log = '';
+        $scope.form = {};
 
         // Get current form if it exists, or create new one
         if($stateParams.formId){
-            $scope.form = {};
-            var _form = Forms.get({ formId: $stateParams.formId}, function(form){
-                _form.pdf = form.pdf;
-                _form.$save();
-
-                $scope.form = angular.fromJson(angular.toJson(_form));
-                console.log(JSON.stringify($scope.form.pdf));
+            Forms.get({ formId: $stateParams.formId}, function(form){
+                $scope.form = angular.fromJson(angular.toJson(form));
+                console.log($scope.form);
             });
         } else {
-            $scope.form = {};
             $scope.form.form_fields = [];
             $scope.isNewForm = true;
         }
@@ -56,13 +52,14 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
                                 evt.config.file.name + '\n' + $scope.log;
                     $scope.pdfLoading = true;
                 }).success(function (data, status, headers, config) {
-                    $scope.log = 'file ' + data.originalname + 'uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
-                    $scope.form.pdf = data;
+                    $scope.log = 'file ' + data.originalname + ' uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
+                    console.log($scope.form.pdf);
+                    $scope.form.pdf = angular.fromJson(angular.toJson(data));
                     $scope.pdfLoading = false;
 
                     console.log($scope.log);
                     console.log('$scope.pdf: '+$scope.form.pdf.name);
-                    if(!$scope.$$phase) {
+                    if(!$scope.$$phase){
                         $scope.$apply();
                     }
                 }).error(function(err){
@@ -85,23 +82,19 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
                 // Create new Form object
                 var form = new Forms($scope.form);
 
-                form.$save(function(response) {
-
+                $http.post('/forms', {form: $scope.form})
+                .success(function(data, status, headers){
                     console.log('form created');
-                    // console.log(response.pdf);
 
                     // Clear form fields
                     $scope.form = {};
-
                     // Redirect after save 
                     $scope.goToWithId('viewForm', response._id);
-
-                }, function(errorResponse) {
+                }).error(function(err){
                     console.log(errorResponse.data.message);
                     $scope.error = errorResponse.data.message;
                 });
             } else{
-                console.log('update form');
                 $scope.update();
             }
         };
@@ -109,14 +102,24 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
         // Update existing Form
         $scope.update = function() {
             var form = new Forms($scope.form);
-            form.$update(function(response) {
-                console.log('form updated');
-                $scope.goToWithId('viewForm', response._id);
-                // $location.path('forms/' + response._id + '/admin');
-            }, function(errorResponse) {
-                console.log(errorResponse.data.message);
-                $scope.error = errorResponse.data.message;
+            console.log('update form');
+            console.log($scope.form);
+
+            $http.put('/forms/'+$scope.form._id, {form: $scope.form})
+            .success(function(data, status, headers){
+                console.log('form updated successfully');
+                $scope.goToWithId('viewForm', $scope.form._id);
+            }).error(function(err){
+                console.log('Error occured during form UPDATE.\n');
+                console.log(err);
             });
+            // form.$update({formId: $scope.form._id}, function(response) {
+            //     console.log('form successfully updated');
+            //     $scope.goToWithId('viewForm', response._id);
+            // }, function(errorResponse) {
+            //     console.log(errorResponse.data.message);
+            //     $scope.error = errorResponse.data.message;
+            // });
         };
 
         //Populate AddField with all available form field types
@@ -153,7 +156,6 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
 
             // put newField into fields array
             $scope.form.form_fields.push(newField);
-            // console.log($scope.form.form_fields);
         };
 
         // deletes particular field on button click
