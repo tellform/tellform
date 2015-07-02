@@ -47,7 +47,8 @@
     "passport-local": "~1.0.0",
     "passport-twitter": "~1.0.2",
     "satelize": "^0.1.1",
-    "swig": "~1.4.1"
+    "swig": "~1.4.1",
+    "then-fs": "^2.0.0"
   },
   "devDependencies": {
     "supertest": "~0.14.0",

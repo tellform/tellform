@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('forms').controller('EditFormController', ['$scope', '$rootScope', '$state', 'Upload', '$stateParams', 'FormFields', 'Forms', 'CurrentForm', '$modal', '$location',
+angular.module('forms').controller('EditFormController', ['$scope', '$state', '$rootScope', 'Upload', '$stateParams', 'FormFields', 'Forms', 'CurrentForm', '$modal', '$location',
     function ($scope, $state, $rootScope, Upload, $stateParams, FormFields, Forms, CurrentForm, $modal, $location) {
         // Principal.identity().then(function(user){
         //     $scope.authentication.user = user;
@@ -80,7 +80,7 @@ angular.module('forms').controller('EditFormController', ['$scope', '$rootScope'
             };
 
             $scope.goToWithId = function(route, id) {
-                $state.transitionTo(route, { 'formId' : id }, { reload: true });
+                $state.go(route, {'formId': id}, {reload: true});
             };
 
             // Create new Form
@@ -100,7 +100,6 @@ angular.module('forms').controller('EditFormController', ['$scope', '$rootScope'
 
                         // Redirect after save 
                         $scope.goToWithId('viewForm', response._id);
-                        // $location.path('forms/' + response._id + '/admin');
 
                     }, function(errorResponse) {
                         console.log(errorResponse.data.message);
@@ -117,8 +116,8 @@ angular.module('forms').controller('EditFormController', ['$scope', '$rootScope'
                 var form = new Forms($scope.form);
                 form.$update(function(response) {
                     console.log('form updated');
-                    // console.log(response.pdf);
-                    $location.path('forms/' + response._id + '/admin');
+                    $scope.goToWithId('viewForm', response._id);
+                    // $location.path('forms/' + response._id + '/admin');
                 }, function(errorResponse) {
                     console.log(errorResponse.data.message);
                     $scope.error = errorResponse.data.message;
@@ -130,7 +129,6 @@ angular.module('forms').controller('EditFormController', ['$scope', '$rootScope'
             $scope.addField.types = FormFields.fields;
             $scope.addField.new = $scope.addField.types[0].name;
             $scope.addField.lastAddedID = 0;
-
 
             // preview form mode
             $scope.previewMode = false;

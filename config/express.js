@@ -106,10 +106,10 @@ module.exports = function(db) {
 		  console.log(file.originalname + ' is starting ...');
 		},
 		onFileUploadComplete: function (file, req, res) {
-			console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
-			// console.log(req.files.file[0]);
+			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
+			console.log(req.body.user);
 			try{
-				formCtrl.uploadPDF(req.files, function(_file){
+				formCtrl.uploadPDF(req.files, req.body.user, function(_file){
 					console.log(_file.filename + ' uploaded to  ' + _file.path);
 					res.status(200).send(_file);
 				});

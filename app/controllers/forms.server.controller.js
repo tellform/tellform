@@ -8,7 +8,6 @@ var mongoose = require('mongoose'),
 	Form = mongoose.model('Form'),
 	FormSubmission = mongoose.model('FormSubmission'),
 	pdfFiller = require( 'pdffiller' ),
-	PDFParser = require('pdf2json/pdfparser'),
 	config = require('../../config/config'),
 	fs = require('fs-extra'),
 	async = require('async'),
@@ -23,14 +22,12 @@ exports.create = function(req, res) {
 	form.admin = req.user;
 
 	form.save(function(err) {
-
 		if (err) {
 			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-
 			return res.json(form);
 		}
 	});
@@ -39,11 +36,11 @@ exports.create = function(req, res) {
 /**
  * Upload PDF 
  */
-var upload_count = 0;
 exports.uploadPDF = function(files, user, cb) {
-	var parser = new PDFParser();
-	console.log("upload count: "+upload_count);
-	upload_count++;
+	var _user = JSON.parse(''+user);
+	console.log(_user.username);
+	console.log(config.tmpUploadPath);
+
 	if(files) { 
 
 		console.log('inside uploadPDF');
@@ -57,7 +54,7 @@ exports.uploadPDF = function(files, user, cb) {
 			//If file exists move to user's tmp directory
 			if(exists) { 
 
-				var newDestination = path.join(config.tmpUploadPath, user.username);
+				var newDestination = path.join(config.tmpUploadPath, _user.username);
 			    var stat = null;
 			    try {
 			        stat = fs.statSync(newDestination);
@@ -66,7 +63,7 @@ exports.uploadPDF = function(files, user, cb) {
 			    }
 			    if (stat && !stat.isDirectory()) {
 			    	console.log('Directory cannot be created');
-			        throw new Error('Directory cannot be created because an inode of a different type exists at "' + dest + '"');
+			        throw new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"');
 			    }
 			    
 			    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
@@ -193,22 +190,25 @@ exports.delete = function(req, res) {
 			});
 		} else {
 			return res.status(200);
-			// res.json(form);
 		}
 	});
 };
 
 /**
- * Get List of Template Forms
+ * Get All of Users' Forms
  */
 exports.list = function(req, res) {
-	Form.find({ type: 'template' }).sort('-created').populate('admin').exec(function(err, forms) {
+	//Allow 'admin' user to view all forms
+	var searchObj = {admin: req.user};
+	if(req.user.isAdmin()){
+		searchObj = {};
+	}
+	Form.find({}).sort('-created').populate('admin').exec(function(err, forms) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(forms);
 			return res.json(forms);
 		}
 	});
@@ -251,13 +251,11 @@ exports.hasAuthorization = function(req, res, next) {
 
 	var form = req.form;
 
-	// console.log('\n\n\nreq.form:\n');
-	// console.log(form);
-	// console.log('req.user.id: '+req.user.id);
-
-	if (req.form.admin.id !== req.user.id) {
+	// console.log(req.form.admin);
+	// console.log(req.user);
+	if (req.form.admin.id !== req.user.id || req.user.roles.indexOf('admin') === -1) {
 		return res.status(403).send({
-			message: 'User is not authorized'
+			message: 'User '+req.user.username+' is not authorized'
 		});
 	}
 	next();

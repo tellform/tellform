@@ -1,21 +1,49 @@
-/* Styles for form list view (/forms) */
+/* Styles for form admin view (/forms/:formID/admin) */
+.admin-form > .page-header {
+    padding-bottom: 0px;
+    margin-bottom: 40px;
+}
+    .admin-form > .page-header h1 {
+        margin-bottom: 0px
+    }
+    .admin-form > .page-header > .col-xs-3 {
+        padding-top: 1.4em;
+    }
+.admin-form .form-controls .row {
+    padding: 5px;
+}
 
+
+.status-light {
+    padding-left:0.6em;
+}
+.status-light.status-light-off {
+    color: red;
+}
+.status-light.status-light-on {
+    color: green;
+}
+
+/* Styles for form list view (/forms) */
+section > section.ng-scope {
+    padding: 0 60px 20px 60px;
+}
 .form-item.row {
     text-align: center;
-    border-bottom: 4px inset #ccc;
+    border-bottom: 6px inset #ccc;
     background-color: #eee;
     width: 180px;
     height: 215px;
+    margin-bottom: 45px;
 }
 
 .form-item.row.create-new {
-    border-bottom: 4px inset #ccc;
     background-color: rgb(131,131,131);
     color: white;
 }
 
 .form-item.row:hover, .form-item.row.create-new:hover {
-    border-bottom: 6px inset #ccc;
+    border-bottom: 8px inset #ccc;
     background-color: #d9d9d9;
 }
 
@@ -23,7 +51,6 @@
     /*color: #eee;*/
     background-color: rgb(81,81,81);
 }
-
 
 .form-item.row > .title-row{
     position: relative;

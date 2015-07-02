@@ -4,10 +4,17 @@
 angular.module('forms').controller('ViewFormController', ['$scope', '$stateParams', '$state', 'Forms', 'CurrentForm','$http',
 	function($scope, $stateParams, $state, Forms, CurrentForm, $http) {
 
-		// Principal.identity().then(function(user){
-  //           $scope.authentication.user = user;
-  //       }).then(function(){
-		
+            // view form submissions
+            $scope.viewSubmissions = false;
+
+            //show submissions of Form
+            $scope.showSubmissions = function(){
+            	$scope.viewSubmissions = true;
+            }
+            //hide submissions of Form
+            $scope.hideSubmissions = function(){
+            	$scope.viewSubmissions = false;
+            }
 
 			// Return all user's Forms
 			$scope.findAll = function() {
@@ -22,10 +29,10 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
 				CurrentForm.setForm($scope.form);
 			};
 
-
             // Remove existing Form
-            $scope.remove = function(form) {
-                if (form) {
+            $scope.remove = function() {
+                if (CurrentForm.getForm()) {
+                	var form = CurrentForm.getForm();
                     form.$remove();
 
                     $http.delete('/forms/'+$scope.form._id).
@@ -37,8 +44,6 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
 
                 } else{
                     $scope.form.$remove(function() {
-                    	console.log('remove');
-                        $state.path('forms');
 	                    $http.delete('/forms/'+$scope.form._id).
 	                    	success(function(data, status, headers){
 	                        console.log('form deleted successfully');

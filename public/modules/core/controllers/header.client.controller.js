@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('core').controller('HeaderController', ['$rootScope','$scope','Menus', '$state', 'Auth', 'User',
-	function($rootScope, $scope, Menus, $state, Auth, User) {
+	function ($rootScope, $scope, Menus, $state, Auth, User) {
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 		

@@ -4,8 +4,8 @@
 			<h1>My MedForms</h1>
 		</div>
 	</div>
-	<div class="row container">
-		<a data-ng-href="#!/forms/create" class="col-xs-2 col-xs-offset-1 form-item row container create-new">
+	<div class="row">
+		<a data-ng-href="#!/forms/create" class="col-xs-2 col-xs-offset-1 form-item row create-new">
 			<div class="title-row col-xs-12">
 				<h4 class=" fa fa-plus fa-6"></h4>
 			</div>
@@ -28,7 +28,7 @@
 					Created on
 					<span data-ng-bind="form.created | date:'mediumDate'"></span>
 					by
-					<span data-ng-bind="form.user.displayName"></span>
+					<span data-ng-bind="form.admin.username"></span>
 				</small>
 
 			</div>

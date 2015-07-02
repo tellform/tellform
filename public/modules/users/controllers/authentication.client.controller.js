@@ -19,26 +19,22 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 				Auth.login();
 				$rootScope.user = Auth.ensureHasCurrentUser(User);
 				$scope = $rootScope;
+				console.log('$state.previous: \n');
+				console.log($state.previous);
 
 				if($state.previous !== 'home'){
-					$state.go($state.previous);
+					$state.go($state.previous.name);
 				}else{
 					$state.go('home');
 				}
 				
 			},
 			function(error) {
-			  
-			  $scope.error = error;
-			  console.log('loginError: '+error);
-			  $rootScope.user = Auth.ensureHasCurrentUser(User);
-			  $scope = $rootScope;
-			  // if(!$scope.loginError){
-			    // Auth.currentUser = rootScope.loginResult.user;
-			    // console.log(Auth.currentUser );
-			  // }
+				$rootScope.user = Auth.ensureHasCurrentUser(User);
+				$scope = $rootScope;
 
-			  // Auth.currentUser = $rootScope.loginResult.user;
+				$scope.error = error;
+				console.log('loginError: '+error);
 			}
 		);
     };

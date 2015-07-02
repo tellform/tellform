@@ -7,36 +7,36 @@ angular.module('users')
       isLoggedIn: false
     };
 
-    return {
+    var service = {
       currentUser: null,
 
       // Note: we can't make the User a dependency of Auth
       // because that would create a circular dependency
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
-        if (this.currentUser && this.currentUser.displayName) {
+        if (service.currentUser && service.currentUser.displayName) {
           console.log('Using local current user.');
-          console.log(this.currentUser);
-          return this.currentUser;
+          console.log(service.currentUser);
+          return service.currentUser;
         } 
         else if ($window.user){
           console.log('Using cached current user.');
           console.log($window.user);
-          this.currentUser = $window.user;
-          return this.currentUser;
+          service.currentUser = $window.user;
+          return service.currentUser;
         }
         else{
           console.log('Fetching current user from the server.');
           User.getCurrent().then(function(user) {
             // success
-            this.currentUser = user;
+            service.currentUser = user;
             userState.isLoggedIn = true; 
-            $window.user = this.currentUser;
-            return this.currentUser;         
+            $window.user = service.currentUser;
+            return service.currentUser;         
           },
           function(response) {
             userState.isLoggedIn = false;
-            this.currentUser = null;
+            service.currentUser = null;
             $window.user = null;
             console.log('User.getCurrent() err', response);
             return null;
@@ -45,7 +45,7 @@ angular.module('users')
       },
 
       isAuthenticated: function() {
-        return !!this.currentUser;
+        return !!service.currentUser;
       },
 
       getUserState: function() {
@@ -59,8 +59,9 @@ angular.module('users')
       logout: function() {
         $window.user = null;
         userState.isLoggedIn = false;
-        this.currentUser = null;
-        this.ensureHasCurrentUser(null);   
+        service.currentUser = null;
+        service.ensureHasCurrentUser(null);   
       },
     };
+    return service;
   });

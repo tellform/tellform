@@ -59,6 +59,10 @@ var FormSchema = new Schema({
 		type: Boolean,
 		default: false,
 	},
+	isLive: {
+		type: Boolean,
+		default: true,
+	},
 	autofillPDFs: {
 		type: Boolean,
 		default: false,
@@ -106,6 +110,17 @@ FormSchema.pre('save', function (next) {
 		}
 	}else {
 		next();
+	}
+});
+
+//Delete template PDF of current Form
+FormSchema.pre('remove', function (next) {
+	if(this.pdf){
+		//Delete template form
+		fs.unlink(this.pdf.path, function(err){
+			if (err) throw err;
+		  	console.log('successfully deleted', this.pdf.path);
+		});
 	}
 });
 
