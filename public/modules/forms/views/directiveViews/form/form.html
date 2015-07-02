@@ -1,9 +1,7 @@
-<h2>{{ form.form_name }}</h2>
-
-<div ng-show="!form.submitted">
+<div ng-hide="form.submitted">
 
     <div class="field row">
-        <div class="col-sm-11 col-sm-offset-1"><h1>{{ form.title }}</h1>
+        <div class="col-sm-10 col-sm-offset-1"><h1>{{ form.title }}</h1>
                 <hr>
         </div>
     </div>
@@ -11,31 +9,46 @@
     <br>
     <br>
 
-
-    <form class="field row" name="form" ng-model="form" ng-repeat="field in form.form_fields" >
-        <!-- <ul class=" col-sm-11 col-sm-offset-1" style="margin-top: 50px; margin-bottom: 50px;" ng-repeat="field in form.form_fields" > -->
-            <field-directive field="field" >
-            </field-directive>
-        <!-- </ul> -->
-    </form>
+    <div class="row">
+        <form class="field col-sm-offset-1 col-sm-10" name="form" ng-model="form" ng-repeat="field in form.form_fields" >
+            <!-- <ul class=" col-sm-11 col-sm-offset-1" style="margin-top: 50px; margin-bottom: 50px;" ng-repeat="field in form.form_fields" > -->
+                <field-directive field="field" >
+                </field-directive>
+            <!-- </ul> -->
+        </form>
+    </div>
 
 
     <div class="row form-actions">
-        <p class="text-left col-sm-2 col-sm-offset-5">
-            <button class="btn btn-success right" type="button" ng-disabled="myForm.$valid" ng-click="submit()">
-                <i class="icon-edit icon-white"></i> Submit Form 
+            <button class="btn btn-success col-sm-2 col-sm-offset-5" type="button" ng-disabled="myForm.$valid" ng-click="submit()" style="font-size: 1.6em;">
+                <i class="icon-edit icon-white"></i> submit 
             </button>
-        </p>
     </div>
 </div>
 
 <div ng-show="form.submitted">
-    <h3>Form Successfully submitted</h3>
-    <br><br><br>
+
+    <div class="field row">
+        <div class="col-sm-11 col-sm-offset-1"><h1>{{ form.title }}</h1>
+        <hr>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="field row text-center">
+    <h4 class="col-xs-6 col-xs-offset-1 text-left">Form entry successfully submitted!<br> What would you like to do next?</h4>
+    </div>
+    <br><br><br><br><br>
     <div class="row form-actions">
-        <p class="text-left col-sm-2">
-            <button class="btn btn-primary left" type="button">
-                <a href="/form/{{form.id}}" style="color:white;"> Submit again?</a>
+        <p class="text-center col-xs-3 col-xs-offset-2">
+            <button class="btn btn-success left" type="button">
+                <a href="/#!/form/{{form._id}}" style="color:white;"> Submit again?</a>
+            </button>
+        </p>
+        <p class="text-center col-xs-2" ng-if="authentication.isAuthenticated()">
+            <button class="btn btn-caution left" type="button">
+                <a href="/form/{{form.id}}/admin" style="color:white;">Edit Form</a>
             </button>
         </p>
     </div>

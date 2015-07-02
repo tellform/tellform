@@ -8,13 +8,13 @@ angular.module('forms').service('timeCounter', [
 
 		this.startClock = function(){
 			_startTime = Date.now();
-			console.log('Clock Started');
+			// console.log('Clock Started');
 		};
 
 		this.stopClock = function(){
 			_endTime = Date.now();
 			that.timeSpent = Math.abs(_endTime.valueOf() - _startTime.valueOf())/1000;
-			console.log('Clock Ended');
+			// console.log('Clock Ended');
 			return that.timeSpent;
 		};
 

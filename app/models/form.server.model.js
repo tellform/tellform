@@ -22,6 +22,10 @@ var FormSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	lastModified: {
+		type: Date,
+		default: Date.now
+	},
 	title: {
 		type: String,
 		default: '',
@@ -69,10 +73,14 @@ var FormSchema = new Schema({
 	},
 });
 
-//Move PDF to permanent location after first save
+//Update lastModified everytime we save
 FormSchema.pre('save', function (next) {
-	// console.log(this.pdf);
-	// debugger;
+	this.lastModified = Date.now();
+	next();
+});
+
+//Move PDF to permanent location after new template is uploaded
+FormSchema.pre('save', function (next) {
 
 	if(this.pdf){
 		if(this.pdf.modified){
@@ -208,6 +216,5 @@ FormSchema.methods.convertToFDF = function (cb) {
 
 	return jsonObj;
 };
-
 
 mongoose.model('Form', FormSchema);

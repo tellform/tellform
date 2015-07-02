@@ -31,27 +31,21 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
 
             // Remove existing Form
             $scope.remove = function() {
-                if (CurrentForm.getForm()) {
-                	var form = CurrentForm.getForm();
-                    form.$remove();
-
-                    $http.delete('/forms/'+$scope.form._id).
-                    	success(function(data, status, headers){
+                console.log('hello');
+                var form = CurrentForm.getForm()
+                if(!form){
+                    form = $scope.form
+                }
+                $http.delete('/forms/'+$scope.form._id)
+                    .success(function(data, status, headers){
                         console.log('form deleted successfully');
                         alert('Form deleted..');
                         $state.go('listForms');
+                    }).error(function(error){
+                        console.log('ERROR: Form could not be deleted.');
+                        console.error(error);
                     });
 
-                } else{
-                    $scope.form.$remove(function() {
-	                    $http.delete('/forms/'+$scope.form._id).
-	                    	success(function(data, status, headers){
-	                        console.log('form deleted successfully');
-	                        alert('Form deleted..');
-	                        $state.go('listForms');
-	                    });
-                    });
-                }
             };
 
             

@@ -24,11 +24,11 @@ exports.create = function(req, res) {
 	form.save(function(err) {
 		if (err) {
 			console.log(err);
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			return res.json(form);
+			res.json(form);
 		}
 	});
 };
@@ -127,11 +127,12 @@ exports.createSubmission = function(req, res) {
 	submission.save(function(err){
 		if (err) {
 			console.error(err);
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			return res.status(200);
+			console.log('Form Submission CREATED');
+			res.status(200).send('Form submission successfully saved');
 		}            
 	});	
 };
@@ -145,11 +146,11 @@ exports.listSubmissions = function(req, res) {
 
 	FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, submissions) {
 		if (err) {
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			return res.json(submissions);
+			res.json(submissions);
 		}
 	});
 };
@@ -167,12 +168,12 @@ exports.update = function(req, res) {
 	form.save(function(err) {
 		if (err) {
 			console.log(err);
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			console.log('updated form');
-			return res.json(form);
+			res.json(form);
 		}
 	});
 };
@@ -182,14 +183,15 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 	var form = req.form;
-
-	form.remove(function(err) {
+	console.log('deleting form');
+	Form.remove({_id: form._id}, function(err) {
 		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+			res.status(400).send({
+				message: err.message
 			});
 		} else {
-			return res.status(200);
+			console.log('Form successfully deleted');
+			res.status(200).send('Form successfully deleted');
 		}
 	});
 };
@@ -200,16 +202,15 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) {
 	//Allow 'admin' user to view all forms
 	var searchObj = {admin: req.user};
-	if(req.user.isAdmin()){
-		searchObj = {};
-	}
+	if(req.user.isAdmin()) searchObj = {};
+
 	Form.find({}).sort('-created').populate('admin').exec(function(err, forms) {
 		if (err) {
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			return res.json(forms);
+			res.json(forms);
 		}
 	});
 };
@@ -221,7 +222,7 @@ exports.list = function(req, res) {
 exports.formByID = function(req, res, next, id) {
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(400).send({
+		res.status(400).send({
 			message: 'Form is invalid'
 		});
 	}
@@ -229,8 +230,27 @@ exports.formByID = function(req, res, next, id) {
 	Form.findById(id).populate('admin').exec(function(err, form) {
 		if (err) return next(err);
 		if (!form) {
-			return res.status(404).send({
+			res.status(404).send({
 				message: 'Form not found'
+			});
+		}
+		if(!form.admin){
+			form.admin = req.user;
+			form.save(function(err) {
+				if (err) {
+					console.log(err);
+					res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					//Remove sensitive information from User object
+					form.admin.password = null;
+					form.admin.created = null;
+					form.admin.salt = null;
+
+					req.form = form;
+					next();
+				}
 			});
 		}
 
@@ -250,11 +270,8 @@ exports.formByID = function(req, res, next, id) {
 exports.hasAuthorization = function(req, res, next) {
 
 	var form = req.form;
-
-	// console.log(req.form.admin);
-	// console.log(req.user);
-	if (req.form.admin.id !== req.user.id || req.user.roles.indexOf('admin') === -1) {
-		return res.status(403).send({
+	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
+		res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized'
 		});
 	}
