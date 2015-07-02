@@ -1,31 +1,47 @@
-<section data-ng-controller="ViewFormController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="form.title"> Form Submissions</h1>
-	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == form.user._id">
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}">
-			View Public Form
-		</a>
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}/submissions">
-			View Form Submissions
-		</a>
+<section data-ng-controller="ViewSubmissionController" data-ng-init="findAll()">
+	<div class="page-header row" style="padding-bottom: 0px;">
+		<div class="col-xs-9">
+			<h1 data-ng-bind="form.title" style="margin-bottom: 0px;"></h1> <small>Submissions </small>
+		</div>
+		<div class="col-xs-3">
+			<small class=" pull-right">			
+				<a class="btn btn-default" href="/#!/forms/{{form._id}}" disabled="form.isLive">
+					View Live Form 
+					<i class="status-light status-light-on fa fa-dot-circle-o fa-3" ng-show="form.isLive"></i>
+					<i class="status-light status-light-off fa fa-circle-o fa-3" ng-hide="form.isLive"></i>
+				</a>
+			</small>
+		</div>
 	</div>
 	<div class="row">
-		<span class="col-md-5" data-ng-bind="form"></span>
+
+		<table class="table table-striped col-xs-7">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th data-ng-repeat="(key, val) in submissions[0].form_fields">
+						{{key}}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="submission in submissions">
+					<td>{{$index+1}}</td>
+					<td data-ng-repeat="(key, val) in submission.form_fields">
+						{{value}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a data-ng-repeat="submission in submissions" data-ng-href="#!/forms/{{form._id}}/admin" class="list-group-item">
+			<small class="list-group-item-text">
+				Created on
+				<span data-ng-bind="submission.created | date:'mediumDate'"></span>
+				by
+				<span data-ng-bind="form.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="submission.title"></h4>
+			
+		</a>
 	</div>
-	<small>
-		<em class="text-muted">
-			Created on 
-			<span data-ng-bind="form.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="form.admin.displayName"></span>
-		</em>
-	</small>
-	<!-- <p class="lead" data-ng-bind="form.content"></p> -->
 </section>

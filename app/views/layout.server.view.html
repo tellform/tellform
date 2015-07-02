@@ -38,6 +38,8 @@
 	{% for cssFile in cssFiles %}
 		<link rel="stylesheet" href="{{cssFile}}">
 	{% endfor %}
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
 
 	<!-- HTML5 Shim -->
 	<!--[if lt IE 9]>
@@ -45,12 +47,12 @@
 	<![endif]-->
 </head>
 
-<body class="ng-cloak" >
+<body ng-cloak>
 	<header data-ng-include="'/modules/core/views/header.client.view.html'"></header>
 	<section class="content">
-		<section class="container">
+		<!-- <section class="container"> -->
 			{% block content %}{% endblock %}
-		</section>
+		<!-- </section> -->
 	</section>
 
 	<!--Embedding The User Object-->

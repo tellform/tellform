@@ -8,29 +8,27 @@ var mongoose = require('mongoose'),
 	Form = mongoose.model('Form'),
 	FormSubmission = mongoose.model('FormSubmission'),
 	pdfFiller = require( 'pdffiller' ),
-	PDFParser = require('pdf2json/pdfparser'),
 	config = require('../../config/config'),
 	fs = require('fs-extra'),
 	async = require('async'),
+	path = require('path'),
 	_ = require('lodash');
 
 /**
- * Create a new form manually
+ * Create a new form
  */
 exports.create = function(req, res) {
 	var form = new Form(req.body);
 	form.admin = req.user;
 
 	form.save(function(err) {
-
 		if (err) {
 			console.log(err);
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-
-			return res.json(form);
+			res.json(form);
 		}
 	});
 };
@@ -38,23 +36,29 @@ exports.create = function(req, res) {
 /**
  * Upload PDF 
  */
-exports.uploadPDF = function(req, res) {
-	var parser = new PDFParser(),
-		pdfFile = req.files.file;
+exports.uploadPDF = function(files, user, cb) {
+	var _user = JSON.parse(''+user);
+	console.log(_user.username);
+	console.log(config.tmpUploadPath);
 
+<<<<<<< HEAD
 	// console.log(pdfFile);
 
 	var form = Form.findById(req.body.form._id);
 	// console.log(req.files);
+=======
+	if(files) { 
 
-	if (req.files) { 
-		
+		console.log('inside uploadPDF');
+		console.log(files.file[0]);
+		var pdfFile = files.file[0];
+>>>>>>> dev_working
+
 		if (pdfFile.size === 0) {
-			return res.status(400).send({
-				message: 'Hey, first would you select a file?'
-			});
+			throw new Error('Files uploaded are EMPTY');
 		}
 		fs.exists(pdfFile.path, function(exists) { 
+<<<<<<< HEAD
 			console.log(pdfFile.path);
 
 			fs.open(pdfFile.path,'r',function(err,fd){
@@ -65,12 +69,40 @@ exports.uploadPDF = function(req, res) {
 			    }
 			    return res.status(200); 
 			});
-		}); 
-	} 
+=======
+			//If file exists move to user's tmp directory
+			if(exists) { 
 
-	return res.status(400).send({
-		message: 'FILE NOT UPLOADED'
-	});
+				var newDestination = path.join(config.tmpUploadPath, _user.username);
+			    var stat = null;
+			    try {
+			        stat = fs.statSync(newDestination);
+			    } catch (err) {
+			        fs.mkdirSync(newDestination);
+			    }
+			    if (stat && !stat.isDirectory()) {
+			    	console.log('Directory cannot be created');
+			        throw new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"');
+			    }
+			    
+			    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
+					if (err) {
+						throw new Error(err.message);
+					}
+					pdfFile.path = path.join(newDestination, pdfFile.name);
+
+					return cb(pdfFile);
+				});				
+
+			} else { 
+				throw new Error('Did NOT get your file!');
+			} 
+>>>>>>> dev_working
+		}); 
+	}else {
+		throw new Error('File NOT uploaded');
+	}
+
 };
 
 /**
@@ -95,8 +127,8 @@ exports.createSubmission = function(req, res) {
 	submission.form_fields = req.body.form_fields;
 	submission.title = req.body.title;
 	submission.timeElapsed = req.body.timeElapsed;
+	console.log(req.body);
 	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
 
 	if (form.isGenerated){
 		fdfTemplate = form.convertToFDF();
@@ -108,28 +140,22 @@ exports.createSubmission = function(req, res) {
 		}
 	}
 
-	fdfData = pdfFiller.fillFdfTemplate(fdfTemplate, submission.form_fields, null);
-
-	submission.fdfData = fdfData;
-
-	//Create new file
-	// pdfFiller.fillForm( form.pdf.path, config.pdfUploadPath+form.title+'/'+form.title+'_'+Date.now()+'_submission.pdf', fdfData, function() { 
-		// console.log('\n\n\n fdfData');
-		// console.log(fdfData);
-		// console.log('\n\n\n :\n');
-		// console.log(req.body);
+	if(form.autofillPDFs){
+		fdfData = pdfFiller.fillFdfTemplate(fdfTemplate, submission.form_fields, null);
+		submission.fdfData = fdfData;
+	}
 
 	submission.save(function(err){
 		if (err) {
 			console.error(err);
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			return res.status(200);
+			console.log('Form Submission CREATED');
+			res.status(200).send('Form submission successfully saved');
 		}            
 	});	
-	// });
 };
 
 
@@ -139,13 +165,15 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 
-	FormSubmission.find({ form: req.form }).exec(function(err, submissions) {
+	FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, submissions) {
 		if (err) {
-			return res.status(400).send({
+			console.log(err);
+			res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			return res.json(submissions);
+			console.log('hello');
+			res.json(submissions);
 		}
 	});
 };
@@ -163,12 +191,12 @@ exports.update = function(req, res) {
 	form.save(function(err) {
 		if (err) {
 			console.log(err);
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			console.log('updated form');
-			return res.json(form);
+			res.json(form);
 		}
 	});
 };
@@ -178,31 +206,41 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 	var form = req.form;
-
-	form.remove(function(err) {
+	console.log('deleting form');
+	Form.remove({_id: form._id}, function(err) {
 		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+			res.status(500).send({
+				message: err.message
 			});
 		} else {
-			return res.status(200);
-			// res.json(form);
+			console.log('Form successfully deleted');
+			res.status(200).send('Form successfully deleted');
 		}
 	});
 };
 
 /**
+<<<<<<< HEAD
  * Get List of Forms
  */
 exports.list = function(req, res) {
 	Form.find().sort('-created').populate('admin').exec(function(err, forms) {
+=======
+ * Get All of Users' Forms
+ */
+exports.list = function(req, res) {
+	//Allow 'admin' user to view all forms
+	var searchObj = {admin: req.user};
+	if(req.user.isAdmin()) searchObj = {};
+
+	Form.find({}).sort('-created').populate('admin').exec(function(err, forms) {
+>>>>>>> dev_working
 		if (err) {
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(forms);
-			return res.json(forms);
+			res.json(forms);
 		}
 	});
 };
@@ -214,26 +252,48 @@ exports.list = function(req, res) {
 exports.formByID = function(req, res, next, id) {
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(400).send({
+		res.status(400).send({
 			message: 'Form is invalid'
 		});
 	}
 
 	Form.findById(id).populate('admin').exec(function(err, form) {
-		if (err) return next(err);
-		if (!form) {
-			return res.status(404).send({
+		if (err) {
+			return next(err);
+		} else if (!form || form === null) {
+			res.status(404).send({
 				message: 'Form not found'
 			});
 		}
+		else {
+			if(!form.admin){
+				form.admin = req.user;
+				form.save(function(err) {
+					if (err) {
+						console.log(err);
+						res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						//Remove sensitive information from User object
+						form.admin.password = null;
+						form.admin.created = null;
+						form.admin.salt = null;
 
-		//Remove sensitive information from User object
-		form.admin.password = null;
-		form.admin.created = null;
-		form.admin.salt = null;
+						req.form = form;
+						next();
+					}
+				});
+			}
 
-		req.form = form;
-		next();
+			//Remove sensitive information from User object
+			form.admin.password = null;
+			form.admin.created = null;
+			form.admin.salt = null;
+
+			req.form = form;
+			next();
+		}
 	});
 };
 
@@ -243,14 +303,9 @@ exports.formByID = function(req, res, next, id) {
 exports.hasAuthorization = function(req, res, next) {
 
 	var form = req.form;
-
-	// console.log('\n\n\nreq.form:\n');
-	// console.log(form);
-	// console.log('req.user.id: '+req.user.id);
-
-	if (req.form.admin.id !== req.user.id) {
-		return res.status(403).send({
-			message: 'User is not authorized'
+	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
+		res.status(403).send({
+			message: 'User '+req.user.username+' is not authorized'
 		});
 	}
 	next();

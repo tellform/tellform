@@ -4,13 +4,45 @@
 angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
 
+<<<<<<< HEAD
 		// Users state routing
 		$stateProvider.
+=======
+
+	var checkLoggedin = function($q, $timeout, $location, User, Auth) {
+      var deferred = $q.defer();
+
+      console.log(Auth.getUserState);
+
+      if (Auth.currentUser && Auth.currentUser.email) {
+        $timeout(deferred.resolve);
+      }
+      else {
+        Auth.currentUser = User.getCurrent(function() {
+          Auth.login();
+          $timeout(deferred.resolve);
+        },
+        function() {
+          Auth.logout();
+          $timeout(deferred.reject);
+          $location.path('/login');
+        });
+      }
+
+      return deferred.promise;
+    };
+
+	// Users state routing
+	$stateProvider.
+>>>>>>> dev_working
 		state('profile', {
 			// parent: 'restricted',
 			// data: {
 			// 	roles: ['user', 'admin'],
 			// },
+			resolve: {
+          		loggedin: checkLoggedin
+        	},
 			url: '/settings/profile',
 			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
 		}).
@@ -22,6 +54,9 @@ angular.module('users').config(['$stateProvider',
 			// data: {
 			// 	roles: ['user', 'admin'],
 			// },
+			resolve: {
+	          	loggedin: checkLoggedin
+	        },
 			url: '/settings/password',
 			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
 		}).
@@ -30,12 +65,19 @@ angular.module('users').config(['$stateProvider',
 			// data: {
 			// 	roles: ['user', 'admin'],
 			// },
+			resolve: {
+	          	loggedin: checkLoggedin
+	        },
 			url: '/settings/accounts',
 			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
 		}).
 
 		state('signup', {
 			url: '/signup',
+			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
+		}).
+		state('signup-success', {
+			url: '/signup-success',
 			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
 		}).
 		state('signin', {

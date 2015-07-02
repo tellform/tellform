@@ -11,17 +11,22 @@ function validateFormFieldType(value) {
   if (!value || typeof myVar !== 'string' ) { return false; }
 
   var validTypes = [
-        'textfield',
-        'email',
-        'url',
-        'textarea',
-        'checkbox',
-        'date',
-        'dropdown',
-        'hidden',
-        'password',
-        'radio'
-    ];
+    'textfield',
+    'textarea',
+    'statement',
+    'email',
+    'legal',
+    'url',
+    'number',
+    'filefield',
+    'radio',
+    'checkbox',
+    'date',
+    'dropdown',
+    'hidden',
+    'password'
+  ];
+
   if (validTypes.indexOf(value) > -1) { 
     return true;
   }
@@ -49,7 +54,7 @@ var FormFieldSchema = new Schema({
 	},
 	required: {
 		type: Boolean,
-		default: false,
+		default: true,
 	},
 	disabled: {
 		type: Boolean,

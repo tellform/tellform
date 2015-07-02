@@ -96,34 +96,35 @@ module.exports = function(db) {
 	// Setting the app router and static folder
 	app.use(express.static(path.resolve('./public')));
 
+	var formCtrl = require('../app/controllers/forms.server.controller');
 	// Setting the pdf upload route and folder
 	app.use(multer({ dest: config.tmpUploadPath,
 		rename: function (fieldname, filename) {
 		    return Date.now();
 		},
-		// changeDest: function(dest, req, res) {
-		// 	console.log(req.body.form);
-
-		//     var newDestination = dest + req.body.form.title;
-		//     var stat = null;
-		//     try {
-		//         stat = fs.statSync(newDestination);
-		//     } catch (err) {
-		//         fs.mkdirSync(newDestination);
-		//     }
-		//     if (stat && !stat.isDirectory()) {
-		//     	console.log('Directory cannot be created');
-		//         throw new Error('Directory cannot be created because an inode of a different type exists at "' + dest + '"');
-		//     }
-		//     return newDestination;
-		// },
 		onFileUploadStart: function (file) {
 			//Check to make sure we can only upload images and pdfs
 		  	console.log(file.originalname + ' is starting ...');
 		},
+<<<<<<< HEAD
 		onFileUploadComplete: function (file) {
 		  	console.log(file.fieldname + ' has been uploaded to: ' + file.path);
 		  	// done=true;
+=======
+		onFileUploadComplete: function (file, req, res) {
+			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
+			console.log(req.body.user);
+			try{
+				formCtrl.uploadPDF(req.files, req.body.user, function(_file){
+					console.log(_file.filename + ' uploaded to  ' + _file.path);
+					res.status(200).send(_file);
+				});
+			}catch(err) {
+				res.status(500).send({
+					message: err.message
+				});
+			}
+>>>>>>> dev_working
 		}
 	}));
 

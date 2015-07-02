@@ -12,3 +12,21 @@
 	right: 10px;
 	position: absolute;
 }
+
+section.auth {
+	margin-top: 5em;
+}
+	section.auth > h3{
+		font-size: 3em;
+		font-weight: 500;
+		color: #777;
+	}
+
+	section.auth.signup-view > h3 {
+		font-size: 4.4em;
+		padding-bottom: 0.5em;
+	}
+
+	section.auth.signup-view.success > h3 {
+		padding-bottom: 1.2em;
+	}

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="./modules/forms/css/form.css">
+
 <section data-ng-controller="EditFormController">
 	<div ng-if="isNewForm">
 		<h1>Create your form</h1> <br>
@@ -133,7 +135,7 @@
 								Delete
 							</button>
 
-							<button type="button" ng-if="form.pdfLoading" title="Abort ongoing upload" class="btn btn-default" ng-click="cancelUpload()">
+							<button type="button" ng-if="pdfLoading" title="Abort ongoing upload" class="btn btn-default" ng-click="cancelUpload()">
 								<i class="glyphicon glyphicon-ban-circle"></i> 
 								Cancel
 							</button>
@@ -190,12 +192,14 @@
 
 	        <br><br>
 	        <div class="row">
-	        	<div class="col-sm-offset-4 col-sm-2">
+	        	<div class="col-sm-offset-3 col-sm-2">
 		        	<button class="btn btn-primary btn-large" type="button" ng-click="createOrUpdate()"><i class="icon-arrow-left icon-white"></i> Save Changes</button>
 		        </div>
-		        <div class="col-sm-2">
-		            <button class="btn btn-primary" type="button" ng-click="previewOn()"><i class="icon-eye-open icon-white"></i> Preview Form</button>
-					<!-- <button class="btn btn-danger right" type="button" ng-click="reset()"><i class="icon-refresh icon-white"></i> Reset</button> -->
+		        <div class="col-sm-1">
+		            <button class="btn btn-primary" type="button" ng-data-href="#!/forms/{{form._id}}/admin"><i class="icon-eye-open icon-white"></i> Cancel</button>
+				</div>
+		        <div class="col-sm-1  col-sm-offset-1">
+		            <button class="btn btn-secondary" type="button" ng-click="previewOn()"><i class="icon-eye-open icon-white"></i> Preview Form</button>
 				</div>
 	        </div>
 

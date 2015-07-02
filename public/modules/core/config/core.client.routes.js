@@ -12,6 +12,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			url: '/',
 			templateUrl: 'modules/core/views/home.client.view.html'
 		});
+<<<<<<< HEAD
 		// state('restricted', {
 		//   	'abstract': true,
 		// 	resolve: {
@@ -22,5 +23,13 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		// 		]
 		// 	}
 		// });
+=======
+
+		$urlRouterProvider.otherwise( function($injector) {
+		  var $state = $injector.get('$state');
+		  $state.go('home');
+		});
+
+>>>>>>> dev_working
 	}
 ]);

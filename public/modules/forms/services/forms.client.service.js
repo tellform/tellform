@@ -8,14 +8,7 @@ angular.module('forms').factory('Forms', ['$resource',
 		}, {
 			'query' : {
 				method: 'GET', 
-				isArray: false,
-				// "transformResponse": function (data) {
-			 //        var _data = JSON.parse(data);
-			 //        var _pdf = JSON.parse(data).pdf;
-
-			 //        _data.pdf = _pdf;
-			 //        return _data;
-			 //    }
+				isArray: true,
 			},
 			'update': {
 				method: 'PUT'

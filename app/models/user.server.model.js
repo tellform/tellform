@@ -144,4 +144,16 @@ UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
 	});
 };
 
+/**
+ * Function to check if user has Admin priviledges
+ */
+UserSchema.methods.isAdmin = function() {
+
+	if(this.roles.indexOf('admin') !== -1){
+		return true;
+	}
+	return false;
+};
+
+
 mongoose.model('User', UserSchema);

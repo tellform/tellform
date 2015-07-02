@@ -10,9 +10,8 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
-	fs = require('fs-extra');
-
-var Field = mongoose.model('Field', FieldSchema);
+	fs = require('fs-extra'),
+	Field = mongoose.model('Field', FieldSchema);
 
 
 /**
@@ -23,11 +22,10 @@ var FormSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	// type: {
-	// 	type: String,
-	// 	default: 'template',
-	// 	enum: ['submission', 'template']
-	// },
+	lastModified: {
+		type: Date,
+		default: Date.now
+	},
 	title: {
 		type: String,
 		default: '',
@@ -39,7 +37,7 @@ var FormSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	form_fields: [Schema.Types.Mixed],
+	form_fields: [{type: Schema.Types.Mixed}],
 
 	submissions: [{
 		type: Schema.Types.ObjectId,
@@ -57,9 +55,17 @@ var FormSchema = new Schema({
 	pdfFieldMap: {
 		type: Schema.Types.Mixed
 	},
+	hideFooter: {
+		type: Boolean,
+		default: true,
+	},
 	isGenerated: {
 		type: Boolean,
 		default: false,
+	},
+	isLive: {
+		type: Boolean,
+		default: true,
 	},
 	autofillPDFs: {
 		type: Boolean,
@@ -67,10 +73,18 @@ var FormSchema = new Schema({
 	},
 });
 
+<<<<<<< HEAD
 //Move PDF to permanent location after new PDF is uploaded
+=======
+//Update lastModified everytime we save
 FormSchema.pre('save', function (next) {
-	// console.log(this.pdf);
-	// debugger;
+	this.lastModified = Date.now();
+	next();
+});
+
+//Move PDF to permanent location after new template is uploaded
+>>>>>>> dev_working
+FormSchema.pre('save', function (next) {
 
 	if(this.pdf && this.isModified('pdf')){
 		console.log('Relocating PDF');
@@ -111,15 +125,31 @@ FormSchema.pre('save', function (next) {
 	}
 });
 
+//Delete template PDF of current Form
+FormSchema.pre('remove', function (next) {
+	if(this.pdf){
+		//Delete template form
+		fs.unlink(this.pdf.path, function(err){
+			if (err) throw err;
+		  	console.log('successfully deleted', this.pdf.path);
+		});
+	}
+});
+
 //Autogenerate FORM from PDF if 'isGenerated' flag is 'true'
 FormSchema.pre('save', function (next) {
-	var field; 
+	var field, _form_fields; 
 	
 	if(this.isGenerated && this.pdf){
 
 		var _typeConvMap = {
+			'Multiline': 'textarea',
 			'Text': 'textfield',
-			'Button': 'checkbox'
+			'Button': 'checkbox',
+			'Choice': 'radio',
+			'Password': 'password',
+			'FileSelect': 'filefield',
+			'Radio': 'radio'
 		};
 
 		var that = this;
@@ -137,14 +167,27 @@ FormSchema.pre('save', function (next) {
 						field.fieldType = _typeConvMap[ field.fieldType+'' ];
 					}
 
+<<<<<<< HEAD
 					//Set field defaults
 					field.created = Date.now();
+=======
+>>>>>>> dev_working
 					field.fieldValue = '';
+					field.created = Date.now();
 					field.required = true;
-        			field.disabled  = false;
+    				field.disabled  = false;
 
 					// field = new Field(field);
-					// field.save()
+					// field.save(function(err) {
+					// 	if (err) {
+					// 		console.error(err.message);
+					// 		throw new Error(err.message);
+					// 		});
+					// 	} else {
+					// 		_form_fields[i] = this;
+					// 	}
+					// });
+					_form_fields[i] = field;
 				}
 
 				console.log('NEW FORM_FIELDS: ');
@@ -182,6 +225,5 @@ FormSchema.methods.convertToFDF = function (cb) {
 
 	return jsonObj;
 };
-
 
 mongoose.model('Form', FormSchema);

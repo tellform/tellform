@@ -1,31 +1,93 @@
-<section data-ng-controller="ViewFormController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="form.title"></h1>
+<section data-ng-controller="ViewFormController" data-ng-init="findOne()" class="container admin-form">
+	<div class="page-header row" style="padding-bottom: 0px;">
+		<div class="col-xs-9">
+			<h1 data-ng-bind="form.title" style="margin-bottom: 0px;"></h1>
+		</div>
+		<div class="col-xs-3">
+			<small class=" pull-right">			
+				<a class="btn btn-default" href="/#!/forms/{{form._id}}">
+					View <span ng-show="form.isLive">Live</span> <span ng-hide="form.isLive">Preview</span> Form
+					<i class="status-light status-light-on fa fa-dot-circle-o" ng-show="form.isLive"></i>
+					<i class="status-light status-light-off fa fa-circle-o" ng-hide="form.isLive"></i>
+					<!-- <i class="fa fa-sign-out"></i> -->
+				</a>
+			</small>
+		</div>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == form.user._id">
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}">
-			View Public Form
-		</a>
-		<a class="btn btn-primary" href="/#!/forms/{{form._id}}/submissions">
-			View Form Submissions
-		</a>
+
+	<div class="row">
+		<div class="col-xs-8" ng-if="!viewSubmissions">
+			<p ng-show="form.form_fields.length == 0">No fields added yet.</p>
+		        <accordion class="col-xs-10" close-others="accordion.oneAtATime">
+		            <accordion-group heading="{{field.title}} (is a {{field.fieldType}})" ng-repeat="field in form.form_fields">
+		            </accordion-group>
+		         </accordion>
+			</p>
+		</div>
+		<div class="submissions-table col-xs-8" ng-if="viewSubmissions">
+			<table class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th data-ng-repeat="(key, value) in submissions[0].form_fields">
+							{{value.title}}
+						</th>
+						<th>
+							Time Elapsed
+						</th>
+						<th>
+							Date Submitted (UTC)
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="submission in submissions">
+						<th class="scope">{{$index+1}}</th>
+						<td data-ng-repeat="(key, value) in submission.form_fields">
+							{{value.fieldValue}}
+						</td>
+						<td>
+							{{submission.timeElapsed}}
+						</th>
+						<td>
+							{{submission.created | date:'yyyy-MM-dd HH:mm:ss'}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+		<div class="col-xs-3 col-xs-offset-1 container text-right form-controls" data-ng-show="authentication.user._id == form.user._id">
+			<div class="row">
+				<a class="col-xs-12 btn btn-default" href="/#!/forms/{{form._id}}/edit">
+					<i class="glyphicon glyphicon-edit"></i> Edit Form
+				</a>
+			</div>
+			<div class="row">
+				<a class="col-xs-12 btn btn-danger" data-ng-click="remove();">
+					<i class="glyphicon glyphicon-trash"></i> Delete Form
+				</a>
+			</div>
+			<div class="row">
+				<a class="col-xs-12 btn btn-default" data-ng-click="showSubmissions();" ng-hide="viewSubmissions">
+					View Form Submissions
+				</a>
+				<a class="col-xs-12 btn btn-primary" data-ng-click="hideSubmissions();" ng-show="viewSubmissions">
+					Back to Main View
+				</a>
+			</div>
+		</div>
 	</div>
 	<div class="row">
-		<span class="col-md-5" data-ng-bind="form"></span>
+		<small class="col-xs-12">
+			<em class="text-muted">
+				Created on 
+				<span data-ng-bind="form.created | date:'mediumDate'"></span>
+				by
+				<span data-ng-bind="form.admin.displayName"></span>
+			</em>
+		</small>
 	</div>
-	<small>
-		<em class="text-muted">
-			Created on 
-			<span data-ng-bind="form.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="form.admin.displayName"></span>
-		</em>
-	</small>
 	<!-- <p class="lead" data-ng-bind="form.content"></p> -->
 </section>
