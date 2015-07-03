@@ -5,15 +5,11 @@ angular.module('forms').service('FormFields', [
 		this.fields = [
 		    {
 		        name : 'textfield',
-		        value : 'Textfield'
+		        value : 'Short Text'
 		    },
 		    {
 		        name : 'email',
 		        value : 'E-mail'
-		    },
-		    {
-		        name : 'password',
-		        value : 'Password'
 		    },
 		    {
 		        name : 'radio',
@@ -29,7 +25,7 @@ angular.module('forms').service('FormFields', [
 		    },
 		    {
 		        name : 'textarea',
-		        value : 'Text Area'
+		        value : 'Long Text'
 		    },
 		    {
 		        name : 'checkbox',

@@ -8,16 +8,38 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
         $scope.form = CurrentForm.getForm();
         $scope.submissions = undefined;
         $scope.viewSubmissions = false;
+        $scope.table = {
+            masterChecker: true,
+            rows: []
+        };
 
+
+        //Table Functions
+        $scope.toggleAllCheckers = function(){
+            console.log('toggleAllCheckers');
+            for(var i=0; i<$scope.table.rows.length; i++){
+                table.rows[i].selected = $scope.table.masterChecker;
+            }
+        }
+        $scope.toggleObjSelection = function($event, description) {
+            $event.stopPropagation();
+           console.log('checkbox clicked');
+       }
+
+       $scope.rowClicked = function(obj) {
+           console.log('row clicked');
+           obj.selected = !obj.selected;
+       };
 
         //show submissions of Form
         $scope.showSubmissions = function(){
         	$scope.viewSubmissions = true;
-            if(!$scope.submissions){
+            if(!$scope.table.rows.length){
                 $http.get('/forms/'+$scope.form._id+'/submissions')
                     .success(function(data, status, headers){
                         console.log(data);
                         $scope.submissions = data;
+                        $scope.table.rows = data; 
                         console.log('form submissions successfully fetched');
                     })
                     .error(function(err){
@@ -27,6 +49,8 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
                 $http.get('/forms/'+$scope.form._id+'/submissions')
                     .success(function(data, status, headers){
                         $scope.submissions = data;
+                        $scope.table.rows = data;
+                        console.log($scope.table.rows);
                         console.log('form submissions successfully fetched');
                     })
                     .error(function(err){

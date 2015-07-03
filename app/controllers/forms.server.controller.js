@@ -138,21 +138,22 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 
-	if(_form.submissions.length){
-		res.json(_form.submissions);
-	}else{
-		FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, submissions) {
+	// if(_form.submissions.length){
+		// res.json(_form.submissions);
+	// }else{
+		FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, _submissions) {
 			if (err) {
 				console.log(err);
 				res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-				console.log('retrieved submissions for form');
-				res.json(submissions);
+				// _form.submissions = _submissions;
+				_form.update({ $set : { submissions: _submissions }});
+
 			}
 		});
-	}
+	// }
 };
 
 /**
@@ -185,7 +186,7 @@ exports.read = function(req, res) {
 /**
  * Update a form
  */
-exports.update = function(req, res) {
+exports.update = function(req, res) { 
 	console.log('in form.update()');
 
 	var form = req.form;
@@ -254,7 +255,7 @@ exports.formByID = function(req, res, next, id) {
 		});
 	}
 
-	Form.findById(id).populate('admin').exec(function(err, form) {
+	Form.findById(id).populate('admin', 'submissions').exec(function(err, form) {
 		if (err) {
 			return next(err);
 		} else if (!form || form === null) {
@@ -282,6 +283,8 @@ exports.formByID = function(req, res, next, id) {
 					}
 				});
 			}
+
+			console.log(form.submissions);
 
 			//Remove sensitive information from User object
 			form.admin.password = null;

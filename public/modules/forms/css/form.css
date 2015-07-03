@@ -12,7 +12,20 @@
 .admin-form .form-controls .row {
     padding: 5px;
 }
+.admin-form .page-header {
+    border: none;
+}
 
+/*Styles for admin view tabs */
+.admin-form .tab-content {
+    padding-top: 3em;
+}
+
+/*Style for edit fields tab*/
+.admin-form .tab-content .add-field {
+    border-right: 1px solid #ddd;
+    background-color: #ddd;
+}
 
 .status-light {
     padding-left:0.6em;

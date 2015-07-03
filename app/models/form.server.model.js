@@ -124,8 +124,7 @@ FormSchema.pre('save', function (next) {
 	if(this.isModified('form_fields')){
 		if(this.submissions.length){
 			for(var i=0; i<this.submissions.length; i++){
-				submission = submissions[i];
-				submission.form_fields = submission.form_fields.concat(_.difference(this.form_fields, this._previousFormFields));
+				this.submissions[i].form_fields = submission.form_fields.concat(_.difference(this.form_fields, this._previousFormFields));
 			}
 		}
 		this.form_fields = this._previousFormFields.concat(_.difference(this.form_fields, this._previousFormFields));
