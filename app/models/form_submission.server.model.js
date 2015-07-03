@@ -81,9 +81,10 @@ FormSubmissionSchema.pre('save', function (next) {
 	// debugger;
 	var fdfData, dest_filename, dest_path;
 	var that = this;
+	var _form = this.form;
 
-	Form.findById(that.form, function(err, _form){
-		if(err) next( new Error(err.mesasge) );
+	// Form.findById(that.form, function(err, _form){
+		// if(err) next( new Error(err.mesasge) );
 		
 		that.title = _form.title;
 		// console.log(_form);
@@ -96,7 +97,7 @@ FormSubmissionSchema.pre('save', function (next) {
 			this.pdfFilePath = dest_path;
 
 
-			pdfFiller.fillForm(_form.pdf.path, dest_path, this.fdfData, function(err){
+			pdfFiller.fillForm(_form.pdf.path, dest_path, that.fdfData, function(err){
 				console.log('fdfData: \n');
 				console.log(that.fdfData);
 
@@ -114,7 +115,7 @@ FormSubmissionSchema.pre('save', function (next) {
 			next();
 		}
 
-	});
+	// });
 
 });
 

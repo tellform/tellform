@@ -1,7 +1,14 @@
 {
-  "name": "meanjs",
-  "version": "0.3.2",
-  "description": "Fullstack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
+  "name": "MedForm",
+  "description": "PDF generated form builder",
+  "version": "0.0.2",
+  "homepage": "https://github.com/whitef0x0/medform",
+  "authors": [
+    "David Baldwynn <polydaic@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "appPath": "public/modules",
   "dependencies": {
     "bootstrap": "~3",
     "angular": "~1.2",
@@ -12,11 +19,14 @@
     "angular-ui-utils": "~0.1.1",
     "angular-ui-router": "~0.2.11",
     "angular-strap": "~2.2.1",
-    "angular-permission": "~0.3.0"
+    "angular-permission": "~0.3.0",
+    "restangular": "~1.5.1",
+    "fontawesome": "~4.3.0",
+    "ng-file-upload": "~5.0.9"
   },
   "resolutions": {
     "angular": "^1.2.21",
     "angular-resource": "~1.2",
-    "ng-file-upload": "~4.1.0"
+    "ng-file-upload": "~5.0.9"
   }
 }

@@ -4,7 +4,9 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
-	glob = require('glob');
+	glob = require('glob'),
+	bowerFiles = require('main-bower-files'),
+	path = require('path');
 
 /**
  * Load app configurations
@@ -53,11 +55,30 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 	return output;
 };
 
+module.exports.removeRootDir = function(files, root) {
+	return files.map(function(file) {
+		return file.replace(path.join(process.cwd(),root), '');
+	});
+};
+
+/**
+ * Get the app's bower dependencies
+ */
+module.exports.getBowerJSAssets = function() {
+	return this.removeRootDir(bowerFiles('**/**.js'), 'public/');
+};
+module.exports.getBowerCSSAssets = function() {
+	return this.removeRootDir(bowerFiles('**/**.css'), 'public/');
+};
+module.exports.getBowerOtherAssets = function() {
+	return this.removeRootDir(bowerFiles('**/!(*.js|*.css|*.less)'), 'public/');
+};
+
 /**
  * Get the modules JavaScript files
  */
 module.exports.getJavaScriptAssets = function(includeTests) {
-	var output = this.getGlobbedFiles(this.assets.lib.js.concat(this.assets.js), 'public/');
+	var output = this.getGlobbedFiles(this.assets.js, 'public/');
 
 	// To include tests
 	if (includeTests) {
@@ -71,6 +92,6 @@ module.exports.getJavaScriptAssets = function(includeTests) {
  * Get the modules CSS files
  */
 module.exports.getCSSAssets = function() {
-	var output = this.getGlobbedFiles(this.assets.lib.css.concat(this.assets.css), 'public/');
+	var output = this.getGlobbedFiles(this.assets.css, 'public/');
 	return output;
 };

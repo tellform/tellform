@@ -71,7 +71,8 @@ exports.createSubmission = function(req, res) {
 	var submission = new FormSubmission(),
 		form = req.form, 
 		fdfData,
-		fdfTemplate;
+		fdfTemplate, 
+		that = this;
 
 	submission.form = form;
 	submission.admin = req.user;
@@ -81,32 +82,54 @@ exports.createSubmission = function(req, res) {
 	console.log(req.body);
 	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-	if (form.isGenerated){
-		fdfTemplate = form.convertToFDF();
-	} else {
-		try {
-			fdfTemplate = pdfFiller.mapForm2PDF(form.convertToFDF(), form.pdfFieldMap);
-		} catch(err){
-			throw new Error(err.message);
-		}
-	}
-
 	if(form.autofillPDFs){
+		if (form.isGenerated){
+			fdfTemplate = form.generateFDFTemplate();
+		} else {
+			try {
+				fdfTemplate = pdfFiller.mapForm2PDF(form.generateFDFTemplate(), form.pdfFieldMap);
+			} catch(err){
+				res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			}
+		}
 		fdfData = pdfFiller.fillFdfTemplate(fdfTemplate, submission.form_fields, null);
 		submission.fdfData = fdfData;
 	}
 
-	submission.save(function(err){
-		if (err) {
-			console.error(err);
-			res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			console.log('Form Submission CREATED');
+	async.series([
+		function(callback){
+			submission.save(function(err){
+				if (err) {
+					callback(err);
+				} else {
+					callback(null);
+				}            
+			});	
+		},
+		function(callback){
+			//Add submission to Form.submissionns
+			form.submissions.push(submission);
+			
+			form.save(function(err){
+				if (err) {
+					callback(err);
+				} else {
+					callback(null);
+				}            
+			});	
+		},
+	], function(err, results) {
+			if(err){
+				res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			}
+			console.log(results);
+			console.log(that.form_fields);
 			res.status(200).send('Form submission successfully saved');
-		}            
-	});	
+		});
 };
 
 /**
@@ -115,17 +138,21 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 
-	FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, submissions) {
-		if (err) {
-			console.log(err);
-			res.status(500).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			console.log('hello');
-			res.json(submissions);
-		}
-	});
+	if(_form.submissions.length){
+		res.json(_form.submissions);
+	}else{
+		FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, submissions) {
+			if (err) {
+				console.log(err);
+				res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				console.log('retrieved submissions for form');
+				res.json(submissions);
+			}
+		});
+	}
 };
 
 /**
@@ -188,7 +215,7 @@ exports.delete = function(req, res) {
 	Form.remove({_id: form._id}, function(err) {
 		if (err) {
 			res.status(500).send({
-				message: err.message
+				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			console.log('Form successfully deleted');

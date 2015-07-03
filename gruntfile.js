@@ -18,39 +18,44 @@ module.exports = function(grunt) {
 			serverViews: {
 				files: watchFiles.serverViews,
 				options: {
-					livereload: true
+					livereload: true,
+					spawn: false
 				}
 			},
 			serverJS: {
 				files: watchFiles.serverJS,
-				tasks: ['jshint'],
+				tasks: ['newer:jshint'],
 				options: {
-					livereload: true
+					livereload: true,
+					spawn: false
 				}
 			},
 			clientViews: {
 				files: watchFiles.clientViews,
 				options: {
-					livereload: true
+					livereload: true,
+					spawn: false
 				}
 			},
 			clientJS: {
 				files: watchFiles.clientJS,
-				tasks: ['jshint'],
+				tasks: ['newer:jshint'],
 				options: {
-					livereload: true
+					livereload: true,
+					spawn: false
 				}
 			},
 			clientCSS: {
 				files: watchFiles.clientCSS,
-				tasks: ['csslint'],
+				tasks: ['newer:csslint'],
 				options: {
-					livereload: true
+					livereload: true,
+					spawn: false
 				}
 			},
 			mochaTests: {
 				files: watchFiles.mochaTests,
-				tasks: ['test:server'],
+				tasks: ['newer:test:server'],
 			}
 		},
 		jshint: {
@@ -171,7 +176,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('secure', ['env:secure', 'lint', 'concurrent:default']);
 
 	// Lint task(s).
-	grunt.registerTask('lint', ['jshint', 'csslint']);
+	grunt.registerTask('lint', ['newer:jshint', 'newer:csslint']);
 
 	// Build task(s).
 	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);

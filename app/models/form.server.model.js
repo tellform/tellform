@@ -172,50 +172,49 @@ FormSchema.pre('save', function (next) {
 					console.log('autogenerating form');
 					console.log(that.pdf.path);
 
-					try {
-						pdfFiller.generateFieldJson(that.pdf.path, function(_form_fields){
+					pdfFiller.generateFieldJson(that.pdf.path, function(err, _form_fields){
+						if(err){
+							next( new Error(err.message), null);
+						}
 
-							//Map PDF field names to FormField field names
-							for(var i = 0; i < _form_fields.length; i++){
-								var field = _form_fields[i];
+						//Map PDF field names to FormField field names
+						for(var i = 0; i < _form_fields.length; i++){
+							var field = _form_fields[i];
 
-								//Convert types from FDF to 'FormField' types
-								if(_typeConvMap[ field.fieldType+'' ]){
-									field.fieldType = _typeConvMap[ field.fieldType+'' ];
-								}
-
-								field.fieldValue = '';
-								field.created = Date.now();
-								field.required = true;
-			    				field.disabled  = false;
-
-								// field = new Field(field);
-								// field.save(function(err) {
-								// 	if (err) {
-								// 		console.error(err.message);
-								// 		throw new Error(err.message);
-								// 		});
-								// 	} else {
-								// 		_form_fields[i] = that;
-								// 	}
-								// });
-								_form_fields[i] = field;
+							//Convert types from FDF to 'FormField' types
+							if(_typeConvMap[ field.fieldType+'' ]){
+								field.fieldType = _typeConvMap[ field.fieldType+'' ];
 							}
 
-							console.log('NEW FORM_FIELDS: ');
-							console.log(_form_fields);
+							field.fieldValue = '';
+							field.created = Date.now();
+							field.required = true;
+		    				field.disabled  = false;
 
-							console.log('\n\nOLD FORM_FIELDS: ');
-							console.log(that.form_fields);
+							// field = new Field(field);
+							// field.save(function(err) {
+							// 	if (err) {
+							// 		console.error(err.message);
+							// 		throw new Error(err.message);
+							// 		});
+							// 	} else {
+							// 		_form_fields[i] = that;
+							// 	}
+							// });
+							_form_fields[i] = field;
+						}
 
-							that.form_fields = _form_fields;
-							callback();
-						});
-					} catch(err){
-						next( new Error(err.message) );
-					}
+						console.log('NEW FORM_FIELDS: ');
+						console.log(_form_fields);
+
+						console.log('\n\nOLD FORM_FIELDS: ');
+						console.log(that.form_fields);
+
+						that.form_fields = _form_fields;
+						callback(null, 'pdfFiller');
+					});
 				}	
-				callback(null,null);
+				callback(null, that);
 			}
 		], function(err, results) {
 			if(err){
@@ -223,10 +222,13 @@ FormSchema.pre('save', function (next) {
 					message: err.message
 				}));
 			}
-			next();
+			console.log(results);
+			console.log(that.form_fields);
+			next(results[1]);
 		});
+	}else{
+		next();
 	}
-	next();
 });
 
 //Autogenerate Form_fields from PDF if 'isGenerated' flag is set
@@ -297,7 +299,28 @@ FormSchema.pre('save', function (next) {
 // 	next();
 // });
 
-FormSchema.methods.convertToFDF = function (cb) {
+// FormSchema.methods.generateSubmissionsCSV = function (cb) {
+// 	if(this.submissions.length){
+// 		submissions = this.submissions
+// 	}else{
+// 		submissions = 
+// 	}
+	
+
+// 	_values.forEach(function(val){
+// 		if(val === true){
+// 			val = 'Yes';
+// 		}else if(val === false) {
+// 			val = 'Off';
+// 		}
+// 	});
+
+// 	var jsonObj = _.zipObject(_keys, _values);
+
+// 	return jsonObj;
+// };
+
+FormSchema.methods.generateFDFTemplate = function (cb) {
 	var _keys = _.pluck(this.form_fields, 'title'),
 		_values = _.pluck(this.form_fields, 'fieldValue');
 
@@ -313,5 +336,6 @@ FormSchema.methods.convertToFDF = function (cb) {
 
 	return jsonObj;
 };
+
 
 mongoose.model('Form', FormSchema);

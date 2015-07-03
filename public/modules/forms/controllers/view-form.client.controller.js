@@ -44,6 +44,7 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
 		// Return all user's Forms
 		$scope.findAll = function() {
 			$scope.forms = Forms.query();
+            console.log($scope.forms);
 		};
 
 		// Find a specific Form
