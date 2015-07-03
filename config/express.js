@@ -106,11 +106,6 @@ module.exports = function(db) {
 			//Check to make sure we can only upload images and pdfs
 		  	console.log(file.originalname + ' is starting ...');
 		},
-<<<<<<< HEAD
-		onFileUploadComplete: function (file) {
-		  	console.log(file.fieldname + ' has been uploaded to: ' + file.path);
-		  	// done=true;
-=======
 		onFileUploadComplete: function (file, req, res) {
 			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
 			console.log(req.body.user);
@@ -124,7 +119,6 @@ module.exports = function(db) {
 					message: err.message
 				});
 			}
->>>>>>> dev_working
 		}
 	}));
 

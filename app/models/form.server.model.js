@@ -73,9 +73,6 @@ var FormSchema = new Schema({
 	},
 });
 
-<<<<<<< HEAD
-//Move PDF to permanent location after new PDF is uploaded
-=======
 //Update lastModified everytime we save
 FormSchema.pre('save', function (next) {
 	this.lastModified = Date.now();
@@ -83,7 +80,6 @@ FormSchema.pre('save', function (next) {
 });
 
 //Move PDF to permanent location after new template is uploaded
->>>>>>> dev_working
 FormSchema.pre('save', function (next) {
 
 	if(this.pdf && this.isModified('pdf')){
@@ -167,11 +163,6 @@ FormSchema.pre('save', function (next) {
 						field.fieldType = _typeConvMap[ field.fieldType+'' ];
 					}
 
-<<<<<<< HEAD
-					//Set field defaults
-					field.created = Date.now();
-=======
->>>>>>> dev_working
 					field.fieldValue = '';
 					field.created = Date.now();
 					field.required = true;

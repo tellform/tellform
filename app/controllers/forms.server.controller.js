@@ -41,64 +41,45 @@ exports.uploadPDF = function(files, user, cb) {
 	console.log(_user.username);
 	console.log(config.tmpUploadPath);
 
-<<<<<<< HEAD
-	// console.log(pdfFile);
-
-	var form = Form.findById(req.body.form._id);
-	// console.log(req.files);
-=======
 	if(files) { 
 
 		console.log('inside uploadPDF');
 		console.log(files.file[0]);
 		var pdfFile = files.file[0];
->>>>>>> dev_working
 
 		if (pdfFile.size === 0) {
 			throw new Error('Files uploaded are EMPTY');
 		}
-		fs.exists(pdfFile.path, function(exists) { 
-<<<<<<< HEAD
-			console.log(pdfFile.path);
 
-			fs.open(pdfFile.path,'r',function(err,fd){
-			    if (err && err.code === 'ENOENT') { 
-			    	return res.status(400).send({
-						message: 'Did NOT get your file!'
-					});
-			    }
-			    return res.status(200); 
-			});
-=======
-			//If file exists move to user's tmp directory
-			if(exists) { 
+		//If file exists move to user's tmp directory
+		fs.open(pdfFile.path,'r',function(err,fd){
+		    if (err && err.code === 'ENOENT') { 
+		    	return res.status(400).send({
+					message: 'Did NOT get your file!'
+				});
+		    }
 
-				var newDestination = path.join(config.tmpUploadPath, _user.username);
-			    var stat = null;
-			    try {
-			        stat = fs.statSync(newDestination);
-			    } catch (err) {
-			        fs.mkdirSync(newDestination);
-			    }
-			    if (stat && !stat.isDirectory()) {
-			    	console.log('Directory cannot be created');
-			        throw new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"');
-			    }
-			    
-			    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
-					if (err) {
-						throw new Error(err.message);
-					}
-					pdfFile.path = path.join(newDestination, pdfFile.name);
+		    var stat = null;
+		    try {
+		        stat = fs.statSync(newDestination);
+		    } catch (err) {
+		        fs.mkdirSync(newDestination);
+		    }
+		    if (stat && !stat.isDirectory()) {
+		    	console.log('Directory cannot be created');
+		        throw new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"');
+		    }
+		    
+		    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
+				if (err) {
+					throw new Error(err.message);
+				}
+				pdfFile.path = path.join(newDestination, pdfFile.name);
 
-					return cb(pdfFile);
-				});				
-
-			} else { 
-				throw new Error('Did NOT get your file!');
-			} 
->>>>>>> dev_working
-		}); 
+				return cb(pdfFile);
+			});		
+		    return res.status(200); 
+		});
 	}else {
 		throw new Error('File NOT uploaded');
 	}
@@ -220,12 +201,6 @@ exports.delete = function(req, res) {
 };
 
 /**
-<<<<<<< HEAD
- * Get List of Forms
- */
-exports.list = function(req, res) {
-	Form.find().sort('-created').populate('admin').exec(function(err, forms) {
-=======
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
@@ -234,7 +209,6 @@ exports.list = function(req, res) {
 	if(req.user.isAdmin()) searchObj = {};
 
 	Form.find({}).sort('-created').populate('admin').exec(function(err, forms) {
->>>>>>> dev_working
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

@@ -4,11 +4,6 @@
 angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
 
-<<<<<<< HEAD
-		// Users state routing
-		$stateProvider.
-=======
-
 	var checkLoggedin = function($q, $timeout, $location, User, Auth) {
       var deferred = $q.defer();
 
@@ -34,7 +29,6 @@ angular.module('users').config(['$stateProvider',
 
 	// Users state routing
 	$stateProvider.
->>>>>>> dev_working
 		state('profile', {
 			// parent: 'restricted',
 			// data: {

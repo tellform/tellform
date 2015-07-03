@@ -74,61 +74,9 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
             }
         };
 
-<<<<<<< HEAD
-            //PDF Functions
-
-            $scope.cancelUpload = function(){
-                //TBD
-            };
-
-            $scope.removePDF = function(){
-                $scope.form.pdf = undefined;
-                $scope.form.isGenerated = false;
-                $scope.form.autofillPDFs = false;
-            };
-
-            $scope.uploadPDF = function(files) {
-
-                if (files && files.length) {
-                    for (var i = 0; i < files.length; i++) {
-                        var file = files[i];
-                        Upload.upload({
-                            url: '/upload/pdf',
-                            fields: {
-                                'user': $scope.form.admin,
-                                'form': $scope.form
-                            },
-                            file: file
-                        }).progress(function (evt) {
-                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                            $scope.log = 'progress: ' + progressPercentage + '% ' +
-                                        evt.config.file.name + '\n' + $scope.log;
-                        }).success(function (data, status, headers, config) {
-                            $scope.log = 'file ' + data.originalname + 'uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
-                            $scope.form.pdf = data;
-
-                            if(!$scope.$$phase) {
-                                $scope.$apply();
-                            }
-
-                            console.log($scope.log);
-                            console.log('$scope.pdf: '+$scope.pdf.name);
-                        });
-                    }
-                }
-            };
-
-            $scope.goToWithId = function(route, id) {
-                $state.transitionTo(route, { 'formId' : id }, { reload: true });
-            };
-
-            // Create new Form
-            $scope.createOrUpdate = function() {
-=======
         $scope.goToWithId = function(route, id) {
             $state.go(route, {'formId': id}, {reload: true});
         };
->>>>>>> dev_working
 
         // Create new Form
         $scope.createOrUpdate = function() {
@@ -136,15 +84,7 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
             if($scope.isNewForm){
                 // Create new Form object
                 var form = new Forms($scope.form);
-
-<<<<<<< HEAD
-                    form.$save(function(response) {
-
-                        console.log('create form');
-                        // console.log(response.pdf);
-=======
                 form.$save(function(response) {
->>>>>>> dev_working
 
                     console.log('form created');
                     // console.log(response.pdf);

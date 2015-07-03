@@ -22,11 +22,7 @@ module.exports = function(app) {
 		.get(forms.read)
 		.post(forms.createSubmission)
 		.put(users.requiresLogin, forms.hasAuthorization, forms.update)
-<<<<<<< HEAD
-		.delete(users.requiresLogin, forms.hasAuthorization,forms.delete);
-=======
 		.delete(users.requiresLogin, forms.hasAuthorization, forms.delete);
->>>>>>> dev_working
 
 	// Finish by binding the form middleware
 	app.param('formId', forms.formByID);
