@@ -5,9 +5,10 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
 
         $scope.isNewForm = false;
         $scope.pdfLoading = false;
-        var _current_upload = null;
-        $scope.log = '';
+
         $scope.form = {};
+        $scope.log = '';
+        var _current_upload = null;
 
         // Get current form if it exists, or create new one
         if($stateParams.formId){
@@ -24,12 +25,13 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
         $scope.cancelUpload = function(){
             _current_upload.abort();
             $scope.pdfLoading = false;
+            $scope.removePDF();
         };
 
         $scope.removePDF = function(){
             $scope.form.pdf = null;
-            $scope.isGenerated = false;
-            $scope.autofillPDFs = false;
+            $scope.form.isGenerated = false;
+            $scope.form.autofillPDFs = false;
 
             console.log('form.pdf: '+$scope.form.pdf+' REMOVED');
         };

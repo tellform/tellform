@@ -205,9 +205,10 @@ exports.listSubmissions = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
-	
+	console.log('in form.update()');
+
 	var form = req.form;
-	console.log(req.body.form);
+	// console.log(req.body.form);
 	form = _.extend(form, req.body.form);
 	form.admin = req.user;
 
