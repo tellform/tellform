@@ -15,25 +15,6 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 
 /**
- * Create a new form
- */
-exports.create = function(req, res) {
-	var form = new Form(req.body);
-	form.admin = req.user;
-
-	form.save(function(err) {
-		if (err) {
-			console.log(err);
-			res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.json(form);
-		}
-	});
-};
-
-/**
  * Upload PDF 
  */
 exports.uploadPDF = function(req, res, next) {
@@ -80,58 +61,6 @@ exports.uploadPDF = function(req, res, next) {
 	}else {
 		next(new Error('Uploaded files were NOT detected'));
 	}
-
-};
-
-// exports.uploadPDF = function(pdfFile, _user, cb) {
-// 	// console.log(_user.username);
-// 	// console.log(config.tmpUploadPath);
-
-
-// 	console.log('inside uploadPDF');
-// 	// console.log(pdfFile);
-
-// 	if (pdfFile.size === 0) {
-// 		cb(new Error('Files uploaded are EMPTY'), null);
-// 	}else {
-// 		fs.exists(pdfFile.path, function(exists) { 
-// 			//If file exists move to user's tmp directory
-// 			if(exists) { 
-
-// 				var newDestination = config.tmpUploadPath+""+_user.username;
-// 			    var stat = null;
-// 			    try {
-// 			        stat = fs.statSync(newDestination);
-// 			    } catch (err) {
-// 			        fs.mkdirSync(newDestination);
-// 			    }
-// 			    if (stat && !stat.isDirectory()) {
-// 			    	console.log('Directory cannot be created');
-// 			        cb(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'), null);
-// 			    }
-			    
-// 			    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
-// 					if (err) {
-// 						return cb(new Error(err.message), null);
-// 					}
-// 					pdfFile.path = path.join(newDestination, pdfFile.name);
-
-// 					return cb(null, pdfFile);
-// 				});				
-
-// 			} else { 
-// 				cb(new Error('Did NOT get your file!'), null);
-// 			} 
-// 		}); 
-// 	}
-
-// };
-
-/**
- * Show the current form
- */
-exports.read = function(req, res) {
-	res.json(req.form);
 };
 
 /**
@@ -180,7 +109,6 @@ exports.createSubmission = function(req, res) {
 	});	
 };
 
-
 /**
  * Get List of Submissions for a given Form
  */
@@ -200,6 +128,32 @@ exports.listSubmissions = function(req, res) {
 	});
 };
 
+/**
+ * Create a new form
+ */
+exports.create = function(req, res) {
+	var form = new Form(req.body);
+	form.admin = req.user;
+
+	form.save(function(err) {
+		if (err) {
+			console.log(err);
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(form);
+		}
+	});
+};
+
+
+/**
+ * Show the current form
+ */
+exports.read = function(req, res) {
+	res.json(req.form);
+};
 
 /**
  * Update a form

@@ -39,7 +39,7 @@
 							Date Submitted (UTC)
 						</th>
 						<th ng-if="form.autofillPDFs">
-							Generated PDf
+							Generated PDF
 						</th>
 					</tr>
 				</thead>
@@ -55,7 +55,7 @@
 						<td>
 							{{submission.created | date:'yyyy-MM-dd HH:mm:ss'}}
 						</td>
-						<td ng-if="form.autofillPDFs">
+						<td ng-if="submission.pdf">
 							<a href="{{submission.pdf.path}}">Generated PDF</a>
 						</td>
 					</tr>

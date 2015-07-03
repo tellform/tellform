@@ -2,6 +2,7 @@
 
 // Setting up route
 angular.module('forms').config(['$stateProvider',
+	
 	function($stateProvider) {
 		// Forms state routing
 		$stateProvider.
