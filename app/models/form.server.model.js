@@ -38,7 +38,13 @@ var FormSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	form_fields: [{type: Schema.Types.Mixed}],
+	form_fields: {
+		type: [Schema.Types.Mixed],
+		set: function(form_fields) {
+	      this._previousFormFields = this.form_fields;
+	      return form_fields;
+	    }
+	},
 
 	submissions: [{
 		type: Schema.Types.ObjectId,
@@ -96,7 +102,7 @@ FormSchema.pre('save', function (next) {
         fs.mkdirSync(newDestination);
     }
     if (stat && !stat.isDirectory()) {
-    	console.log('Directory cannot be created');
+    	// console.log('Directory cannot be created');
         next( new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"') );
     }else{
     	next();
@@ -113,6 +119,20 @@ FormSchema.pre('save', function (next) {
 	next();
 });
 
+//Concatenate submission and form's form_fields
+FormSchema.pre('save', function (next) {
+	if(this.isModified('form_fields')){
+		if(this.submissions.length){
+			for(var i=0; i<this.submissions.length; i++){
+				submission = submissions[i];
+				submission.form_fields = submission.form_fields.concat(_.difference(this.form_fields, this._previousFormFields));
+			}
+		}
+		this.form_fields = this._previousFormFields.concat(_.difference(this.form_fields, this._previousFormFields));
+	}
+	next();
+});
+
 //Move PDF to permanent location after new template is uploaded
 FormSchema.pre('save', function (next) {
 
@@ -121,7 +141,7 @@ FormSchema.pre('save', function (next) {
 		async.series([
 			function(callback){
 				if(that.isModified('pdf')){
-					console.log('about to move PDF');
+					// console.log('about to move PDF');
 
 					var new_filename = that.title.replace(/ /g,'')+'_template.pdf';
 
@@ -134,11 +154,11 @@ FormSchema.pre('save', function (next) {
 				        fs.mkdirSync(newDestination);
 				    }
 				    if (stat && !stat.isDirectory()) {
-				    	console.log('Directory '+newDestination+' cannot be created');
+				    	// console.log('Directory '+newDestination+' cannot be created');
 				        callback( new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"') );
 				    }
 
-					console.log('about to move PDF');
+					// console.log('about to move PDF');
 
 				    fs.move(that.pdf.path, path.join(newDestination, new_filename), function (err) {
 						if (err) {
@@ -148,9 +168,9 @@ FormSchema.pre('save', function (next) {
 						that.pdf.path = path.join(newDestination, new_filename);
 						that.pdf.name = new_filename;
 
-						console.log('\n\n PDF file:'+that.pdf.name+' successfully moved to: '+that.pdf.path);
+						// console.log('\n\n PDF file:'+that.pdf.name+' successfully moved to: '+that.pdf.path);
 
-						callback(null,null);
+						callback(null,'task1');
 					});
 				}
 				callback(null,null);
@@ -169,8 +189,8 @@ FormSchema.pre('save', function (next) {
 						'Radio': 'radio'
 					};
 
-					console.log('autogenerating form');
-					console.log(that.pdf.path);
+					// console.log('autogenerating form');
+					// console.log(that.pdf.path);
 
 					pdfFiller.generateFieldJson(that.pdf.path, function(err, _form_fields){
 						if(err){
@@ -204,17 +224,18 @@ FormSchema.pre('save', function (next) {
 							_form_fields[i] = field;
 						}
 
-						console.log('NEW FORM_FIELDS: ');
-						console.log(_form_fields);
+						// console.log('NEW FORM_FIELDS: ');
+						// console.log(_form_fields);
 
-						console.log('\n\nOLD FORM_FIELDS: ');
-						console.log(that.form_fields);
+						// console.log('\n\nOLD FORM_FIELDS: ');
+						// console.log(that.form_fields);
 
-						that.form_fields = _form_fields;
-						callback(null, 'pdfFiller');
+						that.form_fields.concat(_form_fields);
+						callback(null, 'task2');
 					});
-				}	
-				callback(null, that);
+				}else{
+					callback(null, 'task2');
+				}
 			}
 		], function(err, results) {
 			if(err){
@@ -222,9 +243,9 @@ FormSchema.pre('save', function (next) {
 					message: err.message
 				}));
 			}
-			console.log(results);
-			console.log(that.form_fields);
-			next(results[1]);
+			console.log('ending form save');
+			next();
+
 		});
 	}else{
 		next();
