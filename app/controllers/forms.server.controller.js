@@ -36,55 +36,96 @@ exports.create = function(req, res) {
 /**
  * Upload PDF 
  */
-exports.uploadPDF = function(files, user, cb) {
-	var _user = JSON.parse(''+user);
-	console.log(_user.username);
-	console.log(config.tmpUploadPath);
+exports.uploadPDF = function(req, res, next) {
 
-	if(files) { 
+	console.log('inside uploadPDF');
+	if(req.files){
+		var pdfFile = req.files.file;
+		var _user = req.user;
+		if (req.files.size === 0) {
+			next(new Error('File uploaded is EMPTY'));
+		}else if(req.files.size > 200000000){
+			next(new Error('File uploaded exceeds MAX SIZE of 200MB'));
+		}else {
+			fs.exists(pdfFile.path, function(exists) { 
+				//If file exists move to user's tmp directory
+				if(exists) { 
 
-		console.log('inside uploadPDF');
-		console.log(files.file[0]);
-		var pdfFile = files.file[0];
+					var newDestination = config.tmpUploadPath+_user.username;
+				    var stat = null;
+				    try {
+				        stat = fs.statSync(newDestination);
+				    } catch (err) {
+				        fs.mkdirSync(newDestination);
+				    }
+				    if (stat && !stat.isDirectory()) {
+				    	console.log('Directory cannot be created');
+				        next(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'));
+				    }
+				    
+				    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
+						if (err) {
+							next(new Error(err.message));
+						}
+						pdfFile.path = path.join(newDestination, pdfFile.name);
+						console.log(pdfFile.name + ' uploaded to ' + pdfFile.path);
+						res.status(200).send(pdfFile);
+					});				
 
-		if (pdfFile.size === 0) {
-			throw new Error('Files uploaded are EMPTY');
+				} else { 
+					next(new Error('Did NOT get your file!'));
+				} 
+			}); 
 		}
-
-		//If file exists move to user's tmp directory
-		fs.open(pdfFile.path,'r',function(err,fd){
-		    if (err && err.code === 'ENOENT') { 
-		    	return res.status(400).send({
-					message: 'Did NOT get your file!'
-				});
-		    }
-
-		    var stat = null;
-		    try {
-		        stat = fs.statSync(newDestination);
-		    } catch (err) {
-		        fs.mkdirSync(newDestination);
-		    }
-		    if (stat && !stat.isDirectory()) {
-		    	console.log('Directory cannot be created');
-		        throw new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"');
-		    }
-		    
-		    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
-				if (err) {
-					throw new Error(err.message);
-				}
-				pdfFile.path = path.join(newDestination, pdfFile.name);
-
-				return cb(pdfFile);
-			});		
-		    return res.status(200); 
-		});
 	}else {
-		throw new Error('File NOT uploaded');
+		next(new Error('Uploaded files were NOT detected'));
 	}
 
 };
+
+// exports.uploadPDF = function(pdfFile, _user, cb) {
+// 	// console.log(_user.username);
+// 	// console.log(config.tmpUploadPath);
+
+
+// 	console.log('inside uploadPDF');
+// 	// console.log(pdfFile);
+
+// 	if (pdfFile.size === 0) {
+// 		cb(new Error('Files uploaded are EMPTY'), null);
+// 	}else {
+// 		fs.exists(pdfFile.path, function(exists) { 
+// 			//If file exists move to user's tmp directory
+// 			if(exists) { 
+
+// 				var newDestination = config.tmpUploadPath+""+_user.username;
+// 			    var stat = null;
+// 			    try {
+// 			        stat = fs.statSync(newDestination);
+// 			    } catch (err) {
+// 			        fs.mkdirSync(newDestination);
+// 			    }
+// 			    if (stat && !stat.isDirectory()) {
+// 			    	console.log('Directory cannot be created');
+// 			        cb(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'), null);
+// 			    }
+			    
+// 			    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
+// 					if (err) {
+// 						return cb(new Error(err.message), null);
+// 					}
+// 					pdfFile.path = path.join(newDestination, pdfFile.name);
+
+// 					return cb(null, pdfFile);
+// 				});				
+
+// 			} else { 
+// 				cb(new Error('Did NOT get your file!'), null);
+// 			} 
+// 		}); 
+// 	}
+
+// };
 
 /**
  * Show the current form
@@ -164,9 +205,11 @@ exports.listSubmissions = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
-	
+	console.log('in form.update()');
+
 	var form = req.form;
-	form = _.extend(form, req.body);
+	// console.log(req.body.form);
+	form = _.extend(form, req.body.form);
 	form.admin = req.user;
 
 	form.save(function(err) {

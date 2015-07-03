@@ -83,16 +83,21 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
             if($scope.isNewForm){
                 // Create new Form object
                 var form = new Forms($scope.form);
+<<<<<<< HEAD
+                form.$save(function(response) {
+
+=======
 
                 $http.post('/forms', {form: $scope.form})
                 .success(function(data, status, headers){
+>>>>>>> dev_working
                     console.log('form created');
 
                     // Clear form fields
                     $scope.form = {};
                     // Redirect after save 
-                    $scope.goToWithId('viewForm', $scope.form._id);
-                }).error(function(errorResponse){
+                    $scope.goToWithId('viewForm', response._id);
+                }).error(function(err){
                     console.log(errorResponse.data.message);
                     $scope.error = errorResponse.data.message;
                 });

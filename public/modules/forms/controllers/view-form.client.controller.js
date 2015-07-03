@@ -34,12 +34,12 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
                     });
             }
             console.log($scope.submissions);
-        }
+        };
 
         //hide submissions of Form
         $scope.hideSubmissions = function(){
         	$scope.viewSubmissions = false;
-        }
+        };
 
 		// Return all user's Forms
 		$scope.findAll = function() {
@@ -56,11 +56,10 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
 
         // Remove existing Form
         $scope.remove = function() {
-            console.log('hello');
-            var form = CurrentForm.getForm()
-            if(!form){
-                form = $scope.form
-            }
+
+            var form = CurrentForm.getForm();
+            if(!form) form = $scope.form; 
+            
             $http.delete('/forms/'+$scope.form._id)
                 .success(function(data, status, headers){
                     console.log('form deleted successfully');

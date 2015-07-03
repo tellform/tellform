@@ -90,12 +90,11 @@ FormSubmissionSchema.pre('save', function (next) {
 
 		if(_form.autofillPDFs){
 
-			dest_filename = _form.title.trim()+'_submission_'+Date.now()+'.pdf';
+			dest_filename = _form.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';
 			dest_path = path.join(config.pdfUploadPath, dest_filename);
 
 			this.pdfFilePath = dest_path;
 
-			// console.log('autofillPDFs check');
 
 			pdfFiller.fillForm(_form.pdf.path, dest_path, this.fdfData, function(err){
 				console.log('fdfData: \n');
@@ -108,7 +107,7 @@ FormSubmissionSchema.pre('save', function (next) {
 					console.log('\n err.message: '+err.message);
 					next( new Error(err.message) );
 				}
-				console.log('Field data from Form: '+_form.title.trim()+' outputed to new PDF: '+dest_path);
+				console.log('Field data from Form: '+_form.title.replace(/ /g,'')+' outputed to new PDF: '+dest_path);
 				next();
 			});
 		} else {

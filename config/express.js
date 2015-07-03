@@ -107,19 +107,29 @@ module.exports = function(db) {
 		  	console.log(file.originalname + ' is starting ...');
 		},
 		onFileUploadComplete: function (file, req, res) {
+			console.log(file.originalname + ' uploaded to  ' + file.path);
 			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
-			console.log(req.body.user);
-			try{
-				formCtrl.uploadPDF(req.files, req.body.user, function(_file){
-					console.log(_file.filename + ' uploaded to  ' + _file.path);
-					res.status(200).send(_file);
-				});
-			}catch(err) {
-				res.status(500).send({
-					message: err.message
-				});
-			}
+			// res.status(200).send(file);
 		}
+		// 	console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
+		// 	console.log(req.body.user);
+		// 	console.log(req.user);
+		// 	var _user = JSON.parse(req.body.user);
+		// 	console.log(file)
+
+		// 	formCtrl.uploadPDF(file, _user, function(err, _file){
+		// 		if(err){
+		// 			console.log('\n\n ERROR: '+err.message)
+		// 			res.status(500).send({
+		// 				message: err.message
+		// 			});
+		// 		}else {
+		// 			console.log(_file.filename + ' uploaded to  ' + _file.path);
+		// 			res.status(200).send(_file);						
+		// 		}
+
+		// 	});
+		// }
 	}));
 
 	// CookieParser should be above session
