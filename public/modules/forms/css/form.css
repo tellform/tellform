@@ -21,6 +21,17 @@
     padding-top: 3em;
 }
 
+.admin-form .panel-heading {
+    background-color: #f1f1f1;
+}
+    .admin-form .panel-heading:hover {
+        background-color: #fff;
+        cursor: pointer;
+    }
+        .admin-form .panel-heading a:hover {
+            text-decoration: none;
+        }
+
 .current-fields .tool-panel > .panel-default:hover {
     border-color: #9d9d9d;
     cursor: pointer;

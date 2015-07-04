@@ -7,22 +7,33 @@ angular.module('forms').directive('editFormDirective', ['$http', '$timeout', 'ti
                 //Populate AddField with all available form field types
                 $scope.addField = {};
                 $scope.addField.types = FormFields.fields;
-                $scope.addField.new = $scope.addField.types[0].name;
-                $scope.addField.lastAddedID = 0;
+                // $scope.addField.new = $scope.addField.types[0].name;
+                $scope.addField.types.forEach(function(type){
+                    type.lastAddedID = 0;
+                    return type;
+                });
 
                 // accordion settings
                 $scope.accordion = {};
                 $scope.accordion.oneAtATime = true;
 
                 // create new field button click
-                $scope.addNewField = function(){
+                $scope.addNewField = function(fieldType){
 
                     // incr field_id counter
                     $scope.addField.lastAddedID++;
-
+                    var fieldTitle;
+                    for(var i = 0; i < $scope.addField.types.length; i++){
+                        console.log($scope.addField.types[i].name === fieldType);
+                        if($scope.addField.types[i].name === fieldType){
+                            $scope.addField.types[i].lastAddedID++;
+                            fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;  
+                            break;
+                        }
+                    }
                     var newField = {
-                        'title' : 'New field - ' + ($scope.addField.lastAddedID),
-                        'fieldType' : $scope.addField.new,
+                        'title' : fieldTitle,
+                        'fieldType' : fieldType,
                         'fieldValue' : '',
                         'required' : true,
                         'disabled' : false
@@ -38,8 +49,7 @@ angular.module('forms').directive('editFormDirective', ['$http', '$timeout', 'ti
                     for(var i = 0; i < $scope.form.form_fields.length; i++){
                         console.log($scope.form.form_fields[i].$$hashKey === hashKey);
                         if($scope.form.form_fields[i].$$hashKey === hashKey){
-                            $scope.form.form_fields.splice(i, 1);
-                                                
+                            $scope.form.form_fields.splice(i, 1);                      
                             break;
                         }
                     }

@@ -9,11 +9,11 @@ angular.module('forms').service('FormFields', [
 		    },
 		    {
 		        name : 'email',
-		        value : 'E-mail'
+		        value : 'Email'
 		    },
 		    {
 		        name : 'radio',
-		        value : 'Radio Buttons'
+		        value : 'Multiple Choice'
 		    },
 		    {
 		        name : 'dropdown',
@@ -30,6 +30,30 @@ angular.module('forms').service('FormFields', [
 		    {
 		        name : 'checkbox',
 		        value : 'Checkbox'
+		    },
+		    {
+		        name : 'legal',
+		        value : 'Legal'
+		    },
+		    {
+		        name : 'file',
+		        value : 'File Upload'
+		    },
+		    {
+		        name : 'rating',
+		        value : 'Rating'
+		    },
+		    {
+		        name : 'link',
+		        value : 'Link'
+		    },
+		    {
+		        name : 'scale',
+		        value : 'Opinion Scale'
+		    },
+		    {
+		        name : 'stripe',
+		        value : 'Payment' 
 		    },
 		];
 	}
