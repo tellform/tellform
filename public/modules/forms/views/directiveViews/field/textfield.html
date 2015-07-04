@@ -1,6 +1,6 @@
-<li class="textfield required active visible field row">
-    <div class="span2">{{field.title}}:</div>
-    <div class="span4">
+<div class="textfield field row">
+    <div class="col-xs-2 field-title">{{field.title}} </div>
+    <div class="col-xs-4 field-input">
 		<input type="text" 
 			ng-model="field.fieldValue" 
 			value="field.fieldValue" 
@@ -8,4 +8,4 @@
 			ng-disabled="field.disabled" changeFocus focus-up-id="focusUpButton" focus-down-id="focusDownButton">
         <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
     </div>
-</li>
+</div>

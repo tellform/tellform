@@ -1,86 +1,168 @@
-<div>
+<form class="config-form container">
     <div class="row">
-        <div class="col-sm-12">
-            <h3>Form PDF</h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <h5>Upload your PDF</h5>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="input-group ">
-                <div tabindex="-1" class="form-control file-caption">
-                    <span class="file-caption-ellipsis" ng-if="!form.pdf">…</span>
-                    <div class="file-caption-name" ng-if="form.pdf">
-                        {{form.pdf.originalname}}
-                    </div>
+        <div class="col-sm-6 container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>PDF Generation</h2>
                 </div>
-                <div class="input-group-btn">
-                    <button type="button"  ng-if="form.pdf" ng-click="removePDF();" title="Clear selected files" class="btn btn-danger fileinput-remove fileinput-remove-button">
-                        <i class="glyphicon glyphicon-trash"  ></i> 
-                        Delete
-                    </button>
+            </div>
 
-                    <button type="button" ng-if="pdfLoading" title="Abort ongoing upload" class="btn btn-default" ng-click="cancelUpload()">
-                        <i class="glyphicon glyphicon-ban-circle"></i> 
-                        Cancel
-                    </button>
+            <div class="row field">
+                <div class="field-title col-sm-6">
+                    <h5>Hide Form Footer?</h5>
+                </div>
 
-                    <div class="btn btn-success btn-file" ngf-select ngf-change="uploadPDF($files)" ng-if="!form.pdf"> 
-                        <i class="glyphicon glyphicon-upload"></i>
-                        Upload your PDF
+                <div class="field-input col-sm-6">
+
+                    <label>
+                        <input type="radio" data-ng-value="true" ng-model="form.hideFooter"  ng-required="true" />
+                        &nbsp;<span>Yes</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" data-ng-value="false" ng-model="form.hideFooter"  ng-required="true" />
+                        &nbsp;<span>No</span>
+                    </label>
+
+                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
+                </div>
+            </div>
+
+            <!-- autofillPDFs yes/no field -->
+            <div class="row field" ng-if="form.isGenerated">
+                <div class="field-title col-sm-6">
+                    <h5>Save Submissions as PDFs?</h5>
+                </div>
+
+                <div class="field-input col-sm-6">
+
+                    <label>
+                        <input type="radio" data-ng-value="true" ng-model="form.autofillPDFs"  ng-required="true" />
+                        &nbsp;<span>Yes</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" data-ng-value="false" ng-model="form.autofillPDFs"  ng-required="true" />
+                        &nbsp;<span>No</span>
+                    </label>
+
+                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
+                </div>
+            </div>
+
+            <!-- Upload PDF Field -->
+            <div class="row field" ng-if="form.autofillPDFs">
+                <div class="col-sm-6 field-title">
+                    <h5>Upload Your PDF Template</h5>
+                </div>
+                <div class="col-sm-6 field-input">
+                    <div class="input-group ">
+                        <div tabindex="-1" class="form-control file-caption">
+                            <span class="file-caption-ellipsis" ng-if="!form.pdf">…</span>
+                            <div class="file-caption-name" ng-if="form.pdf">
+                                {{form.pdf.originalname}}
+                            </div>
+                        </div>
+                        <div class="input-group-btn">
+                            <button type="button"  ng-if="form.pdf" ng-click="removePDF();" title="Clear selected files" class="btn btn-danger fileinput-remove fileinput-remove-button">
+                                <i class="glyphicon glyphicon-trash"  ></i> 
+                                Delete
+                            </button>
+
+                            <button type="button" ng-if="pdfLoading" title="Abort ongoing upload" class="btn btn-default" ng-click="cancelUpload()">
+                                <i class="glyphicon glyphicon-ban-circle"></i> 
+                                Cancel
+                            </button>
+
+                            <div class="btn btn-success btn-file" ngf-select ngf-change="uploadPDF($files)" ng-if="!form.pdf"> 
+                                <i class="glyphicon glyphicon-upload"></i>
+                                Upload your PDF
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- generate form from PDF yes/no field -->
+            <div class="row field" ng-if="form.pdf">
+                <div class="col-sm-6 field-title">
+                    <h5>Autogenerate Form?</h5>
+                </div>
+                <div class="col-sm-6 field-input">
+
+                    <label>
+                        <input type="radio" data-ng-value="true" ng-model="form.isGenerated"  ng-required="true" />
+                        &nbsp;<span>Yes</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" data-ng-value="false" ng-model="form.isGenerated"  ng-required="true" />
+                        &nbsp;<span>No</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- !!!!!!DAVID: TODO: Finish this so we can upload pdfFieldMap!!!!!!!!! -->
+           
+            <!-- Map form inputs to PDF inputs Field -->
+            <!-- <div class="textfield field row" ng-if="form.pdf">
+                <div class="col-xs-2 field-title field-title">Map Form Fields to PDF Fields </div>
+                <div class="col-xs-4 field-input field-input">
+                    <div class="row" ng-repeat="field in formFields">
+                        <div class="col-xs-4">
+                            {{field.name}}
+                        </div>
+                        <div class="col-xs-8">
+                            <label style="display:inline" ng-repeat="unbindedPdfField in getUnbindedPdfFields[{{field.fieldType}}]">
+                                <input type="radio" value="unbindedPdfField._id" ng-model="field"/>
+                                &nbsp;<span ng-bind="field.pdfField"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <h5>Autogenerate Form?</h5>
-        </div>
-    </div>
-    <div class="row">
-        <br><br>
-        <div class="col-sm-4">
 
-            <label>
-                <input type="radio" data-ng-value="true" ng-model="form.isGenerated"  ng-required="true" />
-                &nbsp;<span>Yes</span>
-            </label>
+        <div class="col-sm-5 col-sm-offset-1 container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Advanced Settings</h2>
+                </div>
+            </div>
 
-            <label>
-                <input type="radio" data-ng-value="false" ng-model="form.isGenerated"  ng-required="true" />
-                &nbsp;<span>No</span>
-            </label>
+            <div class="row field">
+                <div class="field-title col-sm-6">
+                    <h5>Form Name</h5>
+                </div>
 
-            <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
-        </div>
-    </div>
+                <div class="col-sm-6 field-input field-input">
+                    <input type="text" 
+                        ng-model="form.title" 
+                        value="{{form.title}}">
+                    <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
+                </div>
+            </div>
 
-    <div class="row" ng-if="form.isGenerated">
-        <div class="col-sm-12">
-            <h5>Save Submissions as PDFs?</h5>
-        </div>
-        <br><br>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
+            <div class="row field">
+                <div class="field-title col-sm-6">
+                    <h5>Publish Form?</h5>
+                </div>
 
-            <label>
-                <input type="radio" data-ng-value="true" ng-model="form.autofillPDFs"  ng-required="true" />
-                &nbsp;<span>Yes</span>
-            </label>
+                <div class="field-input col-sm-6">
 
-            <label>
-                <input type="radio" data-ng-value="false" ng-model="form.autofillPDFs"  ng-required="true" />
-                &nbsp;<span>No</span>
-            </label>
+                    <label>
+                        <input type="radio" data-ng-value="true" ng-model="form.isLive"  ng-required="true" />
+                        &nbsp;<span>Yes</span>
+                    </label>
 
-            <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
+                    <label>
+                        <input type="radio" data-ng-value="false" ng-model="form.isLive"  ng-required="true" />
+                        &nbsp;<span>No</span>
+                    </label>
+
+                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -8,6 +8,14 @@ angular.module('forms').directive('configureFormDirective', ['$http', '$timeout'
                 $scope.pdfLoading = false;
                 var _current_upload = null;
 
+
+                var _unbindedPdfFields = $scope.pdfFields;
+
+                //DAVID: TODO: finish this so we can create a Form.pdfFieldMap
+                // $scope.getUnbindedPdfFields = function(fieldType){
+                //     _unbindedPdfFields = $scope.pdfFields
+                // }
+
                 //PDF Functions
                 $scope.cancelUpload = function(){
                     _current_upload.abort();
@@ -65,7 +73,9 @@ angular.module('forms').directive('configureFormDirective', ['$http', '$timeout'
             restrict: 'E',
             scope: {
                 form:'=',
-                user:'='
+                user:'=',
+                pdfFields:'@',
+                formFields:'@'
             }
         };
     }

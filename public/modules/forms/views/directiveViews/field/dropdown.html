@@ -1,6 +1,6 @@
 <div class="field row">
-    <div class="span2">{{field.title}}:</div>
-    <div class="span4">
+    <div class="col-xs-2 field-title">{{field.title}} </div>
+    <div class="col-xs-4 field-input">
 		<select ng-model="field.fieldValue" ng-required="field.required" ng-disabled="field.disabled">
 			<option ng-repeat="option in field.field_options" 
 					ng-selected="option.option_value == field.fieldValue"

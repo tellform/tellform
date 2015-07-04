@@ -1,6 +1,6 @@
 <div class="field row">
-    <div class="span2">{{field.title}}:</div>
-    <div class="span4">
+    <div class="col-xs-2 field-title">{{field.title}} </div>
+    <div class="col-xs-4 field-input">
         <input type="email" placeholder="Email" value="{{field.fieldValue}}" ng-model="field.fieldValue" ng-required="field.required" ng-disabled="field.disabled"/>
         <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
     </div>

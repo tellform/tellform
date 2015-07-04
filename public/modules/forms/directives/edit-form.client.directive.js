@@ -57,7 +57,8 @@ angular.module('forms').directive('editFormDirective', ['$http', '$timeout', 'ti
                 $scope.duplicateField = function (field, field_index){
                     for(var i = 0; i < $scope.form.form_fields.length; i++){
                         if($scope.form.form_fields[i].field_id === field.field_id){
-                            $scope.form.form_fields.splice(field_index+1, 0, field);
+                            // $scope.form.form_fields.splice(field_index+1, 0, field);
+                            $scope.addNewField($scope.form.form_fields[i].fieldType);
                             break;
                         }
                     }

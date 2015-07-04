@@ -42,7 +42,7 @@ var FormFieldSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	title: {
+	name: {
 		type: String,
 		default: '',
 		trim: true,
@@ -65,7 +65,7 @@ var FormFieldSchema = new Schema({
 		required: 'Field type cannot be blank',
 		validate: [validateFormFieldType, 'Invalid field type']
 	},
-	fieldValue: Schema.Types.Mixed
+	value: Schema.Types.Mixed
 
 });
 

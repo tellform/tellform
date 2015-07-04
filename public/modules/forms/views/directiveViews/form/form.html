@@ -10,11 +10,9 @@
     <br>
 
     <div class="row">
-        <form class="field col-sm-offset-1 col-sm-10" name="form" ng-model="form" ng-repeat="field in form.form_fields" >
-            <!-- <ul class=" col-sm-11 col-sm-offset-1" style="margin-top: 50px; margin-bottom: 50px;" ng-repeat="field in form.form_fields" > -->
-                <field-directive field="field" >
+        <form name="form" class="submission-form col-sm-offset-1 col-sm-10" name="form" ng-model="form" ng-repeat="field in form.form_fields" >
+                <field-directive field="field">
                 </field-directive>
-            <!-- </ul> -->
         </form>
     </div>
 

@@ -1,3 +1,57 @@
+/* Styles for form submission view (/forms/:formID) */
+form .row.field {
+    padding: 1em 0 3em 0;
+}
+    form .row.field > .field-title {
+        margin-top:0.5em;
+        font-size:1.5em;
+    }
+    form.submission-form .row.field.statement > .field-title {
+        font-size:1.7em;
+    }
+    form.submission-form .row.field.statement > .field-input {
+        font-size:1.2em;
+        color:#ddd;
+    }
+    form.submission-form .row.field > .field-input input {
+        width:500px;
+    }
+    form.submission-form .row.field .field-input > input:focus {
+        font-size:1em;
+    }
+        form .row.field.textfield > .field-input > input{
+            padding:0.45em 0.9em;
+            width:600px;
+        }
+
+form.config-form > .row {
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    width: 90%;
+}
+
+    form.config-form > .row > .container:nth-of-type(odd){
+        border-right: 1px #ddd solid;
+        /*padding-left: 1em;*/
+    }
+
+        form.config-form .row > .field-input {
+            padding-top:1.2em;
+            padding-left:0.1em;
+        }
+            form.config-form .row > .field-input label {
+                padding-left:1.3em;
+                display: block;
+            }
+
+
+
+
 /* Styles for form admin view (/forms/:formID/admin) */
 .admin-form > .page-header {
     padding-bottom: 0px;
@@ -54,11 +108,19 @@
 }
 
 
-/*Style for edit fields tab*/
-.admin-form .tab-content .add-field {
-    border-right: 1px solid #ddd;
+/*Styles for add fields tab*/
+.admin-form .add-field {
     background-color: #ddd;
 }
+    .admin-form .add-field .col-xs-6 {
+        padding: 0.25em 0.4em;
+    }
+        .admin-form .add-field .col-xs-6 .panel-heading {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #bbb;
+            border-radius: 4px;
+        }
 
 .status-light {
     padding-left:0.6em;

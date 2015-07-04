@@ -55,6 +55,10 @@ angular.module('forms').service('FormFields', [
 		        name : 'stripe',
 		        value : 'Payment' 
 		    },
+		    {
+		        name : 'statement',
+		        value : 'Statement' 
+		    },
 		];
 	}
 		

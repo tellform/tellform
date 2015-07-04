@@ -34,27 +34,42 @@
                                 <field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
                             </span>
                             <span style="padding-left:1.2em;">{{field.title}}</span>
-                            
+                            <span class="pull-right">
+                                <i class="fa fa-chevron-right" ng-hide="accordion[$index].isOpen">
+                                </i>
+                                <i class="fa fa-chevron-down" ng-show="accordion[$index].isOpen">
+                                </i>
+                            </span>
                         </accordion-heading>
-                        <div class="accordion-edit">
+                        <div class="accordion-edit container">
                             <!-- <button class="btn btn-danger pull-right" type="button" ng-click="deleteField(field.client_id)"><i class="icon-trash icon-white"></i> Delete</button> -->
-
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h5>Preview</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="col-xs-8 container" style="list-style:none;">
+                                    <field-directive field="field">
+                                    </field-directive>
+                                </ul>
+                            </div>
                             <div class="clear"></div> <hr>
                             <div class="row">
-                                <div class="span2">Field Type:</div>
-                                <div class="span4">{{field.fieldType}}</div>
+                                <div class="col-xs-2">Field Type:</div>
+                                <div class="col-xs-4">{{field.fieldType}}</div>
                             </div>
                             <div class="row">
-                                <div class="span2">Field Title:</div>
-                                <div class="span4"><input type="text" ng-model="field.title" value="{{field.title}}"></div>
+                                <div class="col-xs-2">Field Title:</div>
+                                <div class="col-xs-4"><input type="text" ng-model="field.title" value="{{field.title}}"></div>
                             </div>
                             <div class="row">
-                                <div class="span2">Field Default Value:</div>
-                                <div class="span4"><input type="text" ng-model="field.fieldValue" value="{{field.fieldValue}}"></div>
+                                <div class="col-xs-2">Field Default Value:</div>
+                                <div class="col-xs-4"><input type="text" ng-model="field.fieldValue" value="{{field.fieldValue}}"></div>
                             </div>
                             <div class="row" ng-show="showAddOptions(field)">
-                                <div class="span2">Field Options:</div>
-                                <div class="span6">
+                                <div class="col-xs-2">Field Options:</div>
+                                <div class="col-xs-6">
                                     <div ng-repeat="option in field.field_options">
                                         <input type="text" ng-model="option.option_title" value="{{option.option_title}}">
                                         <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
@@ -67,8 +82,8 @@
                             <div class="clear"></div> <hr>
 
                             <div class="row">
-                                <div class="span2">Required:</div>
-                                <div class="span4">
+                                <div class="col-xs-2">Required:</div>
+                                <div class="col-xs-4">
                                     <label>
                                         <input type="radio" ng-value="true" ng-selected ng-model="field.required"/>
                                         &nbsp; Yes
@@ -83,8 +98,8 @@
                             <div class="clear"></div> <hr>
 
                             <div class="row">
-                                <div class="span2">Disabled:</div>
-                                <div class="span4">
+                                <div class="col-xs-2">Disabled:</div>
+                                <div class="col-xs-4">
                                     <label>
                                         <input type="radio" ng-value="true" ng-selected ng-model="field.disabled"/>
                                         &nbsp; Yes
@@ -95,6 +110,8 @@
                                     </label>
                                 </div>
                             </div>
+                            <hr>
+                            
                         </div>
                     </accordion-group>
                     <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">

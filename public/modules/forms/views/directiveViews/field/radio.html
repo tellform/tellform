@@ -1,6 +1,6 @@
 <div class="field row">
-    <div class="span2">{{field.title}}:</div>
-    <div class="span4">
+    <div class="col-xs-2 field-title">{{field.title}} </div>
+    <div class="col-xs-4 field-input">
         <div ng-repeat="option in field.field_options" class="row-fluid">
             <label>
                 <input type="radio" value="{{option.option_value}}" ng-model="field.fieldValue"  ng-required="field.required" ng-disabled="field.disabled"/>

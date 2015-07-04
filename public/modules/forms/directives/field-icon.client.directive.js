@@ -23,6 +23,7 @@ angular.module('forms').directive('fieldIconDirective', function($http, $compile
 				"link": "fa fa-link",
 				"scale": "fa fa-sliders",
 				"stripe": "fa fa-credit-card",
+				"statement": "fa fa-quote-left",
 			}
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
         },
