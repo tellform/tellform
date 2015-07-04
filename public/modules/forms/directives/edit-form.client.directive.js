@@ -33,13 +33,29 @@ angular.module('forms').directive('editFormDirective', ['$http', '$timeout', 'ti
                 };
 
                 // deletes particular field on button click
-                $scope.deleteField = function (field_id){
+                $scope.deleteField = function (hashKey){
+                    console.log($scope.form.form_fields);
                     for(var i = 0; i < $scope.form.form_fields.length; i++){
-                        if($scope.form.form_fields[i].field_id === field_id){
+                        console.log($scope.form.form_fields[i].$$hashKey === hashKey);
+                        if($scope.form.form_fields[i].$$hashKey === hashKey){
                             $scope.form.form_fields.splice(i, 1);
+                                                
                             break;
                         }
                     }
+                };
+                $scope.duplicateField = function (field, field_index){
+                    for(var i = 0; i < $scope.form.form_fields.length; i++){
+                        if($scope.form.form_fields[i].field_id === field.field_id){
+                            $scope.form.form_fields.splice(field_index+1, 0, field);
+                            break;
+                        }
+                    }
+                };
+
+                $scope.hover = function(field) {
+                    // Shows/hides the delete button on hover
+                    return field.showTools = !field.showTools;
                 };
 
                 // add new option to the field

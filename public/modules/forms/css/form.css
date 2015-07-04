@@ -21,6 +21,28 @@
     padding-top: 3em;
 }
 
+.current-fields .tool-panel > .panel-default:hover {
+    border-color: #9d9d9d;
+    cursor: pointer;
+}
+
+.current-fields .tool-panel > .panel-default .panel-heading {
+    background-color: #fff;
+    color: #9d9d9d!important;
+}
+    .current-fields .tool-panel > .panel-default .panel-heading:hover {
+        background-color: #eee;
+        color: #000!important;
+        cursor: pointer;
+    }     
+.current-fields .tool-panel > .panel-default .panel-heading a {
+    color: inherit;
+}
+.current-fields .tool-panel > .panel-default .panel-heading a:hover{
+    text-decoration: none;
+}
+
+
 /*Style for edit fields tab*/
 .admin-form .tab-content .add-field {
     border-right: 1px solid #ddd;

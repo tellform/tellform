@@ -31,10 +31,6 @@ angular.module('forms').service('FormFields', [
 		        name : 'checkbox',
 		        value : 'Checkbox'
 		    },
-		    {
-		        name : 'hidden',
-		        value : 'Hidden'
-		    }
 		];
 	}
 		

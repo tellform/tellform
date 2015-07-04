@@ -11,10 +11,10 @@
                                 <i class="fa fa-pencil-square-o" ng-switch-when="textfield"></i>
                                 <i class="fa fa-th-list" ng-switch-when="dropdown"></i>
                                 <i class="fa fa-calendar" ng-switch-when="date"></i>
-                                <i class="fa fa-check-square" ng-switch-when="checkbox"></i>
+                                <i class="fa fa-check-square-o" ng-switch-when="checkbox"></i>
                                 <i class="fa fa-dot-circle-o" ng-switch-when="radio"></i>
                                 <i class="fa fa-envelope-o" ng-switch-when="email"></i>
-                                <i class="fa fa-pencil-square-o" ng-switch-when="textarea"></i>
+                                <i class="fa fa-pencil-square" ng-switch-when="textarea"></i>
                             </span>
                             <span style="padding-left:1em;">{{type.value}}</span>
                         </div>
@@ -23,91 +23,110 @@
         </div>
 
     	<div class="col-sm-3 col-md-8 current-fields">
-            <div class="inside">
-            <p ng-show="form.form_fields.length == 0">No fields added yet.</p>
-            <accordion close-others="accordion.oneAtATime">
-                <accordion-group ng-repeat="field in form.form_fields" is-open="accordion[$index].isOpen">
-                    <accordion-heading>
-                    <div>
-                        <span class="pull-left" ng-switch="field.fieldType">
-                            <i class="fa fa-pencil-square-o" ng-switch-when="textfield"></i>
-                            <i class="fa fa-th-list" ng-switch-when="dropdown"></i>
-                            <i class="fa fa-calendar" ng-switch-when="date"></i>
-                            <i class="fa fa-check-square" ng-switch-when="checkbox"></i>
-                            <i class="fa fa-dot-circle-o" ng-switch-when="radio"></i>
-                            <i class="fa fa-envelope-o" ng-switch-when="email"></i>
-                            <i class="fa fa-pencil-square-o" ng-switch-when="textarea"></i>
-                        </span>
-                        <span style="padding-left:3em;">{{field.title}}</span>
-                        <span class="pull-right">
-                            <i class="fa fa-trash-o" ng-click="deleteField(field.client_id)"></i>
-                            <!-- <i class="fa fa-chevron-right" ng-hide="accordion[$index].isOpen"></i>
-                            <i class="fa fa-chevron-down" ng-show="accordion[$index].isOpen"></i -->
-                        </span>
-                    </div>
-                    </accordion-heading>
-                    <div class="accordion-edit">
-                        <!-- <button class="btn btn-danger pull-right" type="button" ng-click="deleteField(field.client_id)"><i class="icon-trash icon-white"></i> Delete</button> -->
+            <!-- <p ng-show="form.form_fields.length == 0">No fields added yet.</p> -->
+            <div class="row">
+                <div class="col-xs-10">
+                    <accordion close-others="accordion.oneAtATime">
+                        <accordion-group ng-repeat="field in form.form_fields" is-open="accordion[$index].isOpen" >
 
-                        <div class="clear"></div> <hr>
-                        <div class="row">
-                            <div class="span2">Field Type:</div>
-                            <div class="span4">{{field.fieldType}}</div>
-                        </div>
-                        <div class="row">
-                            <div class="span2">Field Title:</div>
-                            <div class="span4"><input type="text" ng-model="field.title" value="{{field.title}}"></div>
-                        </div>
-                        <div class="row">
-                            <div class="span2">Field Default Value:</div>
-                            <div class="span4"><input type="text" ng-model="field.fieldValue" value="{{field.fieldValue}}"></div>
-                        </div>
-                        <div class="row" ng-show="showAddOptions(field)">
-                            <div class="span2">Field Options:</div>
-                            <div class="span6">
-                                <div ng-repeat="option in field.field_options">
-                                    <input type="text" ng-model="option.option_title" value="{{option.option_title}}">
-                                    <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
-                                    <span class="label label-inverse">Value: {{ option.option_value }}</span>
+                            <accordion-heading>
+                                <span class="pull-left" ng-switch="field.fieldType">
+                                    <i class="fa fa-pencil-square-o" ng-switch-when="textfield"></i>
+                                    <i class="fa fa-th-list" ng-switch-when="dropdown"></i>
+                                    <i class="fa fa-calendar" ng-switch-when="date"></i>
+                                    <i class="fa fa-check-square-o" ng-switch-when="checkbox"></i>
+                                    <i class="fa fa-dot-circle-o" ng-switch-when="radio"></i>
+                                    <i class="fa fa-envelope-o" ng-switch-when="email"></i>
+                                    <i class="fa fa-pencil-square" ng-switch-when="textarea"></i>
+                                </span>
+                                <span style="padding-left:1.2em;">{{field.title}}</span>
+                                
+                            </accordion-heading>
+                            <div class="accordion-edit">
+                                <!-- <button class="btn btn-danger pull-right" type="button" ng-click="deleteField(field.client_id)"><i class="icon-trash icon-white"></i> Delete</button> -->
+
+                                <div class="clear"></div> <hr>
+                                <div class="row">
+                                    <div class="span2">Field Type:</div>
+                                    <div class="span4">{{field.fieldType}}</div>
                                 </div>
-                                <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
+                                <div class="row">
+                                    <div class="span2">Field Title:</div>
+                                    <div class="span4"><input type="text" ng-model="field.title" value="{{field.title}}"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="span2">Field Default Value:</div>
+                                    <div class="span4"><input type="text" ng-model="field.fieldValue" value="{{field.fieldValue}}"></div>
+                                </div>
+                                <div class="row" ng-show="showAddOptions(field)">
+                                    <div class="span2">Field Options:</div>
+                                    <div class="span6">
+                                        <div ng-repeat="option in field.field_options">
+                                            <input type="text" ng-model="option.option_title" value="{{option.option_title}}">
+                                            <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
+                                            <span class="label label-inverse">Value: {{ option.option_value }}</span>
+                                        </div>
+                                        <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
+                                    </div>
+                                </div>
+
+                                <div class="clear"></div> <hr>
+
+                                <div class="row">
+                                    <div class="span2">Required:</div>
+                                    <div class="span4">
+                                        <label>
+                                            <input type="radio" ng-value="true" ng-selected ng-model="field.required"/>
+                                            &nbsp; Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" ng-value="false" ng-model="field.required"/>
+                                            &nbsp; No
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="clear"></div> <hr>
+
+                                <div class="row">
+                                    <div class="span2">Disabled:</div>
+                                    <div class="span4">
+                                        <label>
+                                            <input type="radio" ng-value="true" ng-selected ng-model="field.disabled"/>
+                                            &nbsp; Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" ng-value="false" ng-model="field.disabled"/>
+                                            &nbsp; No
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-    					<div class="clear"></div> <hr>
-
-                        <div class="row">
-                            <div class="span2">Required:</div>
-                            <div class="span4">
-                                <label>
-                                    <input type="radio" ng-value="true" ng-selected ng-model="field.required"/>
-                                    &nbsp; Yes
-                                </label>
-                                <label>
-                                    <input type="radio" ng-value="false" ng-model="field.required"/>
-                                    &nbsp; No
-                                </label>
-                            </div>
-                        </div>
-    					
-    					<div class="clear"></div> <hr>
-
-    					<div class="row">
-    						<div class="span2">Disabled:</div>
-                            <div class="span4">
-                                <label>
-                                    <input type="radio" ng-value="true" ng-selected ng-model="field.disabled"/>
-                                    &nbsp; Yes
-                                </label>
-                                <label>
-                                    <input type="radio" ng-value="false" ng-model="field.disabled"/>
-                                    &nbsp; No
-                                </label>
+                        </accordion-group>
+                    </accordion>
+                </div>
+                <div class="col-xs-1" style="padding:0 5px;" >
+                    <div class="panel-group tool-panel text-center">
+                        <div class="panel panel-default" ng-repeat="field in form.form_fields" ng-mouseenter="hover(field)" ng-mouseleave="hover(field)">
+                            <div class="panel-heading" style="padding: 10px 10px;" ng-click="deleteField(field.$$hashKey)">
+                                <span class="text-center">
+                                    <a href="" class="fa fa-trash-o"></a>
+                                </span>
                             </div>
                         </div>
                     </div>
-                </accordion-group>
-            </accordion>
+                </div>
+                <div class="col-xs-1" style="padding:0 5px;">
+                    <div class="panel-group tool-panel text-center">
+                        <div class="panel panel-default" ng-repeat="field in form.form_fields" ng-mouseenter="hover(field)" ng-mouseleave="hover(field)">
+                            <div class="panel-heading" style="padding: 10px 10px;" ng-click="duplicateField(field, $index)">
+                                <span class="text-center">
+                                    <a href="" class="fa fa-files-o"></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
