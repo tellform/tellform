@@ -1,4 +1,4 @@
-<div class="row">
+<form class="row" name="fieldForm" form-locator auto-save-form="update()" form="form" novalidation>
     <div class="add-field col-xs-5">
         <!-- <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
         <button type="submit" class="btn" ng-click="addNewField()">
@@ -6,9 +6,10 @@
         </button> -->
         <div class="row add-field-title">
             <h3 class="col-xs-12">Add New Field</h3>
+            <span ng-if="form.$dirty && form.$valid" class="help-block">Updating ...</span>
         </div>
         <div class="panel-group row">
-            <div class="col-xs-6" ng-repeat="type in addField.types">
+            <div class="col-xs-6" ng-repeat="type in addField.types" on-finish-render>
                 <div class="panel panel-default" style="background-color:#f5f5f5;">
                     <div class="panel-heading" ng-click="addNewField(type.name)" style="cursor: pointer; font-size:14px;">
                         <span class="pull-left">
@@ -27,7 +28,7 @@
         <div class="row">
             <div class="col-xs-10">
                 <accordion close-others="accordion.oneAtATime">
-                    <accordion-group ng-repeat="field in form.form_fields" is-open="accordion[$index].isOpen" >
+                    <accordion-group ng-repeat="field in form.form_fields" is-open="accordion[$index].isOpen" on-finish-render="setFormValid()">
 
                         <accordion-heading>
                             <span class="pull-left" ng-switch="field.fieldType">
@@ -45,12 +46,12 @@
                             <!-- <button class="btn btn-danger pull-right" type="button" ng-click="deleteField(field.client_id)"><i class="icon-trash icon-white"></i> Delete</button> -->
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <h5>Preview</h5>
+                                    <h4>Preview</h4>
                                 </div>
                             </div>
                             <div class="row">
-                                <ul class="col-xs-8 container" style="list-style:none;">
-                                    <field-directive field="field">
+                                <ul class="col-xs-4 container" style="list-style:none;border:2px lightgray solid;">
+                                    <field-directive field="field" required="">
                                     </field-directive>
                                 </ul>
                             </div>
@@ -61,18 +62,17 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-2">Field Title:</div>
-                                <div class="col-xs-4"><input type="text" ng-model="field.title" value="{{field.title}}"></div>
+                                <div class="col-xs-4"><input type="text" ng-model="field.title" value="{{field.title}}" required></div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-2">Field Default Value:</div>
-                                <div class="col-xs-4"><input type="text" ng-model="field.fieldValue" value="{{field.fieldValue}}"></div>
-                            </div>
+                            <br><br>
+                            <hr>
                             <div class="row" ng-show="showAddOptions(field)">
                                 <div class="col-xs-2">Field Options:</div>
-                                <div class="col-xs-6">
-                                    <div ng-repeat="option in field.field_options">
-                                        <input type="text" ng-model="option.option_title" value="{{option.option_title}}">
-                                        <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
+                                <div class="col-xs-6 container">
+                                    <div ng-repeat="option in field.field_options" class="row">
+                                        <input type="text" name="{{option.option_title}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-4">
+
+                                        <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3"><i  class="fa fa-trash-o"></i></a>
                                         <span class="label label-inverse">Value: {{ option.option_value }}</span>
                                     </div>
                                     <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
@@ -125,7 +125,7 @@
             </div>
             <div class="col-xs-1" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in form.form_fields" ng-mouseenter="hover(field)" ng-mouseleave="hover(field)">
+                    <div class="panel panel-default" ng-repeat="field in form.form_fields">
                         <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="deleteField(field.$$hashKey)">
                             <span class="text-center">
                                 <a href="" class="fa fa-trash-o"></a>
@@ -136,7 +136,7 @@
             </div>
             <div class="col-xs-1" style="padding:0 5px;">
                 <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in form.form_fields" ng-mouseenter="hover(field)" ng-mouseleave="hover(field)">
+                    <div class="panel panel-default" ng-repeat="field in form.form_fields">
                         <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="duplicateField(field, $index)">
                             <span class="text-center">
                                 <a href="" class="fa fa-files-o"></a>
@@ -147,4 +147,4 @@
             </div>
         </div>
     </div>
-</div>
+</form>

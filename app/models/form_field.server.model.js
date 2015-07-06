@@ -12,19 +12,26 @@ function validateFormFieldType(value) {
 
   var validTypes = [
     'textfield',
-    'textarea',
-    'statement',
+    'date',
     'email',
     'legal',
     'url',
     'number',
-    'filefield',
+
+    'textarea',
+    'statement',
+    'welcome',
+    'thankyou',
+
+    'file',
+
+    'dropdown',
+    'scale',
+    'rating',
     'radio',
     'checkbox',
-    'date',
-    'dropdown',
+
     'hidden',
-    'password'
   ];
 
   if (validTypes.indexOf(value) > -1) { 
@@ -52,6 +59,9 @@ var FormFieldSchema = new Schema({
 		type: String,
 		default: '',
 	},
+	options: [{
+		type: String
+	}]
 	required: {
 		type: Boolean,
 		default: true,

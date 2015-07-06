@@ -20,8 +20,8 @@ angular.module('users')
           return service.currentUser;
         } 
         else if ($window.user){
-          console.log('Using cached current user.');
-          console.log($window.user);
+          // console.log('Using cached current user.');
+          // console.log($window.user);
           service.currentUser = $window.user;
           return service.currentUser;
         }

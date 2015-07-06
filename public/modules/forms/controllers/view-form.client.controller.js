@@ -1,8 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ViewFormController', ['$scope', '$stateParams', '$state', 'Forms', 'CurrentForm','$http',
-	function($scope, $stateParams, $state, Forms, CurrentForm, $http) {
+angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm','$http',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
 
         // view form submissions
         $scope.form = CurrentForm.getForm();
@@ -13,6 +13,26 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
             rows: []
         };
 
+        $scope.saveInProgress = false;
+        $scope.update = function() {
+            if(!$scope.saveInProgress){
+                $scope.saveInProgress = true;
+
+                console.log('start update()');
+
+                $http.put('/forms/'+$scope.form._id, {form: $scope.form})
+                    .then(function(response){
+                        console.log('form updated successfully');
+                        console.log('$scope.saveInProgress: '+$scope.saveInProgress);
+                        // $rootScope.goToWithId('viewForm', $scope.form._id);
+                    }).catch(function(response){
+                        console.log('Error occured during form UPDATE.\n');
+                        console.log(response.data);
+                    }).finally(function() { 
+                        $scope.saveInProgress = false; 
+                    });
+            };
+        }
 
         //Table Functions
         $scope.toggleAllCheckers = function(){
@@ -94,7 +114,65 @@ angular.module('forms').controller('ViewFormController', ['$scope', '$stateParam
                     console.log('ERROR: Form could not be deleted.');
                     console.error(error);
                 });
-
         };
+
+        $scope.goToWithId = function(route, id) {
+            $state.go(route, {'formId': id}, {reload: true});
+        };
+
+        // Create new Form
+        $rootScope.createOrUpdate = function() {
+            if($scope.isNewForm){
+                // Create new Form object
+                var form = new Forms($scope.form);
+
+                $http.post('/forms', {form: $scope.form})
+                .success(function(data, status, headers){
+                    console.log('form created');
+
+                    // Clear form fields
+                    $scope.form = {};
+                    // Redirect after save 
+                    $scope.goToWithId('viewForm', $scope.form._id);
+                }).error(function(errorResponse){
+                    console.log(errorResponse.data.message);
+                    $scope.error = errorResponse.data.message;
+                });
+            } else{
+                $rootScope.update();
+            }
+        };
+
+        // $rootScope.saveInProgress = false;
+
+        var saveFinished = function() { 
+            $rootScope.saveInProgress = false; 
+            console.log('update form');
+        };
+
+        // Update existing Form
+        $rootScope.update = function() {
+
+            $rootScope.saveInProgress = true;
+            console.log('update form');
+
+            $http.put('/forms/'+$scope.form._id, {form: $scope.form})
+                .then(function(response){
+                    console.log('form updated successfully');
+                }).catch(function(response){
+                    console.log('Error occured during form UPDATE.\n');
+                    console.log(response.data);
+                }).finally(function() { 
+                    $rootScope.saveInProgress = false; 
+                    console.log('update form');
+                });
+        };
+
+        $rootScope.resetForm = function(){
+            $scope.form = Forms.get({
+                formId: $stateParams.formId
+            });
+        }
+
 	}
 ]);

@@ -201,7 +201,8 @@ exports.update = function(req, res) {
 			});
 		} else {
 			console.log('updated form');
-			res.json(form);
+			// res.json(form);
+			res.status(200).send('updated form');
 		}
 	});
 };

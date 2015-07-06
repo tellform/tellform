@@ -1,7 +1,7 @@
 <div class="field row">
-	<div class="col-xs-2 field-title field-title">{{field.title}} </div>
-    <div class="col-xs-4 field-input field-input">
-		<input ng-model="field.fieldValue" id="{{field.client_id}}" type="checkbox" ng-init="field.fieldValue = false" ng-required="field.required" ng-disabled="field.disabled"/>
+	<div class="col-xs-5 field-title field-title">{{field.title}} </div>
+    <div class="col-xs-7 field-input field-input">
+		<input ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  id="{{field.client_id}}" type="checkbox" ng-init="field.fieldValue = false" ng-required="field.required" ng-disabled="field.disabled"/>
 		<span class="required-error" ng-show="field.required && field.fieldValue == 0">(* required)</span>
 	</div>
 <div class="field row">

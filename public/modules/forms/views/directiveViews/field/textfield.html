@@ -1,8 +1,8 @@
 <div class="textfield field row">
-    <div class="col-xs-2 field-title">{{field.title}} </div>
-    <div class="col-xs-4 field-input">
+    <div class="col-xs-5 field-title">{{field.title}} </div>
+    <div class="col-xs-7 field-input">
 		<input type="text" 
-			ng-model="field.fieldValue" 
+			ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  
 			value="field.fieldValue" 
 			ng-required="field.required"
 			ng-disabled="field.disabled" changeFocus focus-up-id="focusUpButton" focus-down-id="focusDownButton">

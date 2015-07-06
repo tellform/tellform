@@ -71,12 +71,12 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
             }
         };
 
-        $scope.goToWithId = function(route, id) {
+        $rootScope.goToWithId = function(route, id) {
             $state.go(route, {'formId': id}, {reload: true});
         };
 
         // Create new Form
-        $scope.createOrUpdate = function() {
+        $rootScope.createOrUpdate = function() {
 
             if($scope.isNewForm){
                 // Create new Form object
@@ -100,7 +100,7 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
         };
 
         // Update existing Form
-        $scope.update = function() {
+        $rootScope.update = function() {
             var form = new Forms($scope.form);
             console.log('update form');
             console.log($scope.form);

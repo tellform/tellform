@@ -1,13 +1,14 @@
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
-    function ($http, $timeout, timeCounter, Auth, FormFields) {
+angular.module('forms').directive('configureFormDirective', ['$rootScope','$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
+    function ($rootScope, $http, $timeout, timeCounter, Auth, FormFields) {
         return {
             controller: function($scope){
                 $scope.log = '';
                 $scope.pdfLoading = false;
                 var _current_upload = null;
-
+                $scope.createOrUpdate = $rootScope.createOrUpdate;
+                $scope.resetForm = $rootScope.resetForm;
 
                 var _unbindedPdfFields = $scope.pdfFields;
 

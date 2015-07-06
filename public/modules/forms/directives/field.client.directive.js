@@ -32,6 +32,8 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
     };
 
     var linker = function(scope, element) {
+        scope.field.required = scope.required;
+        
         // GET template content from path
         var templateUrl = getTemplateUrl(scope.field);
         $http.get(templateUrl).success(function(data) {
@@ -44,7 +46,8 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
         template: '<div>{{field.title}}</div>',
         restrict: 'E',
         scope: {
-            field: '='
+            field: '=',
+            required: '&'
         },
         link: linker
     };

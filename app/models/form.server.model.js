@@ -120,17 +120,19 @@ FormSchema.pre('save', function (next) {
 });
 
 //Concatenate submission and form's form_fields
-FormSchema.pre('save', function (next) {
-	if(this.isModified('form_fields')){
-		if(this.submissions.length){
-			for(var i=0; i<this.submissions.length; i++){
-				this.submissions[i].form_fields = submission.form_fields.concat(_.difference(this.form_fields, this._previousFormFields));
-			}
-		}
-		this.form_fields = this._previousFormFields.concat(_.difference(this.form_fields, this._previousFormFields));
-	}
-	next();
-});
+// FormSchema.pre('save', function (next) {
+// 	if(this.isModified('form_fields')){
+// 		if(this.submissions.length){
+// 			for(var i=0; i<this.submissions.length; i++){
+// 				var submission = this.submissions[i];
+// 				console.log(submission.form_fields);
+// 				this.submissions[i].form_fields = submission.form_fields.concat(_.difference(this.form_fields, this._previousFormFields));
+// 			}
+// 		}
+// 		this.form_fields = this._previousFormFields.concat(_.difference(this.form_fields, this._previousFormFields));
+// 	}
+// 	next();
+// });
 
 //Move PDF to permanent location after new template is uploaded
 FormSchema.pre('save', function (next) {

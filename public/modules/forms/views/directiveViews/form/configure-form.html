@@ -1,4 +1,4 @@
-<form class="config-form container">
+<div class="config-form container">
     <div class="row">
         <div class="col-sm-6 container">
             <div class="row">
@@ -145,24 +145,45 @@
 
             <div class="row field">
                 <div class="field-title col-sm-6">
-                    <h5>Publish Form?</h5>
+                    <h5>Form Status</h5>
                 </div>
 
                 <div class="field-input col-sm-6">
 
                     <label>
-                        <input type="radio" data-ng-value="true" ng-model="form.isLive"  ng-required="true" />
-                        &nbsp;<span>Yes</span>
+                        <input type="radio" data-ng-value="true" ng-model="form.isLive"  ng-required="true" style="background-color:#33CC00;"/>
+                        &nbsp;<span>Public</span>
                     </label>
 
                     <label>
                         <input type="radio" data-ng-value="false" ng-model="form.isLive"  ng-required="true" />
-                        &nbsp;<span>No</span>
+                        &nbsp;<span>Private</span>
                     </label>
 
                     <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
                 </div>
             </div>
+            <div class="row field">
+                <div class="col-xs-7 field-title">{{field.title}} </div>
+                <div class="col-xs-5 field-input">
+                    <select ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  ng-required="field.required" ng-disabled="field.disabled">
+                        <option ng-repeat="option in field.field_options" 
+                                ng-selected="option.option_value == field.fieldValue"
+                                value="{{option.option_id}}">
+                            {{option.option_title}}
+                        </option>
+                    </select>    
+                    <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="row">
+            <div class="col-sm-offset-4 col-sm-2">
+                <button class="btn btn-primary btn-large" type="button" ng-click="createOrUpdate()"><i class="icon-arrow-left icon-white"></i> Save Changes</button>
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-primary" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i> Cancel</button>
+            </div>
     </div>
 </div>

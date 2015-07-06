@@ -5,7 +5,7 @@ angular.module('core').controller('HeaderController', ['$rootScope','$scope','Me
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 		
-	    console.log('isAuthenticated(): '+$scope.authentication.isAuthenticated());
+	    // console.log('isAuthenticated(): '+$scope.authentication.isAuthenticated());
 
 		$scope.isCollapsed = false;
 		$scope.hideNav = false;

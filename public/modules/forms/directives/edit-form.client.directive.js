@@ -1,15 +1,27 @@
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
-    function ($http, $timeout, timeCounter, Auth, FormFields) {
+angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
+    function ($rootScope, $q, $http, $timeout, timeCounter, Auth, FormFields) {
         return {
+            // link: function (scope, iElm, iAttrs) {
+            //     console.log(scope);
+            //   },
+            templateUrl: './modules/forms/views/directiveViews/form/edit-form.html',
+            restrict: 'E',
+            scope: {
+                form:'=',
+                user:'='
+            },
             controller: function($scope){
+                //Populate local scope with rootScope methods/variables
+                $scope.update = $rootScope.update;
+
                 //Populate AddField with all available form field types
                 $scope.addField = {};
                 $scope.addField.types = FormFields.fields;
-                // $scope.addField.new = $scope.addField.types[0].name;
+
                 $scope.addField.types.forEach(function(type){
-                    type.lastAddedID = 0;
+                    type.lastAddedID = 1;
                     return type;
                 });
 
@@ -24,9 +36,10 @@ angular.module('forms').directive('editFormDirective', ['$http', '$timeout', 'ti
                     $scope.addField.lastAddedID++;
                     var fieldTitle;
                     for(var i = 0; i < $scope.addField.types.length; i++){
-                        console.log($scope.addField.types[i].name === fieldType);
+                        // console.log($scope.addField.types[i].name === fieldType);
                         if($scope.addField.types[i].name === fieldType){
                             $scope.addField.types[i].lastAddedID++;
+                            console.log($scope.addField.types[i].lastAddedID);
                             fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;  
                             break;
                         }
@@ -64,11 +77,6 @@ angular.module('forms').directive('editFormDirective', ['$http', '$timeout', 'ti
                     }
                 };
 
-                $scope.hover = function(field) {
-                    // Shows/hides the delete button on hover
-                    return field.showTools = !field.showTools;
-                };
-
                 // add new option to the field
                 $scope.addOption = function (field){
                     if(!field.field_options)
@@ -104,19 +112,14 @@ angular.module('forms').directive('editFormDirective', ['$http', '$timeout', 'ti
 
                 // decides whether field options block will be shown (true for dropdown and radio fields)
                 $scope.showAddOptions = function (field){
-                    if(field.field_type === 'radio' || field.field_type === 'dropdown')
+                    if(field.fieldType == 'dropdown' || field.fieldType == 'checkbox' || field.fieldType == 'scale' || field.fieldType == 'rating' || field.fieldType == 'radio')
                         return true;
                     else
                         return false;
                 };
 
             },
-            templateUrl: './modules/forms/views/directiveViews/form/edit-form.html',
-            restrict: 'E',
-            scope: {
-                form:'=',
-                user:'='
-            }
+  
         };
     }
 ]);
