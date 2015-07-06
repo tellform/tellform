@@ -1,8 +1,18 @@
 /*Navbar Custom CSS*/
+.navbar-inverse {
+	background-color:#fafafa;
+	border: 0;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover {
+	background-color:#ddd;
+}
 .navbar .navbar-brand {
 	font-size: 1.6em;
 	font-weight: 900;
 	color: #FA787E;
+}
+.navbar .navbar-brand:hover {
+	color: #000;
 }
 .navbar .navbar-brand span {
 	text-decoration: underline;
