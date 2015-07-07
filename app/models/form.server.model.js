@@ -29,10 +29,14 @@ var FormSchema = new Schema({
 	},
 	title: {
 		type: String,
-		default: '',
 		trim: true,
 		unique: true,
 		required: 'Title cannot be blank'
+	},
+	language: {
+		type: String,
+		enum: ['english', 'french', 'spanish'],
+		required: 'Form must have a language'
 	},
 	description: {
 		type: String,
@@ -64,7 +68,7 @@ var FormSchema = new Schema({
 	},
 	hideFooter: {
 		type: Boolean,
-		default: true,
+		default: false,
 	},
 	isGenerated: {
 		type: Boolean,
@@ -72,7 +76,7 @@ var FormSchema = new Schema({
 	},
 	isLive: {
 		type: Boolean,
-		default: true,
+		default: false,
 	},
 	autofillPDFs: {
 		type: Boolean,
@@ -89,24 +93,6 @@ FormSchema.pre('remove', function (next) {
 		  	console.log('successfully deleted', this.pdf.path);
 		});
 	}
-});
-
-//Create folder for user's pdfs
-FormSchema.pre('save', function (next) {
-	var newDestination = path.join(config.pdfUploadPath, this.admin.username.replace(/ /g,'')),
-		stat = null;
-
-	try {
-        stat = fs.statSync(newDestination);
-    } catch (err) {
-        fs.mkdirSync(newDestination);
-    }
-    if (stat && !stat.isDirectory()) {
-    	// console.log('Directory cannot be created');
-        next( new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"') );
-    }else{
-    	next();
-    }
 });
 
 //Update lastModified and created everytime we save

@@ -4,7 +4,7 @@ angular.module('core').controller('HeaderController', ['$rootScope','$scope','Me
 	function ($rootScope, $scope, Menus, $state, Auth, User) {
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
-		
+		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish'];
 	    // console.log('isAuthenticated(): '+$scope.authentication.isAuthenticated());
 
 		$scope.isCollapsed = false;

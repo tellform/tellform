@@ -5,7 +5,10 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	crypto = require('crypto');
+	crypto = require('crypto'),
+	config = require('../../config/config'),
+	fs = require('fs-extra'),
+	path = require('path');
 
 /**
  * A Validation function for local strategy properties
@@ -75,6 +78,12 @@ var UserSchema = new Schema({
 		}],
 		default: ['user']
 	},
+	language: {
+		type: String,
+		enum: ['english', 'french', 'spanish'],
+		default: 'english',
+		required: 'User must have a language'
+	},
 	updated: {
 		type: Date
 	},
@@ -90,6 +99,24 @@ var UserSchema = new Schema({
 		type: Date
 	},
 	token: String
+});
+
+//Create folder for user's pdfs
+UserSchema.pre('save', function (next) {
+	var newDestination = path.join(config.pdfUploadPath, this.username.replace(/ /g,'')),
+		stat = null;
+
+	try {
+        stat = fs.statSync(newDestination);
+    } catch (err) {
+        fs.mkdirSync(newDestination);
+    }
+    if (stat && !stat.isDirectory()) {
+    	// console.log('Directory cannot be created');
+        next( new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"') );
+    }else{
+    	next();
+    }
 });
 
 /**

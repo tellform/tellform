@@ -4,15 +4,25 @@
 	border: 0;
 }
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover {
-	background-color:#ddd;
+	/*background-color:#ddd;*/
 }
 .navbar .navbar-brand {
 	font-size: 1.6em;
 	font-weight: 900;
+	/*color: #FA787E;*/
+	color: rgb(300,131,131);
+}
+.navbar .navbar-brand:hover, .navbar .navbar-brand:visited {
 	color: #FA787E;
 }
-.navbar .navbar-brand:hover {
-	color: #000;
+.navbar li.dropdown a.dropdown-toggle:hover > *{
+	color: black;
+}
+.navbar li.dropdown a.dropdown-toggle > *{
+	color: #d9d9d9;
+}
+.navbar li.dropdown.open a.dropdown-toggle:hover > *{
+	color: white;
 }
 .navbar .navbar-brand span {
 	text-decoration: underline;
@@ -44,21 +54,31 @@ body.ng-cloak
 
 /*Hero Section CSS (for /home)*/
 section.hero-section {
-	/*padding-top:30px;*/
 	width: 100%;
 }
-section.hero-section > .jumbotron {
-	background-image: url(http://yourplaceandmine.ie/wp-content/uploads/2014/09/Daingean-meeting-048_13-1080x675.jpg);
-	background-repeat: no-repeat;
-	background-position: 0 50%;
-	/*background-position-top: 0px;*/
-	background-size: cover;
+section.hero-section .jumbotron {
+	background-color: transparent;
+	color:#fff;
 }
+	.image-background {
+	 	position: absolute;
+        top: 0;
+        left: 0;
+        height: 110%;
+        width: 100%;
+        z-index: -98;
+        background-image: url(http://yourplaceandmine.ie/wp-content/uploads/2014/09/Daingean-meeting-048_13-1080x675.jpg);
+		background-repeat: no-repeat;
+		background-position: 0 50%;
+		background-size: cover;
+	}
 
-	section > .jumbotron > .opacity-background {
-		background-color: rgba(71,61,61,0.5);
-		color: white;
-		padding: inherit;
-		height: inherit;
-		width: inherit;
+	.opacity-background {
+	 	position: absolute;
+        top: 0;
+        left: 0;
+        height: 110%;
+        width: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: -97;
 	}

@@ -1,26 +1,40 @@
 <section data-ng-controller="HomeController" class="hero-section">
-
+	<div class="opacity-background">
+	</div>
+	<div class="image-background">
+	</div>
 	<div class="jumbotron text-center">
-		<div class="opacity-background">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-					<!-- <img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/logo.png" /> -->
-				</div>
-			</div>
-			<br>
-			<div class="row" data-ng-if="!authentication.isAuthenticated()">
-				<p class="lead">
-					Make beautiful forms in a snap.
-				</p>
-				<br><br> <br><br>
-				<a class="btn btn-info" href="/#!/signup">
-					Signup now
-				</a>
-
+	
+<!-- 		<div class="row">
+			<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+				<img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/logo.png" />
 			</div>
 		</div>
-	</div>
+		<br> -->
+		<div class="row" data-ng-if="!authentication.isAuthenticated()">
+			<div class="col-xs-12 row text-center logo" style="border-bottom: 1px solid rgba(255,255,255,.2); margin-bottom: 30px;">
+				<h3 class="col-xs-12" style="color: #FA787E; margin-bottom:0px">
+					<i class="fa fa-archive fa-3x"></i>
+				</h3>
+				<h2 class="col-xs-12"  style="margin-top:0px">
+					Med<span style="color: #FA787E">Forms</span>
+				</h2>
+			</div>
+			<div class="col-xs-12 row" style="margin-top:0px">
+				<h1 class="lead col-xs-10 col-xs-offset-1" style="font-size:3.8em;">
+					Craft beautiful forms in seconds.
+				</h1>
+				<p class="lead col-xs-12" style="font-size:1.5em; color:rgba(255,255,255,.75)">
+					<i>Medforms is an opensource <b>form builder</b> that can create stunning forms from PDFs or from scratch</i>
+				</h1>
+			</div>
+			
+			<div class="col-xs-12" style="margin-top:7%;">
+				<a class="btn btn-info" href="/#!/signup" style="background-color:#FA787E; border: none; font-size: 2em; padding: 0.3em 0.9em; color: white;">
+					sign me up!
+				</a>
+			</div>
 
-	<br>Enjoy &amp; Keep Us Updated,
-	<br>The MedForms Team.
+		</div>
+	</div>
 </section>

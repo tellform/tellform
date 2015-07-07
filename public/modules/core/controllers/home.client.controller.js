@@ -5,7 +5,6 @@ angular.module('core').controller('HomeController', ['$rootScope', '$scope', 'Us
 	function($rootScope, $scope, User, Auth, $state) {
 		$scope = $rootScope;
 
-		console.log($rootScope.user);
 		$scope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = Auth;
 

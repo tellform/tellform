@@ -4,10 +4,10 @@
 angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
 
-	var checkLoggedin = function($q, $timeout, $location, User, Auth) {
+	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
       var deferred = $q.defer();
 
-      console.log(Auth.getUserState);
+      // console.log(Auth.ensureHasCurrentUser(User));
 
       if (Auth.currentUser && Auth.currentUser.email) {
         $timeout(deferred.resolve);
@@ -15,12 +15,12 @@ angular.module('users').config(['$stateProvider',
       else {
         Auth.currentUser = User.getCurrent(function() {
           Auth.login();
-          $timeout(deferred.resolve);
+          $timeout(deferred.resolve());
         },
         function() {
           Auth.logout();
-          $timeout(deferred.reject);
-          $location.path('/login');
+          $timeout(deferred.reject());
+          $state.go('sigin', {reload: true});
         });
       }
 

@@ -4,9 +4,7 @@
 angular.module('forms').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Forms', 'forms', 'dropdown', '/forms(/create)?');
-		Menus.addSubMenuItem('topbar', 'forms', 'List Forms', 'forms');
-		Menus.addSubMenuItem('topbar', 'forms', 'Create Form', 'forms/create');
+		Menus.addMenuItem('topbar', 'My Forms', 'forms', '', '/forms', false);
 	}
 ]).filter('formValidity',
     function(){

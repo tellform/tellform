@@ -59,9 +59,9 @@ var FormFieldSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	options: [{
+	fieldOptions: [{
 		type: String
-	}]
+	}],
 	required: {
 		type: Boolean,
 		default: true,

@@ -160,8 +160,11 @@ exports.listSubmissions = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
-	var form = new Form(req.body);
+	var form = new Form(req.body.form);
+
 	form.admin = req.user;
+	console.log(form);
+	console.log(req.user);
 
 	form.save(function(err) {
 		if (err) {

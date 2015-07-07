@@ -91,8 +91,8 @@ angular.module('forms').controller('EditFormController', ['$scope', '$state', '$
                     // Redirect after save 
                     $scope.goToWithId('viewForm', $scope.form._id);
                 }).error(function(errorResponse){
-                    console.log(errorResponse.data.message);
-                    $scope.error = errorResponse.data.message;
+                    console.log(errorResponse);
+                    $scope.error = errorResponse;
                 });
             } else{
                 $scope.update();

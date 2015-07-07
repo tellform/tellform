@@ -150,6 +150,31 @@ section > section.ng-scope {
     color: white;
 }
 
+/*MODAL CSS */
+.form-item.row.create-new.new-form {
+    background-color: rgb(300,131,131);
+    z-index: 11;
+}
+.form-item.row.create-new.new-form:hover {
+    background-color: rgb(300,100,100);
+}
+
+    .form-item.new-form a.btn {
+        font-size: 0.95em;
+    }
+
+    /*Modal overlay (for lightbox effect)*/
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 193%;
+        width: inherit;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 10;
+    }
+
+
 .form-item.row:hover, .form-item.row.create-new:hover {
     border-bottom: 8px inset #ccc;
     background-color: #d9d9d9;
@@ -183,7 +208,7 @@ section > section.ng-scope {
     margin-top: 3.2em;
 }
     .form-item.row > .details-row small {
-        font-size: 0.65em;
+        font-size: 0.6em;
     }
     .form-item.row.create-new > .details-row small {
         font-size: 0.95em;
