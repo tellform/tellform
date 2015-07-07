@@ -50,7 +50,7 @@ exports.uploadPDF = function(req, res, next) {
 						}
 						pdfFile.path = path.join(newDestination, pdfFile.name);
 						console.log(pdfFile.name + ' uploaded to ' + pdfFile.path);
-						res.status(200).send(pdfFile);
+						res.status(200).send('pdf file successfully uploaded');
 					});				
 
 				} else { 
@@ -79,7 +79,7 @@ exports.createSubmission = function(req, res) {
 	submission.form_fields = req.body.form_fields;
 	submission.title = req.body.title;
 	submission.timeElapsed = req.body.timeElapsed;
-	console.log(req.body);
+	// console.log(req.body);s
 	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
 	if(form.autofillPDFs){
@@ -150,7 +150,7 @@ exports.listSubmissions = function(req, res) {
 			} else {
 				// _form.submissions = _submissions;
 				_form.update({ $set : { submissions: _submissions }});
-
+				res.status(200);
 			}
 		});
 	// }
@@ -173,7 +173,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(form);
+			res.status(200).send('form created');
 		}
 	});
 };
@@ -204,7 +204,6 @@ exports.update = function(req, res) {
 			});
 		} else {
 			console.log('updated form');
-			// res.json(form);
 			res.status(200).send('updated form');
 		}
 	});
@@ -236,7 +235,7 @@ exports.list = function(req, res) {
 	var searchObj = {admin: req.user};
 	if(req.user.isAdmin()) searchObj = {};
 
-	Form.find({}).sort('-created').populate('admin').exec(function(err, forms) {
+	Form.find(searchObj).sort('-created').populate('admin.username', 'admin._id').exec(function(err, forms) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

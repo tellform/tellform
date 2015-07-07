@@ -5,19 +5,22 @@ angular.module('core').controller('HeaderController', ['$rootScope','$scope','Me
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish'];
-	    // console.log('isAuthenticated(): '+$scope.authentication.isAuthenticated());
 
 		$scope.isCollapsed = false;
 		$scope.hideNav = false;
 		$scope.menu = Menus.getMenu('topbar');
 
-
 	    $scope.signout = function() {
-	      User.logout(function() {
-	        Auth.logout();
-	        $rootScope.user = null;
-	        $state.go('home');
-	      });
+		    var promise = User.logout();
+			promise.then(function() {
+				Auth.logout();
+				// Auth.ensureHasCurrentUser(null);
+				$rootScope.user = null;
+				$state.go('home');
+				}, 
+			function(reason) {
+			  	console.log('Logout Failed: ' + reason);
+			});
 	    };
 
 		$scope.toggleCollapsibleMenu = function() {

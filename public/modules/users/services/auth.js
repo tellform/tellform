@@ -15,8 +15,8 @@ angular.module('users')
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
         if (service.currentUser && service.currentUser.displayName) {
-          console.log('Using local current user.');
-          console.log(service.currentUser);
+          // console.log('Using local current user.');
+          // console.log(service.currentUser);
           return service.currentUser;
         } 
         else if ($window.user){
@@ -60,7 +60,6 @@ angular.module('users')
         $window.user = null;
         userState.isLoggedIn = false;
         service.currentUser = null;
-        service.ensureHasCurrentUser(null);   
       },
     };
     return service;

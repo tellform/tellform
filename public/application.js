@@ -11,13 +11,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 ]);
 angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', '$state', '$stateParams',
     function($rootScope, $state, $stateParams) {
-		// $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
-		// 	// track the state the user wants to go to; authorization service needs this
-		// 	$rootScope.toState = toState;
-		// 	$rootScope.toStateParams = toStateParams;
-		// 	// if the principal is resolved, do an authorization check immediately. otherwise,
-		// 	// it'll be done when the state it resolved.
-		// });
 
 	    $rootScope.$state = $state;
 	    $rootScope.$stateParams = $stateParams;
@@ -25,6 +18,14 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 	    // add previous state property
 	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
 	        $state.previous = fromState;
+
+	        //Redirect home to listForms if user is authenticated
+	        if(toState.name === 'home'){
+	        	if($rootScope.authentication.isAuthenticated()){
+	        		event.preventDefault(); // stop current execution
+            		$state.go('listForms'); // go to login
+	        	}
+	        }
 	    });
 
     }

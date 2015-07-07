@@ -8,9 +8,9 @@ angular.module('core').controller('HomeController', ['$rootScope', '$scope', 'Us
 		$scope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = Auth;
 
-	    if($scope.authentication.isAuthenticated()){
-	    	$state.go('listForms');
-	    }
+	    // if($scope.authentication.isAuthenticated()){
+	    	// $state.go('listForms');
+	    // }
 
 	}
 ]);

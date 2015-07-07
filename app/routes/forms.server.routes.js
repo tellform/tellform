@@ -17,7 +17,7 @@ module.exports = function(app) {
 
 	app.route('/forms/:formId([a-zA-Z0-9]+)')
 		.get(forms.read)
-		// .post(forms.createSubmission)
+		.post(forms.createSubmission)
 		.put(users.requiresLogin, forms.hasAuthorization, forms.update)
 		.delete(users.requiresLogin, forms.hasAuthorization, forms.delete);
 
