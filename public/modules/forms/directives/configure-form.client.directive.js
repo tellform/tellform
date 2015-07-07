@@ -6,6 +6,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
             controller: function($scope){
                 $scope.log = '';
                 $scope.pdfLoading = false;
+                $scope.languages = $rootScope.languages;
                 var _current_upload = null;
                 $scope.createOrUpdate = $rootScope.createOrUpdate;
                 $scope.resetForm = $rootScope.resetForm;
@@ -25,11 +26,11 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
                 };
 
                 $scope.removePDF = function(){
-                    $scope.form.pdf = null;
-                    $scope.form.isGenerated = false;
-                    $scope.form.autofillPDFs = false;
+                    $scope.myform.pdf = null;
+                    $scope.myform.isGenerated = false;
+                    $scope.myform.autofillPDFs = false;
 
-                    console.log('form.pdf: '+$scope.form.pdf+' REMOVED');
+                    console.log('form.pdf: '+$scope.myform.pdf+' REMOVED');
                 };
 
                 $scope.uploadPDF = function(files) {
@@ -41,7 +42,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
                             url: '/upload/pdf',
                             fields: {
                                 'user': $scope.user,
-                                'form': $scope.form
+                                'form': $scope.myform
                             },
                             file: file
                         }).progress(function (evt) {
@@ -51,12 +52,12 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
                             $scope.pdfLoading = true;
                         }).success(function (data, status, headers, config) {
                             $scope.log = 'file ' + data.originalname + ' uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
-                            console.log($scope.form.pdf);
-                            $scope.form.pdf = angular.fromJson(angular.toJson(data));
+                            console.log($scope.myform.pdf);
+                            $scope.myform.pdf = angular.fromJson(angular.toJson(data));
                             $scope.pdfLoading = false;
 
                             console.log($scope.log);
-                            console.log('$scope.pdf: '+$scope.form.pdf.name);
+                            console.log('$scope.pdf: '+$scope.myform.pdf.name);
                             if(!$scope.$$phase){
                                 $scope.$apply();
                             }
@@ -73,7 +74,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
             templateUrl: './modules/forms/views/directiveViews/form/configure-form.html',
             restrict: 'E',
             scope: {
-                form:'=',
+                myform:'=',
                 user:'=',
                 pdfFields:'@',
                 formFields:'@'

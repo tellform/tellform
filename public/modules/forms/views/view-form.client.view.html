@@ -1,17 +1,14 @@
 <section data-ng-controller="ViewFormController" data-ng-init="findOne()" class="container admin-form">
 	<div class="page-header row" style="padding-bottom: 0px;">
 		<div class="col-xs-6">
-			<h1 data-ng-bind="form.title" style="margin-bottom: 0px;"></h1>
+			<h1 data-ng-bind="myform.title" style="margin-bottom: 0px;"></h1>
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-2 col-xs-offset-2">
 			<small class=" pull-right">			
-				<a class="btn btn-default" href="/#!/forms/{{form._id}}">
-					<span ng-click="remove()">Delete Form</span>
-					<!-- <i class="fa fa-sign-out"></i> -->
-				</a>
+				<button class="btn btn-danger" ng-click="remove()"><i class="fa fa-trash-o"></i> Delete Form</button>
 			</small>
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-2">
 			<small class=" pull-right">			
 				<a class="btn btn-default" href="/#!/forms/{{form._id}}">
 					<span ng-show="myform.isLive">View Live</span> <span ng-hide="myform.isLive">Preview</span> Form
@@ -30,19 +27,19 @@
 				<tab-heading>
 					Edit Form Fields
 				</tab-heading>
-				<edit-form-directive form="myform" user="user"></edit-form-directive>
+				<edit-form-directive myform="myform" user="user"></edit-form-directive>
 			</tab>
 			<tab disabled="true">
 				<tab-heading >
 					Edit Design
 				</tab-heading>
-				<edit-form-directive form="myform" user="user"></edit-form-directive>
+				<edit-form-directive myform="myform" user="user"></edit-form-directive>
 			</tab>
 			<tab>
 				<tab-heading>
 					Configure
 				</tab-heading>
-				<configure-form-directive form="myform" user="user"></configure-form-directive>
+				<configure-form-directive myform="myform" user="user"></configure-form-directive>
 			</tab>
 			<tab data-ng-click="showSubmissions()">
 				<tab-heading>

@@ -39,7 +39,7 @@ exports.signup = function(req, res) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
-					res.json(user);
+					res.status(200).send('user successfully loggedin');
 				}
 			});
 		}

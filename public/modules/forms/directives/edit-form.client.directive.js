@@ -9,7 +9,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
             templateUrl: './modules/forms/views/directiveViews/form/edit-form.html',
             restrict: 'E',
             scope: {
-                form:'=',
+                myform:'=',
                 user:'='
             },
             controller: function($scope){
@@ -53,25 +53,25 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     };
 
                     // put newField into fields array
-                    $scope.form.form_fields.unshift(newField);
+                    $scope.myform.form_fields.unshift(newField);
+                    console.log($scope.myform.form_fields.length);
                 };
 
                 // deletes particular field on button click
                 $scope.deleteField = function (hashKey){
-                    console.log($scope.form.form_fields);
-                    for(var i = 0; i < $scope.form.form_fields.length; i++){
-                        console.log($scope.form.form_fields[i].$$hashKey === hashKey);
-                        if($scope.form.form_fields[i].$$hashKey === hashKey){
-                            $scope.form.form_fields.splice(i, 1);                      
+                    console.log($scope.myform.form_fields);
+                    for(var i = 0; i < $scope.myform.form_fields.length; i++){
+                        console.log($scope.myform.form_fields[i].$$hashKey === hashKey);
+                        if($scope.myform.form_fields[i].$$hashKey === hashKey){
+                            $scope.myform.form_fields.splice(i, 1);                      
                             break;
                         }
                     }
                 };
                 $scope.duplicateField = function (field, field_index){
-                    for(var i = 0; i < $scope.form.form_fields.length; i++){
-                        if($scope.form.form_fields[i].field_id === field.field_id){
-                            // $scope.form.form_fields.splice(field_index+1, 0, field);
-                            $scope.addNewField($scope.form.form_fields[i].fieldType);
+                    for(var i = 0; i < $scope.myform.form_fields.length; i++){
+                        if($scope.myform.form_fields[i].field_id === field.field_id){
+                            $scope.addNewField($scope.myform.form_fields[i].fieldType);
                             break;
                         }
                     }

@@ -1,4 +1,4 @@
-<form class="row" name="fieldForm" form-locator auto-save-form="update()" form="form" novalidation>
+<form class="row" name="fieldForm" form-locator auto-save-form="update()" form="myform" novalidation>
     <div class="add-field col-xs-5">
         <!-- <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
         <button type="submit" class="btn" ng-click="addNewField()">
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-xs-10">
                 <accordion close-others="accordion.oneAtATime">
-                    <accordion-group ng-repeat="field in form.form_fields" is-open="accordion[$index].isOpen" on-finish-render="setFormValid()">
+                    <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="setFormValid()">
 
                         <accordion-heading>
                             <span class="pull-left" ng-switch="field.fieldType">

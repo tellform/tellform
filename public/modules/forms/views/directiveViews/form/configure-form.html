@@ -15,12 +15,12 @@
                 <div class="field-input col-sm-6">
 
                     <label>
-                        <input type="radio" data-ng-value="true" ng-model="form.hideFooter"  ng-required="true" />
+                        <input type="radio" data-ng-value="true" ng-model="myform.hideFooter"  ng-required="true" />
                         &nbsp;<span>Yes</span>
                     </label>
 
                     <label>
-                        <input type="radio" data-ng-value="false" ng-model="form.hideFooter"  ng-required="true" />
+                        <input type="radio" data-ng-value="false" ng-model="myform.hideFooter"  ng-required="true" />
                         &nbsp;<span>No</span>
                     </label>
 
@@ -29,7 +29,7 @@
             </div>
 
             <!-- autofillPDFs yes/no field -->
-            <div class="row field" ng-if="form.isGenerated">
+            <div class="row field">
                 <div class="field-title col-sm-6">
                     <h5>Save Submissions as PDFs?</h5>
                 </div>
@@ -37,12 +37,12 @@
                 <div class="field-input col-sm-6">
 
                     <label>
-                        <input type="radio" data-ng-value="true" ng-model="form.autofillPDFs"  ng-required="true" />
+                        <input type="radio" data-ng-value="true" ng-model="myform.autofillPDFs"  ng-required="true" />
                         &nbsp;<span>Yes</span>
                     </label>
 
                     <label>
-                        <input type="radio" data-ng-value="false" ng-model="form.autofillPDFs"  ng-required="true" />
+                        <input type="radio" data-ng-value="false" ng-model="myform.autofillPDFs"  ng-required="true" />
                         &nbsp;<span>No</span>
                     </label>
 
@@ -51,20 +51,20 @@
             </div>
 
             <!-- Upload PDF Field -->
-            <div class="row field" ng-if="form.autofillPDFs">
+            <div class="row field" ng-if="myform.autofillPDFs || myform.isGenerated">
                 <div class="col-sm-6 field-title">
                     <h5>Upload Your PDF Template</h5>
                 </div>
                 <div class="col-sm-6 field-input">
                     <div class="input-group ">
                         <div tabindex="-1" class="form-control file-caption">
-                            <span class="file-caption-ellipsis" ng-if="!form.pdf">…</span>
-                            <div class="file-caption-name" ng-if="form.pdf">
-                                {{form.pdf.originalname}}
+                            <span class="file-caption-ellipsis" ng-if="!myform.pdf">…</span>
+                            <div class="file-caption-name" ng-if="myform.pdf">
+                                {{myform.pdf.originalname}}
                             </div>
                         </div>
                         <div class="input-group-btn">
-                            <button type="button"  ng-if="form.pdf" ng-click="removePDF();" title="Clear selected files" class="btn btn-danger fileinput-remove fileinput-remove-button">
+                            <button type="button"  ng-if="myform.pdf" ng-click="removePDF();" title="Clear selected files" class="btn btn-danger fileinput-remove fileinput-remove-button">
                                 <i class="glyphicon glyphicon-trash"  ></i> 
                                 Delete
                             </button>
@@ -74,7 +74,7 @@
                                 Cancel
                             </button>
 
-                            <div class="btn btn-success btn-file" ngf-select ngf-change="uploadPDF($files)" ng-if="!form.pdf"> 
+                            <div class="btn btn-success btn-file" ngf-select ngf-change="uploadPDF($files)" ng-if="!myform.pdf"> 
                                 <i class="glyphicon glyphicon-upload"></i>
                                 Upload your PDF
                             </div>
@@ -84,19 +84,19 @@
             </div>
 
             <!-- generate form from PDF yes/no field -->
-            <div class="row field" ng-if="form.pdf">
+            <div class="row field">
                 <div class="col-sm-6 field-title">
                     <h5>Autogenerate Form?</h5>
                 </div>
                 <div class="col-sm-6 field-input">
 
                     <label>
-                        <input type="radio" data-ng-value="true" ng-model="form.isGenerated"  ng-required="true" />
+                        <input type="radio" data-ng-value="true" ng-model="myform.isGenerated"  ng-required="true" />
                         &nbsp;<span>Yes</span>
                     </label>
 
                     <label>
-                        <input type="radio" data-ng-value="false" ng-model="form.isGenerated"  ng-required="true" />
+                        <input type="radio" data-ng-value="false" ng-model="myform.isGenerated"  ng-required="true" />
                         &nbsp;<span>No</span>
                     </label>
                 </div>
@@ -105,7 +105,7 @@
             <!-- !!!!!!DAVID: TODO: Finish this so we can upload pdfFieldMap!!!!!!!!! -->
            
             <!-- Map form inputs to PDF inputs Field -->
-            <!-- <div class="textfield field row" ng-if="form.pdf">
+            <!-- <div class="textfield field row" ng-if="myform.pdf">
                 <div class="col-xs-2 field-title field-title">Map Form Fields to PDF Fields </div>
                 <div class="col-xs-4 field-input field-input">
                     <div class="row" ng-repeat="field in formFields">
@@ -137,8 +137,8 @@
 
                 <div class="col-sm-6 field-input field-input">
                     <input type="text" 
-                        ng-model="form.title" 
-                        value="{{form.title}}">
+                        ng-model="myform.title" 
+                        value="{{myform.title}}">
                     <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
                 </div>
             </div>
@@ -151,12 +151,12 @@
                 <div class="field-input col-sm-6">
 
                     <label>
-                        <input type="radio" data-ng-value="true" ng-model="form.isLive"  ng-required="true" style="background-color:#33CC00;"/>
+                        <input type="radio" data-ng-value="true" ng-model="myform.isLive"  ng-required="true" style="background-color:#33CC00;"/>
                         &nbsp;<span>Public</span>
                     </label>
 
                     <label>
-                        <input type="radio" data-ng-value="false" ng-model="form.isLive"  ng-required="true" />
+                        <input type="radio" data-ng-value="false" ng-model="myform.isLive"  ng-required="true" />
                         &nbsp;<span>Private</span>
                     </label>
 
@@ -164,13 +164,13 @@
                 </div>
             </div>
             <div class="row field">
-                <div class="col-xs-7 field-title">{{field.title}} </div>
-                <div class="col-xs-5 field-input">
-                    <select ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  ng-required="field.required" ng-disabled="field.disabled">
-                        <option ng-repeat="option in field.field_options" 
-                                ng-selected="option.option_value == field.fieldValue"
-                                value="{{option.option_id}}">
-                            {{option.option_title}}
+                <div class="col-xs-6 field-title">Language</div>
+                <div class="col-xs-4 field-input">
+                    <select ng-model="myform.language">
+                        <option ng-repeat="language in languages" 
+                                ng-selected="language == myform.language"
+                                value="{{language}}">
+                            {{language}}
                         </option>
                     </select>    
                     <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>

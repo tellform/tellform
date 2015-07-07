@@ -52,8 +52,9 @@ angular.module('users')
         return userState;
       },
 
-      login: function() {
+      login: function(new_user) {
         userState.isLoggedIn = true;
+        service.currentUser = new_user;
       },
 
       logout: function() {

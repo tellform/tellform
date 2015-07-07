@@ -31,11 +31,15 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
         $scope.finishedRender = true;
       });
 
-      $scope.$watch('form', function(newValue, oldValue) {
+      $scope.$watch('myform.form_fields', function(newValue, oldValue) {
         // console.log('auto saving');
-        // console.log(oldValue);
-        // console.log(newValue);
-        if(difference(oldValue.form_fields,newValue.form_fields).length !== 0 && !$formCtrl.$dirty) {
+        console.log(oldValue);
+        console.log(newValue);
+        if(difference(oldValue,newValue).length === 0 || oldValue === undefined){
+          console.log('returning');
+          return;
+        }
+        if(difference(oldValue,newValue).length !== 0 && !$formCtrl.$dirty) {
           $formCtrl.$setDirty();
         }
         // else if(difference(oldValue.form_fields,newValue.form_fields).length === 0 ){
@@ -43,13 +47,13 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
         // }
         // console.log('\n\n-------\n$pristine: '+( $formCtrl.$pristine ) );
         // console.log('$dirty: '+( $formCtrl.$dirty ) );
-        console.log('form_fields changed: '+difference(oldValue.form_fields,newValue.form_fields).length );
-        console.log('$valid: '+$formCtrl.$valid);
-        console.log('finishedRender: '+$scope.finishedRender);
-        console.log('saveInProgress: '+$scope.saveInProgress);
+        // console.log('form_fields changed: '+difference(oldValue.form_fields,newValue.form_fields).length );
+        // console.log('$valid: '+$formCtrl.$valid);
+        // console.log('finishedRender: '+$scope.finishedRender);
+        // console.log('saveInProgress: '+$scope.saveInProgress);
 
-        if($scope.finishedRender && ($formCtrl.$dirty || difference(oldValue.form_fields,newValue.form_fields).length !== 0)) {
-          console.log('auto saving');
+        if($scope.finishedRender && ($formCtrl.$dirty || difference(oldValue,newValue).length !== 0)) {
+          // console.log('auto saving');
           
           if(savePromise) {
             $timeout.cancel(savePromise);
@@ -63,7 +67,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
               // console.log('inside');
 
               if($scope.$eval(expression) !== false) {
-                console.log('Form data persisted -- setting pristine flag');
+                // console.log('Form data persisted -- setting pristine flag');
                 $formCtrl.$setPristine();  
                 // $scope.finishedRender = false;
               }

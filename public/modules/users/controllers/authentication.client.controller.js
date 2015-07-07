@@ -5,6 +5,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 	$scope = $rootScope;
 	$scope.credentials = {};
+	$scope.error = null;
 
 	// If user is signed in then redirect back home
 	if ($scope.authentication.isAuthenticated()) $state.go('home');
@@ -14,9 +15,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
     	// console.log($scope.credentials);
 		Auth.currentUser = User.login($scope.credentials).then(
 			function(response) {
-				Auth.login();
-				$rootScope.user = Auth.ensureHasCurrentUser(User);
-				$scope = $rootScope;
+				Auth.login(response);
+				$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 				console.log('$state.previous: \n');
 				console.log($state.previous);
 
@@ -29,7 +29,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 			},
 			function(error) {
 				$rootScope.user = Auth.ensureHasCurrentUser(User);
-				$scope = $rootScope;
+				$scope.user = $rootScope.user;
 
 				$scope.error = error;
 				console.log('loginError: '+error);
@@ -38,7 +38,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
     };
 
     $scope.signup = function() {
-      $scope.user = User.save($scope.registration,
+        User.save($scope.registration,
         function() {
         	$state.go('signup-success');
         },

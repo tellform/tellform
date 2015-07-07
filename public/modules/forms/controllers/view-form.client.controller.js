@@ -4,6 +4,7 @@
 angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm','$http',
 	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
 
+        
         $scope.myform = CurrentForm.getForm();
         $scope.submissions = undefined;
         $scope.viewSubmissions = false;
@@ -147,9 +148,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             }else {
                 form._id = form_id;
             }
-
     
-            
             $http.delete('/forms/'+form._id)
                 .success(function(data, status, headers){
                     console.log('form deleted successfully');
