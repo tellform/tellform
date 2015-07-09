@@ -17,6 +17,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 
 	    // add previous state property
 	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
+	    	console.log(fromState);
 	        $state.previous = fromState;
 
 	        //Redirect home to listForms if user is authenticated

@@ -3,9 +3,6 @@
 angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
     function ($rootScope, $q, $http, $timeout, timeCounter, Auth, FormFields) {
         return {
-            // link: function (scope, iElm, iAttrs) {
-            //     console.log(scope);
-            //   },
             templateUrl: './modules/forms/views/directiveViews/form/edit-form.html',
             restrict: 'E',
             scope: {
@@ -29,12 +26,14 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 $scope.accordion = {};
                 $scope.accordion.oneAtATime = true;
 
-                // create new field button click
+                // Add a new field to form
                 $scope.addNewField = function(fieldType){
 
                     // incr field_id counter
                     $scope.addField.lastAddedID++;
                     var fieldTitle;
+
+                    //F
                     for(var i = 0; i < $scope.addField.types.length; i++){
                         // console.log($scope.addField.types[i].name === fieldType);
                         if($scope.addField.types[i].name === fieldType){

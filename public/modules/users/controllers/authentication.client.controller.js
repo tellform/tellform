@@ -17,10 +17,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 			function(response) {
 				Auth.login(response);
 				$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
-				console.log('$state.previous: \n');
-				console.log($state.previous);
 
-				if($state.previous !== 'home'){
+				if($state.previous.name !== 'home'){
 					$state.go($state.previous.name);
 				}else{
 					$state.go('home');

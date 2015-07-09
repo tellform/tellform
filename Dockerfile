@@ -1,6 +1,14 @@
-FROM node:0.10
+# DOCKER-VERSION 1.7.0
+
+FROM ubuntu:13.10
+
+# make sure apt is up to date
+RUN apt-get update
 
 MAINTAINER Matthias Luebken, matthias@catalyst-zero.com
+
+# install nodejs and npm
+RUN apt-get install -y nodejs npm git git-core
 
 WORKDIR /home/mean
 

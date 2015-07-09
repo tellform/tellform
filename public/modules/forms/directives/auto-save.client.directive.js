@@ -7,9 +7,9 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
     link: function($scope, $element, $attrs, $ctrls) {
 
       var difference = function(array){
-         var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
+        var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
 
-         var containsEquals = function(obj, target) {
+        var containsEquals = function(obj, target) {
           if (obj == null) return false;
           return _.any(obj, function(value) {
             return _.isEqual(value, target);
