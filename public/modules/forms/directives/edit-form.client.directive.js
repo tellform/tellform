@@ -26,14 +26,13 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 $scope.accordion = {};
                 $scope.accordion.oneAtATime = true;
 
-                // Add a new field to form
+                // Add a new field
                 $scope.addNewField = function(fieldType){
 
                     // incr field_id counter
                     $scope.addField.lastAddedID++;
                     var fieldTitle;
 
-                    //F
                     for(var i = 0; i < $scope.addField.types.length; i++){
                         // console.log($scope.addField.types[i].name === fieldType);
                         if($scope.addField.types[i].name === fieldType){
