@@ -15,7 +15,7 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false"
+    "postinstall": "bower install --config.interactive=false; ./node_modules/grunt-cli/bin/grunt"
   },
   "dependencies": {
     "async": "~0.9.0",

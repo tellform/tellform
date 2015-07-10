@@ -1,5 +1,5 @@
 <form class="row" name="fieldForm" form-locator auto-save-form="update()" form="myform" novalidation>
-    <div class="add-field col-xs-5">
+    <div class="col-xs-5 add-field">
         <!-- <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
         <button type="submit" class="btn" ng-click="addNewField()">
         	<i class="icon-plus"></i> Add Field
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-	<div class="col-sm-7 current-fields">
+	<div class="col-xs-7 current-fields container">
         <!-- <p ng-show="form.form_fields.length == 0">No fields added yet.</p> -->
         <div class="row">
             <div class="col-xs-10">
@@ -125,7 +125,7 @@
             </div>
             <div class="col-xs-1" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in form.form_fields">
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields">
                         <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="deleteField(field.$$hashKey)">
                             <span class="text-center">
                                 <a href="" class="fa fa-trash-o"></a>
@@ -136,7 +136,7 @@
             </div>
             <div class="col-xs-1" style="padding:0 5px;">
                 <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in form.form_fields">
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields">
                         <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="duplicateField(field, $index)">
                             <span class="text-center">
                                 <a href="" class="fa fa-files-o"></a>
