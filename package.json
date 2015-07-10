@@ -15,12 +15,11 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false; grunt"
+    "postinstall": "bower install --config.interactive=false; npm install multer@0.1.8 -g; grunt"
   },
   "dependencies": {
     "async": "~0.9.0",
     "pdffiller": "whitef0x0/pdffiller",
-    "multer": "~0.1.8",
     "body-parser": "~1.9.0",
     "bower": "~1.3.8",
     "chalk": "~1.0.0",
