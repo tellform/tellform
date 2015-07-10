@@ -54,6 +54,7 @@
     "then-fs": "~2.0.0"
   },
   "devDependencies": {
+  	"multer": "~0.1.8",
     "grunt-concurrent": "~1.0.0",
     "grunt-contrib-csslint": "~0.3.1",
     "grunt-contrib-cssmin": "~0.10.0",
