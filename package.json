@@ -2,11 +2,11 @@
   "name": "medforms",
   "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
   "version": "0.0.1",
-  "private": false,
-  "author": "https://github.com/meanjs/mean/graphs/contributors",
+  "private": true,
+  "author": "https://github.com/whitef0x0/medforms/graphs/contributors",
   "repository": {
     "type": "git",
-    "url": "https://github.com/meanjs/mean.git"
+    "url": "https://github.com/whitef0x0/medforms.git"
   },
   "engines": {
     "node": ">=0.10.28",
@@ -20,6 +20,7 @@
   "dependencies": {
     "async": "~0.9.0",
     "pdffiller": "whitef0x0/pdffiller",
+    "multer": "~0.1.8",
     "body-parser": "~1.9.0",
     "bower": "~1.3.8",
     "chalk": "~1.0.0",
@@ -33,6 +34,7 @@
     "forever": "~0.11.0",
     "fs-extra": "~0.18.3",
     "glob": "~4.0.5",
+    "grunt": "~0.4.1",
     "grunt-cli": "~0.1.13",
     "helmet": "~0.5.0",
     "lodash": "~2.4.1",
@@ -40,7 +42,6 @@
     "method-override": "~2.3.0",
     "mongoose": "~3.8.8",
     "morgan": "~1.4.1",
-    "multer": "~0.1.8",
     "nodemailer": "~1.3.0",
     "passport": "~0.2.0",
     "passport-facebook": "~1.0.2",
@@ -54,9 +55,8 @@
     "then-fs": "~2.0.0"
   },
   "devDependencies": {
-  	"mocha": ">=1.20.0",
-    "grunt": "~0.4.1",
-  	"multer": "~0.1.8",
+    "multer": "~0.1.8",
+    "mocha": ">=1.20.0",
     "grunt-concurrent": "~1.0.0",
     "grunt-contrib-csslint": "~0.3.1",
     "grunt-contrib-cssmin": "~0.10.0",
