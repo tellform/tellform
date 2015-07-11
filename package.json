@@ -53,8 +53,6 @@
     "satelize": "~0.1.1",
     "swig": "~1.4.1",
     "then-fs": "~2.0.0"
-  },
-  "devDependencies": {
     "multer": "~0.1.8",
     "mocha": ">=1.20.0",
     "grunt-concurrent": "~1.0.0",
