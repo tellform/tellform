@@ -74,12 +74,6 @@ module.exports = function(db) {
 	// Showing stack errors
 	app.set('showStackError', true);
 
-	// Sentry (Raven) error reporting
-	app.use(raven.middleware.express.requestHandler(config.DSN));
-
-	// Should come before any other error middleware
-	app.use(raven.middleware.express.errorHandler(config.DSN));
-	// app.use(onError); // optional error handler if you want to display the error id to a user
 
 	// Set swig as the template engine
 	app.engine('server.view.html', consolidate[config.templateEngine]);
@@ -180,6 +174,27 @@ module.exports = function(db) {
 		require(path.resolve(routePath))(app);
 	});
 
+	// Add headers
+	// app.use(function (req, res, next) {
+
+	//     // Website you wish to allow to connect
+	//     res.setHeader('Access-Control-Allow-Origin', 'http://sentry.polydaic.com');
+
+	//     // Request methods you wish to allow
+	//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+	//     // Request headers you wish to allow
+	//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+	//     // Set to true if you need the website to include cookies in the requests sent
+	//     // to the API (e.g. in case you use sessions)
+	//     res.setHeader('Access-Control-Allow-Credentials', true);
+
+	//     // Pass to next layer of middleware
+	//     next();
+	// });
+
+
 	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
 	app.use(function(err, req, res, next) {
 		// If the error object doesn't exists
@@ -201,6 +216,17 @@ module.exports = function(db) {
 			error: 'Not Found'
 		});
 	});
+
+	// Sentry (Raven) middleware
+	app.use(raven.middleware.express(config.DSN));
+
+	raven.patchGlobal(function(logged, err) {
+        console.error(err)
+        console.error(err.stack)
+
+        console.error('exiting process (after global patch)')
+        process.exit(1)
+    })
 
 	if (process.env.NODE_ENV === 'secure') {
 		// Load SSL key and certificate

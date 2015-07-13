@@ -22,7 +22,8 @@
     "angular-permission": "~0.3.0",
     "restangular": "~1.5.1",
     "fontawesome": "~4.3.0",
-    "ng-file-upload": "~5.0.9"
+    "ng-file-upload": "~5.0.9",
+    "angular-raven": "~0.5.11"
   },
   "resolutions": {
     "angular": "^1.2.21",

@@ -84,6 +84,17 @@
 	<script type="text/javascript" src="http://{{request.hostname}}:35729/livereload.js"></script>
 	{% endif %}
 
+	<script>
+  		Raven.config('http://db01e03015ce48e2b68240ea8254b17c@sentry.polydaic.com/1', {
+	      // Raven settings
+	    })
+	    .setUser({
+	      "id": "SERVER_RENDERED_ID",
+	      "email": "SERVER_RENDERED_EMAIL"
+	    })
+	    .install()
+	</script>
+
 	<!-- [if lt IE 9]>
 	<section class="browsehappy jumbotron hide">
 		<h1>Hello there!</h1>
