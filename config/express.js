@@ -66,6 +66,13 @@ module.exports = function(db) {
 	// Showing stack errors
 	app.set('showStackError', true);
 
+	// Sentry (Raven) error reporting
+	app.use(raven.middleware.express.requestHandler(config.DSN));
+
+	// Should come before any other error middleware
+	app.use(raven.middleware.express.errorHandler(config.DSN));
+	//app.use(onError); // optional error handler if you want to display the error id to a user
+
 	// Set swig as the template engine
 	app.engine('server.view.html', consolidate[config.templateEngine]);
 
