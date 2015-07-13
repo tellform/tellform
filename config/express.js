@@ -24,14 +24,9 @@ var fs = require('fs-extra'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
-	path = require('path');
+	path = require('path'),
+	client = new raven.Client(config.DSN);
 
-// function onError(err, req, res, next) {
-//   // The error id is attached to `res.sentry` to be returned
-//   // and optionally displayed to the user for support.
-//   res.statusCode = 500;
-//   res.end(res.sentry+'\n');
-// }
 
 module.exports = function(db) {
 	// Initialize express app
@@ -125,25 +120,6 @@ module.exports = function(db) {
 			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
 			// res.status(200).send(file);
 		}
-		// 	console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
-		// 	console.log(req.body.user);
-		// 	console.log(req.user);
-		// 	var _user = JSON.parse(req.body.user);
-		// 	console.log(file)
-
-		// 	formCtrl.uploadPDF(file, _user, function(err, _file){
-		// 		if(err){
-		// 			console.log('\n\n ERROR: '+err.message)
-		// 			res.status(500).send({
-		// 				message: err.message
-		// 			});
-		// 		}else {
-		// 			console.log(_file.filename + ' uploaded to  ' + _file.path);
-		// 			res.status(200).send(_file);						
-		// 		}
-
-		// 	});
-		// }
 	}));
 
 	// CookieParser should be above session
@@ -174,26 +150,12 @@ module.exports = function(db) {
 		require(path.resolve(routePath))(app);
 	});
 
-	// Add headers
-	// app.use(function (req, res, next) {
 
-	//     // Website you wish to allow to connect
-	//     res.setHeader('Access-Control-Allow-Origin', 'http://sentry.polydaic.com');
+	// Sentry (Raven) middleware
+	app.use(raven.middleware.express.requestHandler(config.DSN));
 
-	//     // Request methods you wish to allow
-	//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-	//     // Request headers you wish to allow
-	//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-	//     // Set to true if you need the website to include cookies in the requests sent
-	//     // to the API (e.g. in case you use sessions)
-	//     res.setHeader('Access-Control-Allow-Credentials', true);
-
-	//     // Pass to next layer of middleware
-	//     next();
-	// });
-
+	// Should come before any other error middleware
+	app.use(raven.middleware.express.errorHandler(config.DSN));
 
 	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
 	app.use(function(err, req, res, next) {
@@ -202,6 +164,7 @@ module.exports = function(db) {
 
 		// Log it
 		console.error(err.stack);
+		client.captureError(err);
 
 		// Error page
 		res.status(500).render('500', {
@@ -211,22 +174,12 @@ module.exports = function(db) {
 
 	// Assume 404 since no middleware responded
 	app.use(function(req, res) {
+		client.captureError(new Error('Page Not Found'));
 		res.status(404).render('404', {
 			url: req.originalUrl,
 			error: 'Not Found'
 		});
 	});
-
-	// Sentry (Raven) middleware
-	app.use(raven.middleware.express(config.DSN));
-
-	raven.patchGlobal(function(logged, err) {
-        console.error(err)
-        console.error(err.stack)
-
-        console.error('exiting process (after global patch)')
-        process.exit(1)
-    })
 
 	if (process.env.NODE_ENV === 'secure') {
 		// Load SSL key and certificate
