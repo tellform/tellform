@@ -17,6 +17,7 @@ var fs = require('fs-extra'),
 	helmet = require('helmet'),
 	multer = require('multer'),
 	passport = require('passport'),
+	raven = require('raven'),
 	mongoStore = require('connect-mongo')({
 		session: session
 	}),
@@ -24,6 +25,13 @@ var fs = require('fs-extra'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
 	path = require('path');
+
+// function onError(err, req, res, next) {
+//   // The error id is attached to `res.sentry` to be returned
+//   // and optionally displayed to the user for support.
+//   res.statusCode = 500;
+//   res.end(res.sentry+'\n');
+// }
 
 module.exports = function(db) {
 	// Initialize express app
@@ -71,7 +79,7 @@ module.exports = function(db) {
 
 	// Should come before any other error middleware
 	app.use(raven.middleware.express.errorHandler(config.DSN));
-	//app.use(onError); // optional error handler if you want to display the error id to a user
+	app.use(onError); // optional error handler if you want to display the error id to a user
 
 	// Set swig as the template engine
 	app.engine('server.view.html', consolidate[config.templateEngine]);
