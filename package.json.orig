@@ -15,12 +15,19 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test",
+<<<<<<< HEAD
+    "postinstall": "bower install --config.interactive=false; grunt"
+=======
     "postinstall": "bower install --config.interactive=false; grunt build"
+>>>>>>> 4f7777515c74761ed4266b8787fd3d071329071c
   },
   "dependencies": {
   	"multer": "~0.1.8",
     "async": "~0.9.0",
+<<<<<<< HEAD
+=======
     "load-grunt-tasks": "~1.0.0",
+>>>>>>> 4f7777515c74761ed4266b8787fd3d071329071c
     "pdffiller": "whitef0x0/pdffiller",
     "body-parser": "~1.9.0",
     "bower": "~1.3.8",
@@ -53,7 +60,14 @@
     "passport-twitter": "~1.0.2",
     "satelize": "~0.1.1",
     "swig": "~1.4.1",
+<<<<<<< HEAD
+    "then-fs": "~2.0.0"
+  },
+  "devDependencies": {
+    "multer": "~0.1.8",
+=======
     "then-fs": "~2.0.0",
+>>>>>>> 4f7777515c74761ed4266b8787fd3d071329071c
     "mocha": ">=1.20.0",
     "grunt-concurrent": "~1.0.0",
     "grunt-contrib-csslint": "~0.3.1",

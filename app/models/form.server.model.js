@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
     FieldSchema = require('./form_field.server.model.js'),
 	Schema = mongoose.Schema,
-	pdfFiller = require('pdfFiller'),
+	pdfFiller = require('pdffiller'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
