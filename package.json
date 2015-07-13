@@ -9,15 +9,16 @@
     "url": "https://github.com/whitef0x0/medforms.git"
   },
   "engines": {
-    "node": ">=0.10.28",
-    "npm": ">=1.4.28"
+    "node": "~0.10.28",
+    "npm": "~1.4.28"
   },
   "scripts": {
     "start": "grunt",
     "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false; npm install multer@0.1.8 -g; grunt"
+    "postinstall": "bower install --config.interactive=false; grunt"
   },
   "dependencies": {
+  	"multer": "~0.1.8",
     "async": "~0.9.0",
     "load-grunt-tasks": "~1.0.0",
     "pdffiller": "whitef0x0/pdffiller",
@@ -53,7 +54,6 @@
     "satelize": "~0.1.1",
     "swig": "~1.4.1",
     "then-fs": "~2.0.0",
-    "multer": "~0.1.8",
     "mocha": ">=1.20.0",
     "grunt-concurrent": "~1.0.0",
     "grunt-contrib-csslint": "~0.3.1",
