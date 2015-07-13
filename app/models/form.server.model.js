@@ -36,7 +36,8 @@ var FormSchema = new Schema({
 	language: {
 		type: String,
 		enum: ['english', 'french', 'spanish'],
-		required: 'Form must have a language'
+		required: 'Form must have a language',
+		default: 'english'
 	},
 	description: {
 		type: String,
@@ -182,6 +183,8 @@ FormSchema.pre('save', function (next) {
 					pdfFiller.generateFieldJson(that.pdf.path, function(err, _form_fields){
 						if(err){
 							next( new Error(err.message), null);
+						}else if(!_form_fields.length){
+							next( new Error('Generated formfields is empty'), null);
 						}
 
 						//Map PDF field names to FormField field names

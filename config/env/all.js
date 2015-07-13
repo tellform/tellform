@@ -6,7 +6,7 @@ module.exports = {
 		description: 'Generate Forms from PDFs',
 		keywords: 'typeform, pdfs, forms, generator, form generator',
 	},
-	port: process.env.PORT || 3000,
+	port: process.env.PORT || 5000,
 	templateEngine: 'swig',
 	// The secret should be set to a non-guessable string that
 	// is used to compute a session hash
