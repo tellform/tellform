@@ -79,7 +79,7 @@ module.exports = function(db) {
 
 	// Should come before any other error middleware
 	app.use(raven.middleware.express.errorHandler(config.DSN));
-	app.use(onError); // optional error handler if you want to display the error id to a user
+	// app.use(onError); // optional error handler if you want to display the error id to a user
 
 	// Set swig as the template engine
 	app.engine('server.view.html', consolidate[config.templateEngine]);
