@@ -1,9 +1,12 @@
 {
-  "name": "medforms",
-  "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
-  "version": "0.0.1",
+  "name": "Medform",
+  "description": "PDF generated form builder",
+  "version": "0.0.2",
+  "homepage": "https://github.com/whitef0x0/medform",
+  "authors": [
+    "David Baldwynn <polydaic@gmail.com>"
+  ],
   "private": true,
-  "author": "https://github.com/whitef0x0/medforms/graphs/contributors",
   "repository": {
     "type": "git",
     "url": "https://github.com/whitef0x0/medforms.git"
