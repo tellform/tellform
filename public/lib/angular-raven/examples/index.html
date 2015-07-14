@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Raven.js for Angular.js</title>
+  <script src="https://cdn.ravenjs.com/1.1.16/raven.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+  <script src="../angular-raven.js"></script>
+
+</head>
+<body ng-app="APP">
+  <section ng-controller="MainCtrl">
+    <form ng-submit="throwError(message)">
+      <label>
+        Error:
+        <input type="text" ng-model="message" autofocus required>
+      </label>
+      <button>Submit Error</button>
+    </form>
+    <ul>
+      <li ng-repeat="err in listErrors | reverse track by $index">
+        <pre>{{ err.stack  }}</pre>
+      </li>
+    </ul>
+  </section>
+
+
+
+  <script type="text/javascript">
+    Raven.config('http://50dbe04cd1224d439e9c49bf1d0464df@localhost:8000/1').install();
+
+    angular.module('APP', ['ngRaven'])
+    .config(function($ravenProvider) {
+      $ravenProvider.development(true);
+    })
+    .controller('MainCtrl', function($scope) {
+      $scope.listErrors = [];
+
+      $scope.throwError = function(message) {
+        if (!message) { return; }
+        var err = new Error(message);
+
+        $scope.listErrors.push(err);
+        $scope.message = '';
+
+        throw err;
+      };
+
+    })
+    .filter('reverse', function() {
+      return function(items) {
+        return items.slice().reverse();
+      };
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "name": "angular-raven",
+  "version": "0.5.11",
+  "main": "angular-raven.js",
+  "keywords": [
+    "Patrick",
+    "PatrickJS",
+    "gdi2290",
+    "angular",
+    "angularjs",
+    "angular.js",
+    "$exceptionHandler",
+    "raven",
+    "ravenjs",
+    "raven.js",
+    "sentry.js",
+    "sentry",
+    "sentryjs",
+    "error",
+    "errorhandler"
+  ],
+  "authors": [
+    {
+      "name": "Patrick Stapleton",
+      "email": "github@gdi2290.com",
+      "url": "www.gdi2290.com"
+    }
+  ],
+  "ignore": [
+    "**/.*",
+    "*.yml",
+    "*.xml",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "*",
+    "raven-js": "*"
+  }
+}

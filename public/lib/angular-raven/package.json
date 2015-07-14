@@ -1,0 +1,51 @@
+{
+  "name": "angular-raven",
+  "version": "0.5.11",
+  "main": "angular-raven.js",
+  "description": "A Raven.js / Sentry wrapper for Angular.js",
+  "homepage": "https://github.com/gdi2290/angular-raven",
+  "bugs": "https://github.com/gdi2290/angular-raven/issues",
+  "author": {
+    "name": "Patrick Stapleton",
+    "email": "github@gdi2290.com",
+    "url": "www.gdi2290.com"
+  },
+  "keywords": [
+    "Patrick",
+    "PatrickJS",
+    "gdi2290",
+    "angular",
+    "angularjs",
+    "angular.js",
+    "$exceptionHandler",
+    "raven",
+    "ravenjs",
+    "raven.js",
+    "sentry.js",
+    "sentry",
+    "sentryjs",
+    "error",
+    "errorhandler"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gdi2290/angular-raven.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "dependencies": {
+    "angular": "*",
+    "raven": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "load-grunt-tasks": "~0.1.0",
+    "time-grunt": "~0.1.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.0"
+  }
+}
