@@ -8,7 +8,7 @@ var client = new raven.Client(config.DSN);
 /**
  * Module dependencies.
  */
-exports.index = function(req, res, next) {
+exports.index = function(req, res) {
 	// next( throw new Error('Hello, world!'));
 	client.captureMessage('Rendering index.html');
 	res.render('index', {
