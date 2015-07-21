@@ -114,13 +114,13 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		ngAnnotate: {
-			production: {
-				files: {
-					'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
-				}
-			}
-		},
+		// ngAnnotate: {
+		// 	production: {
+		// 		files: {
+		// 			'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
+		// 		}
+		// 	}
+		// },
 		concurrent: {
 			default: ['nodemon', 'watch'],
 			debug: ['nodemon', 'watch', 'node-inspector'],
@@ -179,7 +179,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint', ['newer:jshint', 'newer:csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'uglify', 'cssmin']); //'ngAnnotate',  ]);
 
 	// Test task.
 	grunt.registerTask('test', ['test:server', 'test:client']);

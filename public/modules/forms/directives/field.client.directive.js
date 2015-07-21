@@ -9,7 +9,7 @@ var __indexOf = [].indexOf || function(item) {
 };
 
 angular.module('forms').directive('fieldDirective', function($http, $compile) {
-    
+
     
     var getTemplateUrl = function(field) {
 
@@ -33,6 +33,17 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
 
     var linker = function(scope, element) {
         scope.field.required = scope.required;
+
+        //Set format only if field is a date
+        if(scope.field.fieldType === 'date'){
+            scope.dateOptions = {
+                changeYear: true,
+                changeMonth: true,
+                altFormat: "mm/dd/yyyy",
+                yearRange: '1900:-0',   
+                defaultDate: 0,
+            };
+        }
         
         // GET template content from path
         var templateUrl = getTemplateUrl(scope.field);

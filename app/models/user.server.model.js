@@ -74,7 +74,7 @@ var UserSchema = new Schema({
 	roles: {
 		type: [{
 			type: String,
-			enum: ['user', 'admin']
+			enum: ['user', 'admin', 'superuser']
 		}],
 		default: ['user']
 	},
@@ -91,6 +91,15 @@ var UserSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	
+	/* For account activation */
+	activationToken: {
+		type: String
+	},
+	activationTokenExpires: {
+		type: Date
+	},
+
 	/* For reset password */
 	resetPasswordToken: {
 		type: String

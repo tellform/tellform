@@ -7,9 +7,10 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
                 $scope.log = '';
                 $scope.pdfLoading = false;
                 $scope.languages = $rootScope.languages;
+                
                 var _current_upload = null;
-                $scope.createOrUpdate = $rootScope.createOrUpdate;
                 $scope.resetForm = $rootScope.resetForm;
+                $scope.update = $rootScope.update;
 
                 var _unbindedPdfFields = $scope.pdfFields;
 

@@ -10,9 +10,6 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
-	Form = mongoose.model('Form'),
-	FieldSchema = require('./form_field.server.model.js'),
-	Field = mongoose.model('Field', FieldSchema),
 	fs = require('fs-extra');
 
 /** 
@@ -119,4 +116,6 @@ FormSubmissionSchema.pre('save', function (next) {
 
 });
 
-mongoose.model('FormSubmission', FormSubmissionSchema);
+module.exports = FormSubmissionSchema;
+
+// mongoose.model('FormSubmission', FormSubmissionSchema);

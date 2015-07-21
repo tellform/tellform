@@ -7,7 +7,93 @@ var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
+	async = require('async'),
+	config = require('../../../config/config'),
+	nodemailer = require('nodemailer'),
+	crypto = require('crypto'),
 	User = mongoose.model('User');
+
+var smtpTransport = nodemailer.createTransport(config.mailer.options);
+
+
+/**
+ * Reset password GET from email token
+ */
+exports.validateResetToken = function(req, res) {
+	User.findOne({
+		resetPasswordToken: req.params.token,
+		resetPasswordExpires: {
+			$gt: Date.now()
+		}
+	}, function(err, user) {
+		if (!user) {
+			return res.redirect('/#!/password/reset/invalid');
+		}
+
+		res.redirect('/#!/password/reset/' + req.params.token);
+	});
+};
+
+/**
+ * Send verification email 
+ */
+var sendVerificationEmail = function(req, res, next) {
+	// Init Variables
+	var passwordDetails = req.body;
+
+	async.waterfall([
+		// Generate random token
+		function(done) {
+			crypto.randomBytes(20, function(err, buffer) {
+				var token = buffer.toString('hex');
+				done(err, token);
+			});
+		},
+		function(token, done) {
+			// For security measurement we remove the roles from the req.body object
+			delete req.body.roles;
+
+			// Init Variables
+			var user = new User(req.body);
+			user.resetPasswordToken = token;
+			user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+			// Add missing user fields
+			user.provider = 'local';
+			user.displayName = user.firstName + ' ' + user.lastName;
+
+			// Then save the user
+			user.save(function(err) {
+				done(err, token, user);
+			});
+		},
+		function(token, user, done) {
+			res.render('templates/verify-account-email', {
+				name: user.displayName,
+				url: 'http://' + req.headers.host + '/auth/activate/' + token,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Please verify your email',
+				html: emailHTML
+			};
+
+			smtpTransport.sendMail(mailOptions, function(err) {
+				done(err, 'done');
+			});
+		}
+	], function(err) {
+		if (err) return next(err);
+		res.status(200).send('new user successfully registered');
+	});
+};
 
 /**
  * Signup
@@ -34,14 +120,15 @@ exports.signup = function(req, res) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
+			res.status(200).send('new user successfully registered');
 
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					res.status(200).send('user successfully loggedin');
-				}
-			});
+			// req.login(user, function(err) {
+			// 	if (err) {
+			// 		res.status(400).send(err);
+			// 	} else {
+			// 		res.status(200).send('new user successfully registered');
+			// 	}
+			// });
 		}
 	});
 };
@@ -60,7 +147,9 @@ exports.signin = function(req, res, next) {
 
 			req.login(user, function(err) {
 				if (err) {
-					res.status(400).send(err);
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
 				} else {
 					res.json(user);
 				}
@@ -74,8 +163,8 @@ exports.signin = function(req, res, next) {
  */
 exports.signout = function(req, res) {
 	req.logout();
-	// res.status(200).send('user successfully logged out');
-	res.redirect('/');
+	res.status(200).send('user successfully logged out');
+	// res.redirect('/');
 };
 
 /**

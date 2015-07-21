@@ -11,14 +11,12 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	if ($scope.authentication.isAuthenticated()) $state.go('home');
 
     $scope.signin = function() {
-    	// console.log("signin");
-    	// console.log($scope.credentials);
 		Auth.currentUser = User.login($scope.credentials).then(
 			function(response) {
 				Auth.login(response);
 				$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-				if($state.previous.name !== 'home'){
+				if($state.previous.name !== 'home' && $state.previous.name !== ''){
 					$state.go($state.previous.name);
 				}else{
 					$state.go('home');
@@ -36,8 +34,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
     };
 
     $scope.signup = function() {
-        User.save($scope.registration,
-        function() {
+        User.signup($scope.credentials).then(
+        function(response) {
+        	console.log('signup-success');
         	$state.go('signup-success');
         },
         function(error) {

@@ -79,7 +79,6 @@ exports.createSubmission = function(req, res) {
 	submission.form_fields = req.body.form_fields;
 	submission.title = req.body.title;
 	submission.timeElapsed = req.body.timeElapsed;
-	// console.log(req.body);s
 	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
 	if(form.autofillPDFs){
@@ -126,8 +125,8 @@ exports.createSubmission = function(req, res) {
 					message: errorHandler.getErrorMessage(err)
 				});
 			}
-			console.log(results);
-			console.log(that.form_fields);
+			// console.log(results);
+			// console.log(that.form_fields);
 			res.status(200).send('Form submission successfully saved');
 		});
 };
@@ -137,21 +136,31 @@ exports.createSubmission = function(req, res) {
  */
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
+	var _user = req.user;
+	// console.log(_form);
 
 	// if(_form.submissions.length){
 		// res.json(_form.submissions);
 	// }else{
-		FormSubmission.find({ form: req.form }).populate('admin', 'form').exec(function(err, _submissions) {
+		FormSubmission.find({ form: req.form, admin: _user }).populate('admin', 'form').exec(function(err, _submissions) {
 			if (err) {
 				console.log(err);
 				res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
-			} else {
-				// _form.submissions = _submissions;
-				_form.update({ $set : { submissions: _submissions }});
-				res.status(200);
 			}
+
+			_form.update({ $set : { submissions: _submissions }}).exec(function(err, form){
+				if (err) {
+					console.log(err);
+					res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} 
+				res.json(_submissions);
+			});
+			// res.status(200).send('Updated forms');
+		
 		});
 	// }
 };
@@ -192,10 +201,21 @@ exports.read = function(req, res) {
 exports.update = function(req, res) { 
 	console.log('in form.update()');
 
-	var form = req.form;
-	form = _.extend(form, req.body.form);
-	form.admin = req.user;
+	console.log(req.body.form.form_fields);
 
+	var form = req.form;
+	delete req.body.form.__v;
+	delete req.body.form._id;
+	delete req.body.form.created;
+	delete req.body.form.lastModified;
+
+	//Unless we have 'admin' priviledges, updating form admin is disabled
+	if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
+
+	form = _.extend(form, req.body.form);
+	// console.log(req.body.form);
+	// form.form_fields = req.body.form.form_fields;
+	
 	form.save(function(err) {
 		if (err) {
 			console.log(err);
@@ -267,28 +287,6 @@ exports.formByID = function(req, res, next, id) {
 			});
 		}
 		else {
-			if(!form.admin){
-				form.admin = req.user;
-				form.save(function(err) {
-					if (err) {
-						console.log(err);
-						res.status(400).send({
-							message: errorHandler.getErrorMessage(err)
-						});
-					} else {
-						//Remove sensitive information from User object
-						form.admin.password = null;
-						form.admin.created = null;
-						form.admin.salt = null;
-
-						req.form = form;
-						next();
-					}
-				});
-			}
-
-			console.log(form.submissions);
-
 			//Remove sensitive information from User object
 			form.admin.password = null;
 			form.admin.created = null;

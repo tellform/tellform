@@ -16,5 +16,5 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
                 }, 500);
             }
         }
-    }
+    };
 });

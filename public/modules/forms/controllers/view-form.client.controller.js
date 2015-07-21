@@ -14,10 +14,30 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             rows: []
         };
 
+        // Return all user's Forms
+        $scope.findAll = function() {
+            $scope.myforms = Forms.query();
+        };
+
+        // Find a specific Form
+        $scope.findOne = function() {
+            $scope.myform = Forms.get({
+                formId: $stateParams.formId
+            });
+            CurrentForm.setForm($scope.myform);
+        };
+
+        $scope.goToWithId = function(route, id) {
+            $state.go(route, {'formId': id}, {reload: true});
+        };
+
+
+
         $scope.setForm = function (form) {
             $scope.myForm = form;
         };
 
+        //Modal functions
         $scope.openCreateModal = function(){
             if(!$scope.showCreateModal){
                 $scope.showCreateModal = true;
@@ -29,53 +49,9 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             }
         };
 
-        //Create new form
-        $scope.createNew = function(){
-            var form = {};
-            form.title = $scope.myForm.name.$modelValue;
-            form.language = $scope.myForm.language.$modelValue;
-            console.log(form);
-            $scope.showCreateModal = true;
-
-            console.log($scope.myForm);
-            if($scope.myForm.$valid && $scope.myForm.$dirty){
-                $http.post('/forms', {form: form})
-                .success(function(data, status, headers){
-                    console.log('form created');
-
-                    // Clear form fields
-                   $scope.myForm = {};
-                    // Redirect after save 
-                    $scope.goToWithId('viewForm', $scope.myform._id);
-                }).error(function(errorResponse){
-                    console.log(errorResponse);
-                    // $scope.error = errorResponse.data.message;
-                });
-            }
-        };
-
-        $scope.saveInProgress = false;
-        $scope.update = function() {
-            if(!$scope.saveInProgress){
-                $scope.saveInProgress = true;
-
-                console.log('start update()');
-
-                $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
-                    .then(function(response){
-                        console.log('form updated successfully');
-                        console.log('$scope.saveInProgress: '+$scope.saveInProgress);
-                        // $rootScope.goToWithId('viewForm', $scope.myform._id);
-                    }).catch(function(response){
-                        console.log('Error occured during form UPDATE.\n');
-                        console.log(response.data);
-                    }).finally(function() { 
-                        $scope.saveInProgress = false; 
-                    });
-            }
-        };
-
-        //Table Functions
+        /*
+        * Table Functions
+        */
         $scope.toggleAllCheckers = function(){
             console.log('toggleAllCheckers');
             for(var i=0; i<$scope.table.rows.length; i++){
@@ -85,59 +61,72 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         $scope.toggleObjSelection = function($event, description) {
             $event.stopPropagation();
            console.log('checkbox clicked');
-       };
-
-       $scope.rowClicked = function(obj) {
-           console.log('row clicked');
+        };
+        $scope.rowClicked = function(obj) {
+           // console.log('row clicked');
            obj.selected = !obj.selected;
-       };
+        };
 
         //show submissions of Form
         $scope.showSubmissions = function(){
         	$scope.viewSubmissions = true;
-            if(!$scope.table.rows.length){
-                $http.get('/forms/'+$scope.myform._id+'/submissions')
-                    .success(function(data, status, headers){
-                        console.log(data);
-                        $scope.submissions = data;
-                        $scope.table.rows = data; 
-                        console.log('form submissions successfully fetched');
-                    })
-                    .error(function(err){
-                        console.log('Could not fetch form submissions.\nError: '+err);
-                    });            
-            } else if(!$scope.submissions.length){
-                $http.get('/forms/'+$scope.myform._id+'/submissions')
-                    .success(function(data, status, headers){
-                        $scope.submissions = data;
-                        $scope.table.rows = data;
-                        console.log($scope.table.rows);
-                        console.log('form submissions successfully fetched');
-                    })
-                    .error(function(err){
-                        console.log('Could not fetch form submissions.\nError: '+err);
-                    });
-            }
-            console.log($scope.submissions);
-        };
 
+            $http.get('/forms/'+$scope.myform._id+'/submissions')
+                .success(function(data, status, headers){
+                    console.log(data[0].form_fields);
+
+                    var _data = Array();
+                    for(var i=0; i<data.length; i++){
+
+                        var _tmpSubFormFields = JSON.parse(JSON.stringify($scope.myform.form_fields));
+
+                        for(var x=0; x<_tmpSubFormFields.length; x++){
+
+                            var currField__id = _tmpSubFormFields[x]._id,
+                                currField = undefined;
+
+                            _.find(data[i].form_fields, function(fieldItem, fieldIdx){ 
+                                if(fieldItem._id === currField__id){ 
+                                    currField = fieldItem; 
+                                    console.log(fieldItem.fieldValue);
+                                    return true;
+                                }; 
+                            });
+
+                            if(currField !== undefined){
+                                _tmpSubFormFields[x].fieldValue = currField.fieldValue;
+                                _tmpSubFormFields[x].$$hashKey = currField.$$hashKey;
+                            }else {
+                                _tmpSubFormFields[x].fieldValue = '';
+                            }
+
+                        }
+                        // _tmpSubFormFields.order = i;
+
+                        _data[i] = data[i];
+                        _data[i].form_fields = _tmpSubFormFields;
+                    };
+
+                    console.log(JSON.stringify(_data));
+                    $scope.submissions = _data;
+
+                    $scope.table.rows = _data;
+                    // console.log('form submissions successfully fetched');
+                    // console.log( JSON.parse(JSON.stringify($scope.submissions)) ) ;
+                    // console.log( JSON.parse(JSON.stringify($scope.myform.form_fields)) );
+
+
+                })
+                .error(function(err){
+                    console.log('Could not fetch form submissions.\nError: '+err);
+                });            
+        };
         //hide submissions of Form
         $scope.hideSubmissions = function(){
         	$scope.viewSubmissions = false;
         };
 
-		// Return all user's Forms
-		$scope.findAll = function() {
-			$scope.myforms = Forms.query();
-		};
 
-		// Find a specific Form
-		$scope.findOne = function() {
-			$scope.myform = Forms.get({
-				formId: $stateParams.formId
-			});
-			CurrentForm.setForm($scope.myform);
-		};
 
         // Remove existing Form
         $scope.remove = function(form_id) {
@@ -168,56 +157,55 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                 });
         };
 
-        $scope.goToWithId = function(route, id) {
-            $state.go(route, {'formId': id}, {reload: true});
-        };
-
         // Create new Form
-        $rootScope.createOrUpdate = function() {
-            if($scope.isNewForm){
-                // Create new Form object
-                var form = new Forms($scope.myform);
+        $scope.createNew = function(){
+            var form = {};
+            form.title = $scope.myForm.name.$modelValue;
+            form.language = $scope.myForm.language.$modelValue;
+            console.log(form);
+            $scope.showCreateModal = true;
 
-                $http.post('/forms', {form: $scope.myform})
+            console.log($scope.myForm);
+            if($scope.myForm.$valid && $scope.myForm.$dirty){
+                $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
                     console.log('form created');
 
                     // Clear form fields
-                    $scope.myform = {};
+                   $scope.myForm = {};
                     // Redirect after save 
                     $scope.goToWithId('viewForm', $scope.myform._id);
                 }).error(function(errorResponse){
-                    console.log(errorResponse.data.message);
-                    $scope.error = errorResponse.data.message;
+                    console.log(errorResponse);
+                    // $scope.error = errorResponse.data.message;
                 });
-            } else{
-                $rootScope.update();
             }
         };
 
-        // $rootScope.saveInProgress = false;
-
-        var saveFinished = function() { 
-            $rootScope.saveInProgress = false; 
-            console.log('update form');
-        };
-
         // Update existing Form
-        $rootScope.update = function() {
+        $scope.saveInProgress = false;
+        $scope.update = $rootScope.update = function(cb) {
+            if(!$scope.saveInProgress){
+                $scope.saveInProgress = true;
 
-            $rootScope.saveInProgress = true;
-            console.log('update form');
+                $rootScope.saveInProgress = true;
+                // console.log('begin updating form');
+                var err = null;
 
-            $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
-                .then(function(response){
-                    console.log('form updated successfully');
-                }).catch(function(response){
-                    console.log('Error occured during form UPDATE.\n');
-                    console.log(response.data);
-                }).finally(function() { 
-                    $rootScope.saveInProgress = false; 
-                    console.log('update form');
-                });
+                $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
+                    .then(function(response){
+                        // console.log('form updated successfully');
+                        // console.log(response.status);
+                    }).catch(function(response){
+                        console.log('Error occured during form UPDATE.\n');
+                        console.log(response.data);
+                        err = response.data;
+                    }).finally(function() { 
+                        // console.log('finished updating');
+                        $scope.saveInProgress = false;
+                        cb(err);
+                    });
+            }
         };
 
         $rootScope.resetForm = function(){

@@ -1,3 +1,7 @@
+.btn {
+    border: 1px solid #c6c6c6!important;
+}
+
 /* Styles for form submission view (/forms/:formID) */
 form .row.field {
     padding: 1em 0 3em 0;
@@ -14,14 +18,28 @@ form .row.field {
         color:#ddd;
     }
     form.submission-form .row.field > .field-input input {
-        width:500px;
+        width:100%;
     }
     form.submission-form .row.field .field-input > input:focus {
         font-size:1em;
     }
         form .row.field.textfield > .field-input > input{
             padding:0.45em 0.9em;
-            width:600px;
+            width:100%;
+            line-height:160%;
+        }
+
+    form .row.field.dropdown > .field-input {
+        height: 34px;
+        overflow: hidden;
+    }
+        form .row.field.dropdown > .field-input > select{
+            padding:0.45em 0.9em;
+            width:100%;
+            background: transparent;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            height: 34px;
         }
 
 div.config-form > .row {

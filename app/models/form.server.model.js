@@ -5,14 +5,16 @@
  */
 var mongoose = require('mongoose'),
     FieldSchema = require('./form_field.server.model.js'),
+    FormSubmissionSchema = require('./form_submission.server.model.js'),
 	Schema = mongoose.Schema,
 	pdfFiller = require('pdffiller'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
 	fs = require('fs-extra'),
-	async = require('async'),
-	Field = mongoose.model('Field', FieldSchema);
+	async = require('async');
+	var Field = mongoose.model('Field', FieldSchema);
+	var FormSubmission = mongoose.model('FormSubmission', FormSubmissionSchema);
 
 
 /**
@@ -44,7 +46,7 @@ var FormSchema = new Schema({
 		default: '',
 	},
 	form_fields: {
-		type: [Schema.Types.Mixed],
+		type: [FieldSchema],
 		set: function(form_fields) {
 	      this._previousFormFields = this.form_fields;
 	      return form_fields;
@@ -58,7 +60,8 @@ var FormSchema = new Schema({
 
 	admin: {
 		type: Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'User',
+		required: 'Form must have an Admin'
 	},
 
 	pdf: {
@@ -67,6 +70,7 @@ var FormSchema = new Schema({
 	pdfFieldMap: {
 		type: Schema.Types.Mixed
 	},
+
 	hideFooter: {
 		type: Boolean,
 		default: false,
@@ -83,6 +87,10 @@ var FormSchema = new Schema({
 		type: Boolean,
 		default: false,
 	},
+});
+
+FormSchema.post('init', function() {
+  this._original = this.toObject();
 });
 
 //Delete template PDF of current Form
@@ -109,6 +117,7 @@ FormSchema.pre('save', function (next) {
 //Concatenate submission and form's form_fields
 // FormSchema.pre('save', function (next) {
 // 	if(this.isModified('form_fields')){
+
 // 		if(this.submissions.length){
 // 			for(var i=0; i<this.submissions.length; i++){
 // 				var submission = this.submissions[i];
@@ -116,10 +125,118 @@ FormSchema.pre('save', function (next) {
 // 				this.submissions[i].form_fields = submission.form_fields.concat(_.difference(this.form_fields, this._previousFormFields));
 // 			}
 // 		}
+
 // 		this.form_fields = this._previousFormFields.concat(_.difference(this.form_fields, this._previousFormFields));
 // 	}
 // 	next();
 // });
+
+function getDeletedIndexes(needle, haystack){
+	var deletedIndexes = [];
+
+	if(haystack.length > 0){
+	  	for(var i = 0; i < needle.length; i++){
+	    	if(haystack.indexOf(needle[i]) <= -1){
+				deletedIndexes.push(i);
+	    	}
+	  	}
+	}
+	return deletedIndexes;
+}
+
+
+FormSchema.pre('save', function (next) {
+	if(this.isModified('form_fields')){
+
+		var old_form_fields = this._original.form_fields,
+			old_ids = _.pluck(this.form_fields, '_id'),
+			new_ids = _.pluck(old_form_fields, '_id'),
+			deletedIds = getDeletedIndexes(old_ids, new_ids),
+			that = this;
+
+		// console.log(deletedIds);
+		// console.log('old_ids\n--------');
+		// console.log(old_ids);
+		// console.log('new_ids\n--------');
+		// console.log(new_ids);
+
+		//Preserve fields that have at least one submission
+		if( deletedIds.length > 0 ){
+
+			var modifiedSubmissions;
+
+			async.forEachOfSeries(deletedIds, function (deletedIdIndex, key, callback) {
+				
+				var deleted_id = old_ids[deletedIdIndex];
+
+				//Search for submissions with deleted form_field
+				FormSubmission.
+					find({ form: that, admin: that.admin, form_fields: {$elemMatch: {_id: deleted_id} } }).
+					exec(function(err, submissions){
+						if(err){
+							console.error(err);
+							return callback(err);
+						}
+
+						//Delete field if there are no submission(s) found
+						if(submissions.length > 0) {
+							//Push old form_field to start of array
+							that.form_fields.unshift(old_form_fields[deletedIdIndex]);
+							modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
+							console.log(modifiedSubmissions);
+						}
+
+						callback(null, modifiedSubmissions);
+					}
+				);
+				}, function (err, submissions) {
+				if(err){
+					console.error(err.message);
+					next(err);
+				}
+
+				console.log('preserved deleted fields');
+				console.log(submissions);
+
+				async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
+
+					for(var i = 0; i < deletedIds.length; i++){
+						var tmpField = _.find(submission.form_fields, function(field){
+							return field._id === deletedIds[i];
+						});
+
+						var index = submission.form_fields.indexOf(tmpField);
+
+						if(tmpField){
+							//Delete old form_field
+							submission.form_fields.splice(index, 1);
+
+							//Move old form_field to start
+							submission.form_fields.unshift(tmpField);
+						}
+					}
+
+					submission.save(function (err) {
+					  if (err) callback(err);
+					  callback();
+					});
+					
+				}, function (err) {
+					if(err){
+						console.error(err.message);
+						next(err);
+					}
+
+					next();
+				});
+
+			});
+		}
+	}
+
+	next();
+
+});
 
 //Move PDF to permanent location after new template is uploaded
 FormSchema.pre('save', function (next) {
@@ -129,7 +246,6 @@ FormSchema.pre('save', function (next) {
 		async.series([
 			function(callback){
 				if(that.isModified('pdf')){
-					// console.log('about to move PDF');
 
 					var new_filename = that.title.replace(/ /g,'')+'_template.pdf';
 
@@ -142,26 +258,21 @@ FormSchema.pre('save', function (next) {
 				        fs.mkdirSync(newDestination);
 				    }
 				    if (stat && !stat.isDirectory()) {
-				    	// console.log('Directory '+newDestination+' cannot be created');
-				        callback( new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"') );
+				        callback( new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"'), null);
 				    }
-
-					// console.log('about to move PDF');
 
 				    fs.move(that.pdf.path, path.join(newDestination, new_filename), function (err) {
 						if (err) {
 							console.error(err);
-							callback( new Error(err.message) );
+							callback( new Error(err.message), null);
 						}
 						that.pdf.path = path.join(newDestination, new_filename);
 						that.pdf.name = new_filename;
 
-						// console.log('\n\n PDF file:'+that.pdf.name+' successfully moved to: '+that.pdf.path);
-
 						callback(null,'task1');
 					});
 				}
-				callback(null,null);
+				callback(null,'task1');
 			},
 			function(callback){
 				if(that.isGenerated){
@@ -182,9 +293,9 @@ FormSchema.pre('save', function (next) {
 
 					pdfFiller.generateFieldJson(that.pdf.path, function(err, _form_fields){
 						if(err){
-							next( new Error(err.message), null);
-						}else if(!_form_fields.length){
-							next( new Error('Generated formfields is empty'), null);
+							callback( new Error(err.message), null);
+						}else if(!_form_fields.length || _form_fields === undefined || _form_fields === null){
+							callback( new Error('Generated formfields is empty'), null);
 						}
 
 						//Map PDF field names to FormField field names
@@ -196,21 +307,8 @@ FormSchema.pre('save', function (next) {
 								field.fieldType = _typeConvMap[ field.fieldType+'' ];
 							}
 
-							field.fieldValue = '';
-							field.created = Date.now();
-							field.required = true;
-		    				field.disabled  = false;
-
-							// field = new Field(field);
-							// field.save(function(err) {
-							// 	if (err) {
-							// 		console.error(err.message);
-							// 		throw new Error(err.message);
-							// 		});
-							// 	} else {
-							// 		_form_fields[i] = that;
-							// 	}
-							// });
+							field = new Field(field);
+							field.required = false;
 							_form_fields[i] = field;
 						}
 
@@ -310,28 +408,7 @@ FormSchema.pre('save', function (next) {
 // 	next();
 // });
 
-// FormSchema.methods.generateSubmissionsCSV = function (cb) {
-// 	if(this.submissions.length){
-// 		submissions = this.submissions
-// 	}else{
-// 		submissions = 
-// 	}
-	
-
-// 	_values.forEach(function(val){
-// 		if(val === true){
-// 			val = 'Yes';
-// 		}else if(val === false) {
-// 			val = 'Off';
-// 		}
-// 	});
-
-// 	var jsonObj = _.zipObject(_keys, _values);
-
-// 	return jsonObj;
-// };
-
-FormSchema.methods.generateFDFTemplate = function (cb) {
+FormSchema.methods.generateFDFTemplate = function() {
 	var _keys = _.pluck(this.form_fields, 'title'),
 		_values = _.pluck(this.form_fields, 'fieldValue');
 

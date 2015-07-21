@@ -41,7 +41,7 @@
     <div class="row form-actions">
         <p class="text-center col-xs-3 col-xs-offset-4">
             <button class="btn btn-success left" type="button">
-                <a href="/#!/forms/{{form._id}}" style="color:white;"> Submit again?</a>
+                <a href="#" ng-click="reloadForm()" style="color:white;"> Submit again?</a>
             </button>
         </p>
         <p class="text-center col-xs-2" ng-if="authentication.isAuthenticated()">

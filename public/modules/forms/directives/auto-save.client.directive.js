@@ -4,16 +4,20 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
   
   return {
     require: ['^form'],
+    // scope: {
+    //     callback: '&autoSaveCallback'
+    // },
     link: function($scope, $element, $attrs, $ctrls) {
 
-      if(!$rootScope.watchCount === undefined){
+      if($rootScope.watchCount === undefined){
         $rootScope.watchCount = 0;
       }
+
       var difference = function(array){
         var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
 
         var containsEquals = function(obj, target) {
-          if (obj == null) return false;
+          if (obj === null) return false;
           return _.any(obj, function(value) {
             return _.isEqual(value, target);
           });
@@ -28,7 +32,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
       var expression = $attrs.autoSaveForm || 'true';
 
       $scope.$on('ngRepeatStarted', function(ngRepeatFinishedEvent) {
-        $scope.finishedRender = false;
+        // $scope.finishedRender = false;
         $rootScope.watchCount = 0;
       });
       $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
@@ -36,20 +40,20 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
       });
 
       $scope.$watch('myform.form_fields', function(newValue, oldValue) {
-
+        // console.log('watchCount: '+$rootScope.watchCount);
         if(difference(oldValue,newValue).length === 0 || oldValue === undefined){
           return;
         }
 
-        // console.log('\n\n-------\n$pristine: '+( $formCtrl.$pristine ) );
-        // console.log('$dirty: '+( $formCtrl.$dirty ) );
-        // console.log('form_fields changed: '+difference(oldValue.form_fields,newValue.form_fields).length );
+        // console.log('\n\n----------\n$dirty: '+( $formCtrl.$dirty ) );
+        // console.log('form_fields changed: '+difference(oldValue,newValue).length );
         // console.log('$valid: '+$formCtrl.$valid);
         // console.log('finishedRender: '+$scope.finishedRender);
         // console.log('saveInProgress: '+$scope.saveInProgress);
           
         if($scope.finishedRender && ($formCtrl.$dirty || difference(oldValue,newValue).length !== 0) ) {
           $rootScope.watchCount++;
+         
           if($rootScope.watchCount === 1) {
             
             if(savePromise) {
@@ -59,15 +63,22 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
             savePromise = $timeout(function() {
               savePromise = null;
 
-              // Still valid?
-              // if($formCtrl.$valid) {
-              if($scope.$eval(expression) !== false) {
-                console.log('Form data persisted -- setting pristine flag');
-                $formCtrl.$setPristine();  
-              }
-              // }
+              $rootScope[$attrs.autoSaveCallback](
+                function(err){
+                  if(!err){
+                    console.log('Form data persisted -- setting pristine flag');
+                    console.log('\n\n---------\nUpdate form CLIENT');
+                    console.log(Date.now());
+                    $rootScope.watchCount = 0;
+                    $formCtrl.$setPristine();  
+                  }else{
+                    console.log('Error form data NOT persisted');
+                    console.log(err);
+                  }
+                });
             
             });
+
           }
         }
         

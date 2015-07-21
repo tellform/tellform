@@ -14,6 +14,10 @@ module.exports = function(app) {
 	app.route('/users').put(users.requiresLogin, users.update);
 	app.route('/users/accounts').delete(users.requiresLogin, users.removeOAuthProvider);
 
+	// Account activation reset token
+	app.route('/auth/reset/:token').get(users.validateResetToken);
+	app.route('/auth/reset/:token').post(users.reset);
+
 	// Setting up the users password api
 	app.route('/users/password').post(users.requiresLogin, users.changePassword);
 	app.route('/auth/forgot').post(users.forgot);

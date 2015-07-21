@@ -1,8 +1,62 @@
 'use strict';
 
 (function() {
+	
+
+	// Principal controller Spec for E2E Tests
+	describe('AuthenticationController E2E Tests', function() {
+
+		describe('/signup should work for a unique username', function() {
+		    beforeEach(function() {
+		        var ptor = protractor.getInstance();
+		        ptor.get('http://localhost:3000/#!/signup');
+		    });
+			
+			it('should show the signup panel on page load', function() {
+				expect($('section > section.row.auth > .col-md-12.text-center')).toEqual('Signup with your email');
+			}); 
+
+
+		    //Jasmine it statement : What "it" will do.
+		    it('Verify that the user is logged in', function() {
+				//Delete all cookies
+		        browser.driver.manage().deleteAllCookies();
+				//Enter UserName
+		        element.all(by.model('username')).get(0).sendKeys('abc@wingify.com');
+				//Enter Password
+		        element(by.model('password')).sendKeys('test');
+				//Click Submit button
+		        element(by.css('.login-form button[type="submit"]')).click();
+				//Wait for the current URL to change to welcome
+		        browser.driver.wait(function() {
+		            return browser.driver.getCurrentUrl().then(function(url) {
+		                return (/welcome/).test(url);
+		            });
+		        });
+		        var firstname = element(by.model('credentials.firstname')),
+					lastname = element(by.model('credentials.lastname')),
+					email = element(by.model('credentials.email')),
+			    	password = element(by.model('credentials.password')),
+			    	username = element(by.model('credentials.username'));
+
+			    email.sendKeys('admin@app.com');
+			    username.sendKeys('admin');
+			    firstname.sendKeys('admin_first');
+			    firstname.sendKeys('admin_last');
+			    password.sendKeys('1234');
+
+			    //Click signup button
+			    element(by.css('.btn.btn-large.btn-primary')).click().then(function () {
+			        expect(browser.getCurrentUrl()).toEqual('http://localhost:3000/#!/signup-success');
+			    });
+
+				
+		    });
+		});
+	});
+	
 	// Principal controller Spec
-	describe('AuthenticationController', function() {
+	describe('AuthenticationController Unit Tests', function() {
 		// Initialize global variables
 		var AuthenticationController,
 			scope,

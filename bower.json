@@ -23,7 +23,10 @@
     "restangular": "~1.5.1",
     "fontawesome": "~4.3.0",
     "ng-file-upload": "~5.0.9",
-    "angular-raven": "~0.5.11"
+    "angular-raven": "~0.5.11",
+    "angular-ui-date": "~0.0.8",
+    "lodash": "~3.10.0",
+    "angular-ui-sortable": "~0.13.4"
   },
   "resolutions": {
     "angular": "^1.2.21",

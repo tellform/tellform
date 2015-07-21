@@ -4,5 +4,5 @@ angular.module('forms').directive('formLocator', function() {
       link: function(scope) {
         scope.$emit('formLocator');
       }
-    }
+    };
 });

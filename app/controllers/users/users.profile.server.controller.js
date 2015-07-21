@@ -52,5 +52,13 @@ exports.update = function(req, res) {
  * Send User
  */
 exports.me = function(req, res) {
+	var _user = req.user;
+	delete _user.password;
+	delete _user.salt;
+	delete _user.provider;
+	delete _user.__v;
+	delete _user.created;
+
+
 	res.json(req.user || null);
 };

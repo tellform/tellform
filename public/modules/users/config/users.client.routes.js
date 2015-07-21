@@ -72,7 +72,7 @@ angular.module('users').config(['$stateProvider',
 		}).
 		state('signup-success', {
 			url: '/signup-success',
-			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
+			templateUrl: 'modules/users/views/authentication/signup-success.client.view.html'
 		}).
 		state('signin', {
 			url: '/signin',

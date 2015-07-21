@@ -1,7 +1,7 @@
 <div class="field row">
     <div class="col-xs-5 field-title">{{field.title}} </div>
     <div class="col-xs-7 field-input">
-        <div ng-repeat="option in field.field_options" class="row-fluid">
+        <div ng-repeat="option in field.fieldOptions" class="row-fluid">
             <label>
                 <input type="radio" value="{{option.option_value}}" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"   ng-required="field.required" ng-disabled="field.disabled"/>
                 &nbsp;<span ng-bind="option.option_title"></span>

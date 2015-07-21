@@ -29,6 +29,10 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     alert('Form canceled..');
                 };
 
+                $scope.reloadForm = function(){
+                    $scope.form.submitted = false;
+                }
+
             },
             templateUrl: './modules/forms/views/directiveViews/form/form.html',
             restrict: 'E',

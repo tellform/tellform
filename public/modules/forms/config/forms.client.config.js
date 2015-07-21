@@ -1,6 +1,6 @@
 'use strict';
 
-// Configuring the Articles module
+// Configuring the Forms drop-down menus
 angular.module('forms').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
@@ -30,4 +30,10 @@ angular.module('forms').run(['Menus',
 			}).length;
 			return valid_count;
         };
-});
+}).config(['$provide', function ($provide){
+    $provide.decorator('accordionDirective', function($delegate) { 
+        var directive = $delegate[0];
+        directive.replace = true;
+        return $delegate;
+    });
+}]);

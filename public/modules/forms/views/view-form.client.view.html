@@ -10,7 +10,7 @@
 		</div>
 		<div class="col-xs-2">
 			<small class=" pull-right">			
-				<a class="btn btn-default" href="/#!/forms/{{form._id}}">
+				<a class="btn btn-default" href="/#!/forms/{{myform._id}}">
 					<span ng-show="myform.isLive">View Live</span> <span ng-hide="myform.isLive">Preview</span> Form
 					<i class="status-light status-light-on fa fa-dot-circle-o" ng-show="myform.isLive"></i>
 					<i class="status-light status-light-off fa fa-dot-circle-o" ng-hide="myform.isLive"></i>
@@ -53,7 +53,7 @@
 									<input ng-model="table.masterChecker" ng-change="toggleAllCheckers()" type="checkbox"/>
 								</th>
 								<th>#</th>
-								<th data-ng-repeat="(key, value) in submissions[0].form_fields">
+								<th data-ng-repeat="(key, value) in myform.form_fields">
 									{{value.title}}
 								</th>
 								<th>
@@ -70,7 +70,7 @@
 						<tbody>
 							<tr data-ng-repeat="row in table.rows" ng-click="rowClicked(row)">
 								<td>
-									<!-- <input ng-model="row.selected" type="checkbox"/> -->
+									<input ng-model="row.selected" type="checkbox"/>
 								</td>
 								<th class="scope">{{$index+1}}</th>
 								<td data-ng-repeat="(key, value) in row.form_fields">

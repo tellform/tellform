@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
 
 // questionType Validation
 function validateFormFieldType(value) {
-  if (!value || typeof myVar !== 'string' ) { return false; }
+  if (!value) { return false; }
 
   var validTypes = [
     'textfield',
@@ -17,20 +17,16 @@ function validateFormFieldType(value) {
     'legal',
     'url',
     'number',
-
     'textarea',
     'statement',
     'welcome',
     'thankyou',
-
     'file',
-
     'dropdown',
     'scale',
     'rating',
     'radio',
     'checkbox',
-
     'hidden',
   ];
 
@@ -49,7 +45,11 @@ var FormFieldSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	name: {
+	lastModified: {
+		type: Date,
+		default: Date.now
+	},
+	title: {
 		type: String,
 		default: '',
 		trim: true,
@@ -60,7 +60,7 @@ var FormFieldSchema = new Schema({
 		default: '',
 	},
 	fieldOptions: [{
-		type: String
+		type: Schema.Types.Mixed
 	}],
 	required: {
 		type: Boolean,
@@ -75,7 +75,7 @@ var FormFieldSchema = new Schema({
 		required: 'Field type cannot be blank',
 		validate: [validateFormFieldType, 'Invalid field type']
 	},
-	value: Schema.Types.Mixed
+	fieldValue: Schema.Types.Mixed
 
 });
 

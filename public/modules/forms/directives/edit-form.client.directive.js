@@ -13,6 +13,58 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
 
+                /*
+                ** FormFields (ui-sortable) drag-and-drop configuration
+                */
+                $scope.dropzone = {
+                    handle: ' .handle'  
+                }
+
+                // $scope.draggable = {
+                //     connectWith: ".dropzone",
+                //     start: function (e, ui) {
+                //         // $scope.$apply(function() {
+                //         //   $scope.dragging = true
+                //         // });
+                //         $('.dropzone').sortable('refresh');
+                //     },
+                //     update: function (e, ui) {
+                //         var isInDropzone = $(e.target).parentsUntil('.panel-group').hasClass('dropzone');
+
+                //         console.log('isInDropzone: '+isInDropzone);
+                //         //Disable drag and drop if we aren't in dropzone
+                //         if(!isInDropzone){
+                //             ui.item.sortable.cancel();
+                //         }
+                //     },
+                //     stop: function (e, ui) {
+                //         var isInDropzone = $(e.target).parentsUntil('.panel-group').hasClass('dropzone');
+
+                //         //Disable drag and drop if we aren't in dropzone
+                //         if(isInDropzone){
+                //             console.log($(e.target));
+                //         }
+                        
+                //         // if (ui.item.sortable.droptarget === undefined) {
+                //         //     $scope.$apply($scope.dragging = false);
+                //         //     return;
+                //         // }else if (ui.item.sortable.droptarget[0].classList[0] === "dropzone") {
+                //         //     // run code when item is dropped in the dropzone
+                //         //     $scope.$apply($scope.dragging = false);
+                //         // }else{
+                //         //   // $scope.$apply($scope.dragging = false);
+                //         // }
+                //         // console.log('has class .dropzone :'+);
+                //         // if ($(e.target).hasClass('dropzone') && ui.item.sortable.droptarget && e.target != ui.item.sortable.droptarget[0] ) {
+                //         //     // restore original types
+                //         //     $scope.addField.types = FormFields.fields;
+                //         // }
+                      
+                        
+                //     }
+                // };
+
+
                 //Populate AddField with all available form field types
                 $scope.addField = {};
                 $scope.addField.types = FormFields.fields;
@@ -37,7 +89,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                         // console.log($scope.addField.types[i].name === fieldType);
                         if($scope.addField.types[i].name === fieldType){
                             $scope.addField.types[i].lastAddedID++;
-                            console.log($scope.addField.types[i].lastAddedID);
+                            // console.log($scope.addField.types[i].lastAddedID);
                             fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;  
                             break;
                         }
@@ -52,14 +104,16 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 
                     // put newField into fields array
                     $scope.myform.form_fields.unshift(newField);
-                    console.log($scope.myform.form_fields.length);
+                    console.log('\n\n---------\nAdded field CLIENT');
+                    console.log(Date.now());
+                    // console.log($scope.myform.form_fields.length);
                 };
 
                 // deletes particular field on button click
                 $scope.deleteField = function (hashKey){
-                    console.log($scope.myform.form_fields);
+                    // console.log($scope.myform.form_fields);
                     for(var i = 0; i < $scope.myform.form_fields.length; i++){
-                        console.log($scope.myform.form_fields[i].$$hashKey === hashKey);
+                        // console.log($scope.myform.form_fields[i].$$hashKey === hashKey);
                         if($scope.myform.form_fields[i].$$hashKey === hashKey){
                             $scope.myform.form_fields.splice(i, 1);                      
                             break;
@@ -77,13 +131,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 
                 // add new option to the field
                 $scope.addOption = function (field){
-                    if(!field.field_options)
-                        field.field_options = [];
+                    if(!field.fieldOptions) field.fieldOptions = [];
 
                     var lastOptionID = 0;
 
-                    if(field.field_options[field.field_options.length-1])
-                        lastOptionID = field.field_options[field.field_options.length-1].option_id;
+                    if(field.fieldOptions[field.fieldOptions.length-1])
+                        lastOptionID = field.fieldOptions[field.fieldOptions.length-1].option_id;
 
                     // new option's id
                     var option_id = lastOptionID + 1;
@@ -94,15 +147,15 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                         'option_value' : option_id
                     };
 
-                    // put new option into field_options array
-                    field.field_options.push(newOption);
+                    // put new option into fieldOptions array
+                    field.fieldOptions.push(newOption);
                 };
 
                 // delete particular option
                 $scope.deleteOption = function (field, option){
-                    for(var i = 0; i < field.field_options.length; i++){
-                        if(field.field_options[i].option_id === option.option_id){
-                            field.field_options.splice(i, 1);
+                    for(var i = 0; i < field.fieldOptions.length; i++){
+                        if(field.fieldOptions[i].option_id === option.option_id){
+                            field.fieldOptions.splice(i, 1);
                             break;
                         }
                     }
@@ -110,10 +163,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 
                 // decides whether field options block will be shown (true for dropdown and radio fields)
                 $scope.showAddOptions = function (field){
-                    if(field.fieldType == 'dropdown' || field.fieldType == 'checkbox' || field.fieldType == 'scale' || field.fieldType == 'rating' || field.fieldType == 'radio')
+                    if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'scale' || field.fieldType === 'rating' || field.fieldType === 'radio'){
                         return true;
-                    else
+                    } else {
                         return false;
+                    }
                 };
 
             },

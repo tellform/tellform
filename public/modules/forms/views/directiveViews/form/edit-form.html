@@ -1,4 +1,5 @@
-<form class="row" name="fieldForm" form-locator auto-save-form="update()" form="myform" novalidation>
+<form class="row" name="fieldForm" form-locator auto-save-form auto-save-callback="update" form="myform" novalidation>
+
     <div class="col-xs-5 add-field">
         <!-- <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
         <button type="submit" class="btn" ng-click="addNewField()">
@@ -8,7 +9,7 @@
             <h3 class="col-xs-12">Add New Field</h3>
             <span ng-if="form.$dirty && form.$valid" class="help-block">Updating ...</span>
         </div>
-        <div class="panel-group row">
+        <div class="panel-group row" class="draggable" ng-model="addField.types">
             <div class="col-xs-6" ng-repeat="type in addField.types" on-finish-render>
                 <div class="panel panel-default" style="background-color:#f5f5f5;">
                     <div class="panel-heading" ng-click="addNewField(type.name)" style="cursor: pointer; font-size:14px;">
@@ -27,23 +28,26 @@
         <!-- <p ng-show="form.form_fields.length == 0">No fields added yet.</p> -->
         <div class="row">
             <div class="col-xs-10">
-                <accordion close-others="accordion.oneAtATime">
+                <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
+
                     <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="setFormValid()">
 
                         <accordion-heading>
-                            <span class="pull-left" ng-switch="field.fieldType">
-                                <field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
-                            </span>
-                            <span style="padding-left:1.2em;">{{field.title}}</span>
-                            <span class="pull-right">
-                                <i class="fa fa-chevron-right" ng-hide="accordion[$index].isOpen">
-                                </i>
-                                <i class="fa fa-chevron-down" ng-show="accordion[$index].isOpen">
-                                </i>
-                            </span>
+                            <div class="handle">
+                                <span class="pull-left" ng-switch="field.fieldType">
+                                    <field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
+                                </span>
+                                <span style="padding-left:1.2em;">{{field.title}}</span>
+                                <span class="pull-right">
+                                    <i class="fa fa-chevron-right" ng-hide="accordion[$index].isOpen">
+                                    </i>
+                                    <i class="fa fa-chevron-down" ng-show="accordion[$index].isOpen">
+                                    </i>
+                                </span>
+                            </div>
                         </accordion-heading>
+
                         <div class="accordion-edit container">
-                            <!-- <button class="btn btn-danger pull-right" type="button" ng-click="deleteField(field.client_id)"><i class="icon-trash icon-white"></i> Delete</button> -->
                             <div class="row">
                                 <div class="col-xs-12">
                                     <h4>Preview</h4>
@@ -55,7 +59,9 @@
                                     </field-directive>
                                 </ul>
                             </div>
+
                             <div class="clear"></div> <hr>
+
                             <div class="row">
                                 <div class="col-xs-2">Field Type:</div>
                                 <div class="col-xs-4">{{field.fieldType}}</div>
@@ -69,7 +75,7 @@
                             <div class="row" ng-show="showAddOptions(field)">
                                 <div class="col-xs-2">Field Options:</div>
                                 <div class="col-xs-6 container">
-                                    <div ng-repeat="option in field.field_options" class="row">
+                                    <div ng-repeat="option in field.fieldOptions" class="row">
                                         <input type="text" name="{{option.option_title}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-4">
 
                                         <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3"><i  class="fa fa-trash-o"></i></a>
@@ -114,6 +120,7 @@
                             
                         </div>
                     </accordion-group>
+
                     <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
                         <div class="panel-heading">
                             <h4 class="panel-title text-center" style="color: #a9a9a9;">
@@ -121,6 +128,7 @@
                             </h4>
                         </div>
                     </div>
+
                 </accordion>
             </div>
             <div class="col-xs-1" style="padding:0 5px;" >

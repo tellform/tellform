@@ -1,8 +1,8 @@
-<div class="field row">
-    <div class="col-xs-7 field-title">{{field.title}} </div>
-    <div class="col-xs-5 field-input">
+<div class="field row dropdown">
+    <div class="col-xs-5 field-title">{{field.title}} </div>
+    <div class="col-xs-7 field-input ">
 		<select ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  ng-required="field.required" ng-disabled="field.disabled">
-			<option ng-repeat="option in field.field_options" 
+			<option ng-repeat="option in field.fieldOptions" 
 					ng-selected="option.option_value == field.fieldValue"
 					value="{{option.option_id}}">
 				{{option.option_title}}
