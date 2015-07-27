@@ -1,14 +1,14 @@
 <section class="row text-center" data-ng-controller="VerifyController" ng-init="validateVerifyToken()">
 
-<section class="row text-center" ng-if="success">
-	<h3 class="col-md-12">Password successfully reset</h3>
-	<a href="/#!/" class="col-md-12">Continue to home page</a>
-</section>
+	<section class="row text-center" ng-if="isReset">
+		<h3 class="col-md-12">Password successfully reset</h3>
+		<a href="/#!/" class="col-md-12">Continue to home page</a>
+	</section>
 
-<section class="row text-center" ng-if="!success">
-	<h3 class="col-md-12">Verification link is invalid or has expired</h3>
-	<a href="/#!/verify" class="col-md-6">Resend your verification email</a>
-	<a href="/#!/signin" class="col-md-6">Signin to your account</a>
-</section>
+	<section class="row text-center" ng-if="!isReset">
+		<h3 class="col-md-12">Verification link is invalid or has expired</h3>
+		<a href="/#!/verify" class="col-md-6">Resend your verification email</a>
+		<a href="/#!/signin" class="col-md-6">Signin to your account</a>
+	</section>
 
 </section>

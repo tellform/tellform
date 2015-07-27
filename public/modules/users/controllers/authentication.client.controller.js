@@ -49,20 +49,5 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	      );
 	    };
 
-
-		// Submit forgotten password account id
-		$scope.resendVerifyEmail = function() {
-			User.resendVerifyEmail($scope.email).then(
-				function(response){
-					$scope.success = response.message;
-					$scope.credentials = null;
-				},
-				function(error){
-					$scope.error = error;
-					$scope.credentials = null;
-				}
-			);
-		};
-
  	}
 ]);

@@ -131,10 +131,13 @@ module.exports = function(grunt) {
 		},
 		env: {
 			test: {
-				NODE_ENV: 'test'
+				NODE_ENV: 'test',
 			},
 			secure: {
 				NODE_ENV: 'secure'
+			},
+			options: {
+				src: 'ENV.json'
 			}
 		},
 		mochaTest: {

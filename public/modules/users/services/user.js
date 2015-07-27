@@ -56,11 +56,21 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
       resendVerifyEmail: function(email) { 
         var deferred = $q.defer();
-        $http.post('/auth/verify/'+token, email).success(function(response) {
-
-          deferred.resolve();
+        $http.post('/auth/verify/', {email: email}).success(function(response) {
+          deferred.resolve(response);
         }).error(function(error) {
           deferred.reject(error.message || error);
+        });
+
+        return deferred.promise;
+      },
+
+      validateVerifyToken: function(token) { 
+        var deferred = $q.defer();
+        $http.get('/auth/verify/'+token).success(function(response) {
+          deferred.resolve(response);
+        }).error(function(error) {
+          deferred.reject(error);
         });
 
         return deferred.promise;

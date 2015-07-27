@@ -22,6 +22,8 @@ config/sslcerts/*.pem
 access.log
 #public/dist/
 uploads/
+# API keys file
+api_keys.js
 
 # Sublime editor
 # ==============

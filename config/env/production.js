@@ -61,12 +61,12 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'noreply@forms.polydaic.com',
+		from: process.env.MAILER_FROM || '',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'Mandrill',
+			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'hackouver@gmail.com',
-				pass: process.env.MAILER_PASSWORD || 'ehOLuSXCBFxLjipRalBxVg'
+				user: process.env.MAILER_EMAIL_ID || '',
+				pass: process.env.MAILER_PASSWORD || ''
 			}
 		}
 	}
