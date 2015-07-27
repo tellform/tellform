@@ -2,7 +2,7 @@ MEDFORMS
 --------
 
 [![Build Status](https://travis-ci.org/whitef0x0/medforms.svg?branch=master)](https://travis-ci.org/whitef0x0/medforms)
-[![Dependencies Status](https://david-dm.org/meanjs/mean.svg)](https://david-dm.org/meanjs/mean)
+[![Dependencies Status](https://david-dm.org/whitef0x0/medforms.svg)](https://david-dm.org/whitef0x0/medforms)
 
 Medforms is an opensource *form builder* that can create stunning forms from PDFs or from scratch
 
