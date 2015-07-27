@@ -30,9 +30,10 @@
             <div class="col-xs-10">
                 <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                    <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="setFormValid()">
+                    <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="setFormValid()" ng-show="!field.deletePreserved">
 
                         <accordion-heading>
+
                             <div class="handle">
                                 <span class="pull-left" ng-switch="field.fieldType">
                                     <field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
@@ -46,7 +47,6 @@
                                 </span>
                             </div>
                         </accordion-heading>
-
                         <div class="accordion-edit container">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -55,7 +55,7 @@
                             </div>
                             <div class="row">
                                 <ul class="col-xs-4 container" style="list-style:none;border:2px lightgray solid;">
-                                    <field-directive field="field" required="">
+                                    <field-directive field="field">
                                     </field-directive>
                                 </ul>
                             </div>
@@ -69,6 +69,10 @@
                             <div class="row">
                                 <div class="col-xs-2">Field Title:</div>
                                 <div class="col-xs-4"><input type="text" ng-model="field.title" value="{{field.title}}" required></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">Field Decription:</div>
+                                <div class="col-xs-4"><textarea type="text" ng-model="field.title" value="{{field.description}}"></textarea> </div>
                             </div>
                             <br><br>
                             <hr>
@@ -116,8 +120,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <hr>
-                            
+                            <hr>   
                         </div>
                     </accordion-group>
 
@@ -133,7 +136,7 @@
             </div>
             <div class="col-xs-1" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields">
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
                         <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="deleteField(field.$$hashKey)">
                             <span class="text-center">
                                 <a href="" class="fa fa-trash-o"></a>
@@ -144,7 +147,7 @@
             </div>
             <div class="col-xs-1" style="padding:0 5px;">
                 <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields">
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
                         <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="duplicateField(field, $index)">
                             <span class="text-center">
                                 <a href="" class="fa fa-files-o"></a>

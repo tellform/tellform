@@ -3,7 +3,12 @@
 /**
  * Module dependencies.
  */
-var applicationConfiguration = require('./config/config');
+var applicationConfiguration = require('./config/config'),
+	bowerFiles = require('main-bower-files');
+
+var bowerDep = bowerFiles('**/**.js');
+
+console.log(bowerDep);
 
 // Karma configuration
 module.exports = function(config) {
@@ -12,7 +17,7 @@ module.exports = function(config) {
 		frameworks: ['jasmine'],
 
 		// List of files / patterns to load in the browser
-		files: applicationConfiguration.assets.lib.js.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.tests),
+		files: bowerDep.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.tests),
 
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
@@ -39,7 +44,7 @@ module.exports = function(config) {
 		// - Safari (only Mac)
 		// - PhantomJS
 		// - IE (only Windows)
-		browsers: ['Chrome'],
+		browsers: ['PhantomJS'],
 
 		// If browser does not capture in given timeout [ms], kill it
 		captureTimeout: 60000,

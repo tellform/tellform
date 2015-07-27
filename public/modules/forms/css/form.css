@@ -17,12 +17,31 @@ form .row.field {
         font-size:1.2em;
         color:#ddd;
     }
-    form.submission-form .row.field > .field-input input {
-        width:100%;
-    }
-    form.submission-form .row.field .field-input > input:focus {
-        font-size:1em;
-    }
+
+        form.submission-form .select.radio > .field-input input {
+            width:20%;
+        }
+
+
+        form.submission-form .select > .field-input input {
+            width:20%;
+        }
+        form.submission-form .select > .field-input .btn {
+            text-align: left;
+            margin-bottom:0.7em;
+        }
+        form.submission-form .select > .field-input .btn > span {
+            font-size: 1.10em;
+        }
+
+
+        form.submission-form .row.field > .field-input input {
+            width:100%;
+        }
+        form.submission-form .row.field .field-input > input:focus {
+            font-size:1em;
+        }
+
         form .row.field.textfield > .field-input > input{
             padding:0.45em 0.9em;
             width:100%;
@@ -151,8 +170,9 @@ div.config-form > .row {
 }
 
 /* Styles for form list view (/forms) */
-section > section.ng-scope {
-    padding: 0 60px 20px 60px;
+section > section.public-form {
+    padding: 0 6em 7em 6em;
+
 }
 .form-item.row {
     text-align: center;

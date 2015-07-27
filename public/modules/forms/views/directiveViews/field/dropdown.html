@@ -1,4 +1,4 @@
-<div class="field row dropdown">
+<div class="field row dropdown" ng-if="field.fieldOptions.length > 0">
     <div class="col-xs-5 field-title">{{field.title}} </div>
     <div class="col-xs-7 field-input ">
 		<select ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  ng-required="field.required" ng-disabled="field.disabled">

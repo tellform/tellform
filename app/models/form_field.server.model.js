@@ -41,14 +41,14 @@ function validateFormFieldType(value) {
  * Question Schema
  */
 var FormFieldSchema = new Schema({
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	lastModified: {
-		type: Date,
-		default: Date.now
-	},
+	// created: {
+	// 	type: Date,
+	// 	default: Date.now
+	// },
+	// lastModified: {
+	// 	type: Date,
+	// 	default: Date.now
+	// },
 	title: {
 		type: String,
 		default: '',
@@ -69,6 +69,11 @@ var FormFieldSchema = new Schema({
 	disabled: {
 		type: Boolean,
 		default: false,
+	},
+
+	deletePreserved: {
+		type: Boolean,
+		default: false
 	},
 	fieldType: {
 		type: String,

@@ -20,6 +20,10 @@ var mongoose = require('mongoose'),
 exports.uploadPDF = function(req, res, next) {
 
 	console.log('inside uploadPDF');
+
+	// console.log(req.files.file);
+	// console.log('\n\nProperty Descriptor\n-----------');
+	// console.log(Object.getOwnPropertyDescriptor(req.files.file, 'path'));
 	if(req.files){
 		var pdfFile = req.files.file;
 		var _user = req.user;
@@ -50,7 +54,7 @@ exports.uploadPDF = function(req, res, next) {
 						}
 						pdfFile.path = path.join(newDestination, pdfFile.name);
 						console.log(pdfFile.name + ' uploaded to ' + pdfFile.path);
-						res.status(200).send('pdf file successfully uploaded');
+						res.json(pdfFile);
 					});				
 
 				} else { 
@@ -63,22 +67,46 @@ exports.uploadPDF = function(req, res, next) {
 	}
 };
 
+
+/**
+ * Delete a forms submissions
+ */
+exports.deleteSubmissions = function(req, res) {
+	console.log(req.body);
+	var submission_id_list = req.body.deleted_submissions,
+		form = req.form;
+
+	FormSubmission.remove({ form: req.form, admin: req.user, _id: {$in: submission_id_list} }, function(err){
+		
+		if(err){
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+
+		res.status(200).send('Form submissions successfully deleted');
+	});
+};
 /**
  * Submit a form entry
  */
 exports.createSubmission = function(req, res) {
 
-	var submission = new FormSubmission(),
+	var submission,
 		form = req.form, 
 		fdfData,
 		fdfTemplate, 
 		that = this;
 
+	submission = new FormSubmission({
+		admin: req.user,
+		form_fields: req.body.form_fields,
+		timeElapsed: req.body.timeElapsed
+	});
+
 	submission.form = form;
-	submission.admin = req.user;
-	submission.form_fields = req.body.form_fields;
-	submission.title = req.body.title;
-	submission.timeElapsed = req.body.timeElapsed;
+	submission.pdf = form.pdf;
+	submission.title = form.title;
 	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
 	if(form.autofillPDFs){
@@ -93,42 +121,23 @@ exports.createSubmission = function(req, res) {
 				});
 			}
 		}
-		fdfData = pdfFiller.fillFdfTemplate(fdfTemplate, submission.form_fields, null);
+		fdfData = pdfFiller.convFieldJson2FDF(submission.form_fields);
 		submission.fdfData = fdfData;
+	}else{
+		submission.fdfData = undefined;
 	}
 
-	async.series([
-		function(callback){
-			submission.save(function(err){
-				if (err) {
-					callback(err);
-				} else {
-					callback(null);
-				}            
-			});	
-		},
-		function(callback){
-			//Add submission to Form.submissionns
-			form.submissions.push(submission);
-			
-			form.save(function(err){
-				if (err) {
-					callback(err);
-				} else {
-					callback(null);
-				}            
-			});	
-		},
-	], function(err, results) {
-			if(err){
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
-			// console.log(results);
-			// console.log(that.form_fields);
-			res.status(200).send('Form submission successfully saved');
-		});
+	submission.save(function(err){
+		
+		if(err){
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		// console.log(results);
+		// console.log(that.form_fields);
+		res.status(200).send('Form submission successfully saved');
+	});
 };
 
 /**
@@ -172,8 +181,8 @@ exports.create = function(req, res) {
 	var form = new Form(req.body.form);
 
 	form.admin = req.user;
-	console.log(form);
-	console.log(req.user);
+	// console.log(form);
+	// console.log(req.user);
 
 	form.save(function(err) {
 		if (err) {
@@ -182,7 +191,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.status(200).send('form created');
+			res.json(form);
 		}
 	});
 };
@@ -201,13 +210,16 @@ exports.read = function(req, res) {
 exports.update = function(req, res) { 
 	console.log('in form.update()');
 
-	console.log(req.body.form.form_fields);
+	// console.log(req.body.form.form_fields);
 
 	var form = req.form;
 	delete req.body.form.__v;
 	delete req.body.form._id;
 	delete req.body.form.created;
 	delete req.body.form.lastModified;
+	delete req.body.form.admin;
+
+	// console.log(form.admin);
 
 	//Unless we have 'admin' priviledges, updating form admin is disabled
 	if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
@@ -216,7 +228,7 @@ exports.update = function(req, res) {
 	// console.log(req.body.form);
 	// form.form_fields = req.body.form.form_fields;
 	
-	form.save(function(err) {
+	form.save(function(err, form) {
 		if (err) {
 			console.log(err);
 			res.status(400).send({
@@ -224,7 +236,7 @@ exports.update = function(req, res) {
 			});
 		} else {
 			console.log('updated form');
-			res.status(200).send('updated form');
+			res.json(form);
 		}
 	});
 };
@@ -287,6 +299,11 @@ exports.formByID = function(req, res, next, id) {
 			});
 		}
 		else {
+			if(!form.username){
+				form.admin = req.user;
+			}
+			// console.log(creaform.admin);
+
 			//Remove sensitive information from User object
 			form.admin.password = null;
 			form.admin.created = null;

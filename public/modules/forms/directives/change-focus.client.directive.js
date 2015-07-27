@@ -10,16 +10,16 @@ angular.module('forms').directive('changeFocus', function() {
     	// console.log('aoeuaoeuaoeuaou');
     	scope.focusUp = function(){
     		if(!scope.$first) {
-    			// console.log('aoeuaoeu');
-	        elem[0].previousElementSibling.find('input').focus();
-        }
-        scope.apply();
+    			console.log('focusUp');
+    	        elem[0].previousElementSibling.find('input').focus();
+            }
+            scope.apply();
     	};
     	scope.focusDown = function(){
     		if(!scope.$last) {
 	            elem[0].nextElementSibling.focus();
-        }
-        scope.apply();
+            }
+            scope.apply();
     	};
 
     	//Bind 'focus-down' click event to given dom element

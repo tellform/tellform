@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$rootScope','$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $http, $timeout, timeCounter, Auth, FormFields) {
+angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'timeCounter', 'Auth', 'FormFields',
+    function ($rootScope, $http, Upload, $timeout, timeCounter, Auth, FormFields) {
         return {
             controller: function($scope){
                 $scope.log = '';
@@ -39,6 +39,8 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
                     if (files && files.length) {
                         // for (var i = 0; i < files.length; i++) {
                         var file = files[0];
+                        console.log(file);
+
                         _current_upload = Upload.upload({
                             url: '/upload/pdf',
                             fields: {
@@ -53,13 +55,14 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
                             $scope.pdfLoading = true;
                         }).success(function (data, status, headers, config) {
                             $scope.log = 'file ' + data.originalname + ' uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
-                            console.log($scope.myform.pdf);
                             $scope.myform.pdf = angular.fromJson(angular.toJson(data));
+
+                            console.log($scope.myform.pdf);
+
                             $scope.pdfLoading = false;
 
                             console.log($scope.log);
-                            console.log('$scope.pdf: '+$scope.myform.pdf.name);
-                            if(!$scope.$$phase){
+                            if(!$scope.$$phase && !$scope.$digest){
                                 $scope.$apply();
                             }
                         }).error(function(err){
@@ -67,7 +70,6 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope','$http
                             console.log('Error occured during upload.\n');
                             console.log(err);
                         });
-                        // }
                     }
                 };
 

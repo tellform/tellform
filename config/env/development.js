@@ -14,7 +14,7 @@ module.exports = {
 		// Stream defaults to process.stdout
 		// Uncomment to enable logging to a log on the file system
 		options: {
-			//stream: 'access.log'
+			// stream: 'access.log'
 		}
 	},
 	app: {
@@ -46,12 +46,12 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'MAILER_FROM',
+		from: process.env.MAILER_FROM || 'hi@example.com',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+			service: process.env.MAILER_SERVICE_PROVIDER || 'Mandrill',
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+				user: process.env.MAILER_EMAIL_ID || 'hackouver@gmail.com',
+				pass: process.env.MAILER_PASSWORD || 'ehOLuSXCBFxLjipRalBxVg'
 			}
 		}
 	}

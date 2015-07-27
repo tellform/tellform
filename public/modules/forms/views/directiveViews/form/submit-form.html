@@ -1,26 +1,22 @@
 <div ng-hide="form.submitted">
 
-    <div class="field row">
-        <div class="col-sm-10 col-sm-offset-1"><h1>{{ form.title }}</h1>
-                <hr>
+    <div class="field row" style="padding-bottom:5em;">
+        <div class="col-sm-10 col-sm-offset-1">
+            <h1>{{ form.title }}</h1>
+            <hr>
         </div>
     </div>
-
-    <br>
-    <br>
-
     <div class="row">
         <form name="form" class="submission-form col-sm-offset-1 col-sm-10" name="form" ng-model="form" ng-repeat="field in form.form_fields" >
-                <field-directive field="field">
+                <field-directive field="field" ng-if="!field.deletePreserved">
                 </field-directive>
         </form>
     </div>
-
-
+    <hr>
     <div class="row form-actions">
-            <button class="btn btn-success col-sm-2 col-sm-offset-5" type="button" ng-disabled="myForm.$valid" ng-click="submit()" style="font-size: 1.6em;">
+        <button class="btn btn-success col-sm-2 col-sm-offset-5" type="button" ng-disabled="myForm.$valid" ng-click="submit()" style="font-size: 1.6em;">
                 <i class="icon-edit icon-white"></i> submit 
-            </button>
+        </button>
     </div>
 </div>
 
@@ -50,10 +46,4 @@
             </button>
         </p>
     </div>
-
-    
-    <!-- <div ng-repeat="field in form.form_fields">
-        Field Title: {{ field.title }} <br>
-        Field Value: {{ field.fieldValue }} <br><br>
-    </div> -->
 </div>

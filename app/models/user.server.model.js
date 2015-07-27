@@ -47,14 +47,15 @@ var UserSchema = new Schema({
 	email: {
 		type: String,
 		trim: true,
-		default: '',
+		unique: 'Account already exists with email',
+		required: 'Please enter your email',
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	username: {
 		type: String,
-		unique: 'Username already exists',
-		required: 'Please fill in a username',
+		unique: true,
+		required: true,
 		trim: true
 	},
 	password: {
@@ -84,20 +85,12 @@ var UserSchema = new Schema({
 		default: 'english',
 		required: 'User must have a language'
 	},
-	updated: {
+	lastModified: {
 		type: Date
 	},
 	created: {
 		type: Date,
 		default: Date.now
-	},
-	
-	/* For account activation */
-	activationToken: {
-		type: String
-	},
-	activationTokenExpires: {
-		type: Date
 	},
 
 	/* For reset password */
@@ -112,6 +105,9 @@ var UserSchema = new Schema({
 
 //Create folder for user's pdfs
 UserSchema.pre('save', function (next) {
+	if(!this.username || this.username !== this.email){
+		this.username = this.email;
+	}
 	var newDestination = path.join(config.pdfUploadPath, this.username.replace(/ /g,'')),
 		stat = null;
 

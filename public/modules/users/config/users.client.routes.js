@@ -30,10 +30,6 @@ angular.module('users').config(['$stateProvider',
 	// Users state routing
 	$stateProvider.
 		state('profile', {
-			// parent: 'restricted',
-			// data: {
-			// 	roles: ['user', 'admin'],
-			// },
 			resolve: {
           		loggedin: checkLoggedin
         	},
@@ -41,13 +37,6 @@ angular.module('users').config(['$stateProvider',
 			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
 		}).
 		state('password', {
-			// resolve: {
-			// 	checkLoggedin: Authorization.authorize
-			// },
-			// parent: 'restricted',
-			// data: {
-			// 	roles: ['user', 'admin'],
-			// },
 			resolve: {
 	          	loggedin: checkLoggedin
 	        },
@@ -55,10 +44,6 @@ angular.module('users').config(['$stateProvider',
 			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
 		}).
 		state('accounts', {
-			// parent: 'restricted',
-			// data: {
-			// 	roles: ['user', 'admin'],
-			// },
 			resolve: {
 	          	loggedin: checkLoggedin
 	        },
@@ -83,6 +68,15 @@ angular.module('users').config(['$stateProvider',
 			templateUrl: 'modules/users/views/authentication/access-denied.client.view.html'
 		}).
 		
+		state('resendVerifyEmail', {
+			url: '/verify',
+			templateUrl: 'modules/users/views/verify/resend-verify-email.client.view.html'
+		}).
+		state('verify', {
+			url: '/verify/:token',
+			templateUrl: 'modules/users/views/verify/verify-account.client.view.html'
+		}).
+
 		state('forgot', {
 			url: '/password/forgot',
 			templateUrl: 'modules/users/views/password/forgot-password.client.view.html'

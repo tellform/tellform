@@ -25,16 +25,16 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     });
                 };
 
-                $scope.cancel = function(){
-                    alert('Form canceled..');
-                };
-
                 $scope.reloadForm = function(){
                     $scope.form.submitted = false;
+                    $scope.form.form_fields = _.chain($scope.form.form_fields).map(function(field){
+                        field.fieldValue = '';
+                        return field;
+                    }).value();
                 }
 
             },
-            templateUrl: './modules/forms/views/directiveViews/form/form.html',
+            templateUrl: './modules/forms/views/directiveViews/form/submit-form.html',
             restrict: 'E',
             scope: {
                 form:'='

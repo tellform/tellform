@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
+	nev = require('email-verification'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
@@ -11,89 +12,36 @@ var _ = require('lodash'),
 	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
 	crypto = require('crypto'),
+	nev = require('email-verification'),
 	User = mongoose.model('User');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
+// NEV configuration =====================
+nev.configure({
+    persistentUserModel: User,
+    expirationTime: 600,  // 10 minutes
 
-/**
- * Reset password GET from email token
- */
-exports.validateResetToken = function(req, res) {
-	User.findOne({
-		resetPasswordToken: req.params.token,
-		resetPasswordExpires: {
-			$gt: Date.now()
-		}
-	}, function(err, user) {
-		if (!user) {
-			return res.redirect('/#!/password/reset/invalid');
-		}
+    verificationURL: config.baseUrl+'/#!/verify/${URL}',
+    transportOptions: config.mailer.options,
+    verifyMailOptions: {
+        from: config.mailer.from,
+        subject: 'Confirm your account',
+        html: '<p>Please verify your account by clicking <a href="${URL}">this link</a>. If you are unable to do so, copy and ' +
+                'paste the following link into your browser:</p><p>${URL}</p>',
+        text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
+    },
 
-		res.redirect('/#!/password/reset/' + req.params.token);
-	});
-};
+    confirmMailOptions: {
+        from: config.mailer.from,
+        subject: 'Successfully verified!',
+        html: '<p>Your account has been successfully verified.</p>',
+        text: 'Your account has been successfully verified.'
+    },
 
-/**
- * Send verification email 
- */
-var sendVerificationEmail = function(req, res, next) {
-	// Init Variables
-	var passwordDetails = req.body;
+});
 
-	async.waterfall([
-		// Generate random token
-		function(done) {
-			crypto.randomBytes(20, function(err, buffer) {
-				var token = buffer.toString('hex');
-				done(err, token);
-			});
-		},
-		function(token, done) {
-			// For security measurement we remove the roles from the req.body object
-			delete req.body.roles;
-
-			// Init Variables
-			var user = new User(req.body);
-			user.resetPasswordToken = token;
-			user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-			// Add missing user fields
-			user.provider = 'local';
-			user.displayName = user.firstName + ' ' + user.lastName;
-
-			// Then save the user
-			user.save(function(err) {
-				done(err, token, user);
-			});
-		},
-		function(token, user, done) {
-			res.render('templates/verify-account-email', {
-				name: user.displayName,
-				url: 'http://' + req.headers.host + '/auth/activate/' + token,
-				appName: config.app.title
-			}, function(err, emailHTML) {
-				done(err, emailHTML, user);
-			});
-		},
-		// If valid email, send reset email using service
-		function(emailHTML, user, done) {
-			var mailOptions = {
-				to: user.email,
-				from: config.mailer.from,
-				subject: 'Please verify your email',
-				html: emailHTML
-			};
-
-			smtpTransport.sendMail(mailOptions, function(err) {
-				done(err, 'done');
-			});
-		}
-	], function(err) {
-		if (err) return next(err);
-		res.status(200).send('new user successfully registered');
-	});
-};
+nev.generateTempUserModel(User);
 
 /**
  * Signup
@@ -104,32 +52,44 @@ exports.signup = function(req, res) {
 
 	// Init Variables
 	var user = new User(req.body);
-	var message = null;
 
 	// Add missing user fields
 	user.provider = 'local';
+	user.username = user.email;
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user
-	user.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
-			res.status(200).send('new user successfully registered');
+	// Then save the temporary user
+	nev.createTempUser(user, function(newTempUser) {
+        // new user created
+        if (newTempUser) {
+        	nev.registerTempUser(newTempUser);
+        	res.status(200).send('An email has been sent to you. Please check it to verify your account.');
+        } else {
+            res.status(400).send('Error: Temp user could NOT be created!');
+        }
+    });
+};
 
-			// req.login(user, function(err) {
-			// 	if (err) {
-			// 		res.status(400).send(err);
-			// 	} else {
-			// 		res.status(200).send('new user successfully registered');
-			// 	}
-			// });
-		}
+exports.validateVerificationToken = function(req, res, next){
+
+	nev.confirmTempUser(req.params.token, function(user) {
+	    if (user){
+	        res.status(200).send('User successfully verified');
+	    }else {
+	        // redirect to resend verification email
+	        res.status(401).send('Verification token is invalid or has expired');
+	    }
+	});
+};
+
+exports.resendVerificationEmail = function(req, res, next){
+	nev.resendVerificationEmail(req.body.email, function(user) {
+	    if (user){
+	        res.status(200).send('User successfully verified');
+	    }else {
+	        // user hasn't been found yet
+	        res.status(400).send( {message: 'Error: User could NOT be verified'} );
+	    }
 	});
 };
 

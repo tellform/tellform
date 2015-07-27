@@ -14,9 +14,9 @@ module.exports = function(app) {
 	app.route('/users').put(users.requiresLogin, users.update);
 	app.route('/users/accounts').delete(users.requiresLogin, users.removeOAuthProvider);
 
-	// Account activation reset token
-	app.route('/auth/reset/:token').get(users.validateResetToken);
-	app.route('/auth/reset/:token').post(users.reset);
+	// Setting up the users account verification api
+	app.route('/auth/verify').post(users.resendVerificationEmail);
+	app.route('/auth/verify/:token').get(users.validateVerificationToken);
 
 	// Setting up the users password api
 	app.route('/users/password').post(users.requiresLogin, users.changePassword);

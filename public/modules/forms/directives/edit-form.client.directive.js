@@ -20,6 +20,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     handle: ' .handle'  
                 }
 
+                console.log($scope.myform);
+
                 // $scope.draggable = {
                 //     connectWith: ".dropzone",
                 //     start: function (e, ui) {
@@ -87,7 +89,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 
                     for(var i = 0; i < $scope.addField.types.length; i++){
                         // console.log($scope.addField.types[i].name === fieldType);
-                        if($scope.addField.types[i].name === fieldType){
+                        if($scope.addField.types[i].name === fieldType){ 
                             $scope.addField.types[i].lastAddedID++;
                             // console.log($scope.addField.types[i].lastAddedID);
                             fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;  
@@ -99,13 +101,13 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                         'fieldType' : fieldType,
                         'fieldValue' : '',
                         'required' : true,
-                        'disabled' : false
+                        'disabled' : false,
                     };
 
                     // put newField into fields array
                     $scope.myform.form_fields.unshift(newField);
-                    console.log('\n\n---------\nAdded field CLIENT');
-                    console.log(Date.now());
+                    // console.log('\n\n---------\nAdded field CLIENT');
+                    // console.log(Date.now());
                     // console.log($scope.myform.form_fields.length);
                 };
 

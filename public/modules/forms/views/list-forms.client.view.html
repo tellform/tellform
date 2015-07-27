@@ -33,9 +33,8 @@
 			    	Language
 			    </div>
 			    <div class="col-xs-5 field-input">
-					<select style="color:black;" name="language" required ng-model="formLanguage">
-						<option ng-repeat="language in languages"
-								value="{{language}}" ng-selected="language == formLanguage">
+					<select style="color:black;" name="language" required ng-model="formLanguage" ng-init="formLanguage = user.language">
+						<option ng-repeat="language in languages" value="{{language}}">
 							{{language}}
 						</option>
 			        </select>      

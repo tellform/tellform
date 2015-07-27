@@ -8,27 +8,30 @@ angular.module('forms').run(['Menus',
 	}
 ]).filter('formValidity',
     function(){
-
         return function(formObj){
-			//get keys
-			var formKeys = Object.keys(formObj);
+        	if(formObj && formObj.form_fields && formObj.visible_form_fields){
+        		
+				//get keys
+				var formKeys = Object.keys(formObj);
 
-			//we only care about things that don't start with $
-			var fieldKeys = formKeys.filter(function(key){
-			return key[0] !== '$';
-			});
+				//we only care about things that don't start with $
+				var fieldKeys = formKeys.filter(function(key){
+					return key[0] !== '$';
+				});
 
-			var fields = formObj.form_fields;
-			// fieldKeys.map(function(key){
-			//   return formObj[key];
-			// });
+				var fields = formObj.form_fields;
+				// fieldKeys.map(function(key){
+				//   return formObj[key];
+				// });
 
-			var valid_count = fields.filter(function(field){
-				if(typeof field === 'object'){
-				    return !!(field.fieldValue);
-				}
-			}).length;
-			return valid_count;
+				var valid_count = fields.filter(function(field){
+					if(typeof field === 'object'){
+					    return !!(field.fieldValue);
+					}
+				}).length;
+				return valid_count - (formObj.form_fields.length - formObj.visible_form_fields.length);
+			}
+			return 0;
         };
 }).config(['$provide', function ($provide){
     $provide.decorator('accordionDirective', function($delegate) { 

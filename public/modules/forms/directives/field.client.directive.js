@@ -24,7 +24,8 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
             'dropdown',
             'hidden',
             'password',
-            'radio'
+            'radio',
+            'legal'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
             return templateUrl += type + '.html';
@@ -32,7 +33,7 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
     };
 
     var linker = function(scope, element) {
-        scope.field.required = scope.required;
+        // scope.field.required = scope.required;
 
         //Set format only if field is a date
         if(scope.field.fieldType === 'date'){

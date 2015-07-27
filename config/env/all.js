@@ -9,6 +9,8 @@ module.exports = {
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
 
+	baseUrl: '',
+
 	//Sentry DSN Client Key
 	DSN: 'http://db01e03015ce48e2b68240ea8254b17c:5d878e9bb6c6488fbb70fb81295ee700@sentry.polydaic.com/1',
 

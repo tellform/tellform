@@ -40,7 +40,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
       });
 
       $scope.$watch('myform.form_fields', function(newValue, oldValue) {
-        // console.log('watchCount: '+$rootScope.watchCount);
+        console.log('watchCount: '+$rootScope.watchCount);
         if(difference(oldValue,newValue).length === 0 || oldValue === undefined){
           return;
         }
@@ -49,9 +49,9 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
         // console.log('form_fields changed: '+difference(oldValue,newValue).length );
         // console.log('$valid: '+$formCtrl.$valid);
         // console.log('finishedRender: '+$scope.finishedRender);
-        // console.log('saveInProgress: '+$scope.saveInProgress);
+        console.log('saveInProgress: '+$rootScope.saveInProgress);
           
-        if($scope.finishedRender && ($formCtrl.$dirty || difference(oldValue,newValue).length !== 0) ) {
+        if($scope.finishedRender && ($formCtrl.$dirty || difference(oldValue,newValue).length !== 0) && !$rootScope.saveInProgress) {
           $rootScope.watchCount++;
          
           if($rootScope.watchCount === 1) {
@@ -80,6 +80,8 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
             });
 
           }
+        }else{
+          return;
         }
         
       }, true);

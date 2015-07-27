@@ -10,10 +10,6 @@ angular.module('forms').config(['$stateProvider',
 			url: '/forms',
 			templateUrl: 'modules/forms/views/list-forms.client.view.html',
   		}).
-		state('createForm', {
-			url: '/forms/create',
-			templateUrl: 'modules/forms/views/create-form.client.view.html',
-		}).
 		state('viewForm', {
 			url: '/forms/:formId/admin',
 			templateUrl: 'modules/forms/views/view-form.client.view.html',
@@ -27,10 +23,6 @@ angular.module('forms').config(['$stateProvider',
 			data: {
 				hideNav: true,
 			},
-		}).
-		state('editForm', {
-			url: '/forms/:formId/edit',
-			templateUrl: 'modules/forms/views/create-form.client.view.html',
 		});
 	}
 ]);

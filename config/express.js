@@ -32,6 +32,7 @@ module.exports = function(db) {
 	// Initialize express app
 	var app = express();
 
+
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
 		require(path.resolve(modelPath));
@@ -52,7 +53,10 @@ module.exports = function(db) {
 
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {
-		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
+		if(config.baseUrl === ''){
+			config.baseUrl = req.protocol + '://' + req.headers.host;
+		}
+	    res.locals.url = req.protocol + '://' + req.headers.host + req.url;
 		next();
 	});
 
@@ -103,7 +107,8 @@ module.exports = function(db) {
 	app.disable('x-powered-by');
 
 	// Setting the app router and static folder
-	app.use(express.static(path.resolve('./public')));
+	app.use('/', express.static(path.resolve('./public')));
+	app.use('/uploads', express.static(path.resolve('./uploads')));
 
 	var formCtrl = require('../app/controllers/forms.server.controller');
 	// Setting the pdf upload route and folder
