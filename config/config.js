@@ -6,16 +6,25 @@
 var _ = require('lodash'),
 	glob = require('glob'),
 	bowerFiles = require('main-bower-files'),
-	path = require('path');
+	path = require('path'),
+	fs = require('fs');
 
 /**
  * Load app configurations
  */
-module.exports = _.extend(
-	require('./env/all'),
-	require('./env/' + process.env.NODE_ENV) || {},
-	require('./env/api_keys.js') || {}
-);
+if( fs.existsSync('./env/api_keys.js') ){
+	module.exports = _.extend(
+		require('./env/all'),
+		require('./env/' + process.env.NODE_ENV) || {},
+		require('./env/api_keys') || {}
+	);
+}else {
+	module.exports = _.extend(
+		require('./env/all'),
+		require('./env/' + process.env.NODE_ENV) || {}
+	);
+}
+
 
 /**
  * Get files by glob patterns
