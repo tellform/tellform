@@ -84,7 +84,7 @@ describe('Form Model Unit Tests:', function() {
 			mySubmission = new FormSubmission({
 				form_fields: submission_fields,
 				admin: user, 
-				form: myForm._id,
+				form: myForm,
 				timeElapsed: 17.55
 			});
 
@@ -114,7 +114,8 @@ describe('Form Model Unit Tests:', function() {
 			myForm.form_fields = new_form_fields_del;
 			return myForm.save(function(err, form) {
 				should.not.exist(err);
-				var actual_fields = form.toObject();
+				var actual_fields = form.toObject().form_fields;
+				// console.log(actual_fields);
 
 				should.deepEqual(form.toObject().form_fields, expected_fields, 'old form_fields not equal to newly saved form_fields');
 				done();

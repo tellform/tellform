@@ -99,18 +99,18 @@ FormSchema.pre('remove', function (next) {
 
 //Set _original
 FormSchema.pre('save', function (next) {
+	console.log(this.constructor.modelName);
 	this.constructor   // ≈ mongoose.model('…', FieldSchema).findById
       .findOne({title: this.title}, function(err, original){
       	if(err) next(err);
         else {
+        	console.log(original);
         	_original = original;
         	next();
         }
 
       });
 });
-
-
 
 //Update lastModified and created everytime we save
 FormSchema.pre('save', function (next) {
@@ -257,6 +257,8 @@ FormSchema.pre('save', function (next) {
 	// console.log('_original\n------------\n\n');
 	// console.log(_original);
 	// console.log(this.isModified('form_fields') && !!this.form_fields && !!_original);
+
+	console.log(_original)
 	if(this.isModified('form_fields') && this.form_fields && _original){
 
 		var old_form_fields = _original.form_fields,
@@ -265,7 +267,7 @@ FormSchema.pre('save', function (next) {
 			deletedIds = getDeletedIndexes(old_ids, new_ids),
 			that = this;
 
-		// console.log('deletedId Indexes\n--------');
+		console.log('deletedId Indexes\n--------');
 		// console.log(deletedIds);
 		// console.log('old_ids\n--------');
 		// console.log(old_ids);

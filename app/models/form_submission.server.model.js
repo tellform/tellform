@@ -76,7 +76,7 @@ FormSubmissionSchema.pre('save', function (next){
 			});
 		}
 	}
-	console.log('ipAddr check');
+	// console.log('ipAddr check');
 	next();
 });
 
@@ -85,10 +85,10 @@ FormSubmissionSchema.pre('save', function (next) {
 	var fdfData, dest_filename, dest_path,
 		that = this,
 		_form = this.form;
-	console.log(this.pdf);
+	
 
-	if(this.pdf.path){
-
+	if(this.pdf && this.pdf.path){
+		console.log(this.pdf);
 		dest_filename = that.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';
 		var __path = this.pdf.path.split('/').slice(0,this.pdf.path.split('/').length-1).join('/');
 		dest_path = path.join(__path, dest_filename);

@@ -53,7 +53,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         * Table Functions
         */
         $scope.isAtLeastOneChecked = function(){
-            // console.log('isAtLeastOneChecked');
+            console.log('isAtLeastOneChecked');
             for(var i=0; i<$scope.table.rows.length; i++){
                 if($scope.table.rows[i].selected) return true;
             }
@@ -78,14 +78,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         //Delete selected submissions of Form
         $scope.deleteSelectedSubmissions = function(){
             // console.log('deleteSelectedSubmissions');
-            var delete_ids = [];
-            // for(var i=0; i<$scope.table.rows.length; i++){
-            //     if($scope.table.rows[i].selected){
-            //         delete_ids.push($scope.table.rows[i]._id);
-            //     }
-            // }
-
-            delete_ids = _.chain($scope.table.rows).filter(function(row){
+            var delete_ids = _.chain($scope.table.rows).filter(function(row){
                 return !!row.selected;
             }).pluck('_id').value();
             console.log(delete_ids);
@@ -156,8 +149,6 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                     // console.log('form submissions successfully fetched');
                     // console.log( JSON.parse(JSON.stringify($scope.submissions)) ) ;
                     // console.log( JSON.parse(JSON.stringify($scope.myform.form_fields)) );
-
-
                 })
                 .error(function(err){
                     console.log('Could not fetch form submissions.\nError: '+err);
@@ -238,8 +229,6 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                         if(!$scope.$digest){
                             $scope.$apply();
                         }
-
-                        
                     }).catch(function(response){
                         console.log('Error occured during form UPDATE.\n');
                         console.log(response.data);
