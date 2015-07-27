@@ -12,17 +12,17 @@ var _ = require('lodash'),
 /**
  * Load app configurations
  */
-if( fs.existsSync('./env/api_keys.js') ){
-	module.exports = _.extend(
-		require('./env/all'),
-		require('./env/' + process.env.NODE_ENV) || {},
-		require('./env/api_keys') || {}
-	);
-}else {
-	module.exports = _.extend(
+ var exports = _.extend(
 		require('./env/all'),
 		require('./env/' + process.env.NODE_ENV) || {}
 	);
+if( fs.existsSync('./env/api_keys.js') ){
+	module.exports = _.merge(
+		exports,
+		require('./env/api_keys') || {}
+	);
+}else {
+	module.exports = exports;
 }
 
 
