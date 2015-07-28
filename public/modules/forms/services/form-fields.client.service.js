@@ -35,26 +35,26 @@ angular.module('forms').service('FormFields', [
 		        name : 'legal',
 		        value : 'Legal'
 		    },
-		    {
-		        name : 'file',
-		        value : 'File Upload'
-		    },
-		    {
-		        name : 'rating',
-		        value : 'Rating'
-		    },
-		    {
-		        name : 'link',
-		        value : 'Link'
-		    },
-		    {
-		        name : 'scale',
-		        value : 'Opinion Scale'
-		    },
-		    {
-		        name : 'stripe',
-		        value : 'Payment' 
-		    },
+		    // {
+		    //     name : 'file',
+		    //     value : 'File Upload'
+		    // },
+		    // {
+		    //     name : 'rating',
+		    //     value : 'Rating'
+		    // },
+		    // {
+		    //     name : 'link',
+		    //     value : 'Link'
+		    // },
+		    // {
+		    //     name : 'scale',
+		    //     value : 'Opinion Scale'
+		    // },
+		    // {
+		    //     name : 'stripe',
+		    //     value : 'Payment' 
+		    // },
 		    {
 		        name : 'statement',
 		        value : 'Statement' 
