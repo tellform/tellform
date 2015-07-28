@@ -1,7 +1,7 @@
 {
   "name": "MedForm",
   "description": "PDF generated form builder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/whitef0x0/medform",
   "authors": [
     "David Baldwynn <polydaic@gmail.com>"
@@ -11,27 +11,22 @@
   "appPath": "public/modules",
   "dependencies": {
     "bootstrap": "~3",
-    "angular": "1.3.17",
-    "angular-resource": "~1.2",
-    "angular-animate": "~1.2",
-    "angular-mocks": "~1.2",
+    "angular": "~1.4.3",
+    "angular-resource": "~1.4",
+    "angular-animate": "~1.4",
+    "angular-mocks": "~1.4",
     "angular-bootstrap": "~0.12.0",
     "angular-ui-utils": "~0.1.1",
     "angular-ui-router": "~0.2.11",
-    "angular-strap": "~2.2.1",
-    "angular-permission": "~0.3.0",
+    "angular-strap": "~2.3.1",
+    "angular-permission": "~1.0.6",
     "restangular": "~1.5.1",
     "fontawesome": "~4.3.0",
-    "ng-file-upload": "~5.0.9",
+    "ng-file-upload": "~5.1.0",
     "angular-raven": "~0.5.11",
     "angular-ui-date": "~0.0.8",
     "lodash": "~3.10.0",
     "angular-ui-sortable": "~0.13.4",
     "angular-busy": "~4.1.3"
-  },
-  "resolutions": {
-    "angular": "^1.3.17",
-    "angular-resource": "~1.2",
-    "ng-file-upload": "~5.0.9"
   }
 }

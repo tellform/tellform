@@ -57,13 +57,19 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
 	        $state.previous = fromState;
 
-	        //Redirect home to listForms if user is authenticated
-	        if(toState.name === 'home'){
-	        	if(Auth.isAuthenticated()){
-	        		event.preventDefault(); // stop current execution
-            		$state.go('listForms'); // go to login
-	        	}
-	        }
+	        //Redirect to listForms if user is authenticated
+        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
+        		if(Auth.isAuthenticated()){
+        			event.preventDefault(); // stop current execution
+        			$state.go('listForms'); // go to listForms page
+        		}
+        	}
+	        //Redirect to 'home' route if user is not authenticated
+        	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() ){
+        		event.preventDefault(); // stop current execution
+        		$state.go('home'); // go to listForms page
+        	}
+	        
 	    });
 
     }
@@ -79,17 +85,14 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 		  Auth.ensureHasCurrentUser(User);
 		  user = Auth.currentUser;
 
-		  if(user){
-			  authenticator = new Authorizer(user);
+		    if(user){
+			  	authenticator = new Authorizer(user);
 
-			  // console.log('Permissions');
-			  // console.log(permissions);
-
-			  if( (permissions !== null) && !authenticator.canAccess(permissions) ){
-			    event.preventDefault();
-		    	console.log('access denied')
-		      $state.go('access_denied');
-			  }
+			  	if( (permissions !== null) && !authenticator.canAccess(permissions) ){
+			    	event.preventDefault();
+		    		console.log('access denied')
+		      		$state.go('access_denied');
+				}
 			}
 		});
 }]);
@@ -142,12 +145,12 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 angular.module('core').controller('HeaderController', ['$rootScope','$scope','Menus', '$state', 'Auth', 'User',
 	function ($rootScope, $scope, Menus, $state, Auth, User) {
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
-
 	    $scope.authentication = $rootScope.authentication = Auth;
-	    if(!$scope.user.username){
-			$scope.user = $rootScope.user = User.getCurrent();
-			$scope.authentication.currentUser = $rootScope.authentication.currentUser = $scope.user;
-		}
+	 //    if(!$scope.user || !$scope.user.username){
+		// 	$scope.user = $rootScope.user = User.getCurrent();
+		// 	$scope.authentication.currentUser = $rootScope.authentication.currentUser = $scope.user;
+		// }
+
 		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish'];
 
 		$scope.isCollapsed = false;
@@ -158,10 +161,10 @@ angular.module('core').controller('HeaderController', ['$rootScope','$scope','Me
 		    var promise = User.logout();
 			promise.then(function() {
 				Auth.logout();
-				// Auth.ensureHasCurrentUser(null);
-				$rootScope.user = null;
+				Auth.ensureHasCurrentUser(User);
+				$scope.user = $rootScope.user = null;
 				$state.go('home');
-				}, 
+			}, 
 			function(reason) {
 			  	console.log('Logout Failed: ' + reason);
 			});
@@ -191,14 +194,6 @@ angular.module('core').controller('HeaderController', ['$rootScope','$scope','Me
 angular.module('core').controller('HomeController', ['$rootScope', '$scope', 'User', 'Auth', '$state',
 	function($rootScope, $scope, User, Auth, $state) {
 		$scope = $rootScope;
-
-		$scope.user = Auth.ensureHasCurrentUser(User);
-	    $scope.authentication = Auth;
-
-	    // if($scope.authentication.isAuthenticated()){
-	    	// $state.go('listForms');
-	    // }
-
 	}
 ]);
 'use strict';
@@ -425,6 +420,9 @@ angular.module('forms').config(['$stateProvider',
 		state('listForms', {
 			url: '/forms',
 			templateUrl: 'modules/forms/views/list-forms.client.view.html',
+			data: {
+				permissions: [ 'editForm' ]
+			}
   		}).
 		state('viewForm', {
 			url: '/forms/:formId/admin',
@@ -482,17 +480,21 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
 
         $scope = $rootScope;
         $scope.myform = CurrentForm.getForm();
-        $scope.saveInProgress = false;
+        $rootScope.saveInProgress = false;
         $scope.viewSubmissions = false;
         $rootScope.showCreateModal = false;
         $scope.table = {
-            masterChecker: true,
+            masterChecker: false,
             rows: []
         };
 
         // Return all user's Forms
         $scope.findAll = function() {
-            $scope.myforms = Forms.query();
+            if(!$scope.myforms){
+                Forms.query(function(_forms){
+                    $scope.myforms = _forms;
+                });
+            }
         };
 
         // Find a specific Form
@@ -690,7 +692,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
 
         // Update existing Form
         $scope.update = $rootScope.update = function(cb) {
-            if(!$rootScope.saveInProgress){
+            if(!$rootScope.saveInProgress && $rootScope.finishedRender){
 
                 $rootScope.saveInProgress = true;
                 console.log('begin updating form');
@@ -734,6 +736,8 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
     // },
     link: function($scope, $element, $attrs, $ctrls) {
 
+      $rootScope.finishedRender = false;
+
       if($rootScope.watchCount === undefined){
         $rootScope.watchCount = 0;
       }
@@ -753,15 +757,15 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
       var $formCtrl = $ctrls[0];
       var savePromise = null;
-      $scope.finishedRender = false;
+      // $scope.finishedRender = false;
       var expression = $attrs.autoSaveForm || 'true';
 
       $scope.$on('ngRepeatStarted', function(ngRepeatFinishedEvent) {
-        // $scope.finishedRender = false;
+        $rootScope.finishedRender = false;
         $rootScope.watchCount = 0;
       });
       $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-        $scope.finishedRender = true;
+        $rootScope.finishedRender = true;
       });
 
       $scope.$watch('myform.form_fields', function(newValue, oldValue) {
@@ -773,13 +777,13 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
         // console.log('\n\n----------\n$dirty: '+( $formCtrl.$dirty ) );
         // console.log('form_fields changed: '+difference(oldValue,newValue).length );
         // console.log('$valid: '+$formCtrl.$valid);
-        // console.log('finishedRender: '+$scope.finishedRender);
-        console.log('saveInProgress: '+$rootScope.saveInProgress);
+        // console.log('finishedRender: '+$rootScope.finishedRender);
+        // console.log('saveInProgress: '+$rootScope.saveInProgress);
           
-        if($scope.finishedRender && ($formCtrl.$dirty || difference(oldValue,newValue).length !== 0) && !$rootScope.saveInProgress) {
+        if($rootScope.finishedRender && ($formCtrl.$dirty || difference(oldValue,newValue).length !== 0) && !$rootScope.saveInProgress) {
           $rootScope.watchCount++;
          
-          if($rootScope.watchCount === 1) {
+          // if($rootScope.watchCount === 1) {
             
             if(savePromise) {
               $timeout.cancel(savePromise);
@@ -791,11 +795,12 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
               $rootScope[$attrs.autoSaveCallback](
                 function(err){
                   if(!err){
-                    console.log('Form data persisted -- setting pristine flag');
-                    console.log('\n\n---------\nUpdate form CLIENT');
-                    console.log(Date.now());
+                    console.log('\n\nForm data persisted -- setting pristine flag');
+                    // console.log('\n\n---------\nUpdate form CLIENT');
+                    // console.log(Date.now());
                     $rootScope.watchCount = 0;
                     $formCtrl.$setPristine();  
+                    // $rootScope.saveInProgress = false;
                   }else{
                     console.log('Error form data NOT persisted');
                     console.log(err);
@@ -804,7 +809,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
             
             });
 
-          }
+          // }
         }else{
           return;
         }
@@ -1231,13 +1236,14 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
             if (scope.$first === true) {
                 $timeout(function () {
                     $rootScope.$broadcast('ngRepeatStarted');
-                }, 500);
+                });
             }
             if (scope.$last === true) {
+                console.log(element);
             	$timeout(function () {
-            		// console.log('ngRepeatFinished')
+            		console.log('ngRepeatFinished')
                 	$rootScope.$broadcast('ngRepeatFinished');
-                }, 500);
+                });
             }
         }
     };
@@ -1373,26 +1379,26 @@ angular.module('forms').service('FormFields', [
 		        name : 'legal',
 		        value : 'Legal'
 		    },
-		    {
-		        name : 'file',
-		        value : 'File Upload'
-		    },
-		    {
-		        name : 'rating',
-		        value : 'Rating'
-		    },
-		    {
-		        name : 'link',
-		        value : 'Link'
-		    },
-		    {
-		        name : 'scale',
-		        value : 'Opinion Scale'
-		    },
-		    {
-		        name : 'stripe',
-		        value : 'Payment' 
-		    },
+		    // {
+		    //     name : 'file',
+		    //     value : 'File Upload'
+		    // },
+		    // {
+		    //     name : 'rating',
+		    //     value : 'Rating'
+		    // },
+		    // {
+		    //     name : 'link',
+		    //     value : 'Link'
+		    // },
+		    // {
+		    //     name : 'scale',
+		    //     value : 'Opinion Scale'
+		    // },
+		    // {
+		    //     name : 'stripe',
+		    //     value : 'Payment' 
+		    // },
 		    {
 		        name : 'statement',
 		        value : 'Statement' 
@@ -1494,7 +1500,7 @@ angular.module('users').config(['$httpProvider',
     $httpProvider.interceptors.push(function($q, $location) {
       return {
         responseError: function(response) {
-          console.log($location.path());
+          // console.log($location.path());
           if( response.config.url !== '/users/me' && $location.path() !== '/users/me' && response.config){
 
             console.log('intercepted rejection of ', response.config.url, response.status);
@@ -1618,21 +1624,18 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope.credentials = {};
 		$scope.error = null;
 
-		// If user is signed in then redirect back home
-		if ($scope.authentication.isAuthenticated()) $state.go('home');
-
 	    $scope.signin = function() {
-			Auth.currentUser = User.login($scope.credentials).then(
+			User.login($scope.credentials).then(
 				function(response) {
+					console.log(response)
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
 					if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== ''){
 						$state.go($state.previous.name);
 					}else{
-						$state.go('home');
+						$state.go('listForms');
 					}
-					
 				},
 				function(error) {
 					$rootScope.user = Auth.ensureHasCurrentUser(User);
@@ -1842,7 +1845,7 @@ angular.module('users').factory('Auth',  function($window) {
       ensureHasCurrentUser: function(User) {
         if (service.currentUser && service.currentUser.displayName) {
           console.log('Using local current user.');
-          // console.log(service.currentUser);
+          console.log(service.currentUser);
           return service.currentUser;
         } 
         else if ($window.user){
