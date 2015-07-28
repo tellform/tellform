@@ -1,7 +1,7 @@
 {
   "name": "Medform",
   "description": "PDF generated form builder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/whitef0x0/medform",
   "authors": [
     "David Baldwynn <polydaic@gmail.com>"
