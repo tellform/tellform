@@ -7,21 +7,18 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope.credentials = {};
 		$scope.error = null;
 
-		// If user is signed in then redirect back home
-		if ($scope.authentication.isAuthenticated()) $state.go('home');
-
 	    $scope.signin = function() {
-			Auth.currentUser = User.login($scope.credentials).then(
+			User.login($scope.credentials).then(
 				function(response) {
+					console.log(response)
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-					if($state.previous.name !== 'home' && $state.previous.name !== ''){
+					if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== ''){
 						$state.go($state.previous.name);
 					}else{
-						$state.go('home');
+						$state.go('listForms');
 					}
-					
 				},
 				function(error) {
 					$rootScope.user = Auth.ensureHasCurrentUser(User);

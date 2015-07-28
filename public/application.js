@@ -34,13 +34,19 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
 	        $state.previous = fromState;
 
-	        //Redirect home to listForms if user is authenticated
-	        if(toState.name === 'home'){
-	        	if(Auth.isAuthenticated()){
-	        		event.preventDefault(); // stop current execution
-            		$state.go('listForms'); // go to login
-	        	}
-	        }
+	        //Redirect to listForms if user is authenticated
+        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
+        		if(Auth.isAuthenticated()){
+        			event.preventDefault(); // stop current execution
+        			$state.go('listForms'); // go to listForms page
+        		}
+        	}
+	        //Redirect to 'home' route if user is not authenticated
+        	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() ){
+        		event.preventDefault(); // stop current execution
+        		$state.go('home'); // go to listForms page
+        	}
+	        
 	    });
 
     }
@@ -56,17 +62,14 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 		  Auth.ensureHasCurrentUser(User);
 		  user = Auth.currentUser;
 
-		  if(user){
-			  authenticator = new Authorizer(user);
+		    if(user){
+			  	authenticator = new Authorizer(user);
 
-			  // console.log('Permissions');
-			  // console.log(permissions);
-
-			  if( (permissions !== null) && !authenticator.canAccess(permissions) ){
-			    event.preventDefault();
-		    	console.log('access denied')
-		      $state.go('access_denied');
-			  }
+			  	if( (permissions !== null) && !authenticator.canAccess(permissions) ){
+			    	event.preventDefault();
+		    		console.log('access denied')
+		      		$state.go('access_denied');
+				}
 			}
 		});
 }]);

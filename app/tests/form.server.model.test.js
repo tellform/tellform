@@ -13,7 +13,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var user, myForm, mySubmission, FormFDF;
+var user, myForm, mySubmission;
 
 /**
  * Unit tests
@@ -54,26 +54,44 @@ describe('Form Model Unit Tests:', function() {
 		});
 
 		it('should be able to show an error when try to save without title', function(done) {
-			myForm.title = '';
+			var _form = myForm;
+			_form.title = '';
 
-			return myForm.save(function(err) {
+			return _form.save(function(err) {
 				should.exist(err);
-				should.equal(err.errors.title.message, 'Title cannot be blank');
+				should.equal(err.errors.title.message, 'Form Title cannot be blank');
 				done();
 			});
 		});
 	});
 
-	describe('Test FormField and Submission Logic', function() {
-		var new_form_fields_add1, new_form_fields_del, submission_fields, old_fields;
+	describe('Method Find', function(){
+		beforeEach(function(done){
+			myForm.save(function(err) {
+				done();
+			});
+		});
+		it('should be able to findOne my form without problems', function(done) {
+			return Form.findOne({_id: myForm._id}, function(err,form) {
+				should.not.exist(err);
+				should.exist(form);
+				should.deepEqual(form.toObject(), myForm.toObject());
+				done();
+			});
+		});
+	});
 
-		before(function(done){
-			new_form_fields_add1 = _.clone(myForm.form_fields);
+
+	describe('Test FormField and Submission Logic', function() {
+		var new_form_fields_add1, new_form_fields_del, submission_fields, old_fields, form;
+
+		before(function(){
+			new_form_fields_add1 = _.clone(myForm.toObject().form_fields);
 			new_form_fields_add1.push(
 				{'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}
 			);
 
-			new_form_fields_del = _.clone(myForm.form_fields);
+			new_form_fields_del = _.clone(myForm.toObject().form_fields);
 			new_form_fields_del.splice(0, 1);
 		
 			submission_fields = _.clone(myForm.toObject().form_fields);
@@ -87,45 +105,50 @@ describe('Form Model Unit Tests:', function() {
 				form: myForm,
 				timeElapsed: 17.55
 			});
+			
+		});
 
-			mySubmission.save(function(){
-				done();
+		beforeEach(function(done){
+			myForm.save(function(){
+				mySubmission.save(function(){
+					done();
+				});
 			});
 		});
 
-		after(function(done){
+		afterEach(function(done){
 			mySubmission.remove(function(){
 				done();
 			});
 		});
 
-		beforeEach(function(done){
-			old_fields = myForm.toObject().form_fields;
-			// console.log(old_fields);
-			done();
-		});
-
 		it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
-			var expected_fields = old_fields.slice(1,3).concat(old_fields.slice(0,1));
-
+			old_fields = myForm.toObject().form_fields;
 			// console.log(old_fields);
 
-			myForm.form_fields = new_form_fields_del;
-			return myForm.save(function(err, form) {
-				should.not.exist(err);
-				var actual_fields = form.toObject().form_fields;
-				// console.log(actual_fields);
+			// var expected_fields = old_fields.slice(1,3).concat(old_fields.slice(0,1));
 
-				should.deepEqual(form.toObject().form_fields, expected_fields, 'old form_fields not equal to newly saved form_fields');
+			myForm.form_fields = new_form_fields_del;
+
+			myForm.save(function(err, _form) {
+
+				should.not.exist(err);
+				should.exist(_form);
+
+				// var actual_fields = _.map(_form.toObject().form_fields, function(o){ _.omit(o, '_id')});
+				// old_fields = _.map(old_fields, function(o){ _.omit(o, '_id')});
+
+				// console.log(old_fields);
+				should.deepEqual(JSON.stringify(_form.toObject().form_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
 				done();
 			});
 		});
 
-		// it('should delete \'preseved\' form_fields whose submissions have been removed without any problems', function(done) {
+		// it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
 
 		// 	myForm.form_fields = new_form_fields_del;
-		// 	myForm.save(function(err, form) {
+		// 	myForm.save(function(err, form
 		// 		should.not.exist(err);
 		// 		(form.form_fields).should.be.eql(old_fields, 'old form_fields not equal to newly saved form_fields');
 				
@@ -136,28 +159,30 @@ describe('Form Model Unit Tests:', function() {
 		// 		});
 		// 	});
 		// });
-
 	});
 
 	describe('Method generateFDFTemplate', function() {
-		beforeEach(function(done){
-			FormFDF = {
-				'First Name': '',
-				'nascar': '',
-				'hockey': ''
-			};
-			done();
+		var FormFDF;
+		before(function(done){
+			return myForm.save(function(err, form){
+				
+				FormFDF = {
+					'First Name': '',
+					'nascar': '',
+					'hockey': ''
+				};
+				done();
+			});
 		});
 
-		it('should be able to generate a FDF template without any problems', function(done) {
+		it('should be able to generate a FDF template without any problems', function() {
 			var fdfTemplate = myForm.generateFDFTemplate();
 			(fdfTemplate).should.be.eql(FormFDF);
-			done();
 		});
 	});
 
 	afterEach(function(done) {
-		Form.remove().exec(function() {
+		Form.remove({}, function() {
 			User.remove().exec(done);
 		});
 	});

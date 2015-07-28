@@ -53,7 +53,7 @@ var FormFieldSchema = new Schema({
 		type: String,
 		default: '',
 		trim: true,
-		required: 'Title cannot be blank'
+		required: 'Field title cannot be blank'
 	},
 	description: {
 		type: String,

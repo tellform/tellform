@@ -20,7 +20,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" cg-busy="{promise:updatePromise,message:'Updating form...',backdrop:true}">
 	<!-- <div > -->
 		<tabset class="col-xs-12">
 			<tab>
@@ -33,13 +33,17 @@
 				<tab-heading >
 					Edit Design
 				</tab-heading>
-				<edit-form-directive myform="myform" user="user"></edit-form-directive>
+				<div cg-busy="promise:updatePromise"></div>
+				<edit-form-directive myform="myform" user="user">
+				</edit-form-directive>
 			</tab>
 			<tab>
 				<tab-heading>
 					Configure
 				</tab-heading>
-				<configure-form-directive myform="myform" user="user"></configure-form-directive>
+				<div cg-busy="promise:updatePromise"></div>
+				<configure-form-directive myform="myform" user="user">
+				</configure-form-directive>
 			</tab>
 			<tab data-ng-click="showSubmissions()">
 				<tab-heading>

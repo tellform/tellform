@@ -6,17 +6,21 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
 
         $scope = $rootScope;
         $scope.myform = CurrentForm.getForm();
-        $scope.saveInProgress = false;
+        $rootScope.saveInProgress = false;
         $scope.viewSubmissions = false;
-        $scope.showCreateModal = false;
+        $rootScope.showCreateModal = false;
         $scope.table = {
-            masterChecker: true,
+            masterChecker: false,
             rows: []
         };
 
         // Return all user's Forms
         $scope.findAll = function() {
-            $scope.myforms = Forms.query();
+            if(!$scope.myforms){
+                Forms.query(function(_forms){
+                    $scope.myforms = _forms;
+                });
+            }
         };
 
         // Find a specific Form
@@ -31,21 +35,19 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             $state.go(route, {'formId': id}, {reload: true});
         };
 
-
-
         $scope.setForm = function (form) {
             $scope.myform = form;
         };
 
         //Modal functions
         $scope.openCreateModal = function(){
-            if(!$scope.showCreateModal){
-                $scope.showCreateModal = true;
+            if(!$rootScope.showCreateModal){
+                $rootScope.showCreateModal = true;
             }
         };
         $scope.closeCreateModal = function(){
-            if($scope.showCreateModal){
-                $scope.showCreateModal = false;
+            if($rootScope.showCreateModal){
+                $rootScope.showCreateModal = false;
             }
         };
 
@@ -53,14 +55,14 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         * Table Functions
         */
         $scope.isAtLeastOneChecked = function(){
-            console.log('isAtLeastOneChecked');
+            // console.log('isAtLeastOneChecked');
             for(var i=0; i<$scope.table.rows.length; i++){
                 if($scope.table.rows[i].selected) return true;
             }
             return false;
         };
         $scope.toggleAllCheckers = function(){
-            console.log('toggleAllCheckers');
+            // console.log('toggleAllCheckers');
             for(var i=0; i<$scope.table.rows.length; i++){
                 $scope.table.rows[i].selected = $scope.table.masterChecker;
             }
@@ -194,7 +196,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             form.title = $scope.myform.name.$modelValue;
             form.language = $scope.myform.language.$modelValue;
             console.log(form);
-            $scope.showCreateModal = true;
+            $rootScope.showCreateModal = true;
 
             console.log($scope.myform);
             if($scope.myform.$valid && $scope.myform.$dirty){
@@ -216,13 +218,13 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
 
         // Update existing Form
         $scope.update = $rootScope.update = function(cb) {
-            if(!$rootScope.saveInProgress){
+            if(!$rootScope.saveInProgress && $rootScope.finishedRender){
 
                 $rootScope.saveInProgress = true;
-                // console.log('begin updating form');
+                console.log('begin updating form');
                 var err = null;
 
-                $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
+                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
                         console.log(response.data);
@@ -234,7 +236,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                         console.log(response.data);
                         err = response.data;
                     }).finally(function() { 
-                        // console.log('finished updating');
+                        console.log('finished updating');
                         $rootScope.saveInProgress = false;
                         cb(err);
                     });

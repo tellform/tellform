@@ -14,12 +14,12 @@ angular.module('users').factory('Auth',  function($window) {
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
         if (service.currentUser && service.currentUser.displayName) {
-          // console.log('Using local current user.');
-          // console.log(service.currentUser);
+          console.log('Using local current user.');
+          console.log(service.currentUser);
           return service.currentUser;
         } 
         else if ($window.user){
-          // console.log('Using cached current user.');
+          console.log('Using cached current user.');
           // console.log($window.user);
           service.currentUser = $window.user;
           return service.currentUser;

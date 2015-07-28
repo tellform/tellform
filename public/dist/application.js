@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'medform';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'cgBusy'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -142,11 +142,16 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 angular.module('core').controller('HeaderController', ['$rootScope','$scope','Menus', '$state', 'Auth', 'User',
 	function ($rootScope, $scope, Menus, $state, Auth, User) {
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
+
 	    $scope.authentication = $rootScope.authentication = Auth;
+	    if(!$scope.user.username){
+			$scope.user = $rootScope.user = User.getCurrent();
+			$scope.authentication.currentUser = $rootScope.authentication.currentUser = $scope.user;
+		}
 		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish'];
 
 		$scope.isCollapsed = false;
-		$scope.hideNav = false;
+		$rootScope.hideNav = false;
 		$scope.menu = Menus.getMenu('topbar');
 
 	    $scope.signout = function() {
@@ -169,47 +174,14 @@ angular.module('core').controller('HeaderController', ['$rootScope','$scope','Me
 		// Collapsing the menu after navigation
 		$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 			$scope.isCollapsed = false;
-			$scope.hideNav = false;
+			$rootScope.hideNav = false;
 			if ( angular.isDefined( toState.data ) ) {
 
 				if ( angular.isDefined( toState.data.hideNav ) ) {
-		        	$scope.hideNav = toState.data.hideNav;
+		        	$rootScope.hideNav = toState.data.hideNav;
 		        }
 		    }
 		});
-
-		// Principal.identity().then(function(user){
-		// 	$rootScope.user = user;
-		// 	console.log('topbar')
-		// 	console.log($scope.user);
-		// },
-		// function(error){
-		// 	console.log(error);
-		// }).then(function(){
-			// $scope.signout = function() {
-			// 	$http.get('/auth/signout').success(function(response) {
-		 //          $state.go('home');
-		 //        }).error(function(error) {
-		 //          $scope.error = (error.message || error);
-		 //        });
-        		
-   			//  			Principal.signout().then(
-			// 		function(result){
-			// 			$state.go('home');
-			// 		},
-			// 		function(error){
-			// 			$scope.error = (error.message || error);
-			// 		}
-			// 	);
-			 	// if( angular.isDefined(response_obj.error) ){
-				// 	$scope.error = response_obj.error;
-				// } else{
-				// 	$state.go('home');
-				// }
-
-			// };
-
-		// });
 
 	}
 ]);
@@ -229,32 +201,6 @@ angular.module('core').controller('HomeController', ['$rootScope', '$scope', 'Us
 
 	}
 ]);
-// 'use strict';
-
-// /**
-//  * @ngdoc function
-//  * @name medform.controller:IndexCtrl
-//  * @description
-//  * # IndexCtrl
-//  * Controller of core
-//  */
-// angular.module('medform').controller('IndexCtrl', function ($scope, $rootScope, $location, User, Auth, $state) {
-//     $rootScope.user = Auth.ensureHasCurrentUser(User);
-//     // $rootScope.user = Auth.getUserState(User).user;
-//     $rootScope.authentication = Auth;
-
-//     $scope.signout = function() {
-//       User.logout(function() {
-//         Auth.logout();
-//         $rootScope.user = null;
-//         $state.go('home');
-//         // $scope.$apply();
-//       });
-//     };
-
-
-//   });
-
 'use strict';
 
 //Menu service used for managing  menus
@@ -499,49 +445,33 @@ angular.module('forms').config(['$stateProvider',
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('SubmitFormController', ['$scope', '$stateParams', '$state', 'Forms', 'CurrentForm',
-	function($scope, $stateParams, $state, Forms, CurrentForm) {
-		
-		$scope.form = Forms.get({
+angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$stateParams', '$state', 'Forms', 'CurrentForm',
+	function($scope, $rootScope, $stateParams, $state, Forms, CurrentForm) {
+
+		Forms.get({
 			formId: $stateParams.formId
-		});
-		CurrentForm.setForm($scope.form);
-	}
-]);
-'use strict';
+		}).$promise.then(
+		//success
+		function(form){
+			$scope.form = form;
 
-// submissions controller
-angular.module('forms').controller('ViewSubmissionController', ['$scope', '$stateParams', '$state', 'Submissions','$http',
-	function($scope, $stateParams, $state, Submissions, $http) {
-		$scope.submissionId = undefined;		
-
-		// Return all form's submissions
-		$scope.findAll = function() {
-			$scope.submissions = Submissions.query({
-				formId: $stateParams.formId
-			});
-		};
-
-		// Find a specific submission
-		$scope.findOne = function() {
-			$scope.submission = Submissions.get({
-				submissionId: $scope.submissionId,
-				formId: $stateParams.formId
-			});
-		};
-
-        
-        // Remove existing submission
-        $scope.remove = function(submission) {
-            if (!submission) {
-            	submission = $scope.submission;
-            }
-            $http.delete('/forms/'+$stateParams.formId+'/submissions/'+submission._id).
-            success(function(data, status, headers){
-                console.log('submission deleted successfully');
-                alert('submission deleted..');
-            });
-        };
+			//Show navbar if form is not public AND user is loggedin
+			if(!$scope.form.isLive && $rootScope.authentication.isAuthenticated()){
+				$rootScope.hideNav = false;
+			}else if(!$scope.form.isLive){
+				$state.go('access_denied');
+			}else {
+				CurrentForm.setForm($scope.form);
+			}
+			console.log('$rootScope.hideNav: '+$rootScope.hideNav);
+			console.log('$scope.form.isLive: '+$scope.form.isLive);
+		},
+		//error
+        function( error ){
+        	$scope.error = error.message;
+        	console.log('ERROR: '+error.message);
+        	$state.go('access_denied');
+        });
 	}
 ]);
 'use strict';
@@ -554,7 +484,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         $scope.myform = CurrentForm.getForm();
         $scope.saveInProgress = false;
         $scope.viewSubmissions = false;
-        $scope.showCreateModal = false;
+        $rootScope.showCreateModal = false;
         $scope.table = {
             masterChecker: true,
             rows: []
@@ -577,21 +507,19 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             $state.go(route, {'formId': id}, {reload: true});
         };
 
-
-
         $scope.setForm = function (form) {
             $scope.myform = form;
         };
 
         //Modal functions
         $scope.openCreateModal = function(){
-            if(!$scope.showCreateModal){
-                $scope.showCreateModal = true;
+            if(!$rootScope.showCreateModal){
+                $rootScope.showCreateModal = true;
             }
         };
         $scope.closeCreateModal = function(){
-            if($scope.showCreateModal){
-                $scope.showCreateModal = false;
+            if($rootScope.showCreateModal){
+                $rootScope.showCreateModal = false;
             }
         };
 
@@ -599,14 +527,14 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         * Table Functions
         */
         $scope.isAtLeastOneChecked = function(){
-            console.log('isAtLeastOneChecked');
+            // console.log('isAtLeastOneChecked');
             for(var i=0; i<$scope.table.rows.length; i++){
                 if($scope.table.rows[i].selected) return true;
             }
             return false;
         };
         $scope.toggleAllCheckers = function(){
-            console.log('toggleAllCheckers');
+            // console.log('toggleAllCheckers');
             for(var i=0; i<$scope.table.rows.length; i++){
                 $scope.table.rows[i].selected = $scope.table.masterChecker;
             }
@@ -740,7 +668,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             form.title = $scope.myform.name.$modelValue;
             form.language = $scope.myform.language.$modelValue;
             console.log(form);
-            $scope.showCreateModal = true;
+            $rootScope.showCreateModal = true;
 
             console.log($scope.myform);
             if($scope.myform.$valid && $scope.myform.$dirty){
@@ -765,10 +693,10 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             if(!$rootScope.saveInProgress){
 
                 $rootScope.saveInProgress = true;
-                // console.log('begin updating form');
+                console.log('begin updating form');
                 var err = null;
 
-                $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
+                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
                         console.log(response.data);
@@ -780,7 +708,7 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                         console.log(response.data);
                         err = response.data;
                     }).finally(function() { 
-                        // console.log('finished updating');
+                        console.log('finished updating');
                         $rootScope.saveInProgress = false;
                         cb(err);
                     });
@@ -1502,7 +1430,6 @@ angular.module('forms').factory('Forms', ['$resource',
 		            form.visible_form_fields = _.filter(form.form_fields, function(field){
 		            	return field.deletePreserved === false;
 		            }); //<-- replace each item with an instance of the resource object
-		            console.log(form);
 		          	return form;
 		        }
 			},
@@ -1567,7 +1494,8 @@ angular.module('users').config(['$httpProvider',
     $httpProvider.interceptors.push(function($q, $location) {
       return {
         responseError: function(response) {
-          if( $location.path() !== '/verify' && $location.path() !== '/users/me' && $location.path() !== '/' && $location.path() !== '/signup' && response.config){
+          console.log($location.path());
+          if( response.config.url !== '/users/me' && $location.path() !== '/users/me' && response.config){
 
             console.log('intercepted rejection of ', response.config.url, response.status);
             if (response.status === 401) {
@@ -1699,7 +1627,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-					if($state.previous.name !== 'home' && $state.previous.name !== ''){
+					if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== ''){
 						$state.go($state.previous.name);
 					}else{
 						$state.go('home');
@@ -1740,40 +1668,40 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 	function($scope, $stateParams, $state, User) {
 
 		//If user is signed in then redirect back home
-		if ($scope.authentication.isAuthenticated()) $state.go('home');
+		// if ($scope.authentication.isAuthenticated()) $state.go('home');
 
-			// Submit forgotten password account id
-			$scope.askForPasswordReset = function() {
-				User.askForPasswordReset($scope.credentials).then(
-					function(response){
-						$scope.success = response.message;
-						$scope.credentials = null;
-					},
-					function(error){
-						$scope.error = error;
-						$scope.credentials = null;
-					}
-				);
-			};
+		// Submit forgotten password account id
+		$scope.askForPasswordReset = function() {
+			User.askForPasswordReset($scope.credentials).then(
+				function(response){
+					$scope.success = response.message;
+					$scope.credentials = null;
+				},
+				function(error){
+					$scope.error = error;
+					$scope.credentials = null;
+				}
+			);
+		};
 
-			// Change user password
-			$scope.resetUserPassword = function() {
-				$scope.success = $scope.error = null;
-				User.resetPassword($scope.passwordDetails, $stateParams.token).then(
-					function(response){
-						// If successful show success message and clear form
-						$scope.success = response.message;
-						$scope.passwordDetails = null;
+		// Change user password
+		$scope.resetUserPassword = function() {
+			$scope.success = $scope.error = null;
+			User.resetPassword($scope.passwordDetails, $stateParams.token).then(
+				function(response){
+					// If successful show success message and clear form
+					$scope.success = response.message;
+					$scope.passwordDetails = null;
 
-						// And redirect to the index page
-						$state.go('reset-success');
-					},
-					function(error){
-						$scope.error = error.message || error;
-						$scope.passwordDetails = null;
-					}
-				);
-			};
+					// And redirect to the index page
+					$state.go('reset-success');
+				},
+				function(error){
+					$scope.error = error.message || error;
+					$scope.passwordDetails = null;
+				}
+			);
+		};
 	}
 ]);
 'use strict';
@@ -1853,7 +1781,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 
 angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams',
 	function($scope, $state, $rootScope, User, Auth, $stateParams) {
-		if($rootScope.authetication.isAuthenticated){
+		if($rootScope.authentication.isAuthenticated()){
 			$state.go('home');
 		}
 
@@ -1865,10 +1793,12 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 				function(response){
 					$scope.success = response.message;
 					$scope.credentials = null;
+					$scope.isResetSent = true;
 				},
 				function(error){
 					$scope.error = error;
 					$scope.credentials = null;
+					$scope.isReset = false;
 				}
 			);
 		};
@@ -1911,12 +1841,12 @@ angular.module('users').factory('Auth',  function($window) {
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
         if (service.currentUser && service.currentUser.displayName) {
-          // console.log('Using local current user.');
+          console.log('Using local current user.');
           // console.log(service.currentUser);
           return service.currentUser;
         } 
         else if ($window.user){
-          // console.log('Using cached current user.');
+          console.log('Using cached current user.');
           // console.log($window.user);
           service.currentUser = $window.user;
           return service.currentUser;

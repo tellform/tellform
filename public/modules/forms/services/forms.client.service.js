@@ -27,7 +27,6 @@ angular.module('forms').factory('Forms', ['$resource',
 		            form.visible_form_fields = _.filter(form.form_fields, function(field){
 		            	return field.deletePreserved === false;
 		            }); //<-- replace each item with an instance of the resource object
-		            console.log(form);
 		          	return form;
 		        }
 			},

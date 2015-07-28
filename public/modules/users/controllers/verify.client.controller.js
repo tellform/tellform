@@ -2,7 +2,7 @@
 
 angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams',
 	function($scope, $state, $rootScope, User, Auth, $stateParams) {
-		if($rootScope.authetication.isAuthenticated){
+		if($rootScope.authentication.isAuthenticated()){
 			$state.go('home');
 		}
 
@@ -14,10 +14,12 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 				function(response){
 					$scope.success = response.message;
 					$scope.credentials = null;
+					$scope.isResetSent = true;
 				},
 				function(error){
 					$scope.error = error;
 					$scope.credentials = null;
+					$scope.isReset = false;
 				}
 			);
 		};

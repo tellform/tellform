@@ -7,13 +7,14 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
             if (scope.$first === true) {
                 $timeout(function () {
                     $rootScope.$broadcast('ngRepeatStarted');
-                }, 500);
+                });
             }
             if (scope.$last === true) {
+                console.log(element);
             	$timeout(function () {
-            		// console.log('ngRepeatFinished')
+            		console.log('ngRepeatFinished')
                 	$rootScope.$broadcast('ngRepeatFinished');
-                }, 500);
+                });
             }
         }
     };

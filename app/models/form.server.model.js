@@ -14,8 +14,7 @@ var mongoose = require('mongoose'),
 	fs = require('fs-extra'),
 	async = require('async'),
 	Field = mongoose.model('Field', FieldSchema),
-	FormSubmission = mongoose.model('FormSubmission', FormSubmissionSchema),
-	_original;
+	FormSubmission = mongoose.model('FormSubmission', FormSubmissionSchema);
 
 
 /**
@@ -33,8 +32,7 @@ var FormSchema = new Schema({
 	title: {
 		type: String,
 		trim: true,
-		unique: true,
-		required: 'Title cannot be blank',
+		required: 'Form Title cannot be blank',
 	},
 	language: {
 		type: String,
@@ -84,7 +82,12 @@ var FormSchema = new Schema({
 		type: Boolean,
 		default: false,
 	},
+	saveCount: {
+		type: Number,
+		default: 0,
+	}
 });
+
 
 //Delete template PDF of current Form
 FormSchema.pre('remove', function (next) {
@@ -96,20 +99,45 @@ FormSchema.pre('remove', function (next) {
 		});
 	}
 });
+var _original;
+// FormSchema.post( 'init', function() {
+//     _original = this.toObject();
+//     console.log(this);
+// } );
+// FormSchema.virtual('_original').get(function () {
+//   	this.constructor   // ≈ mongoose.model('…', FieldSchema).findById
+//       .findOne({_id: this._id}).exec(function(err, original){
+//       	if(err) {
+//       		console.log(err);
+//       		throw err;
+//         } else {
+//         	console.log(original);
+//         	if(original) return original.toObject();
+//         	else return null;
+        	
+//         }
+//     });
+// });
 
 //Set _original
 FormSchema.pre('save', function (next) {
-	console.log(this.constructor.modelName);
+	this.saveCount = this.saveCount++;
+	console.log('saveCount: '+this.saveCount);
+	// console.log(this.constructor.model);
+	// console.log(FormModel);
 	this.constructor   // ≈ mongoose.model('…', FieldSchema).findById
-      .findOne({title: this.title}, function(err, original){
-      	if(err) next(err);
-        else {
-        	console.log(original);
+      .findOne({_id: this._id}).exec(function(err, original){
+      	if(err) {
+      		console.log(err);
+      		next(err);
+        } else {
+        	
         	_original = original;
+        	// console.log('_original');
+        	// console.log(_original);
         	next();
         }
-
-      });
+    });
 });
 
 //Update lastModified and created everytime we save
@@ -137,7 +165,6 @@ function getDeletedIndexes(needle, haystack){
 
 //Move PDF to permanent location after new template is uploaded
 FormSchema.pre('save', function (next) {
-
 	if(this.pdf){
 		var that = this;
 		async.series([
@@ -246,20 +273,18 @@ FormSchema.pre('save', function (next) {
 				next();
 			});
 		}
-	}else{
-		next();
 	}
+	next();
 });
 
 FormSchema.pre('save', function (next) {
-	// console.log(this.form_fields);
- 
-	// console.log('_original\n------------\n\n');
+	// var _original = this._original;
+	// console.log('_original\n------------');
 	// console.log(_original);
+	// console.log('field has been deleted: ');
 	// console.log(this.isModified('form_fields') && !!this.form_fields && !!_original);
 
-	console.log(_original)
-	if(this.isModified('form_fields') && this.form_fields && _original){
+	if(this.isModified('form_fields') && this.form_fields.length >= 0 && _original){
 
 		var old_form_fields = _original.form_fields,
 			new_ids = _.map(_.pluck(this.form_fields, '_id'), function(id){ return ''+id;}),
@@ -330,7 +355,7 @@ FormSchema.pre('save', function (next) {
 					// console.log('modifiedSubmissions\n---------\n\n');
 					// console.log(modifiedSubmissions);
 
-					// console.log('preserved deleted fields');
+					console.log('preserved deleted fields');
 					// console.log(submissions);
 
 					async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
@@ -403,5 +428,4 @@ FormSchema.methods.generateFDFTemplate = function() {
 	return jsonObj;
 };
 
-
-mongoose.model('Form', FormSchema);
+ mongoose.model('Form', FormSchema);

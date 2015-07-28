@@ -290,24 +290,25 @@ exports.formByID = function(req, res, next, id) {
 		});
 	}
 
-	Form.findById(id).populate('admin', 'submissions').exec(function(err, form) {
+	Form.findById(id).populate('admin').exec(function(err, form) {
 		if (err) {
 			return next(err);
-		} else if (!form || form === null) {
-			res.status(404).send({
+		} else if (form === undefined || form === null) {
+			res.status(400).send({
 				message: 'Form not found'
 			});
 		}
 		else {
-			if(!form.username){
+			if(!form.admin.username){
 				form.admin = req.user;
 			}
-			// console.log(creaform.admin);
+			console.log(form.admin);
 
 			//Remove sensitive information from User object
 			form.admin.password = null;
 			form.admin.created = null;
 			form.admin.salt = null;
+			form.provider = null;
 
 			req.form = form;
 			next();

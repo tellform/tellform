@@ -20,7 +20,7 @@ var smtpTransport = nodemailer.createTransport(config.mailer.options);
 // NEV configuration =====================
 nev.configure({
     persistentUserModel: User,
-    expirationTime: 600,  // 10 minutes
+    expirationTime: 1800,  // 30 minutes
 
     verificationURL: config.baseUrl+'/#!/verify/${URL}',
     transportOptions: config.mailer.options,
@@ -56,7 +56,7 @@ exports.signup = function(req, res) {
 	// Add missing user fields
 	user.provider = 'local';
 	user.username = user.email;
-	user.displayName = user.firstName + ' ' + user.lastName;
+	// user.displayName = user.firstName + ' ' + user.lastName;
 
 	// Then save the temporary user
 	nev.createTempUser(user, function(newTempUser) {

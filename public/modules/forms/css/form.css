@@ -1,6 +1,10 @@
 .btn {
     border: 1px solid #c6c6c6!important;
 }
+.btn[type='submit'] {
+    font-size: 1.5em;
+    padding: 0.35em 1.2em 0.35em 1.2em;
+}
 
 /* Styles for form submission view (/forms/:formID) */
 form .row.field {
@@ -201,16 +205,16 @@ section > section.public-form {
         font-size: 0.95em;
     }
 
-    /*Modal overlay (for lightbox effect)*/
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 193%;
-        width: inherit;
-        background-color: rgba(0,0,0,0.5);
-        z-index: 10;
-    }
+/*Modal overlay (for lightbox effect)*/
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 193%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}
 
 
 .form-item.row:hover, .form-item.row.create-new:hover {

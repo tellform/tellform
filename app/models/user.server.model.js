@@ -40,10 +40,6 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your last name']
 	},
-	displayName: {
-		type: String,
-		trim: true
-	},
 	email: {
 		type: String,
 		trim: true,
@@ -102,6 +98,11 @@ var UserSchema = new Schema({
 	},
 	token: String
 });
+
+UserSchema.virtual('displayName').get(function () {
+  	return this.firstName + ' ' + this.lastName;
+});
+
 
 //Create folder for user's pdfs
 UserSchema.pre('save', function (next) {

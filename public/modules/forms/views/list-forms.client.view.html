@@ -1,5 +1,5 @@
+<section class="overlay" ng-if="showCreateModal" ng-click="closeCreateModal()"></section>
 <section data-ng-controller="ViewFormController as ctrl" data-ng-init="findAll()" class="container">
-	<section class="overlay" ng-if="showCreateModal" ng-click="closeCreateModal()"></section>
 
 	<div class="row">
 		<div class="page-header col-xs-10 col-xs-offset-1">
@@ -25,7 +25,7 @@
 			<div class="title-row row">
 				    <div class="col-xs-5 field-title">Name </div>
 				    <div class="col-xs-8 field-input">
-						<input type="text" name="name" ng-model="name" required style="color:black;" ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
+						<input type="text" name="name" ng-model="name" required style="color:black; border:none;" ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
 				    </div>
 			</div>
 			<div class="details-row row">			
