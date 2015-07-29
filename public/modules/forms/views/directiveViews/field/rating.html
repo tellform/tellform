@@ -1,0 +1,12 @@
+<div class="textfield field row">
+    <div class="col-xs-5 field-title">{{field.title}} </div>
+    <div class="col-xs-7 field-input">
+		<input-stars max="5"
+			ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  
+			value="field.fieldValue" 
+			ng-required="field.required"
+			ng-disabled="field.disabled">
+		</input-stars>
+        <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
+    </div>
+</div>

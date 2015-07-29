@@ -1,7 +1,7 @@
 <div class="field row">
     <div class="col-xs-5 field-title">{{field.title}} </div>
     <div class="col-xs-7 field-input">
-        <input type="link" placeholder="link" value="{{field.fieldValue}}" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  ng-required="field.required" ng-disabled="field.disabled"/>
+        <input type="url" placeholder="https://example.com/something" value="{{field.fieldValue}}" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  ng-required="field.required" ng-disabled="field.disabled"/>
         <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
     </div>
 </div>

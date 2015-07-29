@@ -32,6 +32,10 @@ angular.module('forms').service('FormFields', [
 		        value : 'Checkbox'
 		    },
 		    {
+		        name : 'yes-no',
+		        value : 'Yes or No'
+		    },
+		    {
 		        name : 'legal',
 		        value : 'Legal'
 		    },
@@ -39,14 +43,14 @@ angular.module('forms').service('FormFields', [
 		    //     name : 'file',
 		    //     value : 'File Upload'
 		    // },
-		    // {
-		    //     name : 'rating',
-		    //     value : 'Rating'
-		    // },
-		    // {
-		    //     name : 'link',
-		    //     value : 'Link'
-		    // },
+		    {
+		        name : 'rating',
+		        value : 'Rating'
+		    },
+		    {
+		        name : 'link',
+		        value : 'Link'
+		    },
 		    // {
 		    //     name : 'scale',
 		    //     value : 'Opinion Scale'
