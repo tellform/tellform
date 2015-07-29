@@ -113,7 +113,7 @@ ApplicationConfiguration.registerModule('core', ['users']);
 'use strict';
 
 // Use Application configuration module to register a new module
-ApplicationConfiguration.registerModule('forms', ['ngFileUpload', 'ui.date', 'ui.sortable', 'users']);
+ApplicationConfiguration.registerModule('forms', ['ngFileUpload', 'ui.date', 'ui.sortable', 'angular-input-stars', 'users']);
 'use strict';
 
 // Use Application configuration module to register a new module
@@ -1180,7 +1180,8 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
             'hidden',
             'password',
             'radio',
-            'legal'
+            'legal',
+            'statement'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
             return templateUrl += type + '.html';
@@ -1376,6 +1377,10 @@ angular.module('forms').service('FormFields', [
 		        value : 'Checkbox'
 		    },
 		    {
+		        name : 'yes-no',
+		        value : 'Yes or No'
+		    },
+		    {
 		        name : 'legal',
 		        value : 'Legal'
 		    },
@@ -1383,14 +1388,14 @@ angular.module('forms').service('FormFields', [
 		    //     name : 'file',
 		    //     value : 'File Upload'
 		    // },
-		    // {
-		    //     name : 'rating',
-		    //     value : 'Rating'
-		    // },
-		    // {
-		    //     name : 'link',
-		    //     value : 'Link'
-		    // },
+		    {
+		        name : 'rating',
+		        value : 'Rating'
+		    },
+		    {
+		        name : 'link',
+		        value : 'Link'
+		    },
 		    // {
 		    //     name : 'scale',
 		    //     value : 'Opinion Scale'
@@ -1789,10 +1794,13 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 		}
 
 		$scope.isReset = false;
+		$scope.credentials = {};
+		
 
 		// Submit forgotten password account id
 		$scope.resendVerifyEmail = function() {
-			User.resendVerifyEmail($scope.email).then(
+			console.log($scope.credentials.email);
+			User.resendVerifyEmail($scope.credentials.email).then(
 				function(response){
 					$scope.success = response.message;
 					$scope.credentials = null;
@@ -1985,9 +1993,9 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      resendVerifyEmail: function(email) { 
+      resendVerifyEmail: function(_email) { 
         var deferred = $q.defer();
-        $http.post('/auth/verify/', {email: email}).success(function(response) {
+        $http.post('/auth/verify/', {email: _email}).success(function(response) {
           deferred.resolve(response);
         }).error(function(error) {
           deferred.reject(error.message || error);
