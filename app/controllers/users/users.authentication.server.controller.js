@@ -77,7 +77,7 @@ exports.validateVerificationToken = function(req, res, next){
 	        res.status(200).send('User successfully verified');
 	    }else {
 	        // redirect to resend verification email
-	        res.status(401).send('Verification token is invalid or has expired');
+	        res.status(400).send('Verification token is invalid or has expired');
 	    }
 	});
 };

@@ -1789,9 +1789,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 
 angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams',
 	function($scope, $state, $rootScope, User, Auth, $stateParams) {
-		if($rootScope.authentication.isAuthenticated()){
-			$state.go('home');
-		}
 
 		$scope.isReset = false;
 		$scope.credentials = {};
@@ -1833,7 +1830,7 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 					}
 				);
 			}
-		}
+		};
 	}
 ]);
 'use strict';
