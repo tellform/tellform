@@ -54,9 +54,9 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      resendVerifyEmail: function(email) { 
+      resendVerifyEmail: function(_email) { 
         var deferred = $q.defer();
-        $http.post('/auth/verify/', {email: email}).success(function(response) {
+        $http.post('/auth/verify/', {email: _email}).success(function(response) {
           deferred.resolve(response);
         }).error(function(error) {
           deferred.reject(error.message || error);
