@@ -95,7 +95,11 @@ var FormSchema = new Schema({
 
 		},
 		font: String,
+<<<<<<< HEAD
 		backgroundImage: { type: Schema.Types.Mixed }
+=======
+		backgroundImage: type: Schema.Types.Mixed
+>>>>>>> 33243bea2a1f74f8f417b240f5ad068c1d05c6bd
 	}
 });
 
