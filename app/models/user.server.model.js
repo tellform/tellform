@@ -106,23 +106,26 @@ UserSchema.virtual('displayName').get(function () {
 
 //Create folder for user's pdfs
 UserSchema.pre('save', function (next) {
-	if(!this.username || this.username !== this.email){
-		this.username = this.email;
-	}
-	var newDestination = path.join(config.pdfUploadPath, this.username.replace(/ /g,'')),
-		stat = null;
+	if(process.env.NODE_ENV === 'development'){
+		if(!this.username || this.username !== this.email){
+			this.username = this.email;
+		}
+		var newDestination = path.join(config.pdfUploadPath, this.username.replace(/ /g,'')),
+			stat = null;
 
-	try {
-        stat = fs.statSync(newDestination);
-    } catch (err) {
-        fs.mkdirSync(newDestination);
-    }
-    if (stat && !stat.isDirectory()) {
-    	// console.log('Directory cannot be created');
-        next( new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"') );
-    }else{
-    	next();
-    }
+		try {
+	        stat = fs.statSync(newDestination);
+	    } catch (err) {
+	        fs.mkdirSync(newDestination);
+	    }
+	    if (stat && !stat.isDirectory()) {
+	    	// console.log('Directory cannot be created');
+	        next( new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"') );
+	    }else{
+	    	next();
+	    }
+	}	
+    next();
 });
 
 /**
