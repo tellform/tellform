@@ -3,7 +3,7 @@
 angular.module('forms').directive('fieldIconDirective', function($http, $compile) {
     
     return {
-        templateUrl: './modules/forms/views/directiveViews/form/fieldIcon.html',
+        template: '<i class="{{typeIcon}}"></i>',
         restrict: 'E',
         scope: {
             typeName: '@'
@@ -24,6 +24,7 @@ angular.module('forms').directive('fieldIconDirective', function($http, $compile
 				'scale': 'fa fa-sliders',
 				'stripe': 'fa fa-credit-card',
 				'statement': 'fa fa-quote-left',
+				'yes_no': 'fa fa-toggle-on'
 			}
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
         },

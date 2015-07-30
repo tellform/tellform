@@ -1,21 +1,21 @@
 <div class="field row radio legal">
     <div class="col-xs-12 field-title">    	
-    	{{field.title}}
+    	<h3>{{field.title}} <span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span></h3>
     	<br>
-    	<p>{{field.description}}</p>
+    	<p style="color:#ddd;">{{field.description}}</p>
     </div>
-    <div class="col-xs-3 field-input container">
+    <div class="col-xs-6 field-input container">
 		<div class="row-fluid">
-            <label class="btn col-xs-12">
+            <label class="btn col-xs-4">
                 <input type="radio" value="true" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"   ng-required="field.required" ng-disabled="field.disabled"/>
                 <span> I accept </span>
             </label>
-            <label class="btn col-xs-12">
+            <label class="btn col-xs-5 col-xs-offset-1">
                 <input type="radio" value="false" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"   ng-required="field.required" ng-disabled="field.disabled"/>
                 <span>I don't accept </span>
             </label>
         </div>
-        <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
+       
     </div>
 </div>
 <br>

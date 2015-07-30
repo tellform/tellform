@@ -10,18 +10,21 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     var _timeElapsed = timeCounter.stopClock();
                     $scope.form.timeElapsed = _timeElapsed;
 
-                    // console.log($scope.form.timeElapsed);
-                    $scope.authentication = Auth;
-                    console.log($scope.authentication.isAuthenticated());
+                    $scope.form.percentageComplete = $filter('formValidity')($scope.form.visible_form_fields)/$scope.visible_form_fields.length;
+                    delete $scope.form.visible_form_fields;
 
-                    $http.post('/forms/'+$scope.form._id,$scope.form).
+                    $scope.authentication = Auth;
+                    // console.log($scope.authentication.isAuthenticated());
+
+                    $scope.submitPromise = $http.post('/forms/'+$scope.form._id,$scope.form).
                     success(function(data, status, headers){
                         console.log('form submitted successfully');
-                        alert('Form submitted..');
+                        // alert('Form submitted..');
                         $scope.form.submitted = true;
                     })
                     .error(function(error){
                         console.log(error);
+                        $scope.error = error.message;
                     });
                 };
 

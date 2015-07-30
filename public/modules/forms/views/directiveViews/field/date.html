@@ -1,10 +1,14 @@
 <div class="field row">
-    <div class="col-xs-5 field-title">{{field.title}} </div>
-    <span class="required-error" ng-show="field.required && !field.fieldValue">* required </span>
-    <div class="col-xs-7 field-input">
+    <div class="col-xs-12 field-title">
+    	<h3>
+    		<span class="fa fa-angle-double-right"></span> 
+    		{{field.title}} 
+    		<span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span>
+    	</h3>
+    </div>
+    <div class="col-xs-12 field-input">
         <div class="control-group input-append">
             <input ui-date="dateOptions" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }" ng-required="field.required" ng-disabled="field.disabled">
-            <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
         </div>
     </div>
 </div>

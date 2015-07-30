@@ -1,11 +1,32 @@
 <section data-ng-controller="ViewFormController" data-ng-init="findOne()" class="container admin-form">
+
+	<!-- Modal Delete Dialog Template -->
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h2 class="modal-title">Are you ABSOLUTELY sure?</h3>
+        </div>
+        <div class="modal-body">
+        	<div class="modal-body-alert">
+			    Unexpected bad things will happen if you don’t read this!
+			  </div>
+       		 <p>This action <strong>CANNOT</strong> be undone. This will permanently delete the <strong>{{myform.title}}</strong> form, form submissions and remove all associated pdfs.</p>
+            <p>Please type in the name of the repository to confirm.</p>
+        </div>
+        <div class="modal-footer">
+        <p>
+			<input type="text" data-ng-model="deleteConfirm" class="input-block" autofocus required aria-label="Type in the name of the form to confirm that you want to delete this form.">
+		</p>
+            <button type="submit" ng-click="remove()" class="btn btn-block btn-danger" ng-disabled="myform.title != deleteConfirm">I understand the consequences, delete this form</button>
+        </div>
+    </script>
+
 	<div class="page-header row" style="padding-bottom: 0px;">
 		<div class="col-xs-6">
 			<h1 data-ng-bind="myform.title" style="margin-bottom: 0px;"></h1>
 		</div>
 		<div class="col-xs-2 col-xs-offset-2">
 			<small class=" pull-right">			
-				<button class="btn btn-danger" ng-click="remove()"><i class="fa fa-trash-o"></i> Delete Form</button>
+				<button class="btn btn-danger" ng-click="openDeleteModal()"><i class="fa fa-trash-o"></i> Delete Form</button>
 			</small>
 		</div>
 		<div class="col-xs-2">

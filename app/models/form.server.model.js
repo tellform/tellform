@@ -85,6 +85,17 @@ var FormSchema = new Schema({
 	saveCount: {
 		type: Number,
 		default: 0,
+	},
+	design: {
+		colors:{
+			backgroundColor: String,
+			questionColor: String,
+			answerColor: String,
+			buttonColor: String,
+
+		},
+		font: String,
+		backgroundImage: type: Schema.Types.Mixed
 	}
 });
 

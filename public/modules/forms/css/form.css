@@ -6,28 +6,78 @@
     padding: 0.35em 1.2em 0.35em 1.2em;
 }
 
+/*
+** Modal CSS Styles 
+*/
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 18px;
+    font-weight: normal;
+}
+.input-block {
+    display: block;
+    width: 100%;
+}
+.modal-footer input[type='text'] {
+    min-height: 34px;
+    padding: 7px 8px;
+    font-size: 13px;
+    color: #333;
+    vertical-align: middle;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+.modal-body > .modal-body-alert {
+    color: #796620;
+    background-color: #f8eec7;
+    border-color: #f2e09a;
+    margin: -16px -15px 15px;
+    padding: 10px 15px;
+    border-style: solid;
+    border-width: 1px 0;
+}
+
+div.form-submitted > .field.row {
+    padding-bottom: 10%;
+    padding-top: 2%;
+}
+div.form-submitted > .field.row > div {
+    font-size: 1.7em;
+}
+
+/* Styles for accordion */
+form .accordion-edit {
+    width: inherit;
+}
+
 /* Styles for form submission view (/forms/:formID) */
 form .row.field {
     padding: 1em 0 3em 0;
 }
     form .row.field > .field-title {
         margin-top:0.5em;
-        font-size:1.5em;
+        font-size:1.2em;
+        padding-bottom: 1.8em;
+    }
+    form .row.field > .field-input {
+        font-size: 1.4em;
+        color: #777;
     }
     form.submission-form .row.field.statement > .field-title {
         font-size:1.7em;
     }
     form.submission-form .row.field.statement > .field-input {
-        font-size:1.2em;
+        font-size:1em;
         color:#ddd;
     }
 
-        form.submission-form .select.radio > .field-input input {
-            width:20%;
-        }
-
-
-        form.submission-form .select > .field-input input {
+        form.submission-form .select.radio > .field-input input, form.submission-form .select > .field-input input {
             width:20%;
         }
         form.submission-form .select > .field-input .btn {
@@ -38,18 +88,30 @@ form .row.field {
             font-size: 1.10em;
         }
 
-
-        form.submission-form .row.field > .field-input input {
-            width:100%;
-        }
-        form.submission-form .row.field .field-input > input:focus {
+        /*form.submission-form .row.field > .field-input > input:focus {
             font-size:1em;
+        }*/
+
+        form .row.field > .field-input > textarea{
+            padding: 0.45em 0.9em;
+            width: 100%;
+            line-height: 160%;
+            border: 2px dashed #ddd;
         }
 
-        form .row.field.textfield > .field-input > input{
-            padding:0.45em 0.9em;
-            width:100%;
-            line-height:160%;
+
+        form .row.field > .field-input > input.text-field-input{
+            padding: 0.45em 0.9em;
+            width: 100%;
+            line-height: 160%;
+            border: 2px dashed #ddd;
+        }
+        form .row.field > .field-input > input.text-field-input:focus{
+            border: 0;
+        }
+        form .required-error{
+            color: #ddd;
+            font-size:0.8em;
         }
 
     form .row.field.dropdown > .field-input {
@@ -152,6 +214,8 @@ div.config-form > .row {
 /*Styles for add fields tab*/
 .admin-form .add-field {
     background-color: #ddd;
+    padding: 0 2% 0 2%;
+    border-radius: 3px;
 }
     .admin-form .add-field .col-xs-6 {
         padding: 0.25em 0.4em;

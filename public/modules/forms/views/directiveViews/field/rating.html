@@ -1,12 +1,21 @@
 <div class="textfield field row">
-    <div class="col-xs-5 field-title">{{field.title}} </div>
-    <div class="col-xs-7 field-input">
+    <div class="col-xs-12 field-title">
+	    <h3>
+	    	<span class="fa fa-angle-double-right"></span> 
+	    	{{field.title}} 
+	    	<span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span>
+	    </h3>
+    </div>
+    <div class="col-xs-12 field-input">
 		<input-stars max="5"
-			ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  
+			icon-full="fa-star" icon-base="fa fa-3x" icon-empty="fa-star-o"
+			ng-init="field.fieldValue = 1"
+			ng-model="field.fieldValue" 
+			ng-model-options="{ debounce: 250 }"  
 			value="field.fieldValue" 
 			ng-required="field.required"
-			ng-disabled="field.disabled">
+			ng-disabled="field.disabled"
+			class="angular-input-stars">
 		</input-stars>
-        <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
     </div>
 </div>

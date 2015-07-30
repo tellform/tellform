@@ -443,6 +443,66 @@ angular.module('forms').config(['$stateProvider',
 'use strict';
 
 // Forms controller
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm','$http',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
+        
+        $scope = $rootScope;
+        $rootScope.showCreateModal = false;
+
+        // Return all user's Forms
+        $scope.findAll = function() {
+            if(!$scope.myforms){
+                Forms.query(function(_forms){
+                    $scope.myforms = _forms;
+                });
+            }
+        };
+
+        //Modal functions
+        $scope.openCreateModal = function(){
+            if(!$rootScope.showCreateModal){
+                $rootScope.showCreateModal = true;
+            }
+        };
+        $scope.closeCreateModal = function(){
+            if($rootScope.showCreateModal){
+                $rootScope.showCreateModal = false;
+            }
+        };
+
+        $scope.setForm = function (form) {
+            $scope.myform = form;
+        };
+
+        // Create new Form
+        $scope.createNew = function(){
+            var form = {};
+            form.title = $scope.myform.name.$modelValue;
+            form.language = $scope.myform.language.$modelValue;
+            console.log(form);
+            $rootScope.showCreateModal = true;
+
+            console.log($scope.myform);
+            if($scope.myform.$valid && $scope.myform.$dirty){
+                $http.post('/forms', {form: form})
+                .success(function(data, status, headers){
+                    console.log('form created');
+
+                    // Clear form fields
+                   $scope.myform = {};
+                    // Redirect after save 
+                    $scope.goToWithId('viewForm', data._id+'');
+                }).error(function(errorResponse){
+                    console.log(errorResponse);
+                    $scope.error = errorResponse.data.message;
+                });
+            }
+        };
+    }
+]);
+'use strict';
+
+// Forms controller
 angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$stateParams', '$state', 'Forms', 'CurrentForm',
 	function($scope, $rootScope, $stateParams, $state, Forms, CurrentForm) {
 
@@ -482,19 +542,9 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         $scope.myform = CurrentForm.getForm();
         $rootScope.saveInProgress = false;
         $scope.viewSubmissions = false;
-        $rootScope.showCreateModal = false;
         $scope.table = {
             masterChecker: false,
             rows: []
-        };
-
-        // Return all user's Forms
-        $scope.findAll = function() {
-            if(!$scope.myforms){
-                Forms.query(function(_forms){
-                    $scope.myforms = _forms;
-                });
-            }
         };
 
         // Find a specific Form
@@ -511,18 +561,6 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
 
         $scope.setForm = function (form) {
             $scope.myform = form;
-        };
-
-        //Modal functions
-        $scope.openCreateModal = function(){
-            if(!$rootScope.showCreateModal){
-                $rootScope.showCreateModal = true;
-            }
-        };
-        $scope.closeCreateModal = function(){
-            if($rootScope.showCreateModal){
-                $rootScope.showCreateModal = false;
-            }
         };
 
         /*
@@ -662,31 +700,6 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                     console.log('ERROR: Form could not be deleted.');
                     console.error(error);
                 });
-        };
-
-        // Create new Form
-        $scope.createNew = function(){
-            var form = {};
-            form.title = $scope.myform.name.$modelValue;
-            form.language = $scope.myform.language.$modelValue;
-            console.log(form);
-            $rootScope.showCreateModal = true;
-
-            console.log($scope.myform);
-            if($scope.myform.$valid && $scope.myform.$dirty){
-                $http.post('/forms', {form: form})
-                .success(function(data, status, headers){
-                    console.log('form created');
-
-                    // Clear form fields
-                   $scope.myform = {};
-                    // Redirect after save 
-                    $scope.goToWithId('viewForm', data._id+'');
-                }).error(function(errorResponse){
-                    console.log(errorResponse);
-                    $scope.error = errorResponse.data.message;
-                });
-            }
         };
 
 
@@ -1181,7 +1194,9 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
             'password',
             'radio',
             'legal',
-            'statement'
+            'statement',
+            'rating',
+            'yes_no'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
             return templateUrl += type + '.html';
@@ -1266,14 +1281,15 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     $scope.authentication = Auth;
                     console.log($scope.authentication.isAuthenticated());
 
-                    $http.post('/forms/'+$scope.form._id,$scope.form).
+                    $scope.submitPromise = $http.post('/forms/'+$scope.form._id,$scope.form).
                     success(function(data, status, headers){
                         console.log('form submitted successfully');
-                        alert('Form submitted..');
+                        // alert('Form submitted..');
                         $scope.form.submitted = true;
                     })
                     .error(function(error){
                         console.log(error);
+                        $scope.error = error.message;
                     });
                 };
 
@@ -1377,7 +1393,7 @@ angular.module('forms').service('FormFields', [
 		        value : 'Checkbox'
 		    },
 		    {
-		        name : 'yes-no',
+		        name : 'yes_no',
 		        value : 'Yes or No'
 		    },
 		    {

@@ -1,26 +1,17 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm','$http',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
+angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$modal',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $modal) {
 
         $scope = $rootScope;
+        var deleteModal;
         $scope.myform = CurrentForm.getForm();
         $rootScope.saveInProgress = false;
         $scope.viewSubmissions = false;
-        $rootScope.showCreateModal = false;
         $scope.table = {
             masterChecker: false,
             rows: []
-        };
-
-        // Return all user's Forms
-        $scope.findAll = function() {
-            if(!$scope.myforms){
-                Forms.query(function(_forms){
-                    $scope.myforms = _forms;
-                });
-            }
         };
 
         // Find a specific Form
@@ -31,24 +22,8 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             CurrentForm.setForm($scope.myform);
         };
 
-        $scope.goToWithId = function(route, id) {
-            $state.go(route, {'formId': id}, {reload: true});
-        };
-
         $scope.setForm = function (form) {
             $scope.myform = form;
-        };
-
-        //Modal functions
-        $scope.openCreateModal = function(){
-            if(!$rootScope.showCreateModal){
-                $rootScope.showCreateModal = true;
-            }
-        };
-        $scope.closeCreateModal = function(){
-            if($rootScope.showCreateModal){
-                $rootScope.showCreateModal = false;
-            }
         };
 
         /*
@@ -161,57 +136,56 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         	$scope.viewSubmissions = false;
         };
 
-        // Remove existing Form
-        $scope.remove = function(form_id) {
-            var form = {};
-            if(!form_id){
-                form = CurrentForm.getForm();
-                if(!form) form = $scope.myform;
-            }else {
-                form._id = form_id;
+        /* 
+        ** DeleteModal Functions 
+        */
+        $scope.openDeleteModal = function() {
+
+            deleteModal = $modal.open({
+              animation: $scope.animationsEnabled,
+              templateUrl: 'myModalContent.html',
+              controller: 'ViewFormController',
+            });
+        };
+        $scope.cancelDeleteModal = function(){
+            if(deleteModal){
+                deleteModal.dismiss('cancel');
             }
-    
-            $http.delete('/forms/'+form._id)
-                .success(function(data, status, headers){
-                    console.log('form deleted successfully');
-
-                    if(!form_id){
-                        $state.go('listForms');
-                    }
-                    if($scope.myforms.length > 0){
-                        $scope.myforms = _.filter($scope.myforms, function(myform){
-                            return myform._id !== form._id; 
-                        });
-                    }
-
-                }).error(function(error){
-                    console.log('ERROR: Form could not be deleted.');
-                    console.error(error);
-                });
         };
 
-        // Create new Form
-        $scope.createNew = function(){
-            var form = {};
-            form.title = $scope.myform.name.$modelValue;
-            form.language = $scope.myform.language.$modelValue;
-            console.log(form);
-            $rootScope.showCreateModal = true;
+        // Remove existing Form
+        $scope.remove = function(form_id) {
+            if(deleteModal && deleteModal.opened){
 
-            console.log($scope.myform);
-            if($scope.myform.$valid && $scope.myform.$dirty){
-                $http.post('/forms', {form: form})
-                .success(function(data, status, headers){
-                    console.log('form created');
+                deleteModal.close();
+            
+                var form = {};
+                if(!form_id){
+                    form = CurrentForm.getForm();
+                    if(!form) form = $scope.myform;
+                }else {
+                    form._id = form_id;
+                }
+        
+                $http.delete('/forms/'+form._id)
+                    .success(function(data, status, headers){
+                        console.log('form deleted successfully');
 
-                    // Clear form fields
-                   $scope.myform = {};
-                    // Redirect after save 
-                    $scope.goToWithId('viewForm', data._id+'');
-                }).error(function(errorResponse){
-                    console.log(errorResponse);
-                    $scope.error = errorResponse.data.message;
-                });
+                        if(!form_id){
+                            $state.go('listForms', {}, {reload: true}); 
+                        }
+                        if($scope.myforms.length > 0){
+                            $scope.myforms = _.filter($scope.myforms, function(myform){
+                                return myform._id !== form._id; 
+                            });
+                        }
+
+                    }).error(function(error){
+                        console.log('ERROR: Form could not be deleted.');
+                        console.error(error);
+                    }).finally(function(){
+
+                    });
             }
         };
 
