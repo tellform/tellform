@@ -1,11 +1,12 @@
 <section class="overlay" ng-if="showCreateModal" ng-click="closeCreateModal()"></section>
-<section data-ng-controller="ViewFormController as ctrl" data-ng-init="findAll()" class="container">
+<section data-ng-controller="ListFormsController as ctrl" data-ng-init="findAll()" class="container">
 
-	<div class="row">
+	<!-- div class="row">
 		<div class="page-header col-xs-10 col-xs-offset-1">
 			<h1>My MedForms</h1>
 		</div>
-	</div>
+	</div> -->
+	<br>
 	<div class="row">
 		<div ng-click="openCreateModal()" class="col-xs-2 col-xs-offset-1 form-item row create-new">
 			<div class="title-row col-xs-12">
@@ -21,32 +22,32 @@
 		</div>
 
 		<form name="createForm" class="col-xs-2 col-xs-offset-1 form-item row create-new new-form" ng-show="showCreateModal">
-		<div ng-init="setForm(createForm);" style="display:none;"></div>
-			<div class="title-row row">
-				    <div class="col-xs-5 field-title">Name </div>
-				    <div class="col-xs-8 field-input">
-						<input type="text" name="name" ng-model="name" required style="color:black; border:none;" ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
+			<div ng-init="setForm(createForm);" style="display:none;"></div>
+				<div class="title-row row">
+					    <div class="col-xs-5 field-title">Name </div>
+					    <div class="col-xs-8 field-input">
+							<input type="text" name="name" ng-model="name" required style="color:black; border:none;" ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
+					    </div>
+				</div>
+				<div class="details-row row">			
+				    <div class="col-xs-5 field-title text-left">
+				    	Language
 				    </div>
-			</div>
-			<div class="details-row row">			
-			    <div class="col-xs-5 field-title text-left">
-			    	Language
-			    </div>
-			    <div class="col-xs-5 field-input">
-					<select style="color:black;" name="language" required ng-model="formLanguage" ng-init="formLanguage = user.language">
-						<option ng-repeat="language in languages" value="{{language}}">
-							{{language}}
-						</option>
-			        </select>      
-			    </div>
-			</div>
-			<div class="details-row row">			
-			    <div class="col-xs-12 field-title text-center">
-			    	<button class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="createNew()">
-			    		Create Form
-			    	</button>
-			    </div>
-			</div>		
+				    <div class="col-xs-5 field-input">
+						<select style="color:black;" name="language" required ng-model="formLanguage" ng-init="formLanguage = user.language">
+							<option ng-repeat="language in languages" value="{{language}}">
+								{{language}}
+							</option>
+				        </select>      
+				    </div>
+				</div>
+				<div class="details-row row">			
+				    <div class="col-xs-12 field-title text-center">
+				    	<button class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="createNew()">
+				    		Create Form
+				    	</button>
+				    </div>
+				</div>		
 		</form>
 
 		<div data-ng-repeat="form in myforms" class="col-xs-2 col-xs-offset-1 form-item row">
@@ -69,7 +70,4 @@
 			
 		</div>
 	</div>
-<!-- 	<div class="alert alert-warning text-center" data-ng-if="forms.$resolved && !forms.length">
-		No forms yet, why don't you <a href="/#!/forms/create">create one</a>?
-	</div> -->
 </section>

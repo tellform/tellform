@@ -57,6 +57,9 @@ var FormSubmissionSchema = new Schema({
 	timeElapsed: { //time (in seconds) it took for user to submit form
 		type: Number,
 	}, 
+	percentageComplete: {
+		type: Number,
+	}
 
 });
 
@@ -67,7 +70,7 @@ var FormSubmissionSchema = new Schema({
 //Check for IP Address of submitting person 
 FormSubmissionSchema.pre('save', function (next){
 	if(this.ipAddr){
-		if(this.ipAddr.modified){
+		if(this.isModified('ipAddr')){
 			satelize.satelize({ip: this.ipAddr}, function(err, geoData){
 				if (err) next( new Error(err.message) );
 

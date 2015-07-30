@@ -107,6 +107,10 @@ exports.createSubmission = function(req, res) {
 	submission.form = form;
 	submission.pdf = form.pdf;
 	submission.title = form.title;
+	if(req.headers['x-forwarded-for'] || req.connection.remoteAddress){
+		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		console.log('ip address of client is: '+ip);
+	}
 	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
 	if(form.autofillPDFs){
@@ -302,7 +306,7 @@ exports.formByID = function(req, res, next, id) {
 			if(!form.admin.username){
 				form.admin = req.user;
 			}
-			console.log(form.admin);
+			// console.log(form.admin);
 
 			//Remove sensitive information from User object
 			form.admin.password = null;

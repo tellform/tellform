@@ -7,7 +7,6 @@
         </button> -->
         <div class="row add-field-title">
             <h3 class="col-xs-12">Add New Field</h3>
-            <span ng-if="form.$dirty && form.$valid" class="help-block">Updating ...</span>
         </div>
         <div class="panel-group row" class="draggable" ng-model="addField.types">
             <div class="col-xs-6" ng-repeat="type in addField.types">
@@ -54,73 +53,77 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <ul class="col-xs-4 container" style="list-style:none;border:2px lightgray solid;">
+                                <ul class="col-xs-12 container" style="list-style:none;border:2px lightgray solid;">
                                     <field-directive field="field">
                                     </field-directive>
                                 </ul>
                             </div>
 
-                            <div class="clear"></div> <hr>
+                            <div class="row"> 
+                                <hr>
+                            </div> 
+
 
                             <div class="row">
-                                <div class="col-xs-2">Field Type:</div>
-                                <div class="col-xs-4">{{field.fieldType}}</div>
+                                <div class="col-xs-5">Field Title:</div>
+                                <div class="col-xs-7">
+                                <input type="text" ng-model="field.title" value="{{field.title}}" required></div>
                             </div>
+                            <br>
                             <div class="row">
-                                <div class="col-xs-2">Field Title:</div>
-                                <div class="col-xs-4"><input type="text" ng-model="field.title" value="{{field.title}}" required></div>
+                                <div class="col-xs-5">Field Decription:</div>
+                                <div class="col-xs-7"><textarea type="text" ng-model="field.description" value="{{field.description}}"></textarea> </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-2">Field Decription:</div>
-                                <div class="col-xs-4"><textarea type="text" ng-model="field.title" value="{{field.description}}"></textarea> </div>
-                            </div>
-                            <br><br>
-                            <hr>
+
+                            <div class="row" ng-show="showAddOptions(field)"><hr></div>
                             <div class="row" ng-show="showAddOptions(field)">
-                                <div class="col-xs-2">Field Options:</div>
-                                <div class="col-xs-6 container">
+                                <div class="col-xs-4">Field Options:</div>
+                                <div class="col-xs-8 container">
                                     <div ng-repeat="option in field.fieldOptions" class="row">
-                                        <input type="text" name="{{option.option_title}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-4">
+                                        <input type="text" name="{{option.option_title}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-5">
 
-                                        <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3"><i  class="fa fa-trash-o"></i></a>
-                                        <span class="label label-inverse">Value: {{ option.option_value }}</span>
+                                        <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                        <span class="label label-inverse col-xs-4">
+                                            Value: {{ option.option_value }}
+                                        </span>
                                     </div>
                                     <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
                                 </div>
                             </div>
 
-                            <div class="clear"></div> <hr>
+                            <div class="row"> <hr></div> 
 
                             <div class="row">
-                                <div class="col-xs-2">Required:</div>
-                                <div class="col-xs-4">
-                                    <label>
-                                        <input type="radio" ng-value="true" ng-selected ng-model="field.required"/>
-                                        &nbsp; Yes
+                                <div class="col-xs-5 field-title">Required:</div>
+                                <div class="col-xs-7 field-input">
+                                    <label class="btn col-xs-5">
+                                        <input type="radio" value="true" ng-model="field.fieldValue" required />
+                                        <span> &nbsp; Yes</span>
                                     </label>
-                                    <label>
-                                        <input type="radio" ng-value="false" ng-model="field.required"/>
-                                        &nbsp; No
+
+                                    <label class="btn col-xs-5 col-xs-offset-1">
+                                        <input type="radio" value="false" ng-model="field.fieldValue" required />
+                                        <span> &nbsp; No</span>
                                     </label>
                                 </div>
                             </div>
-                            
-                            <div class="clear"></div> <hr>
-
+                            <br>
                             <div class="row">
-                                <div class="col-xs-2">Disabled:</div>
-                                <div class="col-xs-4">
-                                    <label>
-                                        <input type="radio" ng-value="true" ng-selected ng-model="field.disabled"/>
-                                        &nbsp; Yes
+                                <div class="col-xs-5 field-input">Disabled:</div>
+                                <div class="col-xs-7 field-input">
+                                    <label class="btn col-xs-5">
+                                        <input type="radio" value="true" ng-model="field.fieldValue" required />
+                                        <span> &nbsp; Yes</span>
                                     </label>
-                                    <label>
-                                        <input type="radio" ng-value="false" ng-model="field.disabled"/>
-                                        &nbsp; No
+
+                                    <label class="btn col-xs-5 col-xs-offset-1">
+                                        <input type="radio" value="false" ng-model="field.fieldValue" required />
+                                        <span> &nbsp; No</span>
                                     </label>
                                 </div>
-                            </div>
-                            <hr>   
+                            </div>  
                         </div>
                     </accordion-group>
 

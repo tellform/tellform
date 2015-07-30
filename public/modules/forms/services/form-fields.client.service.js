@@ -32,8 +32,8 @@ angular.module('forms').service('FormFields', [
 		        value : 'Checkbox'
 		    },
 		    {
-		        name : 'yes-no',
-		        value : 'Yes or No'
+		        name : 'yes_no',
+		        value : 'Yes/No'
 		    },
 		    {
 		        name : 'legal',

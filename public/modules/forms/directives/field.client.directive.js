@@ -26,7 +26,9 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
             'password',
             'radio',
             'legal',
-            'statement'
+            'statement',
+            'rating',
+            'yes_no'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
             return templateUrl += type + '.html';

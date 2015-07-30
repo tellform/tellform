@@ -16,7 +16,6 @@ function validateFormFieldType(value) {
     'email',
     'legal',
     'url',
-    'number',
     'textarea',
     'statement',
     'welcome',
@@ -28,6 +27,7 @@ function validateFormFieldType(value) {
     'radio',
     'checkbox',
     'hidden',
+    'yes_no',
   ];
 
   if (validTypes.indexOf(value) > -1) { 

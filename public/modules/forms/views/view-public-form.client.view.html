@@ -1,7 +1,8 @@
-<link rel="stylesheet" href="./modules/forms/css/form.css">
+<!-- <link rel="stylesheet" href="./modules/forms/css/form.css">
+ -->
 
 <section data-ng-controller="SubmitFormController" class="public-form">
-
+   
 	<form-directive form="form"></form-directive>
 
 	<section ng-if="!form.hideFooter" class="navbar navbar-fixed-bottom" style="background-color:rgba(242,242,242,0.5); padding-top:15px;">
@@ -14,16 +15,16 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li style="padding-right:20px" >
-                        <a href="/#!/forms" class="btn btn-default" ng-hide="authentication.isAuthenticated()">create a Medform</a>
+                        <a href="/#!/forms" class="btn btn-default" ng-hide="authentication.isAuthenticated()">Create a Medform</a>
                     </li>
-                    <li style="padding-right:20px" ng-show="authentication.isAuthenticated()">
-                        <a href="/#!/forms/{{form._id}}/admin" class="btn btn-default">edit this Medform</a>
-                    </li>
-                    <li style="padding-left:5px">
-                        <div class="btn btn-info" id="focusDownButton">\/</div>
+                    <li style="padding-right:20px; padding-bottom:10px;" ng-show="authentication.isAuthenticated()">
+                        <a href="/#!/forms/{{form._id}}/admin" class="btn btn-default">Edit this Medform</a>
                     </li>
                     <li style="padding-left:5px">
-                        <div class="btn btn-info" id="focusUpButton">/\</div>
+                        <div class="btn btn-info" id="focusDownButton" style="padding: 15px;">\/</div>
+                    </li>
+                    <li style="padding-left:5px">
+                        <div class="btn btn-info" id="focusUpButton" style="padding: 15px">/\</div>
                     </li>
                 </ul>
             </nav>
