@@ -1,0 +1,18 @@
+<div class="textfield natural field row">
+    <div class="col-xs-12 field-title"><h3><span class="fa fa-angle-double-right"></span> {{field.title}} <span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span></h3></div>
+    <div class="col-xs-12 field-input">
+		<input type="text" 
+			class="text-field-input" 
+			ng-model="field.fieldValue" 
+			ng-model-options="{ debounce: 250 }"  
+			value="field.fieldValue" 
+			ng-required="field.required"
+			ng-disabled="field.disabled" changeFocus 
+			focus-up-id="focusUpButton" 
+			focus-down-id="focusDownButton">
+    </div>
+    <br>
+    <div class="col-xs-12">
+    	<span ng-bind="field.fieldMatchValue"></span>
+    </div>
+</div>

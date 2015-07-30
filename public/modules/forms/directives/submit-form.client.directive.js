@@ -29,6 +29,8 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                 };
 
                 $scope.reloadForm = function(){
+                    timeCounter.stopClock();
+                    timeCounter.startClock();
                     $scope.form.submitted = false;
                     $scope.form.form_fields = _.chain($scope.form.form_fields).map(function(field){
                         field.fieldValue = '';

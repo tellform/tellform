@@ -28,7 +28,8 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
             'legal',
             'statement',
             'rating',
-            'yes_no'
+            'yes_no',
+            'natural'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
             return templateUrl += type + '.html';
@@ -47,6 +48,14 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
                 yearRange: '1900:-0',   
                 defaultDate: 0,
             };
+        }
+        //Set only if we have a natural lang processing field
+        else if(scope.field.fieldType === 'natural'){
+
+            //Fires when field is changed
+            scope.$watch('scope.field', function(newValue, oldValue) {
+
+            });
         }
         
         // GET template content from path

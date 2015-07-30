@@ -63,6 +63,10 @@ angular.module('forms').service('FormFields', [
 		        name : 'statement',
 		        value : 'Statement' 
 		    },
+		    {
+		        name : 'natural',
+		        value : 'Natural Language Input' 
+		    },
 		];
 	}
 		

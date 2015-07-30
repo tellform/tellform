@@ -28,6 +28,7 @@ function validateFormFieldType(value) {
     'checkbox',
     'hidden',
     'yes_no',
+    'natural'
   ];
 
   if (validTypes.indexOf(value) > -1) { 
