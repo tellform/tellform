@@ -4,8 +4,6 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    FieldSchema = require('./form_field.server.model.js'),
-    FormSubmissionSchema = require('./form_submission.server.model.js'),
 	Schema = mongoose.Schema,
 	pdfFiller = require('node-pdffiller'),
 	_ = require('lodash'),
@@ -13,6 +11,11 @@ var mongoose = require('mongoose'),
 	path = require('path'),
 	fs = require('fs-extra'),
 	async = require('async'),
+	util = require('util');
+
+//Mongoose Models
+var FieldSchema = require('./form_field.server.model.js'),
+    FormSubmissionSchema = require('./form_submission.server.model.js'),
 	Field = mongoose.model('Field', FieldSchema),
 	FormSubmission = mongoose.model('FormSubmission', FormSubmissionSchema);
 
@@ -27,7 +30,6 @@ var FormSchema = new Schema({
 	},
 	lastModified: {
 		type: Date,
-		default: Date.now
 	},
 	title: {
 		type: String,

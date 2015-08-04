@@ -1,5 +1,16 @@
 <div class="field row radio">
-    <div class="col-xs-12 field-title"><h3><span class="fa fa-angle-double-right"></span> {{field.title}} <span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span></h3></div>
+    <div class="col-xs-12 field-title">
+        <h3 class="row">
+            <span class="fa fa-angle-double-right"></span> {{field.title}} 
+            <span class="required-error" ng-show="field.required && !field.fieldValue">
+                *(required)
+            </span>
+        </h3>
+        <p class="row">
+            {{field.description}}
+        </p>
+    </div>
+
     <div class="col-xs-12 field-input">
         <div class="row-fluid">
             <label class="btn btn-success col-xs-3">
@@ -12,7 +23,6 @@
                 <span>No</span>
             </label>
         </div>
-        <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
     </div>
 </div>
 <br>

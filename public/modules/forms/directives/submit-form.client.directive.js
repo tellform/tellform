@@ -3,7 +3,13 @@
 angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCounter', 'Auth', '$filter',
     function ($http, $timeout, timeCounter, Auth, $filter) {
         return {
+            templateUrl: './modules/forms/views/directiveViews/form/submit-form.html',
+            restrict: 'E',
+            scope: {
+                form:'='
+            },
             controller: function($scope){
+                console.log('rendering submitFormDirective');
                 timeCounter.startClock();
 
                 $scope.submit = function(){
@@ -14,18 +20,17 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     delete $scope.form.visible_form_fields;
 
                     $scope.authentication = Auth;
-                    // console.log($scope.authentication.isAuthenticated());
 
-                    $scope.submitPromise = $http.post('/forms/'+$scope.form._id,$scope.form).
-                    success(function(data, status, headers){
-                        console.log('form submitted successfully');
-                        // alert('Form submitted..');
-                        $scope.form.submitted = true;
-                    })
-                    .error(function(error){
-                        console.log(error);
-                        $scope.error = error.message;
-                    });
+                    $scope.submitPromise = $http.post('/forms/'+$scope.form._id,$scope.form)
+                        .success(function(data, status, headers){
+                            console.log('form submitted successfully');
+                            // alert('Form submitted..');
+                            $scope.form.submitted = true;
+                        })
+                        .error(function(error){
+                            console.log(error);
+                            $scope.error = error.message;
+                        });
                 };
 
                 $scope.reloadForm = function(){
@@ -38,11 +43,6 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     }).value();
                 };
 
-            },
-            templateUrl: './modules/forms/views/directiveViews/form/submit-form.html',
-            restrict: 'E',
-            scope: {
-                form:'='
             }
         };
     }

@@ -1,4 +1,4 @@
-<form class="row" name="fieldForm" form-locator auto-save-form auto-save-callback="update" form="myform" novalidation>
+<form class="row" name="editForm" auto-save-form auto-save-watch="myform.form_fields" auto-save-callback="update" novalidation>
 
     <div class="col-xs-5 add-field">
         <!-- <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
@@ -24,16 +24,16 @@
     </div>
 
 	<div class="col-xs-7 current-fields container">
-        <!-- <p ng-show="form.form_fields.length == 0">No fields added yet.</p> -->
         <div class="row">
             <div class="col-xs-10">
                 <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                    <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render ng-show="!field.deletePreserved">
+                    <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
 
                         <accordion-heading>
 
                             <div class="handle">
+
                                 <span class="pull-left" ng-switch="field.fieldType">
                                     <field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
                                 </span>
@@ -54,33 +54,37 @@
                             </div>
                             <div class="row">
                                 <ul class="col-xs-12 container" style="list-style:none;border:2px lightgray solid;">
-                                    <field-directive field="field">
+                                    <field-directive field="field" validate="false">
                                     </field-directive>
                                 </ul>
                             </div>
 
-                            <div class="row"> 
-                                <hr>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <hr>
+                                    <h4>Edit</h4>
+                                    <br>
+                                </div>
                             </div> 
 
 
                             <div class="row">
-                                <div class="col-xs-5">Field Title:</div>
-                                <div class="col-xs-7">
-                                <input type="text" ng-model="field.title" value="{{field.title}}" required></div>
+                                <div class="col-xs-4">Question Title:</div>
+                                <div class="col-xs-8">
+                                <input type="text" ng-model="field.title" name="title{{field._id}}" value="{{field.title}}" required></div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-xs-5">Field Decription:</div>
-                                <div class="col-xs-7"><textarea type="text" ng-model="field.description" value="{{field.description}}"></textarea> </div>
+                                <div class="col-xs-4">Description:</div>
+                                <div class="col-xs-8"><textarea type="text" ng-model="field.description" name="description{{field._id}}"value="{{field.description}}"></textarea> </div>
                             </div>
 
-                            <div class="row" ng-show="showAddOptions(field)"><hr></div>
+                            <div class="row" ng-show="showAddOptions(field)"><br></div>
                             <div class="row" ng-show="showAddOptions(field)">
-                                <div class="col-xs-4">Field Options:</div>
+                                <div class="col-xs-4">Options:</div>
                                 <div class="col-xs-8 container">
                                     <div ng-repeat="option in field.fieldOptions" class="row">
-                                        <input type="text" name="{{option.option_title}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-5">
+                                        <input type="text" name="{{option.option_title}}{{field._id}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-5">
 
                                         <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
                                             <i class="fa fa-trash-o"></i>
@@ -93,33 +97,35 @@
                                 </div>
                             </div>
 
-                            <div class="row"> <hr></div> 
+                            <div class="row"><br></div> 
 
                             <div class="row">
-                                <div class="col-xs-5 field-title">Required:</div>
-                                <div class="col-xs-7 field-input">
+                                <div class="col-xs-4 field-title">Required:</div>
+                                <div class="col-xs-8 field-input">
                                     <label class="btn col-xs-5">
-                                        <input type="radio" value="true" ng-model="field.fieldValue" required />
+                                        <input type="radio" ng-value="true" ng-model="field.required" name="required{{field._id}}"/>
                                         <span> &nbsp; Yes</span>
                                     </label>
 
                                     <label class="btn col-xs-5 col-xs-offset-1">
-                                        <input type="radio" value="false" ng-model="field.fieldValue" required />
+                                        <input type="radio" ng-value="false" ng-model="field.required" name="required{{field._id}}"/>/>
                                         <span> &nbsp; No</span>
                                     </label>
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-xs-5 field-input">Disabled:</div>
-                                <div class="col-xs-7 field-input">
+                                <div class="col-xs-4 field-input">Disabled:</div>
+                                <div class="col-xs-8 field-input">
                                     <label class="btn col-xs-5">
-                                        <input type="radio" value="true" ng-model="field.fieldValue" required />
+                                        <input type="radio" ng-value="true" 
+                                        ng-model="field.disabled" name="disabled{{field._id}}"/>/>
                                         <span> &nbsp; Yes</span>
                                     </label>
 
                                     <label class="btn col-xs-5 col-xs-offset-1">
-                                        <input type="radio" value="false" ng-model="field.fieldValue" required />
+                                        <input type="radio" ng-value="false" 
+                                        ng-model="field.disabled" name="disabled{{field._id}}"/>/>
                                         <span> &nbsp; No</span>
                                     </label>
                                 </div>

@@ -3,6 +3,14 @@
 angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'timeCounter', 'Auth', 'FormFields',
     function ($rootScope, $http, Upload, $timeout, timeCounter, Auth, FormFields) {
         return {
+            templateUrl: './modules/forms/views/directiveViews/form/configure-form.html',
+            restrict: 'E',
+            scope: {
+                myform:'=',
+                user:'=',
+                pdfFields:'@',
+                formFields:'@'
+            },
             controller: function($scope){
                 $scope.log = '';
                 $scope.pdfLoading = false;
@@ -73,14 +81,6 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                     }
                 };
 
-            },
-            templateUrl: './modules/forms/views/directiveViews/form/configure-form.html',
-            restrict: 'E',
-            scope: {
-                myform:'=',
-                user:'=',
-                pdfFields:'@',
-                formFields:'@'
             }
         };
     }

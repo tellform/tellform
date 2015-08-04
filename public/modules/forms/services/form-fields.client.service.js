@@ -17,7 +17,7 @@ angular.module('forms').service('FormFields', [
 		    },
 		    {
 		        name : 'dropdown',
-		        value : 'Dropdown List'
+		        value : 'Dropdown'
 		    },
 		    {
 		        name : 'date',
@@ -25,7 +25,7 @@ angular.module('forms').service('FormFields', [
 		    },
 		    {
 		        name : 'textarea',
-		        value : 'Long Text'
+		        value : 'Paragraph Text'
 		    },
 		    {
 		        name : 'checkbox',
@@ -39,6 +39,10 @@ angular.module('forms').service('FormFields', [
 		        name : 'legal',
 		        value : 'Legal'
 		    },
+		    // {
+		    //     name : 'sig',
+		    //     value : 'Signature'
+		    // },
 		    // {
 		    //     name : 'file',
 		    //     value : 'File Upload'

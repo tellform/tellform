@@ -3,7 +3,13 @@
     <div class="col-xs-12 field-input">
         <div ng-repeat="option in field.fieldOptions" class="row-fluid">
             <label class="btn btn-info col-xs-3">
-                <input type="radio" value="{{option.option_value}}" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }" ng-required="field.required" ng-disabled="field.disabled" ng-init="field.fieldValue = field.fieldOptions[0].option_value"/>
+                <input type="radio" 
+                value="{{option.option_value}}" 
+                ng-model="field.fieldValue" 
+                ng-model-options="{ debounce: 250 }" 
+                ng-required="field.required" 
+                ng-disabled="field.disabled" 
+                ng-init="field.fieldValue = field.fieldOptions[0].option_value"/>
                 <span ng-bind="option.option_title"></span>
             </label>
         </div>

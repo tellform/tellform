@@ -7,8 +7,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
             restrict: 'E',
             scope: {
                 myform:'=',
-                user:'='
             },
+            transclude: true,
             controller: function($scope){
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
@@ -20,7 +20,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     handle: ' .handle'  
                 }
 
-                console.log($scope.myform);
+                // console.log($scope.myform);
 
                 // $scope.draggable = {
                 //     connectWith: ".dropzone",

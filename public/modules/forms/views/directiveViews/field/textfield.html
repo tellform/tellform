@@ -3,10 +3,12 @@
     <div class="col-xs-12 field-input">
 		<input type="text" 
 			class="text-field-input" 
-			ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  
+			ng-model="field.fieldValue" 
+			ng-model-options="{ debounce: 250 }"  
 			value="field.fieldValue" 
 			ng-required="field.required"
-			ng-disabled="field.disabled" changeFocus focus-up-id="focusUpButton" focus-down-id="focusDownButton">
+			ng-disabled="field.disabled" 
+			changeFocus focus-up-id="focusUpButton" focus-down-id="focusDownButton">
         <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
     </div>
 </div>

@@ -4,60 +4,59 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
   
   return {
     require: ['^form'],
-    // scope: {
-    //     callback: '&autoSaveCallback'
-    // },
     link: function($scope, $element, $attrs, $ctrls) {
 
       $rootScope.finishedRender = false;
 
-      if($rootScope.watchCount === undefined){
-        $rootScope.watchCount = 0;
-      }
+      var $formCtrl = $ctrls[0],
+          savePromise = null;
 
-      var difference = function(array){
-        var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
 
-        var containsEquals = function(obj, target) {
-          if (obj === null) return false;
-          return _.any(obj, function(value) {
-            return _.isEqual(value, target);
-          });
-        };
-
-        return _.filter(array, function(value){ return !containsEquals(rest, value); });
-      };
-
-      var $formCtrl = $ctrls[0];
-      var savePromise = null;
-      // $scope.finishedRender = false;
-      var expression = $attrs.autoSaveForm || 'true';
-
-      $scope.$on('ngRepeatStarted', function(ngRepeatFinishedEvent) {
+      $scope.$on('editFormFieldsStarted', function(ngRepeatFinishedEvent) {
         $rootScope.finishedRender = false;
-        $rootScope.watchCount = 0;
       });
-      $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+      $scope.$on('editFormFieldsFinished', function(ngRepeatFinishedEvent) {
         $rootScope.finishedRender = true;
       });
 
-      $scope.$watch('myform.form_fields', function(newValue, oldValue) {
-        console.log('watchCount: '+$rootScope.watchCount);
-        if(difference(oldValue,newValue).length === 0 || oldValue === undefined){
+      // $scope.anyDirtyAndTouched = function (form){
+      //   console.log(form);
+      //   console.log($scope.myform);
+
+
+      //   for(var prop in form) {
+      //     if(form.hasOwnProperty(prop) && prop[0] !== '$') {
+      //        if(form[prop].$dirty && form[prop].$touched) {
+      //          return true;
+      //        }
+      //     }
+      //   }
+      //   return false;
+      // };
+
+      // console.log($scope.watchModel);
+      $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
+        console.log('hello');
+        if( !newValue && !oldValue ){
           return;
         }
+        var changedFields = !_.isEqual(oldValue,newValue);
 
-        // console.log('\n\n----------\n$dirty: '+( $formCtrl.$dirty ) );
-        // console.log('form_fields changed: '+difference(oldValue,newValue).length );
+        // console.log('\n\n----------');
+        console.log('$dirty: '+( $formCtrl.$dirty ) );
+        // console.log('oldValue: '+oldValue);
+        // console.log('newValue: '+newValue);
+        // console.log('form_fields changed: '+changedFields);
         // console.log('$valid: '+$formCtrl.$valid);
         // console.log('finishedRender: '+$rootScope.finishedRender);
         // console.log('saveInProgress: '+$rootScope.saveInProgress);
+
+        // var inputDirtyUntouched = $scope.anyDirtyAndTouched($scope.editForm);
           
-        if($rootScope.finishedRender && ($formCtrl.$dirty || difference(oldValue,newValue).length !== 0) && !$rootScope.saveInProgress) {
-          $rootScope.watchCount++;
-         
-          // if($rootScope.watchCount === 1) {
+        //Save form ONLY IF rendering is finished, form_fields have been change AND currently not save in progress
+        if($rootScope.finishedRender && (inputDirtyUntouched || changedFields) && !$rootScope.saveInProgress) {
             
+            console.log('Saving Form');
             if(savePromise) {
               $timeout.cancel(savePromise);
             }
@@ -71,12 +70,11 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     console.log('\n\nForm data persisted -- setting pristine flag');
                     // console.log('\n\n---------\nUpdate form CLIENT');
                     // console.log(Date.now());
-                    $rootScope.watchCount = 0;
                     $formCtrl.$setPristine();  
                     // $rootScope.saveInProgress = false;
                   }else{
-                    console.log('Error form data NOT persisted');
-                    console.log(err);
+                    console.error('Error form data NOT persisted');
+                    console.error(err);
                   }
                 });
             

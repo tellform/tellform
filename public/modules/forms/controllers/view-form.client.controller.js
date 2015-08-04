@@ -4,8 +4,9 @@
 angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$modal',
 	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $modal) {
 
-        $scope = $rootScope;
         var deleteModal;
+        $scope = $rootScope;
+
         $scope.myform = CurrentForm.getForm();
         $rootScope.saveInProgress = false;
         $scope.viewSubmissions = false;
@@ -24,6 +25,11 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
 
         $scope.setForm = function (form) {
             $scope.myform = form;
+        };
+        $rootScope.resetForm = function(){
+            $scope.myform = Forms.get({
+                formId: $stateParams.formId
+            });
         };
 
         /*
@@ -215,12 +221,6 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                         cb(err);
                     });
             }
-        };
-
-        $rootScope.resetForm = function(){
-            $scope.myform = Forms.get({
-                formId: $stateParams.formId
-            });
         };
 
 	}

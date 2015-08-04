@@ -37,7 +37,6 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
     };
 
     var linker = function(scope, element) {
-        // scope.field.required = scope.required;
 
         //Set format only if field is a date
         if(scope.field.fieldType === 'date'){
@@ -51,10 +50,11 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
         }
         //Set only if we have a natural lang processing field
         else if(scope.field.fieldType === 'natural'){
+            scope.field.fieldMatchValue = '';
 
             //Fires when field is changed
-            scope.$watch('scope.field', function(newValue, oldValue) {
-
+            scope.$watch('scope.field', function(newField, oldField) {
+                
             });
         }
         

@@ -57,5 +57,36 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 });
             }
         };
+
+        $scope.remove = function(form_id) {
+
+            console.log('Remove existing form');
+
+            var form = {};
+            if(!form_id){
+                form = CurrentForm.getForm();
+                if(!form) form = $scope.myform;
+            }else {
+                form._id = form_id;
+            }
+    
+            $http.delete('/forms/'+form._id)
+                .success(function(data, status, headers){
+                    console.log('form deleted successfully');
+
+                    if(!form_id){
+                        $state.go('listForms', {}, {reload: true}); 
+                    }
+                    if($scope.myforms.length > 0){
+                        $scope.myforms = _.filter($scope.myforms, function(myform){
+                            return myform._id !== form._id; 
+                        });
+                    }
+
+                }).error(function(error){
+                    console.log('ERROR: Form could not be deleted.');
+                    console.error(error);
+                });
+        };
     }
 ]);

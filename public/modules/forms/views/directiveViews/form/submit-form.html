@@ -1,4 +1,5 @@
 <div cg-busy="{promise:submitPromise,message:'Submitting form...',backdrop:true}"></div>
+
 <div ng-hide="form.submitted">
     <div class="field row" style="padding-bottom:5em;">
         <div class="col-sm-10 col-sm-offset-1">
@@ -7,7 +8,7 @@
         </div>
     </div>
     <div class="row">
-        <form name="form" class="submission-form col-sm-offset-1 col-sm-10" name="form" ng-model="form" ng-repeat="field in form.form_fields" >
+        <form name="myForm" class="submission-form col-sm-offset-1 col-sm-10" ng-model="form" ng-repeat="field in form.form_fields" >
                 <field-directive field="field" ng-if="!field.deletePreserved">
                 </field-directive>
         </form>

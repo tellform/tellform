@@ -13,9 +13,9 @@ angular.module('users').factory('Auth',  function($window) {
       // because that would create a circular dependency
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
-        if (service.currentUser && service.currentUser.displayName) {
+        if (service.currentUser && service.currentUser.username) {
           console.log('Using local current user.');
-          console.log(service.currentUser);
+          // console.log(service.currentUser);
           return service.currentUser;
         } 
         else if ($window.user){
