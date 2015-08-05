@@ -35,61 +35,28 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
           return false;
         };
 
-        var debounceUpdates = function () {
+        var updateFields = function () {
+          $rootScope.saveInProgress = true;
+          $rootScope[$attrs.autoSaveCallback](false,
+            function(err){
+              if(!err){
+                console.log('\n\nForm data persisted -- setting pristine flag');
+                // console.log('\n\n---------\nUpdate form CLIENT');
+                // console.log(Date.now());
+                $formCtrl.$setPristine(); 
+              }else{
+                console.error('Error form data NOT persisted');
+                console.error(err);
+              }
+            }); 
+        }
 
-          // console.log('Saving Form');
-          if(savePromise) {
-            $timeout.cancel(savePromise);
-          }else {
-            savePromise = $timeout(function() {
-
-
-              $rootScope[$attrs.autoSaveCallback](
-                function(err){
-                  if(!err){
-                    // console.log('\n\nForm data persisted -- setting pristine flag');
-                    // console.log('\n\n---------\nUpdate form CLIENT');
-                    // console.log(Date.now());
-                    $formCtrl.$setPristine(); 
-                    console.log($rootScope.saveInProgress);
-                    savePromise = null;
-                    // $formCtrl.$setUntouched();  
-                  }else{
-                    console.error('Error form data NOT persisted');
-                    console.error(err);
-                  }
-                });
-            
-            });
-          }
-        };
-
-
-        // $scope.$watch('editForm', function(newValue, oldValue) {
-        //   console.log('watch editForm');
-        //   if($scope.anyDirtyAndTouched($scope.editForm)){
-        //     console.log('ready to save text input');
-        //   }
-        // });
 
         $scope.$watch(function(newValue, oldValue) {
-          // console.log('watch editForm');
           if($scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
             console.log('ready to save text input');
             console.log('Saving Form');
-            $rootScope.saveInProgress = true;
-            $rootScope[$attrs.autoSaveCallback](false,
-              function(err){
-                if(!err){
-                  console.log('\n\nForm data persisted -- setting pristine flag');
-                  // console.log('\n\n---------\nUpdate form CLIENT');
-                  // console.log(Date.now());
-                  $formCtrl.$setPristine(); 
-                }else{
-                  console.error('Error form data NOT persisted');
-                  console.error(err);
-                }
-              }); 
+            updateFields();
           }
         });
 
@@ -109,37 +76,17 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
           // console.log('newValue: '+newValue);
           // console.log('oldValue: '+oldValue);
 
-          // var anyCurrentlyDirtyNotFocused = $scope.anyDirtyAndTouched($scope.editForm);
-          // console.log('anyCurrentlyDirtyNotFocused: '+anyCurrentlyDirtyNotFocused);
-          // console.log('properties of $scope.editForm');
-          // for(var item in $scope.editForm){
-          //   console.log(item);
-          // }
           //Save form ONLY IF rendering is finished, form_fields have been change AND currently not save in progress
           if($rootScope.finishedRender && (changedFields && !$formCtrl.$dirty) && !$rootScope.saveInProgress) {
 
-            
             if(savePromise) {
               $timeout.cancel(savePromise);
               savePromise = null;
             }
 
-            savePromise = $timeout(function() {
-              
+            savePromise = $timeout(function() {   
               console.log('Saving Form');
-              $rootScope.saveInProgress = true;
-              $rootScope[$attrs.autoSaveCallback](false,
-                function(err){
-                  if(!err){
-                    console.log('\n\nForm data persisted -- setting pristine flag');
-                    // console.log('\n\n---------\nUpdate form CLIENT');
-                    // console.log(Date.now());
-                    $formCtrl.$setPristine(); 
-                  }else{
-                    console.error('Error form data NOT persisted');
-                    console.error(err);
-                  }
-                });            
+              updateFields();           
             }); 
           }else if($rootScope.finishedRender && $rootScope.saveInProgress){
             $rootScope.saveInProgress = false;

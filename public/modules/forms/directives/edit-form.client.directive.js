@@ -92,7 +92,7 @@ angular.module('forms')
                 **  Field CRUD Methods
                 */
                 // Add a new field
-                $scope.addNewField = function(fieldType){
+                $scope.addNewField = function(addOrReturn, fieldType){
 
                     // incr field_id counter
                     $scope.addField.lastAddedID++;
@@ -116,8 +116,13 @@ angular.module('forms')
                     };
 
                     // put newField into fields array
-                    $scope.myform.form_fields.push(newField);
-                    // console.log('\n\n---------\nAdded field CLIENT');
+                    if(addOrReturn){
+                        $scope.myform.form_fields.push(newField);
+                    }else {
+                        return newField;
+                    }
+                    
+                    console.log('\n\n---------\nAdded field CLIENT');
                     // console.log(Date.now());
                     // console.log($scope.myform.form_fields.length);
                 };
@@ -133,13 +138,21 @@ angular.module('forms')
                         }
                     }
                 };
-                $scope.duplicateField = function (field, field_index){
-                    for(var i = 0; i < $scope.myform.form_fields.length; i++){
-                        if($scope.myform.form_fields[i].field_id === field.field_id){
-                            $scope.addNewField($scope.myform.form_fields[i].fieldType);
-                            break;
-                        }
-                    }
+                $scope.duplicateField = function (field_index){
+                    console.log('field_index: '+field_index);
+                    var field = $scope.addNewField(false, $scope.myform.form_fields[field_index].fieldType);
+                    field.title = $scope.myform.form_fields[field_index].title;
+                    console.log($scope.myform.form_fields[field_index]);
+
+
+                    //Insert field at selected index
+                    $scope.myform.form_fields.splice(field_index+1, 0, field);
+                    // for(var i = 0; i < $scope.myform.form_fields.length; i++){
+                    //     if($scope.myform.form_fields[i].field_id === field.field_id){
+                            
+                    //         break;
+                    //     }
+                    // }
                 };
 
                 /*
