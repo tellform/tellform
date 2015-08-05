@@ -161,7 +161,8 @@ div.config-form > .row {
     margin-bottom: 40px;
 }
     .admin-form > .page-header h1 {
-        margin-bottom: 0px
+        margin-bottom: 0px;
+        margin-top: 0px;
     }
     .admin-form > .page-header > .col-xs-3 {
         padding-top: 1.4em;

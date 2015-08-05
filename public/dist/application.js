@@ -451,11 +451,9 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         // Return all user's Forms
         $scope.findAll = function() {
-            if(!$scope.myforms){
-                Forms.query(function(_forms){
-                    $scope.myforms = _forms;
-                });
-            }
+            Forms.query(function(_forms){
+                $scope.myforms = _forms;
+            });
         };
 
         //Modal functions
@@ -472,6 +470,9 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         $scope.setForm = function (form) {
             $scope.myform = form;
+        };
+        $scope.goToWithId = function(route, id) {
+            $state.go(route, {'formId': id}, {reload: true});
         };
 
         // Create new Form
@@ -497,6 +498,37 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                     $scope.error = errorResponse.data.message;
                 });
             }
+        };
+
+        $scope.remove = function(form_id) {
+
+            console.log('Remove existing form');
+
+            var form = {};
+            if(!form_id){
+                form = CurrentForm.getForm();
+                if(!form) form = $scope.myform;
+            }else {
+                form._id = form_id;
+            }
+    
+            $http.delete('/forms/'+form._id)
+                .success(function(data, status, headers){
+                    console.log('form deleted successfully');
+
+                    if(!form_id){
+                        $state.go('listForms', {}, {reload: true}); 
+                    }
+                    if($scope.myforms.length > 0){
+                        $scope.myforms = _.filter($scope.myforms, function(myform){
+                            return myform._id !== form._id; 
+                        });
+                    }
+
+                }).error(function(error){
+                    console.log('ERROR: Form could not be deleted.');
+                    console.error(error);
+                });
         };
     }
 ]);
@@ -535,10 +567,12 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm','$http',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
+angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$modal',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $modal) {
 
+        var deleteModal;
         $scope = $rootScope;
+
         $scope.myform = CurrentForm.getForm();
         $rootScope.saveInProgress = false;
         $scope.viewSubmissions = false;
@@ -555,12 +589,13 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             CurrentForm.setForm($scope.myform);
         };
 
-        $scope.goToWithId = function(route, id) {
-            $state.go(route, {'formId': id}, {reload: true});
-        };
-
         $scope.setForm = function (form) {
             $scope.myform = form;
+        };
+        $rootScope.resetForm = function(){
+            $scope.myform = Forms.get({
+                formId: $stateParams.formId
+            });
         };
 
         /*
@@ -673,33 +708,57 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         	$scope.viewSubmissions = false;
         };
 
+        /* 
+        ** DeleteModal Functions 
+        */
+        $scope.openDeleteModal = function() {
+
+            deleteModal = $modal.open({
+              animation: $scope.animationsEnabled,
+              templateUrl: 'myModalContent.html',
+              controller: 'ViewFormController',
+            });
+        };
+        $scope.cancelDeleteModal = function(){
+            if(deleteModal){
+                deleteModal.dismiss('cancel');
+            }
+        };
+
         // Remove existing Form
         $scope.remove = function(form_id) {
-            var form = {};
-            if(!form_id){
-                form = CurrentForm.getForm();
-                if(!form) form = $scope.myform;
-            }else {
-                form._id = form_id;
+            if(deleteModal && deleteModal.opened){
+
+                deleteModal.close();
+            
+                var form = {};
+                if(!form_id){
+                    form = CurrentForm.getForm();
+                    if(!form) form = $scope.myform;
+                }else {
+                    form._id = form_id;
+                }
+        
+                $http.delete('/forms/'+form._id)
+                    .success(function(data, status, headers){
+                        console.log('form deleted successfully');
+
+                        if(!form_id){
+                            $state.go('listForms', {}, {reload: true}); 
+                        }
+                        if($scope.myforms.length > 0){
+                            $scope.myforms = _.filter($scope.myforms, function(myform){
+                                return myform._id !== form._id; 
+                            });
+                        }
+
+                    }).error(function(error){
+                        console.log('ERROR: Form could not be deleted.');
+                        console.error(error);
+                    }).finally(function(){
+
+                    });
             }
-    
-            $http.delete('/forms/'+form._id)
-                .success(function(data, status, headers){
-                    console.log('form deleted successfully');
-
-                    if(!form_id){
-                        $state.go('listForms');
-                    }
-                    if($scope.myforms.length > 0){
-                        $scope.myforms = _.filter($scope.myforms, function(myform){
-                            return myform._id !== form._id; 
-                        });
-                    }
-
-                }).error(function(error){
-                    console.log('ERROR: Form could not be deleted.');
-                    console.error(error);
-                });
         };
 
 
@@ -730,12 +789,6 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             }
         };
 
-        $rootScope.resetForm = function(){
-            $scope.myform = Forms.get({
-                formId: $stateParams.formId
-            });
-        };
-
 	}
 ]);
 'use strict';
@@ -743,95 +796,127 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
 angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   
   return {
-    require: ['^form'],
-    // scope: {
-    //     callback: '&autoSaveCallback'
-    // },
+    // require: ['^form'],
+    restrict: 'AE',
     link: function($scope, $element, $attrs, $ctrls) {
+      angular.element(document).ready(function() {
+        $rootScope.finishedRender = false;
 
-      $rootScope.finishedRender = false;
 
-      if($rootScope.watchCount === undefined){
-        $rootScope.watchCount = 0;
-      }
+        // Log that the directive has been linked.
+        // console.log( "Linked: autoSaveForm");
 
-      var difference = function(array){
-        var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
+        var $formCtrl = $scope.editForm,
+            savePromise = null;
 
-        var containsEquals = function(obj, target) {
-          if (obj === null) return false;
-          return _.any(obj, function(value) {
-            return _.isEqual(value, target);
-          });
+
+        $scope.$on('editFormFieldsStarted', function(ngRepeatFinishedEvent) {
+          $rootScope.finishedRender = false;
+        });
+        $scope.$on('editFormFieldsFinished', function(ngRepeatFinishedEvent) {
+          $rootScope.finishedRender = true;
+        });
+
+        $scope.anyDirtyAndTouched = function (form){
+          for(var prop in form) {
+            if(form.hasOwnProperty(prop) && prop[0] !== '$') {
+
+               // console.log(form[prop]);
+               if(form[prop].$dirty && form[prop].$untouched) {
+                 return true;
+               }
+            }
+          }
+          return false;
         };
 
-        return _.filter(array, function(value){ return !containsEquals(rest, value); });
-      };
+        // console.log('properties of $scope.editForm');
+        // for(var item in $scope.editForm){
+        //   console.log(item);
+        // }
 
-      var $formCtrl = $ctrls[0];
-      var savePromise = null;
-      // $scope.finishedRender = false;
-      var expression = $attrs.autoSaveForm || 'true';
+        // console.log($scope.editForm);
+        // console.log($scope.watchModel);
 
-      $scope.$on('ngRepeatStarted', function(ngRepeatFinishedEvent) {
-        $rootScope.finishedRender = false;
-        $rootScope.watchCount = 0;
-      });
-      $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-        $rootScope.finishedRender = true;
-      });
+        //Autosave Form when model (specificed in $attrs.autoSaveWatch) changes
+        $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
+          if( !newValue && !oldValue ){
+            return;
+          }
+          var changedFields = !_.isEqual(oldValue,newValue);
 
-      $scope.$watch('myform.form_fields', function(newValue, oldValue) {
-        console.log('watchCount: '+$rootScope.watchCount);
-        if(difference(oldValue,newValue).length === 0 || oldValue === undefined){
-          return;
-        }
+          // console.log('\n\n----------');
+          // console.log('$dirty: '+ $formCtrl.$dirty );
+          // console.log('oldValue: '+oldValue);
+          // console.log('newValue: '+newValue);
+          // console.log('form_fields changed: '+changedFields);
+          // console.log('finishedRender: '+$rootScope.finishedRender);
+          // console.log('saveInProgress: '+$rootScope.saveInProgress);
+          // console.log($scope.editForm);
+          var inputDirtyUntouched = $scope.anyDirtyAndTouched($scope.editForm);
 
-        // console.log('\n\n----------\n$dirty: '+( $formCtrl.$dirty ) );
-        // console.log('form_fields changed: '+difference(oldValue,newValue).length );
-        // console.log('$valid: '+$formCtrl.$valid);
-        // console.log('finishedRender: '+$rootScope.finishedRender);
-        // console.log('saveInProgress: '+$rootScope.saveInProgress);
-          
-        if($rootScope.finishedRender && ($formCtrl.$dirty || difference(oldValue,newValue).length !== 0) && !$rootScope.saveInProgress) {
-          $rootScope.watchCount++;
-         
-          // if($rootScope.watchCount === 1) {
-            
-            if(savePromise) {
-              $timeout.cancel(savePromise);
-            }
-
-            savePromise = $timeout(function() {
-              savePromise = null;
-
-              $rootScope[$attrs.autoSaveCallback](
-                function(err){
-                  if(!err){
-                    console.log('\n\nForm data persisted -- setting pristine flag');
-                    // console.log('\n\n---------\nUpdate form CLIENT');
-                    // console.log(Date.now());
-                    $rootScope.watchCount = 0;
-                    $formCtrl.$setPristine();  
-                    // $rootScope.saveInProgress = false;
-                  }else{
-                    console.log('Error form data NOT persisted');
-                    console.log(err);
-                  }
-                });
-            
-            });
-
+          // console.log('properties of $scope.editForm');
+          // for(var item in $scope.editForm){
+          //   console.log(item);
           // }
-        }else{
-          return;
-        }
-        
-      }, true);
+
+          // console.log('inputDirtyUntouched: '+inputDirtyUntouched);
+          // console.log($scope.editForm);
+          
+          //Save form ONLY IF rendering is finished, form_fields have been change AND currently not save in progress
+          if($rootScope.finishedRender && ($formCtrl.$dirty  || changedFields) && !$rootScope.saveInProgress) {
+              
+              console.log('Saving Form');
+              if(savePromise) {
+                $timeout.cancel(savePromise);
+              }
+
+              savePromise = $timeout(function() {
+                savePromise = null;
+
+                $rootScope[$attrs.autoSaveCallback](
+                  function(err){
+                    if(!err){
+                      console.log('\n\nForm data persisted -- setting pristine flag');
+                      // console.log('\n\n---------\nUpdate form CLIENT');
+                      // console.log(Date.now());
+                      $formCtrl.$setPristine(); 
+                      // $formCtrl.$setUntouched();  
+                    }else{
+                      console.error('Error form data NOT persisted');
+                      console.error(err);
+                    }
+                  });
+              
+              });
+
+            // }
+          }else{
+            return;
+          }
+        }, true);
+
+      });
+
     }
   };
   
 }]);
+
+'use strict';
+
+angular.module('forms').directive('bnLifecycle',['$rootScope', function($rootScope) {
+    return {
+        // I link the DOM element to the view model.
+        restrict: 'A',
+        link: function( scope, element, attributes ) {
+            // Log that the directive has been linked.
+            console.log('aoeuaoeu');
+            // console.log( 'Linked:', attributes.id );
+        }
+    };
+}]);
+
 'use strict';
 
 angular.module('forms').directive('changeFocus', function() {
@@ -873,6 +958,14 @@ angular.module('forms').directive('changeFocus', function() {
 angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'timeCounter', 'Auth', 'FormFields',
     function ($rootScope, $http, Upload, $timeout, timeCounter, Auth, FormFields) {
         return {
+            templateUrl: './modules/forms/views/directiveViews/form/configure-form.html',
+            restrict: 'E',
+            scope: {
+                myform:'=',
+                user:'=',
+                pdfFields:'@',
+                formFields:'@'
+            },
             controller: function($scope){
                 $scope.log = '';
                 $scope.pdfLoading = false;
@@ -943,30 +1036,43 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                     }
                 };
 
-            },
-            templateUrl: './modules/forms/views/directiveViews/form/configure-form.html',
-            restrict: 'E',
-            scope: {
-                myform:'=',
-                user:'=',
-                pdfFields:'@',
-                formFields:'@'
             }
         };
     }
 ]);
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
+angular.module('forms')
+.directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
     function ($rootScope, $q, $http, $timeout, timeCounter, Auth, FormFields) {
         return {
             templateUrl: './modules/forms/views/directiveViews/form/edit-form.html',
             restrict: 'E',
             scope: {
                 myform:'=',
-                user:'='
             },
+            // transclude: true,
             controller: function($scope){
+
+                // Log that the directive has been linked.
+                // console.log( "Linked: editForm Controller");
+
+                /*
+                **  Initialize scope with variables
+                */
+                //Populate AddField with all available form field types
+                $scope.addField = {};
+                $scope.addField.types = FormFields.fields;
+
+                $scope.addField.types.forEach(function(type){
+                    type.lastAddedID = 1;
+                    return type;
+                });
+
+                // accordion settings
+                $scope.accordion = {};
+                $scope.accordion.oneAtATime = true;
+
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
 
@@ -977,7 +1083,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     handle: ' .handle'  
                 }
 
-                console.log($scope.myform);
+                // console.log($scope.myform);
 
                 // $scope.draggable = {
                 //     connectWith: ".dropzone",
@@ -1024,19 +1130,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 // };
 
 
-                //Populate AddField with all available form field types
-                $scope.addField = {};
-                $scope.addField.types = FormFields.fields;
-
-                $scope.addField.types.forEach(function(type){
-                    type.lastAddedID = 1;
-                    return type;
-                });
-
-                // accordion settings
-                $scope.accordion = {};
-                $scope.accordion.oneAtATime = true;
-
+                /*
+                **  Field CRUD Methods
+                */
                 // Add a new field
                 $scope.addNewField = function(fieldType){
 
@@ -1087,6 +1183,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                         }
                     }
                 };
+
+                /*
+                **  Field Option Methods
+                */
 
                 // add new option to the field
                 $scope.addOption = function (field){
@@ -1139,7 +1239,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 angular.module('forms').directive('fieldIconDirective', function($http, $compile) {
     
     return {
-        templateUrl: './modules/forms/views/directiveViews/form/fieldIcon.html',
+        template: '<i class="{{typeIcon}}"></i>',
         restrict: 'E',
         scope: {
             typeName: '@'
@@ -1160,6 +1260,7 @@ angular.module('forms').directive('fieldIconDirective', function($http, $compile
 				'scale': 'fa fa-sliders',
 				'stripe': 'fa fa-credit-card',
 				'statement': 'fa fa-quote-left',
+				'yes_no': 'fa fa-toggle-on'
 			}
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
         },
@@ -1196,7 +1297,8 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
             'legal',
             'statement',
             'rating',
-            'yes_no'
+            'yes_no',
+            'natural'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
             return templateUrl += type + '.html';
@@ -1204,7 +1306,6 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
     };
 
     var linker = function(scope, element) {
-        // scope.field.required = scope.required;
 
         //Set format only if field is a date
         if(scope.field.fieldType === 'date'){
@@ -1215,6 +1316,15 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
                 yearRange: '1900:-0',   
                 defaultDate: 0,
             };
+        }
+        //Set only if we have a natural lang processing field
+        else if(scope.field.fieldType === 'natural'){
+            scope.field.fieldMatchValue = '';
+
+            //Fires when field is changed
+            scope.$watch('scope.field', function(newField, oldField) {
+                
+            });
         }
         
         // GET template content from path
@@ -1248,17 +1358,27 @@ angular.module('forms').directive('formLocator', function() {
 angular.module('forms').directive('onFinishRender', function ($rootScope, $timeout) {
     return {
         restrict: 'A',
-        link: function (scope, element, attr) {
-            if (scope.$first === true) {
-                $timeout(function () {
-                    $rootScope.$broadcast('ngRepeatStarted');
-                });
+        link: function (scope, element, attrs) {
+
+            //Don't do anything if we don't have a ng-repeat on the current element
+            if(!element.attr('ng-repeat')){
+                return;
             }
-            if (scope.$last === true) {
-                console.log(element);
+
+            var broadcastMessage = attrs.onFinishRender || 'ngRepeat';
+             
+            
+            if(scope.$first && !scope.$last) {
+                $timeout(function () {
+                    // console.log(broadcastMessage+'Started');
+                    $rootScope.$broadcast(broadcastMessage+'Started');
+                });
+            }else if(scope.$last) {
             	$timeout(function () {
-            		console.log('ngRepeatFinished')
-                	$rootScope.$broadcast('ngRepeatFinished');
+                    element.ready(function () {
+                        // console.log(broadcastMessage+'Finished');
+                	    $rootScope.$broadcast(broadcastMessage+'Finished');
+                    });
                 });
             }
         }
@@ -1267,45 +1387,49 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
 
 'use strict';
 
-angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCounter', 'Auth',
-    function ($http, $timeout, timeCounter, Auth) {
+angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCounter', 'Auth', '$filter',
+    function ($http, $timeout, timeCounter, Auth, $filter) {
         return {
+            templateUrl: './modules/forms/views/directiveViews/form/submit-form.html',
+            restrict: 'E',
+            scope: {
+                form:'='
+            },
             controller: function($scope){
+                console.log('rendering submitFormDirective');
                 timeCounter.startClock();
 
                 $scope.submit = function(){
                     var _timeElapsed = timeCounter.stopClock();
                     $scope.form.timeElapsed = _timeElapsed;
 
-                    // console.log($scope.form.timeElapsed);
-                    $scope.authentication = Auth;
-                    console.log($scope.authentication.isAuthenticated());
+                    $scope.form.percentageComplete = $filter('formValidity')($scope.form.visible_form_fields)/$scope.visible_form_fields.length;
+                    delete $scope.form.visible_form_fields;
 
-                    $scope.submitPromise = $http.post('/forms/'+$scope.form._id,$scope.form).
-                    success(function(data, status, headers){
-                        console.log('form submitted successfully');
-                        // alert('Form submitted..');
-                        $scope.form.submitted = true;
-                    })
-                    .error(function(error){
-                        console.log(error);
-                        $scope.error = error.message;
-                    });
+                    $scope.authentication = Auth;
+
+                    $scope.submitPromise = $http.post('/forms/'+$scope.form._id,$scope.form)
+                        .success(function(data, status, headers){
+                            console.log('form submitted successfully');
+                            // alert('Form submitted..');
+                            $scope.form.submitted = true;
+                        })
+                        .error(function(error){
+                            console.log(error);
+                            $scope.error = error.message;
+                        });
                 };
 
                 $scope.reloadForm = function(){
+                    timeCounter.stopClock();
+                    timeCounter.startClock();
                     $scope.form.submitted = false;
                     $scope.form.form_fields = _.chain($scope.form.form_fields).map(function(field){
                         field.fieldValue = '';
                         return field;
                     }).value();
-                }
+                };
 
-            },
-            templateUrl: './modules/forms/views/directiveViews/form/submit-form.html',
-            restrict: 'E',
-            scope: {
-                form:'='
             }
         };
     }
@@ -1378,7 +1502,7 @@ angular.module('forms').service('FormFields', [
 		    },
 		    {
 		        name : 'dropdown',
-		        value : 'Dropdown List'
+		        value : 'Dropdown'
 		    },
 		    {
 		        name : 'date',
@@ -1386,7 +1510,7 @@ angular.module('forms').service('FormFields', [
 		    },
 		    {
 		        name : 'textarea',
-		        value : 'Long Text'
+		        value : 'Paragraph Text'
 		    },
 		    {
 		        name : 'checkbox',
@@ -1394,12 +1518,16 @@ angular.module('forms').service('FormFields', [
 		    },
 		    {
 		        name : 'yes_no',
-		        value : 'Yes or No'
+		        value : 'Yes/No'
 		    },
 		    {
 		        name : 'legal',
 		        value : 'Legal'
 		    },
+		    // {
+		    //     name : 'sig',
+		    //     value : 'Signature'
+		    // },
 		    // {
 		    //     name : 'file',
 		    //     value : 'File Upload'
@@ -1423,6 +1551,10 @@ angular.module('forms').service('FormFields', [
 		    {
 		        name : 'statement',
 		        value : 'Statement' 
+		    },
+		    {
+		        name : 'natural',
+		        value : 'Natural Language Input' 
 		    },
 		];
 	}
@@ -1864,9 +1996,9 @@ angular.module('users').factory('Auth',  function($window) {
       // because that would create a circular dependency
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
-        if (service.currentUser && service.currentUser.displayName) {
+        if (service.currentUser && service.currentUser.username) {
           console.log('Using local current user.');
-          console.log(service.currentUser);
+          // console.log(service.currentUser);
           return service.currentUser;
         } 
         else if ($window.user){

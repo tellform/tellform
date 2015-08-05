@@ -197,28 +197,31 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
 
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(cb) {
-            if(!$rootScope.saveInProgress && $rootScope.finishedRender){
-
-                $rootScope.saveInProgress = true;
+        $scope.update = $rootScope.update = function(immediate, cb) {
+            console.log('immediate: '+immediate);
+            var continueUpdate = true;
+            if(immediate){
+               continueUpdate = !$rootScope.saveInProgress;
+            }
+            
+            if(continueUpdate){
                 console.log('begin updating form');
                 var err = null;
+
+                if(immediate){ $rootScope.saveInProgress = true; }
 
                 $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
                         console.log(response.data);
-                        if(!$scope.$digest){
-                            $scope.$apply();
-                        }
                     }).catch(function(response){
                         console.log('Error occured during form UPDATE.\n');
                         console.log(response.data);
                         err = response.data;
                     }).finally(function() { 
                         console.log('finished updating');
-                        $rootScope.saveInProgress = false;
-                        cb(err);
+                        if(immediate){$rootScope.saveInProgress = false; }
+                        cb(err); 
                     });
             }
         };

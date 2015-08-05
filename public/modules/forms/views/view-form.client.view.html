@@ -23,10 +23,10 @@
     </script>
 
 	<div class="page-header row" style="padding-bottom: 0px;">
-		<div class="col-xs-6">
+		<div class="col-xs-8">
 			<h1 data-ng-bind="myform.title" style="margin-bottom: 0px;"></h1>
 		</div>
-		<div class="col-xs-2 col-xs-offset-2">
+		<div class="col-xs-2">
 			<small class=" pull-right">			
 				<button class="btn btn-danger" ng-click="openDeleteModal()"><i class="fa fa-trash-o"></i> Delete Form</button>
 			</small>
@@ -40,7 +40,6 @@
 					<span ng-hide="myform.isLive">Preview</span> Form
 					<i class="status-light status-light-on fa fa-dot-circle-o" ng-show="myform.isLive"></i>
 					<i class="status-light status-light-off fa fa-dot-circle-o" ng-hide="myform.isLive"></i>
-					<!-- <i class="fa fa-sign-out"></i> -->
 				</a>
 			</small>
 		</div>
@@ -59,13 +58,11 @@
 				<tab-heading >
 					Edit Design
 				</tab-heading>
-				<div cg-busy="{promise:updatePromise}"></div>
 			</tab>
 			<tab>
 				<tab-heading>
 					Configure
 				</tab-heading>
-				<div cg-busy="{promise:updatePromise}"></div>
 				<configure-form-directive myform="myform" user="user">
 				</configure-form-directive>
 			</tab>

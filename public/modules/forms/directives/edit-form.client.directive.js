@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
+angular.module('forms')
+.directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
     function ($rootScope, $q, $http, $timeout, timeCounter, Auth, FormFields) {
         return {
             templateUrl: './modules/forms/views/directiveViews/form/edit-form.html',
@@ -8,8 +9,28 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
             scope: {
                 myform:'=',
             },
-            transclude: true,
+            // transclude: true,
             controller: function($scope){
+
+                // Log that the directive has been linked.
+                // console.log( "Linked: editForm Controller");
+
+                /*
+                **  Initialize scope with variables
+                */
+                //Populate AddField with all available form field types
+                $scope.addField = {};
+                $scope.addField.types = FormFields.fields;
+
+                $scope.addField.types.forEach(function(type){
+                    type.lastAddedID = 1;
+                    return type;
+                });
+
+                // accordion settings
+                $scope.accordion = {};
+                $scope.accordion.oneAtATime = true;
+
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
 
@@ -67,19 +88,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 // };
 
 
-                //Populate AddField with all available form field types
-                $scope.addField = {};
-                $scope.addField.types = FormFields.fields;
-
-                $scope.addField.types.forEach(function(type){
-                    type.lastAddedID = 1;
-                    return type;
-                });
-
-                // accordion settings
-                $scope.accordion = {};
-                $scope.accordion.oneAtATime = true;
-
+                /*
+                **  Field CRUD Methods
+                */
                 // Add a new field
                 $scope.addNewField = function(fieldType){
 
@@ -105,7 +116,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     };
 
                     // put newField into fields array
-                    $scope.myform.form_fields.unshift(newField);
+                    $scope.myform.form_fields.push(newField);
                     // console.log('\n\n---------\nAdded field CLIENT');
                     // console.log(Date.now());
                     // console.log($scope.myform.form_fields.length);
@@ -130,6 +141,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                         }
                     }
                 };
+
+                /*
+                **  Field Option Methods
+                */
 
                 // add new option to the field
                 $scope.addOption = function (field){

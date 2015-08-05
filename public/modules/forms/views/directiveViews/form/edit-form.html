@@ -1,170 +1,182 @@
-<form class="row" name="editForm" auto-save-form auto-save-watch="myform.form_fields" auto-save-callback="update" novalidation>
 
-    <div class="col-xs-5 add-field">
-        <!-- <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
-        <button type="submit" class="btn" ng-click="addNewField()">
-        	<i class="icon-plus"></i> Add Field
-        </button> -->
-        <div class="row add-field-title">
-            <h3 class="col-xs-12">Add New Field</h3>
-        </div>
-        <div class="panel-group row" class="draggable" ng-model="addField.types">
-            <div class="col-xs-6" ng-repeat="type in addField.types">
-                <div class="panel panel-default" style="background-color:#f5f5f5;">
-                    <div class="panel-heading" ng-click="addNewField(type.name)" style="cursor: pointer; font-size:14px;">
-                        <span class="pull-left">
-                            <field-icon-directive type-name="{{type.name}}"></field-icon-directive>
-                        </span>
-                        
-                        <span style="padding-left:0.3em;">{{type.value}}</span>
+    <form class="row" name="editForm" auto-save-form auto-save-watch="myform.form_fields" auto-save-callback="update">
+
+        <div class="col-xs-5 add-field" id="hello">
+            <!-- <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
+            <button type="submit" class="btn" ng-click="addNewField()">
+            	<i class="icon-plus"></i> Add Field
+            </button> -->
+            <div class="row add-field-title">
+                <h3 class="col-xs-12">Add New Field</h3>
+            </div>
+            <div class="panel-group row" class="draggable" ng-model="addField.types">
+                <div class="col-xs-6" ng-repeat="type in addField.types">
+                    <div class="panel panel-default" style="background-color:#f5f5f5;">
+                        <div class="panel-heading" ng-click="addNewField(type.name)" style="cursor: pointer; font-size:14px;">
+                            <span class="pull-left">
+                                <field-icon-directive type-name="{{type.name}}"></field-icon-directive>
+                            </span>
+                            
+                            <span style="padding-left:0.3em;">{{type.value}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-	<div class="col-xs-7 current-fields container">
-        <div class="row">
-            <div class="col-xs-10">
-                <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
+    	<div class="col-xs-7 current-fields container">
+            <div class="row">
+                <div class="col-xs-10">
+                    <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                    <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
+                        <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
 
-                        <accordion-heading>
+                            <accordion-heading>
 
-                            <div class="handle">
+                                <div class="handle">
 
-                                <span class="pull-left" ng-switch="field.fieldType">
-                                    <field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
-                                </span>
-                                <span style="padding-left:1.2em;">{{field.title}}</span>
-                                <span class="pull-right">
-                                    <i class="fa fa-chevron-right" ng-hide="accordion[$index].isOpen">
-                                    </i>
-                                    <i class="fa fa-chevron-down" ng-show="accordion[$index].isOpen">
-                                    </i>
-                                </span>
-                            </div>
-                        </accordion-heading>
-                        <div class="accordion-edit container">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <h4>Preview</h4>
+                                    <span class="pull-left" ng-switch="field.fieldType">
+                                        <field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
+                                    </span>
+                                    <span style="padding-left:1.2em;">{{field.title}}</span>
+                                    <span class="pull-right">
+                                        <i class="fa fa-chevron-right" ng-hide="accordion[$index].isOpen">
+                                        </i>
+                                        <i class="fa fa-chevron-down" ng-show="accordion[$index].isOpen">
+                                        </i>
+                                    </span>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <ul class="col-xs-12 container" style="list-style:none;border:2px lightgray solid;">
-                                    <field-directive field="field" validate="false">
-                                    </field-directive>
-                                </ul>
-                            </div>
+                            </accordion-heading>
+                            <div class="accordion-edit container">
 
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <hr>
-                                    <h4>Edit</h4>
-                                    <br>
-                                </div>
-                            </div> 
-
-
-                            <div class="row">
-                                <div class="col-xs-4">Question Title:</div>
-                                <div class="col-xs-8">
-                                <input type="text" ng-model="field.title" name="title{{field._id}}" value="{{field.title}}" required></div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-xs-4">Description:</div>
-                                <div class="col-xs-8"><textarea type="text" ng-model="field.description" name="description{{field._id}}"value="{{field.description}}"></textarea> </div>
-                            </div>
-
-                            <div class="row" ng-show="showAddOptions(field)"><br></div>
-                            <div class="row" ng-show="showAddOptions(field)">
-                                <div class="col-xs-4">Options:</div>
-                                <div class="col-xs-8 container">
-                                    <div ng-repeat="option in field.fieldOptions" class="row">
-                                        <input type="text" name="{{option.option_title}}{{field._id}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-5">
-
-                                        <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
-                                            <i class="fa fa-trash-o"></i>
-                                        </a>
-                                        <span class="label label-inverse col-xs-4">
-                                            Value: {{ option.option_value }}
-                                        </span>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4>Preview Field</h4>
                                     </div>
-                                    <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
+                                    <ul class="col-xs-12 container" style="list-style:none;border:2px lightgray solid;">
+                                        <field-directive field="field" validate="false">
+                                        </field-directive>
+                                    </ul>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr>
+                                        <h4>Edit Field</h4>
+                                        <br>
+                                    </div>
+                                </div> 
+
+                                <div class="row">
+                                    <div class="col-xs-4">Question Title:</div>
+                                    <div class="col-xs-8">
+                                    <input type="text" ng-model="field.title" name="title{{field._id}}" value="{{field.title}}" required></div>
+                                </div>
+
+                                <div class="row"><br></div> 
+
+                                <div class="row">
+                                    <div class="col-xs-4">Description:</div>
+                                    <div class="col-xs-8"><textarea type="text" ng-model="field.description" name="description{{field._id}}"value="{{field.description}}"></textarea> </div>
+                                </div>
+
+                                <div class="row" ng-show="showAddOptions(field)"><br></div>
+                                <div class="row" ng-show="showAddOptions(field)">
+                                    <div class="col-xs-4">Options:</div>
+                                    <div class="col-xs-8 container">
+                                        <div ng-repeat="option in field.fieldOptions" class="row">
+                                            <input type="text" name="{{option.option_title}}{{field._id}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-5">
+
+                                            <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                            <span class="label label-inverse col-xs-4">
+                                                Value: {{ option.option_value }}
+                                            </span>
+                                        </div>
+                                        <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
+                                    </div>
+                                </div>
+
+                                <div class="row"><br></div> 
+
+                                <div class="row">
+                                    <div class="col-xs-4 field-title">Required:</div>
+                                    <div class="col-xs-8 field-input">
+                                        <label class="btn col-xs-5">
+                                            <input type="radio" ng-value="true" ng-model="field.required" name="required{{field._id}}"/>
+                                            <span> &nbsp; Yes</span>
+                                        </label>
+
+                                        <label class="btn col-xs-5 col-xs-offset-1">
+                                            <input type="radio" ng-value="false" ng-model="field.required" name="required{{field._id}}"/>
+                                            <span> &nbsp; No</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-4 field-input">Disabled:</div>
+                                    <div class="col-xs-8 field-input">
+                                        <label class="btn col-xs-5">
+                                            <input type="radio" ng-value="true" 
+                                            ng-model="field.disabled" name="disabled{{field._id}}"/>
+                                            <span> &nbsp; Yes</span>
+                                        </label>
+
+                                        <label class="btn col-xs-5 col-xs-offset-1">
+                                            <input type="radio" ng-value="false" 
+                                            ng-model="field.disabled" name="disabled{{field._id}}"/>
+                                            <span> &nbsp; No</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="row"><br><hr></div> 
+
+                                <div class="row">
+                                    <div class="col-sm-4 col-sm-offset-4">
+                                        <button class="btn btn-primary btn-large" type="button" ng-click="update()">
+                                            <i class="icon-arrow-left icon-white"></i> Save Changes
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                        </accordion-group>
 
-                            <div class="row"><br></div> 
-
-                            <div class="row">
-                                <div class="col-xs-4 field-title">Required:</div>
-                                <div class="col-xs-8 field-input">
-                                    <label class="btn col-xs-5">
-                                        <input type="radio" ng-value="true" ng-model="field.required" name="required{{field._id}}"/>
-                                        <span> &nbsp; Yes</span>
-                                    </label>
-
-                                    <label class="btn col-xs-5 col-xs-offset-1">
-                                        <input type="radio" ng-value="false" ng-model="field.required" name="required{{field._id}}"/>/>
-                                        <span> &nbsp; No</span>
-                                    </label>
-                                </div>
+                        <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
+                            <div class="panel-heading">
+                                <h4 class="panel-title text-center" style="color: #a9a9a9;">
+                                    Drag and Drop new fields here
+                                </h4>
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-xs-4 field-input">Disabled:</div>
-                                <div class="col-xs-8 field-input">
-                                    <label class="btn col-xs-5">
-                                        <input type="radio" ng-value="true" 
-                                        ng-model="field.disabled" name="disabled{{field._id}}"/>/>
-                                        <span> &nbsp; Yes</span>
-                                    </label>
-
-                                    <label class="btn col-xs-5 col-xs-offset-1">
-                                        <input type="radio" ng-value="false" 
-                                        ng-model="field.disabled" name="disabled{{field._id}}"/>/>
-                                        <span> &nbsp; No</span>
-                                    </label>
-                                </div>
-                            </div>  
                         </div>
-                    </accordion-group>
 
-                    <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
-                        <div class="panel-heading">
-                            <h4 class="panel-title text-center" style="color: #a9a9a9;">
-                                Drag and Drop new fields here
-                            </h4>
-                        </div>
-                    </div>
-
-                </accordion>
-            </div>
-            <div class="col-xs-1" style="padding:0 5px;" >
-                <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
-                        <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="deleteField(field.$$hashKey)">
-                            <span class="text-center">
-                                <a href="" class="fa fa-trash-o"></a>
-                            </span>
+                    </accordion>
+                </div>
+                <div class="col-xs-1" style="padding:0 5px;" >
+                    <div class="panel-group tool-panel text-center">
+                        <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
+                            <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="deleteField(field.$$hashKey)">
+                                <span class="text-center">
+                                    <a href="" class="fa fa-trash-o"></a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-1" style="padding:0 5px;">
-                <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
-                        <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="duplicateField(field, $index)">
-                            <span class="text-center">
-                                <a href="" class="fa fa-files-o"></a>
-                            </span>
+                <div class="col-xs-1" style="padding:0 5px;">
+                    <div class="panel-group tool-panel text-center">
+                        <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
+                            <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="duplicateField(field, $index)">
+                                <span class="text-center">
+                                    <a href="" class="fa fa-files-o"></a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+
+    </form>
