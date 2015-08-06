@@ -3,24 +3,23 @@
 // Forms controller
 angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$stateParams', '$state', 'Forms', 'CurrentForm',
 	function($scope, $rootScope, $stateParams, $state, Forms, CurrentForm) {
+	
 
 		Forms.get({
 			formId: $stateParams.formId
 		}).$promise.then(
 		//success
 		function(form){
-			$scope.form = form;
+			$scope.myform = form;
 
-			//Show navbar if form is not public AND user is loggedin
-			if(!$scope.form.isLive && $rootScope.authentication.isAuthenticated()){
+			// Show navbar if form is not public AND user is loggedin
+			if(!$scope.myform.isLive && $rootScope.authentication.isAuthenticated()){
 				$rootScope.hideNav = false;
-			}else if(!$scope.form.isLive){
+			}else if(!$scope.myform.isLive){
 				$state.go('access_denied');
-			}else {
-				CurrentForm.setForm($scope.form);
 			}
 			console.log('$rootScope.hideNav: '+$rootScope.hideNav);
-			console.log('$scope.form.isLive: '+$scope.form.isLive);
+			console.log('$scope.form.isLive: '+$scope.myform.isLive);
 		},
 		//error
         function( error ){
@@ -28,5 +27,6 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
         	console.log('ERROR: '+error.message);
         	$state.go('access_denied');
         });
+
 	}
 ]);

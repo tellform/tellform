@@ -97,11 +97,13 @@ exports.createSubmission = function(req, res) {
 		fdfData,
 		fdfTemplate, 
 		that = this;
+	console.log(req.body.percentageComplete);
 
 	submission = new FormSubmission({
 		admin: req.user,
 		form_fields: req.body.form_fields,
-		timeElapsed: req.body.timeElapsed
+		timeElapsed: req.body.timeElapsed,
+		percentageComplete: req.body.percentageComplete
 	});
 
 	submission.form = form;

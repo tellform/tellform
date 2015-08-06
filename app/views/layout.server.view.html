@@ -64,6 +64,7 @@
 		<!-- </section> -->
 	</section>
 
+	<script src="https://rawgithub.com/eligrey/FileSaver.js/master/FileSaver.js" type="text/javascript"></script>
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
 		var user = {{ user | json | safe }};
@@ -87,14 +88,14 @@
 	{% endif %}
 
 	<script>
-  		Raven.config('http://db01e03015ce48e2b68240ea8254b17c@sentry.polydaic.com/1', {
-	      // Raven settings
-	    })
-	    .setUser({
-	      "id": "SERVER_RENDERED_ID",
-	      "email": "SERVER_RENDERED_EMAIL"
-	    })
-	    .install()
+  		// Raven.config('http://db01e03015ce48e2b68240ea8254b17c@sentry.polydaic.com/1', {
+	   //    // Raven settings
+	   //  })
+	   //  .setUser({
+	   //    "id": "SERVER_RENDERED_ID",
+	   //    "email": "SERVER_RENDERED_EMAIL"
+	   //  })
+	   //  .install()
 	</script>
 
 	<!-- [if lt IE 9]>

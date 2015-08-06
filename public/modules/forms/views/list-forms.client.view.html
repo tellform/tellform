@@ -8,7 +8,7 @@
 	</div> -->
 	<br>
 	<div class="row">
-		<div ng-click="openCreateModal()" class="col-xs-2 col-xs-offset-1 form-item row create-new">
+		<div ng-click="openCreateModal()" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new">
 			<div class="title-row col-xs-12">
 				<h4 class="fa fa-plus fa-6"></h4>
 			</div>
@@ -21,11 +21,11 @@
 			</div>	
 		</div>
 
-		<form name="createForm" class="col-xs-2 col-xs-offset-1 form-item row create-new new-form" ng-show="showCreateModal">
+		<form name="createForm" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form" ng-show="showCreateModal">
 			<div ng-init="setForm(createForm);" style="display:none;"></div>
 				<div class="title-row row">
 					    <div class="col-xs-5 field-title">Name </div>
-					    <div class="col-xs-8 field-input">
+					    <div class="col-xs-12 field-input">
 							<input type="text" name="name" ng-model="name" required style="color:black; border:none;" ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
 					    </div>
 				</div>
@@ -50,7 +50,7 @@
 				</div>		
 		</form>
 
-		<div data-ng-repeat="form in myforms" class="col-xs-2 col-xs-offset-1 form-item row">
+		<div data-ng-repeat="form in myforms" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item">
 			<span class="pull-right"> 
 				<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="remove(form._id)"></i>
 			</span>
@@ -59,15 +59,14 @@
 			</a>
 			<div class="col-xs-12 details-row">
 				
-				<small class="list-group-item-text">
+				<!-- <small class="list-group-item-text">
 					Created on
-					<span data-ng-bind="form.created | date:'mediumDate'"></span>
+					<span data-ng-bind="form.created | date:'shortDate'"></span>
 					by
 					<span data-ng-bind="form.admin.username"></span>
-				</small>
+				</small> -->
 
 			</div>
-			
 		</div>
 	</div>
 </section>

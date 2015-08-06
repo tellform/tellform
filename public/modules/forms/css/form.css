@@ -56,6 +56,11 @@ form .accordion-edit {
     width: inherit;
 }
 
+/*Styles for ui-datepicker*/
+.ui-datepicker.ui-widget {
+    z-index: 99!important;
+}
+
 /* Styles for form submission view (/forms/:formID) */
 form .row.field {
     padding: 1em 0 3em 0;
@@ -80,6 +85,15 @@ form .row.field {
         form.submission-form .select.radio > .field-input input, form.submission-form .select > .field-input input {
             width:20%;
         }
+
+        form.submission-form .field.row.radio .btn.activeBtn {
+            background-color: rgba(0,0,0,0.7)!important;
+            color: white;
+        }
+        form.submission-form .field.row.radio .btn {
+            margin-right:1.2em;
+        }
+
         form.submission-form .select > .field-input .btn {
             text-align: left;
             margin-bottom:0.7em;
@@ -88,11 +102,11 @@ form .row.field {
             font-size: 1.10em;
         }
 
-        /*form.submission-form .row.field > .field-input > input:focus {
+        /*form.submission-form .field-input > input:focus {
             font-size:1em;
         }*/
 
-        form .row.field > .field-input > textarea{
+        form .field-input > textarea{
             padding: 0.45em 0.9em;
             width: 100%;
             line-height: 160%;
@@ -100,13 +114,13 @@ form .row.field {
         }
 
 
-        form .row.field > .field-input > input.text-field-input{
+        form .field-input > input.text-field-input{
             padding: 0.45em 0.9em;
             width: 100%;
             line-height: 160%;
             border: 2px dashed #ddd;
         }
-        form .row.field > .field-input > input.text-field-input:focus{
+        form .field-input > input.text-field-input:focus{
             border: 0;
         }
         form .required-error{
@@ -126,8 +140,11 @@ form .row.field {
             border: 1px solid #ccc;
             height: 34px;
         }
+.config-form {
+    max-width: 100%;
+}
 
-div.config-form > .row {
+.config-form > .row {
     padding: 19px;
     margin-bottom: 20px;
     background-color: #f5f5f5;
@@ -135,7 +152,6 @@ div.config-form > .row {
     border-radius: 4px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-    width: 90%;
 }
 
     div.config-form > .row > .container:nth-of-type(odd){
@@ -190,6 +206,15 @@ div.config-form > .row {
             text-decoration: none;
         }
 
+.current-fields .panel-body .row.question input[type='text'], .current-fields .panel-body .row.description textarea{
+    width: 100%;
+}
+.current-fields .panel-body .row.options input[type='text'] {
+    width: 80%;
+}
+
+
+
 .current-fields .tool-panel > .panel-default:hover {
     border-color: #9d9d9d;
     cursor: pointer;
@@ -211,6 +236,26 @@ div.config-form > .row {
     text-decoration: none;
 }
 
+/*Styles for submission table*/
+.submissions-table .table-outer.row {
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+    margin-left: 0px!important;
+    margin-right: 0px!important;
+}
+.submissions-table .table-outer .col-xs-12 {
+    padding-left: 0px!important;
+    border:1px solid #ddd;
+    overflow-x: scroll; 
+    border-radius:3px;
+}
+.submissions-table .table > thead > tr > th {
+    min-width:8em;
+}
+.submissions-table .table > tbody > tr.selected {
+    background-color:#efefef;
+}
+
 
 /*Styles for add fields tab*/
 .admin-form .add-field {
@@ -228,8 +273,8 @@ div.config-form > .row {
             border-radius: 4px;
         }
 
-.status-light {
-    padding-left:0.6em;
+.view-form-btn.span {
+    padding-right:0.6em;
 }
 .status-light.status-light-off {
     color: #BE0000;
@@ -243,26 +288,32 @@ section > section.public-form {
     padding: 0 6em 7em 6em;
 
 }
-.form-item.row {
+.form-item {
     text-align: center;
     border-bottom: 6px inset #ccc;
     background-color: #eee;
-    width: 180px;
-    height: 215px;
+    /*width: 180px;*/
+    /*width:100%;*/
+    position: relative;
+    height: 0;/*215px;*/
+    padding-bottom: 25%;
     margin-bottom: 45px;
 }
+.form-item.create-new input[type='text']{
+    width: inherit;
+}
 
-.form-item.row.create-new {
+.form-item.create-new {
     background-color: rgb(131,131,131);
     color: white;
 }
 
 /*MODAL CSS */
-.form-item.row.create-new.new-form {
+.form-item.create-new.new-form {
     background-color: rgb(300,131,131);
     z-index: 11;
 }
-.form-item.row.create-new.new-form:hover {
+.form-item.create-new.new-form:hover {
     background-color: rgb(300,100,100);
 }
 
@@ -272,51 +323,66 @@ section > section.public-form {
 
 /*Modal overlay (for lightbox effect)*/
 .overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    height: 193%;
+    height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,0.5);
     z-index: 10;
 }
+.field-directive {
+    z-index: 9;
+    padding:25px;
+    border: 25px transparent solid;
+    position: relative;
+}
+.activeField {
+    z-index: 11;
+    position: relative;
+    display: inline-block;
+    background-color: white;
+    border-radius: 7px;
+    width:100%;
+    border: 25px white solid;
+}
 
 
-.form-item.row:hover, .form-item.row.create-new:hover {
+.form-item:hover, .form-item.create-new:hover {
     border-bottom: 8px inset #ccc;
     background-color: #d9d9d9;
 }
 
-.form-item.row.create-new:hover {
+.form-item.create-new:hover {
     /*color: #eee;*/
     background-color: rgb(81,81,81);
 }
 
-.form-item.row > .title-row{
+.form-item > .title-row{
     position: relative;
     top: 15px;
     padding-top:3em;
     padding-bottom:3.65em; 
 }
-    .form-item.row > .title-row h4 {
+    .form-item > .title-row h4 {
         font-size: 1.3em;
     }
 
-.form-item.row.create-new > .title-row{
+.form-item.create-new > .title-row{
     padding: 0;
     /*margin-top:1em; */
 
 }
-    .form-item.row.create-new > .title-row h4 {
+    .form-item.create-new > .title-row h4 {
         font-size: 7em;
     }
 
-.form-item.row > .details-row{
+.form-item > .details-row{
     margin-top: 3.2em;
 }
-    .form-item.row > .details-row small {
+    .form-item > .details-row small {
         font-size: 0.6em;
     }
-    .form-item.row.create-new > .details-row small {
+    .form-item.create-new > .details-row small {
         font-size: 0.95em;
     }

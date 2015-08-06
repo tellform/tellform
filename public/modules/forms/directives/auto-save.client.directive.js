@@ -54,8 +54,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
         $scope.$watch(function(newValue, oldValue) {
           if($scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-            console.log('ready to save text input');
-            console.log('Saving Form');
             updateFields();
           }
         });

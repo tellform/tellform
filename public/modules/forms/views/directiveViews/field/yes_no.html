@@ -1,4 +1,4 @@
-<div class="field row radio">
+<div class="field row radio" ng-click="setActiveField(field._id)">
     <div class="col-xs-12 field-title">
         <h3 class="row">
             <span class="fa fa-angle-double-right"></span> {{field.title}} 
@@ -14,12 +14,12 @@
     <div class="col-xs-12 field-input">
         <div class="row-fluid">
             <label class="btn btn-success col-xs-3">
-                <input type="radio" value="true" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }" ng-required="field.required" ng-disabled="field.disabled" ng-init="field.fieldValue = true"/>
+                <input ng-focus="setActiveField(field._id)"type="radio" value="true" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }" ng-required="field.required" ng-disabled="field.disabled" ng-init="field.fieldValue = true"/>
                 <span>Yes</span>
             </label>
 
             <label class="btn btn-danger col-xs-3">
-                <input type="radio" value="false" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }" ng-required="field.required" ng-disabled="field.disabled"/>
+                <input ng-focus="setActiveField(field._id)"type="radio" value="false" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }" ng-required="field.required" ng-disabled="field.disabled"/>
                 <span>No</span>
             </label>
         </div>

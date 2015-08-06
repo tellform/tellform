@@ -27,6 +27,21 @@
 	padding-right: 20px;
 }
 
+.navbar-inverse .navbar-nav>li>a, .navbar li.dropdown a.dropdown-toggle > * {
+    color: rgb(131,131,131);
+}
+.navbar-inverse .navbar-nav .active > a, .navbar li.dropdown.open a.dropdown-toggle > *, .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+	background-color: rgb(131,131,131);
+    color: white!important;
+}
+.navbar-inverse .navbar-toggle {
+	background-color: #ddd;
+	border:none;
+}
+.navbar-inverse .navbar-collapse{
+	border: none;
+}
+
 .content {
 	margin-top: 70px;
 }
@@ -57,10 +72,10 @@ section.hero-section .jumbotron {
 	color:#fff;
 }
 	.image-background {
-	 	position: absolute;
+	 	position: fixed;
         top: 0;
         left: 0;
-        height: 230%;
+        height: 100%;
         width: 100%;
         z-index: -98;
         background-image: url(http://yourplaceandmine.ie/wp-content/uploads/2014/09/Daingean-meeting-048_13-1080x675.jpg);
@@ -70,10 +85,10 @@ section.hero-section .jumbotron {
 	}
 
 	.opacity-background {
-	 	position: absolute;
+	 	position: fixed;
         top: 0;
         left: 0;
-        height: 230%;
+        height: 100%;
         width: 100%;
         background-color: rgba(0,0,0,0.5);
         z-index: -97;

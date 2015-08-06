@@ -1,16 +1,16 @@
-<!-- <link rel="stylesheet" href="./modules/forms/css/form.css">
+<!-- <link rel="stylesheet" href="./modules/forms/css/myform.css"> 
  -->
 
 <section data-ng-controller="SubmitFormController" class="public-form">
    
-	<form-directive form="form"></form-directive>
+	<form-directive form="myform"></form-directive>
 
-	<section ng-if="!form.hideFooter" class="navbar navbar-fixed-bottom" style="background-color:rgba(242,242,242,0.5); padding-top:15px;">
+	<section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" style="background-color:rgba(242,242,242,0.5); padding-top:15px;">
         <div class="container" >
             <nav role="navigation">
                 <ul class="nav navbar-nav navbar-left" >
-                    <li ng-show="!form.submitted">
-                        <p class="lead">{{form | formValidity}}   out of {{form.visible_form_fields.length}} answered</p>
+                    <li ng-show="!myform.submitted">
+                        <p class="lead">{{myform | formValidity}}   out of {{myform.visible_form_fields.length}} answered</p>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -18,7 +18,7 @@
                         <a href="/#!/forms" class="btn btn-default" ng-hide="authentication.isAuthenticated()">Create a Medform</a>
                     </li>
                     <li style="padding-right:20px; padding-bottom:10px;" ng-show="authentication.isAuthenticated()">
-                        <a href="/#!/forms/{{form._id}}/admin" class="btn btn-default">Edit this Medform</a>
+                        <a href="/#!/forms/{{myform._id}}/admin" class="btn btn-default">Edit this Medform</a>
                     </li>
                     <li style="padding-left:5px">
                         <div class="btn btn-info" id="focusDownButton" style="padding: 15px;">\/</div>

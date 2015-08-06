@@ -1,1 +1,1 @@
-<input type="hidden" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  value="{{field.fieldValue}}" ng-disabled="field.disabled">
+<input ng-focus="setActiveField(field._id)"type="hidden" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  value="{{field.fieldValue}}" ng-disabled="field.disabled">

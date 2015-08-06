@@ -7,15 +7,16 @@ angular.module('users').config(['$httpProvider',
       return {
         responseError: function(response) {
           // console.log($location.path());
-          if( response.config.url !== '/users/me' && $location.path() !== '/users/me' && response.config){
-
-            console.log('intercepted rejection of ', response.config.url, response.status);
-            if (response.status === 401) {
-              // save the current location so that login can redirect back
-              $location.nextAfterLogin = $location.path();
-              $location.path('/signin');
-            }else if(response.status === 403){
-              $location.path('/access_denied');
+          if( $location.path() !== '/users/me' && response.config){
+            if(response.config.url !== '/users/me'){
+              console.log('intercepted rejection of ', response.config.url, response.status);
+              if (response.status === 401) {
+                // save the current location so that login can redirect back
+                $location.nextAfterLogin = $location.path();
+                $location.path('/signin');
+              }else if(response.status === 403){
+                $location.path('/access_denied');
+              }
             }
 
           }

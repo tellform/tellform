@@ -51,8 +51,8 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
         $scope.toggleObjSelection = function($event, description) {
             $event.stopPropagation();
         };
-        $scope.rowClicked = function(obj) {
-           obj.selected = !obj.selected;
+        $scope.rowClicked = function(row_index) {
+           $scope.table.rows[row_index].selected = !$scope.table.rows[row_index].selected;
         };
 
         /*
@@ -64,7 +64,6 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
             var delete_ids = _.chain($scope.table.rows).filter(function(row){
                 return !!row.selected;
             }).pluck('_id').value();
-            console.log(delete_ids);
 
             $http({ url: '/forms/'+$scope.myform._id+'/submissions', 
                     method: 'DELETE',
@@ -72,11 +71,14 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                     headers: {"Content-Type": "application/json;charset=utf-8"}
                 }).success(function(data, status, headers){
                     //Remove deleted ids from table
+                    var tmpArray = [];
                     for(var i=0; i<$scope.table.rows.length; i++){
-                        if($scope.table.rows[i].selected){
-                            $scope.table.rows.splice(i, 1);
+                        if(!$scope.table.rows[i].selected){
+                            tmpArray.push($scope.table.rows[i]);
                         }
                     }
+                    console.log(tmpArray);
+                    $scope.table.rows = tmpArray;
                 })
                 .error(function(err){
                     console.log('Could not delete form submissions.\nError: ');
@@ -84,6 +86,21 @@ angular.module('forms').controller('ViewFormController', ['$rootScope', '$scope'
                     console.error = err;
                 });      
         };
+
+        //Export selected submissions of Form
+        $scope.exportSubmissions = function(){
+            // console.log('exportSelectedSubmissions');
+            // var export_ids = _.chain($scope.table.rows).filter(function(row){
+            //     return !!row.selected;
+            // }).pluck('_id').value();
+
+            var blob = new Blob([document.getElementById('table-submission-data').innerHTM], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+            });
+            saveAs(blob, $scope.myform.title+'_export_'+Date.now()+".xls");
+        };
+
+
         //Fetch and display submissions of Form
         $scope.showSubmissions = function(){
         	$scope.viewSubmissions = true;

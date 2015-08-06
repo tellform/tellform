@@ -68,6 +68,10 @@ var FormSchema = new Schema({
 		type: Schema.Types.Mixed
 	},
 
+	showStart: {
+		type: Boolean,
+		default: false,
+	},
 	hideFooter: {
 		type: Boolean,
 		default: false,

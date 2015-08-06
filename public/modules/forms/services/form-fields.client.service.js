@@ -55,6 +55,10 @@ angular.module('forms').service('FormFields', [
 		        name : 'link',
 		        value : 'Link'
 		    },
+		    {
+		        name : 'number',
+		        value : 'Numbers'
+		    },
 		    // {
 		    //     name : 'scale',
 		    //     value : 'Opinion Scale'
@@ -67,10 +71,10 @@ angular.module('forms').service('FormFields', [
 		        name : 'statement',
 		        value : 'Statement' 
 		    },
-		    {
-		        name : 'natural',
-		        value : 'Natural Language Input' 
-		    },
+		    // {
+		    //     name : 'natural',
+		    //     value : 'Natural Language Input' 
+		    // },
 		];
 	}
 		

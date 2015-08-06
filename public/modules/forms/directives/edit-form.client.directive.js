@@ -114,7 +114,9 @@ angular.module('forms')
                         'required' : true,
                         'disabled' : false,
                     };
-
+                    console.log('\n\n---------\nAdded field CLIENT');
+                    console.log(newField);
+                    
                     // put newField into fields array
                     if(addOrReturn){
                         $scope.myform.form_fields.push(newField);
@@ -122,7 +124,7 @@ angular.module('forms')
                         return newField;
                     }
                     
-                    console.log('\n\n---------\nAdded field CLIENT');
+                    
                     // console.log(Date.now());
                     // console.log($scope.myform.form_fields.length);
                 };
@@ -193,7 +195,7 @@ angular.module('forms')
 
                 // decides whether field options block will be shown (true for dropdown and radio fields)
                 $scope.showAddOptions = function (field){
-                    if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'scale' || field.fieldType === 'rating' || field.fieldType === 'radio'){
+                    if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
                         return true;
                     } else {
                         return false;

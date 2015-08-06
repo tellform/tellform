@@ -24,7 +24,8 @@ angular.module('forms').directive('fieldIconDirective', function($http, $compile
 				'scale': 'fa fa-sliders',
 				'stripe': 'fa fa-credit-card',
 				'statement': 'fa fa-quote-left',
-				'yes_no': 'fa fa-toggle-on'
+				'yes_no': 'fa fa-toggle-on',
+				'number': 'fa fa-slack'
 			}
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
         },

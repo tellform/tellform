@@ -8,7 +8,8 @@ var __indexOf = [].indexOf || function(item) {
     return -1;
 };
 
-angular.module('forms').directive('fieldDirective', function($http, $compile) {
+angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', 
+    function($http, $compile, $rootScope) {
 
     
     var getTemplateUrl = function(field) {
@@ -29,6 +30,7 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
             'statement',
             'rating',
             'yes_no',
+            'number',
             'natural'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
@@ -38,6 +40,7 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
 
     var linker = function(scope, element) {
 
+        scope.setActiveField = $rootScope.setActiveField;
         //Set format only if field is a date
         if(scope.field.fieldType === 'date'){
             scope.dateOptions = {
@@ -75,4 +78,4 @@ angular.module('forms').directive('fieldDirective', function($http, $compile) {
         },
         link: linker
     };
-});
+}]);

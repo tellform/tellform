@@ -1,16 +1,9 @@
-<section data-ng-controller="HomeController" class="hero-section">
+<section data-ng-controller="HomeController" class="hero-section" style="overflow:hidden;">
 	<div class="opacity-background">
 	</div>
 	<div class="image-background">
 	</div>
 	<div class="jumbotron text-center">
-	
-<!-- 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-				<img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/logo.png" />
-			</div>
-		</div>
-		<br> -->
 		<div class="row" data-ng-if="!authentication.isAuthenticated()">
 			<div class="col-xs-12 row text-center logo" style="border-bottom: 1px solid rgba(255,255,255,.2); margin-bottom: 30px;">
 				<h3 class="col-xs-12" style="color: #FA787E; margin-bottom:0px">
@@ -21,12 +14,15 @@
 				</h2>
 			</div>
 			<div class="col-xs-12 row" style="margin-top:0px">
-				<h1 class="lead col-xs-10 col-xs-offset-1" style="font-size:3.8em;">
+				<h1 class="lead col-md-10 col-md-offset-1 hidden-xs hidden-sm" style="font-size:3.8em;">
 					Craft beautiful forms in seconds.
 				</h1>
-				<p class="lead col-xs-12" style="font-size:1.5em; color:rgba(255,255,255,.75)">
+				<h2 class="lead col-xs-12 text-center hidden-md hidden-lg" style="font-size:2.8em;">
+					Craft beautiful forms.
+				</h2>
+				<p class="lead col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-1" style="font-size:1.5em; color:rgba(255,255,255,.75)">
 					<i>Medforms is an opensource <b>form builder</b> that can create stunning forms from PDFs or from scratch</i>
-				</h1>
+				</p>
 			</div>
 			
 			<div class="col-xs-12" style="margin-top:7%;">
@@ -34,7 +30,6 @@
 					sign me up!
 				</a>
 			</div>
-
 		</div>
 	</div>
 </section>

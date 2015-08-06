@@ -1,9 +1,10 @@
 <div class="config-form container">
     <div class="row">
-        <div class="col-sm-6 container">
+        <div class="col-md-6 col-sm-12 container">
             <div class="row">
                 <div class="col-sm-12">
-                    <h2>PDF Generation</h2>
+                    <h2 class="hidden-sm hidden-xs">PDF Generation</h2>
+                    <h3 class="hidden-lg hidden-md">PDF Generation</h3>
                 </div>
             </div>
 
@@ -13,7 +14,6 @@
                 </div>
 
                 <div class="field-input col-sm-6">
-
                     <label>
                         <input type="radio" data-ng-value="true" ng-model="myform.hideFooter"  ng-required="true" />
                         &nbsp;<span>Yes</span>
@@ -23,8 +23,6 @@
                         <input type="radio" data-ng-value="false" ng-model="myform.hideFooter"  ng-required="true" />
                         &nbsp;<span>No</span>
                     </label>
-
-                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
                 </div>
             </div>
 
@@ -123,23 +121,29 @@
             </div> -->
         </div>
 
-        <div class="col-sm-5 col-sm-offset-1 container">
+        <div class="col-sm-12 hidden-md hidden-lg">
+            <br>
+            <hr>
+        </div>
+
+        <div class="col-md-5 col-md-offset-1 col-sm-12 container">
             <div class="row">
                 <div class="col-sm-12">
-                    <h2>Advanced Settings</h2>
+                    <h2 class="hidden-sm hidden-xs">Advanced Settings</h2>
+                    <h3 class="hidden-lg hidden-md">PDF Generation</h3>
                 </div>
             </div>
 
             <div class="row field">
-                <div class="field-title col-sm-6">
+                <div class="field-title col-sm-4">
                     <h5>Form Name</h5>
                 </div>
 
-                <div class="col-sm-6 field-input field-input">
+                <div class="col-sm-8">
                     <input type="text" 
                         ng-model="myform.title" 
-                        value="{{myform.title}}">
-                    <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
+                        value="{{myform.title}}"
+                        style="width: 100%;">
                 </div>
             </div>
 
@@ -158,6 +162,26 @@
                     <label>
                         <input type="radio" data-ng-value="false" ng-model="myform.isLive"  ng-required="true" />
                         &nbsp;<span>Private</span>
+                    </label>
+
+                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
+                </div>
+            </div>
+            <div class="row field">
+                <div class="field-title col-sm-6">
+                    <h5>Display Start Page?</h5>
+                </div>
+
+                <div class="field-input col-sm-6">
+
+                    <label>
+                        <input type="radio" data-ng-value="true" ng-model="myform.showStart"  ng-required="true" style="background-color:#33CC00;"/>
+                        &nbsp;<span>Yes</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" data-ng-value="false" ng-model="myform.showStart"  ng-required="true" />
+                        &nbsp;<span>No</span>
                     </label>
 
                     <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
