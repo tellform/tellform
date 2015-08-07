@@ -27,16 +27,51 @@ var fs = require('fs-extra'),
 	path = require('path'),
 	client = new raven.Client(config.DSN);
 
+// NEV setup and configuration ================
+var config_nev = function () {
+
+	var nev = require('email-verification'),
+		mongoose = require('mongoose'),
+		User = mongoose.model('User');
+
+	nev.configure({
+	    persistentUserModel: User,
+	    tempUserCollection: config.tempUserCollection,
+	    expirationTime: 1800,  // 30 minutes
+
+	    verificationURL: config.baseUrl+'/#!/verify/${URL}',
+	    transportOptions: config.mailer.options,
+	    verifyMailOptions: {
+	        from: config.mailer.from,
+	        subject: 'Confirm your account',
+	        html: '<p>Please verify your account by clicking <a href="${URL}">this link</a>. If you are unable to do so, copy and ' +
+	                'paste the following link into your browser:</p><p>${URL}</p>',
+	        text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
+	    },
+
+	    confirmMailOptions: {
+	        from: config.mailer.from,
+	        subject: 'Successfully verified!',
+	        html: '<p>Your account has been successfully verified.</p>',
+	        text: 'Your account has been successfully verified.'
+	    },
+
+	});
+	nev.generateTempUserModel(User);
+};
+
 
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
 
-
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
 		require(path.resolve(modelPath));
 	});
+
+	//Configure Node-Email-Verification
+	config_nev();
 
 	// Setting application local variables
 	app.locals.title = config.app.title;
@@ -110,7 +145,6 @@ module.exports = function(db) {
 	app.use('/', express.static(path.resolve('./public')));
 	app.use('/uploads', express.static(path.resolve('./uploads')));
 
-	var formCtrl = require('../app/controllers/forms.server.controller');
 	// Setting the pdf upload route and folder
 	app.use(multer({ dest: config.tmpUploadPath,
 		rename: function (fieldname, filename) {
@@ -156,7 +190,7 @@ module.exports = function(db) {
 	});
 
 	// Add headers for Sentry
-app.use(function (req, res, next) {
+	app.use(function (req, res, next) {
 
 	    // Website you wish to allow to connect
 	    res.setHeader('Access-Control-Allow-Origin', 'http://sentry.polydaic.com');

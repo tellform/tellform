@@ -154,13 +154,16 @@ form .row.field {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
 
+div.config-form .row.field {
+    padding-top:1.5em;
+}
+
     div.config-form > .row > .container:nth-of-type(odd){
         border-right: 1px #ddd solid;
         /*padding-left: 1em;*/
     }
 
         div.config-form .row > .field-input {
-            padding-top:1.2em;
             padding-left:0.1em;
         }
             div.config-form .row > .field-input label {
@@ -292,15 +295,15 @@ section > section.public-form {
     text-align: center;
     border-bottom: 6px inset #ccc;
     background-color: #eee;
-    /*width: 180px;*/
+    width: 180px;
     /*width:100%;*/
     position: relative;
-    height: 0;/*215px;*/
-    padding-bottom: 25%;
+    height: 215px;
+    /*padding-bottom: 25%;*/
     margin-bottom: 45px;
 }
 .form-item.create-new input[type='text']{
-    width: inherit;
+    /*width: inherit;*/
 }
 
 .form-item.create-new {
@@ -322,6 +325,15 @@ section > section.public-form {
     }
 
 /*Modal overlay (for lightbox effect)*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(256,256,256,0.8);
+    z-index: 10;
+}
 .overlay {
     position: fixed;
     top: 0;
@@ -354,35 +366,40 @@ section > section.public-form {
 }
 
 .form-item.create-new:hover {
-    /*color: #eee;*/
     background-color: rgb(81,81,81);
 }
 
-.form-item > .title-row{
+.form-item > .row.footer {
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+}
+
+.form-item .title-row{
     position: relative;
     top: 15px;
     padding-top:3em;
     padding-bottom:3.65em; 
 }
-    .form-item > .title-row h4 {
+    .form-item .title-row h4 {
         font-size: 1.3em;
     }
 
-.form-item.create-new > .title-row{
+.form-item.create-new  .title-row{
     padding: 0;
     /*margin-top:1em; */
 
 }
-    .form-item.create-new > .title-row h4 {
+    .form-item.create-new  .title-row h4 {
         font-size: 7em;
     }
 
-.form-item > .details-row{
+.form-item .details-row{
     margin-top: 3.2em;
 }
-    .form-item > .details-row small {
+    .form-item  .details-row small {
         font-size: 0.6em;
     }
-    .form-item.create-new > .details-row small {
+    .form-item.create-new  .details-row small {
         font-size: 0.95em;
     }

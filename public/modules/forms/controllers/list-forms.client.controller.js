@@ -33,15 +33,28 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             $state.go(route, {'formId': id}, {reload: true});
         };
 
+        $scope.duplicate = function(form, form_index){
+            delete form._id;
+            
+            $http.post('/forms', {form: form})
+                .success(function(data, status, headers){
+                    console.log('form duplicated');
+                    $scope.myforms.splice(form_index, 0, data);
+                }).error(function(errorResponse){
+                    console.log(errorResponse);
+                    $scope.error = errorResponse.data.message;
+                });
+        }
+
         // Create new Form
         $scope.createNew = function(){
             var form = {};
             form.title = $scope.myform.name.$modelValue;
             form.language = $scope.myform.language.$modelValue;
-            console.log(form);
+            // console.log(form);
             $rootScope.showCreateModal = true;
 
-            console.log($scope.myform);
+            // console.log($scope.myform);
             if($scope.myform.$valid && $scope.myform.$dirty){
                 $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
@@ -58,28 +71,17 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             }
         };
 
-        $scope.remove = function(form_id) {
+        $scope.removeFromList = function(deleted_form_id) {
 
             console.log('Remove existing form');
-
-            var form = {};
-            if(!form_id){
-                form = CurrentForm.getForm();
-                if(!form) form = $scope.myform;
-            }else {
-                form._id = form_id;
-            }
     
-            $http.delete('/forms/'+form._id)
+            $http.delete('/forms/'+deleted_form_id)
                 .success(function(data, status, headers){
                     console.log('form deleted successfully');
-
-                    if(!form_id){
-                        $state.go('listForms', {}, {reload: true}); 
-                    }
+                    
                     if($scope.myforms.length > 0){
                         $scope.myforms = _.filter($scope.myforms, function(myform){
-                            return myform._id !== form._id; 
+                            return myform._id !== deleted_form_id; 
                         });
                     }
 

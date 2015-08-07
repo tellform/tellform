@@ -43,7 +43,7 @@ var UserSchema = new Schema({
 	email: {
 		type: String,
 		trim: true,
-		unique: 'Account already exists with email',
+		unique: 'Account already exists with this email',
 		required: 'Please enter your email',
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
@@ -51,7 +51,7 @@ var UserSchema = new Schema({
 	username: {
 		type: String,
 		unique: true,
-		required: true,
+		required: false,
 		trim: true
 	},
 	password: {
@@ -106,10 +106,8 @@ UserSchema.virtual('displayName').get(function () {
 
 //Create folder for user's pdfs
 UserSchema.pre('save', function (next) {
+	this.username = this.email;
 	if(process.env.NODE_ENV === 'development'){
-		if(!this.username || this.username !== this.email){
-			this.username = this.email;
-		}
 		var newDestination = path.join(config.pdfUploadPath, this.username.replace(/ /g,'')),
 			stat = null;
 
@@ -184,7 +182,6 @@ UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
  * Function to check if user has Admin priviledges
  */
 UserSchema.methods.isAdmin = function() {
-
 	if(this.roles.indexOf('admin') !== -1){
 		return true;
 	}

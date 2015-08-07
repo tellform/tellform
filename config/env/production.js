@@ -18,6 +18,9 @@ module.exports = {
 			stream: 'access.log'
 		}
 	},
+	sessionCookie: {
+		domain: 'forms.polydaic.com'
+	},
 	assets: {
 		// lib: {
 		// 	css: [

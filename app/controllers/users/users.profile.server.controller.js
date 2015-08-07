@@ -57,8 +57,6 @@ exports.me = function(req, res) {
 	delete _user.salt;
 	delete _user.provider;
 	delete _user.__v;
-	delete _user.created;
-
 
 	res.json(req.user || null);
 };

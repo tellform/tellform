@@ -11,10 +11,7 @@ angular.module('forms')
             },
             // transclude: true,
             controller: function($scope){
-
-                // Log that the directive has been linked.
-                // console.log( "Linked: editForm Controller");
-
+                
                 /*
                 **  Initialize scope with variables
                 */
@@ -27,7 +24,7 @@ angular.module('forms')
                     return type;
                 });
 
-                // accordion settings
+                // Accordion settings
                 $scope.accordion = {};
                 $scope.accordion.oneAtATime = true;
 
@@ -39,9 +36,8 @@ angular.module('forms')
                 */
                 $scope.dropzone = {
                     handle: ' .handle'  
-                }
+                };
 
-                // console.log($scope.myform);
 
                 // $scope.draggable = {
                 //     connectWith: ".dropzone",

@@ -68,9 +68,17 @@ var FormSchema = new Schema({
 		type: Schema.Types.Mixed
 	},
 
-	showStart: {
-		type: Boolean,
-		default: false,
+	startPage: {
+		showStart:{
+			type: Boolean,
+			default: false,
+		},
+		introText:{
+			type: String,
+		},
+		buttonText:{
+			type: String
+		}
 	},
 	hideFooter: {
 		type: Boolean,
@@ -88,17 +96,13 @@ var FormSchema = new Schema({
 		type: Boolean,
 		default: false,
 	},
-	saveCount: {
-		type: Number,
-		default: 0,
-	},
+
 	design: {
 		colors:{
 			backgroundColor: String,
 			questionColor: String,
 			answerColor: String,
 			buttonColor: String,
-
 		},
 		font: String,
 		backgroundImage: { type: Schema.Types.Mixed }
@@ -138,8 +142,6 @@ var _original;
 
 //Set _original
 FormSchema.pre('save', function (next) {
-	this.saveCount = this.saveCount++;
-	console.log('saveCount: '+this.saveCount);
 	// console.log(this.constructor.model);
 	// console.log(FormModel);
 	this.constructor   // ≈ mongoose.model('…', FieldSchema).findById
@@ -148,7 +150,6 @@ FormSchema.pre('save', function (next) {
       		console.log(err);
       		next(err);
         } else {
-        	
         	_original = original;
         	// console.log('_original');
         	// console.log(_original);
@@ -309,7 +310,7 @@ FormSchema.pre('save', function (next) {
 			deletedIds = getDeletedIndexes(old_ids, new_ids),
 			that = this;
 
-		console.log('deletedId Indexes\n--------');
+		// console.log('deletedId Indexes\n--------');
 		// console.log(deletedIds);
 		// console.log('old_ids\n--------');
 		// console.log(old_ids);
@@ -372,7 +373,7 @@ FormSchema.pre('save', function (next) {
 					// console.log('modifiedSubmissions\n---------\n\n');
 					// console.log(modifiedSubmissions);
 
-					console.log('preserved deleted fields');
+					// console.log('preserved deleted fields');
 					// console.log(submissions);
 
 					async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
@@ -428,21 +429,21 @@ FormSchema.pre('save', function (next) {
 	}
 });
 
-FormSchema.methods.generateFDFTemplate = function() {
-	var _keys = _.pluck(this.form_fields, 'title'),
-		_values = _.pluck(this.form_fields, 'fieldValue');
+// FormSchema.methods.generateFDFTemplate = function() {
+// 	var _keys = _.pluck(this.form_fields, 'title'),
+// 		_values = _.pluck(this.form_fields, 'fieldValue');
 
-	_values.forEach(function(val){
-		if(val === true){
-			val = 'Yes';
-		}else if(val === false) {
-			val = 'Off';
-		}
-	});
+// 	_values.forEach(function(val){
+// 		if(val === true){
+// 			val = 'Yes';
+// 		}else if(val === false) {
+// 			val = 'Off';
+// 		}
+// 	});
 
-	var jsonObj = _.zipObject(_keys, _values);
+// 	var jsonObj = _.zipObject(_keys, _values);
 
-	return jsonObj;
-};
+// 	return jsonObj;
+// };
 
  mongoose.model('Form', FormSchema);

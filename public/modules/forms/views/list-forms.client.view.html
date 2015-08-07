@@ -21,7 +21,7 @@
 			</div>	
 		</div>
 
-		<form name="createForm" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form" ng-show="showCreateModal">
+		<form name="createForm" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form" ng-if="showCreateModal">
 			<div ng-init="setForm(createForm);" style="display:none;"></div>
 				<div class="title-row row">
 					    <div class="col-xs-5 field-title">Name </div>
@@ -50,22 +50,34 @@
 				</div>		
 		</form>
 
-		<div data-ng-repeat="form in myforms" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item">
+		<div data-ng-repeat="form in myforms" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container">
+
+			<div class="row">
 			<span class="pull-right"> 
-				<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="remove(form._id)"></i>
+				<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="removeFromList(form._id)"></i>
+				<i style="cursor:pointer;" class="fa fa-files-o" ng-click="duplicate(form)"></i>
 			</span>
+
+			</div>
+
+			<div class="row">
 			<a data-ng-href="#!/forms/{{form._id}}/admin"  class="title-row col-xs-12">
 				<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
 			</a>
-			<div class="col-xs-12 details-row">
-				
-				<!-- <small class="list-group-item-text">
-					Created on
-					<span data-ng-bind="form.created | date:'shortDate'"></span>
-					by
-					<span data-ng-bind="form.admin.username"></span>
-				</small> -->
+			</div>
 
+			<div class="row footer">
+				<div class="col-xs-12 details-row">
+					
+					<small class="list-group-item-text">
+						Created on
+						<span data-ng-bind="form.created | date:'shortDate'"></span>
+					</small>
+						<!--by
+						<span data-ng-bind="form.admin.username"></span>
+					</small> -->
+
+				</div>
 			</div>
 		</div>
 	</div>

@@ -10,7 +10,7 @@ var client = new raven.Client(config.DSN);
  */
 exports.index = function(req, res) {
 	// next( throw new Error('Hello, world!'));
-	client.captureMessage('Rendering index.html');
+	// client.captureMessage('Rendering index.html');
 	res.render('index', {
 		user: req.user || null,
 		request: req

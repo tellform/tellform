@@ -13,16 +13,17 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
 
                     $scope.selected = null;
                     $scope.startPage = true;
+                     timeCounter.startClock()
 
                     $rootScope.setActiveField = function (field_id) {
                         console.log('form field clicked: '+field_id);
                         $scope.selected = field_id;
                         console.log($scope.selected);
-                    }
+                    };
                     $scope.hideOverlay = function (){
                         $scope.selected = null;
                         console.log($scope.myForm);
-                    }
+                    };
 
                     $scope.submit = function(){
                         var _timeElapsed = timeCounter.stopClock();
@@ -50,7 +51,7 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
 
                     $scope.exitStartPage = function () {
                         $scope.startPage = false;
-                    }
+                    };
 
                     $scope.reloadForm = function(){
                         timeCounter.stopClock();

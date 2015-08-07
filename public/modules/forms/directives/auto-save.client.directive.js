@@ -35,7 +35,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
           return false;
         };
 
-        var updateFields = function () {
+        var debounceSave = function () {
           $rootScope.saveInProgress = true;
           $rootScope[$attrs.autoSaveCallback](false,
             function(err){
@@ -49,12 +49,12 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                 console.error(err);
               }
             }); 
-        }
+        };
 
 
         $scope.$watch(function(newValue, oldValue) {
           if($scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-            updateFields();
+            debounceSave();
           }
         });
 
@@ -84,7 +84,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
             savePromise = $timeout(function() {   
               console.log('Saving Form');
-              updateFields();           
+              debounceSave();           
             }); 
           }else if($rootScope.finishedRender && $rootScope.saveInProgress){
             $rootScope.saveInProgress = false;

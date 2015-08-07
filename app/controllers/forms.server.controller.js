@@ -19,11 +19,12 @@ var mongoose = require('mongoose'),
  */
 exports.uploadPDF = function(req, res, next) {
 
-	console.log('inside uploadPDF');
+	// console.log('inside uploadPDF');
 
 	// console.log(req.files.file);
 	// console.log('\n\nProperty Descriptor\n-----------');
 	// console.log(Object.getOwnPropertyDescriptor(req.files.file, 'path'));
+	
 	if(req.files){
 		var pdfFile = req.files.file;
 		var _user = req.user;
@@ -73,6 +74,7 @@ exports.uploadPDF = function(req, res, next) {
  */
 exports.deleteSubmissions = function(req, res) {
 	console.log(req.body);
+
 	var submission_id_list = req.body.deleted_submissions,
 		form = req.form;
 
@@ -92,56 +94,46 @@ exports.deleteSubmissions = function(req, res) {
  */
 exports.createSubmission = function(req, res) {
 
-	var submission,
-		form = req.form, 
-		fdfData,
-		fdfTemplate, 
-		that = this;
-	console.log(req.body.percentageComplete);
+	var form = req.form;
+	// console.log('in createSubmission()');
+	// console.log(req.body);
 
-	submission = new FormSubmission({
-		admin: req.user,
+	var submission = new FormSubmission({
+		admin: req.form.admin._id,
+		form: req.form._id,
+		title: req.form.title,
 		form_fields: req.body.form_fields,
 		timeElapsed: req.body.timeElapsed,
 		percentageComplete: req.body.percentageComplete
 	});
 
-	submission.form = form;
-	submission.pdf = form.pdf;
-	submission.title = form.title;
+	if(form.pdf) submission.pdf = form.pdf;
+
 	if(req.headers['x-forwarded-for'] || req.connection.remoteAddress){
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-		console.log('ip address of client is: '+ip);
+		// console.log('ip address of client is: '+ip);
+		// if(ip) submission.ipAddr = ip;
 	}
-	// submission.ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
 	if(form.autofillPDFs){
-		if (form.isGenerated){
-			fdfTemplate = form.generateFDFTemplate();
-		} else {
-			try {
-				fdfTemplate = pdfFiller.mapForm2PDF(form.generateFDFTemplate(), form.pdfFieldMap);
-			} catch(err){
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
+		try {
+			submission.fdfData = pdfFiller.convFieldJson2FDF(submission.form_fields);
+		} catch(err){
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
 		}
-		fdfData = pdfFiller.convFieldJson2FDF(submission.form_fields);
-		submission.fdfData = fdfData;
 	}else{
-		submission.fdfData = undefined;
+		submission.fdfData = null;
 	}
 
-	submission.save(function(err){
-		
+	submission.save(function(err, submission){
+		// console.log('in submissions.save()\n submission: '+JSON.stringify(submission) );
 		if(err){
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		// console.log(results);
-		// console.log(that.form_fields);
 		res.status(200).send('Form submission successfully saved');
 	});
 };
@@ -152,6 +144,7 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 	var _user = req.user;
+	// console.log('listSubmissions');
 	// console.log(_form);
 
 	// if(_form.submissions.length){
@@ -186,8 +179,10 @@ exports.listSubmissions = function(req, res) {
 exports.create = function(req, res) {
 	var form = new Form(req.body.form);
 
-	form.admin = req.user;
+	form.admin = req.user._id;
+	// console.log('Create a new form');
 	// console.log(form);
+	// console.log(req.body.form)
 	// console.log(req.user);
 
 	form.save(function(err) {
@@ -214,15 +209,13 @@ exports.read = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) { 
-	console.log('in form.update()');
+	// console.log('in form.update()');
 
 	// console.log(req.body.form.form_fields);
 
 	var form = req.form;
 	delete req.body.form.__v;
 	delete req.body.form._id;
-	delete req.body.form.created;
-	delete req.body.form.lastModified;
 	delete req.body.form.admin;
 
 	// console.log(form.admin);
@@ -241,7 +234,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log('updated form');
+			// console.log('updated form');
 			res.json(form);
 		}
 	});
@@ -252,15 +245,16 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 	var form = req.form;
-	console.log('deleting form');
+	// console.log('deleting form');
 	Form.remove({_id: form._id}, function(err) {
 		if (err) {
-			res.status(500).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log('Form successfully deleted');
-			res.status(200).send('Form successfully deleted');
+			// console.log('Form successfully deleted');
+			// res.status(200).send('Form successfully deleted');
+			res.json(form);
 		}
 	});
 };
@@ -305,16 +299,12 @@ exports.formByID = function(req, res, next, id) {
 			});
 		}
 		else {
-			if(!form.admin.username){
-				form.admin = req.user;
-			}
 			// console.log(form.admin);
 
 			//Remove sensitive information from User object
-			form.admin.password = null;
-			form.admin.created = null;
-			form.admin.salt = null;
-			form.provider = null;
+			form.admin.password = undefined;
+			form.admin.salt = undefined;
+			form.provider = undefined;
 
 			req.form = form;
 			next();
@@ -330,7 +320,7 @@ exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
 	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
 		res.status(403).send({
-			message: 'User '+req.user.username+' is not authorized'
+			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});
 	}
 	next();

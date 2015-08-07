@@ -10,7 +10,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    $scope.signin = function() {
 			User.login($scope.credentials).then(
 				function(response) {
-					console.log(response)
+					// console.log(response);
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 

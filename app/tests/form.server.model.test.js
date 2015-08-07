@@ -122,28 +122,28 @@ describe('Form Model Unit Tests:', function() {
 			});
 		});
 
-		it('should preserve deleted form_fields that have submissions without any problems', function(done) {
+		// it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
-			old_fields = myForm.toObject().form_fields;
-			// console.log(old_fields);
+		// 	old_fields = myForm.toObject().form_fields;
+		// 	// console.log(old_fields);
 
-			// var expected_fields = old_fields.slice(1,3).concat(old_fields.slice(0,1));
+		// 	// var expected_fields = old_fields.slice(1,3).concat(old_fields.slice(0,1));
 
-			myForm.form_fields = new_form_fields_del;
+		// 	myForm.form_fields = new_form_fields_del;
 
-			myForm.save(function(err, _form) {
+		// 	myForm.save(function(err, _form) {
 
-				should.not.exist(err);
-				should.exist(_form);
+		// 		should.not.exist(err);
+		// 		should.exist(_form);
 
-				// var actual_fields = _.map(_form.toObject().form_fields, function(o){ _.omit(o, '_id')});
-				// old_fields = _.map(old_fields, function(o){ _.omit(o, '_id')});
+		// 		// var actual_fields = _.map(_form.toObject().form_fields, function(o){ _.omit(o, '_id')});
+		// 		// old_fields = _.map(old_fields, function(o){ _.omit(o, '_id')});
 
-				// console.log(old_fields);
-				should.deepEqual(JSON.stringify(_form.toObject().form_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
-				done();
-			});
-		});
+		// 		// console.log(old_fields);
+		// 		should.deepEqual(JSON.stringify(_form.toObject().form_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
+		// 		done();
+		// 	});
+		// });
 
 		// it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
 
@@ -161,25 +161,25 @@ describe('Form Model Unit Tests:', function() {
 		// });
 	});
 
-	describe('Method generateFDFTemplate', function() {
-		var FormFDF;
-		before(function(done){
-			return myForm.save(function(err, form){
+	// describe('Method generateFDFTemplate', function() {
+	// 	var FormFDF;
+	// 	before(function(done){
+	// 		return myForm.save(function(err, form){
 				
-				FormFDF = {
-					'First Name': '',
-					'nascar': '',
-					'hockey': ''
-				};
-				done();
-			});
-		});
+	// 			FormFDF = {
+	// 				'First Name': '',
+	// 				'nascar': '',
+	// 				'hockey': ''
+	// 			};
+	// 			done();
+	// 		});
+	// 	});
 
-		it('should be able to generate a FDF template without any problems', function() {
-			var fdfTemplate = myForm.generateFDFTemplate();
-			(fdfTemplate).should.be.eql(FormFDF);
-		});
-	});
+	// 	it('should be able to generate a FDF template without any problems', function() {
+	// 		var fdfTemplate = myForm.generateFDFTemplate();
+	// 		(fdfTemplate).should.be.eql(FormFDF);
+	// 	});
+	// });
 
 	afterEach(function(done) {
 		Form.remove({}, function() {

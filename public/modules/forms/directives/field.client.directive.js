@@ -46,7 +46,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             scope.dateOptions = {
                 changeYear: true,
                 changeMonth: true,
-                altFormat: "mm/dd/yyyy",
+                altFormat: 'mm/dd/yyyy',
                 yearRange: '1900:-0',   
                 defaultDate: 0,
             };

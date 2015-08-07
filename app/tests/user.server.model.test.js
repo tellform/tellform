@@ -16,22 +16,20 @@ var user, user2;
  * Unit tests
  */
 describe('User Model Unit Tests:', function() {
-	before(function(done) {
+	beforeEach(function(done) {
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
 			email: 'test@test.com',
-			username: 'username',
+			username: 'test@test.com',
 			password: 'password',
 			provider: 'local'
 		});
 		user2 = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
 			email: 'test@test.com',
-			username: 'username',
+			username: 'test@test.com',
 			password: 'password',
 			provider: 'local'
 		});
@@ -69,7 +67,24 @@ describe('User Model Unit Tests:', function() {
 		});
 	});
 
-	after(function(done) {
+	describe('Method findUniqueUsername', function() {
+		beforeEach(function(done) {
+			User.find({}, function(err, users) {
+				users.should.have.length(0);
+				user.save(done);
+			});
+		});
+
+		it('should be able to find unique version of existing username without problems', function(done) {
+			User.findUniqueUsername(user.username, null, function (availableUsername) {
+				availableUsername.should.not.equal(user.username);
+				done();
+			});
+		});
+
+	});
+
+	afterEach(function(done) {
 		User.remove().exec(done);
 	});
 });

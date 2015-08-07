@@ -16,6 +16,8 @@ var _ = require('lodash'),
 		require('./env/all'),
 		require('./env/' + process.env.NODE_ENV) || {}
 	);
+
+//Load keys from api_keys.js if file exists
 if( fs.existsSync('./env/api_keys.js') ){
 	module.exports = _.merge(
 		exports,

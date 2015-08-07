@@ -5,6 +5,7 @@
 
             <div class="row add-field-title">
                 <h3 class="col-md-12 hidden-sm hidden-xs">Click to Add New Field</h3>
+                <h4 class="col-sm-12 hidden-xs hidden-md hidden-lg">Add New Field</h5>
                 <h5 class="col-sm-12 hidden-sm hidden-md hidden-lg">Add Field</h5>
             </div>
             <div class="panel-group row" class="draggable" ng-model="addField.types">
@@ -26,6 +27,59 @@
             <div class="row">
                 <div class="col-sm-12 col-md-10">
                     <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
+
+                        <accordion-group is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="form.startPage.showStart">
+
+                            <accordion-heading>
+
+                                <div class="handle">
+
+                                    <span style="padding-left:1.2em;">
+                                        Start Page
+                                        <span ng-show="field.required">*</span>
+                                    </span>
+                                    <span class="pull-right">
+                                        <i class="fa fa-chevron-right" ng-hide="accordion[$index].isOpen">
+                                        </i>
+                                        <i class="fa fa-chevron-down" ng-show="accordion[$index].isOpen">
+                                        </i>
+                                    </span>
+                                </div>
+                            </accordion-heading>
+                            <div class="accordion-edit container">
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4>Edit StartPage</h4>
+                                        <br>
+                                    </div>
+                                </div> 
+
+                                <div class="row question">
+                                    <div class="col-md-4 col-sm-12">Intro Text:</div>
+                                    <div class="col-md-8 col-sm-12">
+                                    <input type="text" ng-model="form.startPage.introText" name="titleStartPage" value="{{form.startPage.introText}}" required></div>
+                                </div>
+
+                                <div class="row"><br></div> 
+
+                                <div class="row description">
+                                    <div class="col-md-4 col-sm-12">Intro Description:</div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <textarea type="text" ng-model="form.startPage.introDescription" name="descriptionStartPage" value="{{form.startPage.introDescription}}"></textarea> 
+                                    </div>
+                                </div>
+
+                                <<div class="row"><br></div> 
+
+                                <div class="row description">
+                                    <div class="col-md-4 col-sm-12">Button Text:</div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <textarea type="text" ng-model="form.startPage.buttonText" name="buttonStartPage" value="{{form.startPage.buttonText}}"></textarea> 
+                                    </div>
+                                </div>
+                            </div>
+                        </accordion-group>
 
                         <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
 

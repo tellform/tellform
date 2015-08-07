@@ -17,58 +17,32 @@ var _ = require('lodash'),
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
-// NEV configuration =====================
-nev.configure({
-    persistentUserModel: User,
-    expirationTime: 1800,  // 30 minutes
+// // NEV configuration =====================
+// nev.configure({
+//     persistentUserModel: User,
+//     tempUserCollection: config.tempUserCollection,
+//     expirationTime: 1800,  // 30 minutes
 
-    verificationURL: config.baseUrl+'/#!/verify/${URL}',
-    transportOptions: config.mailer.options,
-    verifyMailOptions: {
-        from: config.mailer.from,
-        subject: 'Confirm your account',
-        html: '<p>Please verify your account by clicking <a href="${URL}">this link</a>. If you are unable to do so, copy and ' +
-                'paste the following link into your browser:</p><p>${URL}</p>',
-        text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
-    },
+//     verificationURL: config.baseUrl+'/#!/verify/${URL}',
+//     transportOptions: config.mailer.options,
+//     verifyMailOptions: {
+//         from: config.mailer.from,
+//         subject: 'Confirm your account',
+//         html: '<p>Please verify your account by clicking <a href="${URL}">this link</a>. If you are unable to do so, copy and ' +
+//                 'paste the following link into your browser:</p><p>${URL}</p>',
+//         text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
+//     },
 
-    confirmMailOptions: {
-        from: config.mailer.from,
-        subject: 'Successfully verified!',
-        html: '<p>Your account has been successfully verified.</p>',
-        text: 'Your account has been successfully verified.'
-    },
+//     confirmMailOptions: {
+//         from: config.mailer.from,
+//         subject: 'Successfully verified!',
+//         html: '<p>Your account has been successfully verified.</p>',
+//         text: 'Your account has been successfully verified.'
+//     },
 
-});
+// });
 
-nev.generateTempUserModel(User);
-
-/**
- * Signup
- */
-exports.signup = function(req, res) {
-	// For security measurement we remove the roles from the req.body object
-	delete req.body.roles;
-
-	// Init Variables
-	var user = new User(req.body);
-
-	// Add missing user fields
-	user.provider = 'local';
-	user.username = user.email;
-	// user.displayName = user.firstName + ' ' + user.lastName;
-
-	// Then save the temporary user
-	nev.createTempUser(user, function(newTempUser) {
-        // new user created
-        if (newTempUser) {
-        	nev.registerTempUser(newTempUser);
-        	res.status(200).send('An email has been sent to you. Please check it to verify your account.');
-        } else {
-            res.status(400).send('Error: Temp user could NOT be created!');
-        }
-    });
-};
+// nev.generateTempUserModel(User);
 
 exports.validateVerificationToken = function(req, res, next){
 
@@ -93,6 +67,33 @@ exports.resendVerificationEmail = function(req, res, next){
 	});
 };
 
+
+/**
+ * Signup
+ */
+exports.signup = function(req, res) {
+	// For security measurement we remove the roles from the req.body object
+	delete req.body.roles;
+
+	// Init Variables
+	var user = new User(req.body);
+
+	// Add missing user fields
+	user.provider = 'local';
+	user.username = user.email;
+
+	// Then save the temporary user
+	nev.createTempUser(user, function(newTempUser) {
+        // new user created
+        if (newTempUser) {
+        	nev.registerTempUser(newTempUser);
+        	res.status(200).send('An email has been sent to you. Please check it to verify your account.');
+        } else {
+            res.status(400).send('Error: Temp user could NOT be created!');
+        }
+    });
+};
+
 /**
  * Signin after passport authentication
  */
@@ -104,6 +105,7 @@ exports.signin = function(req, res, next) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
+			user.provider = undefined;
 
 			req.login(user, function(err) {
 				if (err) {

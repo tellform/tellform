@@ -19,21 +19,37 @@ module.exports = {
 			stream: 'access.log'
 		}
 	},
+
+	sessionCookie: {
+		path: '/',
+		httpOnly: false,
+		// If secure is set to true then it will cause the cookie to be set
+		// only when SSL-enabled (HTTPS) is used, and otherwise it won't
+		// set a cookie. 'true' is recommended yet it requires the above
+		// mentioned pre-requisite.
+		secure: true,
+		// Only set the maxAge to null if the cookie shouldn't be expired
+		// at all. The cookie will expunge when the browser is closed.
+		maxAge: null,
+		// To set the cookie in a specific domain uncomment the following
+		// setting:
+		domain: 'forms.polydaic.com'
+	},
 	assets: {
-		lib: {
-			css: [
-				'public/lib/bootstrap/dist/css/bootstrap.min.css',
-				'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
-			],
-			js: [
-				'public/lib/angular/angular.min.js',
-				'public/lib/angular-resource/angular-resource.min.js',
-				'public/lib/angular-animate/angular-animate.min.js',
-				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
-				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
-			]
-		},
+		// lib: {
+		// 	css: [
+		// 		'public/lib/bootstrap/dist/css/bootstrap.min.css',
+		// 		'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
+		// 	],
+		// 	js: [
+		// 		'public/lib/angular/angular.min.js',
+		// 		'public/lib/angular-resource/angular-resource.min.js',
+		// 		'public/lib/angular-animate/angular-animate.min.js',
+		// 		'public/lib/angular-ui-router/release/angular-ui-router.min.js',
+		// 		'public/lib/angular-ui-utils/ui-utils.min.js',
+		// 		'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
+		// 	]
+		// },
 		css: 'public/dist/application.min.css',
 		js: 'public/dist/application.min.js'
 	},

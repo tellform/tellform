@@ -1,33 +1,28 @@
-<!-- <link rel="stylesheet" href="./modules/forms/css/myform.css"> 
- -->
-
 <section data-ng-controller="SubmitFormController" class="public-form">
    
 	<form-directive form="myform"></form-directive>
 
 	<section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" style="background-color:rgba(242,242,242,0.5); padding-top:15px;">
         <div class="container" >
-            <nav role="navigation">
-                <ul class="nav navbar-nav navbar-left" >
-                    <li ng-show="!myform.submitted">
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-4 col-sm-4 col-sm-offset-4 text-center col-md-3 col-md-offset-0" ng-show="!myform.submitted">
                         <p class="lead">{{myform | formValidity}}   out of {{myform.visible_form_fields.length}} answered</p>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li style="padding-right:20px" >
-                        <a href="/#!/forms" class="btn btn-default" ng-hide="authentication.isAuthenticated()">Create a Medform</a>
-                    </li>
-                    <li style="padding-right:20px; padding-bottom:10px;" ng-show="authentication.isAuthenticated()">
+                </div>
+                <div class="hidden-xs hidden-sm col-md-6 col-md-offset-3 row">
+                    <div class="col-md-4 col-md-offset-2" ng-if="!authentication.isAuthenticated()">
+                        <a href="/#!/forms" class="btn btn-default">Create a Medform</a>
+                    </div>
+                    <div class="col-md-4 col-md-offset-2" ng-if="authentication.isAuthenticated()" class="hidden-sm hidden-xs">
                         <a href="/#!/forms/{{myform._id}}/admin" class="btn btn-default">Edit this Medform</a>
-                    </li>
-                    <li style="padding-left:5px">
-                        <div class="btn btn-info" id="focusDownButton" style="padding: 15px;">\/</div>
-                    </li>
-                    <li style="padding-left:5px">
-                        <div class="btn btn-info" id="focusUpButton" style="padding: 15px">/\</div>
-                    </li>
-                </ul>
-            </nav>
+                    </div>
+                    <div class="col-md-1 col-md-offset-2" style="padding-left:5px" class="hidden-sm hidden-xs">
+                        <div class="btn btn-info" id="focusDownButton">\/</div>
+                    </div>
+                    <div class="col-md-1" class="hidden-sm hidden-xs">
+                        <div class="btn btn-info" id="focusUpButton">/\</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </section>
