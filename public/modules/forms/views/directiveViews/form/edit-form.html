@@ -28,7 +28,7 @@
                 <div class="col-sm-12 col-md-10">
                     <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                        <accordion-group is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="form.startPage.showStart">
+                        <accordion-group is-open="accordion[$index].isOpen" ng-if="myform.startPage.showStart">
 
                             <accordion-heading>
 
@@ -48,6 +48,37 @@
                             </accordion-heading>
                             <div class="accordion-edit container">
 
+                                <div class="row hidden-sm hidden-xs">
+                                    <div class="col-md-12">
+                                        <h4>Preview Field</h4>
+                                    </div>
+                                    <ul class="col-md-12 container" style="list-style:none;border:2px lightgray solid;">
+                                        <div class="field row text-center">
+                                            <div class="col-xs-12 text-center">
+                                                <h1>Welcome to {{myform.title}}</h1>
+                                            </div>
+                                            <div class="col-xs-10 col-xs-offset-1 text-center">
+                                                <p>{{form.startPage.introText}}</p>
+                                            </div>
+                                        </div>
+                                         <div class="row form-actions">
+                                            <p ng-repeat="button in form.startPage.buttons" class="col-xs-6 col-xs-offset-3 text-center">
+                                                <button class="btn btn-info" type="button" ng-style="{background-color:button.backgroundColor; color:button.color;}">
+                                                    <a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none;"> {{button.buttonText}}</a>
+                                                </button>
+                                            </p>
+                                        </div>
+                                        <div class="row form-actions">
+                                            <p class="col-xs-6 col-xs-offset-3 text-center">
+                                                <button class="btn btn-info" type="button">
+                                                    <a ng-click="exitStartPage()" style="color:white; font-size: 1.6em; text-decoration: none;">Continue to Form</a>
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </ul>
+                                    <hr>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <h4>Edit StartPage</h4>
@@ -58,26 +89,53 @@
                                 <div class="row question">
                                     <div class="col-md-4 col-sm-12">Intro Text:</div>
                                     <div class="col-md-8 col-sm-12">
-                                    <input type="text" ng-model="form.startPage.introText" name="titleStartPage" value="{{form.startPage.introText}}" required></div>
-                                </div>
-
-                                <div class="row"><br></div> 
-
-                                <div class="row description">
-                                    <div class="col-md-4 col-sm-12">Intro Description:</div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <textarea type="text" ng-model="form.startPage.introDescription" name="descriptionStartPage" value="{{form.startPage.introDescription}}"></textarea> 
+                                        <input type="text" 
+                                        ng-model="myform.startPage.introText" 
+                                        name="introTextStartPage" 
+                                        value="{{myform.startPage.introText}}" required>
                                     </div>
                                 </div>
 
-                                <<div class="row"><br></div> 
+                                <div class="row"><br></div>
 
-                                <div class="row description">
+                                <div class="row options">
+                                    <div class="col-md-4 col-xs-12">Buttons:</div>
+                                    <div class="col-md-8 col-xs-12">
+                                        <div ng-repeat="button in myform.startPage.buttons" class="row">
+
+                                            <input type="text" 
+                                            name="{{button.buttonText}}_buttonText_StartPage" 
+                                            ng-model="button.buttonText" 
+                                            value="{{button.buttonText}}" 
+                                            placeholder="My Button" 
+                                            class="col-xs-4">
+
+                                            <input type="text" 
+                                            name="{{button.url}}_url_StartPage" 
+                                            ng-model="button.url" 
+                                            value="{{button.url}}" 
+                                            placeholder="http://aeouaou.com/aoeuoa" 
+                                            class="col-xs-6">
+
+                                            <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteButton(button)" class="col-xs-2">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+
+                                        </div>
+                                        <div class="row">                                                
+                                            <button class="btn btn-primary btn-small ol-md-12 col-sm-6 col-sm-offset-6 col-xs-6 col-xs-offset-6" type="button" ng-click="addButton(field)">
+                                                <i class="icon-plus icon-white"></i> Add Button
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <!-- <div class="row description">
                                     <div class="col-md-4 col-sm-12">Button Text:</div>
                                     <div class="col-md-8 col-sm-12">
                                         <textarea type="text" ng-model="form.startPage.buttonText" name="buttonStartPage" value="{{form.startPage.buttonText}}"></textarea> 
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </accordion-group>
 

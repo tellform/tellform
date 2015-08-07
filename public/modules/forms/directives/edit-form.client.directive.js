@@ -153,6 +153,33 @@ angular.module('forms')
                     // }
                 };
 
+
+                /*
+                **  StartPage Button Methods
+                */
+
+                // add new Button to the field
+                $scope.addButton = function (Button){
+
+                    var lastButtonID = 0;
+
+                    if($scope.myform.StartPage.buttons[$scope.myform.StartPage.buttons.length-1])
+                        lastButtonID = $scope.myform.StartPage.buttons[$scope.myform.StartPage.buttons.length-1].button_id;
+
+                    // put new option into fieldOptions array
+                    Button.backgroundColor = '#5bc0de';
+                    Button.button_id = lastButtonID;
+                    Button.color = '#ffffff';
+                    
+
+                    $scope.myform.StartPage.buttons.push(Button);
+                };
+
+                // delete particular option
+                $scope.deleteButton = function (button_index){
+                    $scope.myform.StartPage.buttons.splice(button_index, 1);
+                };
+
                 /*
                 **  Field Option Methods
                 */

@@ -113,7 +113,12 @@ form .row.field {
             border: 2px dashed #ddd;
         }
 
-
+        form .field-input > input.hasDatepicker{
+            padding: 0.45em 0.9em;
+            width: 50%;
+            line-height: 160%;
+            border: 2px dashed #ddd;
+        }
         form .field-input > input.text-field-input{
             padding: 0.45em 0.9em;
             width: 100%;
@@ -140,6 +145,7 @@ form .row.field {
             border: 1px solid #ccc;
             height: 34px;
         }
+        
 .config-form {
     max-width: 100%;
 }
@@ -331,21 +337,15 @@ section > section.public-form {
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(256,256,256,0.8);
-    z-index: 10;
-}
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
     background-color: rgba(0,0,0,0.5);
     z-index: 10;
 }
+.overlay.submitform {
+    background-color: rgba(256,256,256,0.8);
+}
 .field-directive {
     z-index: 9;
-    padding:25px;
+    padding: 10% 10% 10% 0;
     border: 25px transparent solid;
     position: relative;
 }

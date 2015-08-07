@@ -76,9 +76,26 @@ var FormSchema = new Schema({
 		introText:{
 			type: String,
 		},
-		buttonText:{
-			type: String
-		}
+		buttons:[{
+			url: {
+				type: String,
+				match: [/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/],
+			},
+			action: String,
+			buttonText: String,
+			backgroundColor: {
+				type: String,
+				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
+				default: '#5bc0de'
+			},
+			color: {
+				type: String,
+				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
+				default: '#ffffff'
+			}
+
+
+		}]
 	},
 	hideFooter: {
 		type: Boolean,
@@ -99,10 +116,22 @@ var FormSchema = new Schema({
 
 	design: {
 		colors:{
-			backgroundColor: String,
-			questionColor: String,
-			answerColor: String,
-			buttonColor: String,
+			backgroundColor: { 
+				type: String,
+				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]
+			},
+			questionColor: { 
+				type: String,
+				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]
+			},
+			answerColor: { 
+				type: String,
+				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]
+			},
+			buttonColor: { 
+				type: String,
+				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]
+			},
 		},
 		font: String,
 		backgroundImage: { type: Schema.Types.Mixed }

@@ -60,8 +60,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 .success(function(data, status, headers){
                     console.log('form created');
 
-                    // Clear form fields
-                   $scope.myform = {};
                     // Redirect after save 
                     $scope.goToWithId('viewForm', data._id+'');
                 }).error(function(errorResponse){

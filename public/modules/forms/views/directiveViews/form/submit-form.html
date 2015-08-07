@@ -1,26 +1,33 @@
 <div cg-busy="{promise:submitPromise,message:'Submitting form...',backdrop:true}"></div>
 
-<section class="overlay" ng-if="selected" ng-click="hideOverlay()"></section>
+<section class="overlay submitform" ng-if="selected" ng-click="hideOverlay()"></section>
 
-<div ng-show="!form.submitted && startPage && form.showStart" class="form-submitted">
+<div ng-show="!form.submitted && form.startPage.showStart" class="form-submitted">
     <div class="field row text-center">
         <div class="col-xs-12 text-center">
             <h1>Welcome to {{form.title}}</h1>
         </div>
-       <!--  <div class="col-xs-10 col-xs-offset-1 text-center">
+        <div class="col-xs-10 col-xs-offset-1 text-center">
             <p>{{form.startPage.introText}}</p>
-        </div> -->
+        </div>
+    </div>
+     <div class="row form-actions">
+        <p ng-repeat="button in form.startPage.buttons" class="col-xs-6 col-xs-offset-3 text-center">
+            <button class="btn btn-info" type="button">
+                <a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none;">{{button.buttonText}}</a>
+            </button>
+        </p>
     </div>
     <div class="row form-actions">
-        <p class="text-center col-xs-4 col-xs-offset-4">
+        <p class="col-xs-6 col-xs-offset-3 text-center">
             <button class="btn btn-info" type="button">
-                <a ng-click="exitStartPage()" style="color:white; font-size: 1.6em; text-decoration: none;">Continue to Form</a>
+                <a ng-click="exitStartPage()" style="font-size: 1.6em; text-decoration: none;">Continue to Form</a>
             </button>
         </p>
     </div>
 </div>
 
-<div ng-show="!form.submitted && !(startPage && form.showStart)" data-ng-init="initFocus()">
+<div ng-show="!form.submitted && !form.startPage.showStart" data-ng-init="initFocus()">
     <div class="field row" style="padding-bottom:5em;">
         <div class="col-sm-10 col-sm-offset-1">
             <h1>{{ form.title }} <span style="font-size:0.8em; color: #bbb;" ng-if="!form.isLive">(private preview)</span></h1>
@@ -28,7 +35,7 @@
         </div>
     </div>
     <div class="row">
-        <form name="myForm" class="submission-form col-sm-offset-1 col-sm-10">
+        <form name="myForm" class="submission-form col-sm-12 col-md-offset-1 col-md-10">
                 <div ng-repeat="field in form.form_fields"  ng-if="!field.deletePreserved" ng-class="{activeField: selected == field._id }" class="row field-directive">
                     <field-directive field="field" >
                     </field-directive>
