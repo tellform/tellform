@@ -182,7 +182,7 @@ describe('Form Model Unit Tests:', function() {
 	// });
 
 	afterEach(function(done) {
-		Form.remove({}, function() {
+		Form.remove().exec(function() {
 			User.remove().exec(done);
 		});
 	});

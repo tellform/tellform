@@ -30,7 +30,7 @@ module.exports = {
 		secure: true,
 		// Only set the maxAge to null if the cookie shouldn't be expired
 		// at all. The cookie will expunge when the browser is closed.
-		maxAge: null,
+		maxAge: 7200,
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
 		domain: 'forms.polydaic.com'

@@ -28,7 +28,7 @@
                 <div class="col-sm-12 col-md-10">
                     <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                        <accordion-group is-open="accordion[$index].isOpen" ng-if="myform.startPage.showStart">
+                        <!-- <accordion-group is-open="accordion[$index].isOpen" ng-if="myform.startPage.showStart">
 
                             <accordion-heading>
 
@@ -130,14 +130,10 @@
                                     </div>
                                 </div> 
 
-                                <!-- <div class="row description">
-                                    <div class="col-md-4 col-sm-12">Button Text:</div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <textarea type="text" ng-model="form.startPage.buttonText" name="buttonStartPage" value="{{form.startPage.buttonText}}"></textarea> 
-                                    </div>
-                                </div> -->
                             </div>
-                        </accordion-group>
+                        </accordion-group> -->
+
+                        
 
                         <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
 
