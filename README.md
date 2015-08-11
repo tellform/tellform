@@ -30,20 +30,6 @@ $ npm install -g bower
 $ npm install -g grunt-cli
 ```
 
-## Downloading MEAN.JS
-There are several ways you can get the MEAN.JS boilerplate:
-
-### Yo Generator
-The recommended way would be to use the [Official Yo Generator](http://meanjs.org/generator.html), which generates the latest stable copy of the MEAN.JS boilerplate and supplies multiple sub-generators to ease your daily development cycles.
-
-### Cloning The GitHub Repository
-You can also use Git to directly clone the MEAN.JS repository:
-```bash
-$ git clone https://github.com/whitef0x0/medforms.git medforms
-```
-This will clone the latest version of the Medforms repository to a **medforms** folder.
-
-
 ## Quickstart
 
 Install dependencies first.
@@ -81,32 +67,7 @@ And to run only the client tests, run the test:client task:
 $ grunt test:client
 ```
 
-## Development and deployment With Docker
-
-* Install [Docker](http://www.docker.com/)
-* Install [Docker-Machine](https://docs.docker.com/machine/)
-
-* Local development and setup with dockermachine:
-```bash
-$ curl -L https://github.com/docker/machine/releases/download/v0.3.0/docker-machine_darwin-amd64 > /usr/local/bin/docker-machine
-$ chmod +x /usr/local/bin/docker-machine
-$ docker-machine create -d virtualbox dev
-$ docker-machine env dev
-$ eval "$(docker-machine env dev)"
-```
-
-* Local development and testing with just Docker:
-```bash
-$ docker build -t medforms .
-$ docker run -p 27017:27017 -d --name db mongo
-$ docker run -p 3000:3000 --link db:db_1 mean
-$
-```
-
-* To enable live reload, forward port 35729 and mount /app and /public as volumes:
-```bash
-$ docker run -p 3000:3000 -p 35729:35729 -v /Users/mdl/workspace/mean-stack/mean/public:/home/mean/public -v /Users/mdl/workspace/mean-stack/mean/app:/home/mean/app --link db:db_1 mean
-```
+Currently the live example uses heroku github deployments. The Docker file is out of date and does not work. If someone wishes to get it working feel free to submit a pull request.
 
 ## Running in a secure environment
 To run your application in a secure manner you'll need to use OpenSSL and generate a set of self-signed certificates. Unix-based users can use the following command:
@@ -116,15 +77,6 @@ $ sh ./scripts/generate-ssl-certs.sh
 Windows users can follow instructions found [here](http://www.websense.com/support/article/kbarticle/How-to-use-OpenSSL-and-Microsoft-Certification-Authority).
 After you've generated the key and certificate, place them in the *config/sslcerts* folder.
 
-
-## Community
-* Use the [Official Website](http://meanjs.org) to learn about changes and the roadmap.
-* Join #meanjs on freenode.
-* Discuss it in the new [Google Group](https://groups.google.com/d/forum/meanjs)
-* Ping us on [Twitter](http://twitter.com/meanjsorg) and [Facebook](http://facebook.com/meanjs)
-
-## Live Example
-Browse the live MEAN.JS example on [http://meanjs.herokuapp.com](http://meanjs.herokuapp.com).
 
 ## Credits
 Inspired/built off great work of the meanjs team [MeanJS](https://github.com/mean/)
