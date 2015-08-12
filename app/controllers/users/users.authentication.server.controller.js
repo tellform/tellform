@@ -17,33 +17,6 @@ var _ = require('lodash'),
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
-// // NEV configuration =====================
-// nev.configure({
-//     persistentUserModel: User,
-//     tempUserCollection: config.tempUserCollection,
-//     expirationTime: 1800,  // 30 minutes
-
-//     verificationURL: config.baseUrl+'/#!/verify/${URL}',
-//     transportOptions: config.mailer.options,
-//     verifyMailOptions: {
-//         from: config.mailer.from,
-//         subject: 'Confirm your account',
-//         html: '<p>Please verify your account by clicking <a href="${URL}">this link</a>. If you are unable to do so, copy and ' +
-//                 'paste the following link into your browser:</p><p>${URL}</p>',
-//         text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
-//     },
-
-//     confirmMailOptions: {
-//         from: config.mailer.from,
-//         subject: 'Successfully verified!',
-//         html: '<p>Your account has been successfully verified.</p>',
-//         text: 'Your account has been successfully verified.'
-//     },
-
-// });
-
-// nev.generateTempUserModel(User);
-
 exports.validateVerificationToken = function(req, res, next){
 
 	nev.confirmTempUser(req.params.token, function(user) {
@@ -86,8 +59,15 @@ exports.signup = function(req, res) {
 	nev.createTempUser(user, function(newTempUser) {
         // new user created
         if (newTempUser) {
-        	nev.registerTempUser(newTempUser);
-        	res.status(200).send('An email has been sent to you. Please check it to verify your account.');
+        	nev.registerTempUser(newTempUser, function (err) {
+        		if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+
+				res.status(200).send('An email has been sent to you. Please check it to verify your account.');
+        	});
         } else {
             res.status(400).send('Error: Temp user could NOT be created!');
         }

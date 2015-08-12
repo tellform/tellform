@@ -18,10 +18,10 @@ var _ = require('lodash'),
 	);
 
 //Load keys from api_keys.js if file exists
-if( fs.existsSync('./env/api_keys.js') ){
-	module.exports = _.merge(
+if( fs.existsSync('./config/env/api_keys.js') ){
+	module.exports = _.extend(
 		exports,
-		require('./env/api_keys') || {}
+		require('./env/api_keys')
 	);
 }else {
 	module.exports = exports;

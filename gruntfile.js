@@ -55,7 +55,7 @@ module.exports = function(grunt) {
 			},
 			mochaTests: {
 				files: watchFiles.mochaTests,
-				tasks: ['newer:test:server'],
+				tasks: ['test:server'],
 			}
 		},
 		jshint: {
