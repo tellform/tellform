@@ -149,25 +149,8 @@ FormSchema.pre('remove', function (next) {
 		});
 	}
 });
+
 var _original;
-// FormSchema.post( 'init', function() {
-//     _original = this.toObject();
-//     console.log(this);
-// } );
-// FormSchema.virtual('_original').get(function () {
-//   	this.constructor   // ≈ mongoose.model('…', FieldSchema).findById
-//       .findOne({_id: this._id}).exec(function(err, original){
-//       	if(err) {
-//       		console.log(err);
-//       		throw err;
-//         } else {
-//         	console.log(original);
-//         	if(original) return original.toObject();
-//         	else return null;
-        	
-//         }
-//     });
-// });
 
 //Set _original
 FormSchema.pre('save', function (next) {

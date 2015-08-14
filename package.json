@@ -21,7 +21,7 @@
     "postinstall": "bower install --config.interactive=false; grunt build"
   },
   "dependencies": {
-    "async": "^1.4.0",
+    "async": "^1.4.2",
     "body-parser": "~1.9.0",
     "bower": "~1.3.8",
     "chalk": "~1.0.0",
@@ -77,6 +77,8 @@
     "passport-local": "~1.0.0",
     "passport-twitter": "~1.0.2",
     "raven": "^0.8.1",
+    "request": "^2.60.0",
+    "request-promise": "^0.4.3",
     "satelize": "~0.1.1",
     "shortid": "^2.2.2",
     "should": "~4.1.0",
