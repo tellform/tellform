@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('users').factory('Auth',  function($window) {
-    var userState =
-    {
+    var userState = {
       isLoggedIn: false
     };
 

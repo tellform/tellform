@@ -90,6 +90,9 @@
   },
   "devDependencies": {
     "karma-chrome-launcher": "^0.1.12",
-    "karma-jasmine": "^0.2.3"
+    "karma-jasmine": "^0.2.3",
+    "karma-jasmine-html-reporter": "^0.1.8",
+    "karma-mocha-reporter": "^1.1.1",
+    "node-mandrill": "^1.0.1"
   }
 }

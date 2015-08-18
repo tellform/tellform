@@ -197,7 +197,6 @@ exports.create = function(req, res) {
 	});
 };
 
-
 /**
  * Show the current form
  */
@@ -209,23 +208,15 @@ exports.read = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) { 
-	// console.log('in form.update()');
-
-	// console.log(req.body.form.form_fields);
-
 	var form = req.form;
 	delete req.body.form.__v;
 	delete req.body.form._id;
 	delete req.body.form.admin;
 
-	// console.log(form.admin);
-
 	//Unless we have 'admin' priviledges, updating form admin is disabled
 	if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
 
 	form = _.extend(form, req.body.form);
-	// console.log(req.body.form);
-	// form.form_fields = req.body.form.form_fields;
 	
 	form.save(function(err, form) {
 		if (err) {
@@ -234,7 +225,6 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			// console.log('updated form');
 			res.json(form);
 		}
 	});

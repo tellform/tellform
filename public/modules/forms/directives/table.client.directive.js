@@ -3,6 +3,12 @@
 angular.module('forms').directive('tableDirective', ['$http', '$timeout', 'Auth',
     function ($http, $timeout, Auth) {
         return {
+            templateUrl: './modules/forms/views/directiveViews/table/table.html',
+            restrict: 'E',
+            scope: {
+                rows:'=',
+                extras:'=',
+            },
             controller: function($scope){
 
                 $scope.toggleChecker = function(checked) {
@@ -19,13 +25,10 @@ angular.module('forms').directive('tableDirective', ['$http', '$timeout', 'Auth'
                     $scope.gridOptions.$gridScope.checker = allChecked;
                 };
 
+
+
             },
-            templateUrl: './modules/forms/views/directiveViews/table/table.html',
-            restrict: 'E',
-            scope: {
-                rows:'=',
-                extras:'=',
-            }
+
         };
     }
 ]);

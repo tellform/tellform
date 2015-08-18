@@ -51,7 +51,7 @@ var config_nev = function () {
 
 	    confirmMailOptions: {
 	        from: config.mailer.from,
-	        subject: 'Successfully verified!',
+	        subject: 'Account successfully verified!',
 	        html: '<p>Your account has been successfully verified.</p>',
 	        text: 'Your account has been successfully verified.'
 	    },

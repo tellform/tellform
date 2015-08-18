@@ -8,8 +8,6 @@ var applicationConfiguration = require('./config/config'),
 
 var bowerDep = bowerFiles('**/**.js');
 
-console.log(bowerDep);
-
 // Karma configuration
 module.exports = function(config) {
 	config.set({
@@ -21,7 +19,12 @@ module.exports = function(config) {
 
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-		reporters: ['progress'],
+		reporters: ['mocha', 'html', 'progress'], 
+		
+		// plugins: [
+	 //      'karma-jasmine',
+	 //      'karma-mocha-reporter',
+	 //    ],
 
 		// Web server port
 		port: 9876,
@@ -51,6 +54,6 @@ module.exports = function(config) {
 
 		// Continuous Integration mode
 		// If true, it capture browsers, run tests and exit
-		singleRun: true
+		singleRun: false
 	});
 };

@@ -151,7 +151,19 @@ module.exports = function(grunt) {
 			unit: {
 				configFile: 'karma.conf.js'
 			}
-		}
+		},
+		// protractor: {
+		// 	options: {
+		// 		configFile: 'protractor.conf.js',
+		// 		keepAlive: true,
+		// 		noColor: false
+		// 	},
+		// 	e2e: {
+		// 		options: {
+		// 			args: {} // Target-specific arguments
+		// 		}
+		// 	}
+	 //    },
 	});
 
 	// Load NPM tasks

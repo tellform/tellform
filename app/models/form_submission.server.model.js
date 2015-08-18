@@ -91,7 +91,6 @@ FormSubmissionSchema.pre('save', function (next) {
 	
 
 	if(this.pdf && this.pdf.path){
-		// console.log(this.pdf);
 		dest_filename = that.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';
 		var __path = this.pdf.path.split('/').slice(0,this.pdf.path.split('/').length-1).join('/');
 		dest_path = path.join(__path, dest_filename);
@@ -99,12 +98,6 @@ FormSubmissionSchema.pre('save', function (next) {
 		that.pdfFilePath = dest_path;
 
 		pdfFiller.fillForm(that.pdf.path, dest_path, that.fdfData, function(err){
-			// console.log('fdfData: \n');
-			// console.log(that.fdfData);
-
-			// console.log('_form.pdf.path: '+_form.pdf.path);
-			// console.log('dest_path: '+dest_path);
-
 			if(err) {
 				console.log('\n err.message: '+err.message);
 				next( new Error(err.message) );

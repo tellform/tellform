@@ -1,3 +1,15 @@
+.panel-default.startPage {
+
+    /*background-color: #eee;*/
+    border-style: dashed;
+        border-color: #a9a9a9;
+    border-width:3px;
+}
+
+section.content p {
+    word-break: break-all;
+}
+
 .btn {
     border: 1px solid #c6c6c6!important;
 }

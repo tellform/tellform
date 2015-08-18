@@ -1,4 +1,4 @@
-<section data-ng-controller="ViewFormController" data-ng-init="findOne()" class="container admin-form">
+<section data-ng-controller="AdminFormController" data-ng-init="findOne()" class="container admin-form">
 
 	<!-- Modal Delete Dialog Template -->
     <script type="text/ng-template" id="myModalContent.html">
@@ -61,14 +61,14 @@
 		</div>
 	</div>
 
-	<div class="row" cg-busy="{promise:updatePromise,message:'Updating form...',backdrop:true}">
-	<!-- <div > -->
+	<div class="row" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...',backdrop:false}">
 		<tabset class="col-xs-12">
 			<tab>
 				<tab-heading>
 					Edit Form Fields
 				</tab-heading>
-				<edit-form-directive myform="myform"></edit-form-directive>
+				<edit-form-directive myform="myform">
+				</edit-form-directive>
 			</tab>
 			<tab disabled="true">
 				<tab-heading >
@@ -82,82 +82,65 @@
 				<configure-form-directive myform="myform" user="user">
 				</configure-form-directive>
 			</tab>
-			<tab data-ng-click="showSubmissions()">
+			<tab>
 				<tab-heading>
 					View Submissions
 				</tab-heading>
-				<div class="submissions-table row container" ng-show="viewSubmissions">
-
-					<div class="row">
-						<div class="col-xs-2">	
-							<button class="btn btn-danger" ng-click="deleteSelectedSubmissions()" ng-disabled="!isAtLeastOneChecked();">
-								<i class="fa fa-trash-o"></i> Delete Selected
-							</button>
-						</div>
-						<div class="col-xs-2">	
-							<button class="btn btn-default" ng-click="exportSubmissions()">
-								Export to XLS
-							</button>
-						</div>
-					</div>
-					<div class="row table-outer">
-						<div class="col-xs-12"> 					
-							<table id="table-submission-data" class="table table-striped table-hover table-condensed">
-							<thead>
-								<tr>
-									<th>
-										<input ng-model="table.masterChecker" ng-change="toggleAllCheckers()" type="checkbox"/>
-									</th>
-									<th>#</th>
-									<th data-ng-repeat="(key, value) in myform.form_fields">
-										{{value.title}}
-									</th>
-									<th>
-										Percentage Complete
-									</th>
-									<th>
-										Time Elapsed
-									</th>
-									<th>
-										Date Submitted (UTC)
-									</th>
-									<th ng-if="myform.autofillPDFs">
-										Generated PDF
-									</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<tr data-ng-repeat="row in table.rows" ng-click="rowClicked($index)" ng-class="{selected: row.selected === true}">
-									<td>
-										<input ng-model="row.selected" type="checkbox"/>
-									</td>
-									<th class="scope">
-										{{$index+1}}
-									</th>
-									<td data-ng-repeat="(key, value) in row.form_fields">
-										{{value.fieldValue}}
-									</td>
-									<td>
-										{{row.percentageComplete}}%
-									</td>
-									<td>
-										{{row.timeElapsed}}
-									</td>
-									<td>
-										{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}
-									</td>
-									<td ng-if="row.pdf">
-										<a href="{{row.pdfFilePath}}" download="{{row.pdf.name}}" target="_self">Generated PDF</a>
-									</td>
-								</tr>
-							</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
+				<submissions-form-directive myform="myform" user="user">
+				</submissions-form-directive>
 			</tab>
 		</tabset>
-	<!-- </div> -->
+
+		<div class="cg-busy cg-busy-backdrop cg-busy-backdrop-animation ng-show ng-scope"></div>
+<!-- 
+		<div class="cg-busy cg-busy-animation cg-busy-default-wrapper">
+			<div class="cg-busy-default-sign">
+				<div class="cg-busy-default-spinner">
+				   <div class="bar1"></div>
+				   <div class="bar2"></div>
+				   <div class="bar3"></div>
+				   <div class="bar4"></div>
+				   <div class="bar5"></div>
+				   <div class="bar6"></div>
+				   <div class="bar7"></div>
+				   <div class="bar8"></div>
+				   <div class="bar9"></div>
+				   <div class="bar10"></div>
+				   <div class="bar11"></div>
+				   <div class="bar12"></div>
+				</div>
+				<div class="cg-busy-default-text">Updating form...</div>
+			</div>
+		</div> -->
+
+<!-- 		<div class="cg-busy cg-busy-animation cg-busy-default-wrapper">
+			<div style="position: absolute; top: 0px; right: 0px;">
+				<div class="cg-busy-default-spinner">
+				   <div class="bar1"></div>
+				   <div class="bar2"></div>
+				   <div class="bar3"></div>
+				   <div class="bar4"></div>
+				   <div class="bar5"></div>
+				   <div class="bar6"></div>
+				   <div class="bar7"></div>
+				   <div class="bar8"></div>
+				   <div class="bar9"></div>
+				   <div class="bar10"></div>
+				   <div class="bar11"></div>
+				   <div class="bar12"></div>
+				</div>
+				<div class="cg-busy-default-text" style="">Updating form...</div>
+			</div>
+		</div> -->
+
+		<div class="cg-busy cg-busy-backdrop cg-busy-backdrop-animation ng-show ng-scope"></div>
+		<div class="cg-busy cg-busy-animation">
+			<div style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px;">
+
+					<div style="text-align: center; font-size: 20px;position: fixed; bottom: 0; left: 45px; background-color: gray; color: white; padding: 5px 15px 5px 10px;">Updating Form...</div>
+
+			</div>
+		</div>
+
 	</div>
 </section>

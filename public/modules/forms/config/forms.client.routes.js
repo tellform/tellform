@@ -15,7 +15,7 @@ angular.module('forms').config(['$stateProvider',
   		}).
 		state('viewForm', {
 			url: '/forms/:formId/admin',
-			templateUrl: 'modules/forms/views/view-form.client.view.html',
+			templateUrl: 'modules/forms/views/admin-form.client.view.html',
 			data: {
 				permissions: [ 'editForm' ]
 			}

@@ -1,0 +1,80 @@
+<div class="submissions-table row container">
+
+	<div class="row">
+		<div class="col-xs-2">	
+			<button class="btn btn-danger" ng-click="deleteSelectedSubmissions()" ng-disabled="!isAtLeastOneChecked();">
+				<i class="fa fa-trash-o"></i> Delete Selected
+			</button>
+		</div>
+		<div class="col-xs-2 col-xs-offset-4 text-right">	
+			<button class="btn btn-default" ng-click="exportSubmissions('xls')">
+				<small>Export to Excel</small>
+			</button>
+		</div>
+		<div class="col-md-2 text-right">	
+			<button class="btn btn-default" ng-click="exportSubmissions('csv')">
+				<small>Export to CSV</small>
+			</button>
+		</div>
+		<div class="col-md-2 text-right">	
+			<button class="btn btn-default" ng-click="exportSubmissions('json')">
+				<small>Export to JSON</small>
+			</button>
+		</div>
+	</div>
+	<div class="row table-outer">
+		<div class="col-xs-12"> 					
+			<table id="table-submission-data" class="table table-striped table-hover table-condensed">
+			<thead>
+				<tr>
+					<th>
+						<input ng-model="table.masterChecker" ng-change="toggleAllCheckers()" type="checkbox"/>
+					</th>
+					<th>#</th>
+					<th data-ng-repeat="(key, value) in myform.form_fields">
+						{{value.title}}
+					</th>
+					<th>
+						Percentage Complete
+					</th>
+					<th>
+						Time Elapsed
+					</th>
+					<th>
+						Date Submitted (UTC)
+					</th>
+					<th ng-if="myform.autofillPDFs">
+						Generated PDF
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr data-ng-repeat="row in table.rows" ng-click="rowClicked($index)" ng-class="{selected: row.selected === true}">
+					<td>
+						<input ng-model="row.selected" type="checkbox"/>
+					</td>
+					<th class="scope">
+						{{$index+1}}
+					</th>
+					<td data-ng-repeat="(key, value) in row.form_fields">
+						{{value.fieldValue}}
+					</td>
+					<td>
+						{{row.percentageComplete}}%
+					</td>
+					<td>
+						{{row.timeElapsed}}
+					</td>
+					<td>
+						{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}
+					</td>
+					<td ng-if="row.pdf">
+						<a href="{{row.pdfFilePath}}" download="{{row.pdf.name}}" target="_self">Generated PDF</a>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>

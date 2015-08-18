@@ -17,6 +17,9 @@ var should = require('should'),
 var mailosaur = require('mailosaur')(config.mailosaur.key),
 	mailbox = new mailosaur.Mailbox(config.mailosaur.mailbox_id);
 
+var mandrill = require('node-mandrill')(config.mailer.options.auth.pass);
+
+
 /**
  * Globals
  */
@@ -26,7 +29,7 @@ var credentials, _User, _Session;
  * Form routes tests
  */
 describe('User CRUD tests', function() {
-	this.timeout(10000);
+	this.timeout(15000);
 	var userSession;
 
 	beforeEach(function(done) {
@@ -52,11 +55,9 @@ describe('User CRUD tests', function() {
 
 	});
 
-
-
 	describe('create, activate and confirm a User Account', function () {
 		var username = 'testActiveAccount.be1e58fb@mailosaur.in';
-		var link, activateToken;
+		var link, _tmpUser, activateToken = '';
 
 		it('should be able to create a temporary (non-activated) User', function(done) {
 			_User.email = _User.username = username;
@@ -66,89 +67,142 @@ describe('User CRUD tests', function() {
 				.end(function(FormSaveErr, FormSaveRes) {
 					(FormSaveRes.text).should.equal('An email has been sent to you. Please check it to verify your account.');
 		
-					// setTimeout(function() {			
+					setTimeout(function() {			
 						tmpUser.findOne({username: _User.username}, function (err, user) {
 							should.not.exist(err);
 							should.exist(user);
+							_tmpUser = user;
 
 							_User.username.should.equal(user.username);
 							_User.firstName.should.equal(user.firstName);
 							_User.lastName.should.equal(user.lastName);
 
-							mailbox.getEmails(function(err, _emails) {
-								if(err) done(err);
-								var emails = _emails;
+							mandrill('/messages/search', {
+							    query: "subject:Confirm",
+							    senders: [
+							        "test@forms.polydaic.com"
+							    ],
+							       limit: 1
+							}, function(error, emails) {
+							    if (error) console.log( JSON.stringify(error) );
 
-								console.log('mailbox.getEmails:');
-								for(var i=0; i<emails.length; i++){
-									console.log(emails[i].text.links);
-								}
+							    var confirmation_email = emails[0];
 
-								var link = emails[0].text.links[0].href;
-								var activateToken = url.parse(link).hash.split('/').slice(-1)[0];
+								mandrill('/messages/content', {
+								    id: confirmation_email._id
+								}, function(error, email) {
+								    if (error) console.log( JSON.stringify(error) );
 
-								activateToken.should.equal(user.GENERATED_VERIFYING_URL);
+								    // console.log(email);
+								    var link = _(email.text.split('\n')).reverse().value()[1];
+								    console.log(link);
+								    activateToken = _(url.parse(link).hash.split('/')).reverse().value()[0];
+								    console.log('actual   activateToken: '+ activateToken);
+								    console.log('expected activateToken: ' + user.GENERATED_VERIFYING_URL);
 
-								done();
+								    done();
+
+								});
 							});
+
+							// mailbox.getEmails(function(err, _emails) {
+							// 	if(err) done(err);
+
+							// 	var emails = _emails;
+
+							// 	// console.log('mailbox.getEmails:');
+							// 	// console.log(emails[0].text.links);
+
+							// 	var link = emails[0].text.links[0].href;
+							// 	activateToken = _(url.parse(link).hash.split('/')).reverse().value()[0];
+							// 	console.log('actual   activateToken: '+ activateToken);
+							// 	console.log('expected activateToken: ' + user.GENERATED_VERIFYING_URL);
+							// 	(activateToken).should.equal(user.GENERATED_VERIFYING_URL);
+
+							// 	// done();
+							// 	userSession.get('/auth/verify/'+activateToken)
+							// 		.expect(200)
+							// 		.end(function(VerifyErr, VerifyRes) {
+							// 			should.not.exist(VerifyErr);
+							// 			(VerifyRes.text).should.equal('User successfully verified');
+							// 			done();
+							// 		});
+
+							// });
+
 						});
-					// }, 1000);
+					}, 3000);
 				});
 		});
 
-		// it('should be able to activate/verify a User Account', function(done) {
-		// _User.email = _User.username = username;
-		// 	mailbox.getEmails(function(err, _emails) {
-		// 		if(err) done(err);
-		// 		var emails = _emails;
-
-		// 		console.log('mailbox.getEmails:');
-		// 		console.log(emails[0].text.links);
-
-		// 		link = emails[0].text.links[0].href;
-		// 		activateToken = url.parse(link).hash.split('/').slice(-1)[0];
-
-		// 		userSession.get('/auth/verify/'+activateToken)
-		// 			.expect(200, 'User successfully verified')
-		// 			.end(function(VerifyErr, VerifyRes) {
-		// 				should.not.exist(VerifyErr);
-		// 				done();
-		// 			});
-		// 	});
-
+		// it('should be able to verify a User Account', function(done) {
+		// 	userSession.get('/auth/verify/'+activateToken)
+		// 		.expect(200)
+		// 		.end(function(VerifyErr, VerifyRes) {
+		// 			should.not.exist(VerifyErr);
+		// 			(VerifyRes.text).should.equal('User successfully verified');
+		// 			done();
+		// 		});
 		// });
 
-		// it('should receive confirmation email after activating a User Account', function(done) {
-		// _User.email = _User.username = username;
-		// 	mailbox.getEmails(function(err, _emails) {
-		// 		if(err) done(err);
-		// 		var emails = _emails;
+		it('should receive confirmation email after verifying a User Account', function(done) {
+			mailbox.getEmails(function(err, _emails) {
+				if(err) throw err;
+				var email = _emails[0];
 
-		// 		console.log('mailbox.getEmails:');
-		// 		console.log(emails[0].text.links);
-
-		// 		var link = emails[0].text.links[0].href;
-		// 		var activateToken = url.parse(link).hash.split('/').slice(-1)[0];
-
-		// 		userSession.get('/auth/verify/'+activateToken)
-		// 			.expect(200, 'User successfully verified')
-		// 			.end(function(VerifyErr, VerifyRes) {
-		// 				should.not.exist(VerifyErr);
-		// 				done();
-		// 			});
-		// 	});
-		// });
-
+				// console.log('mailbox.getEmails:');
+				console.log(email);
+				(email.subject).should.equal('Account successfully verified!');
+				done();
+			});
+		});
 	});
+
+	it('should be able to login and logout a User', function (done) {
+		var username = 'testActiveAccount.be1e58fb@mailosaur.in';
+		_User.email = _User.username = credentials.username = username;
+		userSession.post('/auth/signup')
+			.send(_User)
+			.expect(200)
+			.end(function(FormSaveErr, FormSaveRes) {
+				(FormSaveRes.text).should.equal('An email has been sent to you. Please check it to verify your account.');
+	
+				userSession.post('/auth/signin')
+					.send(credentials)
+					.expect('Content-Type', /json/)
+					.expect(200)
+					.end(function(signinErr, signinRes) {
+
+						// Handle signin error
+						if (signinErr) throw signinErr;
+
+						userSession.get('/auth/signout')
+							.expect(200)
+							.end(function(signoutErr, signoutRes) {
+
+								// Handle signout error
+								if (signoutErr) throw signoutErr;
+
+								(signoutRes.text).should.equal('Successfully logged out');
+
+								done();
+							});
+					});
+			});
+	});
+
+	it('should be able to reset a User\'s password');
+
+	it('should be able to delete a User account without any problems');
 
 	afterEach(function(done) {
 		User.remove().exec(function () {
 			tmpUser.remove().exec(function(){
-				// mailbox.deleteAllEmail(function (err, body) {
-					// if(err) done(err);
+				mailbox.deleteAllEmail(function (err, body) {
+					if(err) done(err);
 					userSession.destroy();
 					done();
-				// });
+				});
 			});
 		});
 	});

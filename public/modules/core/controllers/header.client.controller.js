@@ -1,13 +1,9 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope','$scope','Menus', '$state', 'Auth', 'User',
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User',
 	function ($rootScope, $scope, Menus, $state, Auth, User) {
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
-	 //    if(!$scope.user || !$scope.user.username){
-		// 	$scope.user = $rootScope.user = User.getCurrent();
-		// 	$scope.authentication.currentUser = $rootScope.authentication.currentUser = $scope.user;
-		// }
 
 		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish'];
 

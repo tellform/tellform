@@ -3,7 +3,7 @@
 angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCounter', 'Auth', '$filter', '$rootScope',
     function ($http, $timeout, timeCounter, Auth, $filter, $rootScope) {
         return {
-            templateUrl: './modules/forms/views/directiveViews/form/submit-form.html',
+            templateUrl: './modules/forms/views/directiveViews/form/submit-form.client.view.html',
             restrict: 'E',
             scope: {
                 form:'='
@@ -48,7 +48,7 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     };
 
 
-                    $scope.exitStartPage = function () {
+                    $scope.exitstartPage = function () {
                         $scope.form.startPage.showStart = false;
                     };
 

@@ -4,7 +4,7 @@ angular.module('forms')
 .directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
     function ($rootScope, $q, $http, $timeout, timeCounter, Auth, FormFields) {
         return {
-            templateUrl: './modules/forms/views/directiveViews/form/edit-form.html',
+            templateUrl: './modules/forms/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',
@@ -142,43 +142,42 @@ angular.module('forms')
                     field.title = $scope.myform.form_fields[field_index].title;
                     console.log($scope.myform.form_fields[field_index]);
 
-
                     //Insert field at selected index
                     $scope.myform.form_fields.splice(field_index+1, 0, field);
-                    // for(var i = 0; i < $scope.myform.form_fields.length; i++){
-                    //     if($scope.myform.form_fields[i].field_id === field.field_id){
-                            
-                    //         break;
-                    //     }
-                    // }
+
                 };
 
 
                 /*
-                **  StartPage Button Methods
+                **  startPage Button Methods
                 */
 
-                // add new Button to the field
-                $scope.addButton = function (Button){
+                // add new Button to the startPage/EndPage
+                $scope.addButton = function (newButtons){
 
-                    var lastButtonID = 0;
+                    var newButton = {};
+                    newButton.bgColor = '#ddd';
+                    newButton.color = '#ffffff';
+                    newButton.text = 'Button';
 
-                    if($scope.myform.StartPage.buttons[$scope.myform.StartPage.buttons.length-1])
-                        lastButtonID = $scope.myform.StartPage.buttons[$scope.myform.StartPage.buttons.length-1].button_id;
-
-                    // put new option into fieldOptions array
-                    Button.backgroundColor = '#5bc0de';
-                    Button.button_id = lastButtonID;
-                    Button.color = '#ffffff';
-                    
-
-                    $scope.myform.StartPage.buttons.push(Button);
+                    $scope.myform.startPage.buttons.push(newButton);
                 };
 
-                // delete particular option
-                $scope.deleteButton = function (button_index){
-                    $scope.myform.StartPage.buttons.splice(button_index, 1);
+                // delete particular Button
+                $scope.deleteButton = function(button){
+                    var hashKey = _.chain(button.$$hashKey).words().last().parseInt().value();
+
+                    for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
+                        var currHashKey = _.chain($scope.myform.startPage.buttons[i].$$hashKey).words().last().parseInt().value();;
+
+                        if(currHashKey === hashKey){
+                            $scope.myform.startPage.buttons.splice(i, 1);
+                            break;
+                        }
+                    }
                 };
+
+
 
                 /*
                 **  Field Option Methods
