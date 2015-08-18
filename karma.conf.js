@@ -3,10 +3,7 @@
 /**
  * Module dependencies.
  */
-var applicationConfiguration = require('./config/config'),
-	bowerFiles = require('main-bower-files');
-
-var bowerDep = bowerFiles('**/**.js');
+var applicationConfiguration = require('./config/config');
 
 // Karma configuration
 module.exports = function(config) {
