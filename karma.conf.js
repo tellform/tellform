@@ -3,7 +3,10 @@
 /**
  * Module dependencies.
  */
-var applicationConfiguration = require('./config/config');
+var applicationConfiguration = require('./config/config'),
+	bowerFiles = require('main-bower-files');
+
+var bowerDep = bowerFiles('**/**.js');
 
 // Karma configuration
 module.exports = function(config) {
@@ -17,17 +20,20 @@ module.exports = function(config) {
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
 		reporters: ['mocha', 'html', 'progress'], 
-		
-		// plugins: [
-	 //      'karma-jasmine',
-	 //      'karma-mocha-reporter',
-	 //    ],
 
 		// Web server port
 		port: 9876,
 
 		// Enable / disable colors in the output (reporters and logs)
 		colors: true,
+
+		//Make sure we capture console.log output
+		client: {
+	      captureConsole: true,
+	      mocha: {
+	        bail: true
+	      }
+	    },
 
 		// Level of logging
 		// Possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG

@@ -5,10 +5,74 @@
 	describe('AdminFormController Tests', function() {
 		// Initialize global variables
 		var AdminFormController,
+			createAdminFormController,
 			scope,
 			$httpBackend,
 			$stateParams,
-			$location;
+			$location,
+			$state;
+
+		var sampleUser = {
+			firstName: 'Full',
+			lastName: 'Name',
+			email: 'test@test.com',
+			username: 'test@test.com',
+			password: 'password',
+			provider: 'local',
+			roles: ['user'],
+			_id: 'ed873933b1f1dea0ce12fab9'
+		};
+
+		var sampleForm = {
+			title: 'Form Title',
+			admin: 'ed873933b1f1dea0ce12fab9',
+			language: 'english',
+			form_fields: [
+				{'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
+				{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
+				{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+			],
+			_id: '525a8422f6d0f87f0e407a33'
+		};
+
+		var expectedForm = {
+			title: 'Form Title',
+			admin: 'ed873933b1f1dea0ce12fab9',
+			language: 'english',
+			form_fields: [
+				{'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
+				{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
+				{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+			],
+			visible_form_fields: [
+				{'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
+				{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
+				{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+			],
+			_id: '525a8422f6d0f87f0e407a33'
+		};
+
+		var fakeModal = function(){
+			this.opened = true;
+
+			this.result = function(confirmCallback, cancelCallback) {
+	            //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+	            this.confirmCallBack = confirmCallback;
+	            this.cancelCallback = cancelCallback;
+		    };
+			this.close = function( item ) {
+		        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+		        this.opened = false;
+		        this.confirmCallBack( item );
+		    };
+			this.dismiss = function( type ) {
+		        //The user clicked cancel on the modal dialog, call the stored cancel callback
+		        this.opened = false;
+		        this.cancelCallback( type );
+		    };
+		}
+
+
 
 		// The $resource service augments the response object with methods for updating and deleting the resource.
 		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -29,156 +93,185 @@
 			});
 		});
 
-		// Then we can start by loading the main application module
+		//Mock Users Service
+		beforeEach(module(function($provide) {
+			$provide.service('User', function($q) {
+				return {
+					getCurrent: function() {
+						var deferred = $q.defer();
+						deferred.resolve( JSON.stringify(sampleUser) );
+						return deferred.promise;
+					},
+					login: function(credentials) {
+						var deferred = $q.defer();
+						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+							deferred.resolve( JSON.stringify(sampleUser) );
+						}else {
+							deferred.resolve('Error: User could not be loggedin');
+						}
+
+						return deferred.promise;
+					},
+					logout: function() {
+						var deferred = $q.defer();
+						deferred.resolve(null);
+						return deferred.promise;
+					},
+					signup: function(credentials) {
+						var deferred = $q.defer();
+						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+							deferred.resolve( JSON.stringify(sampleUser) );
+						}else {
+							deferred.resolve('Error: User could not be signed up');
+						}
+
+						return deferred.promise;
+					}
+				};
+			});
+		}));
+
+		//Mock Authentication Service
+		beforeEach(module(function($provide) {
+			$provide.service('Auth', function() {
+				return {
+					ensureHasCurrentUser: function() {
+						return sampleUser;
+					},
+					isAuthenticated: function() {
+						return true;
+					},
+					getUserState: function() {
+						return true;
+					}
+				};
+			});
+		}));
+
+		// Load the main application module
 		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+		beforeEach(module('stateMock'));
+
+		beforeEach(inject(function($modal) {
+		    spyOn($modal, 'open').and.returnValue(new fakeModal());
+		}));
 
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$state_, _$stateParams_, _$httpBackend_) {
+		beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms) {
 			// Set a new global scope
 			scope = $rootScope.$new();
+
+			//Set CurrentForm
+			CurrentForm.setForm(sampleForm);
 
 			// Point global variables to injected services
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
+			$state = _$state_;
+
+			$httpBackend.whenGET(/\.html$/).respond('');
+			$httpBackend.whenGET('/users/me/').respond('');
 
 			// Initialize the Forms controller.
-			AdminFormController = $controller('AdminFormController', {
-				$scope: scope,
-			});
+			createAdminFormController = function(){
+				return $controller('AdminFormController', { $scope: scope });
+			};
+ 		}));
+
+		it('AdminFormController should fetch current Form when instantiated', inject(function() {
+			// Run controller functionality
+			var controller = createAdminFormController();
+
+			// Test scope value
+			expect(scope.myform).toEqualData(sampleForm);
 		}));
 
-		//Mock Authentication Service
-		$provide.value("MyLoginServce", {
-			ensureHasCurrentUser: function(){
-				return true;
-			},
-			redirectForLogin: function {}
-	    });
-
 		it('$scope.findOne() should fetch current Form', inject(function(Forms) {
+
 			// Define a sample article object
-			var sampleForm = new Forms({
-				title: 'Form Title',
-				admin: 'ed873933b1f1dea0ce12fab9',
-				language: 'english',
-				form_fields: [
-					{'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''},
-					{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''},
-					{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''}
-				]
-			});
+			var expectedFormObj = new Forms(expectedForm);
+
+			var controller = createAdminFormController();
+
 			// Set the URL parameter
-			$stateParams.formId = '525a8422f6d0f87f0e407a33';
+			$stateParams.formId = expectedForm._id;
 
 			// Set GET response
-			$httpBackend.expectGET(/forms\/([0-9a-fA-F]{24})$/).respond(sampleForm);
+			$httpBackend.expectGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
 
 			// Run controller functionality
 			scope.findOne();
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.article).toEqualData(sampleArticle);
+			expect( scope.myform.toJSON() ).toEqualData(expectedFormObj.toJSON());
 		}));
 
-		// it('$scope.find() should create an array with at least one article object fetched from XHR', inject(function(Forms) {
-		// 	// Create sample article using the Forms service
-		// 	var sampleArticle = new Forms({
-		// 		title: 'An Article about MEAN',
-		// 		content: 'MEAN rocks!'
-		// 	});
+		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', function() {
+			var controller = createAdminFormController();
 
-		// 	// Create a sample Forms array that includes the new article
-		// 	var sampleForms = [sampleForm];
+			//Set expected $state transition 
+			$state.expectTransitionTo('listForms');
 
-		// 	// Set GET response
-		// 	$httpBackend.expectGET('Forms').respond(sampleForms);
+			// Set DELETE response
+			$httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
 
-		// 	// Run controller functionality
-		// 	scope.find();
-		// 	$httpBackend.flush();
+			//Run controller functionality
+			scope.openDeleteModal();
 
-		// 	// Test scope value
-		// 	expect(scope.Forms).toEqualData(sampleForms);
-		// }));
+			scope.deleteModal.result(function(selectedItem){
+				scope.selected = selectedItem;
+			}, function(type){
+				$scope.canceled = true;
+			});
 
+			scope.removeCurrentForm();
+	
+			$httpBackend.flush();
+		});
 
-		// it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Forms) {
-		// 	// Create a sample article object
-		// 	var sampleArticlePostData = new Forms({
-		// 		title: 'An Article about MEAN',
-		// 		content: 'MEAN rocks!'
-		// 	});
+		it('$scope.update() should send a PUT request with the id of form', function() {
+			var controller = createAdminFormController();
 
-		// 	// Create a sample article response
-		// 	var sampleArticleResponse = new Forms({
-		// 		_id: '525cf20451979dea2c000001',
-		// 		title: 'An Article about MEAN',
-		// 		content: 'MEAN rocks!'
-		// 	});
+			//Set PUT response
+			$httpBackend.expect('PUT', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
 
-		// 	// Fixture mock form input values
-		// 	scope.title = 'An Article about MEAN';
-		// 	scope.content = 'MEAN rocks!';
+			//Run controller functionality
+			scope.update(false, null);
 
-		// 	// Set POST response
-		// 	$httpBackend.expectPOST('Forms', sampleArticlePostData).respond(sampleArticleResponse);
+			$httpBackend.flush();
+		});
 
-		// 	// Run controller functionality
-		// 	scope.create();
-		// 	$httpBackend.flush();
+		it('$scope.openDeleteModal() should open scope.deleteModal', function() {
+			var controller = createAdminFormController();
 
-		// 	// Test form inputs are reset
-		// 	expect(scope.title).toEqual('');
-		// 	expect(scope.content).toEqual('');
+			//Run controller functionality
+			scope.openDeleteModal();
+			expect( scope.deleteModal.opened ).toEqual(true);
+		});
 
-		// 	// Test URL redirection after the article was created
-		// 	expect($location.path()).toBe('/Forms/' + sampleArticleResponse._id);
-		// }));
+		it('$scope.cancelDeleteModal() should close scope.deleteModal', inject(function($modal) {
+			var controller = createAdminFormController();
 
-		// it('$scope.update() should update a valid article', inject(function(Forms) {
-		// 	// Define a sample article put data
-		// 	var sampleArticlePutData = new Forms({
-		// 		_id: '525cf20451979dea2c000001',
-		// 		title: 'An Article about MEAN',
-		// 		content: 'MEAN Rocks!'
-		// 	});
+			//Run controller functionality
+			scope.openDeleteModal();
+			console.log(scope.deleteModal.opened);
 
-		// 	// Mock article in scope
-		// 	scope.article = sampleArticlePutData;
+			scope.deleteModal.result(function(selectedItem){
+				this.selected = selectedItem;
+			}, function(type){
+				this.canceled = true;
+			});
 
-		// 	// Set PUT response
-		// 	$httpBackend.expectPUT(/Forms\/([0-9a-fA-F]{24})$/).respond();
+			scope.cancelDeleteModal();
+			console.log(scope.deleteModal.opened);
+			expect( scope.deleteModal.opened ).toEqual(false);
+			expect( scope.deleteModal.canceled ).toEqual(true);
 
-		// 	// Run controller functionality
-		// 	scope.update();
-		// 	$httpBackend.flush();
-
-		// 	// Test URL location to new object
-		// 	expect($location.path()).toBe('/Forms/' + sampleArticlePutData._id);
-		// }));
-
-		// it('$scope.remove() should send a DELETE request with a valid articleId and remove the article from the scope', inject(function(Forms) {
-		// 	// Create new article object
-		// 	var sampleArticle = new Forms({
-		// 		_id: '525a8422f6d0f87f0e407a33'
-		// 	});
-
-		// 	// Create new Forms array and include the article
-		// 	scope.Forms = [sampleArticle];
-
-		// 	// Set expected DELETE response
-		// 	$httpBackend.expectDELETE(/Forms\/([0-9a-fA-F]{24})$/).respond(204);
-
-		// 	// Run controller functionality
-		// 	scope.remove(sampleArticle);
-		// 	$httpBackend.flush();
-
-		// 	// Test array after successful delete
-		// 	expect(scope.Forms.length).toBe(0);
-		// }));
+		}));
 	});
 }());

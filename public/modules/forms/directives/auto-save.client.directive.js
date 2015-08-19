@@ -37,12 +37,10 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
         var debounceSave = function () {
           $rootScope.saveInProgress = true;
-          $rootScope[$attrs.autoSaveCallback](false,
+          $rootScope[$attrs.autoSaveCallback](true,
             function(err){
               if(!err){
                 console.log('\n\nForm data persisted -- setting pristine flag');
-                // console.log('\n\n---------\nUpdate form CLIENT');
-                // console.log(Date.now());
                 $formCtrl.$setPristine(); 
               }else{
                 console.error('Error form data NOT persisted');
@@ -51,7 +49,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
             }); 
         };
 
-
+        //Update/save Form if any Form fields are Dirty and Touched
         $scope.$watch(function(newValue, oldValue) {
           if($scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
             debounceSave();
@@ -86,7 +84,9 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
               console.log('Saving Form');
               debounceSave();           
             }); 
-          }else if($rootScope.finishedRender && $rootScope.saveInProgress){
+          }
+          //If we are finished rendering then form saving should be finished
+          else if($rootScope.finishedRender && $rootScope.saveInProgress){
             $rootScope.saveInProgress = false;
           }
 

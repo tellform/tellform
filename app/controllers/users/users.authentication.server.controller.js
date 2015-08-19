@@ -32,10 +32,10 @@ exports.validateVerificationToken = function(req, res, next){
 exports.resendVerificationEmail = function(req, res, next){
 	nev.resendVerificationEmail(req.body.email, function(user) {
 	    if (user){
-	        res.status(200).send('User successfully verified');
+	        res.status(200).send('Verification email successfully Re-Sent');
 	    }else {
 	        // user hasn't been found yet
-	        res.status(400).send( {message: 'Error: User could NOT be verified'} );
+	        res.status(400).send( {message: 'Error: Verification Email could NOT be sent'} );
 	    }
 	});
 };

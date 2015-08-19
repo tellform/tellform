@@ -24,7 +24,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         $http.post('/auth/signin', credentials).success(function(response) {
             deferred.resolve(response);
           }).error(function(error) {
-
             deferred.reject(error.message || error);
           });
           return deferred.promise;
@@ -79,7 +78,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       resetPassword: function(passwordDetails, token) { 
         var deferred = $q.defer();
         $http.get('/auth/password/'+token, passwordDetails).success(function(response) {
-
           deferred.resolve();
         }).error(function(error) {
           deferred.reject(error.message || error);

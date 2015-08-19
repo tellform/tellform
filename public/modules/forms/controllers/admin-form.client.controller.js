@@ -4,7 +4,6 @@
 angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$modal',
 	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $modal) {
 
-        var deleteModal;
         $scope = $rootScope;
 
         $scope.myform = CurrentForm.getForm();
@@ -17,7 +16,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             });
             CurrentForm.setForm($scope.myform);
         };
-
         $scope.setForm = function(form){
             $scope.myform = form;
         };
@@ -31,82 +29,70 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         ** DeleteModal Functions 
         */
         $scope.openDeleteModal = function(){
-
-            deleteModal = $modal.open({
+            $scope.deleteModal = $modal.open({
               animation: $scope.animationsEnabled,
               templateUrl: 'myModalContent.html',
               controller: 'AdminFormController',
             });
         };
         $scope.cancelDeleteModal = function(){
-            if(deleteModal){
-                deleteModal.dismiss('cancel');
+            if($scope.deleteModal){
+                $scope.deleteModal.dismiss('cancel');
             }
         };
 
         // Remove existing Form
-        $scope.remove = function(form_id) {
-            if(deleteModal && deleteModal.opened){
+        $scope.removeCurrentForm = function() {
+            if($scope.deleteModal && $scope.deleteModal.opened){
 
-                deleteModal.close();
+                $scope.deleteModal.close();
             
-                var form = {};
-                if(!form_id){
-                    form = CurrentForm.getForm();
-                    if(!form) form = $scope.myform;
-                }else {
-                    form._id = form_id;
-                }
+                var form_id = $scope.myform._id;
+                if(!form_id) throw new Error('Error - removeCurrentForm(): $scope.myform._id does not exist');
         
-                $http.delete('/forms/'+form._id)
+                $http.delete('/forms/'+form_id)
                     .success(function(data, status, headers){
                         console.log('form deleted successfully');
 
-                        if(!form_id){
-                            $state.go('listForms', {}, {reload: true}); 
-                        }
-                        if($scope.myforms.length > 0){
-                            $scope.myforms = _.filter($scope.myforms, function(myform){
-                                return myform._id !== form._id; 
-                            });
-                        }
+                        $state.go('listForms', {}, {reload: true}); 
 
                     }).error(function(error){
                         console.log('ERROR: Form could not be deleted.');
                         console.error(error);
-                    }).finally(function(){
-
                     });
             }
         };
 
-
         // Update existing Form
-        $scope.update = $rootScope.update = function(shouldUpdateNow, cb){
-            // console.log('shouldUpdateNow: '+shouldUpdateNow);
+        $scope.update = $rootScope.update = function(updateImmediately, cb){
+
             var continueUpdate = true;
-            if(shouldUpdateNow){
-               continueUpdate = !$rootScope.saveInProgress;
+            if(!updateImmediately){
+                continueUpdate = !$rootScope.saveInProgress;
             }
             
+            //Update form if we **are not currently updating** or if **shouldUpdateNow flag is set**
             if(continueUpdate){
-                console.log('begin updating form');
+                // console.log('begin updating form');
                 var err = null;
 
-                if(shouldUpdateNow){ $rootScope.saveInProgress = true; }
+                if(!updateImmediately){ $rootScope.saveInProgress = true; }
 
                 $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
-                        console.log(response.data);
+                        // console.log(response.data);
                     }).catch(function(response){
-                        console.log('Error occured during form UPDATE.\n');
-                        console.log(response.data);
+                        // console.log('Error occured during form UPDATE.\n');
+                        // console.log(response.data);
                         err = response.data;
                     }).finally(function() { 
-                        console.log('finished updating');
-                        if(shouldUpdateNow){$rootScope.saveInProgress = false; }
-                        cb(err); 
+                        // console.log('finished updating');
+                        if(!updateImmediately){$rootScope.saveInProgress = false; }
+
+                        if( (typeof cb) === 'function'){
+                            cb(err); 
+                        }
                     });
             }
         };

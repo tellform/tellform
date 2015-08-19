@@ -1,8 +1,8 @@
 'use strict';
 
 //Forms service used for communicating with the forms REST endpoints
-angular.module('forms').service('CurrentForm', ['Forms', 
-	function(Forms){
+angular.module('forms').service('CurrentForm',
+	function(){
 
 		//Private variables
 		var _form = {};
@@ -15,4 +15,4 @@ angular.module('forms').service('CurrentForm', ['Forms',
 	        _form = form;
 	    };
     }
-]);
+);

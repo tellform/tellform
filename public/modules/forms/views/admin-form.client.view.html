@@ -19,7 +19,7 @@
 	        <p>
 				<input type="text" data-ng-model="deleteConfirm" class="input-block" autofocus required aria-label="Type in the name of the form to confirm that you want to delete this form.">
 			</p>
-            <button type="submit" ng-click="remove()" class="btn btn-block btn-danger" ng-disabled="myform.title != deleteConfirm">
+            <button type="submit" ng-click="removeCurrentForm()" class="btn btn-block btn-danger" ng-disabled="myform.title != deleteConfirm">
             	I understand the consequences, delete this form
             </button>
         </div>

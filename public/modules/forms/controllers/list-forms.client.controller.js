@@ -1,7 +1,7 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm','$http',
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http',
 	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
         
         $scope = $rootScope;
@@ -33,13 +33,14 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             $state.go(route, {'formId': id}, {reload: true});
         };
 
-        $scope.duplicate = function(form, form_index){
+        $scope.duplicate = function(form_index){
+            var form = $scope.myforms[form_index];
             delete form._id;
             
             $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
-                    console.log('form duplicated');
-                    $scope.myforms.splice(form_index, 0, data);
+                    // console.log('form duplicated');
+                    $scope.myforms.splice(form_index+1, 0, data);
                 }).error(function(errorResponse){
                     console.log(errorResponse);
                     $scope.error = errorResponse.data.message;
@@ -69,19 +70,16 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             }
         };
 
-        $scope.removeFromList = function(deleted_form_id) {
+        $scope.removeForm = function(form_index) {
+            if(form_index >= $scope.myforms.length || form_index < 0){
+                throw new Error('Error: form_index in removeForm() must be between 0 and '+$scope.myforms.length-1);
+            }
 
-            console.log('Remove existing form');
-    
-            $http.delete('/forms/'+deleted_form_id)
+            $http.delete('/forms/'+$scope.myforms[form_index]._id)
                 .success(function(data, status, headers){
                     console.log('form deleted successfully');
                     
-                    if($scope.myforms.length > 0){
-                        $scope.myforms = _.filter($scope.myforms, function(myform){
-                            return myform._id !== deleted_form_id; 
-                        });
-                    }
+                    $scope.myforms.splice(form_index, 1);
 
                 }).error(function(error){
                     console.log('ERROR: Form could not be deleted.');
