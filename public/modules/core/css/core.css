@@ -52,10 +52,10 @@
 	display: none !important;
 }
 .ng-invalid.ng-dirty {
-	border-color: #FA787E;
+	/*border-color: #FA787E;*/
 }
 .ng-valid.ng-dirty {
-	border-color: #78FA89;
+	/*border-color: #78FA89;*/
 }
 .browsehappy.jumbotron.hide,
 body.ng-cloak

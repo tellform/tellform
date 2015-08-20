@@ -1,8 +1,6 @@
 .panel-default.startPage {
-
-    /*background-color: #eee;*/
     border-style: dashed;
-        border-color: #a9a9a9;
+    border-color: #a9a9a9;
     border-width:3px;
 }
 
@@ -11,7 +9,7 @@ section.content p {
 }
 
 .btn {
-    border: 1px solid #c6c6c6!important;
+    border: 1px solid #c6c6c6;
 }
 .btn[type='submit'] {
     font-size: 1.5em;
@@ -190,8 +188,6 @@ div.config-form .row.field {
             }
 
 
-
-
 /* Styles for form admin view (/forms/:formID/admin) */
 .admin-form > .page-header {
     padding-bottom: 0px;
@@ -321,7 +317,9 @@ section > section.public-form {
     margin-bottom: 45px;
 }
 .form-item.create-new input[type='text']{
-    /*width: inherit;*/
+    width: inherit;
+    color:black; 
+    border:none;
 }
 
 .form-item.create-new {
@@ -329,7 +327,7 @@ section > section.public-form {
     color: white;
 }
 
-/*MODAL CSS */
+/*CREATE-NEW FORM MODAL*/
 .form-item.create-new.new-form {
     background-color: rgb(300,131,131);
     z-index: 11;
@@ -337,9 +335,34 @@ section > section.public-form {
 .form-item.create-new.new-form:hover {
     background-color: rgb(300,100,100);
 }
+    .form-item.new-form input[type='text'] {
+        margin-top:0.2em;
+        width: inherit;
+        color:black; 
+        border:none;
+        padding: 0.3em 0.6em 0.3em 0.6em;
+    }
+    .form-item.new-form .custom-select {
+        margin-top: 0.2em
+    }
+        .form-item.new-form .custom-select select {
+            background-color: white;
+        }
 
-    .form-item.new-form a.btn {
-        font-size: 0.95em;
+
+    .form-item.new-form .details-row {
+        margin-top: 1em;
+    }
+    .form-item.new-form .details-row.submit {
+        margin-top: 1.7em;
+    }
+        .form-item.new-form .details-row.submit .btn {
+            font-size: 0.95em;
+        }
+
+    .form-item.new-form .title-row {
+        margin-top: 1em;
+        top:0;
     }
 
 /*Modal overlay (for lightbox effect)*/

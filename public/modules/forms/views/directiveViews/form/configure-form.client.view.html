@@ -196,7 +196,9 @@
                     <input type="text" 
                         ng-model="myform.title" 
                         value="{{myform.title}}"
-                        style="width: 100%;">
+                        style="width: 100%;"
+                        ng-minlength="4"
+                        ng-pattern="/^[a-zA-Z0-9 \-.]*$/">
                 </div>
             </div>
 

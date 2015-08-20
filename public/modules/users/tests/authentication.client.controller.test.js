@@ -36,13 +36,11 @@
 // 		        var firstname = element(by.model('credentials.firstname')),
 // 					lastname = element(by.model('credentials.lastname')),
 // 					email = element(by.model('credentials.email')),
-// 			    	password = element(by.model('credentials.password')),
-// 			    	username = element(by.model('credentials.username'));
+// 			    	password = element(by.model('credentials.password'));
 
 // 			    email.sendKeys('admin@app.com');
-// 			    username.sendKeys('admin');
 // 			    firstname.sendKeys('admin_first');
-// 			    firstname.sendKeys('admin_last');
+// 			    lastname.sendKeys('admin_last');
 // 			    password.sendKeys('1234');
 
 // 			    //Click signup button

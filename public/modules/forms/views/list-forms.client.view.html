@@ -21,33 +21,32 @@
 			</div>	
 		</div>
 
-		<form name="createForm" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form" ng-if="showCreateModal">
-			<div ng-init="setForm(createForm);" style="display:none;"></div>
-				<div class="title-row row">
-					    <div class="col-xs-5 field-title">Name </div>
-					    <div class="col-xs-12 field-input">
-							<input type="text" name="name" ng-model="name" required style="color:black; border:none;" ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
-					    </div>
-				</div>
-				<div class="details-row row">			
-				    <div class="col-xs-5 field-title text-left">
-				    	Language
+		<form name="forms.createForm" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form" ng-if="showCreateModal">
+			<div class="title-row row">
+				    <div class="col-xs-5 field-title text-left"> Name </div>
+				    <div class="col-xs-12 field-input">
+						<input type="text" name="title" required ng-pattern="/^[a-zA-Z0-9 \-.]*$/" ng-minlength="4"/>
 				    </div>
-				    <div class="col-xs-5 field-input">
+			</div>
+			<div class="details-row row">			
+			    <div class="col-xs-5 field-title text-left"> Language </div>
+			    <div class="col-xs-12 field-input">
+				    <div class="button custom-select">
 						<select style="color:black;" name="language" required ng-model="formLanguage" ng-init="formLanguage = user.language">
 							<option ng-repeat="language in languages" value="{{language}}">
 								{{language}}
 							</option>
 				        </select>      
 				    </div>
-				</div>
-				<div class="details-row row">			
-				    <div class="col-xs-12 field-title text-center">
-				    	<button class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="createNew()">
-				    		Create Form
-				    	</button>
-				    </div>
-				</div>		
+			    </div>
+			</div>
+			<div class="details-row submit row">			
+			    <div class="col-xs-12 field-title text-center">
+			    	<button class="btn btn-primary" ng-disabled="forms.createForm.$invalid" ng-click="createNew()">
+			    		Create Form
+			    	</button>
+			    </div>
+			</div>		
 		</form>
 
 		<div data-ng-repeat="form in myforms" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container">

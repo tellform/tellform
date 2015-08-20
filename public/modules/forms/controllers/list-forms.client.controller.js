@@ -5,7 +5,8 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
         
         $scope = $rootScope;
-        $rootScope.showCreateModal = false;
+        $scope.forms = {};
+        $scope.showCreateModal = false;
 
         // Return all user's Forms
         $scope.findAll = function() {
@@ -16,13 +17,13 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         //Modal functions
         $scope.openCreateModal = function(){
-            if(!$rootScope.showCreateModal){
-                $rootScope.showCreateModal = true;
+            if(!$scope.showCreateModal){
+                $scope.showCreateModal = true;
             }
         };
         $scope.closeCreateModal = function(){
-            if($rootScope.showCreateModal){
-                $rootScope.showCreateModal = false;
+            if($scope.showCreateModal){
+                $scope.showCreateModal = false;
             }
         };
 
@@ -34,13 +35,14 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         };
 
         $scope.duplicate = function(form_index){
-            var form = $scope.myforms[form_index];
-            delete form._id;
+            var form = _.clone($scope.myforms[form_index]);
+            form._id = '';
             
             $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
-                    // console.log('form duplicated');
+                    console.log('form duplicated');
                     $scope.myforms.splice(form_index+1, 0, data);
+                    console.log($scope.myforms[3]._id);
                 }).error(function(errorResponse){
                     console.log(errorResponse);
                     $scope.error = errorResponse.data.message;
@@ -49,22 +51,21 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         // Create new Form
         $scope.createNew = function(){
-            var form = {};
-            form.title = $scope.myform.name.$modelValue;
-            form.language = $scope.myform.language.$modelValue;
-            // console.log(form);
-            $rootScope.showCreateModal = true;
+            console.log($scope.forms.createForm);
 
-            // console.log($scope.myform);
-            if($scope.myform.$valid && $scope.myform.$dirty){
+            var form = {};
+            form.title = $scope.forms.createForm.title.$modelValue;
+            form.language = $scope.forms.createForm.language.$modelValue;
+
+            if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
                 $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
-                    console.log('form created');
+                    console.log('new form created');
 
                     // Redirect after save 
                     $scope.goToWithId('viewForm', data._id+'');
                 }).error(function(errorResponse){
-                    console.log(errorResponse);
+                    console.error(errorResponse);
                     $scope.error = errorResponse.data.message;
                 });
             }

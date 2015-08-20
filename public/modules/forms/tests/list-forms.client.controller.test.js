@@ -192,38 +192,37 @@
 
             var dupSampleForm = sampleFormList[2],
                 dupSampleForm_index = 3,
-                newSampleFormList = sampleFormList;
+                newSampleFormList = _.clone(sampleFormList);
             dupSampleForm._id = 'a02df75b44c1d26b6a5e05b8';
-            newSampleFormList.splice(2, 0, dupSampleForm);
+            newSampleFormList.splice(3, 0, dupSampleForm);            
 
             var controller = createListFormsController();
 
             // Set GET response
-            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList);
-
+            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList); 
             // Run controller functionality
             scope.findAll();
             $httpBackend.flush();
 
             // Set GET response
             $httpBackend.expect('POST', '/forms').respond(200, dupSampleForm);
-
             // Run controller functionality
             scope.duplicate(2);
             $httpBackend.flush();
 
             // Test scope value
-            expect( scope.myforms.length ).toEqual(sampleFormList.length+1);
-            // expect( scope.myforms ).toEqualData(newSampleFormList);
+            expect( scope.myforms.length ).toEqual(newSampleFormList.length);
+            for(var i=0; i<scope.myforms.length; i++){
+                expect( scope.myforms[i] ).toEqualData(newSampleFormList[i]);                
+            }
             expect( scope.myforms[dupSampleForm_index] ).toEqualData(dupSampleForm);
-
         }));
 
         it('$scope.removeForm() should remove a Form', inject(function(Forms) {
 
             var delIndex = 0,
                 delSampleForm = sampleFormList[delIndex],
-                delSampleFormList = sampleFormList;
+                delSampleFormList = _.clone(sampleFormList);
             delSampleFormList.splice(delIndex, 1);
 
             var controller = createListFormsController();
@@ -243,12 +242,43 @@
             $httpBackend.flush();
 
             // Test scope value
-            expect( scope.myforms.length ).toEqual(sampleFormList.length-1);
-            for(var i=0; i<scope.myforms.length){
-                expect( scope.myforms[i] ).toEqualData(sampleFormList.slice(1,2)[i]);                
+            expect( scope.myforms.length ).toEqual(delSampleFormList.length);
+            for(var i=0; i<scope.myforms.length; i++){
+                expect( scope.myforms[i] ).toEqualData(delSampleFormList[i]);                
             }
             expect( scope.myforms[0] ).not.toEqualData(delSampleForm);
+        }));
 
+        it('$scope.createNew() should create a new Form', inject(function(Forms) {
+            var newForm = _.clone(sampleForm);
+            newForm.name = 'Test Form5';
+
+            var controller = createListFormsController();
+
+            scope.forms.createForm = {
+                language: {
+                    $modelValue: 'english'
+                },
+                title: {
+                    $modelValue: 'Test Form5'
+                },
+                $dirty: true,
+                $valid: true,
+            }
+            // scope.forms.createForm.language.$modelValue = 'english';
+            // scope.forms.createForm.name.$modelValue = 'Test Form5';
+            // scope.forms.createForm.$dirty = true;
+            // scope.forms.createForm.$invalid = false;
+
+            //Set $state transition 
+            $state.expectTransitionTo('viewForm');
+
+            // Set GET response
+            $httpBackend.expect('POST', '/forms').respond(200, newForm);
+
+            scope.createNew();
+
+            $httpBackend.flush();
         }));
 
     });

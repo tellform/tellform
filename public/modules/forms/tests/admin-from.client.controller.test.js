@@ -214,7 +214,7 @@
 		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', function() {
 			var controller = createAdminFormController();
 
-			//Set expected $state transition 
+			//Set $state transition 
 			$state.expectTransitionTo('listForms');
 
 			// Set DELETE response
