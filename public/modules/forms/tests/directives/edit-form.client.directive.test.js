@@ -88,7 +88,7 @@
             // Point global variables to injected services
             $httpBackend = _$httpBackend_;
 
-            // $httpBackend.whenGET(/.+\.html$/).respond('');
+            $httpBackend.whenGET(/.+\.html$/).respond('');
             $httpBackend.whenGET('/users/me/').respond('');
 
             //Grab controller instance

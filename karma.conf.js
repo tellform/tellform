@@ -22,7 +22,8 @@ module.exports = function(config) {
 		reporters: ['mocha', 'html', 'progress'], 
 
 		preprocessors: {
-		    'public/modules/**/*.html': ['ng-html2js']
+		    'public/modules/**/*.html': ['ng-html2js'],
+		    'public/modules/**/*.js': ['coverage'],
 		},
 
 		ngHtml2JsPreprocessor: {
