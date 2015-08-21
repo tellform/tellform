@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCounter', 'Auth', '$filter', '$rootScope',
-    function ($http, $timeout, timeCounter, Auth, $filter, $rootScope) {
+angular.module('forms').directive('formDirective', ['$http', '$timeout', 'TimeCounter', 'Auth', '$filter', '$rootScope',
+    function ($http, $timeout, TimeCounter, Auth, $filter, $rootScope) {
         return {
             templateUrl: './modules/forms/views/directiveViews/form/submit-form.client.view.html',
             restrict: 'E',
@@ -12,7 +12,7 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                 angular.element(document).ready(function() {
 
                     $scope.selected = null;
-                    timeCounter.startClock()
+                    TimeCounter.startClock()
 
                     $rootScope.setActiveField = function (field_id) {
                         console.log('form field clicked: '+field_id);
@@ -25,7 +25,7 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     };
 
                     $scope.submit = function(){
-                        var _timeElapsed = timeCounter.stopClock();
+                        var _timeElapsed = TimeCounter.stopClock();
                         $scope.form.timeElapsed = _timeElapsed;
 
                         // console.log('percentageComplete: '+$filter('formValidity')($scope.form)/$scope.form.visible_form_fields.length*100+'%');
@@ -53,8 +53,8 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'timeCo
                     };
 
                     $scope.reloadForm = function(){
-                        timeCounter.stopClock();
-                        timeCounter.startClock();
+                        TimeCounter.stopClock();
+                        TimeCounter.startClock();
                         $scope.form.submitted = false;
                         $scope.form.form_fields = _.chain($scope.form.form_fields).map(function(field){
                             field.fieldValue = '';

@@ -2,7 +2,7 @@
 
 angular.module('forms').service('FormFields', [
 	function() {
-		this.fields = [
+		this.types = [
 		    {
 		        name : 'textfield',
 		        value : 'Short Text'

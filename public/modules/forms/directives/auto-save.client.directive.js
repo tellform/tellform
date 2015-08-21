@@ -5,9 +5,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
   return {
     require: ['^form'],
     restrict: 'AE',
-    controller: function ($scope) {
-      
-    },
     link: function($scope, $element, $attrs, $ctrls) {
       angular.element(document).ready(function() {
       

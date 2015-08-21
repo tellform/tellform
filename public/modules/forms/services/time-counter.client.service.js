@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('forms').service('timeCounter', [
+angular.module('forms').service('TimeCounter', [
 	function(){
 		var _startTime, _endTime, that=this;
 

@@ -15,11 +15,22 @@ module.exports = function(config) {
 		frameworks: ['jasmine'],
 
 		// List of files / patterns to load in the browser
-		files: bowerDep.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.tests),
+		files: bowerDep.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.tests, applicationConfiguration.assets.views),
 
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
 		reporters: ['mocha', 'html', 'progress'], 
+
+		preprocessors: {
+		    'public/modules/**/*.html': ['ng-html2js']
+		},
+
+		ngHtml2JsPreprocessor: {
+		    stripPrefix: 'public/',
+
+		    // the name of the Angular module to create
+    		moduleName: 'module-templates'
+		},
 
 		// Web server port
 		port: 9876,

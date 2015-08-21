@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'timeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $http, Upload, $timeout, timeCounter, Auth, FormFields) {
+angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
+    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields) {
         return {
-            templateUrl: './modules/forms/views/directiveViews/form/configure-form.client.view.html',
+            templateUrl: 'modules/forms/views/directiveViews/form/configure-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',
@@ -16,20 +16,20 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                 $scope.pdfLoading = false;
                 $scope.languages = $rootScope.languages;
                 
-                var _current_upload = null;
+                this._current_upload = null;
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 
-                var _unbindedPdfFields = $scope.pdfFields;
+                this._unbindedPdfFields = $scope.pdfFields;
 
                 //DAVID: TODO: finish this so we can create a Form.pdfFieldMap
                 // $scope.getUnbindedPdfFields = function(fieldType){
-                //     _unbindedPdfFields = $scope.pdfFields
+                //     this._unbindedPdfFields = $scope.pdfFields
                 // }
 
                 //PDF Functions
                 $scope.cancelUpload = function(){
-                    _current_upload.abort();
+                    this._current_upload.abort();
                     $scope.pdfLoading = false;
                     $scope.removePDF();
                 };
@@ -43,13 +43,14 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                 };
 
                 $scope.uploadPDF = function(files) {
+                    console.log(files)
 
                     if (files && files.length) {
                         // for (var i = 0; i < files.length; i++) {
                         var file = files[0];
                         console.log(file);
 
-                        _current_upload = Upload.upload({
+                        this._current_upload = Upload.upload({
                             url: '/upload/pdf',
                             fields: {
                                 'user': $scope.user,
@@ -60,6 +61,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                             $scope.log = 'progress: ' + progressPercentage + '% ' +
                                         evt.config.file.name + '\n' + $scope.log;
+                                        
                             $scope.pdfLoading = true;
                         }).success(function (data, status, headers, config) {
                             $scope.log = 'file ' + data.originalname + ' uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;

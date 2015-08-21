@@ -2,7 +2,7 @@
 
 (function() {
     // Forms Controller Spec
-    describe('ListFormsController Tests', function() {
+    describe('ListForms Controller Tests', function() {
         // Initialize global variables
         var ListFormsController,
             createListFormsController,
@@ -12,25 +12,14 @@
             $location,
             $state;
 
-        var sampleUser = {
-            firstName: 'Full',
-            lastName: 'Name',
-            email: 'test@test.com',
-            username: 'test@test.com',
-            password: 'password',
-            provider: 'local',
-            roles: ['user'],
-            _id: 'ed873933b1f1dea0ce12fab9'
-        };
-
         var sampleForm = {
             title: 'Form Title',
             admin: 'ed873933b1f1dea0ce12fab9',
             language: 'english',
             form_fields: [
-                {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
-                {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
-                {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+                {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
             ],
             _id: '525a8422f6d0f87f0e407a33'
         };
@@ -40,9 +29,9 @@
                 admin: 'ed873933b1f1dea0ce12fab9',
                 language: 'english',
                 form_fields: [
-                    {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
-                    {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
-                    {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+                    {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
                 ],
                 _id: '525a8422f6d0f87f0e407a33'
             },{
@@ -50,9 +39,9 @@
                 admin: '39223933b1f1dea0ce12fab9',
                 language: 'english',
                 form_fields: [
-                    {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
-                    {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
-                    {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+                    {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
                 ],
                 _id: '52f6d0f87f5a407a384220e3'
             },{
@@ -60,9 +49,9 @@
                 admin: '2fab9ed873937f0e1dea0ce1',
                 language: 'english',
                 form_fields: [
-                    {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
-                    {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
-                    {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+                    {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
                 ],
                 _id: '922f6d0f87fed8730e4e1233'
             }
@@ -87,62 +76,7 @@
                 }
             });
         });
-
-        //Mock Users Service
-        beforeEach(module(function($provide) {
-            $provide.service('User', function($q) {
-                return {
-                    getCurrent: function() {
-                        var deferred = $q.defer();
-                        deferred.resolve( JSON.stringify(sampleUser) );
-                        return deferred.promise;
-                    },
-                    login: function(credentials) {
-                        var deferred = $q.defer();
-                        if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
-                            deferred.resolve( JSON.stringify(sampleUser) );
-                        }else {
-                            deferred.resolve('Error: User could not be loggedin');
-                        }
-
-                        return deferred.promise;
-                    },
-                    logout: function() {
-                        var deferred = $q.defer();
-                        deferred.resolve(null);
-                        return deferred.promise;
-                    },
-                    signup: function(credentials) {
-                        var deferred = $q.defer();
-                        if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
-                            deferred.resolve( JSON.stringify(sampleUser) );
-                        }else {
-                            deferred.resolve('Error: User could not be signed up');
-                        }
-
-                        return deferred.promise;
-                    }
-                };
-            });
-        }));
-
-        //Mock Authentication Service
-        beforeEach(module(function($provide) {
-            $provide.service('Auth', function() {
-                return {
-                    ensureHasCurrentUser: function() {
-                        return sampleUser;
-                    },
-                    isAuthenticated: function() {
-                        return true;
-                    },
-                    getUserState: function() {
-                        return true;
-                    }
-                };
-            });
-        }));
-
+        
         // Load the main application module
         beforeEach(module(ApplicationConfiguration.applicationModuleName));
 
@@ -264,7 +198,7 @@
                 },
                 $dirty: true,
                 $valid: true,
-            }
+            };
             // scope.forms.createForm.language.$modelValue = 'english';
             // scope.forms.createForm.name.$modelValue = 'Test Form5';
             // scope.forms.createForm.$dirty = true;
@@ -279,6 +213,7 @@
             scope.createNew();
 
             $httpBackend.flush();
+            $state.ensureAllTransitionsHappened();
         }));
 
     });

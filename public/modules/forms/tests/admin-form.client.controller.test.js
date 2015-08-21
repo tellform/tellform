@@ -2,7 +2,7 @@
 
 (function() {
 	// Forms Controller Spec
-	describe('AdminFormController Tests', function() {
+	describe('AdminForm Controller Tests', function() {
 		// Initialize global variables
 		var AdminFormController,
 			createAdminFormController,
@@ -28,9 +28,9 @@
 			admin: 'ed873933b1f1dea0ce12fab9',
 			language: 'english',
 			form_fields: [
-				{'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
-				{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
-				{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
 			],
 			_id: '525a8422f6d0f87f0e407a33'
 		};
@@ -40,14 +40,14 @@
 			admin: 'ed873933b1f1dea0ce12fab9',
 			language: 'english',
 			form_fields: [
-				{'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
-				{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
-				{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
 			],
 			visible_form_fields: [
-				{'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
-				{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
-				{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
 			],
 			_id: '525a8422f6d0f87f0e407a33'
 		};
@@ -70,7 +70,7 @@
 		        this.opened = false;
 		        this.cancelCallback( type );
 		    };
-		}
+		};
 
 
 
@@ -92,6 +92,12 @@
 				}
 			});
 		});
+
+
+		// Load the main application module
+		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+		beforeEach(module('stateMock'));
 
 		//Mock Users Service
 		beforeEach(module(function($provide) {
@@ -148,10 +154,6 @@
 			});
 		}));
 
-		// Load the main application module
-		beforeEach(module(ApplicationConfiguration.applicationModuleName));
-
-		beforeEach(module('stateMock'));
 
 		beforeEach(inject(function($modal) {
 		    spyOn($modal, 'open').and.returnValue(new fakeModal());
@@ -224,14 +226,15 @@
 			scope.openDeleteModal();
 
 			scope.deleteModal.result(function(selectedItem){
-				scope.selected = selectedItem;
+				this.selected = selectedItem;
 			}, function(type){
-				$scope.canceled = true;
+				this.canceled = true;
 			});
 
 			scope.removeCurrentForm();
 	
 			$httpBackend.flush();
+			$state.ensureAllTransitionsHappened();
 		});
 
 		it('$scope.update() should send a PUT request with the id of form', function() {
@@ -267,8 +270,8 @@
 				this.canceled = true;
 			});
 
+			//Run controller functionality
 			scope.cancelDeleteModal();
-			console.log(scope.deleteModal.opened);
 			expect( scope.deleteModal.opened ).toEqual(false);
 			expect( scope.deleteModal.canceled ).toEqual(true);
 

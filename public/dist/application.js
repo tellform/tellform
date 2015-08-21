@@ -574,13 +574,14 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         };
 
         $scope.duplicate = function(form_index){
-            var form = $scope.myforms[form_index];
-            delete form._id;
+            var form = _.clone($scope.myforms[form_index]);
+            form._id = '';
             
             $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
-                    // console.log('form duplicated');
+                    console.log('form duplicated');
                     $scope.myforms.splice(form_index+1, 0, data);
+                    console.log($scope.myforms[3]._id);
                 }).error(function(errorResponse){
                     console.log(errorResponse);
                     $scope.error = errorResponse.data.message;
@@ -592,7 +593,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             console.log($scope.forms.createForm);
 
             var form = {};
-            form.title = $scope.forms.createForm.$modelValue;
+            form.title = $scope.forms.createForm.title.$modelValue;
             form.language = $scope.forms.createForm.language.$modelValue;
 
             if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
@@ -630,32 +631,42 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$stateParams', '$state', 'Forms', 'CurrentForm',
-	function($scope, $rootScope, $stateParams, $state, Forms, CurrentForm) {
+angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$stateParams', '$state', 'Forms', 'CurrentForm', 'Auth',
+	function($scope, $rootScope, $stateParams, $state, Forms, CurrentForm, Auth) {
+		$scope.authentication = Auth;
 	
+		$scope.initForm = function(){
+			Forms.get({
+				formId: $stateParams.formId
+			}).$promise.then(
+				//success
+				function(form){
+					$scope.myform = form;
 
-		Forms.get({
-			formId: $stateParams.formId
-		}).$promise.then(
-		//success
-		function(form){
-			$scope.myform = form;
+					if(!$scope.myform.isLive){
+						// Show navbar if form is not public AND user IS loggedin
+						if($scope.authentication.isAuthenticated()){
+							$scope.hideNav = $rootScope.hideNav = false;
+						}
+						// Redirect if  form is not public user IS NOT loggedin
+						else {
+							$scope.hideNav = $rootScope.hideNav = true;
+							$state.go('access_denied');
+						}
+					}else{
+						$scope.hideNav = $rootScope.hideNav = true;
+					}
+				},
+				//error
+		        function( error ){
+		        	$scope.error = error.message;
+		        	console.log('ERROR: '+error.message);
+		        	throw new Error('Error: '+error.message);
 
-			// Show navbar if form is not public AND user is loggedin
-			if(!$scope.myform.isLive && $rootScope.authentication.isAuthenticated()){
-				$rootScope.hideNav = false;
-			}else if(!$scope.myform.isLive){
-				$state.go('access_denied');
-			}
-			console.log('$rootScope.hideNav: '+$rootScope.hideNav);
-			console.log('$scope.form.isLive: '+$scope.myform.isLive);
-		},
-		//error
-        function( error ){
-        	$scope.error = error.message;
-        	console.log('ERROR: '+error.message);
-        	$state.go('access_denied');
-        });
+		        	$state.go('access_denied');
+		        }
+	        );
+		};
 
 	}
 ]);

@@ -5,6 +5,8 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
         restrict: 'A',
         link: function (scope, element, attrs) {
 
+            // $rootScope.$broadcast(' Started');
+
             //Don't do anything if we don't have a ng-repeat on the current element
             if(!element.attr('ng-repeat')){
                 return;
@@ -12,17 +14,19 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
 
             var broadcastMessage = attrs.onFinishRender || 'ngRepeat';
              
-            if(!scope.$last) {
-                $timeout(function () {
-                    // console.log(broadcastMessage+'Started');
-                    $rootScope.$broadcast(broadcastMessage+'Started');
+            if(scope.$first) {
+                scope.$evalAsync(function () {
+                    // console.log(broadcastMessage+' Started');
+                    // console.log(Date.now());
+                    $rootScope.$broadcast(broadcastMessage+' Started');
                 });
             }else if(scope.$last) {
-            	$timeout(function () {
-                    element.ready(function () {
+            	scope.$evalAsync(function () {
+                    // element.ready(function () {
                         // console.log(broadcastMessage+'Finished');
-                	    $rootScope.$broadcast(broadcastMessage+'Finished');
-                    });
+                        // console.log(Date.now());
+                	    $rootScope.$broadcast(broadcastMessage+' Finished');
+                    // });
                 });
             }
         }

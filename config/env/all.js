@@ -90,9 +90,14 @@ module.exports = {
 			'public/modules/*/*.js',
 			'public/modules/*/*[!tests]*/*.js'
 		],
+		views: [
+			'public/modules/*/views/*.html',
+			'public/modules/*/views/**/*.html'
+		],
 		tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
-			'public/modules/*/tests/*.js'
+			'public/modules/*/tests/*.js',
+			'public/modules/*/tests/*/*.js',
 		]
 	}
 };

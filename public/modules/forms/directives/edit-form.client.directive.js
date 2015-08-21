@@ -1,15 +1,13 @@
 'use strict';
 
-angular.module('forms')
-.directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'timeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $q, $http, $timeout, timeCounter, Auth, FormFields) {
+angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
+    function ($rootScope, $q, $http, $timeout, TimeCounter, Auth, FormFields) {
         return {
             templateUrl: './modules/forms/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',
             },
-            // transclude: true,
             controller: function($scope){
                 
                 /*
@@ -17,7 +15,7 @@ angular.module('forms')
                 */
                 //Populate AddField with all available form field types
                 $scope.addField = {};
-                $scope.addField.types = FormFields.fields;
+                $scope.addField.types = FormFields.types;
 
                 $scope.addField.types.forEach(function(type){
                     type.lastAddedID = 1;
@@ -76,7 +74,7 @@ angular.module('forms')
                 //         // console.log('has class .dropzone :'+);
                 //         // if ($(e.target).hasClass('dropzone') && ui.item.sortable.droptarget && e.target != ui.item.sortable.droptarget[0] ) {
                 //         //     // restore original types
-                //         //     $scope.addField.types = FormFields.fields;
+                //         //     $scope.addField.types = FormFields.types;
                 //         // }
                       
                         
@@ -88,7 +86,7 @@ angular.module('forms')
                 **  Field CRUD Methods
                 */
                 // Add a new field
-                $scope.addNewField = function(addOrReturn, fieldType){
+                $scope.addNewField = function(modifyForm, fieldType){
 
                     // incr field_id counter
                     $scope.addField.lastAddedID++;
@@ -104,25 +102,21 @@ angular.module('forms')
                         }
                     }
                     var newField = {
-                        'title' : fieldTitle,
-                        'fieldType' : fieldType,
-                        'fieldValue' : '',
-                        'required' : true,
-                        'disabled' : false,
+                        title: fieldTitle,
+                        fieldType: fieldType,
+                        fieldValue: '',
+                        required: true,
+                        disabled: false,
+                        deletePreserved: false
                     };
                     console.log('\n\n---------\nAdded field CLIENT');
                     console.log(newField);
                     
                     // put newField into fields array
-                    if(addOrReturn){
+                    if(modifyForm){
                         $scope.myform.form_fields.push(newField);
-                    }else {
-                        return newField;
                     }
-                    
-                    
-                    // console.log(Date.now());
-                    // console.log($scope.myform.form_fields.length);
+                    return newField;    
                 };
 
                 // deletes particular field on button click
@@ -144,7 +138,6 @@ angular.module('forms')
 
                     //Insert field at selected index
                     $scope.myform.form_fields.splice(field_index+1, 0, field);
-
                 };
 
 
@@ -168,7 +161,7 @@ angular.module('forms')
                     var hashKey = _.chain(button.$$hashKey).words().last().parseInt().value();
 
                     for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
-                        var currHashKey = _.chain($scope.myform.startPage.buttons[i].$$hashKey).words().last().parseInt().value();;
+                        var currHashKey = _.chain($scope.myform.startPage.buttons[i].$$hashKey).words().last().parseInt().value();
 
                         if(currHashKey === hashKey){
                             $scope.myform.startPage.buttons.splice(i, 1);
