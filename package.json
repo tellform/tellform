@@ -9,7 +9,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/whitef0x0/medforms.git"
+    "url": "https://github.com/whitef0x0/NodeForms.git"
   },
   "engines": {
     "node": "~0.10.28",

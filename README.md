@@ -1,8 +1,8 @@
 NodeForms
 --------
 
-[![Build Status](https://travis-ci.org/whitef0x0/medforms.svg?branch=master)](https://travis-ci.org/whitef0x0/medforms)
-[![Dependencies Status](https://david-dm.org/whitef0x0/medforms.svg)](https://david-dm.org/whitef0x0/medforms)
+[![Build Status](https://travis-ci.org/whitef0x0/NodeForms.svg?branch=master)](https://travis-ci.org/whitef0x0/NodeForms)
+[![Dependencies Status](https://david-dm.org/whitef0x0/NodeForms.svg)](https://david-dm.org/whitef0x0/NodeForms)
 
 NodeForms is an opensource *form builder* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
