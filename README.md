@@ -1,10 +1,36 @@
-MEDFORMS
+NodeForms
 --------
 
 [![Build Status](https://travis-ci.org/whitef0x0/medforms.svg?branch=master)](https://travis-ci.org/whitef0x0/medforms)
 [![Dependencies Status](https://david-dm.org/whitef0x0/medforms.svg)](https://david-dm.org/whitef0x0/medforms)
 
-Medforms is an opensource *form builder* that can create stunning forms from PDFs or from scratch
+NodeForms is an opensource *form builder* built ontop of nodejs that can create stunning forms from PDFs or from scratch
+
+Currently following features are implemented:
+
+##Current Features
+-User login system to manage forms
+-User CRUD 
+-Form CRUD
+-11 possible types of form fields
+-Editable startpage
+-Create forms from FDF-formatted PDFs (unstable)
+-Save form submissions as FDF-formatted PDFs (unstable)
+-Toggle forms as private (viewable only if logged in as Form's user) or public (viewable by anyone)
+-Drag and drop functionality to editing form field order
+-Editable form submissions (half-done)
+
+#TODO:
+-Implement encryption for all form data
+-Implement custom form design
+-Finish frontend/backend testing
+-Integrate AWS for PDF saving
+-Add Typeform API integration
+-Add OscarHost API integration
+-Add plugin support (ala Slack)
+-Create wiki for easy installation and setup
+-Create mockups for different user view designs
+
 
 
 
