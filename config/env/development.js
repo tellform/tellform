@@ -19,7 +19,7 @@ module.exports = {
 		}
 	},
 	app: {
-		title: 'MedForms'
+		title: 'NodeForms'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
