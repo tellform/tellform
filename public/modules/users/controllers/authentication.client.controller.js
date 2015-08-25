@@ -5,12 +5,11 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 		$scope = $rootScope;
 		$scope.credentials = {};
-		$scope.error = null;
+		$scope.error = '';
 
 	    $scope.signin = function() {
 			User.login($scope.credentials).then(
 				function(response) {
-					// console.log(response);
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
@@ -32,18 +31,19 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 	    $scope.signup = function() {
 	        User.signup($scope.credentials).then(
-	        function(response) {
-	        	console.log('signup-success');
-	        	$state.go('signup-success');
-	        },
-	        function(error) {
-	          if(error) {
-	            $scope.error = error;
-	          }else {
-	            console.log('No response received');
-	          }
-	        }
-	      );
+		        function(response) {
+		        	console.log('signup-success');
+		        	$state.go('signup-success');
+		        },
+		        function(error) {
+					if(error) {
+						$scope.error = error;
+						console.log(error);
+					}else {
+						console.log('No response received');
+					}
+		        }
+		    );
 	    };
 
  	}

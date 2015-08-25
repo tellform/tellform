@@ -392,7 +392,7 @@
             <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">
                     <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
-                        <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="deleteField(field.$$hashKey)">
+                        <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="deleteField($index)">
                             <span class="text-center">
                                 <a href="" class="fa fa-trash-o"></a>
                             </span>

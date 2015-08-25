@@ -3,7 +3,7 @@
 angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
     function ($rootScope, $q, $http, $timeout, TimeCounter, Auth, FormFields) {
         return {
-            templateUrl: './modules/forms/views/directiveViews/form/edit-form.client.view.html',
+            templateUrl: 'modules/forms/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',
@@ -21,6 +21,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     type.lastAddedID = 1;
                     return type;
                 });
+
+                $scope.lastButtonID = 0;
 
                 // Accordion settings
                 $scope.accordion = {};
@@ -93,10 +95,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     var fieldTitle;
 
                     for(var i = 0; i < $scope.addField.types.length; i++){
-                        // console.log($scope.addField.types[i].name === fieldType);
                         if($scope.addField.types[i].name === fieldType){ 
                             $scope.addField.types[i].lastAddedID++;
-                            // console.log($scope.addField.types[i].lastAddedID);
                             fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;  
                             break;
                         }
@@ -109,8 +109,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                         disabled: false,
                         deletePreserved: false
                     };
-                    console.log('\n\n---------\nAdded field CLIENT');
-                    console.log(newField);
+                    // console.log('\n\n---------\nAdded field CLIENT');
+                    // console.log(newField);
+                    newField._id = _.uniqueId();
                     
                     // put newField into fields array
                     if(modifyForm){
@@ -119,25 +120,15 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     return newField;    
                 };
 
-                // deletes particular field on button click
-                $scope.deleteField = function (hashKey){
-                    // console.log($scope.myform.form_fields);
-                    for(var i = 0; i < $scope.myform.form_fields.length; i++){
-                        // console.log($scope.myform.form_fields[i].$$hashKey === hashKey);
-                        if($scope.myform.form_fields[i].$$hashKey === hashKey){
-                            $scope.myform.form_fields.splice(i, 1);                      
-                            break;
-                        }
-                    }
+                // Delete particular field on button click
+                $scope.deleteField = function (field_index){
+                    $scope.myform.form_fields.splice(field_index, 1);
                 };
                 $scope.duplicateField = function (field_index){
-                    console.log('field_index: '+field_index);
-                    var field = $scope.addNewField(false, $scope.myform.form_fields[field_index].fieldType);
-                    field.title = $scope.myform.form_fields[field_index].title;
-                    console.log($scope.myform.form_fields[field_index]);
+                    var currField = $scope.myform.form_fields[field_index];  
 
                     //Insert field at selected index
-                    $scope.myform.form_fields.splice(field_index+1, 0, field);
+                    $scope.myform.form_fields.splice(field_index+1, 0, currField);
                 };
 
 
@@ -146,30 +137,32 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 */
 
                 // add new Button to the startPage/EndPage
-                $scope.addButton = function (newButtons){
+                $scope.addButton = function(){
 
                     var newButton = {};
                     newButton.bgColor = '#ddd';
                     newButton.color = '#ffffff';
                     newButton.text = 'Button';
+                    newButton._id = _.uniqueId();
 
                     $scope.myform.startPage.buttons.push(newButton);
                 };
 
                 // delete particular Button
                 $scope.deleteButton = function(button){
-                    var hashKey = _.chain(button.$$hashKey).words().last().parseInt().value();
-
+                    // var hashKey = _.chain(button.$$hashKey).words().last().parseInt().value();
+                    var currID;
                     for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
-                        var currHashKey = _.chain($scope.myform.startPage.buttons[i].$$hashKey).words().last().parseInt().value();
+                        // var currHashKey = _.chain($scope.myform.startPage.buttons[i].$$hashKey).words().last().parseInt().value();
+                        currID = $scope.myform.startPage.buttons[i]._id;
+                        console.log(currID);
 
-                        if(currHashKey === hashKey){
+                        if(currID === button._id){
                             $scope.myform.startPage.buttons.splice(i, 1);
                             break;
                         }
                     }
                 };
-
 
 
                 /*
@@ -182,8 +175,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 
                     var lastOptionID = 0;
 
-                    if(field.fieldOptions[field.fieldOptions.length-1])
+                    if(field.fieldOptions[field.fieldOptions.length-1]){
                         lastOptionID = field.fieldOptions[field.fieldOptions.length-1].option_id;
+                    }
 
                     // new option's id
                     var option_id = lastOptionID + 1;

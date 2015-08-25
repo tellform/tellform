@@ -28,6 +28,7 @@ var FormFieldSchema = new Schema({
 		type: String,
 		default: '',
 	},
+	//DAVID: TODO: SEMI-URGENT: Need to come up with a schema for field options
 	fieldOptions: [{
 		type: Schema.Types.Mixed
 	}],
@@ -50,7 +51,6 @@ var FormFieldSchema = new Schema({
 		validate: [validateFormFieldType, 'Invalid field type']
 	},
 	fieldValue: Schema.Types.Mixed
-
 });
 
 FormFieldSchema.static('validTypes', function(){

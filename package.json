@@ -1,8 +1,8 @@
 {
-  "name": "Medform",
+  "name": "NodeForm",
   "description": "PDF generated form builder",
   "version": "1.0.3",
-  "homepage": "https://github.com/whitef0x0/medform",
+  "homepage": "https://github.com/whitef0x0/NodeForm",
   "authors": [
     "David Baldwynn <polydaic@gmail.com>"
   ],
@@ -56,7 +56,7 @@
     "karma-chrome-launcher": "~0.1.2",
     "karma-coverage": "~0.2.0",
     "karma-firefox-launcher": "~0.1.3",
-    "karma-jasmine": "~0.2.1",
+    "karma-jasmine": "^0.2.3",
     "karma-phantomjs-launcher": "~0.1.2",
     "load-grunt-tasks": "~1.0.0",
     "lodash": "~2.4.1",
@@ -90,7 +90,6 @@
   },
   "devDependencies": {
     "karma-chrome-launcher": "^0.1.12",
-    "karma-jasmine": "^0.2.3",
     "karma-jasmine-html-reporter": "^0.1.8",
     "karma-mocha-reporter": "^1.1.1",
     "karma-ng-html2js-preprocessor": "^0.1.2",

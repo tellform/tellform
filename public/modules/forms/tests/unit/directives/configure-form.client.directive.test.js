@@ -2,9 +2,9 @@
 
 (function() {
     // Forms Controller Spec
-    describe('configureForm Tests', function() {
+    describe('ConfigureForm Directive-Controller Tests', function() {
         // Initialize global variables
-        var el, scope, controller, $httpBackend;
+         var el, scope, controller, $httpBackend;
 
         var sampleUser = {
             firstName: 'Full',
@@ -99,8 +99,6 @@
             //See angular.element documentation.
             scope = el.isolateScope() || el.scope();
 
-            // spyOn(scope, 'update');
-            // spyOn(scope, 'resetForm');
         }));
 
         it('$scope.uploadPDF() should upload a pdf file', function() {

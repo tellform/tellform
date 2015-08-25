@@ -16,7 +16,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, user, _Form;
+var credentials, user, _Form, userSession;
 
 /**
  * Form routes tests
@@ -496,6 +496,7 @@ describe('Form CRUD tests', function() {
 		User.remove().exec(function() {
 			Form.remove().exec(function() {
 				userSession.destroy();
+				done();
 			});
 		});
 	});

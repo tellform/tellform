@@ -8,14 +8,14 @@ var __indexOf = [].indexOf || function(item) {
     return -1;
 };
 
-angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', 
-    function($http, $compile, $rootScope) {
+angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', '$compile', '$rootScope', 
+    function($templateCache, $http, $compile, $rootScope) {
 
     
     var getTemplateUrl = function(field) {
 
         var type = field.fieldType;
-        var templateUrl = './modules/forms/views/directiveViews/field/';
+        var templateUrl = 'modules/forms/views/directiveViews/field/';
         var supported_fields = [
             'textfield',
             'email',
@@ -34,8 +34,10 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'natural'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
-            return templateUrl += type + '.html';
+            templateUrl += type + '.html';
         }
+        var template = $templateCache.get(templateUrl);
+        return template;
     };
 
     var linker = function(scope, element) {
@@ -51,22 +53,23 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
                 defaultDate: 0,
             };
         }
+        //DAVID: TODO: Make natural language processing work
         //Set only if we have a natural lang processing field
-        else if(scope.field.fieldType === 'natural'){
-            scope.field.fieldMatchValue = '';
+        // else if(scope.field.fieldType === 'natural'){
+        //     scope.field.fieldMatchValue = '';
 
-            //Fires when field is changed
-            scope.$watch('scope.field', function(newField, oldField) {
+        //     //Fires when field is changed
+        //     scope.$watch('scope.field', function(newField, oldField) {
                 
-            });
-        }
+        //     });
+        // }
         
         // GET template content from path
-        var templateUrl = getTemplateUrl(scope.field);
-        $http.get(templateUrl).success(function(data) {
-            element.html(data);
+        var template = getTemplateUrl(scope.field);
+        // $http.get(templateUrl).success(function(data) {
+            element.html(template);
             $compile(element.contents())(scope);
-        });
+        // });
     };
 
     return {

@@ -1,5 +1,6 @@
 'use strict';
 
+//TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
 angular.module('forms').service('FormFields', [
 	function() {
 		this.types = [

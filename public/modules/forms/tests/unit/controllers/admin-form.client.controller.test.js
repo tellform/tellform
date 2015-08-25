@@ -184,13 +184,13 @@
 			};
  		}));
 
-		it('AdminFormController should fetch current Form when instantiated', inject(function() {
+		it('AdminFormController should fetch current Form when instantiated', function() {
 			// Run controller functionality
 			var controller = createAdminFormController();
 
 			// Test scope value
 			expect(scope.myform).toEqualData(sampleForm);
-		}));
+		});
 
 		it('$scope.findOne() should fetch current Form', inject(function(Forms) {
 

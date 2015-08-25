@@ -6,6 +6,8 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
     require: ['^form'],
     restrict: 'AE',
     link: function($scope, $element, $attrs, $ctrls) {
+
+      //DAVID: TODO: Do we really need to check if our directive element is ready everytime
       angular.element(document).ready(function() {
       
         var $formCtrl = $ctrls[0],
@@ -32,7 +34,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
           return false;
         };
 
-        var debounceSave = function () {
+        this.debounceSave = function () {
           $rootScope.saveInProgress = true;
           $rootScope[$attrs.autoSaveCallback](true,
             function(err){
@@ -49,7 +51,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
         //Update/save Form if any Form fields are Dirty and Touched
         $scope.$watch(function(newValue, oldValue) {
           if($scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-            debounceSave();
+            this.debounceSave();
           }
         });
 
@@ -79,7 +81,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
             savePromise = $timeout(function() {   
               console.log('Saving Form');
-              debounceSave();           
+              this.debounceSave();           
             }); 
           }
           //If we are finished rendering then form saving should be finished

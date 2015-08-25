@@ -1,40 +1,45 @@
 'use strict';
 
-angular.module('users').factory('Auth',  function($window) {
+angular.module('users').factory('Auth', ['$window', 
+  function($window) {
+
     var userState = {
       isLoggedIn: false
     };
 
     var service = {
-      currentUser: null,
+      _currentUser: null,
+      get currentUser(){
+        return this._currentUser;
+      },
 
       // Note: we can't make the User a dependency of Auth
       // because that would create a circular dependency
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
-        if (service.currentUser && service.currentUser.username) {
+        if (service._currentUser && service._currentUser.username) {
           console.log('Using local current user.');
-          // console.log(service.currentUser);
-          return service.currentUser;
+          // console.log(service._currentUser);
+          return service._currentUser;
         } 
         else if ($window.user){
           console.log('Using cached current user.');
           // console.log($window.user);
-          service.currentUser = $window.user;
-          return service.currentUser;
+          service._currentUser = $window.user;
+          return service._currentUser;
         }
         else{
           console.log('Fetching current user from the server.');
           User.getCurrent().then(function(user) {
             // success
-            service.currentUser = user;
+            service._currentUser = user;
             userState.isLoggedIn = true; 
-            $window.user = service.currentUser;
-            return service.currentUser;         
+            $window.user = service._currentUser;
+            return service._currentUser;         
           },
           function(response) {
             userState.isLoggedIn = false;
-            service.currentUser = null;
+            service._currentUser = null;
             $window.user = null;
             console.log('User.getCurrent() err', response);
             return null;
@@ -43,7 +48,7 @@ angular.module('users').factory('Auth',  function($window) {
       },
 
       isAuthenticated: function() {
-        return !!service.currentUser;
+        return !!service._currentUser;
       },
 
       getUserState: function() {
@@ -52,14 +57,16 @@ angular.module('users').factory('Auth',  function($window) {
 
       login: function(new_user) {
         userState.isLoggedIn = true;
-        service.currentUser = new_user;
+        service._currentUser = new_user;
       },
 
       logout: function() {
         $window.user = null;
         userState.isLoggedIn = false;
-        service.currentUser = null;
+        service._currentUser = null;
       },
     };
     return service;
-  });
+    
+  }
+]);

@@ -6,3 +6,12 @@ env:
   - NODE_ENV=travis
 services:
   - mongodb
+# before_install: 
+# 	- npm install -g grunt-cli
+# 	- npm install -g bower
+# install: 
+# 	- npm install
+# 	- bower install --config.interactive=false
+# before_scripts:
+# 	- grunt build
+

@@ -1,8 +1,8 @@
 {
-  "name": "MedForm",
+  "name": "NodeForm",
   "description": "PDF generated form builder",
   "version": "1.0.3",
-  "homepage": "https://github.com/whitef0x0/medform",
+  "homepage": "https://github.com/whitef0x0/NodeForm",
   "authors": [
     "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
   ],

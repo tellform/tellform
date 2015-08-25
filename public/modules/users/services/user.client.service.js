@@ -3,7 +3,6 @@
 angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '$state',
   function($window, $q, $timeout, $http, $state) {
 
-
     var userService = {
       getCurrent: function() {
       	var deferred = $q.defer();
@@ -26,9 +25,11 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
           }).error(function(error) {
             deferred.reject(error.message || error);
           });
-          return deferred.promise;
+
+        return deferred.promise;
       },
       logout: function() { 
+
         var deferred = $q.defer();
         $http.get('/auth/signout').success(function(response) {
           deferred.resolve(null);
@@ -41,12 +42,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       signup: function(credentials) { 
 
         var deferred = $q.defer();
-
         $http.post('/auth/signup', credentials).success(function(response) {
           // If successful we assign the response to the global user model
           deferred.resolve(response);
         }).error(function(error) {
-
           deferred.reject(error.message || error);
         });
 
@@ -54,8 +53,9 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       },
 
       resendVerifyEmail: function(_email) { 
+
         var deferred = $q.defer();
-        $http.post('/auth/verify/', {email: _email}).success(function(response) {
+        $http.post('/auth/verify', {email: _email}).success(function(response) {
           deferred.resolve(response);
         }).error(function(error) {
           deferred.reject(error.message || error);
@@ -65,6 +65,12 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       },
 
       validateVerifyToken: function(token) { 
+
+        //DAVID: TODO: The valid length of a token should somehow be linked to server config values
+        //DAVID: TODO: SEMI-URGENT: Should we even be doing this?
+        var validTokenRe = /^([A-Za-z0-9]{48})$/g;
+        if( !validTokenRe.test(token) ) throw new Error('Error token: '+token+' is not a valid verification token');
+
         var deferred = $q.defer();
         $http.get('/auth/verify/'+token).success(function(response) {
           deferred.resolve(response);
@@ -75,7 +81,8 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      resetPassword: function(passwordDetails, token) { 
+      resetPassword: function(passwordDetails, token) {
+
         var deferred = $q.defer();
         $http.get('/auth/password/'+token, passwordDetails).success(function(response) {
           deferred.resolve();
@@ -88,12 +95,11 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
       // Submit forgotten password account id
       askForPasswordReset: function(credentials) {
+
         var deferred = $q.defer();
         $http.post('/auth/forgot', credentials).success(function(response) {
           // Show user success message and clear form
-
           deferred.resolve(response);
-
         }).error(function(error) {
           // Show user error message
           deferred.reject(error.message || error);

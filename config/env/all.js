@@ -92,12 +92,16 @@ module.exports = {
 		],
 		views: [
 			'public/modules/*/views/*.html',
-			'public/modules/*/views/**/*.html'
+			'public/modules/*/views/*/*.html',
+			'public/modules/*/views/*/*/*.html',
 		],
-		tests: [
+		unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
-			'public/modules/*/tests/*.js',
-			'public/modules/*/tests/*/*.js',
+			'public/modules/*/tests/unit/*.js',
+			'public/modules/*/tests/unit/**/*.js',
+		],
+		e2e_tests: [
+			'public/modules/*/tests/e2e/**.js',
 		]
 	}
 };

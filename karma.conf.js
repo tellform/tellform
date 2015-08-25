@@ -15,15 +15,17 @@ module.exports = function(config) {
 		frameworks: ['jasmine'],
 
 		// List of files / patterns to load in the browser
-		files: bowerDep.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.tests, applicationConfiguration.assets.views),
+		files: bowerDep.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.unit_tests, applicationConfiguration.assets.views),
 
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
 		reporters: ['mocha', 'html', 'progress'], 
 
 		preprocessors: {
-		    'public/modules/**/*.html': ['ng-html2js'],
-		    'public/modules/**/*.js': ['coverage'],
+		    'public/modules/*/views/**/*.html': ['ng-html2js'],
+		    'public/modules/*/views/*.html': ['ng-html2js'],
+		    'public/modules/*/*.js': ['coverage'],
+			'public/modules/*/*[!tests]*/*.js': ['coverage'],
 		},
 
 		ngHtml2JsPreprocessor: {
