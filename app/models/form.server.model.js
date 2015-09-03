@@ -17,8 +17,7 @@ var mongoose = require('mongoose'),
 var FieldSchema = require('./form_field.server.model.js'),
     FormSubmissionSchema = require('./form_submission.server.model.js'),
 	Field = mongoose.model('Field', FieldSchema),
-	FormSubmission = mongoose.model('FormSubmission', FormSubmissionSchema);
-
+	FormSubmission = mongoose.model('FormSubmission', FormSubmissionSchema)
 
 var ButtonSchema = new Schema({
 	url: {
@@ -42,7 +41,7 @@ var ButtonSchema = new Schema({
 /**
  * Form Schema
  */
-var FormSchema = new Schema({
+var LogicJumpSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now
@@ -145,7 +144,7 @@ var FormSchema = new Schema({
 
 
 //Delete template PDF of current Form
-FormSchema.pre('remove', function (next) {
+LogicJumpSchema.pre('remove', function (next) {
 	if(this.pdf && process.env.NODE_ENV === 'development'){
 		//Delete template form
 		fs.unlink(this.pdf.path, function(err){
@@ -158,7 +157,7 @@ FormSchema.pre('remove', function (next) {
 var _original;
 
 //Set _original
-FormSchema.pre('save', function (next) {
+LogicJumpSchema.pre('save', function (next) {
 	// console.log(this.constructor.model);
 	// console.log(FormModel);
 	this.constructor   // ≈ mongoose.model('…', FieldSchema).findById
@@ -176,7 +175,7 @@ FormSchema.pre('save', function (next) {
 });
 
 //Update lastModified and created everytime we save
-FormSchema.pre('save', function (next) {
+LogicJumpSchema.pre('save', function (next) {
 	var now = new Date();
 	this.lastModified = now;
 	if( !this.created ){
@@ -199,7 +198,7 @@ function getDeletedIndexes(needle, haystack){
 }
 
 //Move PDF to permanent location after new template is uploaded
-FormSchema.pre('save', function (next) {
+LogicJumpSchema.pre('save', function (next) {
 	if(this.pdf){
 		var that = this;
 		async.series([
@@ -312,7 +311,7 @@ FormSchema.pre('save', function (next) {
 	next();
 });
 
-FormSchema.pre('save', function (next) {
+LogicJumpSchema.pre('save', function (next) {
 	// var _original = this._original;
 	// console.log('_original\n------------');
 	// console.log(_original);
@@ -446,7 +445,7 @@ FormSchema.pre('save', function (next) {
 	}
 });
 
-// FormSchema.methods.generateFDFTemplate = function() {
+// LogicJumpSchema.methods.generateFDFTemplate = function() {
 // 	var _keys = _.pluck(this.form_fields, 'title'),
 // 		_values = _.pluck(this.form_fields, 'fieldValue');
 
@@ -463,4 +462,4 @@ FormSchema.pre('save', function (next) {
 // 	return jsonObj;
 // };
 
- mongoose.model('Form', FormSchema);
+ mongoose.model('LogicJump', LogicJumpSchema);

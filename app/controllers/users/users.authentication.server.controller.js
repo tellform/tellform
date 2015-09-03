@@ -24,7 +24,7 @@ exports.validateVerificationToken = function(req, res, next){
 	        res.status(200).send('User successfully verified');
 	    }else {
 	        // redirect to resend verification email
-	        res.status(400).send('Verification token is invalid or has expired');
+	        return res.status(400).send('Verification token is invalid or has expired');
 	    }
 	});
 };
@@ -35,7 +35,7 @@ exports.resendVerificationEmail = function(req, res, next){
 	        res.status(200).send('Verification email successfully Re-Sent');
 	    }else {
 	        // user hasn't been found yet
-	        res.status(400).send( {message: 'Error: Verification Email could NOT be sent'} );
+	        return res.status(400).send( {message: 'Error: Verification Email could NOT be sent'} );
 	    }
 	});
 };
@@ -65,11 +65,10 @@ exports.signup = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-
 				res.status(200).send('An email has been sent to you. Please check it to verify your account.');
         	});
         } else {
-            res.status(400).send('Error: Temp user could NOT be created!');
+            return res.status(400).send('Error: Temp user could NOT be created!');
         }
     });
 };

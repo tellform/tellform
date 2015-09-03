@@ -4,7 +4,19 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+	nools = require('nools');
+
+// /**
+//  * LogicJump Schema
+//  */
+// var LogicJump = new Schema({
+// 	[
+
+// 	]
+// 	type: Schema.Types.ObjectId,
+// 	ref: 'FormSubmission'
+// });
 
 /**
  * Question Schema
@@ -28,6 +40,11 @@ var FormFieldSchema = new Schema({
 		type: String,
 		default: '',
 	},
+
+	logicJumps: [{
+		type: String,
+	}],
+
 	//DAVID: TODO: SEMI-URGENT: Need to come up with a schema for field options
 	fieldOptions: [{
 		type: Schema.Types.Mixed
@@ -111,5 +128,3 @@ function validateFormFieldType(value) {
 
 
 module.exports = FormFieldSchema;
-
-// mongoose.model('Field', FormFieldSchema);
