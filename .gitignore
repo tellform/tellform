@@ -1,6 +1,7 @@
 docs/Oscar_Credentials.md
 scripts/test_oscarhost.js
 scripts/oscarhost/private/
+coverage/
 
 # iOS / Apple
 # ===========
