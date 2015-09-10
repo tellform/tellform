@@ -10,6 +10,7 @@
 // 	mongoose = require('mongoose'),
 // 	User = mongoose.model('User'),
 // 	Form = mongoose.model('Form'),
+// 	Field = mongoose.model('Field'),
 // 	FormSubmission = mongoose.model('FormSubmission'),
 // 	agent = request.agent(app);
 
@@ -52,9 +53,9 @@
 // 				language: 'english',
 // 				admin: user._id,
 // 				form_fields: [
-// 					{'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''},
-// 					{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''},
-// 					{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''}
+// 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
+// 					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
+// 					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
 // 				]
 // 			};
 

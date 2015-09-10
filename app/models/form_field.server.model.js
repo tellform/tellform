@@ -4,19 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema,
-	nools = require('nools');
-
-// /**
-//  * LogicJump Schema
-//  */
-// var LogicJump = new Schema({
-// 	[
-
-// 	]
-// 	type: Schema.Types.ObjectId,
-// 	ref: 'FormSubmission'
-// });
+	Schema = mongoose.Schema;
 
 /**
  * Question Schema
@@ -124,7 +112,6 @@ function validateFormFieldType(value) {
     return true;
   }
   return false;
-}
-
+};
 
 module.exports = FormFieldSchema;
