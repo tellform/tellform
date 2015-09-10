@@ -14,17 +14,18 @@ var fakeDemo = {
 		"address": "880-9650 Velit. St.",
 		"alias": "",
 		"anonymous": "",
-		"chartNo": 200000,
-		"children": "",
-		"hin": 9146509343,
+		"chartNo": "",
+		"children":"",
+		"citizenship":"Canadian",
 		"city": "Lloydminster",
 		"dateJoined": new Date(),
 		"dateOfBirth": "10",
 		"demographicNo": 90348,
 		"email": "Sed.nunc@dis.co.uk",
-		"familyDoctor": "<rdohip></rdohip><rd></rd>",
 		"firstName": "Uriah F.",
+		"hin": 9146509343,
 		"lastName": "Little",
+		"lastUpdateDate": new Date(),
 		"monthOfBirth": "05",
 		"officialLanguage": "English",
 		"phone": "(306) 872-3210",
@@ -36,6 +37,41 @@ var fakeDemo = {
 		"postal": "S4M 7T8",
 		"yearOfBirth": "2015"
 	};
+
+var exampleDemo = { 
+	activeCount: 1,
+	address: '880-9650 Velit. St.',
+	chartNo: '',
+	city: '',
+	dateJoined: Date.now(),
+	dateOfBirth: '10',
+	displayName: 'LITTLE, URIAH',
+	email: '',
+	familyDoctor: '<rdohip></rdohip><rd></rd>',
+	firstName: 'Uriah F.',
+	hcType: 'BC',
+	hin: '',
+	hsAlertCount: 0,
+	lastName: 'Little',
+	lastUpdateDate: Date.now(),
+	lastUpdateUser: '',
+	links: '',
+	monthOfBirth: '05',
+	officialLanguage: 'English',
+	patientStatus: 'AC',
+	patientStatusDate: Date.now(),
+	phone: '250-',
+	phone2: '',
+	postal: "S4M 7T8",
+	providerNo: '4',
+	province: 'BC',
+	rosterStatus: '',
+	sex: 'M',
+	sexDesc: 'Female',
+	sin: '',
+	spokenLanguage: 'English',
+	title: 'MS.',
+	yearOfBirth: '2015' }
 
 var options = {
     ignoredNamespaces: {
@@ -54,34 +90,15 @@ async.waterfall([
 			});
 		});
 	},
-	function (security_obj, callback){
-		//Search by HIN for demographic number
-		demo.getDemoByHIN(my_hin, function(demo_num){
-			args_demo.arg0 = demo_num;
-			callback(null, security_obj)
-		});
-	},
-	function (security_obj, callback) {
-		//Get demographic
-		soap.createClient(url_demo, options, function(err, client) {
-			client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
-
-			client.getDemographic(args_demo, function (err, result) {
-				if(err) callback(err);
-				console.log('My Demographic:')
-				console.log(result);
-				callback(null, security_obj);
-			});
-		});
-	},
 
 	function (security_obj, callback) {
 		//Add demographic
 		soap.createClient(url_demo, options, function(err, client) {
 			client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
 
-			client.addDemographic(fakeDemo, function (err, result) {
+			client.addDemographic({ arg0: exampleDemo }, function (err, result) {
 				if(err) callback(err);
+				console.log(client.describe());
 				callback(null, result);
 			});
 		});

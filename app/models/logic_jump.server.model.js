@@ -6,12 +6,10 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	_ = require('lodash'),
-	tree = require('mongoose-tree'),
-	math = require('math'),
-	deasync = require('fibers');
+	math = require('math');
 
 
-var BooleanExpresssionSchema = new Schema({
+var BooleanExpressionSchema = new Schema({
 	expressionString: {
 		type: String,
 	},
@@ -29,7 +27,7 @@ BooleanExpresssionSchema.plugin(tree, {
 });
 */
 
-BooleanExpresssionSchema.methods.evaluate = function(){
+BooleanExpressionSchema.methods.evaluate = function(){
 
 	//Get headNode
 	var headNode = math.parse(expressionString);
@@ -40,7 +38,6 @@ BooleanExpresssionSchema.methods.evaluate = function(){
 	headNode.traverse(function (node, path, parent) {
 		if(node.type === 'SymbolNode'){
 
-			Fiber()
 			mongoose.model('Field')
 				.findOne({_id: node.name}).exec(function(err, field){
 					if(err) {
@@ -64,9 +61,9 @@ BooleanExpresssionSchema.methods.evaluate = function(){
 
 	this.result = result;
 	return result;
-});
+};
 
-mongoose.model('BooleanStatement', BooleanStatementSchema);
+mongoose.model('BooleanExpression', BooleanExpressionSchema);
 
 /**
  * Form Schema
@@ -87,4 +84,5 @@ var LogicJumpSchema = new Schema({
 
 });
 
+// return LogicJumpSchema;
 mongoose.model('LogicJump', LogicJumpSchema);
