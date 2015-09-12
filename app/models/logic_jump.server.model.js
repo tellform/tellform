@@ -6,9 +6,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	_ = require('lodash'),
-	tree = require('mongoose-tree'),
-	math = require('math'),
-	deasync = require('fibers');
+	math = require('math');
 
 
 var BooleanExpresssionSchema = new Schema({
@@ -40,7 +38,6 @@ BooleanExpresssionSchema.methods.evaluate = function(){
 	headNode.traverse(function (node, path, parent) {
 		if(node.type === 'SymbolNode'){
 
-			Fiber()
 			mongoose.model('Field')
 				.findOne({_id: node.name}).exec(function(err, field){
 					if(err) {
@@ -59,14 +56,14 @@ BooleanExpresssionSchema.methods.evaluate = function(){
 		}
 	});
 
-	var code = node.compile(); 
+	var code = headNode.compile(); 
 	var result = code.eval(expressionScope);
 
 	this.result = result;
 	return result;
-});
+};
 
-mongoose.model('BooleanStatement', BooleanStatementSchema);
+mongoose.model('BooleanExpresssion', BooleanExpresssionSchema);
 
 /**
  * Form Schema

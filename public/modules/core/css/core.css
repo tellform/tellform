@@ -1,3 +1,7 @@
+body {
+	overflow-x: hidden;
+}
+
 /*Navbar Custom CSS*/
 .navbar-inverse {
 	background-color:#fafafa;
