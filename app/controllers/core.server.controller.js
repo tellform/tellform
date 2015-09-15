@@ -1,8 +1,8 @@
 'use strict';
 
-var raven = require('raven');
+// var raven = require('raven');
 var config = require('../../config/config');
-var client = new raven.Client(config.DSN);
+// var client = new raven.Client(config.DSN);
 
 
 /**

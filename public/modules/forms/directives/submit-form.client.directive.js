@@ -16,6 +16,9 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
 
                     TimeCounter.startClock()
 
+                    $scope.exitStartPage = function(){
+                        $scope.myform.startPage.showStart = false;
+                    }
                     $rootScope.setActiveField = function (field_id) {
                         $scope.selected = field_id;
                     };
@@ -45,11 +48,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                                 console.log(error);
                                 $scope.error = error.message;
                             });
-                    };
-
-
-                    $scope.exitStartPage = function () {
-                        $scope.myform.startPage.showStart = false;
                     };
 
                     $scope.reloadForm = function(){
