@@ -154,7 +154,6 @@
 			});
 		}));
 
-
 		beforeEach(inject(function($modal) {
 		    spyOn($modal, 'open').and.returnValue(new fakeModal());
 		}));
@@ -210,7 +209,7 @@
 			$httpBackend.flush();
 
 			// Test scope value
-			expect( scope.myform.toJSON() ).toEqualData(expectedFormObj.toJSON());
+			expect( scope.myform.toJSON() ).toEqualData(expectedFormObj);
 		}));
 
 		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', function() {

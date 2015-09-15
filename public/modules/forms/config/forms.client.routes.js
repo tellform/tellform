@@ -13,19 +13,20 @@ angular.module('forms').config(['$stateProvider',
 				permissions: [ 'editForm' ]
 			}
   		}).
+  		state('submitForm', {
+			url: '/forms/:formId',
+			templateUrl: 'modules/forms/views/submit-form.client.view.html',
+			data: {
+				hideNav: true,
+			},
+		}).
 		state('viewForm', {
 			url: '/forms/:formId/admin',
 			templateUrl: 'modules/forms/views/admin-form.client.view.html',
 			data: {
 				permissions: [ 'editForm' ]
 			}
-		}).		
-		state('viewPublicForm', {
-			url: '/forms/:formId',
-			templateUrl: 'modules/forms/views/view-public-form.client.view.html',
-			data: {
-				hideNav: true,
-			},
-		});
+		});	
+
 	}
 ]);

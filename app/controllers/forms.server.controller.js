@@ -275,31 +275,32 @@ exports.list = function(req, res) {
 exports.formByID = function(req, res, next, id) {
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		res.status(400).send({
+		return res.status(400).send({
 			message: 'Form is invalid'
 		});
 	}
+	else {
+		Form.findById(id).populate('admin').exec(function(err, form) {
+			if (err) {
+				return next(err);
+			} else if (form === undefined || form === null) {
+				res.status(400).send({
+					message: 'Form not found'
+				});
+			}
+			else {
+				// console.log(form.admin);
 
-	Form.findById(id).populate('admin').exec(function(err, form) {
-		if (err) {
-			return next(err);
-		} else if (form === undefined || form === null) {
-			res.status(400).send({
-				message: 'Form not found'
-			});
-		}
-		else {
-			// console.log(form.admin);
+				//Remove sensitive information from User object
+				form.admin.password = undefined;
+				form.admin.salt = undefined;
+				form.provider = undefined;
 
-			//Remove sensitive information from User object
-			form.admin.password = undefined;
-			form.admin.salt = undefined;
-			form.provider = undefined;
-
-			req.form = form;
-			next();
-		}
-	});
+				req.form = form;
+				next();
+			}
+		});
+	}
 };
 
 /**

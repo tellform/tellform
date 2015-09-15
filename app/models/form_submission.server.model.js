@@ -63,10 +63,6 @@ var FormSubmissionSchema = new Schema({
 
 });
 
-//Mongoose Relationship initialization
-// FormSubmissionSchema.plugin(relationship, { relationshipPathName:'form' });
-
-
 //Check for IP Address of submitting person 
 FormSubmissionSchema.pre('save', function (next){
 	if(this.ipAddr){

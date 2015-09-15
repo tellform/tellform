@@ -36,6 +36,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		        	$state.go('signup-success');
 		        },
 		        function(error) {
+		        	console.log('Error: ');
+		        	console.log(error);
 					if(error) {
 						$scope.error = error;
 						console.log(error);

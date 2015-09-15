@@ -5,23 +5,25 @@
 <div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted">
     <div class="field row text-center">
         <div class="col-xs-12 text-center">
-            <h1>Welcome to {{myform.title}}</h1>
+            <h1>{{myform.startPage.introTitle}}</h1>
         </div>
-        <div class="col-xs-10 col-xs-offset-1 text-center">
-            <p>{{myform.startPage.introText}}</p>
+        <div class="col-xs-10 col-xs-offset-1 text-left">
+            <p style="color:#ddd;">{{myform.startPage.introParagraph}}</p>
         </div>
     </div>
-     <div class="row form-actions">
-        <p ng-repeat="button in myform.startPage.buttons" class="col-xs-6 col-xs-offset-3 text-center">
-            <button class="btn btn-info" type="button">
-                <a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none;">{{button.buttonText}}</a>
+    <div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
+        <p ng-repeat="button in myform.startPage.buttons" class="text-center" style="display:inline;">
+            <button class="btn btn-info" type="button" ng-style="{'background-color':button.bgColor, 'color':button.color}">
+                <a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none; color: inherit;" > 
+                    {{button.text}}
+                </a>
             </button>
         </p>
     </div>
     <div class="row form-actions">
-        <p class="col-xs-6 col-xs-offset-3 text-center">
+        <p class="col-xs-3 col-xs-offset-3 text-center">
             <button class="btn btn-info" type="button">
-                <a ng-click="exitStartPage()" style="font-size: 1.6em; text-decoration: none;">Continue to Form</a>
+                <a ng-click="exitStartPage()" style="color:white; font-size: 1.6em; text-decoration: none;">Continue to Form</a>
             </button>
         </p>
     </div>
