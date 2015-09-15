@@ -15,7 +15,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     rows: []
                 };
 
-
                 /*
                 ** Table Functions
                 */
@@ -46,8 +45,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     $http.get('/forms/'+$scope.myform._id+'/submissions')
                         .success(function(data, status, headers){
 
-                            console.log(data[0].form_fields);
-
                             var _tmpSubFormFields,
                                 defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
@@ -68,7 +65,9 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         .error(function(err){
                             console.error('Could not fetch form submissions.\nError: '+err);
                         });            
-                };
+    
+                };  
+
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
 

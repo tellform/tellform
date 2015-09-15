@@ -7,15 +7,23 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope = $rootScope;
 
         $scope.myform = CurrentForm.getForm();
+        $scope.myform._id = $stateParams.formId;
         $rootScope.saveInProgress = false;
 
         // Find a specific Form
         $scope.findOne = function(){
-            $scope.myform = Forms.get({
+            Forms.get({
                 formId: $stateParams.formId
+            }, function(form){
+                CurrentForm.setForm(form);
+                $scope.myform = form;
+                $scope.myform._id = $stateParams.formId;
+            }, function(err){
+                console.error('Could not fetch form');
+                console.error(err);
             });
-            CurrentForm.setForm($scope.myform);
         };
+
         $scope.setForm = function(form){
             $scope.myform = form;
         };

@@ -152,6 +152,7 @@
 // 	// 		.expect(200)
 // 	// 		.end(function(FormSaveErr, FormSaveRes) {
 // 	// 			(FormSaveRes.text).should.equal('An email has been sent to you. Please check it to verify your account.');
+
 	
 // 	// 			userSession.post('/auth/signin')
 // 	// 				.send(credentials)

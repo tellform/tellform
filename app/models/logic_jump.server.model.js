@@ -56,7 +56,7 @@ BooleanExpressionSchema.methods.evaluate = function(){
 		}
 	});
 
-	var code = node.compile(); 
+	var code = headNode.compile(); 
 	var result = code.eval(expressionScope);
 
 	this.result = result;
@@ -64,7 +64,6 @@ BooleanExpressionSchema.methods.evaluate = function(){
 };
 
 mongoose.model('BooleanExpression', BooleanExpressionSchema);
-
 /**
  * Form Schema
  */

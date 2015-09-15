@@ -56,20 +56,35 @@ exports.signup = function(req, res) {
 	user.username = user.email;
 
 	// Then save the temporary user
-	nev.createTempUser(user, function(newTempUser) {
-        // new user created
-        if (newTempUser) {
-        	nev.registerTempUser(newTempUser, function (err) {
-        		if (err) {
-					return res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				}
-				res.status(200).send('An email has been sent to you. Please check it to verify your account.');
-        	});
-        } else {
-            return res.status(400).send('Error: Temp user could NOT be created!');
-        }
+	nev.createTempUser(user, function(err, newTempUser) {
+		
+		if (err) {
+			console.log('Error: ');
+			console.log(err);
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}else {
+			console.log('new tmpuser created');
+	        // new user created
+	        if (newTempUser) {
+	        	nev.registerTempUser(newTempUser, function (err) {
+	        		if (err) {
+	        			console.log('Error: ');
+						console.log(err);
+						res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					}else {
+						console.log('new tmpuser registered');
+						res.status(200).send('An email has been sent to you. Please check it to verify your account.');
+	        		}
+	        	});
+	        } else {
+	        	console.log('Error: Temp user already exists!');
+	            res.status(400).send('Error: Temp user already exists!');
+	        }
+	    }
     });
 };
 
@@ -104,8 +119,8 @@ exports.signin = function(req, res, next) {
  */
 exports.signout = function(req, res) {
 	req.logout();
-	res.status(200).send('Successfully logged out');
-	// res.redirect('/');
+	// res.status(200).send('Successfully logged out');
+	res.redirect('/');
 };
 
 /**
