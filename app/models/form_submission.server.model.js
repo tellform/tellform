@@ -13,6 +13,7 @@ var mongoose = require('mongoose'),
 	fs = require('fs-extra'),
 	Field = mongoose.model('Field'),
 	soap = require('soap'),
+	FieldSchema = require('./form_field.server.model.js'),
 	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity');
 	
 var newDemoTemplate = {
@@ -60,7 +61,7 @@ var FormSubmissionSchema = new Schema({
 		ref: 'User',
 		required: true
 	},
-	form_fields: [Field],
+	form_fields: [FieldSchema],
 	form: { 
 		type:Schema.Types.ObjectId, 
 		ref:'Form', 
@@ -112,10 +113,10 @@ FormSubmissionSchema.post('save', function (next) {
  		}
 
  		//Generate demographics from hashmap
- 		var generateDemo = function(formFields, conversionMap, templateDemo){
+ 		var generateDemo = function(formFields, conversionMap, demographicsTemplate){
  			var _generatedDemo = {};
  			for(var field in formFields){
- 				if(templateDemo.hasOwnProperty(conversionMap[field._id])){
+ 				if(demographicsTemplate.hasOwnProperty(conversionMap[field._id])){
  					var propertyName = conversionMap[field._id];
 
  					if(propertyName === "unparsedDOB"){
@@ -132,7 +133,7 @@ FormSubmissionSchema.post('save', function (next) {
  			return _generatedDemo;
  		}
 
- 		var submissionDemographic = generateDemo(this.form_fields, this.form.plugin.oscarhost.settings.fieldMap);
+ 		var submissionDemographic = generateDemo(this.form_fields, this.form.plugin.oscarhost.settings.fieldMap, newDemoTemplate);
 
 		async.waterfall([
 			function (callback) {	
@@ -146,7 +147,7 @@ FormSubmissionSchema.post('save', function (next) {
 			},
 
 			function (security_obj, callback) {
-				//Force Add 
+				//Force Add Demographic
 				if(this.plugins.oscarhost.settings.updateType === 'force_add'){
 					soap.createClient(url_demo, options, function(err, client) {
 						client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );

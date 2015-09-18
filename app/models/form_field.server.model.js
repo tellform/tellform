@@ -4,12 +4,20 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+	relationship = require('mongoose-relationship'),
+	_ = require('lodash'),
 	Schema = mongoose.Schema;
 
 /**
  * Question Schema
  */
 var FormFieldSchema = new Schema({
+	// formSubmission: {
+	// 	 type: Schema.ObjectId, 
+	// 	 ref: 'FormSubmission', 
+	// 	 childPath: 'form_fields'
+	// },
+
 	created: {
 		type: Date,
 		default: Date.now
@@ -20,7 +28,6 @@ var FormFieldSchema = new Schema({
 	},
 	title: {
 		type: String,
-		default: '',
 		trim: true,
 		required: 'Field title cannot be blank'
 	},
@@ -29,9 +36,10 @@ var FormFieldSchema = new Schema({
 		default: '',
 	},
 
-	logicJumps: [{
-		type: String,
-	}],
+	logicJump: {
+		type: Schema.Types.ObjectId,
+		ref: 'LogicJump'
+	},
 
 	//DAVID: TODO: SEMI-URGENT: Need to come up with a schema for field options
 	fieldOptions: [{
@@ -57,6 +65,8 @@ var FormFieldSchema = new Schema({
 	},
 	fieldValue: Schema.Types.Mixed
 });
+
+// FormFieldSchema.plugin(relationship, { relationshipPathName:'formSubmission' });
 
 FormFieldSchema.static('validTypes', function(){
 	return [
@@ -114,4 +124,8 @@ function validateFormFieldType(value) {
   return false;
 };
 
-module.exports = FormFieldSchema;
+var cloneFieldSchema = _.cloneDeep(FormFieldSchema);
+mongoose.model('Field', FormFieldSchema);
+
+module.exports = cloneFieldSchema;
+

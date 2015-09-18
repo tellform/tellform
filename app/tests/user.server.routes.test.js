@@ -51,9 +51,10 @@
 // 		};
 // 	});
 
-// 	// describe('Create, Verify and Activate a User', function() {
+// 	describe('Create, Verify and Activate a User', function() {
 // 		var username = 'testActiveAccount.be1e58fb@mailosaur.in';
-// 		var link, _tmpUser, activateToken = '';
+// 		var link, _tmpUser, activateToken;
+// 		this.timeout(15000);
 
 // 		it('should be able to create a temporary (non-activated) User', function(done) {
 // 			_User.email = _User.username = username;
@@ -101,35 +102,50 @@
 // 					// 	// });
 
 
-// 					// 	// mailbox.getEmails(function(err, _emails) {
-// 					// 	// 	if(err) done(err);
+// 					// 	mailbox.getEmails(function(err, _emails) {
+// 					// 		if(err) done(err);
 
-// 					// 	// 	var emails = _emails;
+// 					// 		var emails = _emails;
 
-// 					// 	// 	console.log('mailbox.getEmails:');
-// 					// 	// 	console.log(emails[0].text.links);
+// 					// 		console.log('mailbox.getEmails:');
+// 					// 		console.log(emails[0].text.links);
 
-// 					// 	// 	var link = emails[0].text.links[0].href;
-// 					// 	// 	activateToken = _(url.parse(link).hash.split('/')).reverse().value()[0];
-// 					// 	// 	console.log('actual   activateToken: '+ activateToken);
-// 					// 	// 	console.log('expected activateToken: ' + user.GENERATED_VERIFYING_URL);
-// 					// 	// 	(activateToken).should.equal(user.GENERATED_VERIFYING_URL);
+// 					// 		var link = emails[0].text.links[0].href;
+// 					// 		activateToken = _(url.parse(link).hash.split('/')).reverse().value()[0];
+// 					// 		console.log('actual   activateToken: '+ activateToken);
+// 					// 		console.log('expected activateToken: ' + user.GENERATED_VERIFYING_URL);
+// 					// 		(activateToken).should.equal(user.GENERATED_VERIFYING_URL);
 
-// 					// 	// 	done();
-// 					// 	// });
+// 					// 		done();
+// 					// 	});
 // 					// });
 // 				});
 // 		});
+	
+// 		it('shold have created User Account', function(done){
+// 			tmpUser.findOne({username: _User.username}, function (err, user) {
+// 				should.not.exist(err);
+// 				should.exist(user);
+// 				_tmpUser = user;
 
-// 		// it('should be able to verify a User Account', function(done) {
-// 		// 	userSession.get('/auth/verify/'+activateToken)
-// 		// 		.expect(200)
-// 		// 		.end(function(VerifyErr, VerifyRes) {
-// 		// 			should.not.exist(VerifyErr);
-// 		// 			(VerifyRes.text).should.equal('User successfully verified');
-// 		// 			done();
-// 		// 		});
-// 		// });
+// 				_User.username.should.equal(user.username);
+// 				_User.firstName.should.equal(user.firstName);
+// 				_User.lastName.should.equal(user.lastName)
+
+// 				activateToken = user.GENERATED_VERIFYING_URL;
+
+// 				done();
+// 			});
+// 		});
+// 		it('should be able to verify a User Account', function(done) {
+// 			userSession.get('/auth/verify/'+activateToken)
+// 				.expect(200)
+// 				.end(function(VerifyErr, VerifyRes) {
+// 					should.not.exist(VerifyErr);
+// 					(VerifyRes.text).should.equal('User successfully verified');
+// 					done();
+// 				});
+// 		});
 
 // 		// it('should receive confirmation email after verifying a User Account', function(done) {
 // 		// 	mailbox.getEmails(function(err, _emails) {
@@ -142,7 +158,7 @@
 // 		// 		done();
 // 		// 	});
 // 		// });
-// 	// });
+// 	});
 
 // 	// it('should be able to login and logout a User', function (done) {
 // 	// 	var username = 'testActiveAccount.be1e58fb@mailosaur.in';

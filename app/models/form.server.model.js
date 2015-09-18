@@ -14,10 +14,12 @@ var mongoose = require('mongoose'),
 	util = require('util');
 
 //Mongoose Models
+var FieldSchema = require('./form_field.server.model.js');
+var Field = mongoose.model('Field');
+
 var FormSubmissionSchema = require('./form_submission.server.model.js'),
-	FieldSchema = require('./form_field.server.model.js'),
-	Field = mongoose.model('Field', FieldSchema),
 	FormSubmission = mongoose.model('FormSubmission', FormSubmissionSchema);
+
 
 var ButtonSchema = new Schema({
 	url: {
@@ -64,10 +66,9 @@ var FormSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	form_fields: [Field],
-	//form_fields: {
-	//	type: [FieldSchema],
-	//},
+	form_fields: [{
+		type: Schema.Types.Mixed
+	}],
 
 	submissions: [{
 		type: Schema.Types.ObjectId,
@@ -163,11 +164,9 @@ var FormSchema = new Schema({
 			auth: {
 				user: {
 					type: String,
-					required: true,
 				},
 				pass: {
 					type: String,
-					required: true,
 				}
 			}
 		}
@@ -189,16 +188,15 @@ var _original;
 
 //Set _original
 FormSchema.pre('save', function (next) {
-	// console.log(this.constructor.model);
-	// console.log(FormModel);
-	this.constructor   // ≈ mongoose.model('…', FieldSchema).findById
+
+	this.constructor
       .findOne({_id: this._id}).exec(function(err, original){
       	if(err) {
       		console.log(err);
       		next(err);
         } else {
         	_original = original;
-        	// console.log('_original');
+        	//console.log('_original');
         	// console.log(_original);
         	next();
         }
@@ -291,7 +289,6 @@ FormSchema.pre('save', function (next) {
 							callback( new Error('Generated formfields is empty'), null);
 						}
 
-						// console.log(_form_fields);
 						//Map PDF field names to FormField field names
 						for(var i = 0; i < _form_fields.length; i++){
 							var field = _form_fields[i];
