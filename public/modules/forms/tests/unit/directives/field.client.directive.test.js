@@ -22,18 +22,18 @@
         };
 
         var sampleFields = [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'AoeuName', deletePreserved: false, required: true, disabled: false},
-                {fieldType:'email', title:'Email',      fieldValue: 'aoeu@aoeu.com', deletePreserved: false, required: true, disabled: false},
-                {fieldType:'yes_no', title:'Do you Play Hockey?', fieldValue: 'true', deletePreserved: false, required: true, disabled: false},
-                {fieldType:'checkbox', title:'Receive emails from us', fieldValue: '', deletePreserved: false, required: true, disabled: false},
-                {fieldType:'url', title:'Github Account',      fieldValue: 'http://github.com/aoeu', deletePreserved: false, required: true, disabled: false},
-                {fieldType:'textarea', title:'Bio',      fieldValue: 'This is my bio.', deletePreserved: false, required: true, disabled: false},
-                {fieldType:'number', title:'Phone #',      fieldValue: '5325325325', deletePreserved: false, required: true, disabled: false},
-                {fieldType:'legal', title:'You agree to terms and conditions',  description:'By selecting \'I agree\' you are agreeing under Canadian law that you have read and accept terms and conditions outlayed below', fieldValue: '', deletePreserved: false, required: true, disabled: false},
-                {fieldType:'dropdown', title:'Your Sex', fieldValue: 'male', fieldOptions:[ { 'option_id': 0, 'option_title': 'M', 'option_value': 'male' }, { 'option_id': 1, 'option_title': 'F', 'option_value': 'female' }], deletePreserved: false, required: true, disabled: false},
-                {fieldType:'radio', title:'Your Sexual Orientation', fieldValue: 'hetero', fieldOptions:[ { 'option_id': 0, 'option_title': 'Heterosexual', 'option_value': 'hetero' }, { 'option_id': 1, 'option_title': 'Homosexual', 'option_value': 'homo' }, { 'option_id': 2, 'option_title': 'Bisexual', 'option_value': 'bi' }, { 'option_id': 3, 'option_title': 'Asexual', 'option_value': 'asex' }], deletePreserved: false, required: true, disabled: false},
-                {fieldType:'rating', title:'Your Current Happiness', fieldValue: '0', deletePreserved: false, required: true, disabled: false},
-            ];
+            {fieldType:'textfield', title:'First Name',                 fieldValue: 'AoeuName', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'email',     title:'Email',                      fieldValue: 'aoeu@aoeu.com', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'yes_no',    title:'Do you Play Hockey?',        fieldValue: 'true', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'checkbox',  title:'Receive emails from us',     fieldValue: '', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'url',       title:'Github Account',             fieldValue: 'http://github.com/aoeu', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'textarea',  title:'Bio',                        fieldValue: 'This is my bio.', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'number',    title:'Phone #',                    fieldValue: 5325325325, deletePreserved: false, required: true, disabled: false},
+            {fieldType:'legal',     title:'You agree to terms and conditions',  description:'By selecting \'I agree\' you are agreeing under Canadian law that you have read and accept terms and conditions outlayed below', fieldValue: '', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'dropdown',  title:'Your Sex',                   fieldValue: 'male', fieldOptions:[ { 'option_id': 0, 'option_title': 'M', 'option_value': 'male' }, { 'option_id': 1, 'option_title': 'F', 'option_value': 'female' }], deletePreserved: false, required: true, disabled: false},
+            {fieldType:'radio',     title:'Your Sexual Orientation',    fieldValue: 'hetero', fieldOptions:[ { 'option_id': 0, 'option_title': 'Heterosexual', 'option_value': 'hetero' }, { 'option_id': 1, 'option_title': 'Homosexual', 'option_value': 'homo' }, { 'option_id': 2, 'option_title': 'Bisexual', 'option_value': 'bi' }, { 'option_id': 3, 'option_title': 'Asexual', 'option_value': 'asex' }], deletePreserved: false, required: true, disabled: false},
+            {fieldType:'rating',    title:'Your Current Happiness',     fieldValue: '0', deletePreserved: false, required: true, disabled: false},
+        ];
 
 
         // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -71,13 +71,22 @@
         it('should be able to render all field types in html', inject(function($rootScope) {
             scope.fields = sampleFields;
 
-            for(var field in sampleFields){     
+            for(var i=0; i<sampleFields.length; i++){ 
+                var field = sampleFields[i]; 
+                if(!field.title) field.title = ''; 
+                
                 scope.myfield = field;
                 var element = angular.element('<field-directive field="myfield"></field-directive>');
                 $compile(element)(scope);
                 scope.$digest();
 
-                expect(element.html()).not.toEqual('<div>'+field.title+'</div>');
+                console.log('Actual: ');
+                console.log(element.html());
+
+                console.log('\nExpected: ');
+
+                console.log('<div class="ng-binding ng-scope>'+field.title+'</div>');
+                expect(element.html()).not.toEqual('<div class="ng-binding ng-scope>'+field.title+'</div>');
             }
         }));
     });
