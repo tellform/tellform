@@ -6,12 +6,12 @@
             <label class="btn btn-info col-xs-3">
                 <input ng-focus="setActiveField(field._id)"
                 type="checkbox" 
-                value="{{option.option_value}}" 
+                value="{{option.option_id}}" 
                 ng-model="field.fieldValue" 
                 ng-model-options="{ debounce: 250 }" 
                 ng-required="field.required" 
                 ng-disabled="field.disabled" 
-                ng-init="field.fieldValue = field.fieldOptions[0].option_value"/>
+                ng-init="field.fieldValue = field.fieldOptions[0].option_id"/>
                 <span ng-bind="option.option_title"></span>
             </label>
         </div>

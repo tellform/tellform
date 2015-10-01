@@ -18,7 +18,6 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
         var templateUrl = 'modules/forms/views/directiveViews/field/';
         var supported_fields = [
             'textfield',
-            'welcome_page',
             'email',
             'textarea',
             'checkbox',
@@ -66,11 +65,11 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
         // }
         
         // GET template content from path
-        console.log(scope.field);
         var template = getTemplateUrl(scope.field);
         // $http.get(templateUrl).success(function(data) {
-            element.html(template);
-            $compile(element.contents())(scope);
+        element.html(template).show();
+        // console.log(element.contents());
+        $compile(element.contents())(scope);
         // });
     };
 
