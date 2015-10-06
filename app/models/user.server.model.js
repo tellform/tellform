@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	crypto = require('crypto'),
 	config = require('../../config/config'),
 	fs = require('fs-extra'),
+	mUtilities = require('mongoose-utilities'),
 	path = require('path');
 
 /**
@@ -102,6 +103,11 @@ UserSchema.virtual('displayName').get(function () {
   	return this.firstName + ' ' + this.lastName;
 });
 
+UserSchema.plugin(mUtilities.timestamp, {
+	createdPath: 'created',
+	modifiedPath: 'lastModified',
+	useVirtual: false
+});
 
 //Create folder for user's pdfs
 UserSchema.pre('save', function (next) {

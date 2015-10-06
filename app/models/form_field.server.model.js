@@ -5,11 +5,27 @@
  */
 var mongoose = require('mongoose'),
 	relationship = require('mongoose-relationship'),
+	mUtilities = require('mongoose-utilities'),
 	_ = require('lodash'),
 	Schema = mongoose.Schema;
 
+var FieldOptionSchema = new Schema({
+	option_id: {
+		type: Number,
+	},
+
+	option_title: {
+		type: String,
+	},
+
+	option_value: {
+		type: String,
+		trim: true,
+	},
+});
+
 /**
- * Question Schema
+ * FormField Schema
  */
 var FormFieldSchema = new Schema({
 	// formSubmission: {
@@ -18,18 +34,10 @@ var FormFieldSchema = new Schema({
 	// 	 childPath: 'form_fields'
 	// },
 
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	lastModified: {
-		type: Date,
-		default: Date.now
-	},
 	title: {
 		type: String,
 		trim: true,
-		required: 'Field title cannot be blank'
+		required: 'Field Title cannot be blank',
 	},
 	description: {
 		type: String,
@@ -41,10 +49,7 @@ var FormFieldSchema = new Schema({
 		ref: 'LogicJump'
 	},
 
-	//DAVID: TODO: SEMI-URGENT: Need to come up with a schema for field options
-	fieldOptions: [{
-		type: Schema.Types.Mixed
-	}],
+	fieldOptions: [FieldOptionSchema],
 	required: {
 		type: Boolean,
 		default: true,
@@ -60,14 +65,18 @@ var FormFieldSchema = new Schema({
 	},
 	fieldType: {
 		type: String,
-		required: 'Field type cannot be blank',
+		required: true,
 		validate: [validateFormFieldType, 'Invalid field type']
 	},
 	fieldValue: Schema.Types.Mixed
 });
 
 // FormFieldSchema.plugin(relationship, { relationshipPathName:'formSubmission' });
-
+FormFieldSchema.plugin(mUtilities.timestamp, {
+	createdPath: 'created',
+	modifiedPath: 'lastModified',
+	useVirtual: false
+});
 FormFieldSchema.static('validTypes', function(){
 	return [
 	    'textfield',
@@ -124,8 +133,8 @@ function validateFormFieldType(value) {
   return false;
 };
 
-var cloneFieldSchema = _.cloneDeep(FormFieldSchema);
+// var cloneFieldSchema = _.cloneDeep(FormFieldSchema);
 mongoose.model('Field', FormFieldSchema);
 
-module.exports = cloneFieldSchema;
+module.exports = FormFieldSchema;
 

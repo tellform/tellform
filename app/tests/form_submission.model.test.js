@@ -38,7 +38,7 @@ var exampleDemo = {
 	patientStatusDate: Date.now(),
 	phone: '250-',
 	phone2: '',
-	postal: "S4M 7T8",
+	postal: 'S4M 7T8',
 	providerNo: '4',
 	province: 'BC',
 	rosterStatus: '',
@@ -48,7 +48,24 @@ var exampleDemo = {
 	spokenLanguage: 'English',
 	title: 'MS.',
 	yearOfBirth: '2015' 
-}
+};
+
+var sampleFormFields = [
+	{'fieldType':'textfield', 'title':'What\'s your first name', 'fieldValue': ''},
+	{'fieldType':'textfield', 'title':'And your last name',  'fieldValue': ''},
+	{'fieldType':'radio', 	'title':'And your sex',  'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''},
+	{'fieldType':'date', 	    'title':'When were you born?',  'fieldValue': ''},
+	{'fieldType':'number', 	'title':'What\'s your phone #?',  'fieldValue': ''}
+];
+
+var sampleSubmission = [
+	{'fieldType':'textfield', 'title':'What\'s your first name', 'fieldValue': 'David'},
+	{'fieldType':'textfield', 'title':'And your last name',  'fieldValue': 'Baldwynn'},
+	{'fieldType':'radio', 	'title':'And your sex',  'fieldValue': 0, 'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }]},
+	{'fieldType':'date', 	    'title':'When were you born?',  'fieldValue': Date.now()},
+	{'fieldType':'number', 	'title':'What\'s your phone #?',  'fieldValue': '6043158008'}
+];
+
 
 /**
  * Globals
@@ -64,17 +81,20 @@ describe('FormSubmission Model Unit Tests:', function() {
 			firstName: 'Full',
 			lastName: 'Name',
 			displayName: 'Full Name',
-			email: 'test1@test.com',
-			username: 'test1@test.com',
-			password: 'password'
+			email: 'test1@test.com'+Date.now(),
+			username: 'test1@test.com'+Date.now(),
+			password: 'password',
+			provider: 'local'
 		});
 
-		user.save(function(err, _user) {
-			if(err) done(err);
-
+		user.save(function(err) {
+			if(err){
+				console.log(err.errors);
+				done(err);
+			} 
 			myForm = new Form({
-				title: 'Form Title',
-				admin: _user,
+				title: 'Form Title1',
+				admin: user,
 				language: 'english',
 				form_fields: [
 					{'fieldType':'textfield', 	'title':'What\'s your first name', 	'fieldValue': ''},
@@ -87,7 +107,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 					oscarhost: {
 						baseUrl: config.oscarhost.baseUrl,
 						settings: {
-							lookupField: '',
 							updateType: 'force_add',
 						},
 						auth: config.oscarhost.auth,
@@ -95,13 +114,34 @@ describe('FormSubmission Model Unit Tests:', function() {
 				}
 			});
 
-			done();
+			myForm.save(function(err, form){
+				if(err){
+					console.log(err.errors);
+					done(err);
+				}
+
+				var submissionFields = _.clone(myForm.form_fields);
+				for(var z=0; z<submissionFields.length; z++){
+					submissionFields[z] = _.extend(myForm.form_fields[z], submissionFields[z]);
+				}
+				
+				mySubmission = new FormSubmission({
+					admin: user, 
+					form: myForm,
+					timeElapsed: 17.55,
+					form_fields: submissionFields
+				});
+				
+				done();
+			});
 		});
 	});
 
 	describe('Method Save', function() {
-		var myFieldMap = {};
+		
 		beforeEach(function(done){
+
+			var myFieldMap = {};
 			myFieldMap[myForm.form_fields[0]._id+''] = 'firstName';
 			myFieldMap[myForm.form_fields[1]._id+''] = 'lastName';
 			myFieldMap[myForm.form_fields[2]._id+''] = 'sex';
@@ -114,14 +154,14 @@ describe('FormSubmission Model Unit Tests:', function() {
 				if(err) done(err);
 
 				// var submission_fields = _.cloneDeep(form.toObject().form_fields);
-
-				// var submission_fields = [
-				// 	{'fieldType':'textfield', 'title':'What\'s your first name', 'fieldValue': ''},
-				// 	{'fieldType':'textfield', 'title':'And your last name',  'fieldValue': ''},
-				// 	{'fieldType':'radio', 	'title':'And your sex',  'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''},
-				// 	{'fieldType':'date', 	    'title':'When were you born?',  'fieldValue': ''},
-				// 	{'fieldType':'number', 	'title':'What\'s your phone #?',  'fieldValue': ''}
-				// ];
+				/*
+				var submission_fields = [
+					{'fieldType':'textfield', 'title':'What\'s your first name', 'fieldValue': ''},
+					{'fieldType':'textfield', 'title':'And your last name',  'fieldValue': ''},
+					{'fieldType':'radio', 	'title':'And your sex',  'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''},
+					{'fieldType':'date', 	    'title':'When were you born?',  'fieldValue': ''},
+					{'fieldType':'number', 	'title':'What\'s your phone #?',  'fieldValue': ''}
+				];
 
 				submission_fields[0].fieldValue = 'David';
 				submission_fields[1].fieldValue = 'Baldwynn'+Date.now();
@@ -132,19 +172,19 @@ describe('FormSubmission Model Unit Tests:', function() {
 				mySubmission = new FormSubmission({
 					admin: user, 
 					form: form,
-					timeElapsed: 17.55
-				});
-
-				// for(var i=0; i<submission_fields.length; i++){
-				// 	mySubmission.form_fields.create(submission_fields[i]);
-				// }
+					timeElapsed: 17.55,
+					form_fields: submission_fields
+				});	
+				*/
 				done();
 			});
 		});
 
 		it('should be able to save a FormSubmission without problems', function(done) {
 			return mySubmission.save(function(err, submission) {
+				if(err) done(err);
 				should.not.exist(err);
+				should.exist(submission);
 				should.exist(submission.oscarDemoNum);
 				done();
 			});
@@ -153,117 +193,108 @@ describe('FormSubmission Model Unit Tests:', function() {
 		it('should add Patient to OscarHost EMR after save');
 	});
 
-	// describe('Method Find', function(){
-	// 	beforeEach(function(done){
-	// 		myForm.save(function(err) {
-	// 			done();
-	// 		});
-	// 	});
-	// 	// it('should be able to findOne my form without problems', function(done) {
-	// 	// 	return Form.findOne({_id: myForm._id}, function(err,form) {
-	// 	// 		should.not.exist(err);
-	// 	// 		should.exist(form);
-	// 	// 		should.deepEqual(form.toObject(), myForm.toObject());
-	// 	// 		done();
-	// 	// 	});
-	// 	// });
-	// });
+	describe('Method Find', function(){
+		beforeEach(function(done){
+			mySubmission.save(function(err) {
+				done();
+			});
+		});
+		it('should be able to findOne FormSubmission without problems', function(done) {
+			return FormSubmission.findOne({_id: mySubmission._id}, function(err,submission) {
+				should.not.exist(err);
+				should.exist(submission);
+				should.deepEqual(submission.toObject(), mySubmission.toObject());
+				done();
+			});
+		});
 
-	// describe('Test FormField and Submission Logic', function() {
-	// 	var new_form_fields_add1, new_form_fields_del, submission_fields, old_fields, form;
+		it('should be able to find FormSubmission by $elemMatch on form_fields id', function(done){
+			return FormSubmission.findOne({ form: myForm._id, admin: user, form_fields: {$elemMatch: {_id: myForm.form_fields[0]._id} }  })
+				.exec(function(err, submission){
+					should.not.exist(err);
+					should.exist(submission);
+					should.deepEqual(submission.toObject(), mySubmission.toObject());
+					done();
+				});
+		});
+	});
 
-	// 	before(function(){
-	// 		new_form_fields_add1 = _.clone(myForm.toObject().form_fields);
-	// 		new_form_fields_add1.push(
-	// 			{'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}
-	// 		);
+	describe('Test FormField and Submission Logic', function() {
+		var new_form_fields_add1, new_form_fields_del;
 
-	// 		new_form_fields_del = _.clone(myForm.toObject().form_fields);
-	// 		new_form_fields_del.splice(0, 1);
+		beforeEach(function(done){
+			new_form_fields_add1 = _.clone(myForm.toObject().form_fields);
+			new_form_fields_add1.push(
+				{'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}
+			);
 		
-	// 		//Create Submission
-	// 		submission_fields = _.clone(myForm.toObject().form_fields);
-
-	// 		for(var i=0; i<submission_fields.length; i++){
-	// 			submission_fields[i] = new Field(submission_fields[i]);
-	// 		}
-	// 		submission_fields[0].fieldValue = 'David';
-	// 		submission_fields[1].fieldValue = true;
-	// 		submission_fields[2].fieldValue = true;
-
-	// 		mySubmission = new FormSubmission({
-	// 			form_fields: [],
-	// 			admin: user, 
-	// 			form: myForm,
-	// 			timeElapsed: 17.55
-	// 		});	
+			//Create Submission
 			
-	// 		for(var i=0; i<submission_fields.length; i++){
-	// 			mySubmission.form_fields.push(submission_fields[i]);
-	// 		}	
-	// 	});
+			mySubmission = new FormSubmission({
+				form_fields: sampleSubmission,
+				admin: user, 
+				form: myForm,
+				timeElapsed: 17.55
+			});	
 
-	// 	beforeEach(function(done){
-	// 		myForm.save(function(){
-	// 			console.log(mySubmission);
-	// 			mySubmission.save(function(err){
-	// 				if(err) done(err);
-	// 				done();
-	// 			});
-	// 		});
-	// 	});
+			mySubmission.save(function(err){
+				if(err) done(err);
+				done();
+			});
+			
+		});
+		
+		it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
-	// 	afterEach(function(done){
-	// 		mySubmission.remove(function(){
-	// 			done();
-	// 		});
-	// 	});
+			var old_fields = myForm.toObject().form_fields;
+			var new_form_fields = _.clone(myForm.toObject().form_fields);
+			new_form_fields.splice(0, 1);
 
-	// 	it('something', function(done){
-	// 		done();
-	// 	});
+			myForm.form_fields = new_form_fields;
 
-	// 	// it('should preserve deleted form_fields that have submissions without any problems', function(done) {
+			myForm.save(function(err, _form) {
 
-	// 	// 	old_fields = myForm.toObject().form_fields;
+				should.not.exist(err);
+				should.exist(_form);
 
-	// 	// 	// var expected_fields = old_fields.slice(1,3).concat(old_fields.slice(0,1));
+				// var actual_fields = _.map(_form.toObject().form_fields, function(o){ _.omit(o, '_id')});
+				// old_fields = _.map(old_fields, function(o){ _.omit(o, '_id')});
 
-	// 	// 	myForm.form_fields = new_form_fields_del;
+				// console.log(old_fields);
+				should.deepEqual(JSON.stringify(_form.toObject().form_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
+				done();
+			});
+		});
+		
 
-	// 	// 	myForm.save(function(err, form) {
+		// it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
 
-	// 	// 		should.not.exist(err);
-	// 	// 		should.exist(_form);
-
-	// 	// 		// var actual_fields = _.map(_form.toObject().form_fields, function(o){ _.omit(o, '_id')});
-	// 	// 		// old_fields = _.map(old_fields, function(o){ _.omit(o, '_id')});
-
-	// 	// 		// console.log(old_fields);
-	// 	// 		should.deepEqual(JSON.stringify(_form.toObject().form_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
-	// 	// 		done();
-	// 	// 	});
-	// 	// });
-
-	// 	// it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
-
-	// 	// 	myForm.form_fields = new_form_fields_del;
-	// 	// 	myForm.save(function(err, form
-	// 	// 		should.not.exist(err);
-	// 	// 		(form.form_fields).should.be.eql(old_fields, 'old form_fields not equal to newly saved form_fields');
+		// 	myForm.form_fields = new_form_fields_del;
+		// 	myForm.save(function(err, form
+		// 		should.not.exist(err);
+		// 		(form.form_fields).should.be.eql(old_fields, 'old form_fields not equal to newly saved form_fields');
 				
-	// 	// 		//Remove submission
-	// 	// 		mySubmission.remove(function(err){
-	// 	// 			myForm.submissions.should.have.length(0);
-	// 	// 			myForm.form_fields.should.not.containDeep(old_fields[0]);
-	// 	// 		});
-	// 	// 	});
-	// 	// });
-	// });
+		// 		//Remove submission
+		// 		mySubmission.remove(function(err){
+		// 			myForm.submissions.should.have.length(0);
+		// 			myForm.form_fields.should.not.containDeep(old_fields[0]);
+		// 		});
+		// 	});
+		// });
+
+		
+		afterEach(function(done){
+			mySubmission.remove(function(){
+				done();
+			});
+		});
+	});
 
 	afterEach(function(done) {
 		Form.remove().exec(function() {
-			User.remove().exec(done);
+			User.remove().exec(function() {
+				FormSubmission.remove().exec(done);
+			});
 		});
 	});
 });

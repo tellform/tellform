@@ -144,7 +144,9 @@ module.exports = function(grunt) {
 			src: watchFiles.mochaTests,
 			options: {
 				reporter: 'spec',
-				require: 'server.js'
+				quiet: false, 
+				require: 'server.js',
+				ui: 'bdd'
 			}
 		},
 		karma: {

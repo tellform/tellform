@@ -12,44 +12,6 @@ var should = require('should'),
 	config = require('../../config/config'),
 	FormSubmission = mongoose.model('FormSubmission');
 
-
-var exampleDemo = { 
-	activeCount: 1,
-	unparsedDOB: '',
-	address: '880-9650 Velit. St.',
-	chartNo: '',
-	city: '',
-	dateJoined: Date.now(),
-	dateOfBirth: '10',
-	displayName: 'LITTLE, URIAH',
-	email: '',
-	familyDoctor: '<rdohip></rdohip><rd></rd>',
-	firstName: 'Uriah F.',
-	hcType: 'BC',
-	hin: '',
-	hsAlertCount: 0,
-	lastName: 'Little',
-	lastUpdateDate: Date.now(),
-	lastUpdateUser: '',
-	links: '',
-	monthOfBirth: '05',
-	officialLanguage: 'English',
-	patientStatus: 'AC',
-	patientStatusDate: Date.now(),
-	phone: '250-',
-	phone2: '',
-	postal: "S4M 7T8",
-	providerNo: '4',
-	province: 'BC',
-	rosterStatus: '',
-	sex: 'M',
-	sexDesc: 'Female',
-	sin: '',
-	spokenLanguage: 'English',
-	title: 'MS.',
-	yearOfBirth: '2015' 
-}
-
 /**
  * Globals
  */
@@ -59,32 +21,37 @@ var user, myForm, mySubmission;
  * Unit tests
  */
 describe('Form Model Unit Tests:', function() {
+
 	beforeEach(function(done) {
-		Form.remove().exec(function() {
-			User.remove().exec(done);
-		});
-	});
-	beforeEach(function(done) {
+
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
 			displayName: 'Full Name',
 			email: 'test@test.com',
 			username: 'username',
-			password: 'password'
+			password: 'password',
+			provider: 'local'
 		});
 
-		user.save(function() {
+		user.save(function(err) {
+
+			if(err){
+				console.log(err.errors);
+				done(err);
+			} 
+
 			myForm = new Form({
 				title: 'Form Title',
 				admin: user,
 				language: 'english',
 				form_fields: [
-					{'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''},
-					{'fieldType':'checkbox',  'title':'nascar',     'fieldValue': ''},
-					{'fieldType':'checkbox',  'title':'hockey',     'fieldValue': ''}
+					{'fieldType':'textfield', title:'First Name', 'fieldValue': ''},
+					{'fieldType':'checkbox',  title:'nascar',     'fieldValue': ''},
+					{'fieldType':'checkbox',  title:'hockey',     'fieldValue': ''}
 				]
 			});
+
 
 			done();
 		});
@@ -92,17 +59,26 @@ describe('Form Model Unit Tests:', function() {
 
 	describe('Method Save', function() {
 		it('should be able to save without problems', function(done) {
-			return myForm.save(function(err) {
+			myForm.save(function(err) {
 				should.not.exist(err);
 				done();
 			});
 		});
 
 		it('should be able to show an error when try to save without title', function(done) {
-			var _form = myForm;
+			var _form = new Form({
+				title: 'Form Title',
+				admin: user,
+				language: 'english',
+				form_fields: [
+					{'fieldType':'textfield', title:'First Name', 'fieldValue': ''},
+					{'fieldType':'checkbox',  title:'nascar',     'fieldValue': ''},
+					{'fieldType':'checkbox',  title:'hockey',     'fieldValue': ''}
+				]
+			});
 			_form.title = '';
 
-			return _form.save(function(err) {
+			_form.save(function(err) {
 				should.exist(err);
 				should.equal(err.errors.title.message, 'Form Title cannot be blank');
 				done();
