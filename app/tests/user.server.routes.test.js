@@ -102,6 +102,7 @@
 // 					// 	// });
 
 
+<<<<<<< HEAD
 // 					// 	mailbox.getEmails(function(err, _emails) {
 // 					// 		if(err) done(err);
 

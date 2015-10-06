@@ -18,31 +18,31 @@ var mongoose = require('mongoose'),
 	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity');
 
 var newDemoTemplate = {
-		'activeCount': 0, 
-		'address': '',
-		'alias': '',
-		'anonymous': '',
-		'chartNo': '',
-		'children':'',
-		'citizenship':'',
-		'city': '',
-		'dateJoined': null,
-		'dateOfBirth': '',
-		'email': '',
-		'firstName': '',
-		'hin': 9146509343,
-		'lastName': '',
-		'lastUpdateDate': null,
-		'monthOfBirth': '',
-		'officialLanguage': '',
-		'phone': '',
-		'phone2': '',
-		'providerNo': 0,
-		'province': '',
-		'sex': '',
-		'spokenLanguage': '',
-		'postal': '',
-		'yearOfBirth': ''
+		"activeCount": 0, 
+		"address": "",
+		"alias": "",
+		"anonymous": "",
+		"chartNo": "",
+		"children":"",
+		"citizenship":"",
+		"city": "",
+		"dateJoined": null,
+		"dateOfBirth": "",
+		"email": "",
+		"firstName": "",
+		"hin": 9146509343,
+		"lastName": "",
+		"lastUpdateDate": null,
+		"monthOfBirth": "",
+		"officialLanguage": "",
+		"phone": "",
+		"phone2": "",
+		"providerNo": 0,
+		"province": "",
+		"sex": "",
+		"spokenLanguage": "",
+		"postal": "",
+		"yearOfBirth": ""
 	};
 
 /** 
@@ -58,9 +58,12 @@ var FormSubmissionSchema = new Schema({
 		ref: 'User',
 		required: true
 	},
+
 	form_fields: {
 		type: [Schema.Types.Mixed],
 	},
+	// form_fields: [Field],
+
 	form: { 
 		type: Schema.Types.ObjectId, 
 		ref: 'Form', 
@@ -193,9 +196,7 @@ FormSubmissionSchema.pre('save', function (next) {
 		}else{
 			next();
 		}
-	
 	});
-
 });
 
 //Check for IP Address of submitting person 

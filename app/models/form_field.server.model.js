@@ -24,6 +24,7 @@ var FieldOptionSchema = new Schema({
 	},
 });
 
+
 /**
  * FormField Schema
  */
@@ -133,7 +134,6 @@ function validateFormFieldType(value) {
   return false;
 };
 
-// var cloneFieldSchema = _.cloneDeep(FormFieldSchema);
 mongoose.model('Field', FormFieldSchema);
 
 module.exports = FormFieldSchema;

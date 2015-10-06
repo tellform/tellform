@@ -67,9 +67,10 @@ var FormSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	form_fields: {
-		type: [FieldSchema],
-	},
+	form_fields: [Field],
+	//form_fields: {
+	//	type: [FieldSchema],
+	//},
 
 	submissions: [{
 		type: Schema.Types.ObjectId,
