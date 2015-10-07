@@ -45,13 +45,6 @@ var ButtonSchema = new Schema({
  * Form Schema
  */
 var FormSchema = new Schema({
-	// created: {
-	// 	type: Date,
-	// 	default: Date.now
-	// },
-	// lastModified: {
-	// 	type: Date,
-	// },
 	title: {
 		type: String,
 		trim: true,
@@ -67,10 +60,10 @@ var FormSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	form_fields: [Field],
-	//form_fields: {
-	//	type: [FieldSchema],
-	//},
+	// form_fields: [Field],
+	form_fields: {
+		type: [FieldSchema],
+	},
 
 	submissions: [{
 		type: Schema.Types.ObjectId,

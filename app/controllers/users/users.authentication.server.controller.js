@@ -18,13 +18,14 @@ var _ = require('lodash'),
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 exports.validateVerificationToken = function(req, res, next){
-
+	console.log('validateVerificationToken');
+	console.log('token: '+req.params.token+'\n\n');
 	nev.confirmTempUser(req.params.token, function(user) {
 	    if (user){
 	        res.status(200).send('User successfully verified');
 	    }else {
 	        // redirect to resend verification email
-	        return res.status(400).send('Verification token is invalid or has expired');
+	        res.status(400).send( {message: 'Verification token is invalid or has expired'} );
 	    }
 	});
 };
@@ -35,7 +36,7 @@ exports.resendVerificationEmail = function(req, res, next){
 	        res.status(200).send('Verification email successfully Re-Sent');
 	    }else {
 	        // user hasn't been found yet
-	        return res.status(400).send( {message: 'Error: Verification Email could NOT be sent'} );
+	        res.status(400).send( {message: 'Error: Verification Email could NOT be sent'} );
 	    }
 	});
 };
