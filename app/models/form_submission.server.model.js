@@ -135,7 +135,7 @@ FormSubmissionSchema.pre('save', function (next) {
 	 		        override: true
 	 		    }
 	 		};
-	 		console.log(self.form_fields);
+	 		// console.log(self.form_fields);
 
 	 		//Generate demographics from hashmap
 	 		var generateDemo = function(formFields, conversionMap, demographicsTemplate){
@@ -195,7 +195,7 @@ FormSubmissionSchema.pre('save', function (next) {
 				if(err) next(err);
 
 				self.oscarDemoNum = parseInt(result.return, 10);
-				console.log('self.oscarDemoNum: '+self.oscarDemoNum);
+				// console.log('self.oscarDemoNum: '+self.oscarDemoNum);
 				next();
 			});	
 		}else{

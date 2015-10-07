@@ -9,7 +9,10 @@ var should = require('should'),
 	Form = mongoose.model('Form'),
 	Field = mongoose.model('Field'),
 	_ = require('lodash'),
+	async = require('async'),
+	soap = require('soap'),
 	config = require('../../config/config'),
+	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity'),
 	FormSubmission = mongoose.model('FormSubmission');
 
 var exampleDemo = { 
@@ -126,7 +129,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 	});
 
 	describe('Method Save', function() {
-		
+		var oscar_demo_num;
+
 		beforeEach(function(done){
 
 			var myFieldMap = {};
@@ -147,14 +151,59 @@ describe('FormSubmission Model Unit Tests:', function() {
 		it('should be able to save a FormSubmission without problems', function(done) {
 			return mySubmission.save(function(err, submission) {
 				if(err) done(err);
+
 				should.not.exist(err);
 				should.exist(submission);
 				should.exist(submission.oscarDemoNum);
+				oscar_demo_num = submission.oscarDemoNum;
+
 				done();
 			});
 		});
 
-		it('should add Patient to OscarHost EMR after save');
+		it('should add Patient to OscarHost EMR after save', function(done){
+			var url_login = myForm.plugins.oscarhost.baseUrl+'/LoginService?wsdl',
+	 			url_demo = myForm.plugins.oscarhost.baseUrl+'/DemographicService?wsdl',
+	 			args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};
+
+	 		var options = {
+	 		    ignoredNamespaces: {
+	 		        namespaces: ['targetNamespace', 'typedNamespace'],
+	 		        override: true
+	 		    }
+	 		};
+
+			async.waterfall([
+				function (callback) {	
+					//Authenticate with API
+					soap.createClient(url_login, options, function(err, client) {
+						client.login(args_login, function (err, result) {
+							if(err) callback(err);
+							callback(null, result.return);
+						});
+					});
+				},
+
+				function (security_obj, callback) {
+					soap.createClient(url_demo, options, function(err, client) {
+						client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
+
+						client.getDemographic({ arg0: oscar_demo_num }, function (err, result) {
+							if(err) callback(err);
+							callback(null, result);
+						});
+					});
+				},
+
+			], function(err, result) {
+				if(err) done(err);
+
+				should.exist(result);
+				console.log(result.return);
+
+				done();
+			});	
+		});
 	});
 
 	describe('Method Find', function(){
@@ -249,59 +298,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 		
 		afterEach(function(done){
 			mySubmission.remove(function(){
-				done();
-			});
-		});
-	});
-
-	describe('Submission of Form should add Patient to OscarHost', function() {
-		before(function(done){
-			myForm.form_fields = [
-				new Field({'fieldType':'textfield', 'title':'What\'s your first name', 'fieldValue': ''}),
-				new Field({'fieldType':'textfield', 'title':'And your last name',  'fieldValue': ''}),
-				new Field({'fieldType':'radio', 	'title':'And your sex',  'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''}),
-				new Field({'fieldType':'date', 	    'title':'When were you born?',  'fieldValue': ''}),
-				new Field({'fieldType':'number', 	'title':'What\'s your phone #?',  'fieldValue': ''}),
-			];
-			var myFieldMap = {};
-			myFieldMap[myForm.form_fields[0]._id] = 'firstName';
-			myFieldMap[myForm.form_fields[1]._id] = 'lastName';
-			myFieldMap[myForm.form_fields[2]._id] = 'sex';
-			myFieldMap[myForm.form_fields[3]._id] = 'unparsedDOB';
-			myFieldMap[myForm.form_fields[4]._id] = 'phone';
-
-			myForm.plugins.oscarhost = {
-				baseUrl: config.oscarhost.baseUrl,
-				settings: {
-					updateType: 'force_add',
-					fieldMap: myFieldMap,
-				},
-				auth: config.oscarhost.auth,
-			};
-
-			myForm.save(function(err, form){
-				if(err) done(err);
-
-				var submission_fields = _.clone(myForm.toObject().form_fields);
-				submission_fields[0].fieldValue = 'David';
-				submission_fields[1].fieldValue = 'Baldwynn'+Date.now();
-				submission_fields[2].fieldValue = 'M';
-				submission_fields[3].fieldValue = Date.now();
-				submission_fields[4].fieldValue = 6043158008;
-
-				mySubmission = new FormSubmission({
-					form_fields: submission_fields,
-					admin: form.admin, 
-					form: form,
-					timeElapsed: 17.55
-				});
-				done();
-			});
-		});
-		it('should be able to submit a valid form without problems', function(done) {
-			mySubmission.save(function(err, submission) {
-				should.not.exist(err);
-				should.exist(submission.oscarDemoNum);
 				done();
 			});
 		});
