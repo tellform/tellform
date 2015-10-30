@@ -39,7 +39,7 @@
     <div class="row">
         <form name="myForm" class="submission-form col-sm-12 col-md-offset-1 col-md-10">
                 <div ng-repeat="field in myform.form_fields"  ng-if="!field.deletePreserved" ng-class="{activeField: selected == field._id }" class="row field-directive">
-                    <field-directive field="field">
+                    <field-directive field="field" design="myform.design">
                     </field-directive>
                 </div>
         </form>

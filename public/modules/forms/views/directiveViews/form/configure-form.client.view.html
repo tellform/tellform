@@ -146,12 +146,12 @@
             </div>
             <div class="row field" ng-if="oscarhostAPI">
                 <div class="field-title col-sm-4">
-                    <h5>Oscarhost API update type</h5>
+                    <h5>Oscarhost API Update Type</h5>
                 </div>
 
                 <div class="col-sm-8">
                     <select ng-model="myform.plugins.oscarhost.settings.updateType">
-                        <option ng-repeat="updateType in myform.plugins.oscarhost.settings.validUpdateTypes" ng-value="updateType">
+                        <option ng-repeat="updateType in myform.plugins.oscarhost.settings.validUpdateTypes" ng-selected="myform.plugins.oscarhost.settings.updateType == updateType" ng-value="updateType">
                             {{updateType}}
                         </option>
                     </select> 
@@ -159,8 +159,8 @@
             </div>
 
 
-            <!-- generate typeform from NodeForm yes/no field -->
-            <div class="row field">
+            <!-- Generate typeform from NodeForm yes/no field -->
+            <!-- <div class="row field">
                 <div class="col-sm-6 field-title">
                     <h5>Autogenerate into Typeform?</h5>
                 </div>
@@ -196,7 +196,7 @@
                 <div class="col-sm-8">
                     <span type="text" ng-bind="myform.Typeform.url"></span>
                 </div>
-            </div>
+            </div> -->
 
 
             <!-- !!!!!!DAVID: TODO: Finish this so we can upload pdfFieldMap!!!!!!!!! -->

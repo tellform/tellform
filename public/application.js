@@ -62,8 +62,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 			Auth.ensureHasCurrentUser(User);
 			user = Auth.currentUser;
 
-			console.log(user.roles);
-
 		    if(user){
 			  	authenticator = new Authorizer(user);
 			  	console.log('access denied: '+!authenticator.canAccess(permissions));

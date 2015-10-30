@@ -4,7 +4,7 @@
     <div class="col-xs-12 field-input">
 		<div ng-repeat="option in field.fieldOptions" class="row-fluid">
             <label class="btn btn-info col-xs-3">
-                <input ng-focus="setActiveField(field._id)"
+                <input ng-focus="setActiveField(field._id)" ng-style="{'color': design.colors.answerColor}" 
                 type="checkbox" 
                 value="{{option.option_id}}" 
                 ng-model="field.fieldValue" 

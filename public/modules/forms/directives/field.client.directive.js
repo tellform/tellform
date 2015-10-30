@@ -67,7 +67,8 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
         restrict: 'E',
         scope: {
             field: '=',
-            required: '&'
+            required: '&',
+            design: '='
         },
         link: linker
     };

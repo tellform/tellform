@@ -34,6 +34,9 @@
 					<th data-ng-repeat="(key, value) in myform.form_fields">
 						{{value.title}}
 					</th>
+					<th ng-if="myform.plugins.oscarhost.baseUrl">
+						OscarEMR User Profile
+					</th>
 					<th>
 						Percentage Complete
 					</th>
@@ -59,6 +62,11 @@
 					</th>
 					<td data-ng-repeat="(key, value) in row.form_fields">
 						{{value.fieldValue}}
+					</td>
+					<td ng-if="myform.plugins.oscarhost.baseUrl">
+						<a href="{{myform.plugins.oscarhost.baseUrl.split('ws')[0]}}demographic/demographiccontrol.jsp?demographic_no={{row.oscarDemoNum}}&displaymode=edit">
+						User Profile #{{row.oscarDemoNum}}
+						</a>
 					</td>
 					<td>
 						{{row.percentageComplete}}%
