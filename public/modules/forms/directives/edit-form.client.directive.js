@@ -9,7 +9,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 myform:'=',
             },
             controller: function($scope){
-                
+                var field_ids = _($scope.myform.form_fields).pluck('_id');
+                for(var i=0; i<field_ids.length; i++){
+                    $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
+                }
                 /*
                 **  Initialize scope with variables
                 */
@@ -31,13 +34,32 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
 
+                //Many-to-many Select for Mapping OscarhostFields -> FormFields
+                $scope.oscarFieldsLeft = function(field_id){
+
+                    if($scope.myform && $scope.myform.plugins.oscarhost.settings.validFields.length > 0){
+                        if(!$scope.myform.plugins.oscarhost.settings.fieldMap) $scope.myform.plugins.oscarhost.settings.fieldMap = {};
+
+                        var oscarhostFields = $scope.myform.plugins.oscarhost.settings.validFields;
+                        var currentFields = _($scope.myform.plugins.oscarhost.settings.fieldMap).invert().keys().value();
+
+                        if( $scope.myform.plugins.oscarhost.settings.fieldMap.hasOwnProperty(field_id) ){
+                            currentFields = _(currentFields).difference($scope.myform.plugins.oscarhost.settings.fieldMap[field_id]);
+                        } 
+
+                        // console.log($scope.myform.plugins.oscarhost.settings.fieldMap);
+                        //Get all oscarhostFields that haven't been mapped to a formfield
+                        return _(oscarhostFields).difference(currentFields).value();
+                    }
+                    return [];
+                };
+
                 /*
                 ** FormFields (ui-sortable) drag-and-drop configuration
                 */
                 $scope.dropzone = {
                     handle: ' .handle'  
                 };
-
 
                 // $scope.draggable = {
                 //     connectWith: ".dropzone",
@@ -111,7 +133,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     };
                     // console.log('\n\n---------\nAdded field CLIENT');
                     // console.log(newField);
-                    newField._id = _.uniqueId();
+                    // newField._id = _.uniqueId();
                     
                     // put newField into fields array
                     if(modifyForm){
@@ -122,6 +144,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index){
+                    $scope.myform.plugins.oscarhost.settings.fieldMap = {};
+                    //Delete field from field map
+                    var currFieldId = $scope.myform.form_fields[field_index]._id
+                    delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
+
+                    //Delete field
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
                 $scope.duplicateField = function (field_index){
@@ -184,8 +212,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 
                     var newOption = {
                         'option_id' : option_id,
-                        'option_title' : 'Option ' + option_id,
-                        'option_value' : option_id
+                        'option_value' : 'Option ' + option_id,
                     };
 
                     // put new option into fieldOptions array

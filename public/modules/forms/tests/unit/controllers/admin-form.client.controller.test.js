@@ -72,6 +72,12 @@
 		    };
 		};
 
+		//Mock Users Service
+        beforeEach(module(function($provide) {
+            $provide.service('myForm', function($q) {
+                return sampleForm;
+            });
+        }));
 
 
 		// The $resource service augments the response object with methods for updating and deleting the resource.

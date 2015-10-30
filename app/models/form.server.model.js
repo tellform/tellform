@@ -154,6 +154,26 @@ var FormSchema = new Schema({
 				},
 				fieldMap: {
 					type: Schema.Types.Mixed,
+				},
+				validUpdateTypes: {
+					type: [String]
+				},
+				validFields : {
+					type: [String],
+					default: [
+						'address',
+						'city',
+						'email',
+						'firstName',
+						'hin',
+						'lastName',
+						'phone',
+						'postal',
+						'province',
+						'sex',
+						'spokenLanguage',
+						'title',
+						'DOB']
 				}
 			},
 			auth: {
@@ -173,7 +193,25 @@ FormSchema.plugin(mUtilities.timestamp, {
 	modifiedPath: 'lastModified',
 	useVirtual: false
 });
+FormSchema.pre('save', function (next) {
+	var validUpdateTypes= mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
+	this.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
 
+	this.plugins.oscarhost.settings.validFields = [
+		'address',
+		'city',
+		'email',
+		'firstName',
+		'hin',
+		'lastName',
+		'phone',
+		'postal',
+		'province',
+		'sex',
+		'spokenLanguage',
+		'title',
+		'DOB'];
+});
 //Delete template PDF of current Form
 FormSchema.pre('remove', function (next) {
 	if(this.pdf && process.env.NODE_ENV === 'development'){

@@ -13,7 +13,7 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
 
     
     var getTemplateUrl = function(field) {
-
+        console.log(field.validFieldTypes);
         var type = field.fieldType;
         var templateUrl = 'modules/forms/views/directiveViews/field/';
         var supported_fields = [
@@ -22,6 +22,7 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
             'textarea',
             'checkbox',
             'date',
+            'link',
             'dropdown',
             'hidden',
             'password',
@@ -34,10 +35,9 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
             'natural'
         ];
         if (__indexOf.call(supported_fields, type) >= 0) {
-            templateUrl += type + '.html';
+            templateUrl = templateUrl+type+'.html';
         }
-        var template = $templateCache.get(templateUrl);
-        return template;
+        return templateUrl;
     };
 
     var linker = function(scope, element) {
@@ -53,24 +53,13 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
                 defaultDate: 0,
             };
         }
-        //DAVID: TODO: Make natural language processing work
-        //Set only if we have a natural lang processing field
-        // else if(scope.field.fieldType === 'natural'){
-        //     scope.field.fieldMatchValue = '';
 
-        //     //Fires when field is changed
-        //     scope.$watch('scope.field', function(newField, oldField) {
-                
-        //     });
-        // }
-        
         // GET template content from path
-        var template = getTemplateUrl(scope.field);
-        // $http.get(templateUrl).success(function(data) {
-        element.html(template).show();
-        // console.log(element.contents());
-        $compile(element.contents())(scope);
-        // });
+        var templateUrl = getTemplateUrl(scope.field);
+        $http.get(templateUrl).success(function(data) {
+            element.html(data).show();
+            $compile(element.contents())(scope);
+        });
     };
 
     return {

@@ -17,12 +17,12 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, user, _Form, userSession;
+var credentials, user, myForm, userSession;
 
 /**
  * Form routes tests
  */
-describe('Form CRUD tests', function() {
+describe('Form Routes Unit tests', function() {
 
 	beforeEach(function(done) {
 
@@ -48,7 +48,7 @@ describe('Form CRUD tests', function() {
 		// Save a user to the test db and create new Form
 		user.save(function(err) {
 			if(err) done(err);
-			_Form = {
+			myForm = {
 				title: 'Form Title',
 				language: 'english',
 				admin: user._id,
@@ -78,7 +78,7 @@ describe('Form CRUD tests', function() {
 
 				// Save a new Form
 				userSession.post('/forms')
-					.send({form: _Form})
+					.send({form: myForm})
 					.expect('Content-Type', /json/)
 					.expect(200)
 					.end(function(FormSaveErr, FormSaveRes) {
@@ -109,7 +109,7 @@ describe('Form CRUD tests', function() {
 
 	it('should not be able to create a Form if not logged in', function(done) {
 		userSession.post('/forms')
-			.send({form: _Form})
+			.send({form: myForm})
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
 				(FormSaveRes.body.message).should.equal('User is not logged in');
@@ -130,7 +130,7 @@ describe('Form CRUD tests', function() {
 
 	it('should not be able to save a Form if no title is provided', function(done) {
 		// Set Form with a invalid title field
-		_Form.title = '';
+		myForm.title = '';
 
 		userSession.post('/auth/signin')
 			.send(credentials)
@@ -142,13 +142,12 @@ describe('Form CRUD tests', function() {
 
 				// Save a new Form
 				userSession.post('/forms')
-					.send({form: _Form})
+					.send({form: myForm})
 					.expect(400)
 					.end(function(FormSaveErr, FormSaveRes) {
 						// Set message assertion
 						(FormSaveRes.body.message).should.equal('Form Title cannot be blank');
 
-						// Handle Form save error
 						done();
 					});
 			});
@@ -165,7 +164,7 @@ describe('Form CRUD tests', function() {
 
 				// Save a new Form
 				userSession.post('/forms')
-					.send({form: _Form})
+					.send({form: myForm})
 					.expect('Content-Type', /json/)
 					.expect(200)
 					.end(function(FormSaveErr, FormSaveRes) {
@@ -173,11 +172,11 @@ describe('Form CRUD tests', function() {
 						if (FormSaveErr) done(FormSaveErr);
 
 						// Update Form title
-						_Form.title = 'WHY YOU GOTTA BE SO MEAN?';
+						myForm.title = 'WHY YOU GOTTA BE SO MEAN?';
 
 						// Update an existing Form
 						userSession.put('/forms/' + FormSaveRes.body._id)
-							.send({form: _Form})
+							.send({form: myForm})
 							.expect('Content-Type', /json/)
 							.expect(200)
 							.end(function(FormUpdateErr, FormUpdateRes) {
@@ -197,7 +196,7 @@ describe('Form CRUD tests', function() {
 
 	it('should be able to read/get a Form if not signed in', function(done) {
 		// Create new Form model instance
-		var FormObj = new Form(_Form);
+		var FormObj = new Form(myForm);
 
 		// Save the Form
 		FormObj.save(function(err, form) {
@@ -210,7 +209,7 @@ describe('Form CRUD tests', function() {
 					if(err) done(err)
 
 					// Set assertion
-					(res.body).should.be.an.Object.with.property('title', _Form.title);
+					(res.body).should.be.an.Object.with.property('title', myForm.title);
 
 					// Call the assertion callback
 					done();
@@ -228,42 +227,41 @@ describe('Form CRUD tests', function() {
 				// Handle signin error
 				if (signinErr) done(signinErr);
 
-				done();
 				// Save a new Form
-				// userSession.post('/forms')
-				// 	.send({form: _Form})
-				// 	.expect('Content-Type', /json/)
-				// 	.expect(200)
-				// 	.end(function(FormSaveErr, FormSaveRes) {
-				// 		// Handle Form save error
-				// 		if (FormSaveErr) done(FormSaveErr);
+				userSession.post('/forms')
+					.send({form: myForm})
+					.expect('Content-Type', /json/)
+					.expect(200)
+					.end(function(FormSaveErr, FormSaveRes) {
+						// Handle Form save error
+						if (FormSaveErr) done(FormSaveErr);
 
-				// 		// Delete an existing Form
-				// 		userSession.delete('/forms/' + FormSaveRes.body._id)
-				// 			.send(_Form)
-				// 			.expect('Content-Type', /json/)
-				// 			.expect(200)
-				// 			.end(function(FormDeleteErr, FormDeleteRes) {
-				// 				// Handle Form error error
-				// 				if (FormDeleteErr) done(FormDeleteErr);
+						// Delete an existing Form
+						userSession.delete('/forms/' + FormSaveRes.body._id)
+							.send(myForm)
+							.expect('Content-Type', /json/)
+							.expect(200)
+							.end(function(FormDeleteErr, FormDeleteRes) {
+								// Handle Form error error
+								if (FormDeleteErr) done(FormDeleteErr);
 
-				// 				// Set assertions
-				// 				(FormDeleteRes.body._id).should.equal(FormSaveRes.body._id);
+								// Set assertions
+								(FormDeleteRes.body._id).should.equal(FormSaveRes.body._id);
 
-				// 				// Call the assertion callback
-				// 				done();
-				// 			});
-				// 	});
+								// Call the assertion callback
+								done();
+							});
+					});
 
 			});
 	});
 
 	it('should not be able to delete an Form if not signed in', function(done) {
 		// Set Form user
-		_Form.admin = user;
+		myForm.admin = user;
 
 		// Create new Form model instance
-		var FormObj = new Form(_Form);
+		var FormObj = new Form(myForm);
 
 		// Save the Form
 		FormObj.save(function() {
@@ -297,7 +295,7 @@ describe('Form CRUD tests', function() {
 
 				// Save a new Form
 				userSession.post('/forms')
-					.send({form: _Form})
+					.send({form: myForm})
 					.expect('Content-Type', /json/)
 					.expect(200)
 					.end(function(FormSaveErr, FormSaveRes) {
@@ -333,8 +331,8 @@ describe('Form CRUD tests', function() {
 		var FormObj, _Submission, submissionSession;
 
 		beforeEach(function (done) {
-			_Form.admin = user;
-			FormObj = new Form(_Form);
+			myForm.admin = user;
+			FormObj = new Form(myForm);
 
 			FormObj.save(function(err, form) {
 				if (err) done(err);
@@ -489,10 +487,9 @@ describe('Form CRUD tests', function() {
 		});
 	});
 
-
 	afterEach(function(done) {
-		User.remove().exec(function() {
-			Form.remove().exec(function() {
+		Form.remove({}).exec(function() {
+			User.remove({}).exec(function() {
 				userSession.destroy();
 				done();
 			});

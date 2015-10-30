@@ -83,7 +83,7 @@ exports.signup = function(req, res) {
 	        	});
 	        } else {
 	        	console.log('Error: Temp user already exists!');
-	            res.status(400).send('Error: Temp user already exists!');
+	            res.status(400).send({ message: 'Error: Temp user already exists!' });
 	        }
 	    }
     });

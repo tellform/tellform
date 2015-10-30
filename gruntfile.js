@@ -182,6 +182,8 @@ module.exports = function(grunt) {
 		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
 		grunt.config.set('applicationCSSFiles', config.assets.css);
 	});
+	grunt.loadNpmTasks('grunt-html2js');
+
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'concurrent:default']);

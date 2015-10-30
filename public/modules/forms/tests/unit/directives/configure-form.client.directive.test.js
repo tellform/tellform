@@ -1,4 +1,3 @@
-'use strict';
 
 (function() {
     // Forms Controller Spec

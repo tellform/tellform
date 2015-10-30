@@ -22,7 +22,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -156,7 +155,7 @@
             <div class="col-sm-12 col-md-10"><hr></div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-10">
+            <div class="col-sm-12 col-md-8">
                 <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
                     <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
@@ -218,19 +217,15 @@
                                 <div class="col-md-4 col-xs-12">Options:</div>
                                 <div class="col-md-8 col-xs-12">
                                     <div ng-repeat="option in field.fieldOptions" class="row">
-                                        <input type="text" name="{{option.option_title}}{{field._id}}" ng-model="option.option_title" value="{{option.option_title}}" class="col-xs-5">
+                                        <input type="text" name="{{option.option_value}}{{field._id}}" ng-model="option.option_value" class="col-xs-5">
 
                                         <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
                                             <i class="fa fa-trash-o"></i>
                                         </a>
-                                        <span class="label label-inverse col-md-4 hidden-xs hidden-sm">
-                                            Value: {{ option.option_value }}
-                                        </span>
                                     </div>
                                     <div class="row">                                                
-                                        <button class="btn btn-primary btn-small ol-md-12 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption(field)">
+                                        <button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption(field)">
                                             <i class="icon-plus icon-white"></i> Add Option
-        
                                         </button>
                                     </div>
                                 </div>
@@ -409,6 +404,22 @@
                                 <a href="" class="fa fa-files-o"></a>
                             </span>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 hidden-xs hidden-sm" style="padding:0 5px;" ng-if="myform.plugins.oscarhost.baseUrl">
+                <div class="panel-group text-center">
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved" style="border: none;">
+                    
+                        <select ng-model="myform.plugins.oscarhost.settings.fieldMap[field._id]" style="height:39.2px">
+                            <option value="">N/A</option>
+                            <option ng-repeat="oscarhost_field in oscarFieldsLeft(field._id)"
+                                    ng-selected="oscarhost_field == myform.plugins.oscarhost.settings.fieldMap[field._id]"
+                                    ng-value="oscarhost_field">
+                                {{oscarhost_field}}
+                            </option>
+                        </select>    
                     </div>
                 </div>
             </div>

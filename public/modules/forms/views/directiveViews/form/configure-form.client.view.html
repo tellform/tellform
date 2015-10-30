@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-            <!-- generate form from PDF yes/no field -->
+            <!-- Generate form from PDF yes/no field -->
             <div class="row field">
                 <div class="col-sm-6 field-title">
                     <h5>Autogenerate Form?</h5>
@@ -84,29 +84,77 @@
                 </div>
             </div>
 
+            <!-- activate oscarhost API yes/no field -->
             <div class="row field">
+                <div class="field-title col-sm-6">
+                    <h5>Use Oscarhost API?</h5>
+                </div>
+
+                <div class="field-input col-sm-6">
+
+                    <label>
+                        <input type="radio" data-ng-value="true" ng-model="oscarhostAPI"  ng-required="true" />
+                        &nbsp;<span>Yes</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" data-ng-value="false" ng-model="oscarhostAPI"  ng-required="true" />
+                        &nbsp;<span>No</span>
+                    </label>
+
+                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
+                </div>
+            </div>
+            <div class="row field" ng-if="oscarhostAPI">
                 <div class="field-title col-sm-4">
-                    <h5>EMR API Key</h5>
+                    <h5>Oscarhost API Username</h5>
                 </div>
 
                 <div class="col-sm-8">
                     <input type="text" 
-                        ng-model="myform.EMR.api_key" 
-                        value="{{myform.EMR.api_key}}"
-                        style="width: 100%;">
+                        ng-model="myform.plugins.oscarhost.auth.user" 
+                        value="{{myform.plugins.oscarhost.auth.user}}"
+                        style="width: 100%;"
+                        required>
                 </div>
             </div>
-
-            <div class="row field">
+            <div class="row field" ng-if="oscarhostAPI">
                 <div class="field-title col-sm-4">
-                    <h5>EMR URL</h5>
+                    <h5>Oscarhost API Password</h5>
+                </div>
+
+                <div class="col-sm-8">
+                    <input type="password" 
+                        ng-model="myform.plugins.oscarhost.auth.pass" 
+                        value="{{myform.plugins.oscarhost.auth.pass}}"
+                        style="width: 100%;"
+                        required>
+                </div>
+            </div>
+            <div class="row field" ng-if="oscarhostAPI">
+                <div class="field-title col-sm-4">
+                    <h5>Oscarhost API URL</h5>
                 </div>
 
                 <div class="col-sm-8">
                     <input type="link" 
-                        ng-model="myform.EMR.url" 
-                        value="{{myform.EMR.url}}"
-                        style="width: 100%;">
+                        ng-model="myform.plugins.oscarhost.baseUrl" 
+                        value="{{myform.plugins.oscarhost.baseUrl}}"
+                        style="width: 100%;"
+                        required>
+                </div>
+            </div>
+            <div class="row field" ng-if="oscarhostAPI">
+                <div class="field-title col-sm-4">
+                    <h5>Oscarhost API update type</h5>
+                </div>
+
+                <div class="col-sm-8">
+                    <select ng-model="myform.plugins.oscarhost.settings.updateType">
+                        <option ng-repeat="updateType in myform.plugins.oscarhost.settings.validUpdateTypes" ng-value="updateType">
+                            {{updateType}}
+                        </option>
+                    </select> 
                 </div>
             </div>
 
@@ -114,10 +162,9 @@
             <!-- generate typeform from NodeForm yes/no field -->
             <div class="row field">
                 <div class="col-sm-6 field-title">
-                    <h5>Autogenerate Typeform?</h5>
+                    <h5>Autogenerate into Typeform?</h5>
                 </div>
                 <div class="col-sm-6 field-input">
-
                     <label>
                         <input type="radio" data-ng-value="true" ng-model="myform.Typeform.isGenerated"  ng-required="true" />
                         &nbsp;<span>Yes</span>

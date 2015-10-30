@@ -52,11 +52,10 @@
 		<div data-ng-repeat="form in myforms" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container">
 
 			<div class="row">
-			<span class="pull-right"> 
-				<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="removeForm(form._id)"></i>
-				<i style="cursor:pointer;" class="fa fa-files-o" ng-click="duplicate($index)"></i>
-			</span>
-
+				<span class="pull-right"> 
+					<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="removeForm($index)"></i>
+					<i style="cursor:pointer;" class="fa fa-files-o" ng-click="duplicate($index)"></i>
+				</span>
 			</div>
 
 			<div class="row">

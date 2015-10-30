@@ -64,10 +64,34 @@ var FormFieldSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
+	validFieldTypes: {
+		type: [String]
+	},
 	fieldType: {
 		type: String,
 		required: true,
-		validate: [validateFormFieldType, 'Invalid field type']
+		enum: [
+		    'textfield',
+		    'date',
+		    'email',
+		    'link',
+		    'legal',
+		    'url',
+		    'textarea',
+		    'statement',
+		    'welcome',
+		    'thankyou',
+		    'file',
+		    'dropdown',
+		    'scale',
+		    'rating',
+		    'radio',
+		    'checkbox',
+		    'hidden',
+		    'yes_no',
+		    'natural',
+		    'number'
+		],
 	},
 	fieldValue: Schema.Types.Mixed
 });
@@ -78,61 +102,11 @@ FormFieldSchema.plugin(mUtilities.timestamp, {
 	modifiedPath: 'lastModified',
 	useVirtual: false
 });
-FormFieldSchema.static('validTypes', function(){
-	return [
-	    'textfield',
-	    'date',
-	    'email',
-	    'legal',
-	    'url',
-	    'textarea',
-	    'statement',
-	    'welcome',
-	    'thankyou',
-	    'file',
-	    'dropdown',
-	    'scale',
-	    'rating',
-	    'radio',
-	    'checkbox',
-	    'hidden',
-	    'yes_no',
-	    'natural',
-	    'number'
-	  ];
-});
 
-// fieldType Validation
-function validateFormFieldType(value) {
-  if (!value) { return false; }
+// FormFieldSchema.pre('init', function (next){
+// 	this.validFieldTypes = Field.schema.path('fieldType').enumValues;
+// });
 
-  var validTypes = [
-	    'textfield',
-	    'date',
-	    'email',
-	    'legal',
-	    'url',
-	    'textarea',
-	    'statement',
-	    'welcome',
-	    'thankyou',
-	    'file',
-	    'dropdown',
-	    'scale',
-	    'rating',
-	    'radio',
-	    'checkbox',
-	    'hidden',
-	    'yes_no',
-	    'natural',
-	    'number'
-	  ];
-
-  if (validTypes.indexOf(value) > -1) { 
-    return true;
-  }
-  return false;
-};
 
 mongoose.model('Field', FormFieldSchema);
 

@@ -43,6 +43,13 @@
 
         //Mock Users Service
         beforeEach(module(function($provide) {
+            $provide.service('myForm', function($q) {
+                return sampleForm;
+            });
+        }));
+
+        //Mock Users Service
+        beforeEach(module(function($provide) {
             $provide.service('User', function($q) {
                 return {
                     getCurrent: function() {
@@ -206,7 +213,7 @@
         }));
 
         
-        it('$scope.initForm() should populate $scope.myform with current Form', inject(function(Forms) {
+        it('on controller instantiation it should populate $scope.myform with current Form', inject(function(Forms) {
 
             var controller = createSubmitFormController();
 
@@ -215,13 +222,8 @@
             // Set GET response
             $httpBackend.expectGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
 
-            // Run controller functionality
-            scope.initForm();
-            $httpBackend.flush();
-            $state.ensureAllTransitionsHappened();
-
             // Test scope value
-            expect( scope.myform.toJSON() ).toEqualData(sampleForm);
+            expect( scope.myform  ).toEqualData(sampleForm);
             expect( scope.hideNav ).toEqual(false);
         }));
     });

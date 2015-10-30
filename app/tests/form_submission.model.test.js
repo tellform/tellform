@@ -85,7 +85,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			} 
 			myForm = new Form({
 				title: 'Form Title1',
-				admin: user,
+				admin: user._id,
 				language: 'english',
 				form_fields: [
 					{'fieldType':'textfield', 	'title':'What\'s your first name', 	'fieldValue': ''},
@@ -117,8 +117,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 				}
 				
 				mySubmission = new FormSubmission({
-					admin: user, 
-					form: myForm,
+					admin: user._id, 
+					form: myForm._id,
 					timeElapsed: 17.55,
 					form_fields: submissionFields
 				});
@@ -137,7 +137,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			myFieldMap[myForm.form_fields[0]._id+''] = 'firstName';
 			myFieldMap[myForm.form_fields[1]._id+''] = 'lastName';
 			myFieldMap[myForm.form_fields[2]._id+''] = 'sex';
-			myFieldMap[myForm.form_fields[3]._id+''] = 'unparsedDOB';
+			myFieldMap[myForm.form_fields[3]._id+''] = 'DOB';
 			myFieldMap[myForm.form_fields[4]._id+''] = 'phone';
 
 			myForm.plugins.oscarhost.settings.fieldMap = myFieldMap;
@@ -213,7 +213,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			});
 		});
 		it('should be able to findOne FormSubmission without problems', function(done) {
-			return FormSubmission.findOne({_id: mySubmission._id}, function(err,submission) {
+			return FormSubmission.findOne({_id: mySubmission._id}).exec(function(err,submission) {
 				should.not.exist(err);
 				should.exist(submission);
 				should.deepEqual(submission.toObject(), mySubmission.toObject());
@@ -308,6 +308,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 			User.remove().exec(function() {
 				FormSubmission.remove().exec(done);
 			});
-		});
+		})
 	});
 });

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields) {
+angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields', 'CurrentForm',
+    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields, CurrentForm) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/configure-form.client.view.html',
             restrict: 'E',
@@ -12,6 +12,12 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                 formFields:'@'
             },
             controller: function($scope){
+                console.log($scope.myform);
+                if( CurrentForm.getForm().plugins){
+                    if(CurrentForm.getForm().plugins.oscarhost.baseUrl) $scope.oscarhostAPI = true;
+                }else{
+                    $scope.oscarhostAPI = false;
+                }
                 $scope.log = '';
                 $scope.pdfLoading = false;
                 $scope.languages = $rootScope.languages;

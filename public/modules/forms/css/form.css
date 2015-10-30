@@ -290,6 +290,10 @@ div.config-form .row.field {
             border-radius: 4px;
         }
 
+        .admin-form .oscar-field-select {
+            margin: 10px 0 10px;
+        }
+
 .view-form-btn.span {
     padding-right:0.6em;
 }

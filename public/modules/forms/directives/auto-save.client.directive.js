@@ -1,5 +1,18 @@
 'use strict';
 
+_.mixin({ removeDateFields : function(o){
+  var clone = _.clone(o);
+  for(var i=0; i<clone.length; i++){
+    _.each(clone[i], function(v,k){
+      // console.log('key: '+k);
+      if(k === 'lastModified' || k === 'created'){
+        delete clone[i][k];
+      }
+    });
+  }
+  return clone;
+}});
+
 angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   
   return {
@@ -14,10 +27,10 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
             savePromise = null;
 
         $rootScope.finishedRender = false;
-        $scope.$on('editFormFieldsStarted', function(ngRepeatFinishedEvent) {
+        $scope.$on('editFormFields Started', function(ngRepeatFinishedEvent) {
             $rootScope.finishedRender = false;
           });
-        $scope.$on('editFormFieldsFinished', function(ngRepeatFinishedEvent) {
+        $scope.$on('editFormFields Finished', function(ngRepeatFinishedEvent) {
           $rootScope.finishedRender = true;
         });
 
@@ -34,7 +47,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
           return false;
         };
 
-        this.debounceSave = function () {
+        var debounceSave = function () {
           $rootScope.saveInProgress = true;
           $rootScope[$attrs.autoSaveCallback](true,
             function(err){
@@ -48,32 +61,48 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
             }); 
         };
 
-        //Update/save Form if any Form fields are Dirty and Touched
+        //Update/Save Form if any Form fields are Dirty and Touched
         $scope.$watch(function(newValue, oldValue) {
-          if($scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-            this.debounceSave();
+          // console.log($scope);
+          // console.log($scope.$parent.editForm);
+          if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.$parent.editForm) && !$rootScope.saveInProgress){
+            console.log('Form saving started');
+            debounceSave();
           }
         });
 
         //Autosave Form when model (specificed in $attrs.autoSaveWatch) changes
         $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
 
-          var changedFields = !_.isEqual(oldValue,newValue);
+          newValue = angular.copy(newValue);
+          oldValue = angular.copy(oldValue);
+
+          newValue.form_fields = _.removeDateFields(newValue.form_fields);
+          oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
+
+          var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
+
+          var changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
           if( (!newValue && !oldValue) || !oldValue ){
             return;
           }
-
+          
+          // console.log('Autosaving');
           // console.log('\n\n----------');
-          // console.log('$dirty: '+ $formCtrl.$dirty );
+          // console.log('!$dirty: '+ !$formCtrl.$dirty );
           // console.log('changedFields: '+changedFields);
+          // console.log('changedFieldMap: '+changedFieldMap);
           // console.log('finishedRender: '+$rootScope.finishedRender);
-          // console.log('saveInProgress: '+$rootScope.saveInProgress);
+          // console.log('!saveInProgress: '+!$rootScope.saveInProgress);
           // console.log('newValue: '+newValue);
           // console.log('oldValue: '+oldValue);
+          // console.log(oldValue.form_fields);
+          // console.log(newValue.form_fields);
 
-          //Save form ONLY IF rendering is finished, form_fields have been change AND currently not save in progress
-          if($rootScope.finishedRender && (changedFields && !$formCtrl.$dirty) && !$rootScope.saveInProgress) {
+          //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
+          if($rootScope.finishedRender && ((changedFields && !$formCtrl.$dirty) || changedFieldMap)  && !$rootScope.saveInProgress) {
 
+            console.log('saving form now');
             if(savePromise) {
               $timeout.cancel(savePromise);
               savePromise = null;
@@ -81,7 +110,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
             savePromise = $timeout(function() {   
               console.log('Saving Form');
-              this.debounceSave();           
+              debounceSave();           
             }); 
           }
           //If we are finished rendering then form saving should be finished

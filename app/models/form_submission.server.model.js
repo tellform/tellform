@@ -103,8 +103,6 @@ FormSubmissionSchema.plugin(mUtilities.timestamp, {
 	useVirtual: false
 });
 
-
-
 //Oscarhost API hook
 FormSubmissionSchema.pre('save', function (next) {
 	
@@ -149,7 +147,7 @@ FormSubmissionSchema.pre('save', function (next) {
 
 	 				if(demographicsTemplate.hasOwnProperty(conversionMap[currField._id])){
 	 					_generatedDemo[propertyName] = currField.fieldValue+'';
-	 				}else if(propertyName === 'unparsedDOB'){
+	 				}else if(propertyName === 'DOB'){
  						var date = new Date(currField.fieldValue);
  						_generatedDemo['dateOfBirth'] = date.getDate()+'';
  						_generatedDemo['yearOfBirth'] = date.getFullYear()+'';

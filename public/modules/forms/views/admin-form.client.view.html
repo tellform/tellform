@@ -1,4 +1,4 @@
-<section data-ng-controller="AdminFormController" data-ng-init="findOne()" class="container admin-form">
+<section class="container admin-form" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...',backdrop:false,minDuration:700}">
 
 	<!-- Modal Delete Dialog Template -->
     <script type="text/ng-template" id="myModalContent.html">
@@ -61,7 +61,7 @@
 		</div>
 	</div>
 
-	<div class="row" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...',backdrop:false}">
+	<div class="row">
 		<tabset class="col-xs-12">
 			<tab>
 				<tab-heading>

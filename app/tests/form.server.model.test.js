@@ -16,7 +16,7 @@ var should = require('should'),
 
 var exampleDemo = { 
 	activeCount: 1,
-	unparsedDOB: '',
+	DOB: '',
 	address: '880-9650 Velit. St.',
 	chartNo: '',
 	city: '',
@@ -116,7 +116,7 @@ describe('Form Model Unit Tests:', function() {
 			});
 		});
 		it('should be able to findOne my form without problems', function(done) {
-			return Form.findOne({_id: myForm._id}, function(err,form) {
+			return Form.findOne({title: myForm.title}).exec(function(err,form) {
 				should.not.exist(err);
 				should.exist(form);
 				should.deepEqual(form.toObject(), myForm.toObject());

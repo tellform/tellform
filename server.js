@@ -7,6 +7,9 @@ var init = require('./config/init')(),
 	mongoose = require('mongoose'),
 	chalk = require('chalk');
 
+require('events').EventEmitter.prototype._maxListeners = 100;
+
+
 /**
  * Main application entry file.
  * Please note that the order of loading is important.

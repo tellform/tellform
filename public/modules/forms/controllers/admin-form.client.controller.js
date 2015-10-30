@@ -1,14 +1,16 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$modal',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $modal) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$modal', 'myForm',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $modal, myForm) {
 
         $scope = $rootScope;
 
-        $scope.myform = CurrentForm.getForm();
-        $scope.myform._id = $stateParams.formId;
+        $scope.myform = myForm;
         $rootScope.saveInProgress = false;
+        CurrentForm.setForm($scope.myform);
+
+        // console.log($scope.myform);
 
         // Find a specific Form
         $scope.findOne = function(){
@@ -104,6 +106,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                     });
             }
         };
+
 
 	}
 ]);

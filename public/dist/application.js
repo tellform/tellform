@@ -47,55 +47,55 @@ angular.module(ApplicationConfiguration.applicationModuleName).constant('USER_RO
   superuser: 'superuser',
 });
 
-// angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', '$state', '$stateParams',
-//     function($rootScope, Auth, $state, $stateParams) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', '$state', '$stateParams',
+    function($rootScope, Auth, $state, $stateParams) {
 
-// 	    $rootScope.$state = $state;
-// 	    $rootScope.$stateParams = $stateParams;
+	    $rootScope.$state = $state;
+	    $rootScope.$stateParams = $stateParams;
 
-// 	    // add previous state property
-// 	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
-// 	        $state.previous = fromState;
+	    // add previous state property
+	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
+	        $state.previous = fromState;
 
-// 	        //Redirect to listForms if user is authenticated
-//         	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
-//         		if(Auth.isAuthenticated()){
-//         			event.preventDefault(); // stop current execution
-//         			$state.go('listForms'); // go to listForms page
-//         		}
-//         	}
-// 	        //Redirect to 'home' route if user is not authenticated
-//         	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() ){
-//         		event.preventDefault(); // stop current execution
-//         		$state.go('home'); // go to listForms page
-//         	}
+	        //Redirect to listForms if user is authenticated
+        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
+        		if(Auth.isAuthenticated()){
+        			event.preventDefault(); // stop current execution
+        			$state.go('listForms'); // go to listForms page
+        		}
+        	}
+	        //Redirect to 'home' route if user is not authenticated
+        	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() ){
+        		event.preventDefault(); // stop current execution
+        		$state.go('home'); // go to listForms page
+        	}
 	        
-// 	    });
+	    });
 
-//     }
-// ]);
+    }
+]);
 
-// //Page access/authorization logic
-// angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', 'User', 'Authorizer', '$state', '$stateParams',
-//   function($rootScope, Auth, User, Authorizer, $state, $stateParams) {
-// 		$rootScope.$on('$stateChangeStart', function(event, next) {
-// 			var authenticator, permissions, user;
-// 			permissions = next && next.data && next.data.permissions ? next.data.permissions : null;
+//Page access/authorization logic
+angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', 'User', 'Authorizer', '$state', '$stateParams',
+  function($rootScope, Auth, User, Authorizer, $state, $stateParams) {
+		$rootScope.$on('$stateChangeStart', function(event, next) {
+			var authenticator, permissions, user;
+			permissions = next && next.data && next.data.permissions ? next.data.permissions : null;
 
-// 			Auth.ensureHasCurrentUser(User);
-// 			user = Auth.currentUser;
+			Auth.ensureHasCurrentUser(User);
+			user = Auth.currentUser;
 
-// 		    if(user){
-// 			  	authenticator = new Authorizer(user);
+		    if(user){
+			  	authenticator = new Authorizer(user);
 
-// 			  	if( (permissions !== null) && !authenticator.canAccess(permissions) ){
-// 			    	event.preventDefault();
-// 		    		console.log('access denied')
-// 		      		$state.go('access_denied');
-// 				}
-// 			}
-// 		});
-// }]);
+			  	if( (permissions !== null) && !authenticator.canAccess(permissions) ){
+			    	event.preventDefault();
+		    		console.log('access denied')
+		      		$state.go('access_denied');
+				}
+			}
+		});
+}]);
 
 //Then define the init function for starting up the application
 angular.element(document).ready(function() {
@@ -420,20 +420,21 @@ angular.module('forms').config(['$stateProvider',
 				permissions: [ 'editForm' ]
 			}
   		}).
+  		state('submitForm', {
+			url: '/forms/:formId',
+			templateUrl: 'modules/forms/views/submit-form.client.view.html',
+			data: {
+				hideNav: true,
+			},
+		}).
 		state('viewForm', {
 			url: '/forms/:formId/admin',
 			templateUrl: 'modules/forms/views/admin-form.client.view.html',
 			data: {
 				permissions: [ 'editForm' ]
 			}
-		}).		
-		state('viewPublicForm', {
-			url: '/forms/:formId',
-			templateUrl: 'modules/forms/views/view-public-form.client.view.html',
-			data: {
-				hideNav: true,
-			},
-		});
+		});	
+
 	}
 ]);
 'use strict';
@@ -445,15 +446,23 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope = $rootScope;
 
         $scope.myform = CurrentForm.getForm();
+        $scope.myform._id = $stateParams.formId;
         $rootScope.saveInProgress = false;
 
         // Find a specific Form
         $scope.findOne = function(){
-            $scope.myform = Forms.get({
+            Forms.get({
                 formId: $stateParams.formId
+            }, function(form){
+                CurrentForm.setForm(form);
+                $scope.myform = form;
+                $scope.myform._id = $stateParams.formId;
+            }, function(err){
+                console.error('Could not fetch form');
+                console.error(err);
             });
-            CurrentForm.setForm($scope.myform);
         };
+
         $scope.setForm = function(form){
             $scope.myform = form;
         };
@@ -676,6 +685,8 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
     require: ['^form'],
     restrict: 'AE',
     link: function($scope, $element, $attrs, $ctrls) {
+
+      //DAVID: TODO: Do we really need to check if our directive element is ready everytime
       angular.element(document).ready(function() {
       
         var $formCtrl = $ctrls[0],
@@ -702,7 +713,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
           return false;
         };
 
-        var debounceSave = function () {
+        this.debounceSave = function () {
           $rootScope.saveInProgress = true;
           $rootScope[$attrs.autoSaveCallback](true,
             function(err){
@@ -719,7 +730,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
         //Update/save Form if any Form fields are Dirty and Touched
         $scope.$watch(function(newValue, oldValue) {
           if($scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-            debounceSave();
+            this.debounceSave();
           }
         });
 
@@ -749,7 +760,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
             savePromise = $timeout(function() {   
               console.log('Saving Form');
-              debounceSave();           
+              this.debounceSave();           
             }); 
           }
           //If we are finished rendering then form saving should be finished
@@ -1092,35 +1103,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     rows: []
                 };
 
-                //Fetch and display submissions of Form
-                $scope.initFormSubmissions = function(){
-                    $http.get('/forms/'+$scope.myform._id+'/submissions')
-                        .success(function(data, status, headers){
-
-                            console.log(data[0].form_fields);
-
-                            var _tmpSubFormFields,
-                                defaultFormFields = _.cloneDeep($scope.myform.form_fields);
-
-
-                            //Iterate through form's submissions
-                            for(var i=0; i<data.length; i++){
-                                _tmpSubFormFields = _.merge(defaultFormFields, data[i].form_fields);
-                                data[i].form_fields = _tmpSubFormFields;
-                            }
-
-                            // console.log(JSON.stringify(_data));
-                            $scope.table.rows = data;
-
-                            // console.log('form submissions successfully fetched');
-                            // console.log( JSON.parse(JSON.stringify($scope.submissions)) ) ;
-                            // console.log( JSON.parse(JSON.stringify($scope.myform.form_fields)) );
-                        })
-                        .error(function(err){
-                            console.error('Could not fetch form submissions.\nError: '+err);
-                        });            
-                };
-
                 /*
                 ** Table Functions
                 */
@@ -1145,6 +1127,35 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 /*
                 * Form Submission Methods
                 */
+
+                //Fetch and display submissions of Form
+                $scope.initFormSubmissions = function(){
+                    $http.get('/forms/'+$scope.myform._id+'/submissions')
+                        .success(function(data, status, headers){
+
+                            var _tmpSubFormFields,
+                                defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+
+
+                            //Iterate through form's submissions
+                            for(var i=0; i<data.length; i++){
+                                _tmpSubFormFields = _.merge(defaultFormFields, data[i].form_fields);
+                                data[i].form_fields = _tmpSubFormFields;
+                                data[i].selected = false;
+                            }
+
+                            $scope.table.rows = data;
+
+                            // console.log('form submissions successfully fetched');
+                            // console.log( JSON.parse(JSON.stringify($scope.submissions)) ) ;
+                            // console.log( JSON.parse(JSON.stringify($scope.myform.form_fields)) );
+                        })
+                        .error(function(err){
+                            console.error('Could not fetch form submissions.\nError: '+err);
+                        });            
+    
+                };  
+
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
 
@@ -1191,6 +1202,53 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
         };
     }
 ]);
+// 'use strict';
+
+// angular.module('forms').directive('entryPage', ['$templateCache', '$http', '$compile', '$rootScope', 
+//     function($templateCache, $http, $compile, $rootScope) {
+//         var getTemplateUrl = function(type) {
+
+//             var templateUrl = 'modules/forms/views/directiveViews/entryPage/';
+//             var supported_pages = [
+//                 'welcome',
+//                 'thankyou'
+//             ];
+//             if (__indexOf.call(supported_pages, type) >= 0) {
+//                 templateUrl += type + '.html';
+//             }
+//             var template = $templateCache.get(templateUrl);
+//             return template;
+//         };
+//         return {
+//             restrict: 'E',
+//             template: '<div>Start Page</div>',
+//             scope: {
+//                 'pageData': '=',
+//                 'pageType': '&'
+//             },
+//             link: function(scope, element) {
+
+//                 // console.log(attrs);
+//                 console.log('scope.pageData');
+//                 // console.log(scope);
+//                 scope.exitStartPage = function() {
+//                     // console.log(scope.pageData);
+//                     // if(attrs.pageData.showStart) attrs.pageData.showStart = false;
+//                 };
+
+//                 var template = getTemplateUrl(scope.pageType);
+//                 element.html(template);
+//                 $compile(element.contents())(scope);  
+//             },
+//             controller: function($scope){
+//                 console.log('entryPage Controller');
+//                 console.log($scope.pageData);
+//                 // $scope.exitStartPage = function() {
+//                 //     if($scope.pageData.showStart) scope.pageData.showStart = false;
+//                 // };
+//             }
+//         };
+// }]);
 'use strict';
 
 angular.module('forms').directive('fieldIconDirective', function($http, $compile) {
@@ -1294,8 +1352,9 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
         // GET template content from path
         var template = getTemplateUrl(scope.field);
         // $http.get(templateUrl).success(function(data) {
-            element.html(template);
-            $compile(element.contents())(scope);
+        element.html(template).show();
+        // console.log(element.contents());
+        $compile(element.contents())(scope);
         // });
     };
 
@@ -1346,46 +1405,49 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
 
 'use strict';
 
-angular.module('forms').directive('formDirective', ['$http', '$timeout', 'TimeCounter', 'Auth', '$filter', '$rootScope',
+angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', 'TimeCounter', 'Auth', '$filter', '$rootScope',
     function ($http, $timeout, TimeCounter, Auth, $filter, $rootScope) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/submit-form.client.view.html',
             restrict: 'E',
             scope: {
-                form:'='
+                myform:'='
             },
             controller: function($scope){
                 angular.element(document).ready(function() {
-
+                    $scope.error = '';
                     $scope.selected = null;
+                    $scope.submitted = false;
+
                     TimeCounter.startClock()
 
+                    $scope.exitStartPage = function(){
+                        $scope.myform.startPage.showStart = false;
+                    }
                     $rootScope.setActiveField = function (field_id) {
-                        // console.log('form field clicked: '+field_id);
                         $scope.selected = field_id;
-                        // console.log($scope.selected);
                     };
                     $scope.hideOverlay = function (){
                         $scope.selected = null;
-                        console.log($scope.myForm);
                     };
 
                     $scope.submit = function(){
                         var _timeElapsed = TimeCounter.stopClock();
-                        $scope.form.timeElapsed = _timeElapsed;
 
-                        // console.log('percentageComplete: '+$filter('formValidity')($scope.form)/$scope.form.visible_form_fields.length*100+'%');
-                        $scope.form.percentageComplete = $filter('formValidity')($scope.form)/$scope.form.visible_form_fields.length*100;
-                        console.log($scope.form.percentageComplete);
-                        // delete $scope.form.visible_form_fields;
+                        var form = _.cloneDeep($scope.myform);
+                        form.timeElapsed = _timeElapsed;
+
+                        // console.log('percentageComplete: '+$filter('formValidity')($scope.myform)/$scope.myform.visible_form_fields.length*100+'%');
+                        form.percentageComplete = $filter('formValidity')($scope.myform)/$scope.myform.visible_form_fields.length*100;
+                        console.log(form.percentageComplete)
+                        delete form.visible_form_fields;
 
                         $scope.authentication = Auth;
 
-                        $scope.submitPromise = $http.post('/forms/'+$scope.form._id,$scope.form)
+                        $scope.submitPromise = $http.post('/forms/'+$scope.myform._id, form)
                             .success(function(data, status, headers){
                                 console.log('form submitted successfully');
-                                // alert('Form submitted..');
-                                $scope.form.submitted = true;
+                                $scope.myform.submitted = true;
                             })
                             .error(function(error){
                                 console.log(error);
@@ -1393,19 +1455,17 @@ angular.module('forms').directive('formDirective', ['$http', '$timeout', 'TimeCo
                             });
                     };
 
-
-                    $scope.exitstartPage = function () {
-                        $scope.form.startPage.showStart = false;
-                    };
-
                     $scope.reloadForm = function(){
+                        //Reset Timer
                         TimeCounter.stopClock();
                         TimeCounter.startClock();
-                        $scope.form.submitted = false;
-                        $scope.form.form_fields = _.chain($scope.form.form_fields).map(function(field){
-                            field.fieldValue = '';
-                            return field;
-                        }).value();
+
+                        //Reset Form
+                        $scope.myform.submitted = false;
+                        $scope.myform.form_fields = _.chain($scope.myform.form_fields).map(function(field){
+                                field.fieldValue = '';
+                                return field;
+                            }).value();
                     };
                 });
 
@@ -1730,12 +1790,11 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 		$scope = $rootScope;
 		$scope.credentials = {};
-		$scope.error = null;
+		$scope.error = '';
 
 	    $scope.signin = function() {
 			User.login($scope.credentials).then(
 				function(response) {
-					// console.log(response);
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
@@ -1757,18 +1816,21 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 	    $scope.signup = function() {
 	        User.signup($scope.credentials).then(
-	        function(response) {
-	        	console.log('signup-success');
-	        	$state.go('signup-success');
-	        },
-	        function(error) {
-	          if(error) {
-	            $scope.error = error;
-	          }else {
-	            console.log('No response received');
-	          }
-	        }
-	      );
+		        function(response) {
+		        	console.log('signup-success');
+		        	$state.go('signup-success');
+		        },
+		        function(error) {
+		        	console.log('Error: ');
+		        	console.log(error);
+					if(error) {
+						$scope.error = error;
+						console.log(error);
+					}else {
+						console.log('No response received');
+					}
+		        }
+		    );
 	    };
 
  	}
@@ -1777,10 +1839,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
 	function($scope, $stateParams, $state, User) {
-
-		//If user is signed in then redirect back home
-		// if ($scope.authentication.isAuthenticated()) $state.go('home');
-
+		
 		// Submit forgotten password account id
 		$scope.askForPasswordReset = function() {
 			User.askForPasswordReset($scope.credentials).then(
@@ -1819,73 +1878,68 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 
 angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users',
 	function($scope, $rootScope, $http, $state, Users) {
-			$scope.user = $rootScope.user;
-			console.log($scope.user);
-			// If user is not signed in then redirect back home
-			if (!$scope.user) $state.go('home');
+		$scope.user = $rootScope.user;
 
-			// Check if there are additional accounts 
-			$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
-				for (var i in $scope.user.additionalProvidersData) {
-					return true;
+		// Check if there are additional accounts 
+		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
+			for (var i in $scope.user.additionalProvidersData) {
+				return true;
+			}
+			return false;
+		};
+
+		// Check if provider is already in use with current user
+		$scope.isConnectedSocialAccount = function(provider) {
+			return $scope.user.provider === provider || ($scope.user.additionalProvidersData && $scope.user.additionalProvidersData[provider]);
+		};
+
+		// Remove a user social account
+		$scope.removeUserSocialAccount = function(provider) {
+			$scope.success = $scope.error = null;
+
+			$http.delete('/users/accounts', {
+				params: {
+					provider: provider
 				}
+			}).success(function(response) {
+				// If successful show success message and clear form
+				$scope.success = true;
+				$scope.user = response;
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
 
-				return false;
-			};
-
-			// Check if provider is already in use with current user
-			$scope.isConnectedSocialAccount = function(provider) {
-				return $scope.user.provider === provider || ($scope.user.additionalProvidersData && $scope.user.additionalProvidersData[provider]);
-			};
-
-			// Remove a user social account
-			$scope.removeUserSocialAccount = function(provider) {
+		// Update a user profile
+		$scope.updateUserProfile = function(isValid) {
+			if (isValid) {
 				$scope.success = $scope.error = null;
+				var user = new Users($scope.user);
 
-				$http.delete('/users/accounts', {
-					params: {
-						provider: provider
-					}
-				}).success(function(response) {
-					// If successful show success message and clear form
+				user.$update(function(response) {
 					$scope.success = true;
 					$scope.user = response;
-				}).error(function(response) {
-					$scope.error = response.message;
+				}, function(response) {
+					$scope.error = response.data.message;
 				});
-			};
+			} else {
+				$scope.submitted = true;
+			}
+		};
 
-			// Update a user profile
-			$scope.updateUserProfile = function(isValid) {
-				if (isValid) {
-					$scope.success = $scope.error = null;
-					var user = new Users($scope.user);
+		// Change user password
+		$scope.changeUserPassword = function() {
+			$scope.success = $scope.error = null;
 
-					user.$update(function(response) {
-						$scope.success = true;
-						$scope.user = response;
-					}, function(response) {
-						$scope.error = response.data.message;
-					});
-				} else {
-					$scope.submitted = true;
-				}
-			};
+			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
+				// If successful show success message and clear form
+				$scope.success = true;
+				$scope.passwordDetails = null;
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
 
-			// Change user password
-			$scope.changeUserPassword = function() {
-				$scope.success = $scope.error = null;
-
-				$http.post('/users/password', $scope.passwordDetails).success(function(response) {
-					// If successful show success message and clear form
-					$scope.success = true;
-					$scope.passwordDetails = null;
-				}).error(function(response) {
-					$scope.error = response.message;
-				});
-			};
-
-		// });
 	}
 ]);
 'use strict';
@@ -1938,41 +1992,46 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 ]);
 'use strict';
 
-angular.module('users').factory('Auth',  function($window) {
+angular.module('users').factory('Auth', ['$window', 
+  function($window) {
+
     var userState = {
       isLoggedIn: false
     };
 
     var service = {
-      currentUser: null,
+      _currentUser: null,
+      get currentUser(){
+        return this._currentUser;
+      },
 
       // Note: we can't make the User a dependency of Auth
       // because that would create a circular dependency
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
-        if (service.currentUser && service.currentUser.username) {
+        if (service._currentUser && service._currentUser.username) {
           console.log('Using local current user.');
-          // console.log(service.currentUser);
-          return service.currentUser;
+          // console.log(service._currentUser);
+          return service._currentUser;
         } 
         else if ($window.user){
           console.log('Using cached current user.');
           // console.log($window.user);
-          service.currentUser = $window.user;
-          return service.currentUser;
+          service._currentUser = $window.user;
+          return service._currentUser;
         }
         else{
           console.log('Fetching current user from the server.');
           User.getCurrent().then(function(user) {
             // success
-            service.currentUser = user;
+            service._currentUser = user;
             userState.isLoggedIn = true; 
-            $window.user = service.currentUser;
-            return service.currentUser;         
+            $window.user = service._currentUser;
+            return service._currentUser;         
           },
           function(response) {
             userState.isLoggedIn = false;
-            service.currentUser = null;
+            service._currentUser = null;
             $window.user = null;
             console.log('User.getCurrent() err', response);
             return null;
@@ -1981,7 +2040,7 @@ angular.module('users').factory('Auth',  function($window) {
       },
 
       isAuthenticated: function() {
-        return !!service.currentUser;
+        return !!service._currentUser;
       },
 
       getUserState: function() {
@@ -1990,17 +2049,19 @@ angular.module('users').factory('Auth',  function($window) {
 
       login: function(new_user) {
         userState.isLoggedIn = true;
-        service.currentUser = new_user;
+        service._currentUser = new_user;
       },
 
       logout: function() {
         $window.user = null;
         userState.isLoggedIn = false;
-        service.currentUser = null;
+        service._currentUser = null;
       },
     };
     return service;
-  });
+    
+  }
+]);
 
 'use strict';
 
@@ -2041,7 +2102,6 @@ angular.module('users').service('Authorizer', function(APP_PERMISSIONS, USER_ROL
 angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '$state',
   function($window, $q, $timeout, $http, $state) {
 
-
     var userService = {
       getCurrent: function() {
       	var deferred = $q.defer();
@@ -2064,9 +2124,11 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
           }).error(function(error) {
             deferred.reject(error.message || error);
           });
-          return deferred.promise;
+
+        return deferred.promise;
       },
       logout: function() { 
+
         var deferred = $q.defer();
         $http.get('/auth/signout').success(function(response) {
           deferred.resolve(null);
@@ -2079,12 +2141,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       signup: function(credentials) { 
 
         var deferred = $q.defer();
-
         $http.post('/auth/signup', credentials).success(function(response) {
           // If successful we assign the response to the global user model
           deferred.resolve(response);
         }).error(function(error) {
-
           deferred.reject(error.message || error);
         });
 
@@ -2092,8 +2152,9 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       },
 
       resendVerifyEmail: function(_email) { 
+
         var deferred = $q.defer();
-        $http.post('/auth/verify/', {email: _email}).success(function(response) {
+        $http.post('/auth/verify', {email: _email}).success(function(response) {
           deferred.resolve(response);
         }).error(function(error) {
           deferred.reject(error.message || error);
@@ -2103,6 +2164,12 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       },
 
       validateVerifyToken: function(token) { 
+
+        //DAVID: TODO: The valid length of a token should somehow be linked to server config values
+        //DAVID: TODO: SEMI-URGENT: Should we even be doing this?
+        var validTokenRe = /^([A-Za-z0-9]{48})$/g;
+        if( !validTokenRe.test(token) ) throw new Error('Error token: '+token+' is not a valid verification token');
+
         var deferred = $q.defer();
         $http.get('/auth/verify/'+token).success(function(response) {
           deferred.resolve(response);
@@ -2113,7 +2180,8 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      resetPassword: function(passwordDetails, token) { 
+      resetPassword: function(passwordDetails, token) {
+
         var deferred = $q.defer();
         $http.get('/auth/password/'+token, passwordDetails).success(function(response) {
           deferred.resolve();
@@ -2126,12 +2194,11 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
       // Submit forgotten password account id
       askForPasswordReset: function(credentials) {
+
         var deferred = $q.defer();
         $http.post('/auth/forgot', credentials).success(function(response) {
           // Show user success message and clear form
-
           deferred.resolve(response);
-
         }).error(function(error) {
           // Show user error message
           deferred.reject(error.message || error);

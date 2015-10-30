@@ -13,10 +13,9 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
             }
 
             var broadcastMessage = attrs.onFinishRender || 'ngRepeat';
-             
-            if(scope.$first) {
+
+            if(scope.$first && !scope.$last) {
                 scope.$evalAsync(function () {
-                    // console.log(broadcastMessage+' Started');
                     // console.log(Date.now());
                     $rootScope.$broadcast(broadcastMessage+' Started');
                 });

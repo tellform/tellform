@@ -68,7 +68,6 @@ exports.uploadPDF = function(req, res, next) {
 	}
 };
 
-
 /**
  * Delete a forms submissions
  */
@@ -89,6 +88,7 @@ exports.deleteSubmissions = function(req, res) {
 		res.status(200).send('Form submissions successfully deleted');
 	});
 };
+
 /**
  * Submit a form entry
  */
@@ -144,13 +144,13 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 	var _user = req.user;
-	// console.log('listSubmissions');
+	console.log('listSubmissions');
 	// console.log(_form);
 
 	// if(_form.submissions.length){
 		// res.json(_form.submissions);
 	// }else{
-		FormSubmission.find({ form: req.form, admin: _user }).populate('admin', 'form').exec(function(err, _submissions) {
+		FormSubmission.find({ form: _form._id, admin: _user._id }).populate('admin', 'form').exec(function(err, _submissions) {
 			if (err) {
 				console.log(err);
 				res.status(400).send({
@@ -201,7 +201,11 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-	res.json(req.form);
+	var validUpdateTypes= Form.schema.path('plugins.oscarhost.settings.updateType').enumValues;
+
+	var newForm = JSON.parse(JSON.stringify(req.form));
+	newForm.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
+	res.json(newForm);
 };
 
 /**
@@ -211,7 +215,6 @@ exports.update = function(req, res) {
 	var form = req.form;
 	delete req.body.form.__v;
 	delete req.body.form._id;
-	delete req.body.form.admin;
 
 	//Unless we have 'admin' priviledges, updating form admin is disabled
 	if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
@@ -268,7 +271,6 @@ exports.list = function(req, res) {
 	});
 };
 
-
 /**
  * Form middleware
  */
@@ -289,13 +291,11 @@ exports.formByID = function(req, res, next, id) {
 				});
 			}
 			else {
-				// console.log(form.admin);
-
 				//Remove sensitive information from User object
 				form.admin.password = undefined;
 				form.admin.salt = undefined;
 				form.provider = undefined;
-
+				
 				req.form = form;
 				next();
 			}
