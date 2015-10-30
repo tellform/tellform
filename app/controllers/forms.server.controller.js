@@ -128,8 +128,9 @@ exports.createSubmission = function(req, res) {
 	}
 
 	submission.save(function(err, submission){
-		// console.log('in submissions.save()\n submission: '+JSON.stringify(submission) );
+		// console.log('in submissions.save()\n submission: '+JSON.stringify(submission) ) 
 		if(err){
+			console.log(err.message);
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});

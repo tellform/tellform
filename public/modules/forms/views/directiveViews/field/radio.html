@@ -5,13 +5,13 @@
             <label class="btn col-xs-3" ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_id}">
                 <input ng-focus="setActiveField(field._id)"
                 type="radio" 
-                value="{{option.option_id}}" 
+                value="{{option.option_value}}" 
                 ng-model="field.fieldValue" 
                 ng-model-options="{ debounce: 250 }" 
                 ng-required="field.required" 
                 ng-disabled="field.disabled" 
                 />
-                <span ng-bind="option.option_title"></span>
+                <span ng-bind="option.option_value"></span>
             </label>
         </div>
     </div>

@@ -22,7 +22,7 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
             }else if(scope.$last) {
             	scope.$evalAsync(function () {
                     // element.ready(function () {
-                        // console.log(broadcastMessage+'Finished');
+                        console.log(broadcastMessage+'Finished');
                         // console.log(Date.now());
                 	    $rootScope.$broadcast(broadcastMessage+' Finished');
                     // });

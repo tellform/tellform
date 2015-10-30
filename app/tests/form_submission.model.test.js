@@ -24,7 +24,7 @@ var exampleDemo = {
 	firstName: 'Test User',
 	hin: '',
 	lastName: 'AddDemographic',
-	lastUpdateDate: Date.now(),
+	lastUpdateDate: '2014-10-01 00:00:00',
 	monthOfBirth: '05',
 	officialLanguage: 'English',
 	phone: '250-222-2222',

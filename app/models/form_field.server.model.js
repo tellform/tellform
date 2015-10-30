@@ -103,9 +103,10 @@ FormFieldSchema.plugin(mUtilities.timestamp, {
 	useVirtual: false
 });
 
-// FormFieldSchema.pre('init', function (next){
-// 	this.validFieldTypes = Field.schema.path('fieldType').enumValues;
-// });
+FormFieldSchema.pre('save', function (next){
+	this.validFieldTypes = mongoose.model('Field').schema.path('fieldType').enumValues;
+	next();
+});
 
 
 mongoose.model('Field', FormFieldSchema);

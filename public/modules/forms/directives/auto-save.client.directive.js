@@ -64,8 +64,8 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
         //Update/Save Form if any Form fields are Dirty and Touched
         $scope.$watch(function(newValue, oldValue) {
           // console.log($scope);
-          // console.log($scope.$parent.editForm);
-          if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.$parent.editForm) && !$rootScope.saveInProgress){
+          console.log($scope.editForm);
+          if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
             console.log('Form saving started');
             debounceSave();
           }
@@ -98,18 +98,19 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
           // console.log('oldValue: '+oldValue);
           // console.log(oldValue.form_fields);
           // console.log(newValue.form_fields);
+          if(oldValue.form_fields.length === 0) $rootScope.finishedRender = true
 
           //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-          if($rootScope.finishedRender && ((changedFields && !$formCtrl.$dirty) || changedFieldMap)  && !$rootScope.saveInProgress) {
+          if( $rootScope.finishedRender && ((changedFields && !$formCtrl.$dirty) || changedFieldMap)  && !$rootScope.saveInProgress) {
 
-            console.log('saving form now');
+            // console.log('saving form now');
             if(savePromise) {
               $timeout.cancel(savePromise);
               savePromise = null;
             }
 
             savePromise = $timeout(function() {   
-              console.log('Saving Form');
+              // console.log('Saving Form');
               debounceSave();           
             }); 
           }

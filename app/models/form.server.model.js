@@ -211,6 +211,7 @@ FormSchema.pre('save', function (next) {
 		'spokenLanguage',
 		'title',
 		'DOB'];
+	next();
 });
 //Delete template PDF of current Form
 FormSchema.pre('remove', function (next) {

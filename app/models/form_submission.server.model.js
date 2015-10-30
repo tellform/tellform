@@ -154,7 +154,9 @@ FormSubmissionSchema.pre('save', function (next) {
  						_generatedDemo['monthOfBirth'] = date.getMonth()+'';			
 	 				}
 	 			}
-	 			_generatedDemo['lastUpdateDate'] = Date.now();
+	 			var currDate = new Date();
+	 			var dateString = currDate.toISOString().split('T')[0] + ' ' + currDate.toISOString().split('T')[1].slice(0,8);
+	 			_generatedDemo['lastUpdateDate'] = currDate.toISOString();
 	 			return _generatedDemo;
 	 		};
 	 		
@@ -193,7 +195,7 @@ FormSubmissionSchema.pre('save', function (next) {
 				if(err) next(err);
 
 				self.oscarDemoNum = parseInt(result.return, 10);
-				// console.log('self.oscarDemoNum: '+self.oscarDemoNum);
+				console.log('self.oscarDemoNum: '+self.oscarDemoNum);
 				next();
 			});	
 		}else{

@@ -93,7 +93,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                         $rootScope.myform = $scope.myform = response.data;
                         // console.log(response.data);
                     }).catch(function(response){
-                        // console.log('Error occured during form UPDATE.\n');
+                        console.log('Error occured during form UPDATE.\n');
                         // console.log(response.data);
                         err = response.data;
                     }).finally(function() { 
