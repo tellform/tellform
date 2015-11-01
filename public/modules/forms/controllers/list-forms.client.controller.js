@@ -45,7 +45,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                     console.log($scope.myforms[3]._id);
                 }).error(function(errorResponse){
                     console.log(errorResponse);
-                    $scope.error = errorResponse.data.message;
+                    if(errorResponse == null) $scope.error = errorResponse.data.message;
                 });
         }
 

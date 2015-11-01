@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	relationship = require('mongoose-relationship'),
+	// relationship = require('mongoose-relationship'),
 	mUtilities = require('mongoose-utilities'),
 	_ = require('lodash'),
 	Schema = mongoose.Schema;

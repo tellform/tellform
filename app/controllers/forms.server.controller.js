@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Form = mongoose.model('Form'),
 	FormSubmission = mongoose.model('FormSubmission'),
-	pdfFiller = require('node-pdffiller'),
+	pdfFiller = require('pdffiller'),
 	config = require('../../config/config'),
 	fs = require('fs-extra'),
 	async = require('async'),
@@ -25,10 +25,10 @@ exports.uploadPDF = function(req, res, next) {
 	// console.log('\n\nProperty Descriptor\n-----------');
 	// console.log(Object.getOwnPropertyDescriptor(req.files.file, 'path'));
 	
-	if(req.files){
-		var pdfFile = req.files.file;
+	if(req.file){
+		var pdfFile = req.file;
 		var _user = req.user;
-		if (req.files.size === 0) {
+		if (req.file.size === 0) {
 			next(new Error('File uploaded is EMPTY'));
 		}else if(req.files.size > 200000000){
 			next(new Error('File uploaded exceeds MAX SIZE of 200MB'));

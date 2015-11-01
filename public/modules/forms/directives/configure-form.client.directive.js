@@ -73,7 +73,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                             $scope.log = 'file ' + data.originalname + ' uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
                             $scope.myform.pdf = angular.fromJson(angular.toJson(data));
 
-                            console.log($scope.myform.pdf);
+                            // console.log($scope.myform.pdf);
 
                             $scope.pdfLoading = false;
 
