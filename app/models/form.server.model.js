@@ -387,12 +387,12 @@ FormSchema.pre('save', function (next) {
 			deletedIds = getDeletedIndexes(old_ids, new_ids),
 			that = this;
 
-		console.log('deletedId Indexes\n--------');
-		console.log(deletedIds);
-		console.log('old_ids\n--------');
-		console.log(old_ids);
-		console.log('new_ids\n--------');
-		console.log(new_ids);
+		// console.log('deletedId Indexes\n--------');
+		// console.log(deletedIds);
+		// console.log('old_ids\n--------');
+		// console.log(old_ids);
+		// console.log('new_ids\n--------');
+		// console.log(new_ids);
 
 		//Preserve fields that have at least one submission
 		if( deletedIds.length > 0 ){
@@ -432,8 +432,8 @@ FormSchema.pre('save', function (next) {
 
 							//Delete field if there are no submission(s) found
 							if(submissions.length) {
-								console.log('adding submissions');
-								console.log(submissions);
+								// console.log('adding submissions');
+								// console.log(submissions);
 								//Add submissions 
 								modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
 							}
@@ -467,8 +467,8 @@ FormSchema.pre('save', function (next) {
 
 							//Hide field if it exists
 							if(deletedField){
-								console.log('deletedField\n-------\n\n');
-								console.log(deletedField);
+								// console.log('deletedField\n-------\n\n');
+								// console.log(deletedField);
 								//Delete old form_field
 								submission.form_fields.splice(index, 1);
 

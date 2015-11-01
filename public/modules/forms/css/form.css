@@ -78,15 +78,18 @@ form .accordion-edit {
 /* Styles for form submission view (/forms/:formID) */
 form .row.field {
     padding: 1em 0 3em 0;
+    width: inherit;
 }
     form .row.field > .field-title {
         margin-top:0.5em;
         font-size:1.2em;
         padding-bottom: 1.8em;
+        width: inherit;
     }
     form .row.field > .field-input {
         font-size: 1.4em;
         color: #777;
+        width: inherit;
     }
     form.submission-form .row.field.statement > .field-title {
         font-size:1.7em;
