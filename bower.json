@@ -20,7 +20,6 @@
     "angular-ui-router": "~0.2.11",
     "angular-strap": "~2.3.1",
     "restangular": "~1.5.1",
-    "mongoose-utilities": "~0.1.1",
     "fontawesome": "~4.3.0",
     "ng-file-upload": "~5.1.0",
     "angular-raven": "~0.5.11",
