@@ -400,11 +400,11 @@ angular.module('forms').run(['Menus',
 			return 0;
         };
 }).config(['$provide', function ($provide){
-    $provide.decorator('accordionDirective', ["$delegate", function($delegate) { 
+    $provide.decorator('accordionDirective', function($delegate) { 
         var directive = $delegate[0];
         directive.replace = true;
         return $delegate;
-    }]);
+    });
 }]);
 'use strict';
 
@@ -429,9 +429,9 @@ angular.module('forms').config(['$stateProvider',
 			},
 			resolve: {
 				Forms: 'Forms',
-		        myForm: ["Forms", "$stateParams", function (Forms, $stateParams) {
+		        myForm: function (Forms, $stateParams) {
 		            return Forms.get({formId: $stateParams.formId}).$promise;
-		        }],
+		        },
 			},
 			controller: 'SubmitFormController'
 		}).
@@ -443,9 +443,9 @@ angular.module('forms').config(['$stateProvider',
 			},
 			resolve: {
 				Forms: 'Forms',
-		        myForm: ["Forms", "$stateParams", function (Forms, $stateParams) {
+		        myForm: function (Forms, $stateParams) {
 		            return Forms.get({formId: $stateParams.formId}).$promise;
-		        }],
+		        },
 			},
 			controller: 'AdminFormController'
 		});	
@@ -824,7 +824,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                 pdfFields:'@',
                 formFields:'@'
             },
-            controller: ["$scope", function($scope){
+            controller: function($scope){
                 console.log($scope.myform);
                 if( CurrentForm.getForm().plugins){
                     if(CurrentForm.getForm().plugins.oscarhost.baseUrl) $scope.oscarhostAPI = true;
@@ -886,7 +886,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                             $scope.log = 'file ' + data.originalname + ' uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
                             $scope.myform.pdf = angular.fromJson(angular.toJson(data));
 
-                            console.log($scope.myform.pdf);
+                            // console.log($scope.myform.pdf);
 
                             $scope.pdfLoading = false;
 
@@ -902,7 +902,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                     }
                 };
 
-            }]
+            }
         };
     }
 ]);
@@ -916,7 +916,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
             scope: {
                 myform:'=',
             },
-            controller: ["$scope", function($scope){
+            controller: function($scope){
                 var field_ids = _($scope.myform.form_fields).pluck('_id');
                 for(var i=0; i<field_ids.length; i++){
                     $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
@@ -1146,7 +1146,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     }
                 };
 
-            }],
+            },
   
         };
     }
@@ -1162,7 +1162,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 myform:'=',
                 user:'='
             },
-            controller: ["$scope", function($scope){
+            controller: function($scope){
                 $scope.table = {
                     masterChecker: false,
                     rows: []
@@ -1263,13 +1263,13 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     saveAs(blob, $scope.myform.title+'_sumbissions_export_'+Date.now()+'.'+type);
                 };
 
-            }]
+            }
         };
     }
 ]);
 'use strict';
 
-angular.module('forms').directive('fieldIconDirective', ["$http", "$compile", function($http, $compile) {
+angular.module('forms').directive('fieldIconDirective', function($http, $compile) {
     
     return {
         template: '<i class="{{typeIcon}}"></i>',
@@ -1277,7 +1277,7 @@ angular.module('forms').directive('fieldIconDirective', ["$http", "$compile", fu
         scope: {
             typeName: '@'
         },
-        controller: ["$scope", function($scope){
+        controller: function($scope){
         	var iconTypeMap = {
 				'textfield': 'fa fa-pencil-square-o',
 				'dropdown': 'fa fa-th-list',
@@ -1297,10 +1297,10 @@ angular.module('forms').directive('fieldIconDirective', ["$http", "$compile", fu
 				'number': 'fa fa-slack'
 			};
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
-        }],
+        },
 
     };
-}]);
+});
 'use strict';
 
 // coffeescript's for in loop
@@ -1378,7 +1378,7 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
 }]);
 'use strict';
 
-angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
+angular.module('forms').directive('onFinishRender', function ($rootScope, $timeout) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
@@ -1408,7 +1408,7 @@ angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", f
             }
         }
     };
-}]);
+});
 
 'use strict';
 
@@ -1420,7 +1420,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
             scope: {
                 myform:'='
             },
-            controller: ["$scope", function($scope){
+            controller: function($scope){
                 angular.element(document).ready(function() {
                     $scope.error = '';
                     $scope.selected = null;
@@ -1476,7 +1476,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                     };
                 });
 
-            }]
+            }
         };
     }
 ]);
@@ -1672,7 +1672,7 @@ angular.module('forms').service('TimeCounter', [
 // Config HTTP Error Handling
 angular.module('users').config(['$httpProvider',
 	function($httpProvider) {
-    $httpProvider.interceptors.push(["$q", "$location", function($q, $location) {
+    $httpProvider.interceptors.push(function($q, $location) {
       return {
         responseError: function(response) {
           // console.log($location.path());
@@ -1692,7 +1692,7 @@ angular.module('users').config(['$httpProvider',
           return $q.reject(response);
         }
       };
-    }]);
+    });
 }]);
 'use strict';
 
@@ -1722,7 +1722,6 @@ angular.module('users').config(['$stateProvider',
 
       return deferred.promise;
     };
-    checkLoggedin.$inject = ["$q", "$timeout", "$state", "User", "Auth"];
 
 	// Users state routing
 	$stateProvider.
@@ -2074,7 +2073,7 @@ angular.module('users').factory('Auth', ['$window',
 
 'use strict';
 
-angular.module('users').service('Authorizer', ["APP_PERMISSIONS", "USER_ROLES", function(APP_PERMISSIONS, USER_ROLES) {
+angular.module('users').service('Authorizer', function(APP_PERMISSIONS, USER_ROLES) {
   return function(user) {
     return {
       canAccess: function(permissions) {
@@ -2105,7 +2104,7 @@ angular.module('users').service('Authorizer', ["APP_PERMISSIONS", "USER_ROLES", 
       }
     };
   };
-}]);
+});
 'use strict';
 
 angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '$state',
