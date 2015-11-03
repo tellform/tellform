@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	pdfFiller = require('node-pdffiller'),
+	pdfFiller = require('pdffiller'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
