@@ -27,7 +27,7 @@ var upload = multer({ dest: config.tmpUploadPath,
 module.exports = function(app) {
 	// Form Routes
 	app.route('/upload/pdf')
-		.post(users.requiresLogin, upload.single('file'), forms.uploadPDF);
+		.post(users.requiresLogin, forms.uploadPDF);
 
 	app.route('/forms')
 		.get(users.requiresLogin, forms.list)
