@@ -7,8 +7,8 @@ angular.module('users').config(['$httpProvider',
       return {
         responseError: function(response) {
           // console.log($location.path());
-          if( ($location.path() !== '/users/me' || $location.path() !== '/forms') && response.config){
-            if(response.config.url !== '/users/me'){
+          if( $location.path() !== '/users/me' && $location.path() !== '/forms' && response.config){
+            if(response.config.url !== '/users/me' && $location.path() !== '/forms'){
               console.log('intercepted rejection of ', response.config.url, response.status);
               if (response.status === 401) {
                 // save the current location so that login can redirect back
