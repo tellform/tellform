@@ -7,7 +7,7 @@ angular.module('users').config(['$httpProvider',
       return {
         responseError: function(response) {
           // console.log($location.path());
-          if( $location.path() !== '/users/me' && response.config){
+          if( $location.path() !== '/users/me' && $location.path() !== '/forms' && response.config){
             if(response.config.url !== '/users/me'){
               console.log('intercepted rejection of ', response.config.url, response.status);
               if (response.status === 401) {
