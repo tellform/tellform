@@ -18,10 +18,9 @@ var fs = require('fs-extra'),
 	multer = require('multer'),
 	passport = require('passport'),
 	raven = require('raven'),
-	MongoStore = require('connect-mongo')(session),
-	// mongoStore = require('connect-mongo')({
-	// 	session: session
-	// }),
+	mongoStore = require('connect-mongo')({
+		session: session
+	}),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
@@ -141,16 +140,26 @@ module.exports = function(db) {
 	app.use(helmet.nosniff());
 	app.use(helmet.ienoopen());
 	app.disable('x-powered-by');
-	var SIX_MONTHS = 15778476000;
-	app.use(helmet.hsts({
-	    maxAge: SIX_MONTHS,
-	    includeSubdomains: true,
-	    force: true
-	}));
 
 	// Setting the app router and static folder
 	app.use('/', express.static(path.resolve('./public')));
 	app.use('/uploads', express.static(path.resolve('./uploads')));
+
+	// Setting the pdf upload route and folder
+	app.use(multer({ dest: config.tmpUploadPath,
+		rename: function (fieldname, filename) {
+		    return Date.now();
+		},
+		onFileUploadStart: function (file) {
+			//Check to make sure we can only upload images and pdfs
+		  	console.log(file.originalname + ' is starting ...');
+		},
+		onFileUploadComplete: function (file, req, res) {
+			console.log(file.originalname + ' uploaded to  ' + file.path);
+			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
+			// res.status(200).send(file);
+		}
+	}));
 
 	// CookieParser should be above session
 	app.use(cookieParser());
@@ -160,12 +169,12 @@ module.exports = function(db) {
 		saveUninitialized: true,
 		resave: true,
 		secret: config.sessionSecret,
-		store: new MongoStore({
-			mongooseConnection: db.connection,
+		store: new mongoStore({
+			db: db.connection.db,
 			collection: config.sessionCollection
 		}),
 		cookie: config.sessionCookie,
-		name: config.sessionName,
+		name: config.sessionName
 	}));
 
 	// use passport session
