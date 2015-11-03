@@ -6,7 +6,6 @@ angular.module('users').config(['$httpProvider',
     $httpProvider.interceptors.push(function($q, $location) {
       return {
         responseError: function(response) {
-          // console.log($location.path());
           if( $location.path() !== '/users/me' && response.config){
             if(response.config.url !== '/users/me'){
               console.log('intercepted rejection of ', response.config.url, response.status);
