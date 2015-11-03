@@ -9,6 +9,9 @@ angular.module('forms').config(['$stateProvider',
 		state('listForms', {
 			url: '/forms',
 			templateUrl: 'modules/forms/views/list-forms.client.view.html',
+			data: {
+				permissions: [ 'editForm' ]
+			}
   		}).
   		state('submitForm', {
 			url: '/forms/:formId',
