@@ -19,7 +19,7 @@ module.exports = {
 		}
 	},
 	sessionCookie: {
-		domain: 'forms.polydaic.com'
+		domain: 'kioskform-dev.herokuapp.com'
 	},
 	assets: {
 		// lib: {
