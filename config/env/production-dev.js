@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	baseUrl: 'kioskform.herokuapp.com',
+	baseUrl: 'kioskform-dev.herokuapp.com',
 	db: {
 		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean',
 		options: {
@@ -11,7 +11,7 @@ module.exports = {
 	},
 	log: {
 		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
-		format: 'combined',
+		format: 'dev',
 		// Stream defaults to process.stdout
 		// Uncomment to enable logging to a log on the file system
 		options: {
@@ -19,7 +19,7 @@ module.exports = {
 		}
 	},
 	sessionCookie: {
-		domain: 'kioskform.herokuapp.com'
+		domain: 'kioskform-dev.herokuapp.com'
 	},
 	assets: {
 		// lib: {
@@ -65,9 +65,9 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || '',
+		from: process.env.MAILER_FROM || 'no-reply@kioskform-dev.herokuapp.com',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'no-reply@kioskform.herokuapp.com',
+			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			auth: {
 				user: process.env.MAILER_EMAIL_ID || '',
 				pass: process.env.MAILER_PASSWORD || ''

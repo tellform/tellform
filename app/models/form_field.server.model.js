@@ -28,12 +28,6 @@ var FieldOptionSchema = new Schema({
  * FormField Schema
  */
 var FormFieldSchema = new Schema({
-	// formSubmission: {
-	// 	 type: Schema.ObjectId, 
-	// 	 ref: 'FormSubmission', 
-	// 	 childPath: 'form_fields'
-	// },
-
 	title: {
 		type: String,
 		trim: true,
@@ -95,7 +89,6 @@ var FormFieldSchema = new Schema({
 	fieldValue: Schema.Types.Mixed
 });
 
-// FormFieldSchema.plugin(relationship, { relationshipPathName:'formSubmission' });
 FormFieldSchema.plugin(mUtilities.timestamp, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',

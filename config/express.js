@@ -18,47 +18,13 @@ var fs = require('fs-extra'),
 	multer = require('multer'),
 	passport = require('passport'),
 	raven = require('raven'),
-	mongoStore = require('connect-mongo')({
-		session: session
-	}),
+	MongoStore = require('connect-mongo')(session),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
 	path = require('path'),
 	client = new raven.Client(config.DSN);
 
-// NEV setup and configuration ================
-var config_nev = function () {
-
-	var nev = require('email-verification'),
-		mongoose = require('mongoose'),
-		User = mongoose.model('User');
-
-	nev.configure({
-	    persistentUserModel: User,
-	    tempUserCollection: config.tempUserCollection,
-	    expirationTime: 1800,  // 30 minutes
-
-	    verificationURL: config.baseUrl+'/#!/verify/${URL}',
-	    transportOptions: config.mailer.options,
-	    verifyMailOptions: {
-	        from: config.mailer.from,
-	        subject: 'Confirm your account',
-	        html: '<p>Please verify your account by clicking <a href="${URL}">this link</a>. If you are unable to do so, copy and ' +
-	                'paste the following link into your browser:</p><p>${URL}</p>',
-	        text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
-	    },
-
-	    confirmMailOptions: {
-	        from: config.mailer.from,
-	        subject: 'Account successfully verified!',
-	        html: '<p>Your account has been successfully verified.</p>',
-	        text: 'Your account has been successfully verified.'
-	    },
-
-	});
-	nev.generateTempUserModel(User);
-};
 
 
 module.exports = function(db) {
@@ -69,9 +35,6 @@ module.exports = function(db) {
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
 		require(path.resolve(modelPath));
 	});
-
-	//Configure Node-Email-Verification
-	config_nev();
 
 	// Setting application local variables
 	app.locals.title = config.app.title;
@@ -169,10 +132,10 @@ module.exports = function(db) {
 		saveUninitialized: true,
 		resave: true,
 		secret: config.sessionSecret,
-		store: new mongoStore({
-			db: db.connection.db,
-			collection: config.sessionCollection
-		}),
+		store: new MongoStore({
+	      mongooseConnection: db.connection,
+	      collection: config.sessionCollection
+	    }),
 		cookie: config.sessionCookie,
 		name: config.sessionName
 	}));

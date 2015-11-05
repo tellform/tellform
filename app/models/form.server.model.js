@@ -312,7 +312,7 @@ FormSchema.pre('save', function (next) {
 						'Radio': 'radio'
 					};
 
-					console.log('autogenerating form');
+					// console.log('autogenerating form');
 					// console.log(that.pdf.path);
 
 					pdfFiller.generateFieldJson(that.pdf.path, function(err, _form_fields){
@@ -373,7 +373,7 @@ FormSchema.pre('save', function (next) {
 });
 
 FormSchema.pre('save', function (next) {
-	// var _original = this._original;
+
 	// console.log('_original\n------------');
 	// console.log(_original);
 	//console.log('field has been deleted: ');
@@ -403,23 +403,6 @@ FormSchema.pre('save', function (next) {
 				function (deletedIdIndex, key, callback) {
 					
 					var deleted_id = old_ids[deletedIdIndex];
-
-					//Search for submissions with deleted form_field
-					// if(submissions.length){
-					// 	submissionsWithDeletedField = _.select(form.submissions, function(submission){  
-					// 		var field = _(submission.form_fields).filter(function(field) { return field._id === deleted_id; })
-					// 		return !!field;
-					// 	});
-
-					// 	//Push old form_field to start of array
-					// 	if(submissionsWithDeletedField.length){
-					// 		that.form_fields.unshift(old_form_fields[deletedIdIndex]);
-					// 		modifiedSubmissions.push.apply(modifiedSubmissions, submissionsWithDeletedField);
-					// 		console.log(modifiedSubmissions);
-					// 	}
-
-					// 	callback(null, modifiedSubmissions);
-					// } else{
 
 					//Find FormSubmissions that contain field with _id equal to 'deleted_id'
 					FormSubmission.

@@ -142,16 +142,6 @@ UserSchema.virtual('password').get(function () {
 });
 
 
-// UserSchema.pre('save', function(next) {
-// 	if (this.password && this.password.length > 6) {
-// 		this.salt = crypto.randomBytes(16).toString('base64');
-// 		this.password = this.hashPassword(this.password);
-// 	}
-
-// 	next();
-// });
-
-
 /**
  * Create instance method for hashing a password
  */
@@ -207,4 +197,4 @@ UserSchema.methods.isAdmin = function() {
 	return false;
 };
 
-mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

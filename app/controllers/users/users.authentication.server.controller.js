@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
-	nev = require('email-verification'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
@@ -12,16 +11,52 @@ var _ = require('lodash'),
 	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
 	crypto = require('crypto'),
-	nev = require('email-verification'),
 	User = mongoose.model('User');
+
+var nev = require('email-verification')(mongoose);
+
+// NEV setup and configuration ================
+var config_nev = function () {
+
+	var User = require('../../models/user.server.model');
+
+	nev.configure({
+	    persistentUserModel: User,
+	    tempUserCollection: config.tempUserCollection,
+	    expirationTime: 1800,  // 30 minutes
+
+	    verificationURL: config.baseUrl+'/#!/verify/${URL}',
+	    transportOptions: config.mailer.options,
+	    verifyMailOptions: {
+	        from: config.mailer.from,
+	        subject: 'Confirm your account',
+	        html: '<p>Please verify your account by clicking <a href="${URL}">this link</a>. If you are unable to do so, copy and ' +
+	                'paste the following link into your browser:</p><p>${URL}</p>',
+	        text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
+	    },
+
+	    confirmMailOptions: {
+	        from: config.mailer.from,
+	        subject: 'Account successfully verified!',
+	        html: '<p>Your account has been successfully verified.</p>',
+	        text: 'Your account has been successfully verified.'
+	    },
+
+	});
+	nev.generateTempUserModel(User);
+};
+
+config_nev();
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
-exports.validateVerificationToken = function(req, res, next){
+exports.validateVerificationToken = function(req, res){
 	console.log('validateVerificationToken');
 	console.log('token: '+req.params.token+'\n\n');
-	nev.confirmTempUser(req.params.token, function(user) {
-	    if (user){
+	nev.confirmTempUser(req.params.token, function(user, err) {
+	    if(err) { 
+	    	res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
+	    }else if (user){
 	        res.status(200).send('User successfully verified');
 	    }else {
 	        // redirect to resend verification email
@@ -31,8 +66,10 @@ exports.validateVerificationToken = function(req, res, next){
 };
 
 exports.resendVerificationEmail = function(req, res, next){
-	nev.resendVerificationEmail(req.body.email, function(user) {
-	    if (user){
+	nev.resendVerificationEmail(req.body.email, function(err, userFound) {
+		if(err) { 
+			res.status(500).send( {message: errorHandler.getErrorMessage(err)  } );
+	    }else if (userFound){
 	        res.status(200).send('Verification email successfully Re-Sent');
 	    }else {
 	        // user hasn't been found yet
@@ -66,7 +103,7 @@ exports.signup = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}else {
-			console.log('new tmpuser created');
+
 	        // new user created
 	        if (newTempUser) {
 	        	nev.registerTempUser(newTempUser, function (err) {
@@ -120,7 +157,6 @@ exports.signin = function(req, res, next) {
  */
 exports.signout = function(req, res) {
 	req.logout();
-	// res.status(200).send('Successfully logged out');
 	res.redirect('/');
 };
 

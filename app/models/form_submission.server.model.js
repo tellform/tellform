@@ -247,5 +247,3 @@ FormSubmissionSchema.pre('save', function (next) {
 });
 
 module.exports = FormSubmissionSchema;
-
-//mongoose.model('FormSubmission', FormSubmissionSchema);
