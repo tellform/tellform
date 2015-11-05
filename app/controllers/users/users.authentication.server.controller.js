@@ -41,6 +41,13 @@ var config_nev = function () {
 	        html: '<p>Your account has been successfully verified.</p>',
 	        text: 'Your account has been successfully verified.'
 	    },
+	    verifySendMailCallback: function(err, info) {
+	      if (err) {
+	        throw err;
+	      } else {
+	        console.log(info);
+	      }
+	    },
 
 	});
 	nev.generateTempUserModel(User);
@@ -60,7 +67,7 @@ exports.validateVerificationToken = function(req, res){
 	        res.status(200).send('User successfully verified');
 	    }else {
 	        // redirect to resend verification email
-	        res.status(400).send( {message: 'Verification token is invalid or has expired'} );
+	        return res.status(400).send( {message: 'Verification token is invalid or has expired'} );
 	    }
 	});
 };
@@ -68,6 +75,7 @@ exports.validateVerificationToken = function(req, res){
 exports.resendVerificationEmail = function(req, res, next){
 	nev.resendVerificationEmail(req.body.email, function(err, userFound) {
 		if(err) { 
+			console.log(errorHandler.getErrorMessage(err));
 			res.status(500).send( {message: errorHandler.getErrorMessage(err)  } );
 	    }else if (userFound){
 	        res.status(200).send('Verification email successfully Re-Sent');

@@ -47,9 +47,9 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || '',
+		from: process.env.MAILER_FROM || 'no-reply@kioskform.herokuapp.com',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'no-reply@kioskform.herokuapp.com',
+			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			auth: {
 				user: process.env.MAILER_EMAIL_ID || '',
 				pass: process.env.MAILER_PASSWORD || ''

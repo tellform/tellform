@@ -5,7 +5,7 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 
 		$scope.isReset = false;
 		$scope.credentials = {};
-		
+		$scope.error = '';
 
 		// Submit forgotten password account id
 		$scope.resendVerifyEmail = function() {

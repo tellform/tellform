@@ -2,6 +2,7 @@
 
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
 	function($scope, $stateParams, $state, User) {
+		$scope.error = '';
 		
 		// Submit forgotten password account id
 		$scope.askForPasswordReset = function() {
