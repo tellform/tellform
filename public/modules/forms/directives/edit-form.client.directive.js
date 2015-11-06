@@ -61,49 +61,49 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     handle: ' .handle'  
                 };
 
-                // $scope.draggable = {
-                //     connectWith: ".dropzone",
-                //     start: function (e, ui) {
-                //         // $scope.$apply(function() {
-                //         //   $scope.dragging = true
-                //         // });
-                //         $('.dropzone').sortable('refresh');
-                //     },
-                //     update: function (e, ui) {
-                //         var isInDropzone = $(e.target).parentsUntil('.panel-group').hasClass('dropzone');
+                $scope.draggable = {
+                    connectWith: ".dropzone",
+                    start: function (e, ui) {
+                        // $scope.$apply(function() {
+                        //   $scope.dragging = true
+                        // });
+                        $('.dropzone').sortable('refresh');
+                    },
+                    update: function (e, ui) {
+                        var isInDropzone = $(e.target).parentsUntil('.panel-group').hasClass('dropzone');
 
-                //         console.log('isInDropzone: '+isInDropzone);
-                //         //Disable drag and drop if we aren't in dropzone
-                //         if(!isInDropzone){
-                //             ui.item.sortable.cancel();
-                //         }
-                //     },
-                //     stop: function (e, ui) {
-                //         var isInDropzone = $(e.target).parentsUntil('.panel-group').hasClass('dropzone');
+                        console.log('isInDropzone: '+isInDropzone);
+                        //Disable drag and drop if we aren't in dropzone
+                        if(!isInDropzone){
+                            ui.item.sortable.cancel();
+                        }
+                    },
+                    stop: function (e, ui) {
+                        var isInDropzone = $(e.target).parentsUntil('.panel-group').hasClass('dropzone');
 
-                //         //Disable drag and drop if we aren't in dropzone
-                //         if(isInDropzone){
-                //             console.log($(e.target));
-                //         }
+                        //Disable drag and drop if we aren't in dropzone
+                        if(isInDropzone){
+                            console.log($(e.target));
+                        }
                         
-                //         // if (ui.item.sortable.droptarget === undefined) {
-                //         //     $scope.$apply($scope.dragging = false);
-                //         //     return;
-                //         // }else if (ui.item.sortable.droptarget[0].classList[0] === "dropzone") {
-                //         //     // run code when item is dropped in the dropzone
-                //         //     $scope.$apply($scope.dragging = false);
-                //         // }else{
-                //         //   // $scope.$apply($scope.dragging = false);
-                //         // }
-                //         // console.log('has class .dropzone :'+);
-                //         // if ($(e.target).hasClass('dropzone') && ui.item.sortable.droptarget && e.target != ui.item.sortable.droptarget[0] ) {
-                //         //     // restore original types
-                //         //     $scope.addField.types = FormFields.types;
-                //         // }
+                        // if (ui.item.sortable.droptarget === undefined) {
+                        //     $scope.$apply($scope.dragging = false);
+                        //     return;
+                        // }else if (ui.item.sortable.droptarget[0].classList[0] === "dropzone") {
+                        //     // run code when item is dropped in the dropzone
+                        //     $scope.$apply($scope.dragging = false);
+                        // }else{
+                        //   // $scope.$apply($scope.dragging = false);
+                        // }
+                        // console.log('has class .dropzone :'+);
+                        // if ($(e.target).hasClass('dropzone') && ui.item.sortable.droptarget && e.target != ui.item.sortable.droptarget[0] ) {
+                        //     // restore original types
+                        //     $scope.addField.types = FormFields.types;
+                        // }
                       
                         
-                //     }
-                // };
+                    }
+                };
 
 
                 /*

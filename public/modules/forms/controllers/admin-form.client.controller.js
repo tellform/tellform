@@ -10,8 +10,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $rootScope.saveInProgress = false;
         CurrentForm.setForm($scope.myform);
 
-        // console.log($scope.myform);
-
         // Find a specific Form
         $scope.findOne = function(){
             Forms.get({
