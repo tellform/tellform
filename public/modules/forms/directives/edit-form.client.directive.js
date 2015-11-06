@@ -47,7 +47,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                             currentFields = _(currentFields).difference($scope.myform.plugins.oscarhost.settings.fieldMap[field_id]);
                         } 
 
-                        // console.log($scope.myform.plugins.oscarhost.settings.fieldMap);
                         //Get all oscarhostFields that haven't been mapped to a formfield
                         return _(oscarhostFields).difference(currentFields).value();
                     }
@@ -58,53 +57,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                 ** FormFields (ui-sortable) drag-and-drop configuration
                 */
                 $scope.dropzone = {
-                    handle: ' .handle'  
+                    handle: ' .handle',
+                    containment: '.dropzoneContainer',
+                    cursor: 'grabbing',
                 };
-
-                // $scope.draggable = {
-                //     connectWith: ".dropzone",
-                //     start: function (e, ui) {
-                //         // $scope.$apply(function() {
-                //         //   $scope.dragging = true
-                //         // });
-                //         $('.dropzone').sortable('refresh');
-                //     },
-                //     update: function (e, ui) {
-                //         var isInDropzone = $(e.target).parentsUntil('.panel-group').hasClass('dropzone');
-
-                //         console.log('isInDropzone: '+isInDropzone);
-                //         //Disable drag and drop if we aren't in dropzone
-                //         if(!isInDropzone){
-                //             ui.item.sortable.cancel();
-                //         }
-                //     },
-                //     stop: function (e, ui) {
-                //         var isInDropzone = $(e.target).parentsUntil('.panel-group').hasClass('dropzone');
-
-                //         //Disable drag and drop if we aren't in dropzone
-                //         if(isInDropzone){
-                //             console.log($(e.target));
-                //         }
-                        
-                //         // if (ui.item.sortable.droptarget === undefined) {
-                //         //     $scope.$apply($scope.dragging = false);
-                //         //     return;
-                //         // }else if (ui.item.sortable.droptarget[0].classList[0] === "dropzone") {
-                //         //     // run code when item is dropped in the dropzone
-                //         //     $scope.$apply($scope.dragging = false);
-                //         // }else{
-                //         //   // $scope.$apply($scope.dragging = false);
-                //         // }
-                //         // console.log('has class .dropzone :'+);
-                //         // if ($(e.target).hasClass('dropzone') && ui.item.sortable.droptarget && e.target != ui.item.sortable.droptarget[0] ) {
-                //         //     // restore original types
-                //         //     $scope.addField.types = FormFields.types;
-                //         // }
-                      
-                        
-                //     }
-                // };
-
 
                 /*
                 **  Field CRUD Methods
@@ -144,7 +100,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index){
-                    console.log(field_index);
+
                     //Delete field from field map
                     var currFieldId = $scope.myform.form_fields[field_index]._id
                     if($scope.myform.plugins.oscarhost.baseUrl) delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
@@ -153,7 +109,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
                 $scope.duplicateField = function (field_index){
-                    var currField = $scope.myform.form_fields[field_index];  
+                    var currField = _.cloneDeep($scope.myform.form_fields[field_index]);  
+                    currField._id = '';
 
                     //Insert field at selected index
                     $scope.myform.form_fields.splice(field_index+1, 0, currField);

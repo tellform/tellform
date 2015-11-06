@@ -1,4 +1,4 @@
-<section class="container admin-form" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...',backdrop:false,minDuration:700}">
+<section class="container admin-form" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...',backdrop:false}">
 
 	<!-- Modal Delete Dialog Template -->
     <script type="text/ng-template" id="myModalContent.html">
@@ -62,7 +62,7 @@
 	</div>
 
 	<div class="row">
-		<tabset class="col-xs-12">
+		<!-- <tabset class="col-xs-12">
 			<tab>
 				<tab-heading>
 					Edit Form Fields
@@ -75,10 +75,10 @@
 					Design
 				</tab-heading>
 				<div class="config-form container">
-					<!-- Design Settings -->
+					Design Settings
 					<div class="row">
 				        <div class="col-md-12 container">
-				        	<!-- Title -->
+				        	Title
 				            <div class="row">
 				                <div class="col-sm-12">
 				                    <h2 class="hidden-sm hidden-xs">Change how your Form Looks</h2>
@@ -86,7 +86,7 @@
 				                </div>
 				            </div>
 
-				            <!-- Background Color -->
+				            Background Color
 				            <div class="row field">
 				                <div class="field-title col-sm-6">
 				                    <h5>Form Background Color</h5>
@@ -95,12 +95,10 @@
 				                <div class="field-input col-sm-6">
 
 				                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.backgroundColor" ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
-
-				                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
 				                </div>
 				            </div>
 
-				            <!-- Question Color -->
+				            Question Color
 				            <div class="row field">
 				                <div class="field-title col-sm-6">
 				                    <h5>Question Color</h5>
@@ -110,11 +108,11 @@
 
 				                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.questionColor" ng-style="{ 'background-color': myform.design.colors.questionColor }"/>
 
-				                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
+
 				                </div>
 				            </div>
 
-				            <!-- Answer Color -->
+				            Answer Color
 				            <div class="row field">
 				                <div class="field-title col-sm-6">
 				                    <h5>Form Answer Color</h5>
@@ -124,7 +122,6 @@
 
 				                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
 
-				                    <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
 				                </div>
 				            </div>
 				        </div>
@@ -154,58 +151,16 @@
 				<edit-submissions-form-directive myform="myform" user="user">
 				</edit-submissions-form-directive>
 			</tab>
-		</tabset>
-	<!-- 
-		<div class="cg-busy cg-busy-backdrop cg-busy-backdrop-animation ng-show ng-scope"></div> -->
-	<!-- 
-		<div class="cg-busy cg-busy-animation cg-busy-default-wrapper">
-			<div class="cg-busy-default-sign">
-				<div class="cg-busy-default-spinner">
-				   <div class="bar1"></div>
-				   <div class="bar2"></div>
-				   <div class="bar3"></div>
-				   <div class="bar4"></div>
-				   <div class="bar5"></div>
-				   <div class="bar6"></div>
-				   <div class="bar7"></div>
-				   <div class="bar8"></div>
-				   <div class="bar9"></div>
-				   <div class="bar10"></div>
-				   <div class="bar11"></div>
-				   <div class="bar12"></div>
-				</div>
-				<div class="cg-busy-default-text">Updating form...</div>
-			</div>
-		</div> -->
+		</tabset> -->
+		<div class="col-xs-12">
+			<!-- <tabset> -->
+			<tabs data="tabData"></tabs>
+			<!-- </tabset> -->
+		</div>
 
-	<!-- 		<div class="cg-busy cg-busy-animation cg-busy-default-wrapper">
-			<div style="position: absolute; top: 0px; right: 0px;">
-				<div class="cg-busy-default-spinner">
-				   <div class="bar1"></div>
-				   <div class="bar2"></div>
-				   <div class="bar3"></div>
-				   <div class="bar4"></div>
-				   <div class="bar5"></div>
-				   <div class="bar6"></div>
-				   <div class="bar7"></div>
-				   <div class="bar8"></div>
-				   <div class="bar9"></div>
-				   <div class="bar10"></div>
-				   <div class="bar11"></div>
-				   <div class="bar12"></div>
-				</div>
-				<div class="cg-busy-default-text" style="">Updating form...</div>
-			</div>
-		</div> -->
-
-	<!-- 		<div class="cg-busy cg-busy-backdrop cg-busy-backdrop-animation ng-show ng-scope"></div>
-		<div class="cg-busy cg-busy-animation">
-			<div style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px;">
-
-					<div style="text-align: center; font-size: 20px;position: fixed; bottom: 0; left: 45px; background-color: gray; color: white; padding: 5px 15px 5px 10px;">Updating Form...</div>
-
-			</div>
-		</div> -->
+		<div class="col-xs-12">
+			<ui-view></ui-view>
+		</div>
 
 	</div>
 </section>

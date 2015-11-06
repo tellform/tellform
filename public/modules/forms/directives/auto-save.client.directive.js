@@ -1,131 +1,126 @@
 'use strict';
 
 _.mixin({ removeDateFields : function(o){
-  var clone = _.clone(o);
-  for(var i=0; i<clone.length; i++){
-    _.each(clone[i], function(v,k){
-      // console.log('key: '+k);
-      if(k === 'lastModified' || k === 'created'){
-        delete clone[i][k];
-      }
-    });
-  }
-  return clone;
+    var clone = _.clone(o);
+    for(var i=0; i<clone.length; i++){
+        _.each(clone[i], function(v,k){
+            if(k === 'lastModified' || k === 'created'){
+                delete clone[i][k];
+            }
+        });
+    }
+    return clone;
 }});
 
 angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   
-  return {
-    require: ['^form'],
-    restrict: 'AE',
-    link: function($scope, $element, $attrs, $ctrls) {
+    return {
+        require: ['^form'],
+        restrict: 'AE',
+        link: function($scope, $element, $attrs, $ctrls) {
+            //DAVID: TODO: Do we really need to check if our directive element is ready everytime
+            angular.element(document).ready(function() {
 
-      //DAVID: TODO: Do we really need to check if our directive element is ready everytime
-      angular.element(document).ready(function() {
-      
-        var $formCtrl = $ctrls[0],
-            savePromise = null;
+                var $formCtrl = $ctrls[0],
+                    savePromise = null;
 
-        $rootScope.finishedRender = false;
-        $scope.$on('editFormFields Started', function(ngRepeatFinishedEvent) {
-            $rootScope.finishedRender = false;
-          });
-        $scope.$on('editFormFields Finished', function(ngRepeatFinishedEvent) {
-          $rootScope.finishedRender = true;
-        });
+                $rootScope.finishedRender = false;
+                $scope.$on('editFormFields Started', function(ngRepeatFinishedEvent) {
+                    $rootScope.finishedRender = false;
+                });
+                $scope.$on('editFormFields Finished', function(ngRepeatFinishedEvent) {
+                    $rootScope.finishedRender = true;
+                });
 
-        $scope.anyDirtyAndTouched = function(form){
-          var propCount = 0;
-          for(var prop in form) {
-            if(form.hasOwnProperty(prop) && prop[0] !== '$') {
-              propCount++;
-              if(form[prop].$touched && form[prop].$dirty) {
-                return true;
-              }
-            }
-          }
-          return false;
-        };
+                $scope.anyDirtyAndTouched = function(form){
+                    var propCount = 0;
+                    for(var prop in form) {
+                        if(form.hasOwnProperty(prop) && prop[0] !== '$') {
+                            propCount++;
+                            if(form[prop].$touched && form[prop].$dirty) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                };
 
-        var debounceSave = function () {
-          $rootScope.saveInProgress = true;
-          $rootScope[$attrs.autoSaveCallback](true,
-            function(err){
-              if(!err){
-                console.log('\n\nForm data persisted -- setting pristine flag');
-                $formCtrl.$setPristine(); 
-              }else{
-                console.error('Error form data NOT persisted');
-                console.error(err);
-              }
-            }); 
-        };
+                var debounceSave = function () {
+                    $rootScope.saveInProgress = true;
 
-        //Update/Save Form if any Form fields are Dirty and Touched
-        $scope.$watch(function(newValue, oldValue) {
-          // console.log($scope);
-          console.log($scope.editForm);
-          if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-            console.log('Form saving started');
-            debounceSave();
-          }
-        });
+                    $rootScope[$attrs.autoSaveCallback](true,
+                        function(err){
+                        if(!err){
+                            console.log('\n\nForm data persisted -- setting pristine flag');
+                            $formCtrl.$setPristine(); 
+                        }else{
+                            console.error('Error form data NOT persisted');
+                            console.error(err);
+                        }
+                    }); 
+                };
 
-        //Autosave Form when model (specificed in $attrs.autoSaveWatch) changes
-        $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
+                //Update/Save Form if any Form fields are Dirty and Touched
+                $scope.$watch(function(newValue, oldValue) {
+                    // console.log($scope);
+                    // console.log($scope.editForm);
+                    if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
+                        // console.log('Form saving started');
+                        debounceSave();
+                    }
+                });
 
-          newValue = angular.copy(newValue);
-          oldValue = angular.copy(oldValue);
+                //Autosave Form when model (specificed in $attrs.autoSaveWatch) changes
+                $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
 
-          newValue.form_fields = _.removeDateFields(newValue.form_fields);
-          oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
+                    newValue = angular.copy(newValue);
+                    oldValue = angular.copy(oldValue);
 
-          var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
+                    newValue.form_fields = _.removeDateFields(newValue.form_fields);
+                    oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
-          var changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
-          if( (!newValue && !oldValue) || !oldValue ){
-            return;
-          }
-          
-          // console.log('Autosaving');
-          // console.log('\n\n----------');
-          // console.log('!$dirty: '+ !$formCtrl.$dirty );
-          // console.log('changedFields: '+changedFields);
-          // console.log('changedFieldMap: '+changedFieldMap);
-          // console.log('finishedRender: '+$rootScope.finishedRender);
-          // console.log('!saveInProgress: '+!$rootScope.saveInProgress);
-          // console.log('newValue: '+newValue);
-          // console.log('oldValue: '+oldValue);
-          // console.log(oldValue.form_fields);
-          // console.log(newValue.form_fields);
-          if(oldValue.form_fields.length === 0) $rootScope.finishedRender = true
+                    var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
 
-          //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-          if( $rootScope.finishedRender && ((changedFields && !$formCtrl.$dirty) || changedFieldMap)  && !$rootScope.saveInProgress) {
+                    var changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
+                    if( (!newValue && !oldValue) || !oldValue ){
+                        return;
+                    }
+                      
+                    // console.log('Autosaving');
+                    // console.log('\n\n----------');
+                    // console.log('!$dirty: '+ !$formCtrl.$dirty );
+                    // console.log('changedFields: '+changedFields);
+                    // console.log('changedFieldMap: '+changedFieldMap);
+                    // console.log('finishedRender: '+$rootScope.finishedRender);
+                    // console.log('!saveInProgress: '+!$rootScope.saveInProgress);
+                    // console.log('newValue: '+newValue);
+                    // console.log('oldValue: '+oldValue);
+                    // console.log(oldValue.form_fields);
+                    // console.log(newValue.form_fields);
+                    if(oldValue.form_fields.length === 0) { 
+                        $rootScope.finishedRender = true 
+                    }
 
-            // console.log('saving form now');
-            if(savePromise) {
-              $timeout.cancel(savePromise);
-              savePromise = null;
-            }
+                    //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
+                    if( $rootScope.finishedRender && ((changedFields && !$formCtrl.$dirty) || changedFieldMap)  && !$rootScope.saveInProgress) {
 
-            savePromise = $timeout(function() {   
-              // console.log('Saving Form');
-              debounceSave();           
-            }); 
-          }
-          //If we are finished rendering then form saving should be finished
-          else if($rootScope.finishedRender && $rootScope.saveInProgress){
-            $rootScope.saveInProgress = false;
-          }
+                        if(savePromise) {
+                            $timeout.cancel(savePromise);
+                            savePromise = null;
+                        }
 
-        }, true);
+                        savePromise = $timeout(function() {   
+                            debounceSave();           
+                        }); 
+                    }
+                    //If we are finished rendering then form saving should be finished
+                    else if($rootScope.finishedRender && $rootScope.saveInProgress){
+                        $rootScope.saveInProgress = false;
+                    }
 
-
-
-      });
-
-    }
-  };
+                }, true);
+            });
+        }
+    };
   
 }]);

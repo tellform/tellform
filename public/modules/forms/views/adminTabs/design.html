@@ -1,0 +1,61 @@
+<div class="config-form container">
+	<div class="row">
+        <div class="col-md-12 container">
+        	Title
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="hidden-sm hidden-xs">Change how your Form Looks</h2>
+                    <h3 class="hidden-lg hidden-md">Change how your Form Looks</h3>
+                </div>
+            </div>
+
+            Background Color
+            <div class="row field">
+                <div class="field-title col-sm-6">
+                    <h5>Form Background Color</h5>
+                </div>
+
+                <div class="field-input col-sm-6">
+
+                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.backgroundColor" ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
+                </div>
+            </div>
+
+            Question Color
+            <div class="row field">
+                <div class="field-title col-sm-6">
+                    <h5>Question Color</h5>
+                </div>
+
+                <div class="field-input col-sm-6">
+
+                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.questionColor" ng-style="{ 'background-color': myform.design.colors.questionColor }"/>
+
+
+                </div>
+            </div>
+
+            Answer Color
+            <div class="row field">
+                <div class="field-title col-sm-6">
+                    <h5>Form Answer Color</h5>
+                </div>
+
+                <div class="field-input col-sm-6">
+
+                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="row">
+        <div class="col-sm-offset-4 col-sm-2">
+            <button class="btn btn-primary btn-large" type="button" ng-click="update(false, null)"><i class="icon-arrow-left icon-white"></i> Save Changes</button>
+        </div>
+        <div class="col-sm-1">
+            <button class="btn btn-default" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i> Cancel</button>
+        </div>
+	</div>
+</div>

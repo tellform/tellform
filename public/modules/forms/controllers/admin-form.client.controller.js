@@ -10,7 +10,24 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $rootScope.saveInProgress = false;
         CurrentForm.setForm($scope.myform);
 
-        // console.log($scope.myform);
+        $scope.tabData   = [
+            {
+                heading: 'Create',
+                route:   'viewForm.create'
+            },
+            {
+                heading: 'Design',
+                route:   'viewForm.design',
+            },
+            {
+                heading: 'Configure',
+                route:   'viewForm.configure',
+            },
+            {
+                heading: 'Analyze',
+                route:   'viewForm.analyze',
+            }
+        ];
 
         // Find a specific Form
         $scope.findOne = function(){

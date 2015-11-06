@@ -20,9 +20,6 @@ angular.module('forms').run(['Menus',
 				});
 
 				var fields = formObj.form_fields;
-				// fieldKeys.map(function(key){
-				//   return formObj[key];
-				// });
 
 				var valid_count = fields.filter(function(field){
 					if(typeof field === 'object'){
