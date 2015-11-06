@@ -108,22 +108,6 @@ module.exports = function(db) {
 	app.use('/', express.static(path.resolve('./public')));
 	app.use('/uploads', express.static(path.resolve('./uploads')));
 
-	// Setting the pdf upload route and folder
-	app.use(multer({ dest: config.tmpUploadPath,
-		rename: function (fieldname, filename) {
-		    return Date.now();
-		},
-		onFileUploadStart: function (file) {
-			//Check to make sure we can only upload images and pdfs
-		  	console.log(file.originalname + ' is starting ...');
-		},
-		onFileUploadComplete: function (file, req, res) {
-			console.log(file.originalname + ' uploaded to  ' + file.path);
-			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
-			// res.status(200).send(file);
-		}
-	}));
-
 	// CookieParser should be above session
 	app.use(cookieParser());
 

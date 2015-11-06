@@ -9,25 +9,25 @@ var users = require('../../app/controllers/users.server.controller'),
 	config = require('../../config/config');
 
 // Setting the pdf upload route and folder
-// var upload = multer({ dest: config.tmpUploadPath,
-// 		rename: function (fieldname, filename) {
-// 		    return Date.now();
-// 		},
-// 		onFileUploadStart: function (file) {
-// 			//Check to make sure we can only upload images and pdfs
-// 		  	console.log(file.originalname + ' is starting ...');
-// 		},
-// 		onFileUploadComplete: function (file, req, res) {
-// 			console.log(file.originalname + ' uploaded to  ' + file.path);
-// 			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
-// 			// res.status(200).send(file);
-// 		}
-// 	});
+var upload = multer({ dest: config.tmpUploadPath,
+		rename: function (fieldname, filename) {
+		    return Date.now();
+		},
+		onFileUploadStart: function (file) {
+			//Check to make sure we can only upload images and pdfs
+		  	console.log(file.originalname + ' is starting ...');
+		},
+		onFileUploadComplete: function (file, req, res) {
+			console.log(file.originalname + ' uploaded to  ' + file.path);
+			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
+			// res.status(200).send(file);
+		}
+	});
 
 module.exports = function(app) {
 	// Form Routes
 	app.route('/upload/pdf')
-		.post(users.requiresLogin, forms.uploadPDF);
+		.post(users.requiresLogin, upload.single('file'), forms.uploadPDF);
 
 	app.route('/forms')
 		.get(users.requiresLogin, forms.list)
