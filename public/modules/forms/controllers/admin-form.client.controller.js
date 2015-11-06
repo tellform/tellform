@@ -56,10 +56,10 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         ** DeleteModal Functions 
         */
         $scope.openDeleteModal = function(){
+            console.log('hello');
             $scope.deleteModal = $modal.open({
               animation: $scope.animationsEnabled,
               templateUrl: 'myModalContent.html',
-              controller: 'AdminFormController',
             });
         };
         $scope.cancelDeleteModal = function(){

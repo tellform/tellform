@@ -35,6 +35,7 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 		        myForm: function (Forms, $stateParams) {
+		        	console.log('getting form');
 		            return Forms.get({formId: $stateParams.formId}).$promise;
 		        },
 			},

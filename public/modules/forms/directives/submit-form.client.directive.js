@@ -9,11 +9,12 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                 myform:'='
             },
             controller: function($scope){
-                // angular.element(document).ready(function() {
+                angular.element(document).ready(function() {
+
                     $scope.error = '';
                     $scope.selected = {
-                        _id: $scope.myform.form_fields[0]._id,
-                        index: 0,
+                        _id: '',
+                        index: null,
                     };
 
                     $scope.submitted = false;
@@ -22,6 +23,9 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
 
                     $scope.exitStartPage = function(){
                         $scope.myform.startPage.showStart = false;
+                        if($scope.myform.form_fields.length > 0){ 
+                            $scope.selected._id = $scope.myform.form_fields[0]._id;
+                        }
                     };
 
                     $scope.nextField = function(){
@@ -51,7 +55,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                         $scope.selected.index = field_index;
                     };
                     $scope.hideOverlay = function(){
-                        $scope.selected = null;
+                        $scope.selected = {
+                            _id: '',
+                            index: null,
+                        };
                     };
 
                     $scope.submitForm = function(){
@@ -89,7 +96,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                                 return field;
                             }).value();
                     };
-                // });
+                });
 
             }
         };

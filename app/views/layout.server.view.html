@@ -41,6 +41,10 @@
 	{% endfor %}
 	<link rel="stylesheet" href="/lib/angular-input-stars/angular-input-stars.css">
 	<link rel="stylesheet" href="/lib/jquery-ui/themes/flick/jquery-ui.css"/>
+	<link rel="stylesheet" href="/modules/core/css/github-fork-ribbon.css"/>
+	<!--[if lt IE 9]>
+        <link rel="stylesheet" href="gh-fork-ribbon.ie.css">
+    <![endif]-->
 	<!-- end Bower CSS dependencies-->
 
 	<!--Application CSS Files-->
@@ -57,7 +61,7 @@
 </head>
 
 <body ng-cloak>
-	<div class="github-fork-ribbon-wrapper right">
+	<div class="github-fork-ribbon-wrapper right-bottom hidden-xs hidden-sm">
         <div class="github-fork-ribbon">
             <a href="https://github.com/whitef0x0/nodeforms">Fork me on GitHub</a>
         </div>
