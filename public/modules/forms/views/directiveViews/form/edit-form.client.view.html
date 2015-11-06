@@ -155,10 +155,10 @@
             <div class="col-sm-12 col-md-10"><hr></div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-8">
+            <div class="col-sm-12 col-md-8 dropzoneContainer">
                 <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                    <accordion-group ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
+                    <accordion-group data-ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
 
                         <accordion-heading>
 
@@ -277,111 +277,6 @@
                     </div>
 
                     <hr>
-                    <!-- <accordion-group is-open="endPage.isOpen" ng-if="myform.endPage.showStart">
-
-                        <accordion-heading>
-
-                            <div class="handle">
-
-                                <h4 class="text-center">
-                                    End Page
-                                    <span class="pull-right">
-                                        <i class="fa fa-chevron-right" ng-hide="endPage.isOpen">
-                                        </i>
-                                        <i class="fa fa-chevron-down" ng-show="endPage.isOpen">
-                                        </i>
-                                    </span>
-                                </h4>
-
-                            </div>
-                        </accordion-heading>
-                        <div class="accordion-edit container">
-
-                            <div class="row hidden-sm hidden-xs">
-                                <div class="col-md-12">
-                                    <h4>Preview Field</h4>
-                                </div>
-                                <ul class="col-md-12 container" style="list-style:none;border:2px lightgray solid;">
-                                    <div class="field row text-center">
-                                        <div class="col-xs-12 text-center">
-                                            <h1>Welcome to {{myform.endPage.title}}</h1>
-                                        </div>
-                                        <div class="col-xs-10 col-xs-offset-1 text-center">
-                                            <p>{{form.endPage.description}}</p>
-                                        </div>
-                                    </div>
-                                     <div class="row form-actions">
-                                        <p ng-repeat="button in form.endPage.buttons" class="col-xs-6 col-xs-offset-3 text-center">
-                                            <button class="btn btn-info" type="button" ng-style="{background-color:button.bgColor; color:button.color;}">
-                                                <a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none;"> {{button.title}}</a>
-                                            </button>
-                                        </p>
-                                    </div>
-                                    <div class="row form-actions">
-                                        <p class="col-xs-6 col-xs-offset-3 text-center">
-                                            <button class="btn btn-info" type="button">
-                                                <a ng-click="exitEndPage()" style="color:white; font-size: 1.6em; text-decoration: none;">Continue to Form</a>
-                                            </button>
-                                        </p>
-                                    </div>
-                                </ul>
-                                <hr>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <h4>Edit endPage</h4>
-                                    <br>
-                                </div>
-                            </div> 
-
-                            <div class="row question">
-                                <div class="col-md-4 col-sm-12">Intro Text:</div>
-                                <div class="col-md-8 col-sm-12">
-                                    <input type="text" 
-                                    ng-model="myform.endPage.introText" 
-                                    name="introTextEndPage" 
-                                    value="{{myform.endPage.introText}}" required>
-                                </div>
-                            </div>
-
-                            <div class="row"><br></div>
-
-                            <div class="row options">
-                                <div class="col-md-4 col-xs-12">Buttons:</div>
-                                <div class="col-md-8 col-xs-12">
-                                    <div ng-repeat="button in myform.endPage.buttons" class="row">
-
-                                        <input type="text" 
-                                        name="{{button.buttonText}}_buttonText_endPage" 
-                                        ng-model="button.buttonText" 
-                                        value="{{button.buttonText}}" 
-                                        placeholder="My Button" 
-                                        class="col-xs-4">
-
-                                        <input type="text" 
-                                        name="{{button.url}}_url_endPage" 
-                                        ng-model="button.url" 
-                                        value="{{button.url}}" 
-                                        placeholder="http://aeouaou.com/aoeuoa" 
-                                        class="col-xs-6">
-
-                                        <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteButton(button)" class="col-xs-2">
-                                            <i class="fa fa-trash-o"></i>
-                                        </a>
-
-                                    </div>
-                                    <div class="row"><br></div> 
-                                    <div class="row">                                   
-                                        <button class="btn btn-primary btn-small ol-md-12 col-sm-6 col-sm-offset-6 col-xs-6 col-xs-offset-6" type="button" ng-click="addButton()">
-                                            <i class="icon-plus icon-white"></i> Add Button
-                                        </button>
-                                    </div>
-                                </div>
-                            </div> 
-
-                        </div>
-                    </accordion-group> -->
                 </accordion>
             </div>
 

@@ -48,7 +48,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             var _tmpSubFormFields,
                                 defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
-
                             //Iterate through form's submissions
                             for(var i=0; i<data.length; i++){
                                 _tmpSubFormFields = _.merge(defaultFormFields, data[i].form_fields);

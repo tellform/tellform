@@ -40,28 +40,6 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
         return templateUrl;
     };
 
-    var linker = function(scope, element) {
-
-        scope.setActiveField = $rootScope.setActiveField;
-        //Set format only if field is a date
-        if(scope.field.fieldType === 'date'){
-            scope.dateOptions = {
-                changeYear: true,
-                changeMonth: true,
-                altFormat: 'mm/dd/yyyy',
-                yearRange: '1900:-0',   
-                defaultDate: 0,
-            };
-        }
-
-        // GET template content from path
-        var templateUrl = getTemplateUrl(scope.field);
-        $http.get(templateUrl).success(function(data) {
-            element.html(data).show();
-            $compile(element.contents())(scope);
-        });
-    };
-
     return {
         template: '<div>{{field.title}}</div>',
         restrict: 'E',
@@ -70,6 +48,26 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
             required: '&',
             design: '='
         },
-        link: linker
+        link: function(scope, element) {
+            scope.setActiveField = $rootScope.setActiveField;
+            
+            //Set format only if field is a date
+            if(scope.field.fieldType === 'date'){
+                scope.dateOptions = {
+                    changeYear: true,
+                    changeMonth: true,
+                    altFormat: 'mm/dd/yyyy',
+                    yearRange: '1900:-0',   
+                    defaultDate: 0,
+                };
+            }
+
+            // GET template content from path
+            var templateUrl = getTemplateUrl(scope.field);
+            $http.get(templateUrl).success(function(data) {
+                element.html(data).show();
+                $compile(element.contents())(scope);
+            });
+        },
     };
 }]);

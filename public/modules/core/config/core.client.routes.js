@@ -13,10 +13,5 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'modules/core/views/home.client.view.html'
 		});
 
-		// $urlRouterProvider.otherwise( function($injector) {
-		//   var $state = $injector.get('$state');
-		//   $state.go('home');
-		// });
-
 	}
 ]);
