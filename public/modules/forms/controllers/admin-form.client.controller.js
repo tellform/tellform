@@ -1,11 +1,11 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$modal', 'myForm',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $modal, myForm) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm) {
 
         $scope = $rootScope;
-
+        $scope.animationsEnabled = true;
         $scope.myform = myForm;
         $rootScope.saveInProgress = false;
         CurrentForm.setForm($scope.myform);
@@ -57,11 +57,24 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         */
         $scope.openDeleteModal = function(){
             console.log('hello');
-            $scope.deleteModal = $modal.open({
+            $scope.deleteModal = $uibModal.open({
               animation: $scope.animationsEnabled,
               templateUrl: 'myModalContent.html',
+              controller: 'AdminFormController',
+              resolve: {
+                myForm: function () {
+                  return $scope.myform;
+                }
+              }
+            });
+            $scope.deleteModal.result.then(function (selectedItem) {
+              $scope.selected = selectedItem;
+            }, function () {
+              console.log('Modal dismissed at: ' + new Date());
             });
         };
+
+
         $scope.cancelDeleteModal = function(){
             if($scope.deleteModal){
                 $scope.deleteModal.dismiss('cancel');
