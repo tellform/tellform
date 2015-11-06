@@ -35,6 +35,7 @@
     "angular-ui-router-tabs": "~1.7.0"
   },
   "resolutions": {
-    "angular": "~1.3.20"
+    "angular": "~1.3.20",
+    "angular-bootstrap": "^0.14.0"
   }
 }
