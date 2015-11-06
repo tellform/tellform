@@ -161,49 +161,49 @@ describe('FormSubmission Model Unit Tests:', function() {
 			});
 		});
 
-		it('should add Patient to OscarHost EMR after save', function(done){
-			var url_login = myForm.plugins.oscarhost.baseUrl+'/LoginService?wsdl',
-	 			url_demo = myForm.plugins.oscarhost.baseUrl+'/DemographicService?wsdl',
-	 			args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};
+		// it('should add Patient to OscarHost EMR after save', function(done){
+		// 	var url_login = myForm.plugins.oscarhost.baseUrl+'/LoginService?wsdl',
+	 // 			url_demo = myForm.plugins.oscarhost.baseUrl+'/DemographicService?wsdl',
+	 // 			args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};
 
-	 		var options = {
-	 		    ignoredNamespaces: {
-	 		        namespaces: ['targetNamespace', 'typedNamespace'],
-	 		        override: true
-	 		    }
-	 		};
+	 // 		var options = {
+	 // 		    ignoredNamespaces: {
+	 // 		        namespaces: ['targetNamespace', 'typedNamespace'],
+	 // 		        override: true
+	 // 		    }
+	 // 		};
 
-			async.waterfall([
-				function (callback) {	
-					//Authenticate with API
-					soap.createClient(url_login, options, function(err, client) {
-						client.login(args_login, function (err, result) {
-							if(err) callback(err);
-							callback(null, result.return);
-						});
-					});
-				},
+		// 	async.waterfall([
+		// 		function (callback) {	
+		// 			//Authenticate with API
+		// 			soap.createClient(url_login, options, function(err, client) {
+		// 				client.login(args_login, function (err, result) {
+		// 					if(err) callback(err);
+		// 					callback(null, result.return);
+		// 				});
+		// 			});
+		// 		},
 
-				function (security_obj, callback) {
-					soap.createClient(url_demo, options, function(err, client) {
-						client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
+		// 		function (security_obj, callback) {
+		// 			soap.createClient(url_demo, options, function(err, client) {
+		// 				client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
 
-						client.getDemographic({ arg0: oscar_demo_num }, function (err, result) {
-							if(err) callback(err);
-							callback(null, result);
-						});
-					});
-				},
+		// 				client.getDemographic({ arg0: oscar_demo_num }, function (err, result) {
+		// 					if(err) callback(err);
+		// 					callback(null, result);
+		// 				});
+		// 			});
+		// 		},
 
-			], function(err, result) {
-				if(err) done(err);
+		// 	], function(err, result) {
+		// 		if(err) done(err);
 
-				should.exist(result);
-				console.log(result.return);
+		// 		should.exist(result);
+		// 		console.log(result.return);
 
-				done();
-			});	
-		});
+		// 		done();
+		// 	});	
+		// });
 	});
 
 	describe('Method Find', function(){
