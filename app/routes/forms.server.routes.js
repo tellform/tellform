@@ -19,8 +19,6 @@ var upload = multer({ dest: config.tmpUploadPath,
 		},
 		onFileUploadComplete: function (file, req, res) {
 			console.log(file.originalname + ' uploaded to  ' + file.path);
-			// console.log('\n\nheadersSent in onFileUploadComplete: ', res.headersSent);
-			// res.status(200).send(file);
 		}
 	});
 
