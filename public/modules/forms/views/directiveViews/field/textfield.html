@@ -1,4 +1,4 @@
-<div class="textfield field row" ng-click="setActiveField(field._id)">
+<div class="textfield field row" ng-click="setActiveField(field._id, index)">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}" ng-style="{'color': design.colors.questionColor}">
     	<h3>
     		<span class="fa fa-angle-double-right"></span> {{field.title}} 
@@ -8,7 +8,7 @@
     	</h3>
     </div>
     <div class="col-xs-12 field-input">
-		<input ng-focus="setActiveField(field._id)" ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
+		<input ng-focus="setActiveField(field._id, index)" ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
 			type="text" 
 			class="text-field-input" 
 			ng-model="field.fieldValue" 

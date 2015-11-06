@@ -1,4 +1,4 @@
-<div class="textfield field row" ng-click="setActiveField(field._id)">
+<div class="textfield field row" ng-click="setActiveField(field._id, index)">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 	    <h3>
 	    	<span class="fa fa-angle-double-right"></span> 
@@ -7,7 +7,7 @@
 	    </h3>
     </div>
     <div class="col-xs-12 field-input">
-		<input-stars max="5" ng-focus="setActiveField(field._id)"
+		<input-stars max="5" ng-focus="setActiveField(field._id, index)"
 			icon-full="fa-star" 
 			icon-base="fa fa-3x" 
 			icon-empty="fa-star-o"

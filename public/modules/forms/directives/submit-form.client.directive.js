@@ -9,24 +9,52 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                 myform:'='
             },
             controller: function($scope){
-                angular.element(document).ready(function() {
+                // angular.element(document).ready(function() {
                     $scope.error = '';
-                    $scope.selected = null;
+                    $scope.selected = {
+                        _id: $scope.myform.form_fields[0]._id,
+                        index: 0,
+                    };
+
                     $scope.submitted = false;
 
                     TimeCounter.startClock()
 
                     $scope.exitStartPage = function(){
                         $scope.myform.startPage.showStart = false;
-                    }
-                    $rootScope.setActiveField = function (field_id) {
-                        $scope.selected = field_id;
                     };
-                    $scope.hideOverlay = function (){
+
+                    $scope.nextField = function(){
+                        if($scope.selected.index < $scope.myform.form_fields.length){
+                            $scope.selected.index++;
+                            $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
+                        }
+                    };
+                    $scope.prevField = function(){
+                        if($scope.selected.index > 0){
+                            $scope.selected.index = $scope.selected.index - 1;
+                            $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
+                        }
+                    };
+
+                    $rootScope.setActiveField = function(field_id, field_index) {
+                        if($scope.selected === null){
+                            $scope.selected = {
+                                _id: '',
+                                index: 0,
+                            };
+                        }
+                        console.log('field_id: '+field_id);
+                        console.log('field_index: '+field_index);
+                        console.log($scope.selected);
+                        $scope.selected._id = field_id;
+                        $scope.selected.index = field_index;
+                    };
+                    $scope.hideOverlay = function(){
                         $scope.selected = null;
                     };
 
-                    $scope.submit = function(){
+                    $scope.submitForm = function(){
                         var _timeElapsed = TimeCounter.stopClock();
 
                         var form = _.cloneDeep($scope.myform);
@@ -34,7 +62,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
 
                         // console.log('percentageComplete: '+$filter('formValidity')($scope.myform)/$scope.myform.visible_form_fields.length*100+'%');
                         form.percentageComplete = $filter('formValidity')($scope.myform)/$scope.myform.visible_form_fields.length*100;
-                        console.log(form.percentageComplete)
                         delete form.visible_form_fields;
 
                         $scope.authentication = Auth;
@@ -62,7 +89,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                                 return field;
                             }).value();
                     };
-                });
+                // });
 
             }
         };

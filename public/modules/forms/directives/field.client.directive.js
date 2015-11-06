@@ -45,7 +45,8 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
         scope: {
             field: '=',
             required: '&',
-            design: '='
+            design: '=',
+            index: '=',
         },
         link: function(scope, element) {
             scope.setActiveField = $rootScope.setActiveField;
