@@ -43,9 +43,11 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                     $scope.myforms.splice(form_index+1, 0, data);
                 }).error(function(errorResponse){
                     console.error(errorResponse);
-                    if(errorResponse == null) $scope.error = errorResponse.data.message;
+                    if(errorResponse === null){
+                        $scope.error = errorResponse.data.message;   
+                    } 
                 });
-        }
+        };
 
         // Create new Form
         $scope.createNewForm = function(){
@@ -76,9 +78,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             $http.delete('/forms/'+$scope.myforms[form_index]._id)
                 .success(function(data, status, headers){
                     console.log('form deleted successfully');
-                    
                     $scope.myforms.splice(form_index, 1);
-
                 }).error(function(error){
                     console.log('ERROR: Form could not be deleted.');
                     console.error(error);

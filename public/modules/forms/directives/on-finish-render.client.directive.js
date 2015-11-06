@@ -5,10 +5,8 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
         restrict: 'A',
         link: function (scope, element, attrs) {
 
-            // $rootScope.$broadcast(' Started');
-
             //Don't do anything if we don't have a ng-repeat on the current element
-            if(!element.attr('ng-repeat')){
+            if(!element.attr('ng-repeat') && !element.attr('data-ng-repeat')){
                 return;
             }
 

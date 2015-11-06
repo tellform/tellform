@@ -58,17 +58,11 @@ config_nev();
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 exports.validateVerificationToken = function(req, res){
-	// console.log('validateVerificationToken');
-	// console.log('token: '+req.params.token+'\n\n');
-
-	console.log('res.headerSent: '+res.headersSent);
 	nev.confirmTempUser(req.params.token, function(err, user) {
 	    if(err) { 
 			console.log(errorHandler.getErrorMessage(err));
-			console.log(err)
 			return res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
 	    } 
-
 	    else if (user){
 	        return res.status(200).send('User successfully verified');
 	    }else {

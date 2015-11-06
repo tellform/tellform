@@ -13,7 +13,6 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
 
     
     var getTemplateUrl = function(field) {
-        console.log(field.validFieldTypes);
         var type = field.fieldType;
         var templateUrl = 'modules/forms/views/directiveViews/field/';
         var supported_fields = [

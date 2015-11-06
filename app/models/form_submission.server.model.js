@@ -31,7 +31,7 @@ var newDemoTemplate = {
 	officialLanguage: 'English',
 	phone: '250-',
 	phone2: '',
-	postal: "S4M 7T8",
+	postal: 'S4M 7T8',
 	province: 'BC',
 	sex: 'F',
 	sexDesc: 'Female',

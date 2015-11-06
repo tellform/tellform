@@ -26,6 +26,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                 $rootScope.finishedRender = false;
                 $scope.$on('editFormFields Started', function(ngRepeatFinishedEvent) {
+                    // console.log('hello');
                     $rootScope.finishedRender = false;
                 });
                 $scope.$on('editFormFields Finished', function(ngRepeatFinishedEvent) {
@@ -97,6 +98,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     // console.log('oldValue: '+oldValue);
                     // console.log(oldValue.form_fields);
                     // console.log(newValue.form_fields);
+
                     if(oldValue.form_fields.length === 0) { 
                         $rootScope.finishedRender = true 
                     }
