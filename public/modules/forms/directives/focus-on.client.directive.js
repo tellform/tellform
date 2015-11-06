@@ -5,7 +5,6 @@ angular.module('forms').directive('focusOn',function() {
         restrict : 'A', 
         link : function($scope, $element, $attr) {
             $scope.$watch($attr.focusOn,function(focusVal) {
-                // console.log($element);
                 if(focusVal === true) {
                     setTimeout(function() {
                         var $input_element;
@@ -18,10 +17,9 @@ angular.module('forms').directive('focusOn',function() {
                             $input_element = $element[0].querySelector('textarea');
                         }else if($element[0].querySelector('.angular-input-stars')){
                             $input_element = $element[0].querySelector('.angular-input-stars');
+                        }else{
+                            return;
                         }
-                        // $('body').animate({ 
-                        //     scrollTop: $input_element.offset().top
-                        // });
                         $input_element.focus();
                     },50);
                 }

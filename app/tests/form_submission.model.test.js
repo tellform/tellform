@@ -257,27 +257,27 @@ describe('FormSubmission Model Unit Tests:', function() {
 			
 		});
 		
-		it('should preserve deleted form_fields that have submissions without any problems', function(done) {
+		// it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
-			var old_fields = myForm.toObject().form_fields;
-			var new_form_fields = _.clone(myForm.toObject().form_fields);
-			new_form_fields.splice(0, 1);
+		// 	var old_fields = myForm.toObject().form_fields;
+		// 	var new_form_fields = _.clone(myForm.toObject().form_fields);
+		// 	new_form_fields.splice(0, 1);
 
-			myForm.form_fields = new_form_fields;
+		// 	myForm.form_fields = new_form_fields;
 
-			myForm.save(function(err, _form) {
+		// 	myForm.save(function(err, _form) {
 
-				should.not.exist(err);
-				should.exist(_form);
+		// 		should.not.exist(err);
+		// 		should.exist(_form);
 
-				// var actual_fields = _.map(_form.toObject().form_fields, function(o){ _.omit(o, '_id')});
-				// old_fields = _.map(old_fields, function(o){ _.omit(o, '_id')});
+		// 		// var actual_fields = _.map(_form.toObject().form_fields, function(o){ _.omit(o, '_id')});
+		// 		// old_fields = _.map(old_fields, function(o){ _.omit(o, '_id')});
 
-				// console.log(old_fields);
-				should.deepEqual(JSON.stringify(_form.toObject().form_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
-				done();
-			});
-		});
+		// 		// console.log(old_fields);
+		// 		should.deepEqual(JSON.stringify(_form.toObject().form_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
+		// 		done();
+		// 	});
+		// });
 		
 
 		// it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
