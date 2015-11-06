@@ -2,7 +2,7 @@
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}"><h3><span class="fa fa-angle-double-right"></span> {{field.title}} <span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span></h3></div>
     <div class="col-xs-12 field-input">
         <div ng-repeat="option in field.fieldOptions" class="row-fluid">
-            <label class="btn col-xs-3" ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_id}">
+            <label class="btn" style="margin: 0.5em; padding-left:30px" ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_id}">
                 <input ng-focus="setActiveField(field._id)" ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
                 type="radio" 
                 value="{{option.option_value}}" 

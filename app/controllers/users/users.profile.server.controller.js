@@ -51,7 +51,7 @@ exports.update = function(req, res) {
 /**
  * Send User
  */
-exports.me = function(req, res) {
+exports.getUser = function(req, res) {
 	var _user = req.user;
 	delete _user.password;
 	delete _user.salt;
@@ -59,4 +59,6 @@ exports.me = function(req, res) {
 	delete _user.__v;
 
 	res.json(req.user || null);
+
+	res.end();
 };

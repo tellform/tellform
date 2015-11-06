@@ -58,13 +58,19 @@ config_nev();
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 exports.validateVerificationToken = function(req, res){
-	console.log('validateVerificationToken');
-	console.log('token: '+req.params.token+'\n\n');
-	nev.confirmTempUser(req.params.token, function(user, err) {
+	// console.log('validateVerificationToken');
+	// console.log('token: '+req.params.token+'\n\n');
+
+	console.log('res.headerSent: '+res.headersSent);
+	nev.confirmTempUser(req.params.token, function(err, user) {
 	    if(err) { 
-	    	res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
-	    }else if (user){
-	        res.status(200).send('User successfully verified');
+			console.log(errorHandler.getErrorMessage(err));
+			console.log(err)
+			return res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
+	    } 
+
+	    else if (user){
+	        return res.status(200).send('User successfully verified');
 	    }else {
 	        // redirect to resend verification email
 	        return res.status(400).send( {message: 'Verification token is invalid or has expired'} );
@@ -76,12 +82,15 @@ exports.resendVerificationEmail = function(req, res, next){
 	nev.resendVerificationEmail(req.body.email, function(err, userFound) {
 		if(err) { 
 			console.log(errorHandler.getErrorMessage(err));
-			res.status(500).send( {message: errorHandler.getErrorMessage(err)  } );
-	    }else if (userFound){
+			return res.status(500).send( {message: errorHandler.getErrorMessage(err)  } );
+	    } 
+
+	    if (userFound){
+	    	console.log('hello');
 	        res.status(200).send('Verification email successfully Re-Sent');
 	    }else {
 	        // user hasn't been found yet
-	        res.status(400).send( {message: 'Error: Verification Email could NOT be sent'} );
+	        res.status(400).send( {message: 'Error: User has not been registered yet'} );
 	    }
 	});
 };
@@ -107,7 +116,7 @@ exports.signup = function(req, res) {
 		if (err) {
 			console.log('Error: ');
 			console.log(err);
-			res.status(400).send({
+			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}else {
@@ -118,17 +127,17 @@ exports.signup = function(req, res) {
 	        		if (err) {
 	        			console.log('Error: ');
 						console.log(err);
-						res.status(400).send({
+						return res.status(400).send({
 							message: errorHandler.getErrorMessage(err)
 						});
 					}else {
 						console.log('new tmpuser registered');
-						res.status(200).send('An email has been sent to you. Please check it to verify your account.');
+						return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 	        		}
 	        	});
 	        } else {
-	        	console.log('Error: Temp user already exists!');
-	            res.status(400).send({ message: 'Error: Temp user already exists!' });
+	        	console.log('Error: User already exists!');
+	            return res.status(400).send({ message: 'Error: User already exists!' });
 	        }
 	    }
     });
@@ -153,7 +162,7 @@ exports.signin = function(req, res, next) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					res.json(user);
+					return res.json(user);
 				}
 			});
 		}
@@ -166,6 +175,7 @@ exports.signin = function(req, res, next) {
 exports.signout = function(req, res) {
 	req.logout();
 	res.redirect('/');
+	return res.end();
 };
 
 /**

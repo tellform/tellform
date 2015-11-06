@@ -89,7 +89,7 @@ form .row.field {
     form .row.field > .field-input {
         font-size: 1.4em;
         color: #777;
-        width: inherit;
+        /*width: inherit;*/
     }
     form.submission-form .row.field.statement > .field-title {
         font-size:1.7em;
@@ -140,7 +140,7 @@ form .row.field {
             padding: 0.45em 0.9em;
             width: 100%;
             line-height: 160%;
-            border: 3px dashed #ddd;
+            border: 2px dashed #ddd!important;
         }
         form .field-input > input.text-field-input:focus{
             border: 0;

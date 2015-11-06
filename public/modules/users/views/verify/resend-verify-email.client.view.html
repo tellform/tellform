@@ -2,6 +2,9 @@
 	<section ng-if="!isResetSent">
 		<h3 class="col-md-12 text-center">Resend your account verification email</h3>
 		<p class="small text-center">Enter your account email.</p>
+		<div data-ng-show="error" class="text-center text-danger">
+			<strong>{{error}}</strong>
+		</div>
 		<div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
 			<form data-ng-submit="resendVerifyEmail()" class="signin form-horizontal" autocomplete="off">
 				<fieldset>
@@ -12,9 +15,7 @@
 						<button type="submit" class="btn btn-primary" ng-click="resendVerifyEmail()">Submit</button>
 					</div>
 
-					<div data-ng-show="error" class="text-center text-danger">
-						<strong>{{error}}</strong>
-					</div>
+
 					<!-- <div data-ng-show="success" class="text-center text-success">
 						<strong>{{success}}</strong>
 					</div> -->

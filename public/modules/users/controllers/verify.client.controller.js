@@ -3,23 +3,25 @@
 angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams',
 	function($scope, $state, $rootScope, User, Auth, $stateParams) {
 
-		$scope.isReset = false;
+		$scope.isResetSent = false;
 		$scope.credentials = {};
 		$scope.error = '';
 
 		// Submit forgotten password account id
 		$scope.resendVerifyEmail = function() {
-			console.log($scope.credentials.email);
+			// console.log($scope.credentials);
+			// console.log($scope.credentials.email);
 			User.resendVerifyEmail($scope.credentials.email).then(
 				function(response){
+					console.log(response);
 					$scope.success = response.message;
 					$scope.credentials = null;
 					$scope.isResetSent = true;
 				},
 				function(error){
 					$scope.error = error;
-					$scope.credentials = null;
-					$scope.isReset = false;
+					$scope.credentials.email = null;
+					$scope.isResetSent = false;
 				}
 			);
 		};
@@ -32,14 +34,14 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 					function(response){
 						console.log('Success: '+response.message);
 						$scope.success = response.message;
-						$scope.isReset = true;
-						$scope.credentials = null;
+						$scope.isResetSent = true;
+						$scope.credentials.email = null;
 					},
 					function(error){
 						console.log('Error: '+error.message);
-						$scope.isReset = false;
+						$scope.isResetSent = false;
 						$scope.error = error;
-						$scope.credentials = null;
+						$scope.credentials.email = null;
 					}
 				);
 			}
