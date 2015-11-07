@@ -33,6 +33,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 	    // add previous state property
 	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
 	        $state.previous = fromState;
+	        console.log('toState: '+toState.name);
 
 	        //Redirect to listForms if user is authenticated
         	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
@@ -43,6 +44,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
         	}
 	        //Redirect to 'home' route if user is not authenticated
         	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
+        		console.log('go to home');
         		event.preventDefault(); // stop current execution
         		$state.go('home'); // go to listForms page
         	}
