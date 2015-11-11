@@ -9,6 +9,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                 myform:'='
             },
             controller: function($scope){
+                $scope.authentication = $rootScope.authentication;
+                
                 angular.element(document).ready(function() {
 
                     $scope.error = '';
