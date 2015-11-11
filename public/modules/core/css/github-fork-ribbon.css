@@ -57,7 +57,8 @@
   position: absolute;
   overflow: hidden;
   top: 0;
-  z-index: 9999;
+  z-index: 9998;
+
   pointer-events: none;
 }
 

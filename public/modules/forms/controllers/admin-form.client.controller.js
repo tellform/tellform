@@ -56,7 +56,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         ** DeleteModal Functions 
         */
         $scope.openDeleteModal = function(){
-            console.log('hello');
             $scope.deleteModal = $uibModal.open({
               animation: $scope.animationsEnabled,
               templateUrl: 'myModalContent.html',

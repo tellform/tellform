@@ -4,6 +4,27 @@
     border-width:3px;
 }
 
+.busy-updating-wrapper {
+   text-align: center; 
+   font-size: 20px;
+   position: fixed; 
+   bottom: 0; 
+   right: 55px;
+   z-index: 1;
+}
+
+.busy-updating-wrapper .message {
+    text-align: center; 
+    font-size: 20px;
+    position: fixed; 
+    bottom: 0; 
+    right: 70px; 
+    background-color: gray; 
+    color: white; 
+    padding: 5px 15px 5px 10px; 
+    z-index: 9999;
+}
+
 section.public-form {
     margin-top: -70px;
 }
