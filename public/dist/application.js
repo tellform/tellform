@@ -56,6 +56,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 	    // add previous state property
 	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
 	        $state.previous = fromState;
+	        console.log('toState: '+toState.name);
 
 	        //Redirect to listForms if user is authenticated
         	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
@@ -65,7 +66,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
         		}
         	}
 	        //Redirect to 'home' route if user is not authenticated
-        	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() ){
+        	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
+        		console.log('go to home');
         		event.preventDefault(); // stop current execution
         		$state.go('home'); // go to listForms page
         	}
@@ -183,8 +185,8 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$rootScope', '$scope', 'User', 'Auth', '$state',
-	function($rootScope, $scope, User, Auth, $state) {
+angular.module('core').controller('HomeController', ['$rootScope', '$scope', 'User', '$state',
+	function($rootScope, $scope, User, $state) {
 		$scope = $rootScope;
 	}
 ]);
@@ -435,6 +437,7 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 		        myForm: ["Forms", "$stateParams", function (Forms, $stateParams) {
+		        	console.log('getting form');
 		            return Forms.get({formId: $stateParams.formId}).$promise;
 		        }],
 			},
@@ -457,11 +460,11 @@ angular.module('forms').config(['$stateProvider',
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$modal', 'myForm',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $modal, myForm) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm) {
 
         $scope = $rootScope;
-
+        $scope.animationsEnabled = true;
         $scope.myform = myForm;
         $rootScope.saveInProgress = false;
         CurrentForm.setForm($scope.myform);
@@ -512,12 +515,25 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         ** DeleteModal Functions 
         */
         $scope.openDeleteModal = function(){
-            $scope.deleteModal = $modal.open({
+            console.log('hello');
+            $scope.deleteModal = $uibModal.open({
               animation: $scope.animationsEnabled,
               templateUrl: 'myModalContent.html',
               controller: 'AdminFormController',
+              resolve: {
+                myForm: function () {
+                  return $scope.myform;
+                }
+              }
+            });
+            $scope.deleteModal.result.then(function (selectedItem) {
+              $scope.selected = selectedItem;
+            }, function () {
+              console.log('Modal dismissed at: ' + new Date());
             });
         };
+
+
         $scope.cancelDeleteModal = function(){
             if($scope.deleteModal){
                 $scope.deleteModal.dismiss('cancel');
@@ -674,14 +690,14 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$stateParams', '$state', 'Forms', 'CurrentForm', 'Auth', 'myForm',
-	function($scope, $rootScope, $stateParams, $state, Forms, CurrentForm, Auth, myForm) {
-		$scope.authentication = Auth;
+angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$state', 'myForm',
+	function($scope, $rootScope, $state, myForm) {
+		$scope.authentication = $rootScope.authentication;
 		$scope.myform = myForm;
 
 		if(!$scope.myform.isLive){
 			// Show navbar if form is not public AND user IS loggedin
-			if($scope.authentication.isAuthenticated()){
+			if($scope.authentication.isAuthenticated() && $scope.currentUser()._id === $scpoe.myform.admin._id){
 				$scope.hideNav = $rootScope.hideNav = false;
 			}
 			// Redirect if  form is not public user IS NOT loggedin
@@ -1415,11 +1431,14 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                 myform:'='
             },
             controller: ["$scope", function($scope){
-                // angular.element(document).ready(function() {
+                $scope.authentication = $rootScope.authentication;
+                
+                angular.element(document).ready(function() {
+
                     $scope.error = '';
                     $scope.selected = {
-                        _id: $scope.myform.form_fields[0]._id,
-                        index: 0,
+                        _id: '',
+                        index: null,
                     };
 
                     $scope.submitted = false;
@@ -1428,10 +1447,13 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
 
                     $scope.exitStartPage = function(){
                         $scope.myform.startPage.showStart = false;
+                        if($scope.myform.form_fields.length > 0){ 
+                            $scope.selected._id = $scope.myform.form_fields[0]._id;
+                        }
                     };
 
                     $scope.nextField = function(){
-                        if($scope.selected.index < $scope.myform.form_fields.length){
+                        if($scope.selected.index < $scope.myform.form_fields.length-1){
                             $scope.selected.index++;
                             $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
                         }
@@ -1457,7 +1479,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                         $scope.selected.index = field_index;
                     };
                     $scope.hideOverlay = function(){
-                        $scope.selected = null;
+                        $scope.selected = {
+                            _id: '',
+                            index: null,
+                        };
                     };
 
                     $scope.submitForm = function(){
@@ -1495,7 +1520,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                                 return field;
                             }).value();
                     };
-                // });
+                });
 
             }]
         };
