@@ -204,7 +204,9 @@ div.config-form .row.field {
 
     div.config-form > .row > .container:nth-of-type(odd){
         border-right: 1px #ddd solid;
-        /*padding-left: 1em;*/
+    }
+    div.config-form.design > .row > .container:nth-of-type(odd){
+        border-right: none;
     }
 
         div.config-form .row > .field-input {
