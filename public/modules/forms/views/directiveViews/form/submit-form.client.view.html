@@ -67,10 +67,10 @@
                         <a href="/#!/forms/{{myform._id}}/admin/create" class="btn btn-default">Edit this NodeForm</a>
                     </div>
                     <div class="col-md-1 col-md-offset-2" style="padding-left:5px" class="hidden-sm hidden-xs">
-                        <div class="btn btn-info" id="focusDownButton" ng-click="nextField()">\/</div>
+                        <button class="btn btn-info" id="focusDownButton" ng-click="nextField()" ng-disabled="selected.index == myform.form_fields.length-1">\/</button>
                     </div>
                     <div class="col-md-1" class="hidden-sm hidden-xs">
-                        <div class="btn btn-info" id="focusUpButton" ng-click="prevField()">/\</div>
+                        <button class="btn btn-info" id="focusUpButton" ng-click="prevField()" ng-disabled="selected.index == 0">/\</button>
                     </div>
                 </div>
             </div>

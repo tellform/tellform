@@ -29,7 +29,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                     };
 
                     $scope.nextField = function(){
-                        if($scope.selected.index < $scope.myform.form_fields.length){
+                        if($scope.selected.index < $scope.myform.form_fields.length-1){
                             $scope.selected.index++;
                             $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
                         }
