@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields', 'mySubmissions',
-    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields, mySubmissions) {
+angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
+    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html',
             restrict: 'E',
@@ -12,7 +12,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
             controller: function($scope){
                 $scope.table = {
                     masterChecker: false,
-                    rows: mySubmissions
+                    rows: []
                 };
 
                 /*
@@ -54,6 +54,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                                 data[i].form_fields = _tmpSubFormFields;
                                 data[i].selected = false;
                             }
+                            console.log(data);
 
                             $scope.table.rows = data;
 

@@ -205,12 +205,13 @@ FormSubmissionSchema.pre('save', function (next) {
 
 //Check for IP Address of submitting person 
 FormSubmissionSchema.pre('save', function (next){
+	var that = this;
 	if(this.ipAddr){
 		if(this.isModified('ipAddr')){
 			satelize.satelize({ip: this.ipAddr}, function(err, geoData){
 				if (err) next( new Error(err.message) );
 
-				this.geoLocation = JSON.parse(geoData);
+				that.geoLocation = JSON.parse(geoData);
 				next();
 			});
 		}

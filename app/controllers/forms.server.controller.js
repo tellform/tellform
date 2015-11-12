@@ -109,10 +109,10 @@ exports.createSubmission = function(req, res) {
 
 	if(form.pdf) submission.pdf = form.pdf;
 
+	//Save submitter's IP Address
 	if(req.headers['x-forwarded-for'] || req.connection.remoteAddress){
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-		// console.log('ip address of client is: '+ip);
-		// if(ip) submission.ipAddr = ip;
+		if(ip && process.env.NODE_ENV !== 'development') submission.ipAddr = ip;
 	}
 
 	if(form.autofillPDFs){
@@ -148,30 +148,26 @@ exports.listSubmissions = function(req, res) {
 	console.log('listSubmissions');
 	// console.log(_form);
 
-	// if(_form.submissions.length){
-		// res.json(_form.submissions);
-	// }else{
-		FormSubmission.find({ form: _form._id, admin: _user._id }).populate('admin', 'form').exec(function(err, _submissions) {
+	FormSubmission.find({ form: _form._id }).exec(function(err, _submissions) {
+		if (err) {
+			console.log(err);
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+
+		_form.update({ $set : { submissions: _submissions }}).exec(function(err, form){
 			if (err) {
 				console.log(err);
 				res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
-			}
-
-			_form.update({ $set : { submissions: _submissions }}).exec(function(err, form){
-				if (err) {
-					console.log(err);
-					res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				} 
-				res.json(_submissions);
-			});
-			// res.status(200).send('Updated forms');
-		
+			} 
+			res.json(_submissions);
 		});
-	// }
+	
+	});
+
 };
 
 /**

@@ -44,6 +44,12 @@
 						Time Elapsed
 					</th>
 					<th>
+						Geolacation
+					</th>
+					<th>
+						IP Address
+					</th>
+					<th>
 						Date Submitted (UTC)
 					</th>
 					<th ng-if="myform.autofillPDFs">
@@ -60,8 +66,8 @@
 					<th class="scope">
 						{{$index+1}}
 					</th>
-					<td data-ng-repeat="(key, value) in row.form_fields">
-						{{value.fieldValue}}
+					<td data-ng-repeat="field in row.form_fields">
+						{{field.fieldValue}}
 					</td>
 					<td ng-if="myform.plugins.oscarhost.baseUrl">
 						<a href="{{myform.plugins.oscarhost.baseUrl.split('ws')[0]}}demographic/demographiccontrol.jsp?demographic_no={{row.oscarDemoNum}}&displaymode=edit">
@@ -73,6 +79,12 @@
 					</td>
 					<td>
 						{{row.timeElapsed}}
+					</td>
+					<td>
+						{{row.geoLocation}}
+					</td>
+					<td>
+						{{row.ipAddr}}
 					</td>
 					<td>
 						{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}

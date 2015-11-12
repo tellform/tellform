@@ -55,6 +55,7 @@
     "grunt-ng-annotate": "~1.0.1",
     "grunt-node-inspector": "~0.4.1",
     "grunt-nodemon": "~0.4.0",
+    "grunt-html2js": "~0.3.5",
     "helmet": "~0.14.0",
     "load-grunt-tasks": "~3.3.0",
     "lodash": "^2.4.1",

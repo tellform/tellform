@@ -49,28 +49,6 @@ angular.module('forms').config(['$stateProvider',
 	    }).state('viewForm.analyze', {
 			url: '/analyze',
 			templateUrl: 'modules/forms/views/adminTabs/analyze.html',
-			resolve: {
-				mySubmissions: function() {
-					$http.get('/forms/'+$stateParams.formId+'/submissions')
-                        .success(function(data, status, headers){
-
-                            var _tmpSubFormFields,
-                                defaultFormFields = _.cloneDeep($scope.myform.form_fields);
-
-                            //Iterate through form's submissions
-                            for(var i=0; i<data.length; i++){
-                                _tmpSubFormFields = _.merge(defaultFormFields, data[i].form_fields);
-                                data[i].form_fields = _tmpSubFormFields;
-                                data[i].selected = false;
-                            }
-
-                            return data;
-                        })
-                        .error(function(err){
-                            console.error('Could not fetch form submissions.\nError: '+err);
-                        });    
-                    }
-			}
 	    }).state('viewForm.create', {
 			url: '/create',
 			templateUrl: 'modules/forms/views/adminTabs/create.html'

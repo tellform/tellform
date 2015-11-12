@@ -154,8 +154,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 
 				should.not.exist(err);
 				should.exist(submission);
-				should.exist(submission.oscarDemoNum);
-				oscar_demo_num = submission.oscarDemoNum;
+				// should.exist(submission.oscarDemoNum);
+				// oscar_demo_num = submission.oscarDemoNum;
 
 				done();
 			});
