@@ -60,7 +60,7 @@ exports.forgot = function(req, res, next) {
 			res.render('templates/reset-password-email', {
 				name: user.displayName,
 				appName: config.app.title,
-				url: req.protocol+'://' + req.headers.host + '/#!/auth/reset/' + token
+				url: 'http://' + req.headers.host + '/auth/reset/' + token
 			}, function(err, emailHTML) {
 				done(err, emailHTML, user);
 			});
@@ -103,10 +103,10 @@ exports.validateResetToken = function(req, res) {
 		}
 	}, function(err, user) {
 		if (!user) {
-			return res.redirect('/#!/auth/reset/invalid');
+			return res.redirect('/#!/password/reset/invalid');
 		}
 
-		res.redirect('/#!/auth/reset/' + req.params.token);
+		res.redirect('/#!/password/reset/' + req.params.token);
 	});
 };
 

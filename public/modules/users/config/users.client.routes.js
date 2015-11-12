@@ -78,19 +78,19 @@ angular.module('users').config(['$stateProvider',
 		}).
 
 		state('forgot', {
-			url: '/auth/forgot',
+			url: '/password/forgot',
 			templateUrl: 'modules/users/views/password/forgot-password.client.view.html'
 		}).
 		state('reset-invalid', {
-			url: '/auth/reset/invalid',
+			url: '/password/reset/invalid',
 			templateUrl: 'modules/users/views/password/reset-password-invalid.client.view.html'
 		}).
 		state('reset-success', {
-			url: '/auth/reset/success',
+			url: '/password/reset/success',
 			templateUrl: 'modules/users/views/password/reset-password-success.client.view.html'
 		}).
 		state('reset', {
-			url: '/auth/reset/:token',
+			url: '/password/reset/:token',
 			templateUrl: 'modules/users/views/password/reset-password.client.view.html'
 		});
 	}
