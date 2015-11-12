@@ -36,7 +36,7 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.isAuthenticated()">
-				<li class="dropdown" dropdown>
+				<li class="dropdown" uib-dropdown>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" dropdown-toggle>
 						<span>My Settings</span> 
 						<b class="caret"></b>
@@ -45,17 +45,17 @@
 						<li>
 							<a href="/#!/settings/profile">Edit Profile</a>
 						</li>
+						<li class="divider"></li>
 						<li>
 							<a href="/#!/settings/password">Change Password</a>
 						</li>
 						<li data-ng-show="authentication.isAuthenticated().provider === 'local'">
 							<a href="/#!/settings/password">Change Password</a>
 						</li>
-						<li class="divider"></li>
-						<li>
-							<a ng-click="signout()">Signout</a>
-						</li>
 					</ul>
+				</li>
+				<li ng-click="signout()">
+					<a>Signout</a>
 				</li>
 			</ul>
 		</nav>

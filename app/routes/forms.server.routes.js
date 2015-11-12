@@ -38,7 +38,7 @@ module.exports = function(app) {
 		.delete(users.requiresLogin, forms.hasAuthorization, forms.delete);
 
 	app.route('/forms/:formId([a-zA-Z0-9]+)/submissions')
-		.get(users.requiresLogin, forms.hasAuthorization, forms.listSubmissions)
+		.get(forms.listSubmissions)
 		.delete(users.requiresLogin, forms.hasAuthorization, forms.deleteSubmissions);
 
 	// Finish by binding the form middleware

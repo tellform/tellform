@@ -1,7 +1,7 @@
 <div class="field row" ng-click="setActiveField(field._id, index)">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}"><h3><span class="fa fa-angle-double-right"></span> {{field.title}} <span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span></h3></div>
     <div class="col-xs-12 field-input">
-        <textarea type="text" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  value="{{field.fieldValue}}" ng-required="field.required" ng-disabled="field.disabled"></textarea>
+        <textarea class="textarea" type="text" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"  value="{{field.fieldValue}}" ng-required="field.required" ng-disabled="field.disabled"></textarea>
        
     </div>
 </div>

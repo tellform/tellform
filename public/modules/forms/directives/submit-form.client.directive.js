@@ -21,7 +21,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
 
                     $scope.submitted = false;
 
-                    TimeCounter.startClock()
+                    TimeCounter.startClock();
 
                     $scope.exitStartPage = function(){
                         $scope.myform.startPage.showStart = false;
@@ -34,12 +34,14 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                         if($scope.selected.index < $scope.myform.form_fields.length-1){
                             $scope.selected.index++;
                             $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
+                            $scope.setActiveField($scope.selected._id, $scope.selected.index);
                         }
                     };
                     $scope.prevField = function(){
                         if($scope.selected.index > 0){
                             $scope.selected.index = $scope.selected.index - 1;
                             $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
+                            $scope.setActiveField($scope.selected._id, $scope.selected.index);
                         }
                     };
 

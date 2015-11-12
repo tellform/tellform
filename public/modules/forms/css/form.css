@@ -422,10 +422,10 @@ section > section.public-form {
     z-index: 11;
     position: relative;
     display: inline-block;
-    background-color: white;
+    background-color: transparent;
     border-radius: 7px;
     width:100%;
-    border: 25px white solid;
+    border: 25px transparent solid;
 }
 
 
