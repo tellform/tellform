@@ -8,14 +8,13 @@
     	</h3>
     </div>
     <div class="col-xs-12 field-input">
-		<input ng-focus="setActiveField(field._id, index)" ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
+		<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
 			type="text" 
 			class="text-field-input" 
 			ng-model="field.fieldValue" 
 			ng-model-options="{ debounce: 250 }"  
 			value="field.fieldValue" 
 			ng-required="field.required"
-			ng-disabled="field.disabled" 
-			changeFocus focus-up-id="focusUpButton" focus-down-id="focusDownButton">
+			ng-disabled="field.disabled">
     </div>
 </div>

@@ -23,13 +23,31 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
 
                     TimeCounter.startClock();
 
-                    $scope.exitStartPage = function(){
-                        $scope.myform.startPage.showStart = false;
-                        if($scope.myform.form_fields.length > 0){ 
-                            $scope.selected._id = $scope.myform.form_fields[0]._id;
+
+                    /*
+                    ** Field Controls
+                    */
+                    $scope.setActiveField = function(field_id, field_index) {
+                        if($scope.selected === null){
+                            $scope.selected = {
+                                _id: '',
+                                index: 0,
+                            };
                         }
+                        // console.log('field_id: '+field_id);
+                        // console.log('field_index: '+field_index);
+                        // console.log($scope.selected);
+
+                        $scope.selected._id = field_id;
+                        $scope.selected.index = field_index;
+                        setTimeout(function() {
+                            $('html, body').animate({
+                                scrollTop: $('.activeField').offset().top
+                            },350);
+                        }, 10);
                     };
 
+                    
                     $scope.nextField = function(){
                         if($scope.selected.index < $scope.myform.form_fields.length-1){
                             $scope.selected.index++;
@@ -44,25 +62,22 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                             $scope.setActiveField($scope.selected._id, $scope.selected.index);
                         }
                     };
-
-                    $rootScope.setActiveField = function(field_id, field_index) {
-                        if($scope.selected === null){
-                            $scope.selected = {
-                                _id: '',
-                                index: 0,
-                            };
-                        }
-                        console.log('field_id: '+field_id);
-                        console.log('field_index: '+field_index);
-                        console.log($scope.selected);
-                        $scope.selected._id = field_id;
-                        $scope.selected.index = field_index;
-                    };
+                    
                     $scope.hideOverlay = function(){
                         $scope.selected = {
                             _id: '',
                             index: null,
                         };
+                    };
+
+                    /*
+                    ** Form Display Functions
+                    */
+                    $scope.exitStartPage = function(){
+                        $scope.myform.startPage.showStart = false;
+                        if($scope.myform.form_fields.length > 0){ 
+                            $scope.selected._id = $scope.myform.form_fields[0]._id;
+                        }
                     };
 
                     $scope.submitForm = function(){

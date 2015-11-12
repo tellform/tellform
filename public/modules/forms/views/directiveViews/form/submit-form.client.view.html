@@ -2,6 +2,7 @@
 
 <section class="overlay submitform" ng-if="selected.index" ng-click="hideOverlay()"></section>
 
+<!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted">
     <div class="field row text-center">
         <div class="col-xs-12 text-center">
@@ -21,14 +22,13 @@
         </p>
     </div>
     <div class="row form-actions">
-        <!-- <p class="col-sm-2 col-sm-offset-5"> -->
             <button ng-click="exitStartPage()" class="btn btn-info col-sm-4 col-sm-offset-4" type="button">
                 <a style="color:white; font-size: 1.6em; text-decoration: none;">Continue to Form</a>
             </button>
-        <!-- </p> -->
     </div>
 </div>
 
+<!-- Form Fields View -->
 <div ng-show="!myform.submitted && !myform.startPage.showStart" data-ng-init="initFocus()">
     <div class="field row" style="padding-bottom:5em;">
         <div class="col-sm-10 col-sm-offset-1">
@@ -38,8 +38,8 @@
     </div>
     <div class="row">
         <form name="myForm" class="submission-form col-sm-12 col-md-offset-1 col-md-10">
-                <div ng-repeat="field in myform.form_fields"  ng-if="!field.deletePreserved" ng-class="{activeField: selected._id == field._id }" class="row field-directive">
-                    <field-directive field="field" design="myform.design" index="$index" focus-on="selected._id == field._id">
+                <div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
+                    <field-directive field="field" design="myform.design" index="$index" ng-class="{activeField: selected._id == field._id }" class="row field-directive">
                     </field-directive>
                 </div>
         </form>
@@ -79,6 +79,7 @@
     </section>
 </div>
 
+<!-- End Page View -->
 <div ng-show="myform.submitted" class="form-submitted">
 
     <div class="field row text-center">

@@ -60,7 +60,6 @@ var FormSchema = new Schema({
 		type: String,
 		default: '',
 	},
-	// form_fields: [Field],
 	form_fields: {
 		type: [FieldSchema],
 	},

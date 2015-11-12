@@ -58,7 +58,6 @@ var FormSubmissionSchema = new Schema({
 	form_fields: {
 		type: [Schema.Types.Mixed],
 	},
-	// form_fields: [Field],
 
 	form: { 
 		type: Schema.Types.ObjectId, 
@@ -83,7 +82,7 @@ var FormSubmissionSchema = new Schema({
 		type: Schema.Types.Mixed,
 	},
 
-	timeElapsed: { //time (in seconds) it took for user to submit form
+	timeElapsed: { 
 		type: Number,
 	}, 
 	percentageComplete: {
@@ -149,14 +148,14 @@ FormSubmissionSchema.pre('save', function (next) {
 	 					_generatedDemo[propertyName] = currField.fieldValue+'';
 	 				}else if(propertyName === 'DOB'){
  						var date = new Date(currField.fieldValue);
- 						_generatedDemo['dateOfBirth'] = date.getDate()+'';
- 						_generatedDemo['yearOfBirth'] = date.getFullYear()+'';
- 						_generatedDemo['monthOfBirth'] = date.getMonth()+'';			
+ 						_generatedDemo.dateOfBirth = date.getDate()+'';
+ 						_generatedDemo.yearOfBirth = date.getFullYear()+'';
+ 						_generatedDemo.monthOfBirth = date.getMonth()+'';			
 	 				}
 	 			}
 	 			var currDate = new Date();
 	 			var dateString = currDate.toISOString().split('T')[0] + ' ' + currDate.toISOString().split('T')[1].slice(0,8);
-	 			_generatedDemo['lastUpdateDate'] = currDate.toISOString();
+	 			_generatedDemo.lastUpdateDate = currDate.toISOString();
 	 			return _generatedDemo;
 	 		};
 	 		
