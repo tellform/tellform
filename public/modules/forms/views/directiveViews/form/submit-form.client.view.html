@@ -1,6 +1,4 @@
-<div cg-busy="{promise:submitPromise,message:'Submitting form...',backdrop:true}"></div>
-
-<section class="overlay submitform" ng-if="selected.index" ng-click="hideOverlay()"></section>
+<section class="overlay submitform" ng-if="selected._id.length" ng-click="hideOverlay()"></section>
 
 <!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted">
@@ -29,7 +27,7 @@
 </div>
 
 <!-- Form Fields View -->
-<div ng-show="!myform.submitted && !myform.startPage.showStart" data-ng-init="initFocus()">
+<div cg-busy="{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}" ng-show="!myform.submitted && !myform.startPage.showStart">
     <div class="field row" style="padding-bottom:5em;">
         <div class="col-sm-10 col-sm-offset-1">
             <h1>{{ myform.title }} <span style="font-size:0.8em; color: #bbb;" ng-if="!myform.isLive">(private preview)</span></h1>
@@ -38,8 +36,8 @@
     </div>
     <div class="row">
         <form name="myForm" class="submission-form col-sm-12 col-md-offset-1 col-md-10">
-                <div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
-                    <field-directive field="field" design="myform.design" index="$index" ng-class="{activeField: selected._id == field._id }" class="row field-directive">
+                <div ng-repeat="field in myform.form_fields"  ng-if="!field.deletePreserved" ng-class="{activeField: selected._id == field._id }" class="row field-directive">
+                    <field-directive field="field" design="myform.design" index="$index">
                     </field-directive>
                 </div>
         </form>
@@ -57,7 +55,7 @@
         <div class="container" >
             <div class="row">
                 <div class="col-xs-4 col-xs-offset-4 col-sm-4 col-sm-offset-4 text-center col-md-3 col-md-offset-0" ng-show="!myform.submitted">
-                        <p class="lead">{{myform | formValidity}}   out of {{myform.visible_form_fields.length}} answered</p>
+                        <p class="lead">{{myform | formValidity}} out of {{myform.visible_form_fields.length}} answered</p>
                 </div>
                 <div class="hidden-xs hidden-sm col-md-6 col-md-offset-3 row">
                     <div class="col-md-4 col-md-offset-2" ng-if="!authentication.isAuthenticated()">

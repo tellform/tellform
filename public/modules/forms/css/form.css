@@ -13,16 +13,12 @@
    z-index: 1;
 }
 
-.busy-updating-wrapper .message {
-    text-align: center; 
-    font-size: 20px;
-    position: fixed; 
-    bottom: 0; 
-    right: 70px; 
-    background-color: gray; 
-    color: white; 
-    padding: 5px 15px 5px 10px; 
-    z-index: 9999;
+.busy-submitting-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 section.public-form {

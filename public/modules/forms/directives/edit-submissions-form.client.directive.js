@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields) {
+angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields', 'mySubmissions',
+    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields, mySubmissions) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html',
             restrict: 'E',
@@ -12,7 +12,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
             controller: function($scope){
                 $scope.table = {
                     masterChecker: false,
-                    rows: []
+                    rows: mySubmissions
                 };
 
                 /*
@@ -64,7 +64,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         .error(function(err){
                             console.error('Could not fetch form submissions.\nError: '+err);
                         });            
-    
                 };  
 
                 //Delete selected submissions of Form
