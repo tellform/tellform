@@ -386,7 +386,7 @@ angular.module('forms').run(['Menus',
 
 				var valid_count = fields.filter(function(field){
 					if(typeof field === 'object'){
-					    return !!(field.fieldValue);
+					    return !!(field.fieldValue) || _.isNumber(field.fieldValue);
 					}
 				}).length;
 				return valid_count - (formObj.form_fields.length - formObj.visible_form_fields.length);
@@ -450,7 +450,7 @@ angular.module('forms').config(['$stateProvider',
 			templateUrl: 'modules/forms/views/adminTabs/design.html'
 	    }).state('viewForm.analyze', {
 			url: '/analyze',
-			templateUrl: 'modules/forms/views/adminTabs/analyze.html'
+			templateUrl: 'modules/forms/views/adminTabs/analyze.html',
 	    }).state('viewForm.create', {
 			url: '/create',
 			templateUrl: 'modules/forms/views/adminTabs/create.html'
@@ -515,7 +515,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         ** DeleteModal Functions 
         */
         $scope.openDeleteModal = function(){
-            console.log('hello');
             $scope.deleteModal = $uibModal.open({
               animation: $scope.animationsEnabled,
               templateUrl: 'myModalContent.html',
@@ -842,8 +841,8 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields', 'CurrentForm',
-    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields, CurrentForm) {
+angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', 'CurrentForm',
+    function ($rootScope, $http, Upload, CurrentForm) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/configure-form.client.view.html',
             restrict: 'E',
@@ -894,7 +893,6 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                     console.log(files)
 
                     if (files && files.length) {
-                        // for (var i = 0; i < files.length; i++) {
                         var file = files[0];
                         console.log(file);
 
@@ -937,8 +935,8 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
 ]);
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $q, $http, $timeout, TimeCounter, Auth, FormFields) {
+angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields',
+    function ($rootScope, FormFields) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
@@ -1139,8 +1137,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$ht
 ]);
 'use strict';
 
-angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields) {
+angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http',
+    function ($rootScope, $http) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html',
             restrict: 'E',
@@ -1187,12 +1185,18 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             var _tmpSubFormFields,
                                 defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
+                            // console.log('before textField2: '+data[0].form_fields[1].fieldValue);
+                            
                             //Iterate through form's submissions
                             for(var i=0; i<data.length; i++){
-                                _tmpSubFormFields = _.merge(defaultFormFields, data[i].form_fields);
-                                data[i].form_fields = _tmpSubFormFields;
+                                for(var x=0; x<data[i].form_fields; x++){
+                                    oldValue = data[i].form_fields[x].fieldValue || '';
+                                    data[i].form_fields[x] =  _.merge(defaultFormFields, data[i].form_fields);
+                                    data[i].form_fields[x].fieldValue = oldValue;
+                                }
                                 data[i].selected = false;
                             }
+                            // console.log('after textField2: '+data[0].form_fields[1].fieldValue);
 
                             $scope.table.rows = data;
 
@@ -1203,7 +1207,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         .error(function(err){
                             console.error('Could not fetch form submissions.\nError: '+err);
                         });            
-    
                 };  
 
                 //Delete selected submissions of Form
@@ -1254,7 +1257,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 ]);
 'use strict';
 
-angular.module('forms').directive('fieldIconDirective', ["$http", "$compile", function($http, $compile) {
+angular.module('forms').directive('fieldIconDirective', function() {
     
     return {
         template: '<i class="{{typeIcon}}"></i>',
@@ -1283,9 +1286,8 @@ angular.module('forms').directive('fieldIconDirective', ["$http", "$compile", fu
 			};
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
         }],
-
     };
-}]);
+});
 'use strict';
 
 // coffeescript's for in loop
@@ -1296,8 +1298,8 @@ var __indexOf = [].indexOf || function(item) {
     return -1;
 };
 
-angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', '$compile', '$rootScope', 
-    function($templateCache, $http, $compile, $rootScope) {
+angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', 
+    function($http, $compile, $rootScope) {
 
     
     var getTemplateUrl = function(field) {
@@ -1361,35 +1363,6 @@ angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', 
 }]);
 'use strict';
 
-angular.module('forms').directive('focusOn',function() {
-    return {
-        restrict : 'A', 
-        link : function($scope, $element, $attr) {
-            $scope.$watch($attr.focusOn,function(focusVal) {
-                if(focusVal === true) {
-                    setTimeout(function() {
-                        var $input_element;
-
-                        if($element[0].querySelector('input')){
-                            $input_element = $element[0].querySelector('input');
-                        }else if($element[0].querySelector('select')){
-                            $input_element = $element[0].querySelector('select');
-                        }else if($element[0].querySelector('textarea')){
-                            $input_element = $element[0].querySelector('textarea');
-                        }else if($element[0].querySelector('.angular-input-stars')){
-                            $input_element = $element[0].querySelector('.angular-input-stars');
-                        }else{
-                            return;
-                        }
-                        $input_element.focus();
-                    },50);
-                }
-            });
-        }
-    }
-})
-'use strict';
-
 angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
     return {
         restrict: 'A',
@@ -1404,16 +1377,12 @@ angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", f
 
             if(scope.$first && !scope.$last) {
                 scope.$evalAsync(function () {
-                    // console.log(Date.now());
                     $rootScope.$broadcast(broadcastMessage+' Started');
                 });
             }else if(scope.$last) {
             	scope.$evalAsync(function () {
-                    // element.ready(function () {
-                        console.log(broadcastMessage+'Finished');
-                        // console.log(Date.now());
-                	    $rootScope.$broadcast(broadcastMessage+' Finished');
-                    // });
+                    // console.log(broadcastMessage+'Finished');
+            	    $rootScope.$broadcast(broadcastMessage+' Finished');
                 });
             }
         }
@@ -1422,10 +1391,10 @@ angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", f
 
 'use strict';
 
-angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', 'TimeCounter', 'Auth', '$filter', '$rootScope',
-    function ($http, $timeout, TimeCounter, Auth, $filter, $rootScope) {
+angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'Auth',
+    function ($http, TimeCounter, $filter, $rootScope, Auth) {
         return {
-            templateUrl: 'modules/forms/views/directiveViews/form/submit-form.client.view.html',
+            templateUrl: 'modules/forms/views/directiveViews/form/submit-form.client.view.html',    
             restrict: 'E',
             scope: {
                 myform:'='
@@ -1443,28 +1412,12 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
 
                     $scope.submitted = false;
 
-                    TimeCounter.startClock()
+                    TimeCounter.startClock();
 
-                    $scope.exitStartPage = function(){
-                        $scope.myform.startPage.showStart = false;
-                        if($scope.myform.form_fields.length > 0){ 
-                            $scope.selected._id = $scope.myform.form_fields[0]._id;
-                        }
-                    };
 
-                    $scope.nextField = function(){
-                        if($scope.selected.index < $scope.myform.form_fields.length-1){
-                            $scope.selected.index++;
-                            $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
-                        }
-                    };
-                    $scope.prevField = function(){
-                        if($scope.selected.index > 0){
-                            $scope.selected.index = $scope.selected.index - 1;
-                            $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
-                        }
-                    };
-
+                    /*
+                    ** Field Controls
+                    */
                     $rootScope.setActiveField = function(field_id, field_index) {
                         if($scope.selected === null){
                             $scope.selected = {
@@ -1475,14 +1428,46 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', '
                         console.log('field_id: '+field_id);
                         console.log('field_index: '+field_index);
                         console.log($scope.selected);
+
                         $scope.selected._id = field_id;
                         $scope.selected.index = field_index;
+                        setTimeout(function() {
+                            $('html, body').animate({
+                                scrollTop: $('.activeField').offset().top
+                            },200);
+                        }, 10);
                     };
+
+                    $scope.nextField = function(){
+                        if($scope.selected.index < $scope.myform.form_fields.length-1){
+                            $scope.selected.index++;
+                            $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
+                            $rootScope.setActiveField($scope.selected._id, $scope.selected.index);
+                        }
+                    };
+                    $scope.prevField = function(){
+                        if($scope.selected.index > 0){
+                            $scope.selected.index = $scope.selected.index - 1;
+                            $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
+                            $rootScope.setActiveField($scope.selected._id, $scope.selected.index);
+                        }
+                    };
+                    
                     $scope.hideOverlay = function(){
                         $scope.selected = {
                             _id: '',
                             index: null,
                         };
+                    };
+
+                    /*
+                    ** Form Display Functions
+                    */
+                    $scope.exitStartPage = function(){
+                        $scope.myform.startPage.showStart = false;
+                        if($scope.myform.form_fields.length > 0){ 
+                            $scope.selected._id = $scope.myform.form_fields[0]._id;
+                        }
                     };
 
                     $scope.submitForm = function(){
