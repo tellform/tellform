@@ -81,11 +81,23 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
+      validateResetToken: function(token) {
+
+        var deferred = $q.defer();
+        $http.get('/auth/password/'+token).success(function(response) {
+          deferred.resolve(response);
+        }).error(function(error) {
+          deferred.reject(error.message || error);
+        });
+
+        return deferred.promise;
+      },
+
       resetPassword: function(passwordDetails, token) {
 
         var deferred = $q.defer();
-        $http.get('/auth/password/'+token, passwordDetails).success(function(response) {
-          deferred.resolve();
+        $http.post('/auth/password/'+token, passwordDetails).success(function(response) {
+          deferred.resolve(response);
         }).error(function(error) {
           deferred.reject(error.message || error);
         });

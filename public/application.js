@@ -36,7 +36,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 	        console.log('toState: '+toState.name);
 
 	        //Redirect to listForms if user is authenticated
-        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
+        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success' || toState.name.slice(0,5) === 'reset' || toState.name === 'forgot'){
         		if(Auth.isAuthenticated()){
         			event.preventDefault(); // stop current execution
         			$state.go('listForms'); // go to listForms page

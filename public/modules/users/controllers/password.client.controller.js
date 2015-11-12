@@ -23,6 +23,7 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 			$scope.success = $scope.error = null;
 			User.resetPassword($scope.passwordDetails, $stateParams.token).then(
 				function(response){
+					console.log(response);
 					// If successful show success message and clear form
 					$scope.success = response.message;
 					$scope.passwordDetails = null;
@@ -31,6 +32,7 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 					$state.go('reset-success');
 				},
 				function(error){
+					console.error(error);
 					$scope.error = error.message || error;
 					$scope.passwordDetails = null;
 				}
