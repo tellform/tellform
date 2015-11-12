@@ -8,8 +8,8 @@ var __indexOf = [].indexOf || function(item) {
     return -1;
 };
 
-angular.module('forms').directive('fieldDirective', ['$templateCache', '$http', '$compile', '$rootScope', 
-    function($templateCache, $http, $compile, $rootScope) {
+angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', 
+    function($http, $compile, $rootScope) {
 
     
     var getTemplateUrl = function(field) {

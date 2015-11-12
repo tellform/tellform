@@ -205,13 +205,13 @@ FormSubmissionSchema.pre('save', function (next) {
 
 //Check for IP Address of submitting person 
 FormSubmissionSchema.pre('save', function (next){
-	var that = this;
+	var self = this;
 	if(this.ipAddr){
 		if(this.isModified('ipAddr')){
 			satelize.satelize({ip: this.ipAddr}, function(err, geoData){
 				if (err) next( new Error(err.message) );
 
-				that.geoLocation = JSON.parse(geoData);
+				self.geoLocation = JSON.parse(geoData);
 				next();
 			});
 		}
@@ -222,23 +222,23 @@ FormSubmissionSchema.pre('save', function (next){
 //Generate autofilled PDF if flags are set 
 FormSubmissionSchema.pre('save', function (next) {
 	var fdfData, dest_filename, dest_path,
-		that = this,
+		self = this,
 		_form = this.form;
 	
 
 	if(this.pdf && this.pdf.path){
-		dest_filename = that.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';
+		dest_filename = self.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';
 		var __path = this.pdf.path.split('/').slice(0,this.pdf.path.split('/').length-1).join('/');
 		dest_path = path.join(__path, dest_filename);
 
-		that.pdfFilePath = dest_path;
+		self.pdfFilePath = dest_path;
 
-		pdfFiller.fillForm(that.pdf.path, dest_path, that.fdfData, function(err){
+		pdfFiller.fillForm(self.pdf.path, dest_path, self.fdfData, function(err){
 			if(err) {
 				console.log('\n err.message: '+err.message);
 				next( new Error(err.message) );
 			}
-			console.log('Field data from Form: '+that.title.replace(/ /g,'')+' outputed to new PDF: '+dest_path);
+			console.log('Field data from Form: '+self.title.replace(/ /g,'')+' outputed to new PDF: '+dest_path);
 			next();
 		});
 	} else {

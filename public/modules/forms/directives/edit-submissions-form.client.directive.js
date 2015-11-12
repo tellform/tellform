@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields) {
+angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http',
+    function ($rootScope, $http) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html',
             restrict: 'E',
@@ -48,13 +48,18 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             var _tmpSubFormFields,
                                 defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
+                            // console.log('before textField2: '+data[0].form_fields[1].fieldValue);
+                            
                             //Iterate through form's submissions
                             for(var i=0; i<data.length; i++){
-                                _tmpSubFormFields = _.merge(defaultFormFields, data[i].form_fields);
-                                data[i].form_fields = _tmpSubFormFields;
+                                for(var x=0; x<data[i].form_fields; x++){
+                                    oldValue = data[i].form_fields[x].fieldValue || '';
+                                    data[i].form_fields[x] =  _.merge(defaultFormFields, data[i].form_fields);
+                                    data[i].form_fields[x].fieldValue = oldValue;
+                                }
                                 data[i].selected = false;
                             }
-                            console.log(data);
+                            // console.log('after textField2: '+data[0].form_fields[1].fieldValue);
 
                             $scope.table.rows = data;
 

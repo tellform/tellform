@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('forms').directive('fieldIconDirective', function($http, $compile) {
+angular.module('forms').directive('fieldIconDirective', function() {
     
     return {
         template: '<i class="{{typeIcon}}"></i>',
@@ -29,6 +29,5 @@ angular.module('forms').directive('fieldIconDirective', function($http, $compile
 			};
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
         },
-
     };
 });

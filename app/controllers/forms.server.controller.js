@@ -146,7 +146,6 @@ exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 	var _user = req.user;
 	console.log('listSubmissions');
-	// console.log(_form);
 
 	FormSubmission.find({ form: _form._id }).exec(function(err, _submissions) {
 		if (err) {

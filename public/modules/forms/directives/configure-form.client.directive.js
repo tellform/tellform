@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', '$timeout', 'TimeCounter', 'Auth', 'FormFields', 'CurrentForm',
-    function ($rootScope, $http, Upload, $timeout, TimeCounter, Auth, FormFields, CurrentForm) {
+angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', 'CurrentForm',
+    function ($rootScope, $http, Upload, CurrentForm) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/configure-form.client.view.html',
             restrict: 'E',
@@ -52,7 +52,6 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                     console.log(files)
 
                     if (files && files.length) {
-                        // for (var i = 0; i < files.length; i++) {
                         var file = files[0];
                         console.log(file);
 

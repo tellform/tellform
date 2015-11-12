@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('forms').directive('submitFormDirective', ['$http', '$timeout', 'TimeCounter', 'Auth', '$filter', '$rootScope',
-    function ($http, $timeout, TimeCounter, Auth, $filter, $rootScope) {
+angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'Auth',
+    function ($http, TimeCounter, $filter, $rootScope, Auth) {
         return {
-            templateUrl: 'modules/forms/views/directiveViews/form/submit-form.client.view.html',
+            templateUrl: 'modules/forms/views/directiveViews/form/submit-form.client.view.html',    
             restrict: 'E',
             scope: {
                 myform:'='

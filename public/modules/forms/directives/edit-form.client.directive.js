@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', '$q', '$http', '$timeout', 'TimeCounter', 'Auth', 'FormFields',
-    function ($rootScope, $q, $http, $timeout, TimeCounter, Auth, FormFields) {
+angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields',
+    function ($rootScope, FormFields) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
