@@ -14,7 +14,7 @@
   },
   "engines": {
     "node": "~5.0.0",
-    "npm": "~3.3.6"
+    "npm": "~2.2.1"
   },
   "scripts": {
     "start": "grunt",
