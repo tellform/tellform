@@ -699,7 +699,7 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
 
 		if(!$scope.myform.isLive){
 			// Show navbar if form is not public AND user IS loggedin
-			if($scope.authentication.isAuthenticated() && $scope._currentUser._id === $scope.myform.admin._id){
+			if($scope.authentication.isAuthenticated()){
 				$scope.hideNav = $rootScope.hideNav = false;
 			}
 			// Redirect if  form is not public user IS NOT loggedin
