@@ -4,13 +4,13 @@
 	<div class="image-background">
 	</div>
 	<div class="jumbotron text-center">
-		<div class="row container" data-ng-if="!authentication.isAuthenticated()">
+		<div class="container" data-ng-if="!authentication.isAuthenticated()">
 			<div class="row text-center logo" style="border-bottom: 1px solid rgba(255,255,255,.2); margin-bottom: 30px;">
 				<h3 class="col-xs-12" style="color: #FA787E; margin-bottom:0px">
 					<i class="fa fa-archive fa-3x"></i>
 				</h3>
 				<h2 class="col-xs-12"  style="margin-top:0px">
-					Node<span style="color: #FA787E">Forms</span>
+					<span style="color: #FA787E">Node<span style="text-decoration: underline;">Forms</span></span>
 				</h2>
 			</div>
 			<div class="row" style="margin-top:0px">
@@ -32,8 +32,8 @@
 
 			</div>
 			
-			<div class="col-xs-12" style="margin-top:7%;">
-				<a class="btn btn-info signup-btn" href="/#!/signup" style="background-color:#FA787E; border: none; font-size: 2em; padding: 0.3em 0.9em; color: white;">
+			<div class="row" style="margin-top:7%;">
+				<a class="col-xs-4 col-xs-offset-4 btn btn-info signup-btn" href="/#!/signup" style="background-color:#FA787E; border: none; font-size: 2em; padding: 0.3em 0.9em; color: white;">
 					sign me up!
 				</a>
 			</div>

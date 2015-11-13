@@ -54,6 +54,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         if(!err){
                             console.log('\n\nForm data persisted -- setting pristine flag');
                             $formCtrl.$setPristine(); 
+                            $formCtrl.$setUntouched(); 
                         }else{
                             console.error('Error form data NOT persisted');
                             console.error(err);
@@ -63,11 +64,13 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                 //Update/Save Form if any Form fields are Dirty and Touched
                 $scope.$watch(function(newValue, oldValue) {
-                    // console.log($scope);
-                    // console.log($scope.editForm);
+                    console.log('introParagraphStartPage.$dirty: '+$scope.editForm.introParagraphStartPage.$dirty);
+                    console.log('introParagraphStartPage.$touched: '+$scope.editForm.introParagraphStartPage.$touched);
                     if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-                        // console.log('Form saving started');
+                        console.log('Form saving started');
                         debounceSave();
+                        console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
+
                     }
                 });
 

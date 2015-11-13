@@ -28,9 +28,9 @@
 			admin: 'ed873933b1f1dea0ce12fab9',
 			language: 'english',
 			form_fields: [
-				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false, _id:'56340745f59a6fc9e22028e9'},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false, _id:'56e90745f5934fc9e22028a6'}
 			],
 			_id: '525a8422f6d0f87f0e407a33'
 		};
@@ -40,14 +40,14 @@
 			admin: 'ed873933b1f1dea0ce12fab9',
 			language: 'english',
 			form_fields: [
-				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false, _id:'56340745f59a6fc9e22028e9'},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false, _id:'56e90745f5934fc9e22028a6'}
 			],
 			visible_form_fields: [
-				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false, _id:'56340745f59a6fc9e22028e9'},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false, _id:'56e90745f5934fc9e22028a6'}
 			],
 			_id: '525a8422f6d0f87f0e407a33'
 		};
@@ -160,8 +160,8 @@
 			});
 		}));
 
-		beforeEach(inject(function($modal) {
-		    spyOn($modal, 'open').and.returnValue(new fakeModal());
+		beforeEach(inject(function($uibModal) {
+		    spyOn($uibModal, 'open').and.returnValue(new fakeModal());
 		}));
 
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
@@ -262,18 +262,12 @@
 			expect( scope.deleteModal.opened ).toEqual(true);
 		});
 
-		it('$scope.cancelDeleteModal() should close scope.deleteModal', inject(function($modal) {
+		it('$scope.cancelDeleteModal() should close $scope.deleteModal', inject(function($uibModal) {
 			var controller = createAdminFormController();
 
 			//Run controller functionality
 			scope.openDeleteModal();
 			console.log(scope.deleteModal.opened);
-
-			scope.deleteModal.result(function(selectedItem){
-				this.selected = selectedItem;
-			}, function(type){
-				this.canceled = true;
-			});
 
 			//Run controller functionality
 			scope.cancelDeleteModal();

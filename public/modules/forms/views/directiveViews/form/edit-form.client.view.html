@@ -99,8 +99,7 @@
                                 <div class="col-md-8 col-sm-12">
                                     <textarea type="text"
                                     ng-model="myform.startPage.introParagraph" 
-                                    name="introParagraphStartPage" 
-                                    value="{{myform.startPage.introParagraph}}"/>
+                                    name="introParagraphStartPage"/>
                                 </div>
                             </div>
 
@@ -109,7 +108,7 @@
                             <div class="row options buttons">
                                 <div class="col-md-3 col-xs-12">Buttons:</div>
                                 <div class="col-md-9 col-xs-12">
-                                    <div ng-repeat="button in myform.startPage.buttons" class="row" style="padding-bottom:1em;">
+                                    <div ng-repeat="button in myform.startPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
 
                                         <div class="col-xs-5">
                                             <span>Text</span>
@@ -215,7 +214,7 @@
                             <div class="row options" ng-show="showAddOptions(field)">
                                 <div class="col-md-4 col-xs-12">Options:</div>
                                 <div class="col-md-8 col-xs-12">
-                                    <div ng-repeat="option in field.fieldOptions" class="row">
+                                    <div ng-repeat="option in field.fieldOptions track by option.option_id" class="row">
                                         <input type="text" name="{{option.option_value}}{{field._id}}" ng-model="option.option_value" class="col-xs-5">
 
                                         <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
