@@ -1,6 +1,8 @@
 NodeForms
 --------
 
+Current stable release: v1.2.0
+
 [![Build Status](https://travis-ci.org/whitef0x0/nodeforms.svg?branch=master)](https://travis-ci.org/whitef0x0/nodeforms)
 [![Dependencies Status](https://david-dm.org/whitef0x0/NodeForms.svg)](https://david-dm.org/whitef0x0/nodeforms)
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
