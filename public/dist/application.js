@@ -386,8 +386,12 @@ angular.module('forms').run(['Menus',
 
 				var valid_count = fields.filter(function(field){
 					if(typeof field === 'object'){
-					    return !!(field.fieldValue) || _.isNumber(field.fieldValue);
+						if(field.fieldType === 'rating' || field.fieldType === 'statement'){
+							return true;
+						}
+					    return !!(field.fieldValue);
 					}
+
 				}).length;
 				return valid_count - (formObj.form_fields.length - formObj.visible_form_fields.length);
 			}
@@ -569,9 +573,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                 continueUpdate = !$rootScope.saveInProgress;
             }
             
-            //Update form if we **are not currently updating** or if **shouldUpdateNow flag is set**
+            //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
             if(continueUpdate){
-                // console.log('begin updating form');
                 var err = null;
 
                 if(!updateImmediately){ $rootScope.saveInProgress = true; }
@@ -696,7 +699,7 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
 
 		if(!$scope.myform.isLive){
 			// Show navbar if form is not public AND user IS loggedin
-			if($scope.authentication.isAuthenticated() && $scope.currentUser()._id === $scpoe.myform.admin._id){
+			if($scope.authentication.isAuthenticated() && $scope._currentUser._id === $scope.myform.admin._id){
 				$scope.hideNav = $rootScope.hideNav = false;
 			}
 			// Redirect if  form is not public user IS NOT loggedin
@@ -1045,7 +1048,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 };
                 $scope.duplicateField = function (field_index){
                     var currField = _.cloneDeep($scope.myform.form_fields[field_index]);  
-                    currField._id = '';
+                    currField._id = 'cloned'+_.uniqueId();
+                    currField.title += ' copy';
 
                     //Insert field at selected index
                     $scope.myform.form_fields.splice(field_index+1, 0, currField);
