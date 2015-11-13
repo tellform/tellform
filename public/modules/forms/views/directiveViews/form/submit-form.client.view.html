@@ -2,11 +2,11 @@
 
 <!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted">
-    <div class="field row text-center">
-        <div class="col-xs-12 text-center">
+    <div class="field row">
+        <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
             <h1>{{myform.startPage.introTitle}}</h1>
         </div>
-        <div class="col-xs-10 col-xs-offset-1 text-left">
+        <div class="col-xs-10 col-xs-offset-1 text-left" style="overflow-wrap: break-word;">
             <p style="color:#ddd;">{{myform.startPage.introParagraph}}</p>
         </div>
     </div>
@@ -20,9 +20,11 @@
         </p>
     </div>
     <div class="row form-actions">
-            <button ng-click="exitStartPage()" class="btn btn-info col-sm-4 col-sm-offset-4" type="button">
-                <a style="color:white; font-size: 1.6em; text-decoration: none;">Continue to Form</a>
-            </button>
+        <button ng-click="exitStartPage()" class="btn btn-info col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4" type="button">
+            <a style="color:white; font-size: 1.6em; text-decoration: none;">
+                Continue to Form
+            </a>
+        </button>
     </div>
 </div>
 
