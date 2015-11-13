@@ -71,6 +71,14 @@ var FormSubmissionSchema = new Schema({
 	geoLocation: {
 		type: Schema.Types.Mixed,
 	},
+	device: {
+		type: {
+			type: String,
+		},
+		name: {
+			type: String,
+		}
+	},
 
 	pdfFilePath: {
 		type: Schema.Types.Mixed,

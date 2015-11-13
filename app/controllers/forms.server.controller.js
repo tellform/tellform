@@ -115,6 +115,10 @@ exports.createSubmission = function(req, res) {
 		if(ip && process.env.NODE_ENV !== 'development') submission.ipAddr = ip;
 	}
 
+	if(req.device){
+		submission.device = req.device;
+	}
+
 	if(form.autofillPDFs){
 		try {
 			submission.fdfData = pdfFiller.convFieldJson2FDF(submission.form_fields);

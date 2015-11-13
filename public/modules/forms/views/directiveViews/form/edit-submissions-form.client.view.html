@@ -44,7 +44,10 @@
 						Time Elapsed
 					</th>
 					<th>
-						Geolacation
+						Device 
+					</th>
+					<th>
+						Location
 					</th>
 					<th>
 						IP Address
@@ -81,7 +84,10 @@
 						{{row.timeElapsed}}
 					</td>
 					<td>
-						{{row.geoLocation}}
+						{{row.device.name}}, {{row.device.type}}
+					</td>
+					<td>
+						{{row.geoLocation.city}}, {{row.geoLocation.country}}
 					</td>
 					<td>
 						{{row.ipAddr}}

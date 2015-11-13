@@ -14,7 +14,7 @@
   },
   "engines": {
     "node": "~5.0.0",
-    "npm": "~2.11.2"
+    "npm": "~3.3.6"
   },
   "scripts": {
     "start": "grunt",
@@ -85,7 +85,9 @@
     "shortid": "^2.2.2",
     "soap": "^0.11.0",
     "swig": "~1.4.1",
-    "then-fs": "~2.0.0"
+    "then-fs": "~2.0.0",
+    "useragent": "~2.1.7",
+    "express-device" "~0.4.2"
   },
   "devDependencies": {
     "node-mandrill": "^1.0.1",

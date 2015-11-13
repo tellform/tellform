@@ -23,6 +23,7 @@ var fs = require('fs-extra'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
 	path = require('path'),
+	device = require('express-device'),
 	client = new raven.Client(config.DSN);
 
 
@@ -127,6 +128,9 @@ module.exports = function(db) {
 	// use passport session
 	app.use(passport.initialize());
 	app.use(passport.session());
+
+	// setup express-device
+	app.use(device.capture());
 
 	// connect flash for flash messages
 	app.use(flash());
