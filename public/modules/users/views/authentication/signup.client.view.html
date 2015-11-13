@@ -27,11 +27,11 @@
 				</div>
 				<div class="form-group">
 					<label for="firstName">First Name</label>
-					<input type="text" required id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
+					<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
 				</div>
 				<div class="form-group">
 					<label for="lastName">Last Name</label>
-					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name">
+					<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name">
 				</div>
 				<hr>
 				<div class="form-group">

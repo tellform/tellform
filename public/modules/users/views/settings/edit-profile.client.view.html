@@ -16,7 +16,7 @@
 						<b>First Name</b>
 				    </div>
 					<div class="col-xs-12 field-input">
-						<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name">
+						<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name" ng-pattern="/^[a-zA-Z0-9 \-.]*$/">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -24,7 +24,7 @@
 						<b>Last Name</b>
 				    </div>
 					<div class="col-xs-12 field-input">
-					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
+					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name" ng-pattern="/^[a-zA-Z0-9 \-.]*$/">
 					</div>
 				</div>
 				<div class="row">

@@ -1,0 +1,7 @@
+{
+  "name": "NodeForms",
+  "description": "Beautiful, opensource web forms",
+  "repository": "https://github.com/whitef0x0/nodeforms",
+  "logo": "https://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static", "mean"]
+}
