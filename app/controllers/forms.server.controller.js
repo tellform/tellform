@@ -215,6 +215,15 @@ exports.update = function(req, res) {
 	//Unless we have 'admin' priviledges, updating form admin is disabled
 	if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
 
+	//Do this so we can create duplicate fields
+	var checkForValidId = new RegExp("^[0-9a-fA-F]{24}$");
+	for(var i=0; i<req.body.form.form_fields.length; i++){
+		var field = req.body.form.form_fields[i];
+		if(!checkForValidId.exec(field._id+'')){
+			delete field._id;
+		}
+	}
+	
 	form = _.extend(form, req.body.form);
 	
 	form.save(function(err, form) {

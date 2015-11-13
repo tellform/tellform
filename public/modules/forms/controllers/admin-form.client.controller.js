@@ -110,9 +110,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                 continueUpdate = !$rootScope.saveInProgress;
             }
             
-            //Update form if we **are not currently updating** or if **shouldUpdateNow flag is set**
+            //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
             if(continueUpdate){
-                // console.log('begin updating form');
                 var err = null;
 
                 if(!updateImmediately){ $rootScope.saveInProgress = true; }

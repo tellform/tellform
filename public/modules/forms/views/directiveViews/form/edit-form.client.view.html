@@ -157,7 +157,7 @@
             <div class="col-sm-12 col-md-8 dropzoneContainer">
                 <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                    <accordion-group data-ng-repeat="field in myform.form_fields" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
+                    <accordion-group data-ng-repeat="field in myform.form_fields  track by field._id" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
 
                         <accordion-heading>
 
@@ -281,7 +281,7 @@
 
             <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">
                         <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="deleteField($index)">
                             <span class="text-center">
                                 <a href="" class="fa fa-trash-o"></a>
@@ -292,7 +292,7 @@
             </div>
             <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;">
                 <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">
                         <div class="panel-heading" style="padding: 10px 10px; height: 37px;" ng-click="duplicateField($index)">
                             <span class="text-center">
                                 <a href="" class="fa fa-files-o"></a>
@@ -304,7 +304,7 @@
 
             <div class="col-md-2 hidden-xs hidden-sm" style="padding:0 5px;" ng-if="myform.plugins.oscarhost.baseUrl">
                 <div class="panel-group text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved" style="border: none;">
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved" style="border: none;">
                     
                         <select ng-model="myform.plugins.oscarhost.settings.fieldMap[field._id]" style="height:39.2px">
                             <option value="">N/A</option>
