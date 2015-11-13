@@ -332,7 +332,7 @@ div.config-form .row.field {
 
 /* Styles for form list view (/forms) */
 section > section.public-form {
-    padding: 0 6em 7em 6em;
+    padding: 0 10% 10%;
 
 }
 .form-item {
