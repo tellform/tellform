@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	baseUrl: 'kioskform-dev.herokuapp.com',
+	baseUrl: 'dev.tellform.com',
 	db: {
 		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean',
 		options: {
@@ -19,7 +19,7 @@ module.exports = {
 		}
 	},
 	sessionCookie: {
-		domain: 'kioskform-dev.herokuapp.com'
+		domain: 'dev.tellform.com'
 	},
 	assets: {
 		// lib: {
