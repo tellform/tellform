@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	baseUrl: 'kioskform.herokuapp.com',
+	baseUrl: 'tellform.com',
 	db: {
 		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean',
 		options: {
@@ -19,7 +19,7 @@ module.exports = {
 		}
 	},
 	sessionCookie: {
-		domain: 'kioskform.herokuapp.com'
+		domain: 'tellform.com'
 	},
 	assets: {
 		// lib: {
@@ -65,7 +65,7 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'no-reply@kioskform.herokuapp.com',
+		from: process.env.MAILER_FROM || 'no-reply@tellform.com',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			auth: {

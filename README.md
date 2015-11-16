@@ -1,12 +1,14 @@
-NodeForms
+TellForm
 --------
+
+Current stable release: v1.2.1
 
 [![Build Status](https://travis-ci.org/whitef0x0/nodeforms.svg?branch=master)](https://travis-ci.org/whitef0x0/nodeforms)
 [![Dependencies Status](https://david-dm.org/whitef0x0/NodeForms.svg)](https://david-dm.org/whitef0x0/nodeforms)
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 
-NodeForms is an opensource *form builder* built ontop of nodejs that can create stunning forms from PDFs or from scratch
+TellForm is an opensource alternative to *TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
 Currently following features are implemented:
 

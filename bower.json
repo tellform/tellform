@@ -1,7 +1,7 @@
 {
-  "name": "NodeForm",
-  "description": "PDF generated form builder",
-  "version": "1.1.0",
+  "name": "TellForm",
+  "description": "Opensource alternative to TypeForm",
+  "version": "1.2.1",
   "homepage": "https://github.com/whitef0x0/NodeForms",
   "authors": [
     "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"

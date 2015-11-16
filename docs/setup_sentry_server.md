@@ -1,7 +1,7 @@
 Installing Sentry Server
 ------------------------
 
-NodeForms is an opensource *form builder* that can create stunning forms from PDFs or from scratch
+TellForm is an opensource *form builder* that can create stunning forms from PDFs or from scratch
 
 ## Before You Begin
 Make sure you understand what sentry server does. You can view documentation for sentry server [here](https://sentry.readthedocs.org/). This document was written for a server running *Ubuntu 14.04 LTS server* (we used Azure).

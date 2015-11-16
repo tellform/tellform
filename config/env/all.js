@@ -2,7 +2,7 @@
 
 module.exports = {
 	app: {
-		title: 'NodeForms',
+		title: 'TellForm',
 		description: 'Generate Forms from PDFs',
 		keywords: 'typeform, pdfs, forms, generator, form generator',
 	},

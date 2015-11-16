@@ -19,7 +19,7 @@ module.exports = {
 		}
 	},
 	app: {
-		title: 'NodeForms'
+		title: 'TellForm'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
@@ -47,7 +47,7 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'no-reply@kioskform.herokuapp.com',
+		from: process.env.MAILER_FROM || 'no-reply@tellform.com',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			auth: {
