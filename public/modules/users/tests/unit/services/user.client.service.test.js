@@ -55,44 +55,6 @@
 
 		beforeEach(module('stateMock'));
 
-		// Mock Users Service
-		// beforeEach(module(function($provide) {
-		// 	$provide.service('User', function($q) {
-		// 		return {
-		// 			getCurrent: function() {
-		// 				var deferred = $q.defer();
-		// 				deferred.resolve( JSON.stringify(sampleUser) );
-		// 				return deferred.promise;
-		// 			},
-		// 			login: function(credentials) {
-		// 				var deferred = $q.defer();
-		// 				if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
-		// 					deferred.resolve( JSON.stringify(sampleUser) );
-		// 				}else {
-		// 					deferred.resolve('Error: User could not be loggedin');
-		// 				}
-
-		// 				return deferred.promise;
-		// 			},
-		// 			logout: function() {
-		// 				var deferred = $q.defer();
-		// 				deferred.resolve(null);
-		// 				return deferred.promise;
-		// 			},
-		// 			signup: function(credentials) {
-		// 				var deferred = $q.defer();
-		// 				if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
-		// 					deferred.resolve( JSON.stringify(sampleUser) );
-		// 				}else {
-		// 					deferred.resolve('Error: User could not be signed up');
-		// 				}
-
-		// 				return deferred.promise;
-		// 			}
-		// 		};
-		// 	});
-		// }));
-
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.

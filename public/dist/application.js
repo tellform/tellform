@@ -540,6 +540,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.cancelDeleteModal = function(){
             if($scope.deleteModal){
                 $scope.deleteModal.dismiss('cancel');
+                $scope.deleteModal.result(function(selectedItem){
+                    this.selected = selectedItem;
+                }, function(type){
+                    this.canceled = true;
+                });
+
             }
         };
 
@@ -699,7 +705,7 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
 
 		if(!$scope.myform.isLive){
 			// Show navbar if form is not public AND user IS loggedin
-			if($scope.authentication.isAuthenticated() && $scope.currentUser()._id === $scpoe.myform.admin._id){
+			if($scope.authentication.isAuthenticated()){
 				$scope.hideNav = $rootScope.hideNav = false;
 			}
 			// Redirect if  form is not public user IS NOT loggedin
@@ -769,6 +775,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         if(!err){
                             console.log('\n\nForm data persisted -- setting pristine flag');
                             $formCtrl.$setPristine(); 
+                            $formCtrl.$setUntouched(); 
                         }else{
                             console.error('Error form data NOT persisted');
                             console.error(err);
@@ -778,11 +785,13 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                 //Update/Save Form if any Form fields are Dirty and Touched
                 $scope.$watch(function(newValue, oldValue) {
-                    // console.log($scope);
-                    // console.log($scope.editForm);
+                    console.log('introParagraphStartPage.$dirty: '+$scope.editForm.introParagraphStartPage.$dirty);
+                    console.log('introParagraphStartPage.$touched: '+$scope.editForm.introParagraphStartPage.$touched);
                     if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-                        // console.log('Form saving started');
+                        console.log('Form saving started');
                         debounceSave();
+                        console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
+
                     }
                 });
 

@@ -77,6 +77,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.cancelDeleteModal = function(){
             if($scope.deleteModal){
                 $scope.deleteModal.dismiss('cancel');
+                $scope.deleteModal.result(function(selectedItem){
+                    this.selected = selectedItem;
+                }, function(type){
+                    this.canceled = true;
+                });
+
             }
         };
 
