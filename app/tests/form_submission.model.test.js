@@ -29,7 +29,7 @@ var exampleDemo = {
 	officialLanguage: 'English',
 	phone: '250-222-2222',
 	phone2: '',
-	postal: "S4M 7T8",
+	postal: 'S4M 7T8',
 	province: 'BC',
 	sex: 'F',
 	sexDesc: 'Female',
@@ -37,7 +37,7 @@ var exampleDemo = {
 	spokenLanguage: 'English',
 	title: 'MS.',
 	yearOfBirth: '2015' 
-}
+};
 
 
 var sampleFormFields = [
@@ -308,6 +308,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 			User.remove().exec(function() {
 				FormSubmission.remove().exec(done);
 			});
-		})
+		});
 	});
 });

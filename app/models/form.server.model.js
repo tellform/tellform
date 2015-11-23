@@ -359,12 +359,14 @@ FormSchema.pre('save', function (next) {
 			next();
 
 		});
-	}else if(_original.hasOwnProperty('pdf')){
-		fs.remove(_original.pdf.path, function (err) {
-			if(err) next(err);
-			console.log('file at '+_original.pdf.path+' successfully deleted');
-			next();
-		});
+	}else if(_original){
+		if(_original.hasOwnProperty('pdf')){
+			fs.remove(_original.pdf.path, function (err) {
+				if(err) next(err);
+				console.log('file at '+_original.pdf.path+' successfully deleted');
+				next();
+			});
+		}
 	}
 	next();
 });

@@ -1,3 +1,4 @@
+'use strict';
 
 (function() {
     // Forms Controller Spec
@@ -17,13 +18,13 @@
         };
 
         var pdfObj = {
-            fieldname:"file",
-            originalname:"test.pdf",
-            name:"1440112660375.pdf",
-            encoding:"7bit",
-            mimetype:"application/pdf",
-            path:"uploads/tmp/test@test.com/1440112660375.pdf",
-            extension:"pdf",
+            fieldname:'file',
+            originalname:'test.pdf',
+            name:'1440112660375.pdf',
+            encoding:'7bit',
+            mimetype:'application/pdf',
+            path:'uploads/tmp/test@test.com/1440112660375.pdf',
+            extension:'pdf',
             size:56223,
             truncated:false,
             buffer:null
@@ -81,7 +82,7 @@
             tmp_scope.user = sampleUser;
 
             //gotacha: Controller and link functions will execute.
-            el = angular.element('<configure-form-directive myform="myform" user="user"></configure-form-directive>');
+            el = angular.element('<configure-form-directive myform='myform' user='user'></configure-form-directive>');
             $compile(el)(tmp_scope);
             $rootScope.$digest();
 

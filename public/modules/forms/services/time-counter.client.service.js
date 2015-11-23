@@ -25,7 +25,7 @@ angular.module('forms').service('TimeCounter', [
 
 		this.clockStarted = function(){
 			return !!this._startTime;
-		}
+		};
 
 	}
 ]);

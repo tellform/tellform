@@ -20,39 +20,42 @@ var BooleanExpressionSchema = new Schema({
 
 
 BooleanExpressionSchema.methods.evaluate = function(){
+	if(this.expressionString)
+		//Get headNode
+		var headNode = math.parse(this.expressionString);
+		var expressionScope = {};
+		var that = this;
 
-	//Get headNode
-	var headNode = math.parse(expressionString);
-	var expressionScope = {};
-	var that = this;
+		//Create scope
+		headNode.traverse(function (node, path, parent) {
+			if(node.type === 'SymbolNode'){
 
-	//Create scope
-	headNode.traverse(function (node, path, parent) {
-		if(node.type === 'SymbolNode'){
+				mongoose.model('Field')
+					.findOne({_id: node.name}).exec(function(err, field){
+						if(err) {
+							console.log(err);
+							throw new Error(err);
+						} 
 
-			mongoose.model('Field')
-				.findOne({_id: node.name}).exec(function(err, field){
-					if(err) {
-						console.log(err);
-						throw new Error(err);
-					} 
+						if(!!_.parseInt(field.fieldValue)){
+							that.expressionScope[node.name] = _.parseInt(field.fieldValue);
+						}else {
+							that.expressionScope[node.name] = field.fieldValue;						
+						}
+						console.log('_id: '+node.name);
+						console.log('value: '+that.expressionScope[node.name]);
+			    });
+			}
+		});
 
-					if(!!_.parseInt(field.fieldValue)){
-						that.expressionScope[node.name] = _.parseInt(field.fieldValue);
-					}else {
-						that.expressionScope[node.name] = field.fieldValue;						
-					}
-					console.log('_id: '+node.name);
-					console.log('value: '+that.expressionScope[node.name]);
-		    });
-		}
-	});
+		var code = headNode.compile(); 
+		var result = code.eval(expressionScope);
 
-	var code = headNode.compile(); 
-	var result = code.eval(expressionScope);
-
-	this.result = result;
-	return result;
+		this.result = result;
+		return result;
+	}else{
+		return null;
+	}
 };
 
 mongoose.model('BooleanExpression', BooleanExpressionSchema);

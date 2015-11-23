@@ -102,7 +102,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.deleteField = function (field_index){
 
                     //Delete field from field map
-                    var currFieldId = $scope.myform.form_fields[field_index]._id
+                    var currFieldId = $scope.myform.form_fields[field_index]._id;
                     if($scope.myform.hasOwnProperty('plugins.oscarhost.baseUrl')) delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
 
                     //Delete field

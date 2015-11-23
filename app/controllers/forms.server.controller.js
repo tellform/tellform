@@ -107,7 +107,7 @@ exports.createSubmission = function(req, res) {
 		percentageComplete: req.body.percentageComplete
 	});
 
-	if(!!form.plugins.oscarhost.baseUrl) submission.hasPlugins.oscarhost == true;
+	if(!!form.plugins.oscarhost.baseUrl) submission.hasPlugins.oscarhost = true;
 
 	if(form.pdf) submission.pdf = form.pdf;
 
@@ -222,7 +222,7 @@ exports.update = function(req, res) {
 	if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
 
 	//Do this so we can create duplicate fields
-	var checkForValidId = new RegExp("^[0-9a-fA-F]{24}$");
+	var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
 	for(var i=0; i<req.body.form.form_fields.length; i++){
 		var field = req.body.form.form_fields[i];
 		if(!checkForValidId.exec(field._id+'')){

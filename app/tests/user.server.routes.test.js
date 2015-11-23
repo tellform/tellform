@@ -48,10 +48,11 @@ describe('User CRUD tests', function() {
 			email: credentials.username,
 			username: credentials.username,
 			password: credentials.password,
+			provider: 'local'
 		};
 	});
 
-	describe('Create, Verify and Activate a User', function() {
+	describe(' > Create, Verify and Activate a User > ', function() {
 		var username = 'testActiveAccount1.be1e58fb@mailosaur.in';
 		var link, _tmpUser, activateToken;
 		this.timeout(15000);
@@ -124,7 +125,7 @@ describe('User CRUD tests', function() {
 				});
 		});
 	
-		it('should be able to verify a User Account', function(done) {
+		it(' > should be able to verify a User Account', function(done) {
 			console.log('activateToken: '+activateToken);
 			userSession.get('/auth/verify/'+activateToken)
 				.expect(200)
@@ -136,63 +137,36 @@ describe('User CRUD tests', function() {
 				});
 		});
 
-		// it('should receive confirmation email after verifying a User Account', function(done) {
-		// 	mailbox.getEmails(function(err, _emails) {
-		// 		if(err) throw err;
-		// 		var email = _emails[0];
+		it(' > should be able to login and logout a verified User Account', function(done) {
+			userSession.post('/auth/signin')
+				.send(credentials)
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.end(function(signinErr, signinRes) {
+					// Handle signin error
+					if (signinErr) done(signinErr);
 
-		// 		// console.log('mailbox.getEmails:');
-		// 		console.log(email);
-		// 		(email.subject).should.equal('Account successfully verified!');
-		// 		done();
-		// 	});
-		// });
+					var user = signinRes.body;
+					(user.username).should.equal(credentials.username);
+
+					userSession.get('/auth/signout')
+						.expect(200)
+						.end(function(signoutErr, signoutRes) {
+
+							// Handle signout error
+							if (signoutErr) done(signoutErr);
+
+							(signoutRes.text).should.equal('Successfully logged out');
+
+							done();
+						});
+				});
+		});
 	});
 
-	it('should be able to login and logout a User', function (done) {
-		var username = 'testActiveAccount.be1e58fb@mailosaur.in';
-		// _User.email = _User.username = credentials.username = username;
-		// Create a new user
-		var newUser = {
-			firstName: 'Full',
-			lastName: 'Name',
-			email: credentials.username,
-			username: credentials.username,
-			password: credentials.password,
-		};
-		userSession.post('/auth/signup')
-			.send(newUser)
-			.expect(200)
-			.end(function(FormSaveErr, FormSaveRes) {
-				(FormSaveRes.text).should.equal('An email has been sent to you. Please check it to verify your account.');
+	it(' > should be able to reset a User\'s password');
 
-				userSession.post('/auth/signin')
-					.send(credentials)
-					.expect('Content-Type', /json/)
-					.expect(200)
-					.end(function(signinErr, signinRes) {
-
-						// Handle signin error
-						if (signinErr) throw signinErr;
-
-						userSession.get('/auth/signout')
-							.expect(200)
-							.end(function(signoutErr, signoutRes) {
-
-								// Handle signout error
-								if (signoutErr) throw signoutErr;
-
-								(signoutRes.text).should.equal('Successfully logged out');
-
-								done();
-							});
-					});
-			});
-	});
-
-	it('should be able to reset a User\'s password');
-
-	it('should be able to delete a User account without any problems');
+	it(' > should be able to delete a User account without any problems');
 
 	afterEach(function(done) {
 		User.remove().exec(function () {

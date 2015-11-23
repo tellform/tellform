@@ -39,7 +39,7 @@ var exampleDemo = {
 	patientStatusDate: Date.now(),
 	phone: '250-',
 	phone2: '',
-	postal: "S4M 7T8",
+	postal: 'S4M 7T8',
 	providerNo: '4',
 	province: 'BC',
 	rosterStatus: '',
@@ -49,7 +49,7 @@ var exampleDemo = {
 	spokenLanguage: 'English',
 	title: 'MS.',
 	yearOfBirth: '2015' 
-}
+};
 
 /**
  * Globals

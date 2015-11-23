@@ -49,7 +49,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                 };
 
                 $scope.uploadPDF = function(files) {
-                    console.log(files)
+                    // console.log(files);
 
                     if (files && files.length) {
                         var file = files[0];

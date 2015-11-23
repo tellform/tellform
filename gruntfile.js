@@ -67,6 +67,12 @@ module.exports = function(grunt) {
 				options: {
 					jshintrc: true
 				}
+			},
+			allTests: {
+				src: watchFiles.allTests,
+				options: {
+					jshintrc: true
+				}
 			}
 		},
 		csslint: {
@@ -283,13 +289,14 @@ module.exports = function(grunt) {
 	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'concurrent:default']);
 
 	// Lint task(s).
-	grunt.registerTask('lint', ['newer:jshint', 'newer:csslint']);
+	grunt.registerTask('lint', ['jshint', 'csslint']);
+	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).
 	grunt.registerTask('build', ['lint', 'loadConfig', 'uglify', 'cssmin', 'ngAnnotate', 'html2js:main']);
 
 	// Test task.
-	grunt.registerTask('test', ['test:server', 'test:client']);
-	grunt.registerTask('test:server', ['html2js:main', 'env:test', 'mochaTest']);
-	grunt.registerTask('test:client', ['html2js:main', 'env:test', 'karma:unit']);
+	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);
+	grunt.registerTask('test:server', ['lint:tests', 'html2js:main', 'env:test', 'mochaTest']);
+	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'env:test', 'karma:unit']);
 };

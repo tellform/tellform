@@ -86,9 +86,19 @@ $ grunt test:client
 
 Currently the live example uses heroku github deployments. The Docker file is out of date and does not work. If someone wishes to get it working feel free to submit a pull request.
 
-To calculate your code coverage with Istanbul, run the coverage task
+To calculate your total test coverage with Istanbul, run the coverage task
 ```bash
 $ grunt coverage
+```
+
+To calculate your server-side test coverage with Istanbul, run the coverage task
+```bash
+$ grunt coverage:server
+```
+
+To calculate your client-side test coverage with Istanbul, run the coverage task
+```bash
+$ grunt coverage:client
 ```
 
 ## Running in a secure environment

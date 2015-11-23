@@ -37,6 +37,11 @@ module.exports = function(db) {
 		require(path.resolve(modelPath));
 	});
 
+	// Globbing routing files
+	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+		require(path.resolve(routePath))(app);
+	});
+
 	// Setting application local variables
 	app.locals.title = config.app.title;
 	app.locals.description = config.app.description;
@@ -134,11 +139,6 @@ module.exports = function(db) {
 
 	// connect flash for flash messages
 	app.use(flash());
-
-	// Globbing routing files
-	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
-		require(path.resolve(routePath))(app);
-	});
 
 	// Add headers for Sentry
 	app.use(function (req, res, next) {
