@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('stateMock',[]);
 angular.module('stateMock').service('$state', function($q){
     this.expectedTransitions = [];

@@ -82,6 +82,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			if(err){
 				console.log(err.errors);
 				done(err);
+				return;
 			} 
 			myForm = new Form({
 				title: 'Form Title1',
@@ -108,7 +109,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			myForm.save(function(err, form){
 				if(err){
 					console.log(err.errors);
-					done(err);
+					return done(err);
 				}
 
 				var submissionFields = _.clone(myForm.form_fields);
@@ -143,14 +144,14 @@ describe('FormSubmission Model Unit Tests:', function() {
 			myForm.plugins.oscarhost.settings.fieldMap = myFieldMap;
 
 			myForm.save(function(err, form){
-				if(err) done(err);
+				if(err) return done(err);
 				done();
 			});
 		});
 
 		it('should be able to save a FormSubmission without problems', function(done) {
 			return mySubmission.save(function(err, submission) {
-				if(err) done(err);
+				if(err) return done(err);
 
 				should.not.exist(err);
 				should.exist(submission);
@@ -251,7 +252,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			});	
 
 			mySubmission.save(function(err){
-				if(err) done(err);
+				if(err) return done(err);
 				done();
 			});
 			

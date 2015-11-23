@@ -20,7 +20,7 @@ var BooleanExpressionSchema = new Schema({
 
 
 BooleanExpressionSchema.methods.evaluate = function(){
-	if(this.expressionString)
+	if(this.expressionString){
 		//Get headNode
 		var headNode = math.parse(this.expressionString);
 		var expressionScope = {};

@@ -247,10 +247,13 @@ module.exports = function(grunt) {
 	});
 
 	grunt.event.on('coverage', function(lcov, done){
-	    require('coveralls').handleInput(lcov, function(err){
+	    var coveralls = require('coveralls');
+	    coveralls.handleInput(lcov, function(err){
 	        if (err) {
+	        	grunt.log.error("Failed to submit lcov file to coveralls: " + err);
 	            return done(err);
 	        }
+	        grunt.verbose.ok("Successfully submitted lcov file to coveralls");
 	        done();
 	    });
 	});

@@ -16,9 +16,9 @@
 .busy-submitting-wrapper {
     position: fixed;
     top: 50%;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 section.public-form {
@@ -61,8 +61,10 @@ section.content p.breakwords {
     background-position: right 8px center;
     border: 1px solid #ccc;
     border-radius: 3px;
-    outline: none;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+.modal-footer input[type='text']:focus {
+    outline: none;
 }
 .modal-body > .modal-body-alert {
     color: #796620;
@@ -106,7 +108,6 @@ form .row.field {
     form .row.field > .field-input {
         font-size: 1.4em;
         color: #777;
-        /*width: inherit;*/
     }
     form.submission-form .row.field.statement > .field-title {
         font-size:1.7em;
@@ -121,6 +122,7 @@ form .row.field {
         }
 
         form.submission-form .field.row.radio .btn.activeBtn {
+            background-color: rgb(0,0,0)!important;
             background-color: rgba(0,0,0,0.7)!important;
             color: white;
         }
@@ -191,6 +193,7 @@ form .row.field {
     border: 1px solid #e3e3e3;
     border-radius: 4px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
 
@@ -216,12 +219,12 @@ div.config-form .row.field {
 
 /* Styles for form admin view (/forms/:formID/admin) */
 .admin-form > .page-header {
-    padding-bottom: 0px;
+    padding-bottom: 0;
     margin-bottom: 40px;
 }
     .admin-form > .page-header h1 {
-        margin-bottom: 0px;
-        margin-top: 0px;
+        margin-bottom: 0;
+        margin-top: 0;
     }
     .admin-form > .page-header > .col-xs-3 {
         padding-top: 1.4em;
@@ -283,11 +286,11 @@ div.config-form .row.field {
 .submissions-table .table-outer.row {
     margin-top: 1.5em;
     margin-bottom: 2em;
-    margin-left: 0px!important;
-    margin-right: 0px!important;
+    margin-left: 0!important;
+    margin-right: 0!important;
 }
 .submissions-table .table-outer .col-xs-12 {
-    padding-left: 0px!important;
+    padding-left: 0!important;
     border:1px solid #ddd;
     overflow-x: scroll; 
     border-radius:3px;
@@ -402,10 +405,12 @@ section > section.public-form {
     left: 0;
     height: 100%;
     width: 100%;
+    background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.5);
     z-index: 10;
 }
 .overlay.submitform {
+    background-color: rgb(256,256,256);
     background-color: rgba(256,256,256,0.8);
 }
 .field-directive {

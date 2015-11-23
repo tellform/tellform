@@ -82,7 +82,7 @@
             tmp_scope.myform = _.cloneDeep(sampleForm);
 
             //gotacha: Controller and link functions will execute.
-            el = angular.element('<edit-form-directive myform='myform'></edit-form-directive>');
+            el = angular.element('<edit-form-directive myform=\'myform\'></edit-form-directive>');
             $compile(el)(tmp_scope);
             $rootScope.$digest();
 

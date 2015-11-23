@@ -10,7 +10,7 @@
 /* This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper */
 .custom-select select {
   width:100%;
-  margin:0;
+  margin:0px;
   background:none;
   border: 1px solid transparent;
   border-radius: 0px;
@@ -22,6 +22,7 @@
   /* Remove select styling */
   appearance: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
   /* Font size must the 16px or larger to prevent iOS page zoom on focus */
   font-size:1em;
   /* General select styles: change as needed */

@@ -72,7 +72,8 @@ describe('Form Model Unit Tests:', function() {
 			provider: 'local'
 		});
 
-		user.save(function() {
+		user.save(function(err) {
+			if(err) return done(err);
 			myForm = new Form({
 				title: 'Form Title',
 				admin: user,
