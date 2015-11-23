@@ -5,6 +5,7 @@ Current stable release: v1.2.1
 
 [![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
 [![Dependencies Status](https://david-dm.org/whitef0x0/tellform.svg)](https://david-dm.org/whitef0x0/tellform)
+[![Coverage Status](https://coveralls.io/repos/whitef0x0/tellform/badge.svg?branch=master&service=github)](https://coveralls.io/github/whitef0x0/tellform?branch=master)
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 
