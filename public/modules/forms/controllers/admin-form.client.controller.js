@@ -8,6 +8,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
         $rootScope.saveInProgress = false;
+
         CurrentForm.setForm($scope.myform);
 
         $scope.tabData   = [
@@ -28,20 +29,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                 route:   'viewForm.analyze',
             }
         ];
-        
-        // Find a specific Form
-        $scope.findOne = function(){
-            Forms.get({
-                formId: $stateParams.formId
-            }, function(form){
-                CurrentForm.setForm(form);
-                $scope.myform = form;
-                $scope.myform._id = $stateParams.formId;
-            }, function(err){
-                console.error('Could not fetch form');
-                console.error(err);
-            });
-        };
 
         $scope.setForm = function(form){
             $scope.myform = form;
@@ -57,19 +44,19 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         */
         $scope.openDeleteModal = function(){
             $scope.deleteModal = $uibModal.open({
-              animation: $scope.animationsEnabled,
-              templateUrl: 'myModalContent.html',
-              controller: 'AdminFormController',
-              resolve: {
-                myForm: function () {
-                  return $scope.myform;
-                }
-              }
+				animation: $scope.animationsEnabled,
+				templateUrl: 'myModalContent.html',
+				controller: 'AdminFormController',
+				resolve: {
+					myForm: function(){
+						return $scope.myform;
+					}
+				}
             });
             $scope.deleteModal.result.then(function (selectedItem) {
-              $scope.selected = selectedItem;
+            	$scope.selected = selectedItem;
             }, function () {
-              console.log('Modal dismissed at: ' + new Date());
+            	console.log('Modal dismissed at: ' + new Date());
             });
         };
 
@@ -77,12 +64,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.cancelDeleteModal = function(){
             if($scope.deleteModal){
                 $scope.deleteModal.dismiss('cancel');
-                $scope.deleteModal.result(function(selectedItem){
-                    this.selected = selectedItem;
-                }, function(type){
-                    this.canceled = true;
-                });
-
             }
         };
 

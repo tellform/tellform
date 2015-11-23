@@ -126,7 +126,7 @@
 			$httpBackend.expect('GET', '/auth/verify/'+sampleVerifyToken).respond(200);
 
 			//Run Service Logic to Test
-			expect(function(){ User.validateVerifyToken(sampleVerifyToken) }).not.toThrow();
+			expect(function(){ User.validateVerifyToken(sampleVerifyToken); }).not.toThrow();
 
 			$httpBackend.flush();
 		});

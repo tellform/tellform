@@ -155,7 +155,7 @@
             <div class="col-sm-12 col-md-8 dropzoneContainer">
                 <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                    <accordion-group data-ng-repeat="field in myform.form_fields  track by field._id" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
+                    <accordion-group data-ng-repeat="field in myform.form_fields track by field._id" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
 
                         <accordion-heading>
 

@@ -21,11 +21,12 @@ module.exports = function(config) {
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
 		reporters: ['mocha', 'html', 'progress'], 
 
+		
 		preprocessors: {
-		    'public/modules/*/views/**/*.html': ['ng-html2js'],
+		    'public/modules/*/views/**/**.html': ['ng-html2js'],
 		    'public/modules/*/views/*.html': ['ng-html2js'],
-		    'public/modules/*/*.js': ['coverage'],
-			'public/modules/*/*[!tests]*/*.js': ['coverage'],
+		    //'public/modules/*/*.js': ['coverage'],
+			//'public/modules/*/*[!tests]*/*.js': ['coverage'],
 		},
 
 		ngHtml2JsPreprocessor: {
@@ -43,10 +44,10 @@ module.exports = function(config) {
 
 		//Make sure we capture console.log output
 		client: {
-	      captureConsole: true,
-	      mocha: {
-	        bail: true
-	      }
+			captureConsole: true,
+			mocha: {
+				bail: true
+			}
 	    },
 
 		// Level of logging
@@ -67,7 +68,7 @@ module.exports = function(config) {
 		browsers: ['PhantomJS'],
 
 		// If browser does not capture in given timeout [ms], kill it
-		captureTimeout: 60000,
+		captureTimeout: 3000,
 
 		// Continuous Integration mode
 		// If true, it capture browsers, run tests and exit

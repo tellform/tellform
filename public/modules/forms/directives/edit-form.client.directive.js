@@ -103,7 +103,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                     //Delete field from field map
                     var currFieldId = $scope.myform.form_fields[field_index]._id
-                    if($scope.myform.plugins.oscarhost.baseUrl) delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
+                    if($scope.myform.hasOwnProperty('plugins.oscarhost.baseUrl')) delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
 
                     //Delete field
                     $scope.myform.form_fields.splice(field_index, 1);
@@ -122,24 +122,23 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 **  startPage Button Methods
                 */
 
-                // add new Button to the startPage/EndPage
+                // add new Button to the startPage
                 $scope.addButton = function(){
 
                     var newButton = {};
                     newButton.bgColor = '#ddd';
                     newButton.color = '#ffffff';
                     newButton.text = 'Button';
-                    newButton._id = _.uniqueId();
+                    newButton._id = Math.floor(100000*Math.random());
 
                     $scope.myform.startPage.buttons.push(newButton);
                 };
 
-                // delete particular Button
+                // delete particular Button from startPage
                 $scope.deleteButton = function(button){
-                    // var hashKey = _.chain(button.$$hashKey).words().last().parseInt().value();
                     var currID;
                     for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
-                        // var currHashKey = _.chain($scope.myform.startPage.buttons[i].$$hashKey).words().last().parseInt().value();
+
                         currID = $scope.myform.startPage.buttons[i]._id;
                         console.log(currID);
 
@@ -156,33 +155,44 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 */
 
                 // add new option to the field
-                $scope.addOption = function (field){
-                    if(!field.fieldOptions) field.fieldOptions = [];
+                $scope.addOption = function(field_index){
+                    var currField = $scope.myform.form_fields[field_index];
 
-                    var lastOptionID = 0;
+                    if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+                        if(!currField.fieldOptions) $scope.myform.form_fields[field_index].fieldOptions = [];
 
-                    if(field.fieldOptions[field.fieldOptions.length-1]){
-                        lastOptionID = field.fieldOptions[field.fieldOptions.length-1].option_id;
+                        var lastOptionID = 0;
+
+                        if(currField.fieldOptions[currField.fieldOptions.length-1]){
+                            lastOptionID = currField.fieldOptions[currField.fieldOptions.length-1].option_id;
+                        }
+
+                        // new option's id
+                        var option_id = lastOptionID + 1;
+
+                        var newOption = {
+                            'option_id' : Math.floor(100000*Math.random()),
+                            'option_title' : 'Option '+lastOptionID,
+                            'option_value' : 'Option ' +lastOptionID,
+                        };
+
+                        // put new option into fieldOptions array
+                        $scope.myform.form_fields[field_index].fieldOptions.push(newOption);
                     }
-
-                    // new option's id
-                    var option_id = lastOptionID + 1;
-
-                    var newOption = {
-                        'option_id' : option_id,
-                        'option_value' : 'Option ' + option_id,
-                    };
-
-                    // put new option into fieldOptions array
-                    field.fieldOptions.push(newOption);
                 };
 
                 // delete particular option
-                $scope.deleteOption = function (field, option){
-                    for(var i = 0; i < field.fieldOptions.length; i++){
-                        if(field.fieldOptions[i].option_id === option.option_id){
-                            field.fieldOptions.splice(i, 1);
-                            break;
+                $scope.deleteOption = function (field_index, option){
+                    var currField = $scope.myform.form_fields[field_index];
+
+                    if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+                        for(var i = 0; i < currField.fieldOptions.length; i++){
+                            if(currField.fieldOptions[i].option_id === option.option_id){
+
+                                $scope.myform.form_fields[field_index].fieldOptions.splice(i, 1);
+                                break;
+
+                            }
                         }
                     }
                 };

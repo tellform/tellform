@@ -52,26 +52,30 @@
 			_id: '525a8422f6d0f87f0e407a33'
 		};
 
-		var fakeModal = function(){
-			this.opened = true;
-
-			this.result = function(confirmCallback, cancelCallback) {
-	            //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
-	            this.confirmCallBack = confirmCallback;
-	            this.cancelCallback = cancelCallback;
-		    };
-			this.close = function( item ) {
-		        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
-		        this.opened = false;
-		        this.confirmCallBack( item );
-		    };
-			this.dismiss = function( type ) {
-		        //The user clicked cancel on the modal dialog, call the stored cancel callback
-		        this.opened = false;
-		        this.cancelCallback( type );
-		    };
+		var newFakeModal = function(){
+			var result = {
+				opened: true,
+			    result: {
+			        then: function(confirmCallback, cancelCallback) {
+			            //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+			            this.confirmCallBack = confirmCallback;
+			            this.cancelCallback = cancelCallback;
+			        }
+			    },
+			    close: function( item ) {
+			        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+			        this.opened = false;
+			        this.result.confirmCallBack( item );
+			    },
+			    dismiss: function( type ) {
+			        //The user clicked cancel on the modal dialog, call the stored cancel callback
+			        this.opened = false;
+			        this.result.cancelCallback( type );
+			    }
+			};
+			return result;
 		};
-
+		
 		//Mock Users Service
         beforeEach(module(function($provide) {
             $provide.service('myForm', function($q) {
@@ -98,7 +102,6 @@
 				}
 			});
 		});
-
 
 		// Load the main application module
 		beforeEach(module(ApplicationConfiguration.applicationModuleName));
@@ -160,8 +163,12 @@
 			});
 		}));
 
+
+		//Mock $uibModal
 		beforeEach(inject(function($uibModal) {
-		    spyOn($uibModal, 'open').and.returnValue(new fakeModal());
+			var modal = newFakeModal();
+		    spyOn($uibModal, 'open').and.returnValue(modal);
+		    //spyOn($uibModal, 'close').and.callFake(modal.close());
 		}));
 
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
@@ -197,27 +204,6 @@
 			expect(scope.myform).toEqualData(sampleForm);
 		});
 
-		it('$scope.findOne() should fetch current Form', inject(function(Forms) {
-
-			// Define a sample article object
-			var expectedFormObj = new Forms(expectedForm);
-
-			var controller = createAdminFormController();
-
-			// Set the URL parameter
-			$stateParams.formId = expectedForm._id;
-
-			// Set GET response
-			$httpBackend.expectGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
-
-			// Run controller functionality
-			scope.findOne();
-			$httpBackend.flush();
-
-			// Test scope value
-			expect( scope.myform.toJSON() ).toEqualData(expectedFormObj);
-		}));
-
 		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', function() {
 			var controller = createAdminFormController();
 
@@ -229,13 +215,6 @@
 
 			//Run controller functionality
 			scope.openDeleteModal();
-
-			scope.deleteModal.result(function(selectedItem){
-				this.selected = selectedItem;
-			}, function(type){
-				this.canceled = true;
-			});
-
 			scope.removeCurrentForm();
 	
 			$httpBackend.flush();
@@ -259,7 +238,8 @@
 
 			//Run controller functionality
 			scope.openDeleteModal();
-			expect( scope.deleteModal.opened ).toEqual(true);
+			console.log(scope.deleteModal);
+			expect(scope.deleteModal.opened).toEqual(true);
 		});
 
 		it('$scope.cancelDeleteModal() should close $scope.deleteModal', inject(function($uibModal) {
@@ -267,13 +247,10 @@
 
 			//Run controller functionality
 			scope.openDeleteModal();
-			console.log(scope.deleteModal.opened);
 
 			//Run controller functionality
 			scope.cancelDeleteModal();
 			expect( scope.deleteModal.opened ).toEqual(false);
-			expect( scope.deleteModal.canceled ).toEqual(true);
-
 		}));
 	});
 }());

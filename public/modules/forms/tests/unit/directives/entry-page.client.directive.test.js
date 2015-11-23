@@ -53,7 +53,6 @@
 
 //         // Load the main application module
 //         beforeEach(module(ApplicationConfiguration.applicationModuleName));
-//         beforeEach(module('module-templates'));
 
 //         beforeEach(inject(function($rootScope, _$compile_, _$httpBackend_) {
 //             scope = $rootScope.$new();

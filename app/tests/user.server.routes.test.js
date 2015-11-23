@@ -41,7 +41,7 @@ describe('User CRUD tests', function() {
 			password: 'password'
 		};
 
-		Create a new user
+		//Create a new user
 		_User = {
 			firstName: 'Full',
 			lastName: 'Name',

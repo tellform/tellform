@@ -35,9 +35,9 @@
             admin: 'ed873933b1f1dea0ce12fab9',
             language: 'english',
             form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false}
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
             pdf: {},
             pdfFieldMap: {},
@@ -73,8 +73,8 @@
 
         // Load the main application module
         beforeEach(module(ApplicationConfiguration.applicationModuleName));
-        beforeEach(module('stateMock'));
         beforeEach(module('module-templates'));
+        beforeEach(module('stateMock'));
 
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
             //Instantiate directive.
@@ -89,7 +89,7 @@
             // Point global variables to injected services
             $httpBackend = _$httpBackend_;
 
-            $httpBackend.whenGET(/.+\.html$/).respond('');
+            //$httpBackend.whenGET(/.+\.html$/).respond('');
             $httpBackend.whenGET('/users/me/').respond('');
 
             //Grab controller instance
@@ -101,7 +101,7 @@
 
         }));
 
-        describe('Form Field Tests',function(){
+        describe('> Form Field >',function(){
 
         	beforeEach(function(){
         		scope.myform = _.cloneDeep(sampleForm);
@@ -142,13 +142,20 @@
 	        	//Run controller methods
 	            scope.duplicateField(0);
 
+	            var originalField = _.cloneDeep(scope.myform.form_fields[0]);
+	            originalField.title += ' copy';
+
+	            delete originalField._id;
+	            var copyField = _.cloneDeep(scope.myform.form_fields[1]);
+	            delete copyField._id;
+
 	            expect(scope.myform.form_fields.length).toEqual(sampleForm.form_fields.length+1);
-	            expect(scope.myform.form_fields[0]).toEqualData(scope.myform.form_fields[1]);
+	            expect(originalField).toEqualData(copyField);
 	        });
 
 		});
 
-		describe('Form Field Button Tests',function(){
+		describe('> Form Field Button >',function(){
 
 	        it('$scope.addButton() should ADD a button to $scope.myform.startPage.buttons', function() {
 	           
@@ -170,30 +177,27 @@
 	        it('$scope.deleteButton() should DELETE a button from $scope.myform.startPage.buttons', function() {
 	        	//Run controller methods
 	            scope.deleteButton(scope.myform.startPage.buttons[0]);
-
+	            
 	            expect(scope.myform.startPage.buttons.length).toEqual(0);
 	        });
 	    });
 
-        describe('Form Field Option Tests',function(){
+        describe('> Form Field Option >',function(){
 	        it('$scope.addOption() should ADD a new option to a field.fieldOptions', function() {
+	        	var originalOptionLen = scope.myform.form_fields[1].fieldOptions.length;
 
 	        	//Run controller methods
-	            scope.addOption(scope.myform.form_fields[0]);
+	            scope.addOption(1);
 
-	            var expectedFieldOption = {
-	            	option_id : 1,
-	                option_title : 'Option 1',
-	                option_value : 1
-	            };
-
-	            expect(scope.myform.form_fields[0].fieldOptions.length).toEqual(sampleForm.form_fields[0].fieldOptions.length+1);
-	            expect(scope.myform.form_fields[0].fieldOptions[0]).toEqualData(expectedFieldOption);
+	            expect(originalOptionLen+1).toEqual(scope.myform.form_fields[1].fieldOptions.length);
+	            expect(scope.myform.form_fields[1].fieldOptions[0].option_title).toEqualData('Option 0');
+                expect(scope.myform.form_fields[1].fieldOptions[0].option_value).toEqualData('Option 0');
 	        });
 
 	        it('$scope.deleteOption() should DELETE remove option from field.fieldOptions', function() {
+                //Run controller methods
+                scope.deleteOption(1, scope.myform.form_fields[1].fieldOptions[0]);
 
-	        	//Run controller methods
 	            expect(scope.myform.form_fields[0].fieldOptions.length).toEqual(0);
 	            expect(scope.myform.form_fields[0].fieldOptions[0]).not.toBeDefined();
 	        });

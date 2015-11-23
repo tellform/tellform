@@ -8,8 +8,8 @@ var __indexOf = [].indexOf || function(item) {
     return -1;
 };
 
-angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', 
-    function($http, $compile, $rootScope) {
+angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', '$templateCache',
+    function($http, $compile, $rootScope, $templateCache) {
 
     
     var getTemplateUrl = function(field) {
@@ -36,7 +36,9 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
         if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
-        return templateUrl;
+
+   		return $templateCache.get('../public/'+templateUrl);
+        //return templateUrl;
     };
 
     return {
@@ -63,11 +65,11 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             }
 
             // GET template content from path
-            var templateUrl = getTemplateUrl(scope.field);
-            $http.get(templateUrl).success(function(data) {
-                element.html(data).show();
+            var template = getTemplateUrl(scope.field);
+            //$http.get(templateUrl).success(function(data) {
+                element.html(template).show();
                 $compile(element.contents())(scope);
-            });
+            //});
         },
     };
 }]);

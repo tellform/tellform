@@ -1,28 +1,5 @@
 'use strict';
 
-// Init the application configuration module for AngularJS application
-var ApplicationConfiguration = (function() {
-	// Init module configuration options
-	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'cgBusy'];
-
-	// Add a new vertical module
-	var registerModule = function(moduleName, dependencies) {
-		// Create angular module
-		angular.module(moduleName, dependencies || []);
-
-		// Add the module to the AngularJS configuration file
-		angular.module(applicationModuleName).requires.push(moduleName);
-	};
-
-	return {
-		applicationModuleName: applicationModuleName,
-		applicationModuleVendorDependencies: applicationModuleVendorDependencies,
-		registerModule: registerModule
-	};
-})();
-'use strict';
-
 //Start by defining the main module and adding the module dependencies
 angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
 
@@ -108,6 +85,63 @@ angular.element(document).ready(function() {
 	//Then init the app
 	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
+'use strict';
+
+// Init the application configuration module for AngularJS application
+var ApplicationConfiguration = (function() {
+	// Init module configuration options
+	var applicationModuleName = 'TellForm';
+	var applicationModuleVendorDependencies = ['ngResource', 'TellForm.templates', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'cgBusy'];
+
+	// Add a new vertical module
+	var registerModule = function(moduleName, dependencies) {
+		// Create angular module
+		angular.module(moduleName, dependencies || []);
+
+		// Add the module to the AngularJS configuration file
+		angular.module(applicationModuleName).requires.push(moduleName);
+	};
+
+	return {
+		applicationModuleName: applicationModuleName,
+		applicationModuleVendorDependencies: applicationModuleVendorDependencies,
+		registerModule: registerModule
+	};
+})();
+angular.module('TellForm.templates', []).run(['$templateCache', function($templateCache) {
+  "use strict";
+  $templateCache.put("../public/modules/core/views/header.client.view.html",
+    "<section class=\"navbar navbar-fixed-top navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span></button> <a href=\"/#!/\" class=navbar-brand><i class=\"fa fa-archive\" style=\"padding-right: 0.3em\"></i>Tell<span>Forms</span></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav\" data-ng-if=authentication.isAuthenticated()><li data-ng-repeat=\"item in menu.items | orderBy: 'position'\" data-ng-if=item.shouldRender(authentication.isAuthenticated()); ng-switch=item.menuItemType ui-route={{item.uiRoute}} class={{item.menuItemClass}} ng-class=\"{active: ($uiRoute)}\" dropdown=\"item.menuItemType === 'dropdown'\"><a ng-switch-when=dropdown class=dropdown-toggle dropdown-toggle><span data-ng-bind=item.title></span> <b class=caret></b></a><ul ng-switch-when=dropdown class=dropdown-menu><li data-ng-repeat=\"subitem in item.items | orderBy: 'position'\" data-ng-if=subitem.shouldRender(authentication.isAuthenticated()); ui-route={{subitem.uiRoute}} ng-class=\"{active: $uiRoute}\"><a href=/#!/{{subitem.link}} data-ng-bind=subitem.title></a></li></ul><a ng-switch-default href=/#!/{{item.link}} data-ng-bind=item.title></a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>Sign Up</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>Sign In</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>My Settings</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>Edit Profile</a></li><li class=divider></li><li><a href=/#!/settings/password>Change Password</a></li><li data-ng-show=\"authentication.isAuthenticated().provider === 'local'\"><a href=/#!/settings/password>Change Password</a></li></ul></li><li ng-click=signout()><a>Signout</a></li></ul></nav></div></section>");
+  $templateCache.put("../public/modules/core/views/home.client.view.html",
+    "<section data-ng-controller=HomeController class=hero-section style=overflow:hidden><div class=opacity-background></div><div class=image-background></div><div class=\"jumbotron text-center\"><div class=container data-ng-if=!authentication.isAuthenticated()><div class=\"row text-center logo\" style=\"border-bottom: 1px solid rgba(255,255,255,.2); margin-bottom: 30px\"><h3 class=col-xs-12 style=\"color: #FA787E; margin-bottom:0px\"><i class=\"fa fa-archive fa-3x\"></i></h3><h2 class=col-xs-12 style=margin-top:0px><span>Tell<span style=\"text-decoration: underline; color: #FA787E\">Form</span></span></h2></div><div class=row style=margin-top:0px><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:3.8em>Craft beautiful forms in seconds.</h1><h2 class=\"lead col-sm-12 text-center hidden-md hidden-lg\" style=font-size:2.8em>Craft beautiful forms.</h2><p class=\"lead hidden-xs hidden-sm col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p><p class=\"lead col-xs-12 hidden-md hidden-lg\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p></div></div></div><div class=\"jumbotron text-center\"><div class=container data-ng-if=!authentication.isAuthenticated()><div class=row style=margin-top:0px><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:3.8em>Create your next ______.</h1><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:2.5em>Tell a story with a form.</h1><p class=\"lead hidden-xs hidden-sm col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p><p class=\"lead col-xs-12 hidden-md hidden-lg\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p></div><div class=row style=margin-top:7%><a class=\"col-xs-4 col-xs-offset-4 btn btn-info signup-btn\" href=/#!/signup style=\"background-color:#FA787E; border: none; font-size: 2em; padding: 0.3em 0.9em; color: white\">sign me up!</a></div></div></div></section>");
+  $templateCache.put("../public/modules/forms/views/admin-form.client.view.html",
+    "<div class=container cg-busy=\"{promise:updatePromise,templateUrl:'modules/forms/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}\"></div><section class=\"container admin-form\"><script type=text/ng-template id=myModalContent.html><div class=\"modal-header\">\n" +
+    "            <h2 class=\"modal-title hidden-md hidden-lg\">Are you ABSOLUTELY sure?</h2>\n" +
+    "            <h3 class=\"modal-title hidden-xs hidden-sm\">Are you ABSOLUTELY sure?</h3>\n" +
+    "        </div>\n" +
+    "        <div class=\"modal-body\">\n" +
+    "        	<div class=\"modal-body-alert\">\n" +
+    "			    Unexpected bad things will happen if you don’t read this!\n" +
+    "			</div>\n" +
+    "       		<p class=\"hidden-xs hidden-sm\">\n" +
+    "       		 	This action <strong>CANNOT</strong> be undone.This will permanently delete the <strong>{{myform.title}}</strong> form, form submissions and remove all associated pdfs.\n" +
+    "       		</p>\n" +
+    "            <p>Please type in the name of the form to confirm.</p>\n" +
+    "        </div>\n" +
+    "        <div class=\"modal-footer\">\n" +
+    "	        <p>\n" +
+    "				<input type=\"text\" data-ng-model=\"deleteConfirm\" class=\"input-block\" autofocus required aria-label=\"Type in the name of the form to confirm that you want to delete this form.\">\n" +
+    "			</p>\n" +
+    "            <button type=\"submit\" ng-click=\"removeCurrentForm()\" class=\"btn btn-block btn-danger\" ng-disabled=\"myform.title != deleteConfirm\">\n" +
+    "            	I understand the consequences, delete this form\n" +
+    "            </button>\n" +
+    "        </div></script><div class=\"page-header row\" style=\"padding-bottom: 0px\"><div class=\"col-xs-10 col-sm-8\"><h1 class=\"hidden-sm hidden-xs\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h1><h2 class=\"hidden-md hidden-lg\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h2></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><button class=\"btn btn-danger\" ng-click=openDeleteModal()><i class=\"fa fa-trash-o\"></i> <span class=hidden-xs>Delete</span> <span class=\"hidden-xs hidden-sm\">Form</span></button></small></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><a class=\"btn btn-default view-form-btn\" href=/#!/forms/{{myform._id}}><span class=\"hidden-xs hidden-sm\">View <span ng-show=myform.isLive>Live</span> <span ng-hide=myform.isLive>Preview</span> Form</span> <span class=\"hidden-xs hidden-md hidden-lg\">View <span ng-if=myform.isLive>Live</span> <span ng-if=!myform.isLive>Preview</span></span> <i class=\"status-light status-light-on fa fa-dot-circle-o\" ng-if=myform.isLive></i> <i class=\"status-light status-light-off fa fa-dot-circle-o\" ng-if=!myform.isLive></i></a></small></div></div><div class=row><div class=col-xs-12><tabs data=tabData></tabs></div><div class=col-xs-12><ui-view></ui-view></div></div></section>");
+  $templateCache.put("../public/modules/forms/views/list-forms.client.view.html",
+    "<section class=overlay ng-if=showCreateModal ng-click=closeCreateModal()></section><section data-ng-controller=\"ListFormsController as ctrl\" data-ng-init=findAll() class=container><br><div class=row><div ng-click=openCreateModal() class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new\"><div class=\"title-row col-xs-12\"><h4 class=\"fa fa-plus fa-6\"></h4></div><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>Create a new form</small></div></div><form name=forms.createForm class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form\" ng-if=showCreateModal><div class=\"title-row row\"><div class=\"col-xs-5 field-title text-left\">Name</div><div class=\"col-xs-12 field-input\"><input name=title required ng-model=formTitle ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\" ng-minlength=\"4\"></div></div><div class=\"details-row row\"><div class=\"col-xs-5 field-title text-left\">Language</div><div class=\"col-xs-12 field-input\"><div class=\"button custom-select\"><select style=color:black name=language required ng-model=formLanguage ng-init=\"formLanguage = user.language\"><option ng-repeat=\"language in languages\" value={{language}}>{{language}}</option></select></div></div></div><div class=\"details-row submit row\"><div class=\"col-xs-12 field-title text-center\"><button class=\"btn btn-primary\" ng-disabled=forms.createForm.$invalid ng-click=createNewForm()>Create Form</button></div></div></form><div data-ng-repeat=\"form in myforms\" class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container\"><div class=row><span class=pull-right><i style=cursor:pointer class=\"fa fa-trash-o\" ng-click=removeForm($index)></i> <i style=cursor:pointer class=\"fa fa-files-o\" ng-click=duplicateForm($index)></i></span></div><div class=row><a data-ng-href=#!/forms/{{form._id}}/admin/create class=\"title-row col-xs-12\"><h4 class=list-group-item-heading data-ng-bind=form.title></h4></a></div><div class=\"row footer\"><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>Created on <span data-ng-bind=\"form.created | date:'shortDate'\"></span></small></div></div></div></div></section>");
+  $templateCache.put("../public/modules/forms/views/submit-form.client.view.html",
+    "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section>");
+}]);
+
 'use strict';
 
 // Use Application configuration module to register a new module
@@ -441,7 +475,6 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 		        myForm: ["Forms", "$stateParams", function (Forms, $stateParams) {
-		        	console.log('getting form');
 		            return Forms.get({formId: $stateParams.formId}).$promise;
 		        }],
 			},
@@ -471,6 +504,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
         $rootScope.saveInProgress = false;
+
         CurrentForm.setForm($scope.myform);
 
         $scope.tabData   = [
@@ -491,20 +525,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                 route:   'viewForm.analyze',
             }
         ];
-        
-        // Find a specific Form
-        $scope.findOne = function(){
-            Forms.get({
-                formId: $stateParams.formId
-            }, function(form){
-                CurrentForm.setForm(form);
-                $scope.myform = form;
-                $scope.myform._id = $stateParams.formId;
-            }, function(err){
-                console.error('Could not fetch form');
-                console.error(err);
-            });
-        };
 
         $scope.setForm = function(form){
             $scope.myform = form;
@@ -520,19 +540,19 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         */
         $scope.openDeleteModal = function(){
             $scope.deleteModal = $uibModal.open({
-              animation: $scope.animationsEnabled,
-              templateUrl: 'myModalContent.html',
-              controller: 'AdminFormController',
-              resolve: {
-                myForm: function () {
-                  return $scope.myform;
-                }
-              }
+				animation: $scope.animationsEnabled,
+				templateUrl: 'myModalContent.html',
+				controller: 'AdminFormController',
+				resolve: {
+					myForm: function(){
+						return $scope.myform;
+					}
+				}
             });
             $scope.deleteModal.result.then(function (selectedItem) {
-              $scope.selected = selectedItem;
+            	$scope.selected = selectedItem;
             }, function () {
-              console.log('Modal dismissed at: ' + new Date());
+            	console.log('Modal dismissed at: ' + new Date());
             });
         };
 
@@ -540,12 +560,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.cancelDeleteModal = function(){
             if($scope.deleteModal){
                 $scope.deleteModal.dismiss('cancel');
-                $scope.deleteModal.result(function(selectedItem){
-                    this.selected = selectedItem;
-                }, function(type){
-                    this.canceled = true;
-                });
-
             }
         };
 
@@ -697,10 +711,10 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 ]);
 'use strict';
 
-// Forms controller
-angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$state', 'myForm',
-	function($scope, $rootScope, $state, myForm) {
-		$scope.authentication = $rootScope.authentication;
+// SubmitForm controller
+angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$state', 'myForm', 'Auth',
+	function($scope, $rootScope, $state, myForm, Auth) {
+		$scope.authentication = Auth;
 		$scope.myform = myForm;
 
 		if(!$scope.myform.isLive){
@@ -791,7 +805,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         console.log('Form saving started');
                         debounceSave();
                         console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
-
                     }
                 });
 
@@ -805,8 +818,13 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
                     var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
+                    var changedFieldMap = false;
 
-                    var changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
+                    if(oldValue.hasOwnProperty('plugins.oscarhost.settings.fieldMap')){
+                    	changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
+                    }
+
+                    //If our form is undefined, don't save form
                     if( (!newValue && !oldValue) || !oldValue ){
                         return;
                     }
@@ -824,7 +842,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     // console.log(newValue.form_fields);
 
                     if(oldValue.form_fields.length === 0) { 
-                        $rootScope.finishedRender = true 
+                        $rootScope.finishedRender = true;
                     }
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
@@ -1069,24 +1087,23 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 **  startPage Button Methods
                 */
 
-                // add new Button to the startPage/EndPage
+                // add new Button to the startPage
                 $scope.addButton = function(){
 
                     var newButton = {};
                     newButton.bgColor = '#ddd';
                     newButton.color = '#ffffff';
                     newButton.text = 'Button';
-                    newButton._id = _.uniqueId();
+                    newButton._id = Math.floor(100000*Math.random());
 
                     $scope.myform.startPage.buttons.push(newButton);
                 };
 
-                // delete particular Button
+                // delete particular Button from startPage
                 $scope.deleteButton = function(button){
-                    // var hashKey = _.chain(button.$$hashKey).words().last().parseInt().value();
                     var currID;
                     for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
-                        // var currHashKey = _.chain($scope.myform.startPage.buttons[i].$$hashKey).words().last().parseInt().value();
+
                         currID = $scope.myform.startPage.buttons[i]._id;
                         console.log(currID);
 
@@ -1103,33 +1120,44 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 */
 
                 // add new option to the field
-                $scope.addOption = function (field){
-                    if(!field.fieldOptions) field.fieldOptions = [];
+                $scope.addOption = function(field_index){
+                    var currField = $scope.myform.form_fields[field_index];
 
-                    var lastOptionID = 0;
+                    if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+                        if(!currField.fieldOptions) currField.fieldOptions = [];
 
-                    if(field.fieldOptions[field.fieldOptions.length-1]){
-                        lastOptionID = field.fieldOptions[field.fieldOptions.length-1].option_id;
+                        var lastOptionID = 0;
+
+                        if(currField.fieldOptions[currField.fieldOptions.length-1]){
+                            lastOptionID = currField.fieldOptions[currField.fieldOptions.length-1].option_id;
+                        }
+
+                        // new option's id
+                        var option_id = lastOptionID + 1;
+
+                        var newOption = {
+                            'option_id' : Math.floor(100000*Math.random()),
+                            "option_title" : 'Option '+lastOptionID,
+                            'option_value' : 'Option ' +lastOptionID,
+                        };
+
+                        // put new option into fieldOptions array
+                        $scope.myform.form_fields[field_index].fieldOptions.push(newOption);
                     }
-
-                    // new option's id
-                    var option_id = lastOptionID + 1;
-
-                    var newOption = {
-                        'option_id' : option_id,
-                        'option_value' : 'Option ' + option_id,
-                    };
-
-                    // put new option into fieldOptions array
-                    field.fieldOptions.push(newOption);
                 };
 
                 // delete particular option
-                $scope.deleteOption = function (field, option){
-                    for(var i = 0; i < field.fieldOptions.length; i++){
-                        if(field.fieldOptions[i].option_id === option.option_id){
-                            field.fieldOptions.splice(i, 1);
-                            break;
+                $scope.deleteOption = function (field_index, option){
+                    var currField = $scope.myform.form_fields[field_index];
+
+                    if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+                        for(var i = 0; i < currField.fieldOptions.length; i++){
+                            if(currField.fieldOptions[i].option_id === option.option_id){
+
+                                $scope.myform.form_fields[field_index].fieldOptions.splice(i, 1);
+                                break;
+
+                            }
                         }
                     }
                 };
@@ -1427,7 +1455,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 
                     TimeCounter.startClock();
 
-
                     /*
                     ** Field Controls
                     */
@@ -1492,8 +1519,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                         // console.log('percentageComplete: '+$filter('formValidity')($scope.myform)/$scope.myform.visible_form_fields.length*100+'%');
                         form.percentageComplete = $filter('formValidity')($scope.myform)/$scope.myform.visible_form_fields.length*100;
                         delete form.visible_form_fields;
-
-                        $scope.authentication = Auth;
 
                         $scope.submitPromise = $http.post('/forms/'+$scope.myform._id, form)
                             .success(function(data, status, headers){

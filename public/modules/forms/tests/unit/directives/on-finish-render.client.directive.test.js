@@ -19,7 +19,6 @@
 
         it('should emit Custom "Finished" and "Started" events on ng-repeat', inject(function($compile, $rootScope) {
         
-            // console.log(FormFields.types);
             scope.myfields = FormFields.types;
 
             var e = $compile('<div><div ng-repeat="item in myfields" on-finish-render="editFormFields">{{item.name}}</div></div>')(scope);

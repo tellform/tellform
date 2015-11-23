@@ -6,17 +6,26 @@ angular.module('forms').service('TimeCounter', [
 
 		this.timeSpent = 0;
 
-		this.startClock = function(){
+		this.restartClock = function(){
 			_startTime = Date.now();
+			_endTime = _startTime;
 			// console.log('Clock Started');
 		};
 
 		this.stopClock = function(){
-			_endTime = Date.now();
-			that.timeSpent = Math.abs(_endTime.valueOf() - _startTime.valueOf())/1000;
-			// console.log('Clock Ended');
-			return that.timeSpent;
+			if(_startTime){
+				_endTime = Date.now();
+				that.timeSpent = Math.abs(_endTime.valueOf() - _startTime.valueOf())/1000;
+				// console.log('Clock Ended');
+				return that.timeSpent;
+			}else{
+				return new Error('Clock has not been started');
+			}
 		};
+
+		this.clockStarted = function(){
+			return !!this._startTime;
+		}
 
 	}
 ]);

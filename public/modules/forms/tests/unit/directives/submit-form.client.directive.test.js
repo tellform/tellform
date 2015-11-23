@@ -4,7 +4,7 @@
     // Forms Controller Spec
     describe('SubmitForm Directive-Controller Tests', function() {
         // Initialize global variables
-         var el, scope, controller, $httpBackend;
+         var scope, controller, $httpBackend;
 
         var sampleUser = {
             firstName: 'Full',
@@ -35,15 +35,13 @@
             admin: 'ed873933b1f1dea0ce12fab9',
             language: 'english',
             form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
-            ],
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}            ],
             visible_form_fields: [
-                {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
-                {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
-                {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
-            ],
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}            ],
             pdf: {},
             pdfFieldMap: {},
             startPage: {
@@ -58,9 +56,9 @@
 
         var sampleSubmission = {
             form_fields: [
-                {fieldType:'textfield', title:'First Name',             fieldValue: 'John Smith',   deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: true,           deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: false,          deletePreserved: false}
+                {fieldType:'textfield', title:'First Name',             fieldValue: 'John Smith',   deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: true,           deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: false,          deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
             admin: sampleUser, 
             form: sampleForm,
@@ -70,8 +68,8 @@
         var sampleSubmissions = [{
             form_fields: [
                 {fieldType:'textfield', title:'First Name', fieldValue: 'The Terminator', deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'true',           deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'false',          deletePreserved: false}
+                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'true', deletePreserved: false},
+                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'false', deletePreserved: false}
             ],
             admin: sampleUser, 
             form: sampleForm,
@@ -119,14 +117,13 @@
 
         // Load the main application module
         beforeEach(module(ApplicationConfiguration.applicationModuleName));
-        beforeEach(module('stateMock'));
         beforeEach(module('module-templates'));
+        beforeEach(module('stateMock'));
 
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
             
             // Point global variables to injected services
             $httpBackend = _$httpBackend_;
-
             $httpBackend.whenGET('/users/me/').respond('');
 
             //Instantiate directive.
@@ -134,8 +131,9 @@
             tmp_scope.myform = sampleForm;
 
             //gotacha: Controller and link functions will execute.
-            el = angular.element('<submit-form-directive myform="myform"></submit-form-directive>');
+            var el = angular.element('<submit-form-directive myform="myform"></submit-form-directive>');
             $compile(el)(tmp_scope);
+            tmp_scope.$digest();
             $rootScope.$digest();
 
             //Grab controller instance
@@ -144,6 +142,8 @@
             //Grab scope. Depends on type of scope.
             //See angular.element documentation.
             scope = el.isolateScope() || el.scope();
+
+            console.log(scope);
         }));
 
         var Validator = (function() {
@@ -158,7 +158,7 @@
         })();
 
 
-        it('$scope.submit() should submit valid form', function(){
+        it('$scope.submitForm() should submit valid form', function(){
             //Initialize variables
             scope.myform.form_fields = sampleSubmissions[0].form_fields;
 
@@ -175,15 +175,11 @@
                 return Validator.isNewForm(form) && _.isEqual(compareForm, expectedForm);
             };
 
-
-            // console.log('!_.isEmpty(expectedForm.timeElapsed): '+!_.isEmpty(expectedForm.timeElapsed));
-            console.log('data:'+data(expectedForm));
-
-            // //Set expected HTTP requests
+            //Set expected HTTP requests
             $httpBackend.expect('POST',/^(\/forms\/)([0-9a-fA-F]{24})$/, data).respond(200);
 
-            // //Run Controller Logic to Test
-            scope.submit();
+            //Run Controller Logic to Test
+            scope.submitForm();
 
             $httpBackend.flush();
             expect(scope.myform.submitted).toBe(true);
@@ -191,10 +187,10 @@
         });
 
         it('$scope.reloadForm() should reset and reload form', function(){
-            scope.submit();
+            scope.submitForm();
             scope.reloadForm();
 
-            expect(scope.submitted).toBe(false);
+            expect(scope.myform.submitted).toBe(false);
             for(var i=0; i<scope.myform.form_fields.length; i++){
                 expect(scope.myform.form_fields[i].fieldValue).toEqual('');
             }

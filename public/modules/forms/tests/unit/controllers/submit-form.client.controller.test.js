@@ -148,7 +148,7 @@
             });
         }));
 
-                //Mock Users Service
+        //Mock Users Service
         beforeEach(module(function($provide) {
             $provide.service('User', function($q) {
                 return {

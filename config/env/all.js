@@ -3,8 +3,8 @@
 module.exports = {
 	app: {
 		title: 'TellForm',
-		description: 'Generate Forms from PDFs',
-		keywords: 'typeform, pdfs, forms, generator, form generator',
+		description: 'Opensource form builder alternative to TypeForm',
+		keywords: 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs',
 	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
@@ -39,7 +39,7 @@ module.exports = {
 		maxAge: null,
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
-		// domain: 'forms.polydaic.com'
+		// domain: 'tellform.com'
 	},
 
 	/*
@@ -64,29 +64,13 @@ module.exports = {
 		}
 	},
 	assets: {
-		// lib: {
-		// 	css: [
-		// 		'public/lib/bootstrap/dist/css/bootstrap.css',
-		// 		'public/lib/bootstrap/dist/css/bootstrap-theme.css',
-		// 	],
-		// 	js: [
-		// 		'public/lib/angular/angular.js',
-		// 		'public/lib/angular-permission/dist/angular-permission.js',
-		// 		'public/lib/angular-resource/angular-resource.js',
-		// 		'public/lib/angular-animate/angular-animate.js',
-		// 		'public/lib/angular-ui-router/release/angular-ui-router.js',
-		// 		'public/lib/angular-ui-utils/ui-utils.js',
-		// 		'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-		// 		'public/lib/ng-file-upload/ng-file-upload-all.js',
-		// 		'public/lib/angular-cookies/angular-cookies.js',
-		// 	]
-		// },
 		css: [
 			'public/modules/**/css/*.css'
 		],
 		js: [
 			'public/config.js',
 			'public/application.js',
+			'public/populate_template_cache.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*[!tests]*/*.js'
 		],

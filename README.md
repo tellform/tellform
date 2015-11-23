@@ -3,8 +3,8 @@ TellForm
 
 Current stable release: v1.2.1
 
-[![Build Status](https://travis-ci.org/whitef0x0/nodeforms.svg?branch=master)](https://travis-ci.org/whitef0x0/nodeforms)
-[![Dependencies Status](https://david-dm.org/whitef0x0/NodeForms.svg)](https://david-dm.org/whitef0x0/nodeforms)
+[![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
+[![Dependencies Status](https://david-dm.org/whitef0x0/tellform.svg)](https://david-dm.org/whitef0x0/tellform)
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 
@@ -45,6 +45,11 @@ $ npm install
 $ bower install
 ```
 
+Setup environment.
+```bash
+$ grunt build
+```
+
 To run development version:
 ```bash
 $ grunt default
@@ -80,6 +85,11 @@ $ grunt test:client
 ```
 
 Currently the live example uses heroku github deployments. The Docker file is out of date and does not work. If someone wishes to get it working feel free to submit a pull request.
+
+To calculate your code coverage with Istanbul, run the coverage task
+```bash
+$ grunt coverage
+```
 
 ## Running in a secure environment
 To run your application in a secure manner you'll need to use OpenSSL and generate a set of self-signed certificates. Unix-based users can use the following command:

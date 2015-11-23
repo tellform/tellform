@@ -35,9 +35,9 @@
             admin: 'ed873933b1f1dea0ce12fab9',
             language: 'english',
             form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
             pdf: {},
             pdfFieldMap: {},
@@ -114,8 +114,8 @@
 
         // Load the main application module
         beforeEach(module(ApplicationConfiguration.applicationModuleName));
+		beforeEach(module('module-templates'));
         beforeEach(module('stateMock'));
-        beforeEach(module('module-templates'));
 
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
             

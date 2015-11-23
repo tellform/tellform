@@ -16,7 +16,7 @@
 
         it('should be able to time 1 second interval as 1 second', function() {
             var timeSpent = 0;
-        	TimeCounter.startClock();
+        	TimeCounter.restartClock();
 
             setTimeout(function(){
                 timeSpent = TimeCounter.stopClock();

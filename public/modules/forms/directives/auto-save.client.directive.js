@@ -70,7 +70,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         console.log('Form saving started');
                         debounceSave();
                         console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
-
                     }
                 });
 
@@ -84,8 +83,13 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
                     var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
+                    var changedFieldMap = false;
 
-                    var changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
+                    if(oldValue.hasOwnProperty('plugins.oscarhost.settings.fieldMap')){
+                    	changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
+                    }
+
+                    //If our form is undefined, don't save form
                     if( (!newValue && !oldValue) || !oldValue ){
                         return;
                     }
@@ -103,7 +107,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     // console.log(newValue.form_fields);
 
                     if(oldValue.form_fields.length === 0) { 
-                        $rootScope.finishedRender = true 
+                        $rootScope.finishedRender = true;
                     }
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress

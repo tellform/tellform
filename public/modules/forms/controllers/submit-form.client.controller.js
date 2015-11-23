@@ -1,9 +1,9 @@
 'use strict';
 
-// Forms controller
-angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$state', 'myForm',
-	function($scope, $rootScope, $state, myForm) {
-		$scope.authentication = $rootScope.authentication;
+// SubmitForm controller
+angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$state', 'myForm', 'Auth',
+	function($scope, $rootScope, $state, myForm, Auth) {
+		$scope.authentication = Auth;
 		$scope.myform = myForm;
 
 		if(!$scope.myform.isLive){

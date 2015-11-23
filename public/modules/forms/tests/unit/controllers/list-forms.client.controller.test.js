@@ -130,7 +130,7 @@
             expect( scope.myforms ).toEqualData(sampleFormList);
         }));
 
-        it('$scope.duplicate() should duplicate a Form', inject(function(Forms) {
+        it('$scope.duplicateForm() should duplicate a Form', inject(function(Forms) {
 
             var dupSampleForm = sampleFormList[2],
                 dupSampleForm_index = 3,
@@ -149,7 +149,7 @@
             // Set GET response
             $httpBackend.expect('POST', '/forms').respond(200, dupSampleForm);
             // Run controller functionality
-            scope.duplicate(2);
+            scope.duplicateForm(2);
             $httpBackend.flush();
 
             // Test scope value
@@ -191,7 +191,7 @@
             expect( scope.myforms[0] ).not.toEqualData(delSampleForm);
         }));
 
-        it('$scope.createNew() should create a new Form', inject(function(Forms) {
+        it('$scope.createNewForm() should create a new Form', inject(function(Forms) {
             var newForm = _.clone(sampleForm);
             newForm.name = 'Test Form5';
 
@@ -207,18 +207,14 @@
                 $dirty: true,
                 $valid: true,
             };
-            // scope.forms.createForm.language.$modelValue = 'english';
-            // scope.forms.createForm.name.$modelValue = 'Test Form5';
-            // scope.forms.createForm.$dirty = true;
-            // scope.forms.createForm.$invalid = false;
 
             //Set $state transition 
-            $state.expectTransitionTo('viewForm');
+            $state.expectTransitionTo('viewForm.create');
 
             // Set GET response
             $httpBackend.expect('POST', '/forms').respond(200, newForm);
 
-            scope.createNew();
+            scope.createNewForm();
 
             $httpBackend.flush();
             $state.ensureAllTransitionsHappened();

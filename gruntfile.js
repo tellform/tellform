@@ -8,7 +8,9 @@ module.exports = function(grunt) {
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
-		mochaTests: ['app/tests/**/*.js']
+		serverTests: ['app/tests/**/*.js'],
+		clientTests: ['public/modules/**/tests/*.js'],
+		allTests: ['public/modules/**/tests/*.js', 'app/tests/**/*.js'],
 	};
 
 	// Project Configuration
@@ -32,6 +34,7 @@ module.exports = function(grunt) {
 			},
 			clientViews: {
 				files: watchFiles.clientViews,
+				tasks: ['html2js:main'],
 				options: {
 					livereload: true,
 					spawn: false
@@ -54,7 +57,7 @@ module.exports = function(grunt) {
 				}
 			},
 			mochaTests: {
-				files: watchFiles.mochaTests,
+				files: watchFiles.serverTests,
 				tasks: ['test:server'],
 			}
 		},
@@ -166,6 +169,80 @@ module.exports = function(grunt) {
 				}
 			}
 	    },
+	    mocha_istanbul: {
+            coverage: {
+                src: watchFiles.allTests, // a folder works nicely
+                options: {
+                    mask: '*.test.js'
+                }
+            },
+            coverageClient: {
+                src: watchFiles.clientTests, // specifying file patterns works as well
+                options: {
+                    coverageFolder: 'coverageClient',
+                    mask: '*.test.js',
+                }
+            },
+            coverageServer: {
+                src: watchFiles.serverTests,
+                options: {
+                    coverageFolder: 'coverageServer',
+                    mask: '*.test.js',
+                }
+            },
+            coveralls: {
+                src: watchFiles.allTests, // multiple folders also works
+                options: {
+                    coverage:true, // this will make the grunt.event.on('coverage') event listener to be triggered
+                    check: {
+                        lines: 75,
+                        statements: 75
+                    },
+                    root: './lib', // define where the cover task should consider the root of libraries that are covered by tests
+                    reportFormats: ['cobertura','lcovonly']
+                }
+            }
+        },
+        istanbul_check_coverage: {
+          default: {
+            options: {
+              coverageFolder: 'coverage*', // will check both coverage folders and merge the coverage results
+              check: {
+                lines: 80,
+                statements: 80
+              }
+            }
+          }
+        },
+        html2js: {
+		  options: {
+		    base: 'NodeForm',
+		    module: 'NodeForm.templates',
+		    singleModule: true,
+		    useStrict: true,
+		    htmlmin: {
+		      collapseBooleanAttributes: true,
+		      collapseWhitespace: true,
+		      removeAttributeQuotes: true,
+		      removeComments: true,
+		      removeEmptyAttributes: true,
+		      removeRedundantAttributes: true,
+		    }
+		  },
+		  main: {
+		    src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html'],
+		    dest: 'public/populate_template_cache.js'
+		  }
+		}
+	});
+
+	grunt.event.on('coverage', function(lcov, done){
+	    require('coveralls').handleInput(lcov, function(err){
+	        if (err) {
+	            return done(err);
+	        }
+	        done();
+	    });
 	});
 
 	// Load NPM tasks
@@ -182,26 +259,33 @@ module.exports = function(grunt) {
 		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
 		grunt.config.set('applicationCSSFiles', config.assets.css);
 	});
-	grunt.loadNpmTasks('grunt-html2js');
 
+	grunt.loadNpmTasks('grunt-html2js');
+	grunt.loadNpmTasks('grunt-mocha-istanbul');
+
+	// Code coverage tasks.
+	grunt.registerTask('coveralls', ['mocha_istanbul:coveralls']);
+    grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
+    grunt.registerTask('coverage:client', ['mocha_istanbul:coverageClient']);
+    grunt.registerTask('coverage:server', ['mocha_istanbul:coverageServer']);
 
 	// Default task(s).
-	grunt.registerTask('default', ['lint', 'concurrent:default']);
+	grunt.registerTask('default', ['lint', 'html2js:main', 'concurrent:default']);
 
 	// Debug task.
-	grunt.registerTask('debug', ['lint', 'concurrent:debug']);
+	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
 
 	// Secure task(s).
-	grunt.registerTask('secure', ['env:secure', 'lint', 'concurrent:default']);
+	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'concurrent:default']);
 
 	// Lint task(s).
 	grunt.registerTask('lint', ['newer:jshint', 'newer:csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'uglify', 'cssmin', 'ngAnnotate' ]);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'uglify', 'cssmin', 'ngAnnotate', 'html2js:main']);
 
 	// Test task.
 	grunt.registerTask('test', ['test:server', 'test:client']);
-	grunt.registerTask('test:server', ['env:test', 'mochaTest']);
-	grunt.registerTask('test:client', ['env:test', 'karma:unit']);
+	grunt.registerTask('test:server', ['html2js:main', 'env:test', 'mochaTest']);
+	grunt.registerTask('test:client', ['html2js:main', 'env:test', 'karma:unit']);
 };
