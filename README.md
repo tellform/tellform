@@ -27,7 +27,6 @@ Currently following features are implemented:
 
 #TODO:
 	-Implement encryption for all form data
-	-Finish frontend/backend testing
 	-Integrate AWS for PDF saving
 	-Add Typeform API integration
 	-Add plugin/3rd party integration support (ala Slack)

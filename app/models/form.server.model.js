@@ -195,24 +195,24 @@ FormSchema.plugin(mUtilities.timestamp, {
 	modifiedPath: 'lastModified',
 	useVirtual: false
 });
-FormSchema.pre('save', function (next) {
+FormSchema.pre('init', function (next) {
 	var validUpdateTypes= mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
 	this.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
 
-	this.plugins.oscarhost.settings.validFields = [
-		'address',
-		'city',
-		'email',
-		'firstName',
-		'hin',
-		'lastName',
-		'phone',
-		'postal',
-		'province',
-		'sex',
-		'spokenLanguage',
-		'title',
-		'DOB'];
+	// this.plugins.oscarhost.settings.validFields = [
+	// 	'address',
+	// 	'city',
+	// 	'email',
+	// 	'firstName',
+	// 	'hin',
+	// 	'lastName',
+	// 	'phone',
+	// 	'postal',
+	// 	'province',
+	// 	'sex',
+	// 	'spokenLanguage',
+	// 	'title',
+	// 	'DOB'];
 	next();
 });
 //Delete template PDF of current Form
@@ -359,14 +359,12 @@ FormSchema.pre('save', function (next) {
 			next();
 
 		});
-	}else if(_original){
-		if(_original.pdf){
-			fs.remove(_original.pdf.path, function (err) {
-				if(err) next(err);
-				console.log('file at '+_original.pdf.path+' successfully deleted');
-				next();
-			});
-		}
+	}else if(_original.hasOwnProperty('pdf')){
+		fs.remove(_original.pdf.path, function (err) {
+			if(err) next(err);
+			console.log('file at '+_original.pdf.path+' successfully deleted');
+			next();
+		});
 	}
 	next();
 });

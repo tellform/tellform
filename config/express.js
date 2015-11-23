@@ -130,7 +130,7 @@ module.exports = function(db) {
 	app.use(passport.session());
 
 	// setup express-device
-	app.use(device.capture());
+	app.use(device.capture({ parseUserAgent: true }));
 
 	// connect flash for flash messages
 	app.use(flash());

@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for kiosk_form/app/models/form_submission.server.model.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">kiosk_form/app/models/</a> form_submission.server.model.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">9.52% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>8/84</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/35</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">10.26% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>8/78</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+/**
+ * Module dependencies.
+ */
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
+	pdfFiller = require('pdffiller'),
+	freegeoip = require('node-freegeoip'),
+	_ = require('lodash'),
+	config = require('../../config/config'),
+	path = require('path'),
+	fs = require('fs-extra'),
+	mUtilities = require('mongoose-utilities'),
+	soap = require('soap'),
+	async = require('async'),
+	FieldSchema = require('./form_field.server.model.js'),
+	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity');
+&nbsp;
+var newDemoTemplate = { 
+	address: '880-9650 Velit. St.',
+	city: '',
+	dateOfBirth: '10',
+	displayName: 'LITTLE, URIAH',
+	email: '',
+	firstName: 'Uriah F.',
+	hin: '',
+	lastName: 'Little',
+	lastUpdateDate: Date.now(),
+	monthOfBirth: '05',
+	officialLanguage: 'English',
+	phone: '250-',
+	phone2: '',
+	postal: 'S4M 7T8',
+	province: 'BC',
+	sex: 'F',
+	sexDesc: 'Female',
+	sin: '',
+	spokenLanguage: 'English',
+	title: 'MS.',
+	yearOfBirth: '2015' 
+};
+&nbsp;
+/** 
+ * Form Submission Schema
+ */
+var FormSubmissionSchema = new Schema({
+	title: {
+		type: String
+	},
+&nbsp;
+	admin: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+		required: true
+	},
+&nbsp;
+	form_fields: {
+		type: [Schema.Types.Mixed],
+	},
+&nbsp;
+	form: { 
+		type: Schema.Types.ObjectId, 
+		ref: 'Form', 
+		required: true
+	},
+&nbsp;
+	ipAddr: {
+		type: String,
+	},
+	geoLocation: {
+		Country: {
+			type: String,
+		},
+		Region: {
+			type: String,
+		},
+		City: {
+			type: String,
+		}
+	},
+	device: {
+		type: {
+			type: String,
+		},
+		name: {
+			type: String,
+		}
+	},
+&nbsp;
+	pdfFilePath: {
+		type: Schema.Types.Mixed,
+	},
+	pdf: {
+		type: Schema.Types.Mixed,
+	},
+	fdfData: {
+		type: Schema.Types.Mixed,
+	},
+&nbsp;
+	timeElapsed: { 
+		type: Number,
+	}, 
+	percentageComplete: {
+		type: Number,
+	},
+&nbsp;
+	//TODO: DAVID: Need to not have this hardcoded
+	oscarDemoNum: {
+		type: Number,
+	},
+&nbsp;
+	hasPlugins: {
+		oscarhost: {
+			type: Boolean,
+			default: false,
+		}
+	}
+&nbsp;
+});
+&nbsp;
+FormSubmissionSchema.plugin(mUtilities.timestamp, {
+	createdPath: 'created',
+	modifiedPath: 'lastModified',
+	useVirtual: false
+});
+&nbsp;
+//Oscarhost API hook
+FormSubmissionSchema.pre('save', <span class="fstat-no" title="function not covered" >function (next) {</span>
+	
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if(this.hasPlugins.oscarhost){</span>
+<span class="cstat-no" title="statement not covered" >		mongoose.model('Form').findById(self.form, <span class="fstat-no" title="function not covered" >function(err, _form){</span></span>
+<span class="cstat-no" title="statement not covered" >			var form_ids = _.map(_.pluck(_form.form_fields, '_id'), <span class="fstat-no" title="function not covered" >function(id){</span> <span class="cstat-no" title="statement not covered" >return ''+id;}</span>),</span>
+				submission_ids = _.pluck(self.form_fields, '_id');
+&nbsp;
+			// console.log('Form form_field ids\n--------');
+			// console.log(form_ids);
+			// console.log('FormSubmission [form_field ids]\n--------');
+			// console.log(submission_ids);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			if(err) <span class="cstat-no" title="statement not covered" >next(err);</span></span>
+			// console.log(_form);
+			// console.log('should push to api');
+			// console.log( (!this.oscarDemoNum &amp;&amp; !!_form.plugins.oscarhost.baseUrl &amp;&amp; !!_form.plugins.oscarhost.settings.fieldMap) );
+<span class="cstat-no" title="statement not covered" >			if(!this.oscarDemoNum &amp;&amp; _form.plugins.oscarhost.baseUrl &amp;&amp; _form.plugins.oscarhost.settings.fieldMap){</span>
+<span class="cstat-no" title="statement not covered" >				console.log('OSCARHOST API HOOK');</span>
+<span class="cstat-no" title="statement not covered" >		 		var url_login = _form.plugins.oscarhost.baseUrl+'/LoginService?wsdl',</span>
+		 			url_demo = _form.plugins.oscarhost.baseUrl+'/DemographicService?wsdl';
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		 		var args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		 		var options = {</span>
+		 		    ignoredNamespaces: {
+		 		        namespaces: ['targetNamespace', 'typedNamespace'],
+		 		        override: true
+		 		    }
+		 		};
+		 		// console.log(self.form_fields);
+&nbsp;
+		 		//Generate demographics from hashmap
+<span class="cstat-no" title="statement not covered" >		 		var generateDemo = <span class="fstat-no" title="function not covered" >function(formFields, conversionMap, demographicsTemplate){</span></span>
+<span class="cstat-no" title="statement not covered" >		 			console.log('generating Demo fields');</span>
+<span class="cstat-no" title="statement not covered" >		 			console.log(conversionMap);</span>
+<span class="cstat-no" title="statement not covered" >		 			var _generatedDemo = {}, currField, propertyName;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		 			for(var y=0; y&lt;formFields.length; y++){</span>
+<span class="cstat-no" title="statement not covered" >		 				currField = formFields[y];</span>
+<span class="cstat-no" title="statement not covered" >		 				propertyName = conversionMap[currField._id];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		 				if(demographicsTemplate.hasOwnProperty(conversionMap[currField._id])){</span>
+<span class="cstat-no" title="statement not covered" >		 					_generatedDemo[propertyName] = currField.fieldValue+'';</span>
+		 				}else <span class="cstat-no" title="statement not covered" >if(propertyName === 'DOB'){</span>
+<span class="cstat-no" title="statement not covered" >	 						var date = new Date(currField.fieldValue);</span>
+<span class="cstat-no" title="statement not covered" >	 						_generatedDemo.dateOfBirth = date.getDate()+'';</span>
+<span class="cstat-no" title="statement not covered" >	 						_generatedDemo.yearOfBirth = date.getFullYear()+'';</span>
+<span class="cstat-no" title="statement not covered" >	 						_generatedDemo.monthOfBirth = date.getMonth()+'';			</span>
+		 				}
+		 			}
+<span class="cstat-no" title="statement not covered" >		 			var currDate = new Date();</span>
+<span class="cstat-no" title="statement not covered" >		 			var dateString = currDate.toISOString().split('T')[0] + ' ' + currDate.toISOString().split('T')[1].slice(0,8);</span>
+<span class="cstat-no" title="statement not covered" >		 			_generatedDemo.lastUpdateDate = currDate.toISOString();</span>
+<span class="cstat-no" title="statement not covered" >		 			return _generatedDemo;</span>
+		 		};
+		 		
+<span class="cstat-no" title="statement not covered" >		 		var submissionDemographic = generateDemo(self.form_fields, _form.plugins.oscarhost.settings.fieldMap, newDemoTemplate);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		 		console.log(submissionDemographic);</span>
+<span class="cstat-no" title="statement not covered" >				async.waterfall([</span>
+<span class="fstat-no" title="function not covered" >					function (callback) {	</span>
+						//Authenticate with API
+<span class="cstat-no" title="statement not covered" >						soap.createClient(url_login, options, <span class="fstat-no" title="function not covered" >function(err, client) {</span></span>
+<span class="cstat-no" title="statement not covered" >							client.login(args_login, <span class="fstat-no" title="function not covered" >function (err, result) {</span></span>
+<span class="cstat-no" title="statement not covered" >								if(err) <span class="cstat-no" title="statement not covered" >callback(err);</span></span>
+<span class="cstat-no" title="statement not covered" >								console.log('SOAP authenticated');</span>
+<span class="cstat-no" title="statement not covered" >								callback(null, result.return);</span>
+							});
+						});
+					},
+&nbsp;
+<span class="fstat-no" title="function not covered" >					function (security_obj, callback) {</span>
+						//Force Add Demographic
+<span class="cstat-no" title="statement not covered" >						if(_form.plugins.oscarhost.settings.updateType === 'force_add'){</span>
+<span class="cstat-no" title="statement not covered" >							soap.createClient(url_demo, options, <span class="fstat-no" title="function not covered" >function(err, client) {</span></span>
+<span class="cstat-no" title="statement not covered" >								client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >								client.addDemographic({ arg0: submissionDemographic }, <span class="fstat-no" title="function not covered" >function (err, result) {</span></span>
+<span class="cstat-no" title="statement not covered" >									console.log('FORCE ADDING DEMOGRAPHIC \n');</span>
+									// console.log(result.return);
+<span class="cstat-no" title="statement not covered" >									if(err) <span class="cstat-no" title="statement not covered" >callback(err);</span></span>
+<span class="cstat-no" title="statement not covered" >									callback(null, result);</span>
+								});
+							});
+						}
+					},
+&nbsp;
+				], <span class="fstat-no" title="function not covered" >function(err, result) {</span>
+<span class="cstat-no" title="statement not covered" >					if(err) <span class="cstat-no" title="statement not covered" >next(err);</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >					self.oscarDemoNum = parseInt(result.return, 10);</span>
+<span class="cstat-no" title="statement not covered" >					console.log('self.oscarDemoNum: '+self.oscarDemoNum);</span>
+<span class="cstat-no" title="statement not covered" >					next();</span>
+				});	
+			}else{
+<span class="cstat-no" title="statement not covered" >				next();</span>
+			}
+		});
+	}else{
+<span class="cstat-no" title="statement not covered" >		next();</span>
+	}
+&nbsp;
+});
+&nbsp;
+//Check for IP Address of submitting person 
+FormSubmissionSchema.pre('save', <span class="fstat-no" title="function not covered" >function (next){</span>
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+<span class="cstat-no" title="statement not covered" >	if(this.ipAddr){</span>
+<span class="cstat-no" title="statement not covered" >		if(this.isModified('ipAddr') || !this.geoLocation){</span>
+<span class="cstat-no" title="statement not covered" >			freegeoip.getLocation(this.ipAddr, <span class="fstat-no" title="function not covered" >function(err, location){</span></span>
+<span class="cstat-no" title="statement not covered" >				if(err) <span class="cstat-no" title="statement not covered" >next(err);</span></span>
+<span class="cstat-no" title="statement not covered" >				self.geoLocation = JSON.parse(location);</span>
+<span class="cstat-no" title="statement not covered" >				next();</span>
+			});
+		}
+	}
+<span class="cstat-no" title="statement not covered" >	next();</span>
+});
+&nbsp;
+//Generate autofilled PDF if flags are set 
+FormSubmissionSchema.pre('save', <span class="fstat-no" title="function not covered" >function (next) {</span>
+<span class="cstat-no" title="statement not covered" >	var fdfData, dest_filename, dest_path,</span>
+		self = this,
+		_form = this.form;
+	
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if(this.pdf &amp;&amp; this.pdf.path){</span>
+<span class="cstat-no" title="statement not covered" >		dest_filename = self.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';</span>
+<span class="cstat-no" title="statement not covered" >		var __path = this.pdf.path.split('/').slice(0,this.pdf.path.split('/').length-1).join('/');</span>
+<span class="cstat-no" title="statement not covered" >		dest_path = path.join(__path, dest_filename);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		self.pdfFilePath = dest_path;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		pdfFiller.fillForm(self.pdf.path, dest_path, self.fdfData, <span class="fstat-no" title="function not covered" >function(err){</span></span>
+<span class="cstat-no" title="statement not covered" >			if(err) {</span>
+<span class="cstat-no" title="statement not covered" >				console.log('\n err.message: '+err.message);</span>
+<span class="cstat-no" title="statement not covered" >				next( new Error(err.message) );</span>
+			}
+<span class="cstat-no" title="statement not covered" >			console.log('Field data from Form: '+self.title.replace(/ /g,'')+' outputed to new PDF: '+dest_path);</span>
+<span class="cstat-no" title="statement not covered" >			next();</span>
+		});
+	} else {
+<span class="cstat-no" title="statement not covered" >		next();</span>
+	}
+});
+&nbsp;
+module.exports = FormSubmissionSchema;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 23 2015 12:06:03 GMT-0800 (PST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

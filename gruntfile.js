@@ -144,7 +144,7 @@ module.exports = function(grunt) {
 			}
 		},
 		mochaTest: {
-			src: watchFiles.mochaTests,
+			src: watchFiles.serverTests,
 			options: {
 				reporter: 'spec',
 				quiet: false, 
@@ -173,7 +173,8 @@ module.exports = function(grunt) {
             coverage: {
                 src: watchFiles.allTests, // a folder works nicely
                 options: {
-                    mask: '*.test.js'
+                    mask: '*.test.js',
+                    require: ['server.js'],
                 }
             },
             coverageClient: {
@@ -181,6 +182,7 @@ module.exports = function(grunt) {
                 options: {
                     coverageFolder: 'coverageClient',
                     mask: '*.test.js',
+                    require: ['server.js'],
                 }
             },
             coverageServer: {
@@ -188,12 +190,14 @@ module.exports = function(grunt) {
                 options: {
                     coverageFolder: 'coverageServer',
                     mask: '*.test.js',
+                    require: ['server.js'],
                 }
             },
             coveralls: {
                 src: watchFiles.allTests, // multiple folders also works
                 options: {
-                    coverage:true, // this will make the grunt.event.on('coverage') event listener to be triggered
+                	require: ['server.js'],
+                    coverage: true, // this will make the grunt.event.on('coverage') event listener to be triggered
                     check: {
                         lines: 75,
                         statements: 75
@@ -265,9 +269,9 @@ module.exports = function(grunt) {
 
 	// Code coverage tasks.
 	grunt.registerTask('coveralls', ['mocha_istanbul:coveralls']);
-    grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
-    grunt.registerTask('coverage:client', ['mocha_istanbul:coverageClient']);
-    grunt.registerTask('coverage:server', ['mocha_istanbul:coverageServer']);
+    grunt.registerTask('coverage', ['env:test', 'mocha_istanbul:coverage']);
+    grunt.registerTask('coverage:client', ['env:test', 'mocha_istanbul:coverageClient']);
+    grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'html2js:main', 'concurrent:default']);

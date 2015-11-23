@@ -107,6 +107,8 @@ exports.createSubmission = function(req, res) {
 		percentageComplete: req.body.percentageComplete
 	});
 
+	if(!!form.plugins.oscarhost.baseUrl) submission.hasPlugins.oscarhost == true;
+
 	if(form.pdf) submission.pdf = form.pdf;
 
 	//Save submitter's IP Address

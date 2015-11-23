@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	pdfFiller = require('pdffiller'),
-	satelize = require('satelize'),
+	freegeoip = require('node-freegeoip'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
@@ -69,7 +69,15 @@ var FormSubmissionSchema = new Schema({
 		type: String,
 	},
 	geoLocation: {
-		type: Schema.Types.Mixed,
+		Country: {
+			type: String,
+		},
+		Region: {
+			type: String,
+		},
+		City: {
+			type: String,
+		}
 	},
 	device: {
 		type: {
@@ -100,6 +108,13 @@ var FormSubmissionSchema = new Schema({
 	//TODO: DAVID: Need to not have this hardcoded
 	oscarDemoNum: {
 		type: Number,
+	},
+
+	hasPlugins: {
+		oscarhost: {
+			type: Boolean,
+			default: false,
+		}
 	}
 
 });
@@ -114,112 +129,117 @@ FormSubmissionSchema.plugin(mUtilities.timestamp, {
 FormSubmissionSchema.pre('save', function (next) {
 	
 	var self = this;
-	mongoose.model('Form').findById(self.form, function(err, _form){
-		var form_ids = _.map(_.pluck(_form.form_fields, '_id'), function(id){ return ''+id;}),
-			submission_ids = _.pluck(self.form_fields, '_id');
 
-		// console.log('Form form_field ids\n--------');
-		// console.log(form_ids);
-		// console.log('FormSubmission [form_field ids]\n--------');
-		// console.log(submission_ids);
+	if(this.hasPlugins.oscarhost){
+		mongoose.model('Form').findById(self.form, function(err, _form){
+			var form_ids = _.map(_.pluck(_form.form_fields, '_id'), function(id){ return ''+id;}),
+				submission_ids = _.pluck(self.form_fields, '_id');
 
-		if(err) next(err);
-		// console.log(_form);
-		// console.log('should push to api');
-		// console.log( (!this.oscarDemoNum && !!_form.plugins.oscarhost.baseUrl && !!_form.plugins.oscarhost.settings.fieldMap) );
-		if(!this.oscarDemoNum && _form.plugins.oscarhost.baseUrl && _form.plugins.oscarhost.settings.fieldMap){
-			console.log('OSCARHOST API HOOK');
-	 		var url_login = _form.plugins.oscarhost.baseUrl+'/LoginService?wsdl',
-	 			url_demo = _form.plugins.oscarhost.baseUrl+'/DemographicService?wsdl';
+			// console.log('Form form_field ids\n--------');
+			// console.log(form_ids);
+			// console.log('FormSubmission [form_field ids]\n--------');
+			// console.log(submission_ids);
 
-	 		var args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};
+			if(err) next(err);
+			// console.log(_form);
+			// console.log('should push to api');
+			// console.log( (!this.oscarDemoNum && !!_form.plugins.oscarhost.baseUrl && !!_form.plugins.oscarhost.settings.fieldMap) );
+			if(!this.oscarDemoNum && _form.plugins.oscarhost.baseUrl && _form.plugins.oscarhost.settings.fieldMap){
+				console.log('OSCARHOST API HOOK');
+		 		var url_login = _form.plugins.oscarhost.baseUrl+'/LoginService?wsdl',
+		 			url_demo = _form.plugins.oscarhost.baseUrl+'/DemographicService?wsdl';
 
-	 		var options = {
-	 		    ignoredNamespaces: {
-	 		        namespaces: ['targetNamespace', 'typedNamespace'],
-	 		        override: true
-	 		    }
-	 		};
-	 		// console.log(self.form_fields);
+		 		var args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};
 
-	 		//Generate demographics from hashmap
-	 		var generateDemo = function(formFields, conversionMap, demographicsTemplate){
-	 			console.log('generating Demo fields');
-	 			console.log(conversionMap);
-	 			var _generatedDemo = {}, currField, propertyName;
+		 		var options = {
+		 		    ignoredNamespaces: {
+		 		        namespaces: ['targetNamespace', 'typedNamespace'],
+		 		        override: true
+		 		    }
+		 		};
+		 		// console.log(self.form_fields);
 
-	 			for(var y=0; y<formFields.length; y++){
-	 				currField = formFields[y];
-	 				propertyName = conversionMap[currField._id];
+		 		//Generate demographics from hashmap
+		 		var generateDemo = function(formFields, conversionMap, demographicsTemplate){
+		 			console.log('generating Demo fields');
+		 			console.log(conversionMap);
+		 			var _generatedDemo = {}, currField, propertyName;
 
-	 				if(demographicsTemplate.hasOwnProperty(conversionMap[currField._id])){
-	 					_generatedDemo[propertyName] = currField.fieldValue+'';
-	 				}else if(propertyName === 'DOB'){
- 						var date = new Date(currField.fieldValue);
- 						_generatedDemo.dateOfBirth = date.getDate()+'';
- 						_generatedDemo.yearOfBirth = date.getFullYear()+'';
- 						_generatedDemo.monthOfBirth = date.getMonth()+'';			
-	 				}
-	 			}
-	 			var currDate = new Date();
-	 			var dateString = currDate.toISOString().split('T')[0] + ' ' + currDate.toISOString().split('T')[1].slice(0,8);
-	 			_generatedDemo.lastUpdateDate = currDate.toISOString();
-	 			return _generatedDemo;
-	 		};
-	 		
-	 		var submissionDemographic = generateDemo(self.form_fields, _form.plugins.oscarhost.settings.fieldMap, newDemoTemplate);
+		 			for(var y=0; y<formFields.length; y++){
+		 				currField = formFields[y];
+		 				propertyName = conversionMap[currField._id];
 
-	 		console.log(submissionDemographic);
-			async.waterfall([
-				function (callback) {	
-					//Authenticate with API
-					soap.createClient(url_login, options, function(err, client) {
-						client.login(args_login, function (err, result) {
-							if(err) callback(err);
-							console.log('SOAP authenticated');
-							callback(null, result.return);
-						});
-					});
-				},
+		 				if(demographicsTemplate.hasOwnProperty(conversionMap[currField._id])){
+		 					_generatedDemo[propertyName] = currField.fieldValue+'';
+		 				}else if(propertyName === 'DOB'){
+	 						var date = new Date(currField.fieldValue);
+	 						_generatedDemo.dateOfBirth = date.getDate()+'';
+	 						_generatedDemo.yearOfBirth = date.getFullYear()+'';
+	 						_generatedDemo.monthOfBirth = date.getMonth()+'';			
+		 				}
+		 			}
+		 			var currDate = new Date();
+		 			var dateString = currDate.toISOString().split('T')[0] + ' ' + currDate.toISOString().split('T')[1].slice(0,8);
+		 			_generatedDemo.lastUpdateDate = currDate.toISOString();
+		 			return _generatedDemo;
+		 		};
+		 		
+		 		var submissionDemographic = generateDemo(self.form_fields, _form.plugins.oscarhost.settings.fieldMap, newDemoTemplate);
 
-				function (security_obj, callback) {
-					//Force Add Demographic
-					if(_form.plugins.oscarhost.settings.updateType === 'force_add'){
-						soap.createClient(url_demo, options, function(err, client) {
-							client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
-
-							client.addDemographic({ arg0: submissionDemographic }, function (err, result) {
-								console.log('FORCE ADDING DEMOGRAPHIC \n');
-								// console.log(result.return);
+		 		console.log(submissionDemographic);
+				async.waterfall([
+					function (callback) {	
+						//Authenticate with API
+						soap.createClient(url_login, options, function(err, client) {
+							client.login(args_login, function (err, result) {
 								if(err) callback(err);
-								callback(null, result);
+								console.log('SOAP authenticated');
+								callback(null, result.return);
 							});
 						});
-					}
-				},
+					},
 
-			], function(err, result) {
-				if(err) next(err);
+					function (security_obj, callback) {
+						//Force Add Demographic
+						if(_form.plugins.oscarhost.settings.updateType === 'force_add'){
+							soap.createClient(url_demo, options, function(err, client) {
+								client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
 
-				self.oscarDemoNum = parseInt(result.return, 10);
-				console.log('self.oscarDemoNum: '+self.oscarDemoNum);
+								client.addDemographic({ arg0: submissionDemographic }, function (err, result) {
+									console.log('FORCE ADDING DEMOGRAPHIC \n');
+									// console.log(result.return);
+									if(err) callback(err);
+									callback(null, result);
+								});
+							});
+						}
+					},
+
+				], function(err, result) {
+					if(err) next(err);
+
+					self.oscarDemoNum = parseInt(result.return, 10);
+					console.log('self.oscarDemoNum: '+self.oscarDemoNum);
+					next();
+				});	
+			}else{
 				next();
-			});	
-		}else{
-			next();
-		}
-	});
+			}
+		});
+	}else{
+		next();
+	}
+
 });
 
 //Check for IP Address of submitting person 
 FormSubmissionSchema.pre('save', function (next){
 	var self = this;
 	if(this.ipAddr){
-		if(this.isModified('ipAddr')){
-			satelize.satelize({ip: this.ipAddr}, function(err, geoData){
-				if (err) next( new Error(err.message) );
-
-				self.geoLocation = JSON.parse(geoData);
+		if(this.isModified('ipAddr') || !this.geoLocation){
+			freegeoip.getLocation(this.ipAddr, function(err, location){
+				if(err) next(err);
+				self.geoLocation = JSON.parse(location);
 				next();
 			});
 		}
