@@ -69,3 +69,9 @@ mongod
 *.swp
 logs/
 build/
+
+#Coverage
+# =======
+coverage/
+coverageServer/
+coverageClient/
