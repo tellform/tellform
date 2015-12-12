@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = function(grunt) {
+	require('jit-grunt')(grunt);
+
 	// Unified Watch Object
 	var watchFiles = {
 		serverViews: ['app/views/**/*.*'],
@@ -258,9 +260,6 @@ module.exports = function(grunt) {
 	    });
 	});
 
-	// Load NPM tasks
-	require('load-grunt-tasks')(grunt);
-
 	// Making grunt default to force in order not to break the project.
 	grunt.option('force', true);
 
@@ -273,8 +272,6 @@ module.exports = function(grunt) {
 		grunt.config.set('applicationCSSFiles', config.assets.css);
 	});
 
-	grunt.loadNpmTasks('grunt-html2js');
-	grunt.loadNpmTasks('grunt-mocha-istanbul');
 
 	// Code coverage tasks.
 	grunt.registerTask('coveralls', ['mocha_istanbul:coveralls']);
@@ -300,6 +297,6 @@ module.exports = function(grunt) {
 
 	// Test task.
 	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);
-	grunt.registerTask('test:server', ['lint:tests', 'html2js:main', 'env:test', 'mochaTest']);
+	grunt.registerTask('test:server', ['lint:tests', 'env:test', 'mochaTest']);
 	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'env:test', 'karma:unit']);
 };

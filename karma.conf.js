@@ -10,6 +10,9 @@ var bowerDep = bowerFiles('**/**.js');
 
 // Karma configuration
 module.exports = function(config) {
+	var shouldBeSingleRun = false
+	if(process.env.NODE_ENV === 'travis') shouldBeSingleRun = true
+
 	config.set({
 		// Frameworks to use
 		frameworks: ['jasmine'],
@@ -72,6 +75,6 @@ module.exports = function(config) {
 
 		// Continuous Integration mode
 		// If true, it capture browsers, run tests and exit
-		singleRun: false
+		singleRun: shouldBeSingleRun
 	});
 };

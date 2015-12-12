@@ -1,17 +1,14 @@
 language: node_js
+sudo: false
 node_js:
-  - "0.10"
-  - "0.11"
+  - "5.0.0"
+  - "4.0.0"
 env:
   - NODE_ENV=travis
 services:
   - mongodb
-# before_install: 
-# 	- npm install -g grunt-cli
-# 	- npm install -g bower
-# install: 
-# 	- npm install
-# 	- bower install --config.interactive=false
-# before_scripts:
-# 	- grunt build
-
+addons:
+	code_climate:
+	    repo_token: 6c3a1b81a09b2338d6f30913c1bcad115026689752cbb499a0a25061cda6fbcf
+after_script:
+  - grunt coverage

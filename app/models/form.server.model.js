@@ -195,24 +195,15 @@ FormSchema.plugin(mUtilities.timestamp, {
 	modifiedPath: 'lastModified',
 	useVirtual: false
 });
-FormSchema.pre('init', function (next) {
-	var validUpdateTypes= mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
-	this.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
 
-	// this.plugins.oscarhost.settings.validFields = [
-	// 	'address',
-	// 	'city',
-	// 	'email',
-	// 	'firstName',
-	// 	'hin',
-	// 	'lastName',
-	// 	'phone',
-	// 	'postal',
-	// 	'province',
-	// 	'sex',
-	// 	'spokenLanguage',
-	// 	'title',
-	// 	'DOB'];
+//DAVID: TODO: Make this so we don't have to update the validFields property ever save
+FormSchema.pre('save', function (next) {
+
+	if(this.plugins.oscarhost.hasOwnProperty('baseUrl')){
+		var validUpdateTypes= mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
+		this.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
+	}
+
 	next();
 });
 //Delete template PDF of current Form

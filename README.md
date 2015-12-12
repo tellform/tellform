@@ -1,16 +1,15 @@
 TellForm
---------
+========
 
 Current stable release: v1.2.1
 
 [![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
-[![Dependencies Status](https://david-dm.org/whitef0x0/tellform.svg)](https://david-dm.org/whitef0x0/tellform)
-[![devDependency Status](https://david-dm.org/whitef0x0/tellform/dev-status.svg)](https://david-dm.org/whitef0x0/tellform#info=devDependencies)
+[![Dependency Status](https://gemnasium.com/whitef0x0/tellform.svg)](https://gemnasium.com/whitef0x0/tellform)
 [![Coverage Status](https://coveralls.io/repos/whitef0x0/tellform/badge.svg?branch=master&service=github)](https://coveralls.io/github/whitef0x0/tellform?branch=master)
+[![Code Climate](https://codeclimate.com/github/whitef0x0/tellform/badges/gpa.svg)](https://codeclimate.com/github/whitef0x0/tellform)
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-
-TellForm is an opensource alternative to *TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
+TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
 Currently following features are implemented:
 
@@ -112,26 +111,5 @@ After you've generated the key and certificate, place them in the *config/sslcer
 
 
 ## Credits
-Inspired/built off great work of the meanjs team [MeanJS](https://github.com/mean/)
+Inspired/built off the great work of the [MeanJS team](https://github.com/mean/).
 
-## License
-(The MIT License)
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
