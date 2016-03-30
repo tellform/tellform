@@ -93,7 +93,6 @@ exports.resendVerificationEmail = function(req, res, next){
  * Signup
  */
 exports.signup = function(req, res) {
-	console.log(req.body);
 	// For security measures we remove the roles from the req.body object
 	if (req.body) {
 		delete req.body.roles;
@@ -127,7 +126,6 @@ exports.signup = function(req, res) {
 								message: errorHandler.getErrorMessage(err)
 							});
 						} else {
-							console.log('new tmpuser registered');
 							return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 						}
 					});
@@ -146,7 +144,6 @@ exports.signup = function(req, res) {
  * Signin after passport authentication
  */
 exports.signin = function(req, res, next) {
-	console.log(req);
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
 			res.status(400).send(info);
@@ -174,8 +171,9 @@ exports.signin = function(req, res, next) {
  */
 exports.signout = function(req, res) {
 	req.logout();
-	res.redirect('/');
-	return res.end();
+	//res.redirect('/');
+	return res.status(200).send('You have successfully logged out.');
+
 };
 
 /**

@@ -15,20 +15,19 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, user, userSession;
+var credentials, user;
 
 /**
  * Form routes tests
  */
-describe('Form Routes Unit tests', function() {
+describe('Form Submission Routes Unit tests', function() {
 	var FormObj, _Submission, submissionSession;
-	beforeEach(function(done) {
 
-		//Initialize Session
-		userSession = new Session();
+	beforeEach(function(done) {
 
 		// Create user credentials
 		credentials = {
+			email: 	  'test@test.com',
 			username: 'test@test.com',
 			password: 'password'
 		};
@@ -46,7 +45,7 @@ describe('Form Routes Unit tests', function() {
 		// Save a user to the test db and create new Form
 		user.save(function(err) {
 			if(err) return done(err);
-			FormObj = {
+			FormObj = new Form({
 				title: 'Form Title',
 				language: 'english',
 				admin: user._id,
@@ -55,7 +54,7 @@ describe('Form Routes Unit tests', function() {
 					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
 					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
 				]
-			};
+			});
 
 			FormObj.save(function(err, form) {
 				if (err) done(err);
@@ -74,8 +73,8 @@ describe('Form Routes Unit tests', function() {
 
 				FormObj = form;
 
-				//Setup test session
-				submissionSession = new Session();
+				//Initialize Session
+				submissionSession = Session(app);
 
 				done();
 			});
@@ -98,21 +97,21 @@ describe('Form Routes Unit tests', function() {
 	});
 
 	it(' > should be able to get Form Submissions if signed in', function(done) {
-		submissionSession.post('/auth/signin')
-			.send(credentials)
-			.expect('Content-Type', /json/)
+		//Create Submission
+		submissionSession.post('/forms/' + FormObj._id)
+			.send(_Submission)
 			.expect(200)
-			.end(function(signinErr, signinRes) {
+			.end(function(err, res) {
 
-				should.not.exist(signinErr);
+				should.not.exist(err);
 
-				//Create Submission
-				submissionSession.post('/forms/' + FormObj._id)
-					.send(_Submission)
+				submissionSession.post('/auth/signin')
+					.send(credentials)
+					.expect('Content-Type', /json/)
 					.expect(200)
-					.end(function(err, res) {
+					.end(function(signinErr, signinRes) {
 
-						should.not.exist(err);
+						should.not.exist(signinErr);
 
 						submissionSession.get('/forms/' + FormObj._id + '/submissions')
 							.expect('Content-Type', /json/)
@@ -129,44 +128,6 @@ describe('Form Routes Unit tests', function() {
 			});
 	});
 
-	it(' > should not be able to get Form Submissions if not signed in', function(done) {
-		// Attempt to fetch form submissions
-		submissionSession.get('/forms/' + FormObj._id + '/submissions')
-			.expect(401)
-			.end(function(err, res) {
-
-				// Set assertions
-				(res.body.message).should.equal('User is not logged in');
-
-				// Call the assertion callback
-				done();
-			});
-	});
-
-	it(' > should not be able to delete Form Submission if not signed in', function(done) {
-		var SubmissionObj = new FormSubmission(_Submission);
-
-		SubmissionObj.save(function (err, submission) {
-			should.not.exist(err);
-
-			var submission_ids = _.pluck([submission], '_id');
-
-			// Attempt to delete form submissions
-			submissionSession.delete('/forms/' + FormObj._id + '/submissions')
-				.send({deleted_submissions: submission_ids})
-				.expect(401)
-				.end(function(err, res) {
-
-					// Set assertions
-					should.not.exist(err);
-					(res.body.message).should.equal('User is not logged in');
-
-					// Call the assertion callback
-					done();
-				});
-		});
-	});
-
 	it(' > should be able to delete Form Submission if signed in', function(done) {
 		// Create new FormSubmission model instance
 		var SubmissionObj = new FormSubmission(_Submission);
@@ -174,14 +135,14 @@ describe('Form Routes Unit tests', function() {
 		SubmissionObj.save(function (err, submission) {
 			should.not.exist(err);
 
-			// Signin as user
+			// Sign n as user
 			submissionSession.post('/auth/signin')
 				.send(credentials)
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(signinErr, signinRes) {
 					// Handle signin error
-					if (signinErr) return done(signinErr);
+					should.not.exist(signinErr);
 
 					var submission_ids = _.pluck([submission], '_id');
 
@@ -198,6 +159,46 @@ describe('Form Routes Unit tests', function() {
 							// Call the assertion callback
 							done();
 						});
+				});
+		});
+	});
+
+	it(' > should not be able to get Form Submissions if not signed in', function(done) {
+		// Attempt to fetch form submissions
+		submissionSession.get('/forms/' + FormObj._id + '/submissions')
+			.expect(401)
+			.end(function(err, res) {
+				should.not.exist(err);
+
+				// Set assertions
+				(res.body.message).should.equal('User is not logged in');
+
+				// Call the assertion callback
+				done();
+			});
+
+	});
+
+	it(' > should not be able to delete Form Submission if not signed in', function(done) {
+		var SubmissionObj = new FormSubmission(_Submission);
+
+		SubmissionObj.save(function (err, submission) {
+			should.not.exist(err);
+
+			var submission_ids = _.pluck([submission], '_id');
+
+			// Attempt to delete form submissions
+			submissionSession.delete('/forms/' + FormObj._id + '/submissions')
+				.send({deleted_submissions: submission_ids})
+				.expect(401)
+				.end(function (err, res) {
+
+					// Set assertions
+					should.not.exist(err);
+					(res.body.message).should.equal('User is not logged in');
+
+					// Call the assertion callback
+					done();
 				});
 		});
 	});

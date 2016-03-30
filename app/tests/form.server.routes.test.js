@@ -4,7 +4,7 @@ var should = require('should'),
 	lodash = require('lodash'),
 	app = require('../../server'),
 	request = require('supertest'),
-	session = require('supertest-session'),
+	Session = require('supertest-session'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Form = mongoose.model('Form'),
@@ -20,12 +20,13 @@ describe('Form Routes Unit tests', function() {
 	/**
 	 * Globals
 	 */
-	var credentials, user, myForm, userSession = null;
+	this.timeout(15000);
+	var credentials, user, myForm, userSession;
 
 	beforeEach(function(done) {
 
 		//Initialize Session
-		userSession = session(app);
+		userSession = Session(app);
 
 		// Create user credentials
 		credentials = {
@@ -38,7 +39,7 @@ describe('Form Routes Unit tests', function() {
 			firstName: 'Full',
 			lastName: 'Name',
 			displayName: 'Full Name',
-			email: 'test1@test.com',
+			email: 'test5@test.com',
 			username: credentials.username,
 			password: credentials.password,
 			provider: 'local'
@@ -50,20 +51,19 @@ describe('Form Routes Unit tests', function() {
 			myForm = {
 				title: 'Form Title',
 				language: 'english',
-				admin: user.lodashid,
-				formlodashfields: [
+				admin: user.id,
+				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
 					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
 					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
 				]
 			};
-
 			done();
 		});
 	});
 
 	describe(' > Login and Save a new Form >', function() {
-		var lodashuser, lodashform;
+		var _user, _form;
 		before(function(done){
 			userSession.post('/auth/signin')
 				.send(credentials)
@@ -74,7 +74,7 @@ describe('Form Routes Unit tests', function() {
 					// Handle signin error
 					if (signinErr) return done(signinErr);
 
-					lodashuser = signinRes.body;
+					_user = signinRes.body;
 					done();
 				});
 		});
@@ -87,14 +87,14 @@ describe('Form Routes Unit tests', function() {
 				.end(function(FormSaveErr, FormSaveRes) {
 					// Handle Form save error
 					if (FormSaveErr) return done(FormSaveErr);
-					lodashform = FormSaveRes.body;
+					_form = FormSaveRes.body;
 					done();
 				});
 		});
 		it(' > should be able to fetch newly created form', function(done){
 
 				// Get a list of Forms
-				userSession.get('/forms/'+lodashform.lodashid)
+				userSession.get('/forms/'+_form._id)
 					.expect('Content-Type', /json/)
 					.expect(200)
 					.end(function(FormsGetErr, FormsGetRes) {
@@ -103,8 +103,8 @@ describe('Form Routes Unit tests', function() {
 
 						var fetchedForm = FormsGetRes.body;
 						// Set assertions
-						(fetchedForm.admin).should.equal(lodashuser.lodashid);
-						(fetchedForm.title).should.match(lodashform.title);
+						(fetchedForm.admin).should.equal(_user._id);
+						(fetchedForm.title).should.match(_form.title);
 
 						// Call the assertion callback
 						done();
@@ -147,18 +147,13 @@ describe('Form Routes Unit tests', function() {
 		// Set Form with a invalid title field
 		myForm.title = '';
 
-		agent.post('/auth/signin')
+		agent.post('http://localhost:3001/auth/signin')
 			.send(credentials)
 			.expect('Content-Type', /json/)
 			.expect(200)
 			.end(function(signinErr, signinRes) {
 				should.not.exist(signinErr);
 
-				// Handle signin error
-				if (signinErr) {
-					console.log(signinErr);
-					return done(signinErr);
-				}
 				done();
 				// Save a new Form
 				// userSession.post('/forms')
@@ -195,7 +190,7 @@ describe('Form Routes Unit tests', function() {
 						myForm.title = 'WHY YOU GOTTA BE SO MEAN?';
 
 						// Update an existing Form
-						userSession.put('/forms/' + FormSaveRes.body.lodashid)
+						userSession.put('/forms/' + FormSaveRes.body._id)
 							.send({form: myForm})
 							.expect('Content-Type', /json/)
 							.expect(200)
@@ -204,7 +199,7 @@ describe('Form Routes Unit tests', function() {
 								if (FormUpdateErr) done(FormUpdateErr);
 
 								// Set assertions
-								(FormUpdateRes.body.lodashid).should.equal(FormSaveRes.body.lodashid);
+								(FormUpdateRes.body._id).should.equal(FormSaveRes.body._id);
 								(FormUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
 
 								// Call the assertion callback
@@ -222,7 +217,7 @@ describe('Form Routes Unit tests', function() {
 		FormObj.save(function(err, form) {
 			if(err) return done(err);
 
-			agent.get('/forms/' + form.lodashid)
+			agent.get('/forms/' + form._id)
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
@@ -257,7 +252,7 @@ describe('Form Routes Unit tests', function() {
 						if (FormSaveErr) return done(FormSaveErr);
 
 						// Delete an existing Form
-						userSession.delete('/forms/' + FormSaveRes.body.lodashid)
+						userSession.delete('/forms/' + FormSaveRes.body._id)
 							.send(myForm)
 							.expect('Content-Type', /json/)
 							.expect(200)
@@ -267,7 +262,7 @@ describe('Form Routes Unit tests', function() {
 
 								// Set assertions
 								(FormDeleteRes.body).should.exist();
-								// (FormDeleteRes.body.lodashid).should.equal(FormSaveRes.body.lodashid);
+								// (FormDeleteRes.body._id).should.equal(FormSaveRes.body._id);
 
 								// Call the assertion callback
 								done();
@@ -287,7 +282,7 @@ describe('Form Routes Unit tests', function() {
 		// Save the Form
 		FormObj.save(function() {
 			// Try deleting Form
-			agent.delete('/forms/' + FormObj.lodashid)
+			agent.delete('/forms/' + FormObj._id)
 				.expect(401)
 				.end(function(FormDeleteErr, FormDeleteRes) {
 					// Set message assertion
@@ -311,7 +306,7 @@ describe('Form Routes Unit tests', function() {
 				if (signinErr) return done(signinErr);
 
 				var user = signinRes.body;
-				var userId = user.lodashid;
+				var userId = user._id;
 
 				// Save a new Form
 				userSession.post('/forms')

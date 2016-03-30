@@ -15,7 +15,14 @@ var mongoose = require('mongoose'),
  * A Validation function for local strategy properties
  */
 var validateLocalStrategyProperty = function(property) {
-	return ((this.provider !== 'local' && !this.updated) || property.length);
+	var propHasLength;
+	if (property) {
+		propHasLength = !!property.length;
+	} else {
+		propHasLength = false;
+	}
+
+	return ((this.provider !== 'local' && !this.updated) || propHasLength);
 };
 
 /**
@@ -34,9 +41,7 @@ var UserSchema = new Schema({
 		trim: true,
 		default: '',
 		validate: {
-			validator: function(property) {
-				return ((this.provider !== 'local' && !this.updated) || property.length);
-			},
+			validator: validateLocalStrategyProperty,
 			message: 'Please fill in your first name'
 		}
 	},
@@ -45,10 +50,7 @@ var UserSchema = new Schema({
 		trim: true,
 		default: '',
 		validate: {
-			validator: function(property) {
-				console.log(property);
-				return ((this.provider !== 'local' && !this.updated) || property.length);
-			},
+			validator: validateLocalStrategyProperty,
 			message: 'Please fill in your last name'
 		}
 	},
@@ -58,16 +60,7 @@ var UserSchema = new Schema({
 		unique: 'Account already exists with this email',
 		required: 'Please enter your email',
 		validate: {
-			validator: function(property) {
-				var propHasLength;
-				if (property) {
-					propHasLength = !!property.length;
-				} else {
-					propHasLength = false;
-				}
-
-				return ((this.provider !== 'local' && !this.updated) || propHasLength);
-			},
+			validator: validateLocalStrategyProperty,
 			message: 'Please fill in your email'
 		},
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']

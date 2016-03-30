@@ -111,7 +111,7 @@
     "node-mandrill": "^1.0.1",
     "phantomjs": "^1.9.18",
     "should": "~7.1.1",
-    "supertest": "~1.1.0",
-    "supertest-session": "~2.0.0"
+    "supertest": "~1.2.0",
+    "supertest-session": "~2.0.1"
   }
 }

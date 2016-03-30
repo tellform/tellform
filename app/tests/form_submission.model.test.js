@@ -15,7 +15,7 @@ var should = require('should'),
 	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity'),
 	FormSubmission = mongoose.model('FormSubmission');
 
-var exampleDemo = { 
+var exampleDemo = {
 	address: '880-9650 Velit. St.',
 	city: '',
 	dateOfBirth: '10',
@@ -36,7 +36,7 @@ var exampleDemo = {
 	sin: '',
 	spokenLanguage: 'English',
 	title: 'MS.',
-	yearOfBirth: '2015' 
+	yearOfBirth: '2015'
 };
 
 
@@ -55,6 +55,19 @@ var sampleSubmission = [
 	{'fieldType':'date', 	    'title':'When were you born?',  'fieldValue': 'Tue Oct 06 2015 15:17:48 GMT-0700 (PDT)'},
 	{'fieldType':'number', 	'title':'What\'s your phone #?',  'fieldValue': '6043158008'}
 ];
+
+_.mixin({
+	deepOmit: function(obj, iteratee, context) {
+		var r = _.omit(obj, iteratee, context);
+
+		_.each(r, function(val, key) {
+			if (typeof(val) === "object")
+				r[key] = _.deepOmit(val, iteratee, context);
+		});
+
+		return r;
+	}
+});
 
 
 /**
@@ -83,7 +96,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 				console.log(err.errors);
 				done(err);
 				return;
-			} 
+			}
 			myForm = new Form({
 				title: 'Form Title1',
 				admin: user._id,
@@ -94,14 +107,14 @@ describe('FormSubmission Model Unit Tests:', function() {
 					{'fieldType':'radio', 		'title':'And your sex',  			'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''},
 					{'fieldType':'date', 	    'title':'When were you born?',  	'fieldValue': ''},
 					{'fieldType':'number', 		'title':'What\'s your phone #?',  	'fieldValue': ''},
-				], 
+				],
 				plugins: {
 					oscarhost: {
 						baseUrl: config.oscarhost.baseUrl,
 						settings: {
-							updateType: 'force_add',
+							updateType: 'force_add'
 						},
-						auth: config.oscarhost.auth,
+						auth: config.oscarhost.auth
 					}
 				}
 			});
@@ -117,14 +130,14 @@ describe('FormSubmission Model Unit Tests:', function() {
 				for(var z=0; z<submissionFields.length; z++){
 					submissionFields[z] = _.extend(myForm.form_fields[z], sampleSubmission[z]);
 				}
-				
+
 				mySubmission = new FormSubmission({
-					admin: user._id, 
+					admin: user._id,
 					form: myForm._id,
 					timeElapsed: 17.55,
 					form_fields: submissionFields
 				});
-				
+
 				done();
 			});
 		});
@@ -175,7 +188,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 	 // 		};
 
 		// 	async.waterfall([
-		// 		function (callback) {	
+		// 		function (callback) {
 		// 			//Authenticate with API
 		// 			soap.createClient(url_login, options, function(err, client) {
 		// 				client.login(args_login, function (err, result) {
@@ -203,7 +216,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 		// 		console.log(result.return);
 
 		// 		done();
-		// 	});	
+		// 	});
 		// });
 	});
 
@@ -234,69 +247,73 @@ describe('FormSubmission Model Unit Tests:', function() {
 	});
 
 	describe('Test FormField and Submission Logic', function() {
-		var new_form_fields_add1, new_form_fields_del;
 
 		beforeEach(function(done){
-			new_form_fields_add1 = _.clone(myForm.toObject().form_fields);
-			new_form_fields_add1.push(
-				{'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}
-			);
-		
+
 			//Create Submission
-			
 			mySubmission = new FormSubmission({
 				form_fields: sampleSubmission,
-				admin: user, 
+				admin: user,
 				form: myForm,
 				timeElapsed: 17.55
-			});	
+			});
 
 			mySubmission.save(function(err){
 				should.not.exist(err);
 				done();
 			});
-			
+
 		});
-		
-		// it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
-		// 	var old_fields = myForm.toObject().form_fields;
-		// 	var new_form_fields = _.clone(myForm.toObject().form_fields);
-		// 	new_form_fields.splice(0, 1);
+		it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
-		// 	myForm.form_fields = new_form_fields;
+			var old_fields = myForm.toObject().form_fields;
+			var new_form_fields = _.clone(myForm.toObject().form_fields);
+			new_form_fields.splice(0, 1);
 
-		// 	myForm.save(function(err, _form) {
+			myForm.form_fields = new_form_fields;
 
-		// 		should.not.exist(err);
-		// 		should.exist(_form);
+			myForm.save(function(err, _form) {
 
-		// 		// var actual_fields = _.map(_form.toObject().form_fields, function(o){ _.omit(o, '_id')});
-		// 		// old_fields = _.map(old_fields, function(o){ _.omit(o, '_id')});
+				should.not.exist(err);
+				should.exist(_form.form_fields);
 
-		// 		// console.log(old_fields);
-		// 		should.deepEqual(JSON.stringify(_form.toObject().form_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
-		// 		done();
-		// 	});
-		// });
-		
+				var actual_fields = _.deepOmit(_form.toObject().form_fields, ['lastModified', 'created', '_id']);
+				old_fields = _.deepOmit(old_fields, ['lastModified', 'created', '_id']);
 
-		// it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
+				should.deepEqual(JSON.stringify(actual_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
+				done();
+			});
+		});
+		//
+		it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
 
-		// 	myForm.form_fields = new_form_fields_del;
-		// 	myForm.save(function(err, form
-		// 		should.not.exist(err);
-		// 		(form.form_fields).should.be.eql(old_fields, 'old form_fields not equal to newly saved form_fields');
-				
-		// 		//Remove submission
-		// 		mySubmission.remove(function(err){
-		// 			myForm.submissions.should.have.length(0);
-		// 			myForm.form_fields.should.not.containDeep(old_fields[0]);
-		// 		});
-		// 	});
-		// });
+			var old_fields = myForm.toObject().form_fields;
+			var new_form_fields = _.clone(myForm.toObject().form_fields);
+			new_form_fields.splice(0, 1);
 
-		
+			myForm.form_fields = new_form_fields;
+
+			myForm.save(function(err, _form){
+				should.not.exist(err);
+				should.exist(_form.form_fields);
+				should.exist(old_fields);
+
+				var actual_fields = _.deepOmit(_form.toObject().form_fields, ['lastModified', 'created', '_id']);
+				old_fields = _.deepOmit(old_fields, ['lastModified', 'created', '_id']);
+
+				should.deepEqual(JSON.stringify(actual_fields), JSON.stringify(old_fields)); //'old form_fields not equal to newly saved form_fields');
+				done();
+
+				// //Remove submission
+				// mySubmission.remove(function(err){
+				// 	myForm.submissions.should.have.length(0);
+				// 	myForm.form_fields.should.not.containDeep(old_fields[0]);
+				// 	done();
+				// });
+			});
+		});
+
 		afterEach(function(done){
 			mySubmission.remove(function(){
 				done();

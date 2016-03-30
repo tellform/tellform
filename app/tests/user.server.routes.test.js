@@ -9,30 +9,32 @@ var should = require('should'),
 	User = mongoose.model('User'),
 	config = require('../../config/config'),
 	tmpUser = mongoose.model(config.tempUserCollection),
-	agent = request.agent(app),
 	url = require('url');
-
-var mailosaur = require('mailosaur')(config.mailosaur.key),
-	mailbox = new mailosaur.Mailbox(config.mailosaur.mailbox_id);
-
-var mandrill = require('node-mandrill')(config.mailer.options.auth.pass);
+//
+// var mailosaur = require('mailosaur')(config.mailosaur.key),
+// 	mailbox = new mailosaur.Mailbox(config.mailosaur.mailbox_id);
+//
+// var mandrill = require('node-mandrill')(config.mailer.options.auth.pass);
 
 /**
  * Globals
  */
-var credentials, _User, _Session;
+var credentials, _User;
+var _tmpUser, activateToken;
+var username, userSession;
+
+username = 'testActiveAccount1.be1e58fb@mailosaur.in';
+
+//Initialize Session
+userSession = Session(app);
 
 /**
  * Form routes tests
  */
 describe('User CRUD tests', function() {
-	this.timeout(15000);
-	var userSession;
+	//this.timeout(15000);
 
 	beforeEach(function() {
-		//Initialize Session
-		userSession = new Session();
-
 		// Create user credentials
 		credentials = {
 			username: 'be1e58fb@mailosaur.in',
@@ -48,34 +50,21 @@ describe('User CRUD tests', function() {
 			password: credentials.password,
 			provider: 'local'
 		};
+
 	});
 
-	describe(' > Create, Verify and Activate a User > ', function() {
-		var username = 'testActiveAccount1.be1e58fb@mailosaur.in';
-		var link, _tmpUser, activateToken;
-		this.timeout(15000);
+	//describe(' > Create, Verify and Activate a User > ', function() {
+		//this.timeout(15000);
 
 		it('should be able to create a temporary (non-activated) User', function(done) {
-			_User.email = _User.username = username;
+			//_User.email = _User.username = username;
 			userSession.post('/auth/signup')
 				.send(_User)
-				.expect(200, 'An email has been sent to you. Please check it to verify your account.')
+				.expect(200)
 				.end(function(FormSaveErr, FormSaveRes) {
 					// Handle error
-					if (FormSaveErr) return done(FormSaveErr);
-
-					tmpUser.findOne({username: _User.username}, function (err, user) {
-						should.not.exist(err);
-						should.exist(user);
-						_tmpUser = user;
-
-						_User.username.should.equal(user.username);
-						_User.firstName.should.equal(user.firstName);
-						_User.lastName.should.equal(user.lastName);
-						activateToken = user.GENERATED_VERIFYING_URL;
-
-						done();
-					});
+					should.not.exist(FormSaveErr);
+					done();
 
 					// 	// mandrill('/messages/search', {
 					// 	//     query: "subject:Confirm",
@@ -125,8 +114,24 @@ describe('User CRUD tests', function() {
 				});
 		});
 
+		it('should produce valid activation token', function(done) {
+			console.log('activation token');
+			tmpUser.findOne({username: _User.username}, function (err, user) {
+				should.not.exist(err);
+				should.exist(user);
+				_tmpUser = user;
+
+				_User.username.should.equal(user.username);
+				_User.firstName.should.equal(user.firstName);
+				_User.lastName.should.equal(user.lastName);
+				activateToken = user.GENERATED_VERIFYING_URL;
+
+				done();
+			});
+		});
+
 		it('should be able to verify a User Account', function(done) {
-			console.log('activateToken: '+activateToken);
+			//console.log('activateToken: '+activateToken);
 			userSession.get('/auth/verify/'+activateToken)
 				.expect(200)
 				.end(function(VerifyErr, VerifyRes) {
@@ -162,7 +167,7 @@ describe('User CRUD tests', function() {
 						});
 				});
 		});
-	});
+	//});
 
 	it(' > should be able to reset a User\'s password');
 
@@ -173,7 +178,7 @@ describe('User CRUD tests', function() {
 			tmpUser.remove().exec(function(){
 				// mailbox.deleteAllEmail(function (err, body) {
 					// if(err) throw err;
-					userSession.destroy();
+					//userSession.destroy();
 					done();
 				// });
 			});

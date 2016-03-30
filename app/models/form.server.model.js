@@ -58,10 +58,10 @@ var FormSchema = new Schema({
 	},
 	description: {
 		type: String,
-		default: '',
+		default: ''
 	},
 	form_fields: {
-		type: [FieldSchema],
+		type: [FieldSchema]
 	},
 
 	submissions: [{
@@ -92,46 +92,46 @@ var FormSchema = new Schema({
 			default: 'Welcome to Form'
 		},
 		introParagraph:{
-			type: String,
+			type: String
 		},
 		buttons:[ButtonSchema]
 	},
 
 	hideFooter: {
 		type: Boolean,
-		default: false,
+		default: false
 	},
 	isGenerated: {
 		type: Boolean,
-		default: false,
+		default: false
 	},
 	isLive: {
 		type: Boolean,
-		default: false,
+		default: false
 	},
 	autofillPDFs: {
 		type: Boolean,
-		default: false,
+		default: false
 	},
 
 	design: {
 		colors:{
-			backgroundColor: { 
+			backgroundColor: {
 				type: String,
 				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
 				default: '#fff'
 			},
-			questionColor: { 
+			questionColor: {
 				type: String,
 				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
 				default: '#333',
 			},
-			answerColor: { 
+			answerColor: {
 				type: String,
 				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
 				default: '#333',
 			},
-			buttonColor: { 
+			buttonColor: {
 				type: String,
 				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]
 			},
@@ -369,7 +369,7 @@ FormSchema.pre('save', function (next) {
 	//console.log('field has been deleted: ');
 	//console.log(this.isModified('form_fields') && !!this.form_fields && !!_original);
 
-	if(this.isModified('form_fields') && this.form_fields.length >= 0 && _original){
+	if(this.isModified('form_fields') && this.form_fields && _original){
 
 		var old_form_fields = _original.form_fields,
 			new_ids = _.map(_.pluck(this.form_fields, '_id'), function(id){ return ''+id;}),
@@ -389,9 +389,9 @@ FormSchema.pre('save', function (next) {
 
 			var modifiedSubmissions = [];
 
-			async.forEachOfSeries(deletedIds, 
+			async.forEachOfSeries(deletedIds,
 				function (deletedIdIndex, key, callback) {
-					
+
 					var deleted_id = old_ids[deletedIdIndex];
 
 					//Find FormSubmissions that contain field with _id equal to 'deleted_id'
@@ -407,14 +407,14 @@ FormSchema.pre('save', function (next) {
 							if(submissions.length) {
 								// console.log('adding submissions');
 								// console.log(submissions);
-								//Add submissions 
+								//Add submissions
 								modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
 							}
 
 							callback(null);
 						});
 					// }
-				}, 
+				},
 				function (err) {
 					if(err){
 						console.error(err.message);
@@ -431,7 +431,7 @@ FormSchema.pre('save', function (next) {
 						for(var i = 0; i < deletedIds.length; i++){
 
 							//Get index of deleted field
-							var index = _.findIndex(submission.form_fields, function(field) { 
+							var index = _.findIndex(submission.form_fields, function(field) {
 								var tmp_id = field._id+'';
 								return tmp_id === old_ids[ deletedIds[i] ];
 							});
@@ -458,7 +458,7 @@ FormSchema.pre('save', function (next) {
 						submission.save(function (err) {
 						  	if(err) callback(err);
 							else callback(null);
-						});	
+						});
 					}, function (err) {
 						if(err){
 							console.error(err.message);

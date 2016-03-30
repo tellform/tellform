@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 
 /**
- * Upload PDF 
+ * Upload PDF
  */
 exports.uploadPDF = function(req, res, next) {
 
@@ -24,7 +24,7 @@ exports.uploadPDF = function(req, res, next) {
 	// console.log(req.files.file);
 	// console.log('\n\nProperty Descriptor\n-----------');
 	// console.log(Object.getOwnPropertyDescriptor(req.files.file, 'path'));
-	
+
 	if(req.file){
 		var pdfFile = req.file;
 		var _user = req.user;
@@ -33,9 +33,9 @@ exports.uploadPDF = function(req, res, next) {
 		}else if(req.files.size > 200000000){
 			next(new Error('File uploaded exceeds MAX SIZE of 200MB'));
 		}else {
-			fs.exists(pdfFile.path, function(exists) { 
+			fs.exists(pdfFile.path, function(exists) {
 				//If file exists move to user's tmp directory
-				if(exists) { 
+				if(exists) {
 
 					var newDestination = config.tmpUploadPath+_user.username;
 				    var stat = null;
@@ -48,7 +48,7 @@ exports.uploadPDF = function(req, res, next) {
 				    	console.log('Directory cannot be created');
 				        next(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'));
 				    }
-				    
+
 				    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
 						if (err) {
 							next(new Error(err.message));
@@ -56,12 +56,12 @@ exports.uploadPDF = function(req, res, next) {
 						pdfFile.path = path.join(newDestination, pdfFile.name);
 						console.log(pdfFile.name + ' uploaded to ' + pdfFile.path);
 						res.json(pdfFile);
-					});				
+					});
 
-				} else { 
+				} else {
 					next(new Error('Did NOT get your file!'));
-				} 
-			}); 
+				}
+			});
 		}
 	}else {
 		next(new Error('Uploaded files were NOT detected'));
@@ -78,7 +78,7 @@ exports.deleteSubmissions = function(req, res) {
 		form = req.form;
 
 	FormSubmission.remove({ form: req.form, admin: req.user, _id: {$in: submission_id_list} }, function(err){
-		
+
 		if(err){
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -134,7 +134,7 @@ exports.createSubmission = function(req, res) {
 	}
 
 	submission.save(function(err, submission){
-		// console.log('in submissions.save()\n submission: '+JSON.stringify(submission) ) 
+		// console.log('in submissions.save()\n submission: '+JSON.stringify(submission) )
 		if(err){
 			console.log(err.message);
 			res.status(400).send({
@@ -167,10 +167,10 @@ exports.listSubmissions = function(req, res) {
 				res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
-			} 
+			}
 			res.json(_submissions);
 		});
-	
+
 	});
 
 };
@@ -213,7 +213,7 @@ exports.read = function(req, res) {
 /**
  * Update a form
  */
-exports.update = function(req, res) { 
+exports.update = function(req, res) {
 	var form = req.form;
 	delete req.body.form.__v;
 	delete req.body.form._id;
@@ -229,9 +229,9 @@ exports.update = function(req, res) {
 			delete field._id;
 		}
 	}
-	
+
 	form = _.extend(form, req.body.form);
-	
+
 	form.save(function(err, form) {
 		if (err) {
 			console.log(err);
@@ -306,7 +306,7 @@ exports.formByID = function(req, res, next, id) {
 				form.admin.password = undefined;
 				form.admin.salt = undefined;
 				form.provider = undefined;
-				
+
 				req.form = form;
 				next();
 			}
@@ -318,7 +318,6 @@ exports.formByID = function(req, res, next, id) {
  * Form authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-
 	var form = req.form;
 	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
 		res.status(403).send({

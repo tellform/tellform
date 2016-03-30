@@ -92,6 +92,23 @@ module.exports = function(db) {
 	app.use(bodyParser.json());
 	app.use(methodOverride());
 
+	// use passport session
+	app.use(passport.initialize());
+	app.use(passport.session());
+
+	// setup express-device
+	app.use(device.capture({ parseUserAgent: true }));
+
+	// connect flash for flash messages
+	app.use(flash());
+
+	// Use helmet to secure Express headers
+	app.use(helmet.xframe());
+	app.use(helmet.xssFilter());
+	app.use(helmet.nosniff());
+	app.use(helmet.ienoopen());
+	app.disable('x-powered-by');
+
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
 		require(path.resolve(modelPath));
@@ -101,13 +118,6 @@ module.exports = function(db) {
 	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
 		require(path.resolve(routePath))(app);
 	});
-
-	// Use helmet to secure Express headers
-	app.use(helmet.xframe());
-	app.use(helmet.xssFilter());
-	app.use(helmet.nosniff());
-	app.use(helmet.ienoopen());
-	app.disable('x-powered-by');
 
 	// Setting the app router and static folder
 	app.use('/', express.static(path.resolve('./public')));
@@ -128,16 +138,6 @@ module.exports = function(db) {
 		cookie: config.sessionCookie,
 		name: config.sessionName
 	}));
-
-	// use passport session
-	app.use(passport.initialize());
-	app.use(passport.session());
-
-	// setup express-device
-	app.use(device.capture({ parseUserAgent: true }));
-
-	// connect flash for flash messages
-	app.use(flash());
 
 	// Add headers for Sentry
 	/*
