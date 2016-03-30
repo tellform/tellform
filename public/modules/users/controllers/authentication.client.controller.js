@@ -8,6 +8,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope.error = '';
 
 	    $scope.signin = function() {
+			$scope.credentials.email = $scope.credentials.username;
 			User.login($scope.credentials).then(
 				function(response) {
 					Auth.login(response);
@@ -30,6 +31,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    };
 
 	    $scope.signup = function() {
+			console.log($scope.credentials);
 	        User.signup($scope.credentials).then(
 		        function(response) {
 		        	console.log('signup-success');

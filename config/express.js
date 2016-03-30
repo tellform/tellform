@@ -32,16 +32,6 @@ module.exports = function(db) {
 	// Initialize express app
 	var app = express();
 
-	// Globbing model files
-	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
-		require(path.resolve(modelPath));
-	});
-
-	// Globbing routing files
-	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
-		require(path.resolve(routePath))(app);
-	});
-
 	// Setting application local variables
 	app.locals.title = config.app.title;
 	app.locals.description = config.app.description;
@@ -77,7 +67,6 @@ module.exports = function(db) {
 	// Showing stack errors
 	app.set('showStackError', true);
 
-
 	// Set swig as the template engine
 	app.engine('server.view.html', consolidate[config.templateEngine]);
 
@@ -102,6 +91,16 @@ module.exports = function(db) {
 	}));
 	app.use(bodyParser.json());
 	app.use(methodOverride());
+
+	// Globbing model files
+	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
+		require(path.resolve(modelPath));
+	});
+
+	// Globbing routing files
+	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+		require(path.resolve(routePath))(app);
+	});
 
 	// Use helmet to secure Express headers
 	app.use(helmet.xframe());
@@ -141,6 +140,7 @@ module.exports = function(db) {
 	app.use(flash());
 
 	// Add headers for Sentry
+	/*
 	app.use(function (req, res, next) {
 
 	    // Website you wish to allow to connect
@@ -159,12 +159,12 @@ module.exports = function(db) {
 	    // Pass to next layer of middleware
 	    next();
 	});
-
+	*/
 	// Sentry (Raven) middleware
-	app.use(raven.middleware.express.requestHandler(config.DSN));
+	// app.use(raven.middleware.express.requestHandler(config.DSN));
 
 	// Should come before any other error middleware
-	app.use(raven.middleware.express.errorHandler(config.DSN));
+	// app.use(raven.middleware.express.errorHandler(config.DSN));
 
 	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
 	app.use(function(err, req, res, next) {

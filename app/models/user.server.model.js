@@ -33,20 +33,43 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
-		validate: [validateLocalStrategyProperty, 'Please fill in your first name']
+		validate: {
+			validator: function(property) {
+				return ((this.provider !== 'local' && !this.updated) || property.length);
+			},
+			message: 'Please fill in your first name'
+		}
 	},
 	lastName: {
 		type: String,
 		trim: true,
 		default: '',
-		validate: [validateLocalStrategyProperty, 'Please fill in your last name']
+		validate: {
+			validator: function(property) {
+				console.log(property);
+				return ((this.provider !== 'local' && !this.updated) || property.length);
+			},
+			message: 'Please fill in your last name'
+		}
 	},
 	email: {
 		type: String,
 		trim: true,
 		unique: 'Account already exists with this email',
 		required: 'Please enter your email',
-		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
+		validate: {
+			validator: function(property) {
+				var propHasLength;
+				if (property) {
+					propHasLength = !!property.length;
+				} else {
+					propHasLength = false;
+				}
+
+				return ((this.provider !== 'local' && !this.updated) || propHasLength);
+			},
+			message: 'Please fill in your email'
+		},
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	username: {
@@ -57,7 +80,7 @@ var UserSchema = new Schema({
 	},
 	passwordHash: {
 		type: String,
-		default: '',
+		default: ''
 	},
 	salt: {
 		type: String
@@ -127,7 +150,7 @@ UserSchema.pre('save', function (next) {
 	    }else{
 	    	next();
 	    }
-	}	
+	}
     next();
 });
 

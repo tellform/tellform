@@ -47,7 +47,7 @@ var config_nev = function () {
 	      } else {
 	        console.log(info);
 	      }
-	    },
+	    }
 
 	});
 	nev.generateTempUserModel(User);
@@ -59,10 +59,10 @@ var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 exports.validateVerificationToken = function(req, res){
 	nev.confirmTempUser(req.params.token, function(err, user) {
-	    if(err) { 
+	    if(err) {
 			console.log(errorHandler.getErrorMessage(err));
 			return res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
-	    } 
+	    }
 	    else if (user){
 	        return res.status(200).send('User successfully verified');
 	    }else {
@@ -74,10 +74,10 @@ exports.validateVerificationToken = function(req, res){
 
 exports.resendVerificationEmail = function(req, res, next){
 	nev.resendVerificationEmail(req.body.email, function(err, userFound) {
-		if(err) { 
+		if(err) {
 			console.log(errorHandler.getErrorMessage(err));
 			return res.status(500).send( {message: errorHandler.getErrorMessage(err)  } );
-	    } 
+	    }
 
 	    if (userFound){
 	    	console.log('hello');
@@ -89,58 +89,64 @@ exports.resendVerificationEmail = function(req, res, next){
 	});
 };
 
-
 /**
  * Signup
  */
 exports.signup = function(req, res) {
-	// For security measurement we remove the roles from the req.body object
-	delete req.body.roles;
+	console.log(req.body);
+	// For security measures we remove the roles from the req.body object
+	if (req.body) {
+		delete req.body.roles;
+		console.log(req.body);
 
-	// Init Variables
-	var user = new User(req.body);
+		// Init Variables
+		var user = new User(req.body);
 
-	// Add missing user fields
-	user.provider = 'local';
-	user.username = user.email;
+		// Add missing user fields
+		user.provider = 'local';
+		user.username = user.email;
 
-	// Then save the temporary user
-	nev.createTempUser(user, function(err, newTempUser) {
-		
-		if (err) {
-			console.log('Error: ');
-			console.log(err);
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}else {
+		// Then save the temporary user
+		nev.createTempUser(user, function (err, newTempUser) {
 
-	        // new user created
-	        if (newTempUser) {
-	        	nev.registerTempUser(newTempUser, function (err) {
-	        		if (err) {
-	        			console.log('Error: ');
-						console.log(err);
-						return res.status(400).send({
-							message: errorHandler.getErrorMessage(err)
-						});
-					}else {
-						console.log('new tmpuser registered');
-						return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
-	        		}
-	        	});
-	        } else {
-	        	console.log('Error: User already exists!');
-	            return res.status(400).send({ message: 'Error: User already exists!' });
-	        }
-	    }
-    });
+			if (err) {
+				console.log('Error: ');
+				console.log(err);
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+
+				// new user created
+				if (newTempUser) {
+					nev.registerTempUser(newTempUser, function (err) {
+						if (err) {
+							console.log('Error: ');
+							console.log(err);
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							console.log('new tmpuser registered');
+							return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
+						}
+					});
+				} else {
+					console.log('Error: User already exists!');
+					return res.status(400).send({message: 'Error: User already exists!'});
+				}
+			}
+		});
+	} else {
+		res.status(500).send('Incomplete Data');
+	}
 };
 
 /**
  * Signin after passport authentication
  */
 exports.signin = function(req, res, next) {
+	console.log(req);
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
 			res.status(400).send(info);
