@@ -19,7 +19,7 @@
             </button>
         </p>
     </div>
-    <div class="row form-actions">
+    <div class="row form-actions" >
         <button ng-click="exitStartPage()" class="btn btn-info col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4" type="button">
             <a style="color:white; font-size: 1.6em; text-decoration: none;">
                 Continue to Form
@@ -47,8 +47,8 @@
 
     <hr>
 
-    <div class="row form-actions">
-        <button class="btn btn-success col-sm-2 col-sm-offset-5" type="button" ng-disabled="myform.$invalid" ng-click="submitForm()" style="font-size: 1.6em;">
+    <div class="row form-actions" id="submit_field" ng-click="setActiveField('submit_field', myform.form_fields.length+1)" ng-class="{activeField: selected._id == myform.form_fields.length+1 }">
+        <button ng-focus="setActiveField('submit_field', myform.form_fields.length+1)" class="btn btn-success col-sm-2 col-sm-offset-5" type="button" ng-disabled="myform.$invalid" ng-click="submitForm()" style="font-size: 1.6em;">
             Submit
         </button>
     </div>
