@@ -1,16 +1,28 @@
 <section class="overlay submitform" ng-if="selected._id.length" ng-click="hideOverlay()"></section>
 
 <!-- Start Page View -->
-<div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted">
+<div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted" style="margin-top 35vh;">
     <div class="field row">
         <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
-            <h1>{{myform.startPage.introTitle}}</h1>
+            <h1 style="font-weight: 600; font-size: 25px;">
+            	{{myform.startPage.introTitle}}
+            </h1>
         </div>
-        <!--<div class="col-xs-10 col-xs-offset-1 text-center" style="overflow-wrap: break-word;">-->
-        <!--    <p style="color:#ddd;">{{myform.startPage.introParagraph}}</p>-->
-        <!--</div>-->
+        <div class="col-xs-10 col-xs-offset-1 text-center" style="overflow-wrap: break-word;">
+            <p style="color: grey; font-weight: 100; font-size: 16px;">
+            	{{myform.startPage.introParagraph}}
+            </p>
+        </div>
     </div>
-    <div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
+
+    <div class="row form-actions text-center" style="padding: 5px 25px 5px 25px;">
+        <button ng-click="exitStartPage()" class="btn btn-info" type="button">
+            <a style="color:grey; font-size: 1.6em; text-decoration: none;">
+                Start
+            </a>
+        </button>
+    </div>
+     <div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
         <p ng-repeat="button in myform.startPage.buttons" class="text-center" style="display:inline;">
             <button class="btn" style="background-color:rgb(156, 226, 235)" type="button" ng-style="{'background-color':button.bgColor, 'color':button.color}">
                 <a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none;" ng-style="{'color':button.color}"> 
@@ -18,13 +30,6 @@
                 </a>
             </button>
         </p>
-    </div>
-    <div class="row form-actions" >
-        <button ng-click="exitStartPage()" class="btn btn-info col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4" type="button">
-            <a style="color:white; font-size: 1.6em; text-decoration: none;">
-                Continue to Form
-            </a>
-        </button>
     </div>
 </div>
 
