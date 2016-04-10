@@ -39,7 +39,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
         	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
         		if(Auth.isAuthenticated()){
         			event.preventDefault(); // stop current execution
-        			$state.go('listForms'); // go to listForms page
+        			console.log('go to forms');
+				$state.go('listForms'); // go to listForms page
         		}
         	}
 	        //Redirect to 'home' route if user is not authenticated
@@ -66,12 +67,14 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 
 		    if(user){
 			  	authenticator = new Authorizer(user);
-			  	console.log('access denied: '+!authenticator.canAccess(permissions));
-
-			  	if( (permissions !== null) && !authenticator.canAccess(permissions) ){
-			    	event.preventDefault();
-		    		console.log('access denied');
-		      		$state.go('access_denied');
+			  	//console.log('access denied: '+!authenticator.canAccess(permissions));
+				//console.log(permissions);
+			  	if( (permissions != null) ){
+					if( !authenticator.canAccess(permissions) ){
+			    			event.preventDefault();
+		    				console.log('access denied');
+		      				$state.go('access_denied');
+					}
 				}
 			}
 		});
