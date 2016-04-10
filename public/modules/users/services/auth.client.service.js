@@ -19,12 +19,12 @@ angular.module('users').factory('Auth', ['$window',
       ensureHasCurrentUser: function(User) {
         if (service._currentUser && service._currentUser.username) {
           console.log('Using local current user.');
-          // console.log(service._currentUser);
+          console.log(service._currentUser);
           return service._currentUser;
         } 
         else if ($window.user){
           console.log('Using cached current user.');
-          // console.log($window.user);
+          console.log($window.user);
           service._currentUser = $window.user;
           return service._currentUser;
         }
