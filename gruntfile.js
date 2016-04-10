@@ -2,6 +2,8 @@
 
 module.exports = function(grunt) {
 	require('jit-grunt')(grunt);
+	
+	grunt.loadNpmTasks('grunt-env');
 
 	// Unified Watch Object
 	var watchFiles = {
@@ -147,8 +149,8 @@ module.exports = function(grunt) {
 			secure: {
 				NODE_ENV: 'secure'
 			},
-			options: {
-				src: 'ENV.json'
+			default: {
+				src: '.env'
 			}
 		},
 		mochaTest: {
@@ -280,7 +282,7 @@ module.exports = function(grunt) {
     grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
-	grunt.registerTask('default', ['lint', 'html2js:main', 'concurrent:default']);
+	grunt.registerTask('default', ['lint', 'html2js:main', 'env:default', 'concurrent:default']);
 
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
