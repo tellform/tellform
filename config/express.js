@@ -31,6 +31,11 @@ var fs = require('fs-extra'),
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
+	
+	// Globbing model files
+	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
+		require(path.resolve(modelPath));
+	});
 
 	// Setting application local variables
 	app.locals.title = config.app.title;
@@ -92,16 +97,6 @@ module.exports = function(db) {
 	app.use(bodyParser.json());
 	app.use(methodOverride());
 
-	// use passport session
-	app.use(passport.initialize());
-	app.use(passport.session());
-
-	// setup express-device
-	app.use(device.capture({ parseUserAgent: true }));
-
-	// connect flash for flash messages
-	app.use(flash());
-
 	// Use helmet to secure Express headers
 	app.use(helmet.xframe());
 	app.use(helmet.xssFilter());
@@ -109,16 +104,7 @@ module.exports = function(db) {
 	app.use(helmet.ienoopen());
 	app.disable('x-powered-by');
 
-	// Globbing model files
-	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
-		require(path.resolve(modelPath));
-	});
-
-	// Globbing routing files
-	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
-		require(path.resolve(routePath))(app);
-	});
-
+	
 	// Setting the app router and static folder
 	app.use('/', express.static(path.resolve('./public')));
 	app.use('/uploads', express.static(path.resolve('./uploads')));
@@ -138,7 +124,23 @@ module.exports = function(db) {
 		cookie: config.sessionCookie,
 		name: config.sessionName
 	}));
+	
+	// use passport session
+	app.use(passport.initialize());
+	app.use(passport.session());
 
+	// setup express-device
+	app.use(device.capture({ parseUserAgent: true }));
+
+	// connect flash for flash messages
+	app.use(flash());
+
+	// Globbing routing files
+	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+		require(path.resolve(routePath))(app);
+	});
+
+	
 	// Add headers for Sentry
 	/*
 	app.use(function (req, res, next) {
