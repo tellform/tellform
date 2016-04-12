@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name"      : "tellform",
-    "script"    : "/usr/bin/grunt",
+    "script"    : "/usr/local/lib/node_modules/grunt",
     "args"        : "['production']"
   }],
   "deploy" : {
