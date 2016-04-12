@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name"      : "tellform",
-    "script"    : "/usr/local/bingrunt",
+    "script"    : "/usr/local/bin/grunt",
   }],
   "deploy" : {
     "production" : {
