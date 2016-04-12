@@ -151,7 +151,7 @@ module.exports = function(grunt) {
 				src: '.env'
 			},
 			default: {
-				src: '.env'
+				src: '/opt/deploy/.env'
 			},
 			production: {
 				src: '.prod.env'
