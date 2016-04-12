@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	baseUrl: 'tellform.com',
+	baseUrl: process.env.BASE_URL || 'tellform.com',
 	db: {
 		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean',
 		options: {
@@ -20,7 +20,7 @@ module.exports = {
 		}
 	},
 	sessionCookie: {
-		domain: 'tellform.com'
+		domain: process.env.BASE_URL || 'tellform.com'
 	},
 	assets: {
 		css: 'public/dist/application.min.css',
