@@ -21,8 +21,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 
                     $scope.error = '';
                     $scope.selected = {
-                        _id: '',
-                        index: null,
+                        _id: $scope.myform.form_fields[0]._id,
+                        index: 0,
                     };
 
                     //Reset Timer
@@ -32,13 +32,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 /*
                 ** Field Controls
                 */
-                $rootScope.setActiveField = function(field_id, field_index) {
+                $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index) {
                     if($scope.selected === null){
-                        $scope.selected = {
-                            _id: '',
-                            index: 0,
-                        };
-                    }
+						return;
+		    		}
                     console.log('field_id: '+field_id);
                     console.log('field_index: '+field_index);
                     console.log($scope.selected);
@@ -52,14 +49,20 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }, 10);
                 };
 
-                $scope.nextField = function(){
-                    if($scope.selected.index < $scope.myform.form_fields.length-1){
+                $rootScope.nextField = $scope.nextField = function(){
+                    console.log($scope.selected.index)
+					console.log($scope.myform.form_fields.length-1);
+		   if($scope.selected.index < $scope.myform.form_fields.length-1){
                         $scope.selected.index++;
                         $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
                         $rootScope.setActiveField($scope.selected._id, $scope.selected.index);
-                    }
+                    } else if($scope.selected.index === $scope.myform.form_fields.length-1) {
+						$scope.selected.index++;
+						$scope.selected._id = 'submit_field';
+						$rootScope.setActiveField($scope.selected._id, $scope.selected.index);
+					}
                 };
-                $scope.prevField = function(){
+                $rootScope.prevField = $scope.prevField = function(){
                     if($scope.selected.index > 0){
                         $scope.selected.index = $scope.selected.index - 1;
                         $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;

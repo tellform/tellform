@@ -20,7 +20,7 @@
     right: 0;
     bottom: 0;
 }
-
+`
 section.public-form {
     margin-top: -70px;
 }
@@ -76,6 +76,11 @@ section.content p.breakwords {
     border-width: 1px 0;
 }
 
+div.form-fields {
+	position: relative;
+	margin-top: 25vh;
+}
+
 div.form-submitted > .field.row {
     padding-bottom: 10%;
     padding-top: 2%;
@@ -96,7 +101,7 @@ form .accordion-edit {
 
 /* Styles for form submission view (/forms/:formID) */
 form .row.field {
-    padding: 1em 0 3em 0;
+    padding: 1em 0 0em 0;
     width: inherit;
 }
     form .row.field > .field-title {
@@ -422,8 +427,10 @@ section > section.public-form {
 .activeField {
     z-index: 11;
     position: relative;
-    display: inline-block;
     background-color: transparent;
+}
+.activeField.field-directive {
+    display: inline-block;
     border-radius: 7px;
     width: 100%;
     border: 25px transparent solid;
@@ -431,7 +438,6 @@ section > section.public-form {
 	.activeField input {
 		background-color: transparent;
 	}
-
 
 .form-item:hover, .form-item.create-new:hover {
     border-bottom: 8px inset #ccc;

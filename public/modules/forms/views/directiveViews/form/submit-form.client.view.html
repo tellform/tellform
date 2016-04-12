@@ -1,4 +1,4 @@
-<section class="overlay submitform" ng-if="selected._id.length" ng-click="hideOverlay()"></section>
+<section class="overlay submitform" ng-if="!myform.submitted && !myform.startPage.showStart"></section>
 
 <!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted" style="margin-top 35vh;">
@@ -34,7 +34,7 @@
 </div>
 
 <!-- Form Fields View -->
-<div cg-busy="{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}" ng-show="!myform.submitted && !myform.startPage.showStart">
+<div class="form-fields" cg-busy="{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}" ng-show="!myform.submitted && !myform.startPage.showStart">
     <!--<div class="field row" style="padding-bottom:5em;">-->
     <!--    <div class="col-sm-10 col-sm-offset-1">-->
     <!--        <h1>{{ myform.title }} <span style="font-size:0.8em; color: #bbb;" ng-if="!myform.isLive">(private preview)</span></h1>-->
@@ -50,21 +50,36 @@
         </form>
     </div>
 
-    <hr>
 
-    <div class="row form-actions" id="submit_field" ng-click="setActiveField('submit_field', myform.form_fields.length+1)" ng-class="{activeField: selected._id == myform.form_fields.length+1 }" style= "border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 25vh;">
-        <button ng-focus="setActiveField('submit_field', myform.form_fields.length+1)" class="btn btn-success col-sm-2 col-sm-offset-5" type="button" ng-disabled="myform.$invalid" ng-click="submitForm()" style="font-size: 1.6em; margin-left: 20px; margin-top: 20px;">
-            Submit
+    <div class="row form-actions" id="submit_field" 
+	ng-click="setActiveField('submit_field', myform.form_fields.length)" 
+	ng-class="{activeField: selected._id == 'submit_field' }" 
+	style="border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 25vh;">
+        
+	<button ng-focus="setActiveField('submit_field', myform.form_fields.length)" 
+		class="btn btn-success col-sm-2" 
+		type="button" 
+		ng-disabled="myform.$invalid" 
+		ng-click="submitForm()" 
+		style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
+            
+		Submit
         </button>
+	
+	<div class="col-sm-2" style="font-size: 75%; margin-top:2.5em">
+		<small>
+		 press ENTER
+		</small>
+	</div>
     </div>
 
     <section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" style="background-color:rgba(242,242,242,0.5); padding-top:15px;">
-        <div class="container" >
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-8 col-sm-offset-4 col-sm-4 col-sm-offset-4 text-center col-md-3 col-md-offset-0" ng-show="!myform.submitted">
+                <div class="col-sm-5 col-md-6" ng-show="!myform.submitted">
                         <p class="lead">{{myform | formValidity}} out of {{myform.visible_form_fields.length}} answered</p>
                 </div>
-                <div class="col-md-6 col-md-offset-3 row">
+                <div class="col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 row">
                     <div class="col-md-4 col-md-offset-2 hidden-sm hidden-xs" ng-if="!authentication.isAuthenticated()">
                         <a href="/#!/forms" class="btn btn-default">Create 
                         a TellForm</a>
@@ -72,13 +87,13 @@
                     <div class="col-md-4 col-md-offset-2 hidden-sm hidden-xs" ng-if="authentication.isAuthenticated()">
                         <a href="/#!/forms/{{myform._id}}/admin/create" class="btn btn-default">Edit this TellForm</a>
                     </div>
-                    <div class="col-xs-1 col-md-offset-2" style="padding-left:5px" class="hidden-sm hidden-xs">
-                        <button class="btn btn-info" id="focusDownButton" ng-click="nextField()" ng-disabled="selected.index == myform.form_fields.length-1">
+                    <div class="col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-4"> 
+                        <button class="btn btn-info btn-lg" id="focusDownButton"
+				ng-click="nextField()" 
+				ng-disabled="selected.index > myform.form_fields.length">
                         	<i class="fa fa-chevron-down"></i>
                         </button>
-                    </div>
-                    <div class="col-xs-1">
-                        <button class="btn btn-info" id="focusUpButton" ng-click="prevField()" ng-disabled="selected.index == 0">
+                        <button class="btn btn-info btn-lg" id="focusUpButton" ng-click="prevField()" ng-disabled="selected.index == 0">
                         	<i class="fa fa-chevron-up"></i>
                         </button>
                     </div>
@@ -89,7 +104,7 @@
 </div>
 
 <!-- End Page View -->
-<div ng-show="myform.submitted" class="form-submitted">
+<div ng-if="myform.submitted" class="form-submitted">
 
     <div class="field row text-center">
         <div class="col-xs-6 col-xs-offset-3 text-center">Form entry successfully submitted!</div>
