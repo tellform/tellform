@@ -19,6 +19,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                             return field;
                         }).value();
 
+					$scope.loading = false;
                     $scope.error = '';
                     $scope.selected = {
                         _id: $scope.myform.form_fields[0]._id,
@@ -50,8 +51,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
-                    //console.log($scope.selected.index)
-					//console.log($scope.myform.form_fields.length-1);
+                    console.log($scope.selected.index)
+					console.log($scope.myform.form_fields.length-1);
 		   			
 					if($scope.selected.index < $scope.myform.form_fields.length-1){
                         $scope.selected.index++;
@@ -90,7 +91,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 
                 $scope.submitForm = function(){
                     var _timeElapsed = TimeCounter.stopClock();
-
+					$scope.loading = true;	
                     var form = _.cloneDeep($scope.myform);
                     form.timeElapsed = _timeElapsed;
 
@@ -103,6 +104,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                             $scope.myform.submitted = true;
                         })
                         .error(function(error){
+							$scope.loading = false;
                             console.log(error);
                             $scope.error = error.message;
                         });
