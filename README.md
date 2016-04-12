@@ -7,7 +7,6 @@ Current stable release: v1.2.1
 [![Dependency Status](https://gemnasium.com/whitef0x0/tellform.svg)](https://gemnasium.com/whitef0x0/tellform)
 [![Coverage Status](https://coveralls.io/repos/whitef0x0/tellform/badge.svg?branch=master&service=github)](https://coveralls.io/github/whitef0x0/tellform?branch=master)
 [![Code Climate](https://codeclimate.com/github/whitef0x0/tellform/badges/gpa.svg)](https://codeclimate.com/github/whitef0x0/tellform)
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
@@ -50,14 +49,20 @@ Setup environment.
 $ grunt build
 ```
 
-To run development version:
-```bash
-$ grunt default
+Create your .env file. It should look like this
+```
+MAILER_EMAIL_ID=example@test.com
+MAILER_FROM=noreply@yourdomain.com
+MAILER_PASSWORD=yourmandrillapikey
+MAILER_SERVICE_PROVIDER=Mandrill
+BASE_URL=yourdomain.com
 ```
 
-To run production version:
+Edit the 'env' config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
+
+To run:
 ```bash
-$ grunt production
+$ grun
 ```
 
 Your application should run on port 3000, so in your browser just go to [http://localhost:3000](http://localhost:3000)
