@@ -30,7 +30,8 @@ access.log
 uploads/
 # API keys file
 api_keys.js
-
+*.env
+	
 # Sublime editor
 # ==============
 .sublime-project
