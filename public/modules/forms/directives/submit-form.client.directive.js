@@ -8,7 +8,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
             scope: {
                 myform:'='
             },
-            controller: function($scope){
+            controller: function($document, $scope){
                 $scope.authentication = $rootScope.authentication;
 
                 $scope.reloadForm = function(){
@@ -28,7 +28,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     //Reset Timer
                     TimeCounter.restartClock(); 
                 };
-
+	
                 /*
                 ** Field Controls
                 */
@@ -50,9 +50,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
-                    console.log($scope.selected.index)
-					console.log($scope.myform.form_fields.length-1);
-		   if($scope.selected.index < $scope.myform.form_fields.length-1){
+                    //console.log($scope.selected.index)
+					//console.log($scope.myform.form_fields.length-1);
+		   			
+					if($scope.selected.index < $scope.myform.form_fields.length-1){
                         $scope.selected.index++;
                         $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
                         $rootScope.setActiveField($scope.selected._id, $scope.selected.index);

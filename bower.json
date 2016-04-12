@@ -31,7 +31,8 @@
     "file-saver.js": "~1.20150507.2",
     "angular-bootstrap-colorpicker": "~3.0.19",
     "components-font-awesome": "~4.4.0",
-    "angular-ui-router-tabs": "~1.7.0"
+    "angular-ui-router-tabs": "~1.7.0",
+    "angular-scroll": "^1.0.0"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",

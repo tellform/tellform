@@ -43,7 +43,12 @@
     <!--</div>-->
     <div class="row">
         <form name="myForm" class="submission-form col-sm-12 col-md-offset-1 col-md-10">
-                <div ng-repeat="field in myform.form_fields"  ng-if="!field.deletePreserved" ng-class="{activeField: selected._id == field._id }" class="row field-directive">
+                <div ng-repeat="field in myform.form_fields"  
+				ng-if="!field.deletePreserved" 
+				data-index="{{$index}}" 
+				data-id="{{field._id}}" 
+				ng-class="{activeField: selected._id == field._id }" 
+				class="row field-directive">
                     <field-directive field="field" design="myform.design" index="$index">
                     </field-directive>
                 </div>
