@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['ngResource', 'NodeForm.templates', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'cgBusy'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ngResource', 'NodeForm.templates', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'cgBusy'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -21,6 +21,7 @@ var ApplicationConfiguration = (function() {
 		registerModule: registerModule
 	};
 })();
+
 'use strict';
 
 //Start by defining the main module and adding the module dependencies
@@ -62,7 +63,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
         	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
         		if(Auth.isAuthenticated()){
         			event.preventDefault(); // stop current execution
-        			$state.go('listForms'); // go to listForms page
+        			console.log('go to forms');
+				$state.go('listForms'); // go to listForms page
         		}
         	}
 	        //Redirect to 'home' route if user is not authenticated
@@ -89,12 +91,14 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 
 		    if(user){
 			  	authenticator = new Authorizer(user);
-			  	console.log('access denied: '+!authenticator.canAccess(permissions));
-
-			  	if( (permissions !== null) && !authenticator.canAccess(permissions) ){
-			    	event.preventDefault();
-		    		console.log('access denied');
-		      		$state.go('access_denied');
+			  	//console.log('access denied: '+!authenticator.canAccess(permissions));
+				//console.log(permissions);
+			  	if( (permissions != null) ){
+					if( !authenticator.canAccess(permissions) ){
+			    			event.preventDefault();
+		    				console.log('access denied');
+		      				$state.go('access_denied');
+					}
 				}
 			}
 		});
@@ -108,6 +112,7 @@ angular.element(document).ready(function() {
 	//Then init the app
 	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
+
 angular.module('NodeForm.templates', []).run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("../public/modules/core/views/header.client.view.html",
@@ -186,7 +191,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "<div class=\"field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><textarea class=textarea type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value={{field.fieldValue}} ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index)\">\n" +
     "        </textarea></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/textfield.html",
-    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-focus=\"setActiveField(field._id, index)\" class=text-field-input ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-required=field.required ng-disabled=field.disabled></div></div>");
+    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-focus=\"setActiveField(field._id, index)\" class=text-field-input ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-required=field.required ng-disabled=field.disabled on-enter-key=nextField()></div></div><div ng-show=\"field.required && field.fieldValue\" class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px\"><div ng-click=$root.nextField() class=\"btn btn-primary col-sm-5\">OK <i class=\"fa fa-check\"></i></div><div class=col-sm-3 style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/yes_no.html",
     "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row-fluid><label class=\"btn btn-success col-xs-3\"><input ng-focus=\"setActiveField(field._id, index)\" type=radio value=true ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-init=\"field.fieldValue = true\"> <span>Yes</span></label><label class=\"btn btn-danger col-xs-3\"><input ng-focus=\"setActiveField(field._id, index)\" type=radio value=false ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=\"field.disabled\"> <span>No</span></label></div></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/form/configure-form.client.view.html",
@@ -404,7 +409,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html",
     "<div class=\"submissions-table row container\" ng-init=initFormSubmissions()><div class=row><div class=col-xs-2><button class=\"btn btn-danger\" ng-click=deleteSelectedSubmissions() ng-disabled=!isAtLeastOneChecked();><i class=\"fa fa-trash-o\"></i> Delete Selected</button></div><div class=\"col-xs-2 col-xs-offset-4 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('xls')\"><small>Export to Excel</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('csv')\"><small>Export to CSV</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('json')\"><small>Export to JSON</small></button></div></div><div class=\"row table-outer\"><div class=col-xs-12><table id=table-submission-data class=\"table table-striped table-hover table-condensed\"><thead><tr><th><input ng-model=table.masterChecker ng-change=toggleAllCheckers() type=\"checkbox\"></th><th>#</th><th data-ng-repeat=\"(key, value) in myform.form_fields\">{{value.title}}</th><th ng-if=myform.plugins.oscarhost.baseUrl>OscarEMR User Profile</th><th>Percentage Complete</th><th>Time Elapsed</th><th>Device</th><th>Location</th><th>IP Address</th><th>Date Submitted (UTC)</th><th ng-if=myform.autofillPDFs>Generated PDF</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.rows\" ng-click=rowClicked($index) ng-class=\"{selected: row.selected === true}\"><td><input ng-model=row.selected type=\"checkbox\"></td><th class=scope>{{$index+1}}</th><td data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue}}</td><td ng-if=myform.plugins.oscarhost.baseUrl><a href=\"{{myform.plugins.oscarhost.baseUrl.split('ws')[0]}}demographic/demographiccontrol.jsp?demographic_no={{row.oscarDemoNum}}&displaymode=edit\">User Profile #{{row.oscarDemoNum}}</a></td><td>{{row.percentageComplete}}%</td><td>{{row.timeElapsed}}</td><td>{{row.device.name}}, {{row.device.type}}</td><td>{{row.geoLocation.city}}, {{row.geoLocation.country}}</td><td>{{row.ipAddr}}</td><td>{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}</td><td ng-if=row.pdf><a href={{row.pdfFilePath}} download={{row.pdf.name}} target=_self>Generated PDF</a></td></tr></tbody></table></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/form/submit-form.client.view.html",
-    "<section class=\"overlay submitform\" ng-if=selected._id.length ng-click=hideOverlay()></section><div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted><div class=\"field row\"><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1>{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\" style=\"overflow-wrap: break-word\"><p style=color:#ddd>{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><button ng-click=exitStartPage() class=\"btn btn-info col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4\" type=button><a style=\"color:white; font-size: 1.6em; text-decoration: none\">Continue to Form</a></button></div></div><div cg-busy=\"{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}\" ng-show=\"!myform.submitted && !myform.startPage.showStart\"><div class=\"field row\" style=padding-bottom:5em><div class=\"col-sm-10 col-sm-offset-1\"><h1>{{ myform.title }} <span style=\"font-size:0.8em; color: #bbb\" ng-if=!myform.isLive>(private preview)</span></h1><hr></div></div><div class=row><form name=myForm class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\"><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index></field-directive></div></form></div><hr><div class=\"row form-actions\"><button class=\"btn btn-success col-sm-2 col-sm-offset-5\" type=button ng-disabled=myform.$invalid ng-click=submitForm() style=\"font-size: 1.6em\">Submit</button></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom hidden-xs\" style=\"background-color:rgba(242,242,242,0.5); padding-top:15px\"><div class=container><div class=row><div class=\"col-xs-4 col-xs-offset-4 col-sm-4 col-sm-offset-4 text-center col-md-3 col-md-offset-0\" ng-show=!myform.submitted><p class=lead>{{myform | formValidity}} out of {{myform.visible_form_fields.length}} answered</p></div><div class=\"hidden-xs hidden-sm col-md-6 col-md-offset-3 row\"><div class=\"col-md-4 col-md-offset-2\" ng-if=!authentication.isAuthenticated()><a href=/#!/forms class=\"btn btn-default\">Create a TellForm</a></div><div class=\"col-md-4 col-md-offset-2\" ng-if=authentication.isAuthenticated() class=\"hidden-sm hidden-xs\"><a href=/#!/forms/{{myform._id}}/admin/create class=\"btn btn-default\">Edit this TellForm</a></div><div class=\"col-md-1 col-md-offset-2\" style=padding-left:5px class=\"hidden-sm hidden-xs\"><button class=\"btn btn-info\" id=focusDownButton ng-click=nextField() ng-disabled=\"selected.index == myform.form_fields.length-1\">\\/</button></div><div class=col-md-1 class=\"hidden-sm hidden-xs\"><button class=\"btn btn-info\" id=focusUpButton ng-click=prevField() ng-disabled=\"selected.index == 0\">/\\</button></div></div></div></div></section></div><div ng-show=myform.submitted class=form-submitted><div class=\"field row text-center\"><div class=\"col-xs-6 col-xs-offset-3 text-center\">Form entry successfully submitted!</div></div><div class=\"row form-actions\"><p class=\"text-center col-xs-4 col-xs-offset-4\"><button ng-click=reloadForm() class=\"btn btn-info\" type=button><a style=\"color:white; font-size: 1.6em; text-decoration: none\">Go back to Form</a></button></p></div></div>");
+    "<section class=\"overlay submitform\" ng-if=\"!myform.submitted && !myform.startPage.showStart\"></section><div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted style=\"margin-top 35vh\"><div class=\"field row\"><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 600; font-size: 25px\">{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"color: grey; font-weight: 100; font-size: 16px\">{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=exitStartPage() class=\"btn btn-info\" type=button><a style=\"color:grey; font-size: 1.6em; text-decoration: none\">Start</a></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div><div class=form-fields cg-busy=\"{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}\" ng-show=\"!myform.submitted && !myform.startPage.showStart\"><div class=row><form name=myForm class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\"><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved data-index={{$index}} data-id={{field._id}} ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index></field-directive></div></form></div><div class=\"row form-actions\" id=submit_field ng-click=\"setActiveField('submit_field', myform.form_fields.length)\" ng-class=\"{activeField: selected._id == 'submit_field' }\" style=\"border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 25vh\"><button ng-focus=\"setActiveField('submit_field', myform.form_fields.length)\" class=\"btn btn-success col-sm-2\" type=button ng-disabled=myform.$invalid ng-click=submitForm() style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em\">Submit</button><div class=col-sm-2 style=\"font-size: 75%; margin-top:2.5em\"><small>press ENTER</small></div></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom\" style=\"background-color:rgba(242,242,242,0.5); padding-top:15px\"><div class=container-fluid><div class=row><div class=\"col-sm-5 col-md-6\" ng-show=!myform.submitted><p class=lead>{{myform | formValidity}} out of {{myform.visible_form_fields.length}} answered</p></div><div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 row\"><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=!authentication.isAuthenticated()><a href=/#!/forms class=\"btn btn-default\">Create a TellForm</a></div><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=authentication.isAuthenticated()><a href=/#!/forms/{{myform._id}}/admin/create class=\"btn btn-default\">Edit this TellForm</a></div><div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-4\"><button class=\"btn btn-info btn-lg\" id=focusDownButton ng-click=nextField() ng-disabled=\"selected.index > myform.form_fields.length\"><i class=\"fa fa-chevron-down\"></i></button> <button class=\"btn btn-info btn-lg\" id=focusUpButton ng-click=prevField() ng-disabled=\"selected.index == 0\"><i class=\"fa fa-chevron-up\"></i></button></div></div></div></div></section></div><div ng-if=myform.submitted class=form-submitted><div class=\"field row text-center\"><div class=\"col-xs-6 col-xs-offset-3 text-center\">Form entry successfully submitted!</div></div><div class=\"row form-actions\"><p class=\"text-center col-xs-4 col-xs-offset-4\"><button ng-click=reloadForm() class=\"btn btn-info\" type=button><a style=\"color:white; font-size: 1.6em; text-decoration: none\">Go back to Form</a></button></p></div></div>");
   $templateCache.put("../public/modules/users/views/authentication/access-denied.client.view.html",
     "<section class=\"row text-center auth\"><h3 class=col-md-12>You need to be logged in to access this page</h3><a href=/#!/sigin class=col-md-12>Login</a></section>");
   $templateCache.put("../public/modules/users/views/authentication/signin.client.view.html",
@@ -739,10 +744,7 @@ angular.module('forms').config(['$stateProvider',
 		$stateProvider.
 		state('listForms', {
 			url: '/forms',
-			templateUrl: 'modules/forms/views/list-forms.client.view.html',
-			data: {
-				permissions: [ 'editForm' ]
-			}
+			templateUrl: 'modules/forms/views/list-forms.client.view.html'
   		}).
   		state('submitForm', {
 			url: '/forms/:formId',
@@ -785,6 +787,7 @@ angular.module('forms').config(['$stateProvider',
 	    });
 	}
 ]);
+
 'use strict';
 
 // Forms controller
@@ -1695,6 +1698,27 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
         },
     };
 }]);
+'use strict'
+
+angular.module('forms').directive('onEnterKey', ['$rootScope', function($rootScope){
+	return {
+		restrict: 'A', 
+		link: function($scope, $element, $attrs) {
+			$element.bind("keydown keypress", function(event) {
+				var keyCode = event.which || event.keyCode;
+				console.log($attrs.onEnterKey);		
+				if(keyCode === 13) {
+					$rootScope.$apply(function() {
+						$rootScope.$eval($attrs.onEnterKey);
+					});
+					
+					event.preventDefault();
+				}
+			});
+		}
+	};	
+}]);
+
 'use strict';
 
 angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
@@ -1733,7 +1757,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
             scope: {
                 myform:'='
             },
-            controller: ["$scope", function($scope){
+            controller: ["$document", "$scope", function($document, $scope){
                 $scope.authentication = $rootScope.authentication;
 
                 $scope.reloadForm = function(){
@@ -1746,24 +1770,21 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 
                     $scope.error = '';
                     $scope.selected = {
-                        _id: '',
-                        index: null,
+                        _id: $scope.myform.form_fields[0]._id,
+                        index: 0,
                     };
 
                     //Reset Timer
                     TimeCounter.restartClock(); 
                 };
-
+	
                 /*
                 ** Field Controls
                 */
-                $rootScope.setActiveField = function(field_id, field_index) {
+                $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index) {
                     if($scope.selected === null){
-                        $scope.selected = {
-                            _id: '',
-                            index: 0,
-                        };
-                    }
+						return;
+		    		}
                     console.log('field_id: '+field_id);
                     console.log('field_index: '+field_index);
                     console.log($scope.selected);
@@ -1777,14 +1798,21 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }, 10);
                 };
 
-                $scope.nextField = function(){
-                    if($scope.selected.index < $scope.myform.form_fields.length-1){
+                $rootScope.nextField = $scope.nextField = function(){
+                    //console.log($scope.selected.index)
+					//console.log($scope.myform.form_fields.length-1);
+		   			
+					if($scope.selected.index < $scope.myform.form_fields.length-1){
                         $scope.selected.index++;
                         $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
                         $rootScope.setActiveField($scope.selected._id, $scope.selected.index);
-                    }
+                    } else if($scope.selected.index === $scope.myform.form_fields.length-1) {
+						$scope.selected.index++;
+						$scope.selected._id = 'submit_field';
+						$rootScope.setActiveField($scope.selected._id, $scope.selected.index);
+					}
                 };
-                $scope.prevField = function(){
+                $rootScope.prevField = $scope.prevField = function(){
                     if($scope.selected.index > 0){
                         $scope.selected.index = $scope.selected.index - 1;
                         $scope.selected._id = $scope.myform.form_fields[$scope.selected.index]._id;
@@ -1838,6 +1866,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
         };
     }
 ]);
+
 'use strict';
 
 //Forms service used for communicating with the forms REST endpoints
@@ -2392,12 +2421,12 @@ angular.module('users').factory('Auth', ['$window',
       ensureHasCurrentUser: function(User) {
         if (service._currentUser && service._currentUser.username) {
           console.log('Using local current user.');
-          // console.log(service._currentUser);
+          console.log(service._currentUser);
           return service._currentUser;
         } 
         else if ($window.user){
           console.log('Using cached current user.');
-          // console.log($window.user);
+          console.log($window.user);
           service._currentUser = $window.user;
           return service._currentUser;
         }
