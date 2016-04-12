@@ -148,13 +148,9 @@ module.exports = function(grunt) {
 			},
 			secure: {
 				NODE_ENV: 'secure',
-				src: '.env'
 			},
 			default: {
 				src: '/opt/deploy/.env'
-			},
-			production: {
-				src: '.prod.env'
 			}
 		},
 		mochaTest: {
@@ -286,8 +282,7 @@ module.exports = function(grunt) {
     grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
-	grunt.registerTask('default', ['lint', 'html2js:main', 'env:default', 'concurrent:default']);
-	grunt.registerTask('default', ['lint', 'html2js:main', 'uglify:production', 'cssmin', 'ngAnnotate', 'env:production', 'concurrent:default']);
+	grunt.registerTask('default', ['lint', 'html2js:main', 'env', 'concurrent:default']);
 	
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
