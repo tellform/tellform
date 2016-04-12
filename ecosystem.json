@@ -1,0 +1,20 @@
+{
+  "apps" : [{
+    "name"      : "tellform",
+    "script"    : "/usr/bin/grunt",
+    "args"        : "['production']"
+  }],
+  "deploy" : {
+    "production" : {
+      "user" : "node",
+      "host" : "localhost",
+      "ref"  : "origin/master",
+      "repo" : "git@github.com:whitef0x0/tellform.git",
+      "path" : "/opt/deploy",
+      "post-deploy" : "npm install && bower install --allow-root  && pm2 startOrRestart ecosystem.json --env production",
+   		"env" : {
+				"NODE_ENV": "production"
+			} 
+		}
+  }
+}

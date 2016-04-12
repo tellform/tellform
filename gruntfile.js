@@ -147,10 +147,14 @@ module.exports = function(grunt) {
 				NODE_ENV: 'test',
 			},
 			secure: {
-				NODE_ENV: 'secure'
+				NODE_ENV: 'secure',
+				src: '.env'
 			},
 			default: {
 				src: '.env'
+			},
+			production: {
+				src: '.prod.env'
 			}
 		},
 		mochaTest: {
@@ -283,7 +287,8 @@ module.exports = function(grunt) {
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'html2js:main', 'env:default', 'concurrent:default']);
-
+	grunt.registerTask('default', ['lint', 'html2js:main', 'uglify:production', 'cssmin', 'ngAnnotate', 'env:production', 'concurrent:default']);
+	
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
 
