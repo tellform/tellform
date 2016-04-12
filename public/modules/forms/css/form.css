@@ -80,6 +80,26 @@ div.form-fields {
 	position: relative;
 	margin-top: 25vh;
 }
+.letter {
+	position: relative;
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    width: 16px;
+    padding: 0;
+    height: 17px;
+    font-size: 12px;
+    line-height: 19px;
+    border: 1px solid #000;
+    border: 1px solid rgba(0,0,0,.2);
+    margin-right: 7px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    text-align: center;
+    font-weight: 700;
+}
 
 div.form-submitted > .field.row {
     padding-bottom: 10%;
