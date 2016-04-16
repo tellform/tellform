@@ -13,6 +13,7 @@
 
     <div class="col-xs-12 field-input">
         <div class="row">
+	{{field.fieldValue}}
             <label class="btn btn-default col-xs-2"
 		style="background: rgba(0,0,0,0.1); text-align:left;">
                 		<input ng-focus="setActiveField(field._id, index)" 
@@ -26,7 +27,7 @@
 					Y
 				</div>               	
 				<span>Yes</span>
-				<i ng-show="field.fieldValue == true" class="fa fa-check" aria-hidden="true"></i>
+				<i ng-show="field.fieldValue = true" class="fa fa-check" aria-hidden="true"></i>
             </label>
 		</div>
 		<div class="row" style="margin-top: 10px;">
