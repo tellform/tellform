@@ -152,10 +152,7 @@ module.exports = function(grunt) {
 			production: {
 				NODE_ENV: 'production'
 			},
-			default: {
-				NODE_ENV: 'development'
-			},
-				src: '/opt/deploy/.env'
+			src: '/opt/deploy/.env'
 		},
 		mochaTest: {
 			src: watchFiles.serverTests,
