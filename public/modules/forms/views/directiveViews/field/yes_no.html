@@ -11,13 +11,13 @@
         </p>
     </div>
 
-    <div class="col-xs-12 field-input">
+    <div class="col-xs-12 field-input" ng-focus="setActiveField(field._id, index)">
         <div class="row">
 	{{field.fieldValue}}
             <label class="btn btn-default col-xs-2"
-		style="background: rgba(0,0,0,0.1); text-align:left;">
-                		<input ng-focus="setActiveField(field._id, index)" 
-					type="radio" value="true" 
+		style="background: rgba(0,0,0,0.1); text-align:left;" 
+		ng-click="field.fieldValue = true;">
+                		<input 	type="radio" value="true" 
 					style="display: none;"
 					ng-model="field.fieldValue" 
 					ng-model-options="{ debounce: 250 }" 
@@ -27,24 +27,27 @@
 					Y
 				</div>               	
 				<span>Yes</span>
-				<i ng-show="field.fieldValue = true" class="fa fa-check" aria-hidden="true"></i>
+				<i ng-show="!!field.fieldValue" class="fa fa-check" aria-hidden="true"></i>
             </label>
-		</div>
-		<div class="row" style="margin-top: 10px;">
+	</div>
+	
+	<div class="row" style="margin-top: 10px;">
             <label class="btn btn-default col-xs-2" 
-		style="background: rgba(0,0,0,0.1); text-align:left;">
-                <input ng-focus="setActiveField(field._id, index)" 
-			type="radio" value="false" 
+		style="background: rgba(0,0,0,0.1); text-align:left;"
+		ng-click="field.fieldValue = false;">
+	
+                <input type="radio" value="false" 
 			style="display: none;"
 			ng-model="field.fieldValue" 
 			ng-model-options="{ debounce: 250 }" 
 			ng-required="field.required" 
 			ng-disabled="field.disabled"/>
-                <div class="letter">
-                  N
-				</div>
-				<span>No</span>
-                <i ng-show="field.fieldValue == false" class="fa fa-check" aria-hidden="true"></i>
+                	
+			<div class="letter">
+                  		N
+			</div>
+			<span>No</span>
+                	<i ng-show="!field.fieldValue" class="fa fa-check" aria-hidden="true"></i>
             </label>
         </div>
     </div>

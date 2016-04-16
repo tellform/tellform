@@ -34,9 +34,9 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 ** Field Controls
                 */
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index) {
-                    if($scope.selected === null){
-						return;
-		    		}
+                    if($scope.selected === null || $scope.selected._id === field_id){
+			return;
+		    }
                     console.log('field_id: '+field_id);
                     console.log('field_index: '+field_index);
                     console.log($scope.selected);
