@@ -7,17 +7,17 @@
 	    </h3>
     </div>
     <div class="col-xs-12 field-input ">
-		<select ng-model="field.fieldValue" 
+		<ui-select ng-model="field.fieldValue" 
+				theme="selectize"
 				ng-model-options="{ debounce: 250 }"  
 				ng-required="field.required" 
 				ng-disabled="field.disabled"
 				ng-focus="setActiveField(field._id, index)">
-			<option ng-repeat="option in field.fieldOptions" 
-					ng-selected="option.option_value == field.fieldValue"
-					ng-value="option.option_value">
-				{{option.option_value}}
-			</option>
-        </select>    
+			<ui-select-match placeholder="Type or select an option">{{$select.selected.option_value}}</ui-select-match>
+			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search">
+				<span>{{option.option_value | highlight: $select.search}}</span>
+			</ui-select-choices>
+        </ui-select>    
     </div>
 </div>
 <br>
