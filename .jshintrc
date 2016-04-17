@@ -1,4 +1,5 @@
 {
+	"loopfunc": true,
 	"node": true, // Enable globals available when code is running inside of the NodeJS runtime environment.
 	"browser": true, // Standard browser globals e.g. `window`, `document`.
 	"esnext": true, // Allow ES.next specific features such as `const` and `let`.
@@ -8,7 +9,7 @@
 	"eqeqeq": true, // Require triple equals i.e. `===`.
 	"immed": true, // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
 	"latedef": true, // Prohibit variable use before definition.
-	"newcap": true, // Require capitalization of all constructor functions e.g. `new F()`.
+	"newcap": false, // Require capitalization of all constructor functions e.g. `new F()`.
 	"noarg": true, // Prohibit use of `arguments.caller` and `arguments.callee`.
 	"quotmark": "single", // Define quotes to string values.
 	"regexp": true, // Prohibit `.` and `[^...]` in regular expressions.
@@ -20,7 +21,10 @@
 	"globals": { // Globals variables.
 		"jasmine": true,
 		"angular": true,
-		"ApplicationConfiguration": true
+		"_": true,
+		"saveAs": true, 
+		"ApplicationConfiguration": true,
+		"Session": true
 	},
 	"predef": [ // Extra globals.
 		"define",

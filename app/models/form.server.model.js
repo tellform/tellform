@@ -423,18 +423,19 @@ FormSchema.pre('save', function (next) {
 
 					// console.log('modifiedSubmissions\n---------\n\n');
 					// console.log(modifiedSubmissions);
-
+					
+	
 					//Iterate through all submissions with modified form_fields
 					async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
 
 						//Iterate through ids of deleted fields
 						for(var i = 0; i < deletedIds.length; i++){
 
-							//Get index of deleted field
-							var index = _.findIndex(submission.form_fields, function(field) {
-								var tmp_id = field._id+'';
-								return tmp_id === old_ids[ deletedIds[i] ];
-							});
+							var index = _.findIndex(submission.form_fields, function(field){
+                        var tmp_id = field._id+'';
+                        return tmp_id === old_ids[ deletedIds[i] ];
+                    }               
+); 
 
 							var deletedField = submission.form_fields[index];
 

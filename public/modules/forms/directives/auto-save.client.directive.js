@@ -1,16 +1,22 @@
 'use strict';
 
-_.mixin({ removeDateFields : function(o){
+
+function removeDateFieldsFunc(o) {
     var clone = _.clone(o);
-    for(var i=0; i<clone.length; i++){
-        _.each(clone[i], function(v,k){
-            if(k === 'lastModified' || k === 'created'){
-                delete clone[i][k];
-            }
-        });
+    function eachObject(v,k){
+        
+		if(k === 'lastModified' || k === 'created'){
+        	delete clone[i][k];
+        }
+	}
+
+	for(var i=0; i<clone.length; i++){
+        _.each(clone[i], eachObject); 
     }
     return clone;
-}});
+}
+
+_.mixin({ removeDateFields : removeDateFieldsFunc });
 
 angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   

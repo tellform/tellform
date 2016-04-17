@@ -10,11 +10,10 @@
 /* This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper */
 .custom-select select {
   width:100%;
-  margin:0px;
+  margin:0;
   background:none;
   border: 1px solid transparent;
-  border-radius: 0px;
-  outline: none;
+  border-radius: 0;
   /* Prefixed box-sizing rules necessary for older browsers */
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -101,7 +100,7 @@ x:-o-prefocus, .custom-select::after {
 
 /* FIREFOX won't let us hide the native select arrow, so we have to make it wider than needed and clip it via overflow on the parent container. The percentage width is a fallback since FF 4+ supports calc() so we can just add a fixed amount of extra width to push the native arrow out of view. We're applying this hack across all FF versions because all the previous hacks were too fragile and complex. You might want to consider not using this hack and using the native select arrow in FF. Note this makes the menus wider than the select button because they display at the specified width and aren't clipped. Targeting hack via http://browserhacks.com/#hack-758bff81c5c32351b02e10480b5ed48e */
 /* Show only the native arrow */
-@-moz-document url-prefix() { 
+/*@-moz-document url-prefix() { 
   .custom-select {
     overflow: hidden;
   }
@@ -112,7 +111,7 @@ x:-o-prefocus, .custom-select::after {
   }
   
 }
-
+*/
 /* Firefox focus has odd artifacts around the text, this kills that. See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring */
 .custom-select select:-moz-focusring {
   color: transparent;

@@ -53,7 +53,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             //Iterate through form's submissions
                             for(var i=0; i<data.length; i++){
                                 for(var x=0; x<data[i].form_fields; x++){
-                                    oldValue = data[i].form_fields[x].fieldValue || '';
+                                    var oldValue = data[i].form_fields[x].fieldValue || '';
                                     data[i].form_fields[x] =  _.merge(defaultFormFields, data[i].form_fields);
                                     data[i].form_fields[x].fieldValue = oldValue;
                                 }

@@ -61,7 +61,7 @@ _.mixin({
 		var r = _.omit(obj, iteratee, context);
 
 		_.each(r, function(val, key) {
-			if (typeof(val) === "object")
+			if (typeof(val) === 'object')
 				r[key] = _.deepOmit(val, iteratee, context);
 		});
 

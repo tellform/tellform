@@ -255,10 +255,10 @@ module.exports = function(grunt) {
 	    var coveralls = require('coveralls');
 	    coveralls.handleInput(lcov, function(err){
 	        if (err) {
-	        	grunt.log.error("Failed to submit lcov file to coveralls: " + err);
+	        	grunt.log.error('Failed to submit lcov file to coveralls: ' + err);
 	            return done(err);
 	        }
-	        grunt.verbose.ok("Successfully submitted lcov file to coveralls");
+	        grunt.verbose.ok('Successfully submitted lcov file to coveralls');
 	        done();
 	    });
 	});

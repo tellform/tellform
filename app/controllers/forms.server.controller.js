@@ -184,7 +184,7 @@ exports.create = function(req, res) {
 	form.admin = req.user._id;
 	console.log('Create a new form');
 	console.log(form);
-	console.log(req.body.form)
+	console.log(req.body.form);
 	console.log(req.user);
 
 	form.save(function(err) {

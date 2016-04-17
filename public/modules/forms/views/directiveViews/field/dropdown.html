@@ -15,7 +15,7 @@
 				ng-focus="setActiveField(field._id, index)">
 			<ui-select-match placeholder="Type or select an option">{{$select.selected.option_value}}</ui-select-match>
 			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search">
-				<span>{{option.option_value | highlight: $select.search}}</span>
+				<span ng-bind-html="option.option_value | to_trusted | highlight: $select.search"></span>
 			</ui-select-choices>
         </ui-select>    
     </div>

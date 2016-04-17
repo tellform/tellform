@@ -20,7 +20,7 @@
     right: 0;
     bottom: 0;
 }
-`
+
 section.public-form {
     margin-top: -70px;
 }
@@ -64,7 +64,7 @@ section.content p.breakwords {
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
 }
 .modal-footer input[type='text']:focus {
-    outline: none;
+    outline: 0;
 }
 .modal-body > .modal-body-alert {
     color: #796620;
@@ -94,10 +94,10 @@ div.form-fields {
     border: 1px solid #000;
     border: 1px solid rgba(0,0,0,.2);
     margin-right: 7px;
-    border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    text-align: center;
+    border-radius: 3px;
+	text-align: center;
     font-weight: 700;
 }
 
@@ -121,7 +121,7 @@ form .accordion-edit {
 
 /* Styles for form submission view (/forms/:formID) */
 form .row.field {
-    padding: 1em 0 0em 0;
+    padding: 1em 0 0 0;
     width: inherit;
 }
     form .row.field > .field-title {
@@ -309,10 +309,7 @@ div.config-form .row.field {
 
 /*Styles for submission table*/
 .submissions-table .table-outer.row {
-    margin-top: 1.5em;
-    margin-bottom: 2em;
-    margin-left: 0!important;
-    margin-right: 0!important;
+    margin: 1.5em 0 2em 0!important;
 }
 .submissions-table .table-outer .col-xs-12 {
     padding-left: 0!important;

@@ -157,7 +157,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // add new option to the field
                 $scope.addOption = function(field_index){
                     var currField = $scope.myform.form_fields[field_index];
-					console.log(field_index];
+					console.log(field_index);
 					console.log(currField);	
                     
 					if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){

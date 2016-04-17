@@ -44,14 +44,14 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
                     setTimeout(function() {
-                        $('html, body').animate({
-                            scrollTop: $('.activeField').offset().top
+                        angular.element('html, body').animate({
+                            scrollTop: angular.element('.activeField').offset().top
                         },200);
                     }, 10);
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
-                    console.log($scope.selected.index)
+                    console.log($scope.selected.index);
 					console.log($scope.myform.form_fields.length-1);
 		   			
 					if($scope.selected.index < $scope.myform.form_fields.length-1){
