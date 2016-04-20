@@ -1,5 +1,5 @@
 {
-  "name": "TellForm",
+  "name": "tellform",
   "description": "Opensource alternative to TypeForm",
   "version": "1.2.1",
   "homepage": "https://github.com/whitef0x0/tellform",
@@ -38,7 +38,7 @@
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
-    "angular": "^1.2.21",
+    "angular": "1.4.10",
     "angular-animate": "~1.4.7"
   }
 }
