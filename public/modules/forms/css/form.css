@@ -194,18 +194,21 @@ form .row.field {
             font-size:0.8em;
         }
 
-    form .row.field.dropdown > .field-input {
+    form .row.field.dropdown > .field-input input {
         height: 34px;
+		border-width: 0 0 2px 0;
+		border-radius: 5px;
     }
-        form .row.field.dropdown > .field-input > select{
-            padding:0.45em 0.9em;
-            width:100%;
-            background: transparent;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            height: 34px;
+       	form .dropdown > .field-input .ui-select-choices-row-inner {
+			border-radius: 3px;
+			margin: 5px;
+			padding: 10px;
+			background-color: rgba(0,0,0,0.05);
+		}
+
+		form .dropdown > .field-input .ui-select-choices-row-inner.active, form .dropdown > .field-input .ui-select-choices-row-inner.active:focus {
+            background-color: rgba(0,0,0,0.1);
         }
-        
 .config-form {
     max-width: 100%;
 }

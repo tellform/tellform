@@ -16,7 +16,8 @@
 			<ui-select-match placeholder="Type or select an option">
 				{{$select.selected.option_value}}
 			</ui-select-match>
-			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search">
+			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"
+				ng-class="{'active': option.option_value === field.fieldValue }">
 				<span ng-bind-html="option.option_value | highlight: $select.search"></span>
 			</ui-select-choices>
         </ui-select>    
