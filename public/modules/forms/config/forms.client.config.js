@@ -22,10 +22,7 @@ angular.module('forms').run(['Menus',
 				var fields = formObj.form_fields;
 
 				var valid_count = fields.filter(function(field){
-					if(typeof field === 'object'){
-						if(field.fieldType === 'rating' || field.fieldType === 'statement'){
-							return true;
-						}
+					if(typeof field === 'object' && field.fieldType !== 'statement' && field.fieldType !== 'rating'){
 					    return !!(field.fieldValue);
 					}
 

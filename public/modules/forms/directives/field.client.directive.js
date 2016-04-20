@@ -17,7 +17,6 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
         var supported_fields = [
             'textfield',
             'textarea',
-            'checkbox',
             'date',
             'dropdown',
             'hidden',

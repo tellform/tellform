@@ -29,10 +29,6 @@ angular.module('forms').service('FormFields', [
 		        value : 'Paragraph Text'
 		    },
 		    {
-		        name : 'checkbox',
-		        value : 'Checkbox'
-		    },
-		    {
 		        name : 'yes_no',
 		        value : 'Yes/No'
 		    },
@@ -71,11 +67,7 @@ angular.module('forms').service('FormFields', [
 		    {
 		        name : 'statement',
 		        value : 'Statement' 
-		    },
-		    // {
-		    //     name : 'natural',
-		    //     value : 'Natural Language Input' 
-		    // },
+		    }
 		];
 	}
 		

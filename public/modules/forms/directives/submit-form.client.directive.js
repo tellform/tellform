@@ -10,7 +10,14 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
             },
             controller: function($document, $scope){
                 $scope.authentication = $rootScope.authentication;
-
+		
+		$scope.form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
+			if(field.fieldType === 'statement' || field.fieldType === 'rating'){
+				return false;
+			}	
+			return true;
+		}).length;
+		
                 $scope.reloadForm = function(){
                     //Reset Form
                     $scope.myform.submitted = false;
