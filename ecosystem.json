@@ -5,7 +5,7 @@
   }],
   "deploy" : {
     "stage" : {
-      "user" : "root",
+      "user" : "polydaic",
       "host" : "159.203.42.158",
       "ref"  : "origin/master",
       "repo" : "git@github.com:whitef0x0/tellform.git",
