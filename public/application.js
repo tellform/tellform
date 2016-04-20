@@ -24,12 +24,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).constant('USER_RO
   superuser: 'superuser',
 });
 
-angluar.module(ApplicationConfiguration.applicationModuleName).filter('to_trusted'['$sce', function($sce){
-	return function(text){
-		return $sce.trustAsHtml(text);
-	};
-}]);
-
 angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', '$state', '$stateParams',
     function($rootScope, Auth, $state, $stateParams) {
 

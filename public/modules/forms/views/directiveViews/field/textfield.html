@@ -9,8 +9,9 @@
     </div>
     <div class="col-xs-12 field-input">
 		<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
-            ng-focus="setActiveField(field._id, index)"
-			type="text" 
+            		ng-focus="setActiveField(field._id, index)"
+			type="{{field.input_type}}" 
+			placeholder="{{field.placeholder}}"
 			class="text-field-input" 
 			ng-model="field.fieldValue" 
 			ng-model-options="{ debounce: 250 }"  
@@ -20,14 +21,15 @@
 			on-enter-key="nextField()">
     </div>
 </div>
-<div ng-show="field.required && field.fieldValue" class="col-xs-12 row">
+<div class="col-xs-12 row">
     	<div class="btn btn-lg btn-default row-fluid"
 	 	style="padding: 4px; margin-top:8px;">
-			<div ng-click="$root.nextField()" 
+			<button ng-disabled="!field.fieldValue" 
+				ng-click="$root.nextField()" 
 				class="btn btn-primary col-sm-5">
 				
 				OK <i class="fa fa-check"></i>
-			</div>
+			</button>
 			<div class="col-sm-3" style="margin-top:0.2em">
 				<small style="color:#ddd; font-size:70%">
 				press ENTER

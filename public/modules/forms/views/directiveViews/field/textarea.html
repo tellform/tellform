@@ -8,7 +8,20 @@
         	ng-required="field.required" 
         	ng-disabled="field.disabled"
         	ng-focus="setActiveField(field._id, index)">
-        </textarea>
-       
+        </textarea>       
+    </div>
+
+	<div class="col-xs-12 field-input">
+        <input ng-focus="setActiveField(field._id, index)"
+                ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
+                type="email"
+                class="text-field-input"
+                placeholder="email@example.com"
+                value="{{field.fieldValue}}"
+                ng-model="field.fieldValue"
+                ng-model-options="{ debounce: 250 }"
+                ng-required="field.required"
+                ng-disabled="field.disabled"
+                ng-focus="setActiveField(field._id, index)"/>
     </div>
 </div>

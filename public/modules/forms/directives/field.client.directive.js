@@ -10,18 +10,15 @@ var __indexOf = [].indexOf || function(item) {
 
 angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', '$templateCache',
     function($http, $compile, $rootScope, $templateCache) {
-
     
-    var getTemplateUrl = function(field) {
-        var type = field.fieldType;
+    var getTemplateUrl = function(fieldType) {
+        var type = fieldType;
         var templateUrl = 'modules/forms/views/directiveViews/field/';
         var supported_fields = [
             'textfield',
-            'email',
             'textarea',
             'checkbox',
             'date',
-            'link',
             'dropdown',
             'hidden',
             'password',
@@ -33,12 +30,11 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'number',
             'natural'
         ];
-        if (__indexOf.call(supported_fields, type) >= 0) {
+	if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
 
    		return $templateCache.get('../public/'+templateUrl);
-        //return templateUrl;
     };
 
     return {
@@ -63,13 +59,26 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
                     defaultDate: 0,
                 };
             }
-
-            // GET template content from path
-            var template = getTemplateUrl(scope.field);
-            //$http.get(templateUrl).success(function(data) {
-                element.html(template).show();
-                $compile(element.contents())(scope);
-            //});
+			
+			if(scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
+				switch(scope.field.fieldType){
+					case 'textfield':
+						scope.field.input_type = 'text';
+						break;
+					case 'email':
+						scope.field.input_type = 'email';
+						scope.field.placeholder = 'joesmith@example.com';
+						break;
+					default:
+						scope.field.input_type = 'url';
+						scope.field.placeholder = 'http://example.com';
+						break;
+				}
+				scope.field.fieldType = 'textfield';
+			}
+            var template = getTemplateUrl(scope.field.fieldType);
+           	element.html(template).show();
+            $compile(element.contents())(scope);
         },
     };
 }]);

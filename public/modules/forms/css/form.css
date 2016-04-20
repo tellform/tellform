@@ -196,7 +196,6 @@ form .row.field {
 
     form .row.field.dropdown > .field-input {
         height: 34px;
-        overflow: hidden;
     }
         form .row.field.dropdown > .field-input > select{
             padding:0.45em 0.9em;

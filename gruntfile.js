@@ -232,7 +232,8 @@ module.exports = function(grunt) {
         html2js: {
 		  options: {
 		    base: 'NodeForm',
-		    module: 'NodeForm.templates',
+		    watch: true,
+			module: 'NodeForm.templates',
 		    singleModule: true,
 		    useStrict: true,
 		    htmlmin: {
@@ -296,7 +297,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'uglify', 'cssmin', 'ngAnnotate', 'html2js:main']);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'cssmin', 'ngAnnotate', 'uglify', 'html2js:main']);
 
 	// Test task.
 	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);

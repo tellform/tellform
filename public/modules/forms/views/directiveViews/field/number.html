@@ -14,10 +14,11 @@
         	ng-focus="setActiveField(field._id, index)"/>
     </div>
 </div>
-<div ng-show="field.required && field.fieldValue" class="col-xs-12 row">
+<div class="col-xs-12 row">
         <div class="btn btn-lg btn-default row-fluid"
                 style="padding: 4px; margin-top:8px;">
-                        <div ng-click="$root.nextField()" 
+                        <div ng-disabled="!field.fieldValue"
+				ng-click="$root.nextField()" 
                                 class="btn btn-primary col-sm-5">
 
                                 OK <i class="fa fa-check"></i>

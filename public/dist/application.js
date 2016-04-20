@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'ngResource', 'NodeForm.templates', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'cgBusy'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ngSanitize', 'ui.select', 'ngResource', 'NodeForm.templates', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'cgBusy'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -164,34 +164,30 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/forms/views/directiveViews/field/date.html",
     "<div class=\"field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><div class=\"control-group input-append\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ui-date=dateOptions ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/dropdown.html",
-    "<div class=\"field row dropdown\" ng-click=\"setActiveField(field._id, index)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=selectize ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index)\"><ui-select-match placeholder=\"Type or select an option\">{{$select.selected.option_value}}</ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-selected=\"option.option_value == field.fieldValue\" ng-value=option.option_value><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
-  $templateCache.put("../public/modules/forms/views/directiveViews/field/email.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=email class=text-field-input placeholder=email@example.com value={{field.fieldValue}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index)\"></div></div><div ng-show=\"field.required && field.fieldValue\" class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px\"><div ng-click=$root.nextField() class=\"btn btn-primary col-sm-5\">OK <i class=\"fa fa-check\"></i></div><div class=col-sm-3 style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
+    "<div class=\"field row dropdown\" ng-click=\"setActiveField(field._id, index)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=bootstrap ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index)\"><ui-select-match placeholder=\"Type or select an option\">{{$select.selected.option_value}}</ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/file.html",
     "<div class=\"field row\" ng-if=form.autofillPDFs ng-click=\"setActiveField(field._id, index)\"><div class=\"col-sm-4 field-title\"><h5>{{field.title}} <span class=required-error ng-show=\"field.required && field.fieldValue == 0\">(* required)</span></h5></div><div class=\"col-sm-8 field-input\"><div class=input-group><div tabindex=-1 class=\"form-control file-caption\"><span class=file-caption-ellipsis ng-if=!form.pdf>…</span><div class=file-caption-name ng-if=form.pdf>{{field.file.originalname}}</div></div><div class=input-group-btn><button type=button ng-if=field.file ng-click=removeFile(field); title=\"Clear selected files\" class=\"btn btn-danger fileinput-remove fileinput-remove-button\"><i class=\"glyphicon glyphicon-trash\"></i> Delete</button> <button type=button ng-if=field.fileLoading title=\"Abort ongoing upload\" class=\"btn btn-default\" ng-click=cancelFileUpload(field)><i class=\"glyphicon glyphicon-ban-circle\"></i> Cancel</button><div class=\"btn btn-success btn-file\" ngf-select ngf-change=uploadPDF($files) ng-if=!field.file><i class=\"glyphicon glyphicon-upload\"></i> Upload your File</div></div></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/hidden.html",
     "<input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=hidden ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value={{field.fieldValue}} ng-disabled=field.disabled>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/legal.html",
     "<div class=\"field row radio legal\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3>{{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3><br><p style=color:#ddd>{{field.description}}</p></div><div class=\"col-xs-12 field-input container\"><div class=row-fluid><label class=\"btn col-xs-5\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=true ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=\"field.disabled\"> <span>I accept</span></label><label class=\"btn col-xs-5 col-xs-offset-1\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=false ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=\"field.disabled\"> <span>I don't accept</span></label></div></div></div><br>");
-  $templateCache.put("../public/modules/forms/views/directiveViews/field/link.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=url class=text-field-input placeholder=https://example.com/something value={{field.fieldValue}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=\"field.disabled\"></div></div><div ng-show=\"field.required && field.fieldValue\" class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px\"><div ng-click=$root.nextField() class=\"btn btn-primary col-sm-5\">OK <i class=\"fa fa-check\"></i></div><div class=col-sm-3 style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/natural.html",
     "<div class=\"field row textfield natural\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" class=text-field-input ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-required=field.required ng-disabled=field.disabled></div><br><div class=col-xs-12><span ng-bind=field.fieldMatchValue></span></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/number.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=number class=text-field-input placeholder=\"\" value={{field.fieldValue}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index)\"></div></div><div ng-show=\"field.required && field.fieldValue\" class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px\"><div ng-click=$root.nextField() class=\"btn btn-primary col-sm-5\">OK <i class=\"fa fa-check\"></i></div><div class=col-sm-3 style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
+    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=number class=text-field-input placeholder=\"\" value={{field.fieldValue}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index)\"></div></div><div class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px\"><div ng-disabled=!field.fieldValue ng-click=$root.nextField() class=\"btn btn-primary col-sm-5\">OK <i class=\"fa fa-check\"></i></div><div class=col-sm-3 style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/password.html",
     "<div class=\"field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=password class=text-field-input ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value={{field.fieldValue}} ng-required=field.required ng-disabled=field.disabled></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/radio.html",
-    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=btn style=\"margin: 0.5em; padding-left:30px\" ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_id}\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=\"field.disabled\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
+    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=\"btn col-xs-4\" style=\"margin: 0.5em; padding-left:30px\" ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_id}\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=\"field.disabled\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/rating.html",
     "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input-stars max=5 ng-focus=\"setActiveField(field._id, index)\" icon-full=fa-star icon-base=\"fa fa-3x\" icon-empty=fa-star-o ng-init=\"field.fieldValue = 1\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled class=angular-input-stars></input-stars></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/statement.html",
     "<div class=\"statement field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"row field-title field-title\"><div class=col-xs-1><i class=\"fa fa-quote-left fa-1\"></i></div><h2 class=\"text-left col-xs-9\">{{field.title}}</h2></div><div class=\"row field-title field-input\"><p class=col-xs-12 ng-if=field.description.length>{{field.description}}</p><br><div class=\"col-xs-offset-1 col-xs-11\"><button class=\"btn btn-info\" style=\"font-size: 1.3em\" ng-focus=\"setActiveField(field._id, index)\" ng-click=nextField()>Continue</button></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/textarea.html",
     "<div class=\"field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><textarea class=textarea type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value={{field.fieldValue}} ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index)\">\n" +
-    "        </textarea></div></div>");
+    "        </textarea></div><div class=\"col-xs-12 field-input\"><input ng-focus=\"setActiveField(field._id, index)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=email class=text-field-input placeholder=email@example.com value={{field.fieldValue}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index)\"></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/textfield.html",
-    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-focus=\"setActiveField(field._id, index)\" class=text-field-input ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-required=field.required ng-disabled=field.disabled on-enter-key=nextField()></div></div><div ng-show=\"field.required && field.fieldValue\" class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px\"><div ng-click=$root.nextField() class=\"btn btn-primary col-sm-5\">OK <i class=\"fa fa-check\"></i></div><div class=col-sm-3 style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
+    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-focus=\"setActiveField(field._id, index)\" type={{field.input_type}} placeholder={{field.placeholder}} class=text-field-input ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-required=field.required ng-disabled=field.disabled on-enter-key=nextField()></div></div><div class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px\"><button ng-disabled=!field.fieldValue ng-click=$root.nextField() class=\"btn btn-primary col-sm-5\">OK <i class=\"fa fa-check\"></i></button><div class=col-sm-3 style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/yes_no.html",
     "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-xs-2\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true style=\"opacity: 0; margin-left: 0px\" ng-focus=\"setActiveField(field._id, index)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=\"field.disabled\"><div class=letter>Y</div><span>Yes</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-xs-2\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-focus=\"setActiveField(field._id, index)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=\"field.disabled\"><div class=letter>N</div><span>No</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/form/configure-form.client.view.html",
@@ -307,12 +303,12 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "                                    <div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=row>\n" +
     "                                        <input name={{option.option_value}}{{field._id}} ng-model=option.option_value class=col-xs-5>\n" +
     "\n" +
-    "                                        <a class=\"btn btn-danger btn-mini right\" type=button ng-click=\"deleteOption(field, option)\" class=col-xs-3>\n" +
+    "                                        <a class=\"btn btn-danger btn-mini right\" type=button ng-click=\"deleteOption($index, option)\" class=col-xs-3>\n" +
     "                                            <i class=\"fa fa-trash-o\"></i>\n" +
     "                                        </a>\n" +
     "                                    </div>\n" +
     "                                    <div class=row>                                                \n" +
-    "                                        <button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=button ng-click=addOption(field)>\n" +
+    "                                        <button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=button ng-click=addOption($index)>\n" +
     "                                            <i class=\"icon-plus icon-white\"></i> Add Option\n" +
     "                                        </button>\n" +
     "                                    </div>\n" +
@@ -409,7 +405,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html",
     "<div class=\"submissions-table row container\" ng-init=initFormSubmissions()><div class=row><div class=col-xs-2><button class=\"btn btn-danger\" ng-click=deleteSelectedSubmissions() ng-disabled=!isAtLeastOneChecked();><i class=\"fa fa-trash-o\"></i> Delete Selected</button></div><div class=\"col-xs-2 col-xs-offset-4 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('xls')\"><small>Export to Excel</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('csv')\"><small>Export to CSV</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('json')\"><small>Export to JSON</small></button></div></div><div class=\"row table-outer\"><div class=col-xs-12><table id=table-submission-data class=\"table table-striped table-hover table-condensed\"><thead><tr><th><input ng-model=table.masterChecker ng-change=toggleAllCheckers() type=\"checkbox\"></th><th>#</th><th data-ng-repeat=\"(key, value) in myform.form_fields\">{{value.title}}</th><th ng-if=myform.plugins.oscarhost.baseUrl>OscarEMR User Profile</th><th>Percentage Complete</th><th>Time Elapsed</th><th>Device</th><th>Location</th><th>IP Address</th><th>Date Submitted (UTC)</th><th ng-if=myform.autofillPDFs>Generated PDF</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.rows\" ng-click=rowClicked($index) ng-class=\"{selected: row.selected === true}\"><td><input ng-model=row.selected type=\"checkbox\"></td><th class=scope>{{$index+1}}</th><td data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue}}</td><td ng-if=myform.plugins.oscarhost.baseUrl><a href=\"{{myform.plugins.oscarhost.baseUrl.split('ws')[0]}}demographic/demographiccontrol.jsp?demographic_no={{row.oscarDemoNum}}&displaymode=edit\">User Profile #{{row.oscarDemoNum}}</a></td><td>{{row.percentageComplete}}%</td><td>{{row.timeElapsed}}</td><td>{{row.device.name}}, {{row.device.type}}</td><td>{{row.geoLocation.city}}, {{row.geoLocation.country}}</td><td>{{row.ipAddr}}</td><td>{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}</td><td ng-if=row.pdf><a href={{row.pdfFilePath}} download={{row.pdf.name}} target=_self>Generated PDF</a></td></tr></tbody></table></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/form/submit-form.client.view.html",
-    "<section class=\"overlay submitform\" ng-if=\"!myform.submitted && !myform.startPage.showStart\"></section><div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted style=\"margin-top: 35vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; font-size: 25px\">{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"color: grey; font-weight: 100; font-size: 16px\">{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=exitStartPage() class=\"btn btn-info\" type=button><a style=\"font-size: 1.6em; text-decoration: none\">Start</a></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div><div class=form-fields cg-busy=\"{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}\" ng-show=\"!myform.submitted && !myform.startPage.showStart\"><div class=row><form name=myForm class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\"><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved data-index={{$index}} data-id={{field._id}} ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index></field-directive></div></form></div><div class=\"row form-actions\" id=submit_field ng-click=\"setActiveField('submit_field', myform.form_fields.length)\" ng-class=\"{activeField: selected._id == 'submit_field' }\" style=\"border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 25vh\"><button ng-focus=\"setActiveField('submit_field', myform.form_fields.length)\" class=\"btn btn-success col-sm-2\" type=button ng-disabled=\"myform.$invalid || $scope.loading\" ng-click=submitForm() style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em\">Submit</button><div class=col-sm-2 style=\"font-size: 75%; margin-top:2.5em\"><small>press ENTER</small></div></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom\" style=\"background-color:rgba(242,242,242,0.5); padding-top:15px\"><div class=container-fluid><div class=row><div class=\"col-sm-5 col-md-6\" ng-show=!myform.submitted><p class=lead>{{myform | formValidity}} out of {{myform.visible_form_fields.length}} answered</p></div><div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 row\"><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=!authentication.isAuthenticated()><a href=/#!/forms class=\"btn btn-default\">Create a TellForm</a></div><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=authentication.isAuthenticated()><a href=/#!/forms/{{myform._id}}/admin/create class=\"btn btn-default\">Edit this TellForm</a></div><div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-4\"><button class=\"btn btn-info btn-lg\" id=focusDownButton ng-click=nextField() ng-disabled=\"selected.index > myform.form_fields.length-1\"><i class=\"fa fa-chevron-down\"></i></button> <button class=\"btn btn-info btn-lg\" id=focusUpButton ng-click=prevField() ng-disabled=\"selected.index == 0\"><i class=\"fa fa-chevron-up\"></i></button></div></div></div></div></section></div><div ng-if=myform.submitted class=form-submitted><div class=\"field row text-center\"><div class=\"col-xs-6 col-xs-offset-3 text-center\">Form entry successfully submitted!</div></div><div class=\"row form-actions\"><p class=\"text-center col-xs-4 col-xs-offset-4\"><button ng-click=reloadForm() class=\"btn btn-info\" type=button><a style=\"color:white; font-size: 1.6em; text-decoration: none\">Go back to Form</a></button></p></div></div>");
+    "<section class=\"overlay submitform\" ng-if=\"!myform.submitted && !myform.startPage.showStart\"></section><div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted style=\"margin-top: 35vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; font-size: 25px\">{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"color: grey; font-weight: 100; font-size: 16px\">{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=exitStartPage() class=\"btn btn-info\" type=button><a style=\"font-size: 1.6em; text-decoration: none\">Start</a></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div><div class=form-fields cg-busy=\"{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}\" ng-show=\"!myform.submitted && !myform.startPage.showStart\"><div class=row><form name=myForm novalidate class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\"><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved data-index={{$index}} data-id={{field._id}} ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index></field-directive></div></form></div><div class=\"row form-actions\" id=submit_field ng-click=\"setActiveField('submit_field', myform.form_fields.length)\" ng-class=\"{activeField: selected._id == 'submit_field' }\" style=\"border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 25vh\"><button ng-focus=\"setActiveField('submit_field', myform.form_fields.length)\" class=\"btn btn-success col-sm-2\" type=button ng-disabled=\"myform.$invalid || $scope.loading\" ng-click=submitForm() style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em\">Submit</button><div class=col-sm-2 style=\"font-size: 75%; margin-top:2.5em\"><small>press ENTER</small></div></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom\" style=\"background-color:rgba(242,242,242,0.5); padding-top:15px\"><div class=container-fluid><div class=row><div class=\"col-sm-5 col-md-6\" ng-show=!myform.submitted><p class=lead>{{myform | formValidity}} out of {{myform.visible_form_fields.length}} answered</p></div><div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 row\"><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=!authentication.isAuthenticated()><a href=/#!/forms class=\"btn btn-default\">Create a TellForm</a></div><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=authentication.isAuthenticated()><a href=/#!/forms/{{myform._id}}/admin/create class=\"btn btn-default\">Edit this TellForm</a></div><div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-4\"><button class=\"btn btn-info btn-lg\" id=focusDownButton ng-click=nextField() ng-disabled=\"selected.index > myform.form_fields.length-1\"><i class=\"fa fa-chevron-down\"></i></button> <button class=\"btn btn-info btn-lg\" id=focusUpButton ng-click=prevField() ng-disabled=\"selected.index == 0\"><i class=\"fa fa-chevron-up\"></i></button></div></div></div></div></section></div><div ng-if=myform.submitted class=form-submitted><div class=\"field row text-center\"><div class=\"col-xs-6 col-xs-offset-3 text-center\">Form entry successfully submitted!</div></div><div class=\"row form-actions\"><p class=\"text-center col-xs-4 col-xs-offset-4\"><button ng-click=reloadForm() class=\"btn btn-info\" type=button><a style=\"color:white; font-size: 1.6em; text-decoration: none\">Go back to Form</a></button></p></div></div>");
   $templateCache.put("../public/modules/users/views/authentication/access-denied.client.view.html",
     "<section class=\"row text-center auth\"><h3 class=col-md-12>You need to be logged in to access this page</h3><a href=/#!/sigin class=col-md-12>Login</a></section>");
   $templateCache.put("../public/modules/users/views/authentication/signin.client.view.html",
@@ -1029,17 +1025,23 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
 ]);
 'use strict';
 
-_.mixin({ removeDateFields : function(o){
+
+function removeDateFieldsFunc(o) {
     var clone = _.clone(o);
-    for(var i=0; i<clone.length; i++){
-        _.each(clone[i], function(v,k){
-            if(k === 'lastModified' || k === 'created'){
-                delete clone[i][k];
-            }
-        });
+    function eachObject(v,k){
+        
+		if(k === 'lastModified' || k === 'created'){
+        	delete clone[i][k];
+        }
+	}
+
+	for(var i=0; i<clone.length; i++){
+        _.each(clone[i], eachObject); 
     }
     return clone;
-}});
+}
+
+_.mixin({ removeDateFields : removeDateFieldsFunc });
 
 angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   
@@ -1416,8 +1418,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // add new option to the field
                 $scope.addOption = function(field_index){
                     var currField = $scope.myform.form_fields[field_index];
+					console.log(field_index);
 					console.log(currField);	
-                    if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+                    
+					if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
                         if(!currField.fieldOptions) $scope.myform.form_fields[field_index].fieldOptions = [];
 
                         var lastOptionID = 0;
@@ -1526,7 +1530,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             //Iterate through form's submissions
                             for(var i=0; i<data.length; i++){
                                 for(var x=0; x<data[i].form_fields; x++){
-                                    oldValue = data[i].form_fields[x].fieldValue || '';
+                                    var oldValue = data[i].form_fields[x].fieldValue || '';
                                     data[i].form_fields[x] =  _.merge(defaultFormFields, data[i].form_fields);
                                     data[i].form_fields[x].fieldValue = oldValue;
                                 }
@@ -1591,6 +1595,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
         };
     }
 ]);
+
 'use strict';
 
 angular.module('forms').directive('fieldIconDirective', function() {
@@ -1636,18 +1641,15 @@ var __indexOf = [].indexOf || function(item) {
 
 angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', '$templateCache',
     function($http, $compile, $rootScope, $templateCache) {
-
     
-    var getTemplateUrl = function(field) {
-        var type = field.fieldType;
+    var getTemplateUrl = function(fieldType) {
+        var type = fieldType;
         var templateUrl = 'modules/forms/views/directiveViews/field/';
         var supported_fields = [
             'textfield',
-            'email',
             'textarea',
             'checkbox',
             'date',
-            'link',
             'dropdown',
             'hidden',
             'password',
@@ -1659,12 +1661,11 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'number',
             'natural'
         ];
-        if (__indexOf.call(supported_fields, type) >= 0) {
+	if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
 
    		return $templateCache.get('../public/'+templateUrl);
-        //return templateUrl;
     };
 
     return {
@@ -1689,23 +1690,37 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
                     defaultDate: 0,
                 };
             }
-
-            // GET template content from path
-            var template = getTemplateUrl(scope.field);
-            //$http.get(templateUrl).success(function(data) {
-                element.html(template).show();
-                $compile(element.contents())(scope);
-            //});
+			
+			if(scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
+				switch(scope.field.fieldType){
+					case 'textfield':
+						scope.field.input_type = 'text';
+						break;
+					case 'email':
+						scope.field.input_type = 'email';
+						scope.field.placeholder = 'joesmith@example.com';
+						break;
+					default:
+						scope.field.input_type = 'url';
+						scope.field.placeholder = 'http://example.com';
+						break;
+				}
+				scope.field.fieldType = 'textfield';
+			}
+            var template = getTemplateUrl(scope.field.fieldType);
+           	element.html(template).show();
+            $compile(element.contents())(scope);
         },
     };
 }]);
-'use strict'
+
+'use strict';
 
 angular.module('forms').directive('onEnterKey', ['$rootScope', function($rootScope){
 	return {
 		restrict: 'A', 
 		link: function($scope, $element, $attrs) {
-			$element.bind("keydown keypress", function(event) {
+			$element.bind('keydown keypress', function(event) {
 				var keyCode = event.which || event.keyCode;
 				console.log($attrs.onEnterKey);		
 				if(keyCode === 13) {
@@ -1794,14 +1809,14 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
                     setTimeout(function() {
-                        $('html, body').animate({
-                            scrollTop: $('.activeField').offset().top
+                        angular.element('html, body').animate({
+                            scrollTop: angular.element('.activeField').offset().top
                         },200);
                     }, 10);
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
-                    console.log($scope.selected.index)
+                    console.log($scope.selected.index);
 					console.log($scope.myform.form_fields.length-1);
 		   			
 					if($scope.selected.index < $scope.myform.form_fields.length-1){
