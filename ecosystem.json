@@ -5,7 +5,7 @@
   }],
   "deploy" : {
     "stage" : {
-      "user" : "pm2_deploy",
+      "user" : "root",
       "host" : "159.203.42.158",
       "ref"  : "origin/master",
       "repo" : "git@github.com:whitef0x0/tellform.git",
