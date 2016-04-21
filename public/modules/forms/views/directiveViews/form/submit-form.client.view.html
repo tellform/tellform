@@ -1,4 +1,4 @@
-<section class="overlay submitform" ng-if="!myform.submitted && !myform.startPage.showStart"></section>
+<section class="overlay submitform" ng-if="loading || (!myform.submitted && !myform.startPage.showStart)"></section>
 
 <!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart" 
@@ -38,7 +38,7 @@
 </div>
 
 <!-- Form Fields View -->
-<div class="form-fields" cg-busy="{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}" ng-show="!myform.submitted && !myform.startPage.showStart">
+<div class="form-fields" ng-show="!myform.submitted && !myform.startPage.showStart">
     <div class="row">
         <form name="myForm" 
 		du-scroll-container 
@@ -63,13 +63,13 @@
 	style="border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 25vh;">
         
 	<button ng-focus="setActiveField('submit_field', myform.form_fields.length)" 
-		class="btn btn-success col-sm-2" 
-		type="button" 
-		ng-disabled="myform.$invalid || $scope.loading" 
+		class="Button btn btn-success col-sm-2" 
+        v-busy="loading" v-busy-label="Please wait" v-pressable
+		ng-disabled="loading" 
 		ng-click="submitForm()" 
 		style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;"> 
 		Submit
-        </button>
+    </button>
 	
 	<div class="col-sm-2" style="font-size: 75%; margin-top:2.5em">
 		<small>
@@ -109,7 +109,7 @@
 </div>
 
 <!-- End Page View -->
-<div ng-if="myform.submitted" class="form-submitted">
+<div ng-if="myform.submitted && !loading" class="form-submitted">
 
     <div class="field row text-center">
         <div class="col-xs-6 col-xs-offset-3 text-center">Form entry successfully submitted!</div>

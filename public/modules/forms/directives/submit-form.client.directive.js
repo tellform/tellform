@@ -11,7 +11,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
             controller: function($document, $window, $scope){
                 $scope.authentication = $rootScope.authentication;
 		        $scope.noscroll = false;
-    
+                
                 $scope.form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
                     if(field.fieldType === 'statement' || field.fieldType === 'rating'){
                         return false;
@@ -122,13 +122,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }
                 };
                 
-                $scope.hideOverlay = function(){
-                    $scope.selected = {
-                        _id: '',
-                        index: null,
-                    };
-                };
-
                 /*
                 ** Form Display Functions
                 */
@@ -144,19 +137,24 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					$scope.loading = true;	
                     var form = _.cloneDeep($scope.myform);
                     form.timeElapsed = _timeElapsed;
-
+                
                     form.percentageComplete = $filter('formValidity')($scope.myform)/$scope.myform.visible_form_fields.length*100;
                     delete form.visible_form_fields;
 
                     $scope.submitPromise = $http.post('/forms/'+$scope.myform._id, form)
                         .success(function(data, status, headers){
                             console.log('form submitted successfully');
-                            $scope.myform.submitted = true;
+                            setTimeout(function() {
+                                $scope.myform.submitted = true;
+                                $scope.loading = false;
+                            }, 20);
                         })
                         .error(function(error){
-							$scope.loading = false;
-                            console.log(error);
-                            $scope.error = error.message;
+                            setTimeout(function(){
+                                $scope.loading = false;
+                                console.log(error);
+                                $scope.error = error.message;
+                            }, 20);
                         });
                 };
 
