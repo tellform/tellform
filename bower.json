@@ -37,7 +37,6 @@
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
-    "angular": "1.4.10",
-    "angular-animate": "~1.4.7"
+    "angular": "1.4.10"
   }
 }
