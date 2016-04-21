@@ -94,6 +94,10 @@ var FormSchema = new Schema({
 		introParagraph:{
 			type: String
 		},
+        introButtonText:{
+            type: String,
+            default: 'Start'
+        },
 		buttons:[ButtonSchema]
 	},
 

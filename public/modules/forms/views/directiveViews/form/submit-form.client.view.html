@@ -3,7 +3,7 @@
 <!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart" 
 	class="form-submitted" 
-	style="margin-top: 35vh;">
+	style="padding-top: 35vh;">
     <div class="row">
         <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
             <h1 style="font-weight: 400; font-size: 25px;">
@@ -19,9 +19,9 @@
 
     <div class="row form-actions text-center" style="padding: 5px 25px 5px 25px;">
         <button ng-click="exitStartPage()" class="btn btn-info" type="button">
-            <a style="font-size: 1.6em; text-decoration: none;">
-                Start
-            </a>
+            <span style="font-size: 1.6em; text-decoration: none; color:white!important;">
+                {{myform.startPage.introButtonText}}
+            </span>
         </button>
     </div>
      <div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
