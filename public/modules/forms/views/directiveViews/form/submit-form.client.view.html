@@ -40,11 +40,15 @@
 <!-- Form Fields View -->
 <div class="form-fields" cg-busy="{promise:submitPromise,message:'Submitting form...',wrapperClass:'busy-submitting-wrapper',backdrop:true}" ng-show="!myform.submitted && !myform.startPage.showStart">
     <div class="row">
-        <form name="myForm" novalidate class="submission-form col-sm-12 col-md-offset-1 col-md-10">
+        <form name="myForm" 
+		du-scroll-container 
+		novalidate 
+		class="submission-form col-sm-12 col-md-offset-1 col-md-10">
                 <div ng-repeat="field in myform.form_fields"  
 				ng-if="!field.deletePreserved" 
 				data-index="{{$index}}" 
 				data-id="{{field._id}}" 
+				du-scrollspy
 				ng-class="{activeField: selected._id == field._id }" 
 				class="row field-directive">
                     <field-directive field="field" design="myform.design" index="$index">

@@ -1,4 +1,4 @@
-<div class="field row radio legal" ng-click="setActiveField(field._id, index)">
+<div class="field row radio legal" ng-click="setActiveField(field._id, index, true)">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">    	
     	<h3>{{field.title}} <span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span></h3>
     	<br>
@@ -7,11 +7,11 @@
     <div class="col-xs-12 field-input container">
 		<div class="row-fluid">
             <label class="btn col-xs-5">
-                <input ng-focus="setActiveField(field._id, index)" ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" type="radio" value="true" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"   ng-required="field.required" ng-disabled="field.disabled"/>
+                <input ng-focus="setActiveField(field._id, index, true)" ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" type="radio" value="true" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"   ng-required="field.required" ng-disabled="field.disabled"/>
                 <span> I accept </span>
             </label>
             <label class="btn col-xs-5 col-xs-offset-1">
-                <input ng-focus="setActiveField(field._id, index)" ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" type="radio" value="false" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"   ng-required="field.required" ng-disabled="field.disabled"/>
+                <input ng-focus="setActiveField(field._id, index, true)" ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" type="radio" value="false" ng-model="field.fieldValue" ng-model-options="{ debounce: 250 }"   ng-required="field.required" ng-disabled="field.disabled"/>
                 <span>I don't accept </span>
             </label>
         </div>
