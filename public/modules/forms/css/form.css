@@ -21,10 +21,15 @@
     bottom: 0;
 }
 
+
+
 .container.admin-form {
     margin-top: 70px;
 }
 
+form input {
+    background-color: rgba(0,0,0,0);
+}
 section.content p.breakwords {
     word-break: break-all;
 }
