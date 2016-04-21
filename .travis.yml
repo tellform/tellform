@@ -8,7 +8,7 @@ env:
 services:
   - mongodb
 addons:
-	code_climate:
-	    repo_token: 6c3a1b81a09b2338d6f30913c1bcad115026689752cbb499a0a25061cda6fbcf
+  code_climate:
+    repo_token: 6c3a1b81a09b2338d6f30913c1bcad115026689752cbb499a0a25061cda6fbcf
 after_script:
   - grunt coverage
