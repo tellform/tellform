@@ -10,6 +10,7 @@
         <div class="control-group input-append">
             <input ng-focus="setActiveField(field._id, index, true)" 
                 ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
+                ng-class="{ 'no-border': !!field.fieldValue }"
                 ui-date="dateOptions" 
                 ng-model="field.fieldValue" 
                 ng-model-options="{ debounce: 250 }" 

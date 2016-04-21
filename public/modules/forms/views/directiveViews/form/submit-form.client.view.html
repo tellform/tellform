@@ -6,7 +6,7 @@ class="form-submitted"
 style="padding-top: 35vh;">
 <div class="row">
 <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
-<h1 style="font-weight: 400; font-size: 25px;">
+<h1 style="font-weight: 400; nont-size: 25px;">
 {{myform.startPage.introTitle}}
 </h1>
 </div>
@@ -39,7 +39,8 @@ ng-style="{'color':button.color}">
 </div>
 
 <!-- Form Fields View -->
-<div class="form-fields" ng-show="!myform.submitted && !myform.startPage.showStart">
+<div class="form-fields" ng-show="!myform.submitted && !myform.startPage.showStart"
+    ng-style="{ 'border-color': myform.design.colors.buttonTextColor }">
 <div class="row">
 <form name="myForm" 
 du-scroll-container 
@@ -61,10 +62,11 @@ class="row field-directive">
 <div class="row form-actions" id="submit_field" 
 ng-click="setActiveField('submit_field', myform.form_fields.length)" 
 ng-class="{activeField: selected._id == 'submit_field' }" 
+ng-style="{ 'background-color':myform.design.colors.buttonColor}"
 style="border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 50vh;">
 
 <button ng-focus="setActiveField('submit_field', myform.form_fields.length)" 
-class="Button btn" 
+class="Button btn col-sm-2 col-xs-4" 
 v-busy="loading" v-busy-label="Please wait" v-pressable
 ng-disabled="loading" 
 ng-click="submitForm()"
@@ -73,7 +75,7 @@ style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
 Submit
 </button>
 
-<div class="col-sm-2" style="font-size: 75%; margin-top:2.5em">
+<div class="col-sm-2 col-xs-6" style="font-size: 75%; margin-top:2.5em">
 <small>
 press ENTER
 </small>
@@ -81,8 +83,7 @@ press ENTER
 </div>
 
 <section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" 
-        style="padding-top:15px; border-top: 2px grey solid"
-        ng-style="{'background-color':myform.design.colors.buttonColor, 'border-color':myform.design.colors.buttonTextColor, 'color':myform.design.colors.buttonTextColor}">
+        ng-style="{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-xs-5" ng-show="!myform.submitted">
@@ -124,7 +125,8 @@ press ENTER
 
 <!-- End Page View -->
 <div ng-if="myform.submitted && !loading" class="form-submitted"
-    ng-style="{'color':myform.design.colors.buttonTextColor}">
+    ng-style="{'color':myform.design.colors.buttonTextColor}"
+    style="padding-top: 5vh;">
 
     <div class="field row text-center">
         <div class="col-xs-6 col-xs-offset-3 text-center">Form entry successfully submitted!</div>

@@ -22,13 +22,22 @@
 }
 
 
-
 .container.admin-form {
     margin-top: 70px;
 }
 
-form input {
+.public-form input, .public-form textarea {
     background-color: rgba(0,0,0,0);
+    border: 2px dashed #ddd!important;
+}
+
+.public-form input:focus, .public-form textarea:focus {
+    border: 2px dashed #ddd!important;
+    outline: none;
+}
+
+.public-form input.no-border, .public-form textarea.no-border {
+    border: none!important;
 }
 section.content p.breakwords {
     word-break: break-all;
@@ -176,23 +185,17 @@ form .row.field {
             padding: 0.45em 0.9em;
             width: 100%;
             line-height: 160%;
-            border: 3px dashed #ddd;
         }
 
         form .field-input > input.hasDatepicker{
             padding: 0.45em 0.9em;
             width: 50%;
             line-height: 160%;
-            border: 3px dashed #ddd;
         }
         form .field-input > input.text-field-input{
             padding: 0.45em 0.9em;
             width: 100%;
             line-height: 160%;
-            border: 2px dashed #ddd!important;
-        }
-        form .field-input > input.text-field-input:focus{
-            border: 0;
         }
         form .required-error{
             color: #ddd;
@@ -374,10 +377,17 @@ div.config-form .row.field {
 }
 
 /* Styles for form list view (/forms) */
-section > section.public-form {
+section.public-form {
     padding: 0 10% 0 10%;
-
 }
+section.public-form .form-submitted {
+    height: 100vh;
+}
+
+section.public-form .btn {
+    border: 1px solid;
+}
+    
 .form-item {
     text-align: center;
     border-bottom: 6px inset #ccc;

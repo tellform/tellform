@@ -12,7 +12,8 @@
             ng-focus="setActiveField(field._id, index, true)"
 			type="{{field.input_type}}" 
 			placeholder="{{field.placeholder}}"
-			class="text-field-input" 
+			ng-class="{ 'no-border': !!field.fieldValue }"
+            class="focusOn text-field-input" 
 			ng-model="field.fieldValue" 
 			ng-model-options="{ debounce: 250 }"  
 			value="field.fieldValue" 
@@ -23,9 +24,9 @@
 </div>
 <div class="col-xs-12 row">
     	<div class="btn btn-lg btn-default row-fluid"
-	 	style="padding: 4px; margin-top:8px;">
+	 	style="padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)">
 			<button ng-disabled="!field.fieldValue" 
-				ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
+				ng-style="{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"
                 ng-click="$root.nextField()" 
 				class="btn col-sm-5 col-xs-5">
 				

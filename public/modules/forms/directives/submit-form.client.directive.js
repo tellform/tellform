@@ -94,6 +94,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                         setTimeout(function() {
                             $document.scrollToElement(angular.element('.activeField'), -10, 200).then(function(){
                                 $scope.noscroll = false;
+                                document.querySelectorAll('.activeField .focusOn')[0].focus();
                             });
                         }, 20);
                     }

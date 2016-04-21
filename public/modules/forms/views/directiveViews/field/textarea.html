@@ -4,8 +4,10 @@
         <textarea class="textarea" type="text" 
         	ng-model="field.fieldValue" 
         	ng-model-options="{ debounce: 250 }"  
-        	value="{{field.fieldValue}}" 
-        	ng-required="field.required" 
+        	ng-class="{ 'no-border': !!field.fieldValue }"
+            value="{{field.fieldValue}}" 
+        	class="focusOn"
+            ng-required="field.required" 
         	ng-disabled="field.disabled"
         	ng-focus="setActiveField(field._id, index, true)">
         </textarea>       
@@ -13,11 +15,11 @@
 </div>
 <div class="col-xs-12 row">
 	<div class="btn btn-lg btn-default row-fluid"
-        style="padding: 4px; margin-top:8px;">
+        style="padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)">
 		
 		<button ng-disabled="!field.fieldValue"
                 ng-click="$root.nextField()"
-                ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
+                ng-style="{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"
                 class="btn col-sm-5 col-xs-5">
 
         	OK <i class="fa fa-check"></i>

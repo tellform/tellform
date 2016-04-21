@@ -128,17 +128,17 @@ var FormSchema = new Schema({
 			questionColor: {
 				type: String,
 				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
-				default: '#333',
+				default: '#333'
 			},
 			answerColor: {
 				type: String,
 				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
-				default: '#333',
+				default: '#333'
 			},
 			buttonColor: {
 				type: String,
-				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]
-			    default: '#fff',
+				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
+			    default: '#fff'
             },
             buttonTextColor: {
                 type: String,

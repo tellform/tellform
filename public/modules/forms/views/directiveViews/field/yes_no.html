@@ -15,8 +15,9 @@
         <div class="row">
             <label class="btn btn-default col-md-2 col-sm-3 col-xs-4"
 		style="background: rgba(0,0,0,0.1); text-align:left;">
-                		<input type="radio" value="true" 
-					style="opacity: 0; margin-left: 0px;"
+                <input type="radio" value="true" 
+					class="focusOn"
+                    style="opacity: 0; margin-left: 0px;"
 					ng-focus="setActiveField(field._id, index, true)"	
 					ng-model="field.fieldValue" 
 					ng-model-options="{ debounce: 250 }" 

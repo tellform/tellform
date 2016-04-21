@@ -46,9 +46,6 @@ body {
 	border: none;
 }
 
-.content {
-	margin-top: 70px;
-}
 .undecorated-link:hover {
 	text-decoration: none;
 }
