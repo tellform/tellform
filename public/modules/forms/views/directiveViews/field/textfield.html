@@ -9,7 +9,7 @@
     </div>
     <div class="col-xs-12 field-input">
 		<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
-            		ng-focus="setActiveField(field._id, index, true)"
+            ng-focus="setActiveField(field._id, index, true)"
 			type="{{field.input_type}}" 
 			placeholder="{{field.placeholder}}"
 			class="text-field-input" 
@@ -25,8 +25,9 @@
     	<div class="btn btn-lg btn-default row-fluid"
 	 	style="padding: 4px; margin-top:8px;">
 			<button ng-disabled="!field.fieldValue" 
-				ng-click="$root.nextField()" 
-				class="btn btn-primary col-sm-5 col-xs-5">
+				ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
+                ng-click="$root.nextField()" 
+				class="btn col-sm-5 col-xs-5">
 				
 				OK <i class="fa fa-check"></i>
 			</button>

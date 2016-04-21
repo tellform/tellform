@@ -17,7 +17,8 @@
 		
 		<button ng-disabled="!field.fieldValue"
                 ng-click="$root.nextField()"
-                class="btn btn-primary col-sm-5 col-xs-5">
+                ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
+                class="btn col-sm-5 col-xs-5">
 
         	OK <i class="fa fa-check"></i>
         </button>

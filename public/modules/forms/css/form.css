@@ -21,8 +21,8 @@
     bottom: 0;
 }
 
-section.public-form {
-    margin-top: -70px;
+.container.admin-form {
+    margin-top: 70px;
 }
 
 section.content p.breakwords {
@@ -370,7 +370,7 @@ div.config-form .row.field {
 
 /* Styles for form list view (/forms) */
 section > section.public-form {
-    padding: 0 10% 10%;
+    padding: 0 10% 0 10%;
 
 }
 .form-item {

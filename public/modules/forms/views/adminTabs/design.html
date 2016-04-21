@@ -21,7 +21,7 @@
 
             <div class="row field">
                 <div class="field-title col-sm-3">
-                    <h5>Question Font Color</h5>
+                    <h5>Question Text Color</h5>
                 </div>
 
                 <div class="field-input col-sm-9">
@@ -34,11 +34,34 @@
 
             <div class="row field">
                 <div class="field-title col-sm-3">
-                    <h5>Answer Font Color</h5>
+                    <h5>Answer Text Color</h5>
                 </div>
 
                 <div class="field-input col-sm-9">
                     <input colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
+                </div>
+            </div>
+
+            <div class="row field">
+                <div class="field-title col-sm-3">
+                    <h5>Button Background Color</h5>
+                </div>
+
+                <div class="field-input col-sm-9">
+                    <input colorpicker="hex" type="text" 
+                        ng-model="myform.design.colors.buttonColor" 
+                        ng-style="{ 'background-color': myform.design.colors.buttonColor }"/>
+                </div>
+            </div>
+            <div class="row field">
+                <div class="field-title col-sm-3">
+                    <h5>Button Text Color</h5>
+                </div>
+
+                <div class="field-input col-sm-9">
+                    <input colorpicker="hex" type="text" 
+                        ng-model="myform.design.colors.buttonTextColor" 
+                        ng-style="{ 'background-color': myform.design.colors.buttonTextColor }"/>
                 </div>
             </div>
         </div>

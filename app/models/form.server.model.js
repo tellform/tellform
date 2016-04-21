@@ -138,7 +138,13 @@ var FormSchema = new Schema({
 			buttonColor: {
 				type: String,
 				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]
-			},
+			    default: '#fff',
+            },
+            buttonTextColor: {
+                type: String,
+                match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
+                default: '#333'
+            },
 		},
 		font: String,
 		backgroundImage: { type: Schema.Types.Mixed }

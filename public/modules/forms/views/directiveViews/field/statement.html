@@ -9,7 +9,8 @@
 	<div class="col-xs-offset-1 col-xs-11">
         	<button class="btn btn-info" 
 			style="font-size: 1.3em;" 
-			ng-focused="setActiveField(field._id, index, true)"
+			ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
+            ng-focused="setActiveField(field._id, index, true)"
             ng-click="$root.nextField()">
             		Continue 
         	</button>
