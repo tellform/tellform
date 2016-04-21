@@ -58,12 +58,20 @@ MAILER_SERVICE_PROVIDER=Mandrill
 BASE_URL=yourdomain.com
 ```
 
+Create this directory or you will get errors.
+
+```
+mkdir uploads/pdfs
+```
+
 Edit the 'env' config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
 
-To run:
-```bash
-$ grun
-```
+To run development version:
+
+```$ grunt default```
+To run production version:
+
+```$ grunt production```
 
 Your application should run on port 3000, so in your browser just go to [http://localhost:3000](http://localhost:3000)
 
