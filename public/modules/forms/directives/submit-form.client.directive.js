@@ -44,9 +44,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					$scope.fieldTop = elemBox.top;
 					$scope.fieldBottom = elemBox.bottom;
 					
-                    //fieldbottom<173
-
-                    //fieldTop>173
                     if(!$scope.noscroll){
                         //Focus on submit button
                         if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
@@ -95,7 +92,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     if(animateScroll){
                         $scope.noscroll=true;
                         setTimeout(function() {
-                            $document.scrollToElement(angular.element('.activeField'), 0, 200).then(function(){
+                            $document.scrollToElement(angular.element('.activeField'), -10, 200).then(function(){
                                 $scope.noscroll = false;
                             });
                         }, 20);
@@ -103,6 +100,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
+                    console.log('nextfield');
                     //console.log($scope.selected.index);
 					//console.log($scope.myform.form_fields.length-1);
 					if($scope.selected.index < $scope.myform.form_fields.length-1){
@@ -115,6 +113,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 						$rootScope.setActiveField(selected_id, selected_index, true);
 					}
                 };
+
                 $rootScope.prevField = $scope.prevField = function(){
                     if($scope.selected.index > 0){
                         var selected_index = $scope.selected.index - 1;

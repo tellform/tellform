@@ -1,4 +1,4 @@
-<div class="statement field row" ng-click="setActiveField(field._id, index, true)">
+<div class="statement field row">
     <div class="row field-title field-title">
     	<div class="col-xs-1"><i class="fa fa-quote-left fa-1"></i></div>
     	<h2 class="text-left col-xs-9">{{field.title}} </h2>
@@ -9,8 +9,8 @@
 	<div class="col-xs-offset-1 col-xs-11">
         	<button class="btn btn-info" 
 			style="font-size: 1.3em;" 
-			ng-focus="setActiveField(field._id, index, true)" 
-			ng-click="$root.nextField()">
+			ng-focused="setActiveField(field._id, index, true)"
+            ng-click="$root.nextField()">
             		Continue 
         	</button>
 	</div>
