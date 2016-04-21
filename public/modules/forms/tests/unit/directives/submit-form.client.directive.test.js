@@ -182,8 +182,11 @@
             scope.submitForm();
 
             $httpBackend.flush();
-            expect(scope.myform.submitted).toBe(true);
-            expect(scope.error).toEqual('');
+            
+            setTimeout(function(){
+                expect(scope.myform.submitted).toBe(true);
+                expect(scope.error).toEqual('');
+            }, 25);
         });
 
         it('$scope.reloadForm() should reset and reload form', function(){
