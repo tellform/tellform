@@ -3,8 +3,6 @@
 module.exports = function(grunt) {
 	require('jit-grunt')(grunt);
 	
-	grunt.loadNpmTasks('grunt-env');
-
 	// Unified Watch Object
 	var watchFiles = {
 		serverViews: ['app/views/**/*.*'],
@@ -145,6 +143,7 @@ module.exports = function(grunt) {
 		env: {
 			test: {
 				NODE_ENV: 'test',
+                src: '/opt/deploy/.env'
 			},
 			secure: {
 				NODE_ENV: 'secure',

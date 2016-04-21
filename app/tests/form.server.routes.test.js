@@ -9,8 +9,7 @@ var should = require('should'),
 	User = mongoose.model('User'),
 	Form = mongoose.model('Form'),
 	Field = mongoose.model('Field'),
-	FormSubmission = mongoose.model('FormSubmission'),
-	agent = request.agent(app);
+	FormSubmission = mongoose.model('FormSubmission');
 
 
 /**
@@ -25,12 +24,10 @@ describe('Form Routes Unit tests', function() {
 
 	beforeEach(function(done) {
 
-		//Initialize Session
-		userSession = Session(app);
-
 		// Create user credentials
 		credentials = {
-			username: 'test1@test.com',
+			username: 'test@test.com',
+            email: 'test@test.com',
 			password: 'password'
 		};
 
@@ -39,7 +36,7 @@ describe('Form Routes Unit tests', function() {
 			firstName: 'Full',
 			lastName: 'Name',
 			displayName: 'Full Name',
-			email: 'test5@test.com',
+			email: 'test@test.com',
 			username: credentials.username,
 			password: credentials.password,
 			provider: 'local'
@@ -58,6 +55,10 @@ describe('Form Routes Unit tests', function() {
 					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
 				]
 			};
+                
+            //Initialize Session
+            userSession = Session(app);
+
 			done();
 		});
 	});
@@ -116,14 +117,13 @@ describe('Form Routes Unit tests', function() {
 
 					// Handle signout error
 					if (signoutErr) return done(signoutErr);
-					userSession.destroy();
-					done();
+                    done();
 				});
 		});
 	});
 
 	it(' > should not be able to create a Form if not logged in', function(done) {
-		agent.post('/forms')
+		userSession.post('/forms')
 			.send({form: myForm})
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
@@ -134,7 +134,7 @@ describe('Form Routes Unit tests', function() {
 	});
 
 	it(' > should not be able to get list of users\' Forms if not logged in', function(done) {
-		agent.get('/forms')
+		userSession.get('/forms')
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
 				(FormSaveRes.body.message).should.equal('User is not logged in');
@@ -147,24 +147,23 @@ describe('Form Routes Unit tests', function() {
 		// Set Form with a invalid title field
 		myForm.title = '';
 
-		agent.post('http://localhost:3001/auth/signin')
+		userSession.post('/auth/signin')
 			.send(credentials)
 			.expect('Content-Type', /json/)
 			.expect(200)
 			.end(function(signinErr, signinRes) {
 				should.not.exist(signinErr);
 
-				done();
 				// Save a new Form
-				// userSession.post('/forms')
-				// 	.send({form: myForm})
-				// 	.expect(400)
-				// 	.end(function(FormSaveErr, FormSaveRes) {
-				// 		// Set message assertion
-				// 		(FormSaveRes.body.message).should.equal('Form Title cannot be blank');
+				userSession.post('/forms')
+					.send({form: myForm})
+				 	.expect(400)
+				 	.end(function(FormSaveErr, FormSaveRes) {
+				 		// Set message assertion
+				 		(FormSaveRes.body.message).should.equal('Form Title cannot be blank');
 
-				// 		done();
-				// 	});
+				 		done();
+				 	});
 			});
 	});
 
@@ -217,7 +216,7 @@ describe('Form Routes Unit tests', function() {
 		FormObj.save(function(err, form) {
 			if(err) return done(err);
 
-			agent.get('/forms/' + form._id)
+			userSession.get('/forms/' + form._id)
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
@@ -261,7 +260,7 @@ describe('Form Routes Unit tests', function() {
 								if (FormDeleteErr) return done(FormDeleteErr);
 
 								// Set assertions
-								(FormDeleteRes.body).should.exist();
+								should.exist(FormDeleteRes.body);
 								// (FormDeleteRes.body._id).should.equal(FormSaveRes.body._id);
 
 								// Call the assertion callback
@@ -282,7 +281,7 @@ describe('Form Routes Unit tests', function() {
 		// Save the Form
 		FormObj.save(function() {
 			// Try deleting Form
-			agent.delete('/forms/' + FormObj._id)
+			userSession.delete('/forms/' + FormObj._id)
 				.expect(401)
 				.end(function(FormDeleteErr, FormDeleteRes) {
 					// Set message assertion
@@ -295,7 +294,7 @@ describe('Form Routes Unit tests', function() {
 		});
 	});
 
-	it(' > should be able to upload a PDF an Form if logged in', function(done) {
+	it(' > should be able to upload a PDF to Form if signed in', function(done) {
 		userSession.post('/auth/signin')
 			.send(credentials)
 			.expect('Content-Type', /json/)
@@ -322,7 +321,8 @@ describe('Form Routes Unit tests', function() {
 							.expect('Content-Type', /json/)
 							.expect(200)
 							.end(function(FormsGetErr, FormsGetRes) {
-								// Handle Form save error
+								console.log('get forms');
+                                // Handle Form save error
 								if (FormsGetErr) return done(FormsGetErr);
 
 								// Get Forms list

@@ -94,7 +94,7 @@ describe('User CRUD tests', function() {
                                                 // Handle signout error
                                                 if (signoutErr) return done(signoutErr);
 
-                                                (signoutRes.text).should.equal('You have successfully logged out.');
+                                                (signoutRes.text).should.equal('Successfully logged out'');
 
                                                 done();
                                             });
