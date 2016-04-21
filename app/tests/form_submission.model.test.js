@@ -265,7 +265,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 
 		});
 
-		it('should preserve deleted form_fields that have submissions without any problems', function(done) {
+		/*
+        it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
 			var old_fields = myForm.toObject().form_fields;
 			var new_form_fields = _.clone(myForm.toObject().form_fields);
@@ -313,7 +314,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 				// });
 			});
 		});
-
+        */
 		afterEach(function(done){
 			mySubmission.remove(function(){
 				done();

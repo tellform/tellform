@@ -19,7 +19,7 @@ describe('Form Routes Unit tests', function() {
 	/**
 	 * Globals
 	 */
-	this.timeout(15000);
+	//this.timeout(15000);
 	var credentials, user, myForm, userSession;
 
 	beforeEach(function(done) {
@@ -63,66 +63,54 @@ describe('Form Routes Unit tests', function() {
 		});
 	});
 
-	describe(' > Login and Save a new Form >', function() {
-		var _user, _form;
-		before(function(done){
-			userSession.post('/auth/signin')
-				.send(credentials)
-				.expect('Content-Type', /json/)
-				.expect(200, 'Could not login user')
-				.end(function(signinErr, signinRes) {
+	it(' > should be able to upload a PDF to Form if signed in', function(done) {
+		userSession.post('/auth/signin')
+			.send(credentials)
+			.expect('Content-Type', /json/)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
 
-					// Handle signin error
-					if (signinErr) return done(signinErr);
+				// Handle signin error
+				if (signinErr) return done(signinErr);
 
-					_user = signinRes.body;
-					done();
-				});
-		});
-		it(' > should be able to save a Form as a user', function(done){
-			// Save a new Form
-			userSession.post('/forms')
-				.send({form: myForm})
-				.expect('Content-Type', /json/)
-				.expect(200, 'Could not save new Form')
-				.end(function(FormSaveErr, FormSaveRes) {
-					// Handle Form save error
-					if (FormSaveErr) return done(FormSaveErr);
-					_form = FormSaveRes.body;
-					done();
-				});
-		});
-		it(' > should be able to fetch newly created form', function(done){
+				var user = signinRes.body;
+				var userId = user._id;
 
-				// Get a list of Forms
-				userSession.get('/forms/'+_form._id)
+				// Save a new Form
+				userSession.post('/forms')
+					.send({form: myForm})
 					.expect('Content-Type', /json/)
 					.expect(200)
-					.end(function(FormsGetErr, FormsGetRes) {
+					.end(function(FormSaveErr, FormSaveRes) {
 						// Handle Form save error
-						if (FormsGetErr) return done(FormsGetErr);
+						if (FormSaveErr) return done(FormSaveErr);
 
-						var fetchedForm = FormsGetRes.body;
-						// Set assertions
-						(fetchedForm.admin).should.equal(_user._id);
-						(fetchedForm.title).should.match(_form.title);
+						// Get a list of Forms
+						userSession.get('/forms')
+							.expect('Content-Type', /json/)
+							.expect(200)
+							.end(function(FormsGetErr, FormsGetRes) {
+								console.log('get forms');
+                                // Handle Form save error
+								if (FormsGetErr) return done(FormsGetErr);
 
-						// Call the assertion callback
-						done();
-				});
-		});
-		after(function(done){
-			userSession.get('/auth/signout')
-				.end(function(signoutErr, signoutRes) {
+								// Get Forms list
+								var Forms = FormsGetRes.body;
 
-					// Handle signout error
-					if (signoutErr) return done(signoutErr);
-                    done();
-				});
-		});
+								// Set assertions
+								(Forms[0].admin).should.equal(userId);
+								(Forms[0].title).should.match('Form Title');
+
+								// Call the assertion callback
+								done();
+							});
+
+					});
+
+			});
 	});
 
-	it(' > should not be able to create a Form if not logged in', function(done) {
+    it(' > should not be able to create a Form if not logged in', function(done) {
 		userSession.post('/forms')
 			.send({form: myForm})
 			.expect(401)
@@ -294,61 +282,67 @@ describe('Form Routes Unit tests', function() {
 		});
 	});
 
-	it(' > should be able to upload a PDF to Form if signed in', function(done) {
-		userSession.post('/auth/signin')
-			.send(credentials)
-			.expect('Content-Type', /json/)
-			.expect(200)
-			.end(function(signinErr, signinRes) {
 
-				// Handle signin error
-				if (signinErr) return done(signinErr);
+    describe(' > Login and Save a new Form >', function() {
+		var _user, _form, _userSession = Session(app);
+		it('should be able to login as user', function(done){
+			_userSession.post('/auth/signin')
+				.send(credentials)
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.end(function(signinErr, signinRes) {
 
-				var user = signinRes.body;
-				var userId = user._id;
+					// Handle signin error
+					if (signinErr) return done(signinErr);
 
-				// Save a new Form
-				userSession.post('/forms')
-					.send({form: myForm})
-					.expect('Content-Type', /json/)
-					.expect(200)
-					.end(function(FormSaveErr, FormSaveRes) {
-						// Handle Form save error
-						if (FormSaveErr) return done(FormSaveErr);
+					_user = signinRes.body;
+                    // Save a new Form
+                    _userSession.post('/forms')
+                        .send({form: myForm})
+                        .expect('Content-Type', /json/)
+                        .expect(200)
+                        .end(function(FormSaveErr, FormSaveRes) {
+                            // Handle Form save error
+                            if (FormSaveErr) return done(FormSaveErr);
+                            _form = FormSaveRes.body;
 
-						// Get a list of Forms
-						userSession.get('/forms')
-							.expect('Content-Type', /json/)
-							.expect(200)
-							.end(function(FormsGetErr, FormsGetRes) {
-								console.log('get forms');
-                                // Handle Form save error
-								if (FormsGetErr) return done(FormsGetErr);
+                            // Get a list of Forms
+                            _userSession.get('/forms/'+_form._id)
+                                .expect('Content-Type', /json/)
+                                .expect(200)
+                                .end(function(FormsGetErr, FormsGetRes) {
+                                    // Handle Form save error
+                                    if (FormsGetErr) return done(FormsGetErr);
 
-								// Get Forms list
-								var Forms = FormsGetRes.body;
+                                    var fetchedForm = FormsGetRes.body;
+                                    // Set assertions
+                                    (fetchedForm.admin._id).should.equal(_user._id);
+                                    (fetchedForm.title).should.match(_form.title);
 
-								// Set assertions
-								(Forms[0].admin).should.equal(userId);
-								(Forms[0].title).should.match('Form Title');
+                                    // Call the assertion callback
+                                    done();
+                                });
+                        });
+                });
+    });
+    after('should be able to signout user', function(done){
+        userSession.get('/auth/signout')
+            .end(function(signoutErr, signoutRes) {
 
-								// Call the assertion callback
-								done();
-							});
-
-					});
-
-			});
+					// Handle signout error
+					if (signoutErr) return done(signoutErr);
+                    _userSession.destroy();
+                    done();
+				});
+		});
 	});
 
 	afterEach(function(done) {
 		Form.remove({}).exec(function() {
-			// Field.remove({}).exec(function(){
-				User.remove({}).exec(function() {
-					userSession.destroy();
-					done();
-				});
-			// });
+            User.remove({}).exec(function() {
+                userSession.destroy();
+                done();
+            });
 		});
 	});
 });
