@@ -13,6 +13,7 @@ Oscar_Credentials.*
 
 # Node and related ecosystem
 # ==========================
+ecosystem.json
 .nodemonignore
 .sass-cache/
 npm-debug.log
