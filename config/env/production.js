@@ -9,7 +9,7 @@ module.exports = {
 			pass: process.env.MONGOLAB_PASS || ''
 		}
 	},
-	port: 4545, 
+	port: process.env.PORT || 4545, 
 	log: {
 		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
 		format: 'combined',
