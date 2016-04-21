@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'cgBusy'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
