@@ -22,7 +22,8 @@ angular.module('forms').config(['$stateProvider',
 		            return Forms.get({formId: $stateParams.formId}).$promise;
 		        },
 			},
-			controller: 'SubmitFormController'
+			controller: 'SubmitFormController',
+            controllerAs: 'ctrl'
 		}).state('viewForm', {
 			url: '/forms/:formId/admin',
 			templateUrl: 'modules/forms/views/admin-form.client.view.html',

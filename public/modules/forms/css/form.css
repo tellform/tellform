@@ -21,6 +21,11 @@
     bottom: 0;
 }
 
+.dropzone h4.panel-title {
+    height: 17px;
+    overflow: hidden;
+}
+
 .container.admin-form {
     margin-top: 70px;
 }

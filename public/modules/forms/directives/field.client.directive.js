@@ -58,7 +58,9 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
                     defaultDate: 0,
                 };
             }
-			
+		    
+            var fieldType = scope.field.fieldType;
+	
 			if(scope.field.fieldType === 'number' || scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
 				switch(scope.field.fieldType){
 					case 'textfield':
@@ -76,9 +78,9 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 						scope.field.placeholder = 'http://example.com';
 						break;
 				}
-				scope.field.fieldType = 'textfield';
+				fieldType = 'textfield';
 			}
-            var template = getTemplateUrl(scope.field.fieldType);
+            var template = getTemplateUrl(fieldType);
            	element.html(template).show();
             $compile(element.contents())(scope);
         },

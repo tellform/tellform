@@ -11,7 +11,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
             controller: function($document, $window, $scope){
                 $scope.authentication = $rootScope.authentication;
 		        $scope.noscroll = false;
-                
+                $scope.forms = {};                
                 $scope.form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
                     if(field.fieldType === 'statement' || field.fieldType === 'rating'){
                         return false;
@@ -43,7 +43,11 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
 					$scope.fieldTop = elemBox.top;
 					$scope.fieldBottom = elemBox.bottom;
-					
+			        
+                    console.log($scope.forms.myForm);
+
+	
+            	
                     if(!$scope.noscroll){
                         //Focus on submit button
                         if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
@@ -67,8 +71,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                             var field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false); 
                         }
-                        console.log('$scope.selected.index: '+$scope.selected.index);
-					    console.log('scroll pos: '+$scope.scrollPos+' fieldTop: '+$scope.fieldTop+' fieldBottom: '+$scope.fieldBottom);
+                        //console.log('$scope.selected.index: '+$scope.selected.index);
+					    //console.log('scroll pos: '+$scope.scrollPos+' fieldTop: '+$scope.fieldTop+' fieldBottom: '+$scope.fieldBottom);
             		    $scope.$apply(); 
                     }
         		};
