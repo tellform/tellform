@@ -254,7 +254,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "                                <span class=col-xs-1 ng-switch=field.fieldType>\n" +
     "                                    <field-icon-directive type-name={{field.fieldType}}></field-icon-directive>\n" +
     "                                </span>\n" +
-    "                                <span style=col-xs-10>\n" +
+    "                                <span class=col-xs-10>\n" +
     "                                    {{field.title}} \n" +
     "                                    <span ng-show=field.required>*</span>\n" +
     "                                </span>\n" +
@@ -1794,18 +1794,21 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 $scope.reloadForm = function(){
                     //Reset Form
                     $scope.myform.submitted = false;
-                    $scope.myform.form_fields = _.chain($scope.myform.form_fields).map(function(field){
+                    $scope.myform.form_fields = _.chain($scope.myform.visible_form_fields).map(function(field){
                             field.fieldValue = '';
                             return field;
                         }).value();
 
 					$scope.loading = false;
                     $scope.error = '';
+                    
                     $scope.selected = {
-                        _id: $scope.myform.form_fields[0]._id,
-                        index: 0,
+                        _id: '',
+                        index: 0
                     };
-
+                    $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);    
+                
+                    console.log($scope.selected);
                     //Reset Timer
                     TimeCounter.restartClock(); 
                 };
@@ -1816,10 +1819,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					$scope.fieldTop = elemBox.top;
 					$scope.fieldBottom = elemBox.bottom;
 			        
-                    console.log($scope.forms.myForm);
+                    //console.log($scope.forms.myForm);
 
-	
-            	
                     if(!$scope.noscroll){
                         //Focus on submit button
                         if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
@@ -1936,9 +1937,9 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 };
 
                 //Load our form when the page is ready
-                angular.element(document).ready(function() {
+                //angular.element(document).ready(function() {
                     $scope.reloadForm();
-                });
+                //});
 
             }]
         };
