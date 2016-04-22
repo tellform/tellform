@@ -5,14 +5,16 @@ Current stable release: v1.2.1
 
 [![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
 [![Dependency Status](https://gemnasium.com/whitef0x0/tellform.svg)](https://gemnasium.com/whitef0x0/tellform)
-[![Coverage Status](https://coveralls.io/repos/whitef0x0/tellform/badge.svg?branch=master&service=github)](https://coveralls.io/github/whitef0x0/tellform?branch=master)
 [![Code Climate](https://codeclimate.com/github/whitef0x0/tellform/badges/gpa.svg)](https://codeclimate.com/github/whitef0x0/tellform)
 
 TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
-Currently following features are implemented:
+##Demo Forms
+[Job Application Example](https://stage.tellform.com/#!/forms/57193f512aa1f3ff5e205b56)
 
-##Current Features
+## Features	
+
+Currently following features are implemented:
 	-User login system to manage forms
 	-User CRUD 
 	-Form CRUD
@@ -25,7 +27,7 @@ Currently following features are implemented:
 	-Drag and drop functionality to editing form field order
 	-Editable form submissions (half-done)
 
-#TODO:
+###TODO:
 	-Implement encryption for all form data
 	-Integrate AWS for PDF saving
 	-Add Typeform API integration
