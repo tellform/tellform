@@ -22,7 +22,8 @@
 					ng-model="field.fieldValue" 
 					ng-model-options="{ debounce: 250 }" 
 					ng-required="field.required" 
-					ng-disabled="field.disabled" />
+					ng-click="$root.nextField()"
+                    ng-disabled="field.disabled" />
 				<div class="letter">
 					Y
 				</div>               	
@@ -33,15 +34,16 @@
 	
 	<div class="row" style="margin-top: 10px;">
             <label class="btn btn-default col-md-2 col-sm-3 col-xs-4" 
-		style="background: rgba(0,0,0,0.1); text-align:left;">
+		        style="background: rgba(0,0,0,0.1); text-align:left;">
 	
                 <input type="radio" value="false" 
-			style="opacity:0; margin-left:0px;"
-			ng-focus="setActiveField(field._id, index, true)"
-			ng-model="field.fieldValue" 
-			ng-model-options="{ debounce: 250 }" 
-			ng-required="field.required" 
-			ng-disabled="field.disabled"/>
+			        style="opacity:0; margin-left:0px;"
+			        ng-focus="setActiveField(field._id, index, true)"
+			        ng-model="field.fieldValue" 
+			        ng-model-options="{ debounce: 250 }" 
+			        ng-required="field.required" 
+			        ng-click="$root.nextField()"
+                    ng-disabled="field.disabled"/>
                 	
 			<div class="letter">
                   		N

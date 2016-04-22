@@ -8,10 +8,12 @@
     </div>
     <div class="col-xs-12 field-input ">
 		<ui-select ng-model="field.fieldValue" 
-				theme="selectize"
+				class="focusOn"
+                theme="selectize"
 				ng-model-options="{ debounce: 250 }"  
 				ng-required="field.required" 
 				ng-disabled="field.disabled"
+                ng-click="$root.nextField()"
 				ng-focus="setActiveField(field._id, index, true)">
 			<ui-select-match placeholder="Type or select an option">
 				{{$select.selected.option_value}}

@@ -4,14 +4,16 @@
         <div ng-repeat="option in field.fieldOptions" class="row-fluid">
             <label class="btn col-xs-4" style="margin: 0.5em; padding-left:30px" ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_id}">
                 <input ng-focus="setActiveField(field._id, index, true)" 
-		        ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
-                type="radio" 
-                class="focusOn"
-                value="{{option.option_value}}" 
-                ng-model="field.fieldValue" 
-                ng-model-options="{ debounce: 250 }" 
-                ng-required="field.required" 
-                ng-disabled="field.disabled" />
+                    ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
+                    type="radio" 
+                    class="focusOn"
+                    value="{{option.option_value}}" 
+                    ng-model="field.fieldValue" 
+                    ng-model-options="{ debounce: 250 }" 
+                    ng-required="field.required"
+                    ng-click="$root.nextField()" 
+                    ng-disabled="field.disabled" />
+                
                 <span ng-bind="option.option_value"></span>
             </label>
         </div>
