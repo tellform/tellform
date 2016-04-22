@@ -51,8 +51,8 @@ section.content p.breakwords {
     padding: 0.35em 1.2em 0.35em 1.2em;
 }
 
-section.content > section > section {
-    margin: 70px;
+section.content > section > section.container {
+    margin-top: 70px;
 }
 
 /*
