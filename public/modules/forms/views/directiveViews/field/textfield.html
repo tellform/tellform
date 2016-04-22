@@ -10,7 +10,8 @@
     <div class="col-xs-12 field-input">
 		<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
             ng-focus="setActiveField(field._id, index, true)"
-			type="{{field.input_type}}" 
+			name="{{field._id}}"
+            type="{{field.input_type}}" 
 			placeholder="{{field.placeholder}}"
 			ng-class="{ 'no-border': !!field.fieldValue }"
             class="focusOn text-field-input" 
@@ -19,13 +20,20 @@
 			value="field.fieldValue" 
 			ng-required="field.required"
 			ng-disabled="field.disabled"
-			on-enter-key="nextField()">
+	        aria-describedby="inputError2Status"
+    		on-enter-key="nextField()">
+        
+        <div ng-if="myForm.{{field._id}}.$invalid" class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Enter a valid email address
+        </div>
     </div>
 </div>
 <div class="col-xs-12 row">
     	<div class="btn btn-lg btn-default row-fluid"
 	 	style="padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)">
-			<button ng-disabled="!field.fieldValue" 
+			<button ng-disabled="!field.fieldValue || myForm.{{field._id}}.$invalid" 
 				ng-style="{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"
                 ng-click="$root.nextField()" 
 				class="btn col-sm-5 col-xs-5">
