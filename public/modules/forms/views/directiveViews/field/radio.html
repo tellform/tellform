@@ -6,7 +6,7 @@
                     style="margin: 0.5em; padding-left:30px" 
                     ng-click="$root.nextField()"
                     ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_id}">
-                <input ng-focus="setActiveField(field._id, index, true)" 
+                <input 
                     ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
                     type="radio" 
                     class="focusOn"
