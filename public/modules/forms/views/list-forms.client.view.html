@@ -45,7 +45,7 @@
 		</form>
 
 		<div data-ng-repeat="form in myforms" 
-            ng-style="{ 'background-color': form.design.colors.backgroundColor }"
+            ng-style="{ 'background-color': form.design.colors.backgroundColor, 'color': form.design.colors.answerColor }"
             class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container">
 
 			<div class="row">
@@ -56,7 +56,9 @@
 			</div>
 
 			<div class="row">
-			<a data-ng-href="#!/forms/{{form._id}}/admin/create"  class="title-row col-xs-12">
+			<a data-ng-href="#!/forms/{{form._id}}/admin/create"  
+                ng-style="{ 'color': form.design.colors.answerColor }"
+                class="title-row col-xs-12">
 				<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
 			</a>
 			</div>
