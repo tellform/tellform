@@ -6,10 +6,8 @@
                     style="margin: 0.5em; padding-left:30px" 
                     ng-click="$root.nextField()"
                     ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_id}">
-                <input 
-                    ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
-                    type="radio" 
-                    class="focusOn"
+                <input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
+                    type="radio" class="focusOn"
                     value="{{option.option_value}}" 
                     ng-model="field.fieldValue" 
                     ng-model-options="{ debounce: 250 }" 
