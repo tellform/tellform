@@ -59,7 +59,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
                 };
             }
 			
-			if(scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
+			if(scope.field.fieldType === 'number' || scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
 				switch(scope.field.fieldType){
 					case 'textfield':
 						scope.field.input_type = 'text';
@@ -68,7 +68,10 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 						scope.field.input_type = 'email';
 						scope.field.placeholder = 'joesmith@example.com';
 						break;
-					default:
+					case 'number':
+                        scope.field.input_type = 'number';
+                        break;
+                    default:
 						scope.field.input_type = 'url';
 						scope.field.placeholder = 'http://example.com';
 						break;
