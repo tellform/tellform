@@ -6,7 +6,17 @@ angular.module('forms').run(['Menus',
 		// Set top bar menu items
 		Menus.addMenuItem('topbar', 'My Forms', 'forms', '', '/forms', false);
 	}
-]).filter('formValidity',
+])
+/*.filter('highlight', function() {
+    function escapeRegexp(queryToEscape) {
+        return ('' + queryToEscape).replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+    }
+
+    return function(matchItem, query) {
+        return query && matchItem ? ('' + matchItem).replace(new RegExp(escapeRegexp(query), 'gi'), '<span class="ui-select-highlight">$&</span>') : matchItem;
+    };
+})*/
+.filter('formValidity',
     function(){
         return function(formObj){
         	if(formObj && formObj.form_fields && formObj.visible_form_fields){
