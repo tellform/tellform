@@ -44,7 +44,9 @@
 			</div>		
 		</form>
 
-		<div data-ng-repeat="form in myforms" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container">
+		<div data-ng-repeat="form in myforms" 
+            ng-style="{ 'background-color': form.design.colors.backgroundColor }"
+            class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container">
 
 			<div class="row">
 				<span class="pull-right"> 
