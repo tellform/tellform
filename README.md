@@ -10,7 +10,9 @@ Current stable release: v1.2.1
 TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
 ##Demo Forms
-[Job Application Example](https://stage.tellform.com/#!/forms/57193f512aa1f3ff5e205b56)
+[Job Application Example](https://stage.tellform.com/#!/forms/571a76b856d64f9e4ca73ca1) 
+
+[Contact Form Example](https://stage.tellform.com/#!/forms/57196d592601ed12074eecc0)
 
 ## Features	
 
