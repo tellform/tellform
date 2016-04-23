@@ -1,7 +1,7 @@
 TellForm
 ========
 
-Current stable release: v1.2.1
+Current stable release: v1.3.0
 
 [![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
 [![Dependency Status](https://gemnasium.com/whitef0x0/tellform.svg)](https://gemnasium.com/whitef0x0/tellform)
