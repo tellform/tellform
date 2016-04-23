@@ -70,7 +70,7 @@
 	<section class="content">
 		{% block content %}{% endblock %}
 	</section>
-
+    
 	<script src="lib/file-saver.js/FileSaver.js" type="text/javascript"></script>
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
@@ -82,7 +82,8 @@
 		<script type="text/javascript" src="{{bowerJSFile}}"></script>
 	{% endfor %}
 	<!-- end Bower JS dependencies-->
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+    
 	<!--Application JavaScript Files-->
 	{% for jsFile in jsFiles %}
 		<script type="text/javascript" src="{{jsFile}}"></script>
