@@ -9,6 +9,14 @@ var _ = require('lodash'),
 	path = require('path'),
 	fs = require('fs');
 
+var exists = require('path-exists').sync;
+
+var minBowerFiles = function(type){
+    return bowerFiles(type).map( function(path, index, arr) {
+      var newPath = path.replace(/.([^.]+)$/g, '.min.$1');
+      return exists( newPath ) ? newPath : path;
+    });
+}
 /**
  * Load app configurations
  */
@@ -74,13 +82,13 @@ module.exports.removeRootDir = function(files, root) {
  * Get the app's bower dependencies
  */
 module.exports.getBowerJSAssets = function() {
-	return this.removeRootDir(bowerFiles('**/**.js'), 'public/');
+	return this.removeRootDir(minBowerFiles('**/**.js'), 'public/');
 };
 module.exports.getBowerCSSAssets = function() {
-	return this.removeRootDir(bowerFiles('**/**.css'), 'public/');
+	return this.removeRootDir(minBowerFiles('**/**.css'), 'public/');
 };
 module.exports.getBowerOtherAssets = function() {
-	return this.removeRootDir(bowerFiles('**/!(*.js|*.css|*.less)'), 'public/');
+	return this.removeRootDir(minBowerFiles('**/!(*.js|*.css|*.less)'), 'public/');
 };
 
 /**
