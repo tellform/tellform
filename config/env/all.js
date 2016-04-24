@@ -2,6 +2,7 @@
 
 module.exports = {
 	app: {
+		google_analytics_id: process.env.GOOGLE_ANALYTICS_ID || '';
 		title: 'TellForm',
 		description: 'Opensource form builder alternative to TypeForm',
 		keywords: 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs',
@@ -18,7 +19,7 @@ module.exports = {
 	},
 
 	//Sentry DSN Client Key
-	DSN: 'http://db01e03015ce48e2b68240ea8254b17c:5d878e9bb6c6488fbb70fb81295ee700@sentry.polydaic.com/1',
+	//DSN: 
 
 	// The secret should be set to a non-guessable string that
 	// is used to compute a session hash
