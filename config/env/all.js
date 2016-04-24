@@ -45,7 +45,7 @@ module.exports = {
 	/*
 	 * Upload Configuration
 	 */
-	//Global upload path 
+	//Global upload path
 	uploadPath : 'uploads/',
 	//PDF storage path
 	pdfUploadPath: 'uploads/pdfs/',
@@ -70,7 +70,7 @@ module.exports = {
 		js: [
 			'public/config.js',
 			'public/application.js',
-			'public/populate_template_cache.js',
+			'public/dist/populate_template_cache.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*[!tests]*/*.js'
 		],

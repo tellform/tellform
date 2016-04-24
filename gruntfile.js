@@ -2,7 +2,7 @@
 
 module.exports = function(grunt) {
 	require('jit-grunt')(grunt);
-	
+
 	// Unified Watch Object
 	var watchFiles = {
 		serverViews: ['app/views/**/*.*'],
@@ -157,7 +157,7 @@ module.exports = function(grunt) {
 			src: watchFiles.serverTests,
 			options: {
 				reporter: 'spec',
-				quiet: false, 
+				quiet: false,
 				require: 'server.js',
 				ui: 'bdd'
 			}
@@ -243,7 +243,7 @@ module.exports = function(grunt) {
 		  },
 		  main: {
 		    src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html'],
-		    dest: 'public/populate_template_cache.js'
+		    dest: 'public/dist/populate_template_cache.js'
 		  }
 		}
 	});
@@ -282,7 +282,7 @@ module.exports = function(grunt) {
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'html2js:main', 'env', 'concurrent:default']);
-	
+
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
 
