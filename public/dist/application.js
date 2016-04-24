@@ -1,118 +1,3 @@
-'use strict';
-
-// Init the application configuration module for AngularJS application
-var ApplicationConfiguration = (function() {
-	// Init module configuration options
-	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven'];
-
-	// Add a new vertical module
-	var registerModule = function(moduleName, dependencies) {
-		// Create angular module
-		angular.module(moduleName, dependencies || []);
-
-		// Add the module to the AngularJS configuration file
-		angular.module(applicationModuleName).requires.push(moduleName);
-	};
-
-	return {
-		applicationModuleName: applicationModuleName,
-		applicationModuleVendorDependencies: applicationModuleVendorDependencies,
-		registerModule: registerModule
-	};
-})();
-
-'use strict';
-
-//Start by defining the main module and adding the module dependencies
-angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
-
-// Setting HTML5 Location Mode
-angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider',
-	function($locationProvider) {
-		$locationProvider.hashPrefix('!');
-	}
-]);
-
-//Permission Constants
-angular.module(ApplicationConfiguration.applicationModuleName).constant('APP_PERMISSIONS', {
-  viewAdminSettings: 'viewAdminSettings',
-  editAdminSettings: 'editAdminSettings',
-  editForm: 'editForm',
-  viewPrivateForm: 'viewPrivateForm',
-});
-//User Role constants
-angular.module(ApplicationConfiguration.applicationModuleName).constant('USER_ROLES', {
-  admin: 'admin',
-  normal: 'user',
-  superuser: 'superuser',
-});
-
-angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', '$state', '$stateParams',
-    function($rootScope, Auth, $state, $stateParams) {
-
-	    $rootScope.$state = $state;
-	    $rootScope.$stateParams = $stateParams;
-
-	    // add previous state property
-	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
-	        $state.previous = fromState;
-	        console.log('toState: '+toState.name);
-
-	        //Redirect to listForms if user is authenticated
-        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
-        		if(Auth.isAuthenticated()){
-        			event.preventDefault(); // stop current execution
-        			console.log('go to forms');
-				$state.go('listForms'); // go to listForms page
-        		}
-        	}
-	        //Redirect to 'home' route if user is not authenticated
-        	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
-        		console.log('go to home');
-        		event.preventDefault(); // stop current execution
-        		$state.go('home'); // go to listForms page
-        	}
-	        
-	    });
-
-    }
-]);
-
-//Page access/authorization logic
-angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', 'User', 'Authorizer', '$state', '$stateParams',
-  function($rootScope, Auth, User, Authorizer, $state, $stateParams) {
-		$rootScope.$on('$stateChangeStart', function(event, next) {
-			var authenticator, permissions, user;
-			permissions = next && next.data && next.data.permissions ? next.data.permissions : null;
-
-			Auth.ensureHasCurrentUser(User);
-			user = Auth.currentUser;
-
-		    if(user){
-			  	authenticator = new Authorizer(user);
-			  	//console.log('access denied: '+!authenticator.canAccess(permissions));
-				//console.log(permissions);
-			  	if( (permissions != null) ){
-					if( !authenticator.canAccess(permissions) ){
-			    			event.preventDefault();
-		    				console.log('access denied');
-		      				$state.go('access_denied');
-					}
-				}
-			}
-		});
-}]);
-
-//Then define the init function for starting up the application
-angular.element(document).ready(function() {
-	//Fixing facebook bug with redirect
-	if (window.location.hash === '#_=_') window.location.hash = '#!';
-
-	//Then init the app
-	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
-});
-
 angular.module('NodeForm.templates', []).run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("../public/modules/core/views/header.client.view.html",
@@ -436,6 +321,121 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/users/views/verify/verify-account.client.view.html",
     "<section class=\"row text-center\" data-ng-controller=VerifyController ng-init=validateVerifyToken()><section class=\"row text-center\" ng-if=isResetSent><h3 class=col-md-12>Account successfuly activated</h3><a href=/#!/signin class=col-md-12>Continue to login page</a></section><section class=\"row text-center\" ng-if=!isResetSent><h3 class=col-md-12>Verification link is invalid or has expired</h3><a href=/#!/verify class=col-md-6>Resend your verification email</a> <a href=/#!/signin class=col-md-6>Signin to your account</a></section></section>");
 }]);
+
+'use strict';
+
+// Init the application configuration module for AngularJS application
+var ApplicationConfiguration = (function() {
+	// Init module configuration options
+	var applicationModuleName = 'NodeForm';
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven'];
+
+	// Add a new vertical module
+	var registerModule = function(moduleName, dependencies) {
+		// Create angular module
+		angular.module(moduleName, dependencies || []);
+
+		// Add the module to the AngularJS configuration file
+		angular.module(applicationModuleName).requires.push(moduleName);
+	};
+
+	return {
+		applicationModuleName: applicationModuleName,
+		applicationModuleVendorDependencies: applicationModuleVendorDependencies,
+		registerModule: registerModule
+	};
+})();
+
+'use strict';
+
+//Start by defining the main module and adding the module dependencies
+angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
+
+// Setting HTML5 Location Mode
+angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider',
+	function($locationProvider) {
+		$locationProvider.hashPrefix('!');
+	}
+]);
+
+//Permission Constants
+angular.module(ApplicationConfiguration.applicationModuleName).constant('APP_PERMISSIONS', {
+  viewAdminSettings: 'viewAdminSettings',
+  editAdminSettings: 'editAdminSettings',
+  editForm: 'editForm',
+  viewPrivateForm: 'viewPrivateForm',
+});
+//User Role constants
+angular.module(ApplicationConfiguration.applicationModuleName).constant('USER_ROLES', {
+  admin: 'admin',
+  normal: 'user',
+  superuser: 'superuser',
+});
+
+angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', '$state', '$stateParams',
+    function($rootScope, Auth, $state, $stateParams) {
+
+	    $rootScope.$state = $state;
+	    $rootScope.$stateParams = $stateParams;
+
+	    // add previous state property
+	    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
+	        $state.previous = fromState;
+	        console.log('toState: '+toState.name);
+
+	        //Redirect to listForms if user is authenticated
+        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
+        		if(Auth.isAuthenticated()){
+        			event.preventDefault(); // stop current execution
+        			console.log('go to forms');
+				$state.go('listForms'); // go to listForms page
+        		}
+        	}
+	        //Redirect to 'home' route if user is not authenticated
+        	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
+        		console.log('go to home');
+        		event.preventDefault(); // stop current execution
+        		$state.go('home'); // go to listForms page
+        	}
+	        
+	    });
+
+    }
+]);
+
+//Page access/authorization logic
+angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', 'User', 'Authorizer', '$state', '$stateParams',
+  function($rootScope, Auth, User, Authorizer, $state, $stateParams) {
+		$rootScope.$on('$stateChangeStart', function(event, next) {
+			var authenticator, permissions, user;
+			permissions = next && next.data && next.data.permissions ? next.data.permissions : null;
+
+			Auth.ensureHasCurrentUser(User);
+			user = Auth.currentUser;
+
+		    if(user){
+			  	authenticator = new Authorizer(user);
+			  	//console.log('access denied: '+!authenticator.canAccess(permissions));
+				//console.log(permissions);
+			  	if( (permissions != null) ){
+					if( !authenticator.canAccess(permissions) ){
+			    			event.preventDefault();
+		    				console.log('access denied');
+		      				$state.go('access_denied');
+					}
+				}
+			}
+		});
+}]);
+
+//Then define the init function for starting up the application
+angular.element(document).ready(function() {
+	//Fixing facebook bug with redirect
+	if (window.location.hash === '#_=_') window.location.hash = '#!';
+
+	//Then init the app
+	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
+});
 
 'use strict';
 
