@@ -24,7 +24,7 @@ Make sure you have these installed:
 	sudo apt-get update
 	sudo apt-get dist-upgrade
 	sudo apt-get autoremove
-	sudo apt-get install libxml2-dev libxslt1-dev libffi-dev
+	sudo apt-get install libxml2-dev libxslt1-dev libffi-dev libpq-dev python-dev
 	sudo reboot
 	```
 
@@ -34,9 +34,10 @@ Make sure you have these installed:
 	sudo easy_install pip
 	```
 
-4. Install virtualenv and virtualenvwrapper
+4. Install virtualenv and lmxl 
 	```
 	sudo pip install virtualenv
+	sudo pip install lxml
 	```
 
 5. Install Sentry and Setup
