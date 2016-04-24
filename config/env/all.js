@@ -19,7 +19,7 @@ module.exports = {
 	},
 
 	//Sentry DSN Client Key
-	//DSN: 
+	DSN: process.env.RAVEN_DSN || '' 
 
 	// The secret should be set to a non-guessable string that
 	// is used to compute a session hash
