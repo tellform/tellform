@@ -38,7 +38,7 @@ module.exports = function(db) {
 	});
 
 	// Setting application local variables
-	app.locals.google_analytics_id = config.app.oogle_analytics_id;
+	app.locals.google_analytics_id = config.app.google_analytics_id;
 	app.locals.title = config.app.title;
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
