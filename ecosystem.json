@@ -10,11 +10,23 @@
       "ref"  : "origin/master",
       "repo" : "git@github.com:whitef0x0/tellform.git",
       "path" : "/opt/deploy",
-      "post-deploy" : "npm install && bower install --allow-root  && pm2 startOrRestart ecosystem.json --env production",
+      "post-deploy" : "npm install && bower install  && pm2 startOrRestart ecosystem.json --env production",
    		"env" : {
 				"NODE_ENV": "production",
 				"BASE_URL": "stage.tellform.com"
 			} 
-		}
-  }
+		},
+  	"prod" : {
+      "user" : "polydaic",
+      "host" : "159.203.33.182",
+      "ref"  : "origin/master",
+      "repo" : "git@github.com:whitef0x0/tellform.git",
+      "path" : "/opt/deploy",
+      "post-deploy" : "npm install && bower install && pm2 startOrRestart ecosystem.json --env production",
+        "env" : {
+                "NODE_ENV": "production",
+                "BASE_URL": "admin.tellform.com"
+            }
+        }
+	}
 }
