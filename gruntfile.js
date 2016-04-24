@@ -209,10 +209,6 @@ module.exports = function(grunt) {
                 options: {
                 	require: ['server.js'],
                     coverage: true, // this will make the grunt.event.on('coverage') event listener to be triggered
-                    check: {
-                        lines: 75,
-                        statements: 75
-                    },
                     root: './lib', // define where the cover task should consider the root of libraries that are covered by tests
                     reportFormats: ['cobertura','lcovonly']
                 }
@@ -254,7 +250,8 @@ module.exports = function(grunt) {
 
 	grunt.event.on('coverage', function(lcov, done){
 	    var coveralls = require('coveralls');
-	    coveralls.handleInput(lcov, function(err){
+	    console.log(lcov);
+        coveralls.handleInput(lcov, function(err){
 	        if (err) {
 	        	grunt.log.error('Failed to submit lcov file to coveralls: ' + err);
 	            return done(err);
@@ -278,7 +275,7 @@ module.exports = function(grunt) {
 
 
 	// Code coverage tasks.
-	grunt.registerTask('coveralls', ['mocha_istanbul:coveralls']);
+	grunt.registerTask('coveralls', ['env:test','mocha_istanbul:coveralls']);
     grunt.registerTask('coverage', ['env:test', 'mocha_istanbul:coverage']);
     grunt.registerTask('coverage:client', ['env:test', 'mocha_istanbul:coverageClient']);
     grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
@@ -299,7 +296,7 @@ module.exports = function(grunt) {
 	// Build task(s).
 	grunt.registerTask('build', ['lint', 'loadConfig', 'cssmin', 'ngAnnotate', 'uglify', 'html2js:main']);
 
-	// Test task.
+	// Test task(s).
 	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);
 	grunt.registerTask('test:server', ['lint:tests', 'env:test', 'mochaTest']);
 	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'env:test', 'karma:unit']);
