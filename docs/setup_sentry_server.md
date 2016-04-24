@@ -222,7 +222,7 @@ Make sure you have these installed:
 	vim /etc/supervisord.conf
 	```
 
-Configuration file should look like this
+	Configuration file should look like this
 	```
 	[program:sentry-web]
 	directory=~/SentryServer/
