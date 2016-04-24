@@ -1,13 +1,10 @@
-Installing Sentry Server
-------------------------
+#Installing Sentry Server
 
-TellForm is an opensource *form builder* that can create stunning forms from PDFs or from scratch
-
-## Before You Begin
+### Before You Begin
 Make sure you understand what sentry server does. You can view documentation for sentry server [here](https://sentry.readthedocs.org/). This document was written for a server running *Ubuntu 14.04 LTS server* (we used Azure).
 
 
-## Prerequisites
+### Prerequisites
 Make sure you have these installed:
 * apt-get
 * python2.7
@@ -15,32 +12,32 @@ Make sure you have these installed:
 
 
 
-## Installation Steps
+### Installation Steps
 1. Add non-root user. 
-```
-sudo adduser sentry
-sudo adduser sentry sudo
-```
+	```
+	sudo adduser sentry
+	sudo adduser sentry sudo
+	```
 
 2. Update all apt-get packages
-```
-sudo apt-get update
-sudo apt-get dist-upgrade
-sudo apt-get autoremove
-sudo apt-get install libxml2-dev libxslt1-dev libffi-dev
-sudo reboot
-```
+	```
+	sudo apt-get update
+	sudo apt-get dist-upgrade
+	sudo apt-get autoremove
+	sudo apt-get install libxml2-dev libxslt1-dev libffi-dev
+	sudo reboot
+	```
 
 3. Install easy_install and pip
-```
-wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
-sudo easy_install pip
-```
+	```
+	wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
+	sudo easy_install pip
+	```
 
 4. Install virtualenv and virtualenvwrapper
-```
-sudo pip install virtualenv
-```
+	```
+	sudo pip install virtualenv
+	```
 
 5. Install Sentry and Setup
 ```
@@ -56,38 +53,38 @@ pip install -U sentry[postgres]
 ```
 
 6. Install postgresql
-```
-# install postgres
-sudo apt-get install postgresql postgresql-contrib libpq-dev
-
-# install postgres adminpack
-sudo -u postgres psql
-CREATE EXTENSION "adminpack";
-\q
-```
+	```
+	# install postgres
+	sudo apt-get install postgresql postgresql-contrib libpq-dev
+	
+	# install postgres adminpack
+	sudo -u postgres psql
+	CREATE EXTENSION "adminpack";
+	\q
+	```
 
 7. Setup postgresql DB
-```
-# change postgres password & create database
-sudo passwd postgres
-sudo su - postgres
-psql -d template1 -c "ALTER USER postgres WITH PASSWORD 'changeme';"
-createdb sentry
-createuser sentry_user --pwprompt
-psql -d template1 -U postgres
-GRANT ALL PRIVILEGES ON DATABASE sentry to sentry_user;
-\q
-exit
-```
+	```
+	# change postgres password & create database
+	sudo passwd postgres
+	sudo su - postgres
+	psql -d template1 -c "ALTER USER postgres WITH PASSWORD 'changeme';"
+	createdb sentry
+	createuser sentry_user --pwprompt
+	psql -d template1 -U postgres
+	GRANT ALL PRIVILEGES ON DATABASE sentry to sentry_user;
+	\q
+	exit
+	```
 
 8. Setup Sentry Configuration
-```
-# initialize conf file
-sentry init
-
-#edit sentry configuration
-vim ~/.sentry/sentry.conf.py
-```
+	```
+	# initialize conf file
+	sentry init
+	
+	#edit sentry configuration
+	vim ~/.sentry/sentry.conf.py
+	```
 
 The following are the contents of my sentry.conf.py file (replace name, user and password with your that of your DB)
 
