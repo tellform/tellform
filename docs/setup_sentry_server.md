@@ -206,7 +206,8 @@ Make sure you have these installed:
 11. Start the worker processes
 	```
 	# restart nginx
-	sudo service nginx restart
+	sudo nginx -t
+	sudo service nginx reload
 	
 	#start sentry
 	sentry celery worker -B
