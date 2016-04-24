@@ -2,7 +2,7 @@
 
 module.exports = {
 	app: {
-		google_analytics_id: process.env.GOOGLE_ANALYTICS_ID || '';
+		google_analytics_id: process.env.GOOGLE_ANALYTICS_ID || '',
 		title: 'TellForm',
 		description: 'Opensource form builder alternative to TypeForm',
 		keywords: 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs',
