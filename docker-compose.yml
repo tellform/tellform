@@ -3,27 +3,20 @@ version: '2'
 services:
   db:
     image: mongo:3.2
-#    command: ['bash', '-c', 'mongod --storageEngine wiredTiger'] #['mongod', '--storageEngine', 'wiredTiger']
     volumes:
-    - ./mongo-data-wt:/data/db
-    #- /tmp/etc:/etc
-    networks:
-      - back-tier
+      - mongo-data-wt:/data/db
   web:
-    build:
-      context: .
+    build: .
     volumes:
       - .:/usr/src/app
     ports:
       - "3000:3000"
       - "35729:35729"
-    networks:
-      - back-tier
+    environment:
+      DB_1_PORT_27017_TCP_ADDR: db
+      PORT: 3000
     links:
       - db
 volumes:
   mongo-data-wt:
     driver: local
-networks:
-  back-tier:
-    driver: bridge
