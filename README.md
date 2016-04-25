@@ -55,12 +55,17 @@ $ grunt build
 
 Create your .env file. It should look like this
 ```
-MAILER_EMAIL_ID=example@test.com
+GOOGLE_ANALYTICS_ID=yourGAID
+PRERENDER_TOKEN=yourPrerender.ioToken
+COVERALLS_REPO_TOKEN=yourCoveralls.ioToken
+MAILER_EMAIL_ID=SMTP_Injection
 MAILER_FROM=noreply@yourdomain.com
-MAILER_PASSWORD=yourmandrillapikey
-MAILER_SERVICE_PROVIDER=Mandrill
+MAILER_PASSWORD=your_sparkpost_apikey
+MAILER_SERVICE_PROVIDER=SparkPost
 BASE_URL=yourdomain.com
 ```
+
+Currenty we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html
 
 Create this directory or you will get errors.
 
@@ -73,6 +78,7 @@ Edit the 'env' config in gruntfile.js to make sure your .env file is being used.
 To run development version:
 
 ```$ grunt default```
+
 To run production version:
 
 ```$ grunt production```

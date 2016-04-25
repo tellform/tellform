@@ -96,14 +96,14 @@
 	{% endif %}
 
 	<script>
-  		// Raven.config('http://db01e03015ce48e2b68240ea8254b17c@sentry.polydaic.com/1', {
-	   //    // Raven settings
-	   //  })
-	   //  .setUser({
-	   //    "id": "SERVER_RENDERED_ID",
-	   //    "email": "SERVER_RENDERED_EMAIL"
-	   //  })
-	   //  .install()
+		Raven.config('http://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2', {
+	   	// Raven settings
+	    })
+	     .setUser({
+	       "id": "SERVER_RENDERED_ID",
+	       "email": "SERVER_RENDERED_EMAIL"
+	     })
+	     .install()
 	</script>
 
 	<!-- [if lt IE 9]>
@@ -114,7 +114,17 @@
 		<p><a href="http://browsehappy.com" class="btn btn-primary btn-lg" role="button">Yes, upgrade my browser!</a></p>
 	</section>
 	<![endif] -->
+	
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+	  ga('create', '{{google_analytics_id}}', 'auto');
+	  ga('send', 'pageview');
+	</script>
+		
 </body>
 
 </html>
