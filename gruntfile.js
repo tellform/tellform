@@ -227,7 +227,7 @@ module.exports = function(grunt) {
         },
         html2js: {
 		  options: {
-		    base: 'NodeForm',
+		    base: 'public',
 		    watch: true,
 			module: 'NodeForm.templates',
 		    singleModule: true,
