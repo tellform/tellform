@@ -1,7 +1,8 @@
 'use strict';
 
 // Setting up route
-angular.module('users').config(['$stateProvider',
+angular.module('users').config([
+	'$stateProvider',
 	function($stateProvider) {
 
 	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
@@ -67,7 +68,7 @@ angular.module('users').config(['$stateProvider',
 			url: '/access_denied',
 			templateUrl: 'modules/users/views/authentication/access-denied.client.view.html'
 		}).
-		
+
 		state('resendVerifyEmail', {
 			url: '/verify',
 			templateUrl: 'modules/users/views/verify/resend-verify-email.client.view.html'
