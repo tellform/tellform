@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields',
-    function ($rootScope, FormFields) {
+angular.module('forms').directive('editFormDirective', [
+    '$rootScope', 'FormFields', '$templateCache',
+    function ($rootScope, FormFields, $templateCache) {
         return {
-            templateUrl: 'modules/forms/views/directiveViews/form/edit-form.client.view.html',
+            template: $templateCache.get('modules/forms/views/directiveViews/form/edit-form.client.view.html'),
             restrict: 'E',
             scope: {
                 myform:'=',
@@ -45,7 +46,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                         if( $scope.myform.plugins.oscarhost.settings.fieldMap.hasOwnProperty(field_id) ){
                             currentFields = _(currentFields).difference($scope.myform.plugins.oscarhost.settings.fieldMap[field_id]);
-                        } 
+                        }
 
                         //Get all oscarhostFields that haven't been mapped to a formfield
                         return _(oscarhostFields).difference(currentFields).value();
@@ -73,9 +74,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     var fieldTitle;
 
                     for(var i = 0; i < $scope.addField.types.length; i++){
-                        if($scope.addField.types[i].name === fieldType){ 
+                        if($scope.addField.types[i].name === fieldType){
                             $scope.addField.types[i].lastAddedID++;
-                            fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;  
+                            fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;
                             break;
                         }
                     }
@@ -90,12 +91,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     // console.log('\n\n---------\nAdded field CLIENT');
                     // console.log(newField);
                     // newField._id = _.uniqueId();
-                    
+
                     // put newField into fields array
                     if(modifyForm){
                         $scope.myform.form_fields.push(newField);
                     }
-                    return newField;    
+                    return newField;
                 };
 
                 // Delete particular field on button click
@@ -109,7 +110,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
                 $scope.duplicateField = function (field_index){
-                    var currField = _.cloneDeep($scope.myform.form_fields[field_index]);  
+                    var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
                     currField.title += ' copy';
 
@@ -158,8 +159,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.addOption = function(field_index){
                     var currField = $scope.myform.form_fields[field_index];
 					console.log(field_index);
-					console.log(currField);	
-                    
+					console.log(currField);
+
 					if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
                         if(!currField.fieldOptions) $scope.myform.form_fields[field_index].fieldOptions = [];
 
@@ -209,7 +210,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 };
 
             },
-  
+
         };
     }
 ]);

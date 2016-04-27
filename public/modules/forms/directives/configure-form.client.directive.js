@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', 'CurrentForm',
-    function ($rootScope, $http, Upload, CurrentForm) {
+angular.module('forms').directive('configureFormDirective', [
+	'$rootScope', '$http', 'Upload', 'CurrentForm', '$templateCache',
+    function ($rootScope, $http, Upload, CurrentForm, $templateCache) {
         return {
-            templateUrl: 'modules/forms/views/directiveViews/form/configure-form.client.view.html',
+            template: $templateCache.get('modules/forms/views/directiveViews/form/configure-form.client.view.html'),
             restrict: 'E',
             scope: {
                 myform:'=',
@@ -21,7 +22,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                 $scope.log = '';
                 $scope.pdfLoading = false;
                 $scope.languages = $rootScope.languages;
-                
+
                 this._current_upload = null;
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
@@ -66,7 +67,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                             $scope.log = 'progress: ' + progressPercentage + '% ' +
                                         evt.config.file.name + '\n' + $scope.log;
-                                        
+
                             $scope.pdfLoading = true;
                         }).success(function (data, status, headers, config) {
                             $scope.log = 'file ' + data.originalname + ' uploaded as '+ data.name +'. JSON: ' + JSON.stringify(data) + '\n' + $scope.log;
