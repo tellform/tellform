@@ -1,9 +1,9 @@
 'use strict';
 
 //Forms service used for communicating with the forms REST endpoints
-angular.module('forms').factory('Forms', ['$resource',
-	function($resource) {
-		return $resource('/forms/:formId', {
+angular.module('forms').factory('Forms', ['$resource', 'FORM_URL',
+	function($resource, FORM_URL) {
+		return $resource(FORM_URL, {
 			formId: '@_id'
 		}, {
 			'query' : {
@@ -25,7 +25,6 @@ angular.module('forms').factory('Forms', ['$resource',
 				transformResponse: function(data, header) {
 		          	var form = angular.fromJson(data);
 		          	//console.log(form);
-
 		            form.visible_form_fields = _.filter(form.form_fields, function(field){
 		            	return (field.deletePreserved === false);
 		            });

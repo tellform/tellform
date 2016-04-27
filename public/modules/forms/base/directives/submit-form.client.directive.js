@@ -3,8 +3,7 @@
 angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'Auth',
     function ($http, TimeCounter, $filter, $rootScope, Auth) {
         return {
-            templateUrl: 'modules/forms/views/directiveViews/form/submit-form.client.view.html',
-            restrict: 'E',
+            templateUrl: 'modules/forms/base/views/directiveViews/form/submit-form.client.view.html',                restrict: 'E',
             scope: {
                 myform:'='
             },

@@ -13,7 +13,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 
     var getTemplateUrl = function(fieldType) {
         var type = fieldType;
-        var templateUrl = 'modules/forms/views/directiveViews/field/';
+        var templateUrl = 'modules/forms/base/views/directiveViews/field/';
         var supported_fields = [
             'textfield',
             'textarea',

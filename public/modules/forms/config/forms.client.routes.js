@@ -8,11 +8,11 @@ angular.module('forms').config(['$stateProvider',
 		$stateProvider.
 		state('listForms', {
 			url: '/forms',
-			templateUrl: 'modules/forms/views/list-forms.client.view.html'
+			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html'
   		}).
   		state('submitForm', {
 			url: '/forms/:formId',
-			templateUrl: 'modules/forms/views/submit-form.client.view.html',
+			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
 			data: {
 				hideNav: true
 			},
