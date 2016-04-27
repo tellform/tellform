@@ -1,9 +1,9 @@
 'use strict';
 
 //Forms service used for communicating with the forms REST endpoints
-angular.module('forms').factory('Forms', ['$resource',
-	function($resource) {
-		return $resource('/forms/:formId', {
+angular.module('forms').factory('Forms', ['$resource', 'FORM_URL',
+	function($resource, FORM_URL) {
+		return $resource(FORM_URL, {
 			formId: '@_id'
 		}, {
 			'query' : {
