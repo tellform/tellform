@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('forms').directive('configureFormDirective', [
-	'$rootScope', '$http', 'Upload', 'CurrentForm', '$templateCache',
-    function ($rootScope, $http, Upload, CurrentForm, $templateCache) {
+	'$rootScope', '$http', 'Upload', 'CurrentForm',
+    function ($rootScope, $http, Upload, CurrentForm) {
         return {
-            template: $templateCache.get('modules/forms/views/directiveViews/form/configure-form.client.view.html'),
+            templateUrl: 'modules/forms/views/directiveViews/form/configure-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',

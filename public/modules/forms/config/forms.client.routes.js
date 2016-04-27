@@ -2,18 +2,18 @@
 
 // Setting up route
 angular.module('forms').config([
-	'$stateProvider', '$templateCache',
+	'$stateProvider',
 
-	function($stateProvider, $templateCache) {
+	function($stateProvider) {
 		// Forms state routing
 		$stateProvider.
 		state('listForms', {
 			url: '/forms',
-			template: $templateCache.get('modules/forms/views/list-forms.client.view.html')
+			templateUrl: 'modules/forms/views/list-forms.client.view.html'
   		}).
   		state('submitForm', {
 			url: '/forms/:formId',
-			template: $templateCache.get('modules/forms/views/submit-form.client.view.html'),
+			templateUrl: 'modules/forms/views/submit-form.client.view.html',
 			data: {
 				hideNav: true,
 			},
@@ -27,7 +27,7 @@ angular.module('forms').config([
             controllerAs: 'ctrl'
 		}).state('viewForm', {
 			url: '/forms/:formId/admin',
-			template: $templateCache.get('modules/forms/views/admin-form.client.view.html'),
+			templateUrl: 'modules/forms/views/admin-form.client.view.html',
 			data: {
 				permissions: [ 'editForm' ]
 			},
@@ -40,16 +40,16 @@ angular.module('forms').config([
 			controller: 'AdminFormController'
 		}).state('viewForm.configure', {
 			url: '/configure',
-			template: $templateCache.get('modules/forms/views/adminTabs/configure.html')
+			templateUrl: 'modules/forms/views/adminTabs/configure.html'
 	    }).state('viewForm.design', {
 			url: '/design',
-			template: $templateCache.get('modules/forms/views/adminTabs/design.html')
+			templateUrl: 'modules/forms/views/adminTabs/design.html'
 	    }).state('viewForm.analyze', {
 			url: '/analyze',
-			template: $templateCache.get('modules/forms/views/adminTabs/analyze.html')
+			templateUrl: 'modules/forms/views/adminTabs/analyze.html'
 	    }).state('viewForm.create', {
 			url: '/create',
-			template: $templateCache.get('modules/forms/views/adminTabs/create.html')
+			templateUrl: 'modules/forms/views/adminTabs/create.html'
 	    });
 	}
 ]);

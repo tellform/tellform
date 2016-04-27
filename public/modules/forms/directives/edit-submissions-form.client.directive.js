@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('forms').directive('editSubmissionsFormDirective', [
-	'$rootScope', '$http', '$templateCache',
-    function ($rootScope, $http, $templateCache) {
+	'$rootScope', '$http',
+    function ($rootScope, $http) {
         return {
-            template: $templateCache.get('modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html'),
+            templateUrl: 'modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',

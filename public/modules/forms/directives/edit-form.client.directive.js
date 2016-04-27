@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('forms').directive('editFormDirective', [
-    '$rootScope', 'FormFields', '$templateCache',
-    function ($rootScope, FormFields, $templateCache) {
+    '$rootScope', 'FormFields', 
+    function ($rootScope, FormFields) {
         return {
-            template: $templateCache.get('modules/forms/views/directiveViews/form/edit-form.client.view.html'),
+            templateUrl: 'modules/forms/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',
