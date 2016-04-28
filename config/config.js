@@ -16,7 +16,8 @@ var minBowerFiles = function(type){
       var newPath = path.replace(/.([^.]+)$/g, '.min.$1');
       return exists( newPath ) ? newPath : path;
     });
-}
+};
+
 /**
  * Load app configurations
  */

@@ -143,7 +143,7 @@ module.exports = function(grunt) {
 		env: {
 			test: {
 				NODE_ENV: 'test',
-                src: '/opt/deploy/.env'
+                		src: '.env'
 			},
 			secure: {
 				NODE_ENV: 'secure',
@@ -151,7 +151,7 @@ module.exports = function(grunt) {
 			production: {
 				NODE_ENV: 'production'
 			},
-			src: '/opt/deploy/.env'
+			src: '.env'
 		},
 		mochaTest: {
 			src: watchFiles.serverTests,
