@@ -11,7 +11,7 @@
   "dependencies": {
     "bootstrap": "~3",
     "angular": "~1.4.7",
-	"angular-translate": "~2.11.0",	
+	"angular-translate": "~2.11.0",
     "angular-resource": "~1.4.7",
     "angular-bootstrap": "~1.3.2",
     "angular-ui-utils": "~3.0.0",
