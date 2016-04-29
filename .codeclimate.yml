@@ -4,9 +4,9 @@ engines:
   csslint:
     enabled: true
   eslint:
-		enabled: true
-	fixme:
-		enabled: true
+    enabled: true
+  fixme:
+    enabled: true
   duplication:
     enabled: true
     config:
