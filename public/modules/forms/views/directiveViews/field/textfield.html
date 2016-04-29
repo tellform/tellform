@@ -2,8 +2,8 @@
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}" ng-style="{'color': design.colors.questionColor}">
     	<h3>
     		<span class="fa fa-angle-double-right"></span> {{field.title}} 
-    		<span class="required-error" ng-show="field.required && !field.fieldValue">
-    			*(required)
+    		<span class="required-error" ng-show="!field.required">
+    			(optional)
     		</span>
     	</h3>
     </div>
@@ -24,10 +24,12 @@
     		on-enter-key="nextField()">
     </div>
     <div class="col-xs-12">        
-        <div ng-show="forms.myForm.{{field.fieldType}}{{index}}.$invalid" class="alert alert-danger" role="alert">
+        <div ng-show="forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue " class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
-            Enter a valid email address
+			<span ng-if="field.fieldType == 'email'"> Please enter a valid email address </span>
+			<span ng-if="field.fieldType == 'numbers'"> Please enter valid numbers only </span>
+			<span ng-if="field.fieldType == 'link'"> Please a valid url </span>
         </div>
     </div>
 </div>

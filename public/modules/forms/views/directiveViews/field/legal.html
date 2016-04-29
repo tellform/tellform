@@ -1,6 +1,6 @@
 <div class="field row radio legal" ng-click="setActiveField(field._id, index, true)">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">    	
-    	<h3>{{field.title}} <span class="required-error" ng-show="field.required && !field.fieldValue">*(required)</span></h3>
+    	<h3>{{field.title}} <span class="required-error" ng-show="!field.required">optional</span></h3>
     	<br>
     	<p style="color:#ddd;">{{field.description}}</p>
     </div>

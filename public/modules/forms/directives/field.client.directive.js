@@ -10,7 +10,7 @@ var __indexOf = [].indexOf || function(item) {
 
 angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', '$templateCache',
     function($http, $compile, $rootScope, $templateCache) {
-    
+
     var getTemplateUrl = function(fieldType) {
         var type = fieldType;
         var templateUrl = 'modules/forms/views/directiveViews/field/';
@@ -44,23 +44,26 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             required: '&',
             design: '=',
             index: '=',
+			forms: '='
         },
         link: function(scope, element) {
+			console.log(scope.forms.myForm);
+
             scope.setActiveField = $rootScope.setActiveField;
-            
+
             //Set format only if field is a date
             if(scope.field.fieldType === 'date'){
                 scope.dateOptions = {
                     changeYear: true,
                     changeMonth: true,
                     altFormat: 'mm/dd/yyyy',
-                    yearRange: '1900:-0',   
-                    defaultDate: 0,
+                    yearRange: '1900:-0',
+                    defaultDate: 0
                 };
             }
-		    
+
             var fieldType = scope.field.fieldType;
-	
+
 			if(scope.field.fieldType === 'number' || scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
 				switch(scope.field.fieldType){
 					case 'textfield':
@@ -83,6 +86,6 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();
             $compile(element.contents())(scope);
-        },
+        }
     };
 }]);

@@ -40,9 +40,21 @@
     outline: none;
 }
 
-.public-form input.no-border, .public-form textarea.no-border {
-    border: none!important;
+/*.public-form input.no-border.ng-invalid, .public-form textarea.no-border {
+    border-color: none;
+}*/
+.public-form input.ng-valid, .public-form textarea.ng-valid {
+	border-color: #20FF20!important;
+	border-style: solid!important;
+	border-width: 3px!important;
 }
+
+.public-form input.ng-invalid.ng-dirty, .public-form textarea.ng-invalid.ng-dirty {
+	border-color: #FA787E!important;
+	border-style: solid!important;
+	border-width: 3px!important;
+}
+
 section.content p.breakwords {
     word-break: break-all;
 }
