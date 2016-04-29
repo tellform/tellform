@@ -9,18 +9,18 @@ var multiFact = {
         {
             left:"user 4",
             right:"something something user something",
-            logicOp: "AND",
+            logicOp: "AND"
         },
         {
             left:"something something user something",
             right:"something",
-            logicOp: "OR",
+            logicOp: "OR"
         }
     ],
     left:"",
     right:"",
     logicOp:"",
-    prevResult: null,
+    prevResult: null
 };
 
 var _globalRules = function(){};
@@ -39,7 +39,7 @@ _globalRules.Equal = {
 
         if(prevResult !== null){
             if(logicOp === "AND"){
-                
+
             }
         }
         this.result = false;
@@ -59,7 +59,7 @@ _globalRules.NotEqual = {
     "consequence" : function(R) {
         this.result = false;
         R.next();
-    },
+    }
 };
 _globalRules.AND = {
     "condition" : function(R) {
@@ -74,7 +74,7 @@ _globalRules.AND = {
     "consequence" : function(R) {
         this.result = false;
         R.next();
-    },
+    }
 };
 _globalRules.OR = {
     "condition" : function(R) {
@@ -83,7 +83,7 @@ _globalRules.OR = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
         R.when(!(this.left || this.right));
     },
     "consequence" : function(R) {
@@ -101,7 +101,7 @@ _stringRules.Contains = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
         var contains = (this.left.indexOf(this.right) > -1);
         R.when(!contains);
     },
@@ -117,7 +117,7 @@ _stringRules.NotContains = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
         var notContains = !(this.left.indexOf(this.right) > -1);
         R.when(!notContains);
     },
@@ -133,7 +133,7 @@ _stringRules.BeginsWith = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
         R.when(!(this.left.indexOf(this.right) === 0));
     },
     "consequence" : function(R) {
@@ -148,7 +148,7 @@ _stringRules.EndsWith = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
     	var lenLeft = this.left.length;
     	var lenRight = this.right.length;
 
@@ -157,7 +157,7 @@ _stringRules.EndsWith = {
     "consequence" : function(R) {
         this.result = false;
         R.next();
-    },
+    }
 };
 
 var _numberRules = function(){};
@@ -169,14 +169,14 @@ _numberRules.GreaterThan = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
         var greaterThan = (this.left > this.right);
         R.when(!greaterThan);
     },
     "consequence" : function(R) {
         this.result = false;
         R.next();
-    },
+    }
 };
 _numberRules.SmallerThan = {
     "condition" : function(R) {
@@ -185,7 +185,7 @@ _numberRules.SmallerThan = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
         var smallerThan = (this.left < this.right);
         R.when(!smallerThan);
     },
@@ -201,14 +201,14 @@ _numberRules.GreaterThanOrEqual = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
         var greaterThanOrEqual = (this.left >= this.right);
         R.when(!greaterThanOrEqual);
     },
     "consequence" : function(R) {
         this.result = false;
         R.next();
-    },
+    }
 };
 
 _numberRules.SmallerThanOrEqual = {
@@ -218,14 +218,14 @@ _numberRules.SmallerThanOrEqual = {
             this.left = currTuple.left;
             this.right = currTuple.right;
         }
-        
+
         var smallerThanOrEqual = (this.left <= this.right);
         R.when(!smallerThanOrEqual);
     },
     "consequence" : function(R) {
         this.result = false;
         R.next();
-    },
+    }
 };
 
 module.exports = {

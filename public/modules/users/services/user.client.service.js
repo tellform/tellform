@@ -28,7 +28,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
         return deferred.promise;
       },
-      logout: function() { 
+      logout: function() {
 
         var deferred = $q.defer();
         $http.get('/auth/signout').success(function(response) {
@@ -39,7 +39,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
         return deferred.promise;
       },
-      signup: function(credentials) { 
+      signup: function(credentials) {
 
         var deferred = $q.defer();
         $http.post('/auth/signup', credentials).success(function(response) {
@@ -52,7 +52,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      resendVerifyEmail: function(_email) { 
+      resendVerifyEmail: function(_email) {
 
         var deferred = $q.defer();
         $http.post('/auth/verify', {email: _email}).success(function(response) {
@@ -64,7 +64,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      validateVerifyToken: function(token) { 
+      validateVerifyToken: function(token) {
 
         //DAVID: TODO: The valid length of a token should somehow be linked to server config values
         //DAVID: TODO: SEMI-URGENT: Should we even be doing this?
@@ -106,11 +106,11 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         });
 
         return deferred.promise;
-      },
+      }
 
     };
 
     return userService;
-   
+
   }
 ]);

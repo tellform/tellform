@@ -38,7 +38,7 @@
                 {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
                 {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
                 {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
-            ],
+            ]
         };
 
         //Mock Users Service
@@ -212,7 +212,7 @@
             };
         }));
 
-        
+
         it('on controller instantiation it should populate $scope.myform with current Form', inject(function(Forms) {
 
             var controller = createSubmitFormController();

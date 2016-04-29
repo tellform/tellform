@@ -106,7 +106,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 					{'fieldType':'textfield', 	'title':'And your last name',  		'fieldValue': ''},
 					{'fieldType':'radio', 		'title':'And your sex',  			'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''},
 					{'fieldType':'date', 	    'title':'When were you born?',  	'fieldValue': ''},
-					{'fieldType':'number', 		'title':'What\'s your phone #?',  	'fieldValue': ''},
+					{'fieldType':'number', 		'title':'What\'s your phone #?',  	'fieldValue': ''}
 				],
 				plugins: {
 					oscarhost: {

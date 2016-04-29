@@ -48,28 +48,30 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					$scope.fieldBottom = elemBox.bottom;
 
                     //console.log($scope.forms.myForm);
+					var field_id;
+					var field_index;
 
                     if(!$scope.noscroll){
                         //Focus on submit button
                         if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
-                            var field_index = $scope.selected.index+1;
-                            var field_id = 'submit_field';
+                            field_index = $scope.selected.index+1;
+                            field_id = 'submit_field';
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //Focus on field above submit button
                         else if($scope.selected.index === $scope.myform.form_fields.length){
                             if($scope.fieldTop > 200){
-                                var field_index = $scope.selected.index-1;
-                                var field_id = $scope.myform.form_fields[field_index]._id;
+                                field_index = $scope.selected.index-1;
+                                field_id = $scope.myform.form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
                         }else if( $scope.fieldBottom < 0){
-                            var field_index = $scope.selected.index+1;
-                            var field_id = $scope.myform.form_fields[field_index]._id;
+                            field_index = $scope.selected.index+1;
+                            field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
-                            var field_index = $scope.selected.index-1;
-                            var field_id = $scope.myform.form_fields[field_index]._id;
+                            field_index = $scope.selected.index-1;
+                            field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //console.log('$scope.selected.index: '+$scope.selected.index);

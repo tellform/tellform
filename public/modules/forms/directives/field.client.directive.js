@@ -32,7 +32,6 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 	if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
-
    		return $templateCache.get('../public/'+templateUrl);
     };
 

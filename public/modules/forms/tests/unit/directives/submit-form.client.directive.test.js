@@ -14,7 +14,7 @@
             password: 'password',
             provider: 'local',
             roles: ['user'],
-            _id: 'ed873933b1f1dea0ce12fab9',
+            _id: 'ed873933b1f1dea0ce12fab9'
         };
 
         var pdfObj = {
@@ -51,7 +51,7 @@
             isGenerated: false,
             isLive: false,
             autofillPDFs: false,
-            _id: '525a8422f6d0f87f0e407a33',
+            _id: '525a8422f6d0f87f0e407a33'
         };
 
         var sampleSubmission = {
@@ -60,7 +60,7 @@
                 {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: true,           deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
                 {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: false,          deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
-            admin: sampleUser, 
+            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 17.55
         };
@@ -71,7 +71,7 @@
                 {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'true', deletePreserved: false},
                 {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'false', deletePreserved: false}
             ],
-            admin: sampleUser, 
+            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 10.33
         },
@@ -81,7 +81,7 @@
                 {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'true',     deletePreserved: false},
                 {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'true',     deletePreserved: false}
             ],
-            admin: sampleUser, 
+            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 2.33
         },
@@ -91,7 +91,7 @@
                 {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'false',    deletePreserved: false},
                 {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'false',    deletePreserved: false}
             ],
-            admin: sampleUser, 
+            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 11.11
         }];
@@ -121,7 +121,7 @@
         beforeEach(module('stateMock'));
 
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
-            
+
             // Point global variables to injected services
             $httpBackend = _$httpBackend_;
             $httpBackend.whenGET('/users/me/').respond('');
@@ -182,7 +182,7 @@
             scope.submitForm();
 
             $httpBackend.flush();
-            
+
             setTimeout(function(){
                 expect(scope.myform.submitted).toBe(true);
                 expect(scope.error).toEqual('');

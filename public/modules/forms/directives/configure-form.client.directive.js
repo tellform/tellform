@@ -77,7 +77,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                             console.log('Error occured during upload.\n');
                             console.log(resp.status);
                         },  function (evt) {
-								var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+								var progressPercentage = parseInt(100.0 * evt.loaded / evt.total, 10);
 								$scope.log = 'progress: ' + progressPercentage + '% ' +
 									evt.config.data.file.name + '\n' + $scope.log;
 

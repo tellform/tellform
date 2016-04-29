@@ -18,15 +18,15 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             },
             {
                 heading: 'Design',
-                route:   'viewForm.design',
+                route:   'viewForm.design'
             },
             {
                 heading: 'Configure',
-                route:   'viewForm.configure',
+                route:   'viewForm.configure'
             },
             {
                 heading: 'Analyze',
-                route:   'viewForm.analyze',
+                route:   'viewForm.analyze'
             }
         ];
 
@@ -39,8 +39,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             });
         };
 
-        /* 
-        ** DeleteModal Functions 
+        /*
+        ** DeleteModal Functions
         */
         $scope.openDeleteModal = function(){
             $scope.deleteModal = $uibModal.open({
@@ -72,15 +72,15 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             if($scope.deleteModal && $scope.deleteModal.opened){
 
                 $scope.deleteModal.close();
-            
+
                 var form_id = $scope.myform._id;
                 if(!form_id) throw new Error('Error - removeCurrentForm(): $scope.myform._id does not exist');
-        
+
                 $http.delete('/forms/'+form_id)
                     .success(function(data, status, headers){
                         console.log('form deleted successfully');
 
-                        $state.go('listForms', {}, {reload: true}); 
+                        $state.go('listForms', {}, {reload: true});
 
                     }).error(function(error){
                         console.log('ERROR: Form could not be deleted.');
@@ -96,7 +96,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             if(!updateImmediately){
                 continueUpdate = !$rootScope.saveInProgress;
             }
-            
+
             //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
             if(continueUpdate){
                 var err = null;
@@ -111,12 +111,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                         console.log('Error occured during form UPDATE.\n');
                         // console.log(response.data);
                         err = response.data;
-                    }).finally(function() { 
+                    }).finally(function() {
                         // console.log('finished updating');
                         if(!updateImmediately){$rootScope.saveInProgress = false; }
 
                         if( (typeof cb) === 'function'){
-                            cb(err); 
+                            return cb(err);
                         }
                     });
             }
