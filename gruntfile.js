@@ -191,7 +191,7 @@ NODE_ENV: 'test',
                 src: watchFiles.allTests, // a folder works nicely
                 options: {
                     mask: '*.test.js',
-                    require: ['server.js'],
+                    require: ['server.js']
                 }
             },
             coverageClient: {
@@ -199,7 +199,7 @@ NODE_ENV: 'test',
                 options: {
                     coverageFolder: 'coverageClient',
                     mask: '*.test.js',
-                    require: ['server.js'],
+                    require: ['server.js']
                 }
             },
             coverageServer: {
@@ -207,7 +207,7 @@ NODE_ENV: 'test',
                 options: {
                     coverageFolder: 'coverageServer',
                     mask: '*.test.js',
-                    require: ['server.js'],
+                    require: ['server.js']
                 }
             },
             coveralls: {
@@ -244,7 +244,7 @@ NODE_ENV: 'test',
 		      removeAttributeQuotes: true,
 		      removeComments: true,
 		      removeEmptyAttributes: true,
-		      removeRedundantAttributes: true,
+		      removeRedundantAttributes: true
 		    }
 		  },
 		  main: {

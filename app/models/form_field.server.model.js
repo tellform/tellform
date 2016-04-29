@@ -10,17 +10,17 @@ var mongoose = require('mongoose'),
 
 var FieldOptionSchema = new Schema({
 	option_id: {
-		type: Number,
+		type: Number
 	},
 
 	option_title: {
-		type: String,
+		type: String
 	},
 
 	option_value: {
 		type: String,
-		trim: true,
-	},
+		trim: true
+	}
 });
 
 
@@ -31,7 +31,7 @@ var FormFieldSchema = new Schema({
 	title: {
 		type: String,
 		trim: true,
-		required: 'Field Title cannot be blank',
+		required: 'Field Title cannot be blank'
 	},
 	description: {
 		type: String,

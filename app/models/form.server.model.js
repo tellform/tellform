@@ -246,12 +246,12 @@ FormSchema.pre('save', function (next) {
 			.findOne({_id: that._id}).exec(function (err, original) {
 			if (err) {
 				console.log(err);
-				cb(err);
+				return cb(err);
 			} else {
 				_original = original;
 				//console.log('_original');
 				//console.log(_original);
-				cb(null);
+				return cb(null);
 			}
 		});
 	}, function(cb) {
@@ -260,7 +260,7 @@ FormSchema.pre('save', function (next) {
 			var validUpdateTypes = mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
 			that.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
 		}
-		cb(null);
+		return cb(null);
 	},
 		function(cb) {
 			if (that.pdf) {
@@ -286,16 +286,16 @@ FormSchema.pre('save', function (next) {
 							fs.move(old_path, path.join(newDestination, new_filename), {clobber: true}, function (err) {
 								if (err) {
 									console.error(err);
-									callback(new Error(err.message), 'task1');
+									return callback(new Error(err.message), 'task1');
 								} else {
 									that.pdf.path = path.join(newDestination, new_filename);
 									that.pdf.name = new_filename;
 
-									callback(null, 'task1');
+									return callback(null, 'task1');
 								}
 							});
 						} else {
-							callback(null, 'task1');
+							return callback(null, 'task1');
 						}
 					},
 					function (callback) {
@@ -318,9 +318,9 @@ FormSchema.pre('save', function (next) {
 								//console.log(that.pdf.path);
 
 								if (err) {
-									callback(new Error(err.message), null);
+									return callback(new Error(err.message), null);
 								} else if (!_form_fields.length || _form_fields === undefined || _form_fields === null) {
-									callback(new Error('Generated formfields is empty'), null);
+									return callback(new Error('Generated formfields is empty'), null);
 								}
 
 								console.log('autogenerating form');
@@ -347,34 +347,34 @@ FormSchema.pre('save', function (next) {
 								that.form_fields = _form_fields;
 
 								that.isGenerated = false;
-								callback(null, 'task2');
+								return callback(null, 'task2');
 							});
 						} else {
-							callback(null, 'task2');
+							return callback(null, 'task2');
 						}
 					}
 				], function (err, results) {
 					if (err) {
-						cb(new Error({
+						return cb(new Error({
 							message: err.message
 						}));
 					} else {
 						//console.log('ending form save1');
-						cb();
+						return cb();
 					}
 				});
 			}
 			else if (_original) {
 				if (_original.hasOwnProperty('pdf')) {
 					fs.remove(_original.pdf.path, function (err) {
-						if (err) cb(err);
+						if (err) return cb(err);
 						console.log('file at ' + _original.pdf.path + ' successfully deleted');
-						cb();
+						return cb();
 					});
 				}
-				else cb();
+				else return cb();
 			}
-			else cb();
+			else return cb();
 		},
 		function(cb) {
 
@@ -401,7 +401,7 @@ FormSchema.pre('save', function (next) {
 							exec(function(err, submissions){
 								if(err) {
 									console.error(err);
-									cb_id(err);
+									return cb_id(err);
 								} else {
 									//Delete field if there are no submission(s) found
 									if (submissions.length) {
@@ -409,14 +409,14 @@ FormSchema.pre('save', function (next) {
 										modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
 									}
 
-									cb_id(null);
+									return cb_id(null);
 								}
 							});
 						},
 						function (err) {
 							if(err){
 								console.error(err.message);
-								cb(err);
+								return cb(err);
 							} else {
 
 								//Iterate through all submissions with modified form_fields
@@ -450,27 +450,27 @@ FormSchema.pre('save', function (next) {
 									}
 
 									submission.save(function (err) {
-										if (err) callback(err);
-										else callback(null);
+										if (err) return callback(err);
+										else return callback(null);
 									});
 								}, function (err) {
 									if (err) {
 										console.error(err.message);
-										cb(err);
+										return cb(err);
 									}
-									else cb();
+									else return cb();
 								});
 							}
 						}
 					);
 				}
-				else cb(null);
+				else return cb(null);
 			}
-			else cb(null);
+			else return cb(null);
 		}],
 		function(err, results){
-			if (err) next(err);
-			next();
+			if (err) return next(err);
+			return next();
 		});
 });
 

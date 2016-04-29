@@ -14,7 +14,7 @@
             password: 'password',
             provider: 'local',
             roles: ['user'],
-            _id: 'ed873933b1f1dea0ce12fab9',
+            _id: 'ed873933b1f1dea0ce12fab9'
         };
 
         var pdfObj = {
@@ -48,7 +48,7 @@
             isGenerated: false,
             isLive: false,
             autofillPDFs: false,
-            _id: '525a8422f6d0f87f0e407a33',
+            _id: '525a8422f6d0f87f0e407a33'
         };
 
         var sampleSubmission = {
@@ -57,7 +57,7 @@
                 {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
                 {fieldType:'checkbox', title:'hockey',      fieldValue: 0, deletePreserved: false}
             ],
-            admin: sampleUser, 
+            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 17.55
         };
@@ -68,7 +68,7 @@
                 {fieldType:'checkbox', title:'nascar',      fieldValue: 0, deletePreserved: false},
                 {fieldType:'checkbox', title:'hockey',      fieldValue: 1, deletePreserved: false}
             ],
-            admin: sampleUser, 
+            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 10.33
         },
@@ -78,7 +78,7 @@
                 {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
                 {fieldType:'checkbox', title:'hockey',      fieldValue: 0, deletePreserved: false}
             ],
-            admin: sampleUser, 
+            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 2.33
         },
@@ -88,7 +88,7 @@
                 {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
                 {fieldType:'checkbox', title:'hockey',      fieldValue: 1, deletePreserved: false}
             ],
-            admin: sampleUser, 
+            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 11.11
         }];
@@ -118,7 +118,7 @@
         beforeEach(module('stateMock'));
 
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
-            
+
             // Point global variables to injected services
             $httpBackend = _$httpBackend_;
 
@@ -185,7 +185,7 @@
 
                 scope.table.masterChecker = true;
                 scope.toggleAllCheckers();
-                
+
                 $httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200);
 
                 //Run Controller Logic to Test

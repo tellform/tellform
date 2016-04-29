@@ -64,7 +64,7 @@ angular.module('users').factory('Auth', ['$window',
         $window.user = null;
         userState.isLoggedIn = false;
         service._currentUser = null;
-      },
+      }
     };
     return service;
 

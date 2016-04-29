@@ -59,7 +59,7 @@
     "math": "0.0.3",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
-    "mongoose": "~3.8.8",
+    "mongoose": "^3.8.40",
     "mongoose-utilities": "~0.1.1",
     "morgan": "~1.6.1",
     "multer": "~1.1.0",
