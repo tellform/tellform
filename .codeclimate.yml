@@ -25,3 +25,5 @@ exclude_paths:
 - public/lib/**
 - uploads/**
 - docs/**
+- public/populate_template_cache.js
+- scripts/**
