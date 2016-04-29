@@ -143,13 +143,19 @@ module.exports = function(grunt) {
 		env: {
 			test: {
 				NODE_ENV: 'test',
-                src: '/opt/deploy/.env'
+				src: '/opt/deploy/.env'
 			},
 			secure: {
 				NODE_ENV: 'secure',
+				src: '/opt/deploy/.env'
 			},
 			production: {
-				NODE_ENV: 'production'
+				NODE_ENV: 'production',
+				src: '/opt/deploy/.env'
+			},
+			dev: {
+				NODE_ENV: 'development',
+				src: '/opt/deploy/.env'
 			},
 			src: '/opt/deploy/.env'
 		},
@@ -282,7 +288,7 @@ module.exports = function(grunt) {
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'html2js:main', 'env', 'concurrent:default']);
-
+	grunt.registerTask('dev', ['lint', 'html2js:main', 'env:dev', 'concurrent:default']);
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
 

@@ -9,18 +9,18 @@ var users = require('../../app/controllers/users.server.controller'),
 	config = require('../../config/config');
 
 // Setting the pdf upload route and folder
-var upload = multer({ dest: config.tmpUploadPath,
-		rename: function (fieldname, filename) {
-		    return Date.now();
-		},
-		onFileUploadStart: function (file) {
-			//Check to make sure we can only upload images and pdfs
-		  	console.log(file.originalname + ' is starting ...');
-		},
-		onFileUploadComplete: function (file, req, res) {
-			console.log(file.originalname + ' uploaded to  ' + file.path);
-		}
-	});
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, config.tmpUploadPath);
+	},
+	filename: function (req, file, cb) {
+		var len = file.originalname.split('.').length;
+		var ext = file.originalname.split('.')[len-1];
+		cb(null, Date.now()+ '-' + file.fieldname + '.'+ext);
+	}
+});
+
+var upload = multer({ storage: storage });
 
 module.exports = function(app) {
 	// Form Routes

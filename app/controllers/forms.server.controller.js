@@ -19,21 +19,26 @@ var mongoose = require('mongoose'),
  */
 exports.uploadPDF = function(req, res, next) {
 
-	// console.log('inside uploadPDF');
+	console.log('inside uploadPDF');
 
-	// console.log(req.files.file);
 	// console.log('\n\nProperty Descriptor\n-----------');
 	// console.log(Object.getOwnPropertyDescriptor(req.files.file, 'path'));
+
+	console.log(req.file);
 
 	if(req.file){
 		var pdfFile = req.file;
 		var _user = req.user;
+		var _path = req.file.path;
+
+
 		if (req.file.size === 0) {
 			next(new Error('File uploaded is EMPTY'));
-		}else if(req.files.size > 200000000){
-			next(new Error('File uploaded exceeds MAX SIZE of 200MB'));
+		}else if(req.file.size > 100000000){
+			next(new Error('File uploaded exceeds MAX SIZE of 100MB'));
 		}else {
-			fs.exists(pdfFile.path, function(exists) {
+			fs.exists(_path, function(exists) {
+
 				//If file exists move to user's tmp directory
 				if(exists) {
 
@@ -44,17 +49,20 @@ exports.uploadPDF = function(req, res, next) {
 				    } catch (err) {
 				        fs.mkdirSync(newDestination);
 				    }
+
 				    if (stat && !stat.isDirectory()) {
 				    	console.log('Directory cannot be created');
 				        next(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'));
 				    }
+			
+					console.log(path.join(newDestination, pdfFile.filename));
 
-				    fs.move(pdfFile.path, path.join(newDestination, pdfFile.name), function (err) {
+					fs.move(pdfFile.path, path.join(newDestination, pdfFile.filename), function (err) {
 						if (err) {
 							next(new Error(err.message));
 						}
-						pdfFile.path = path.join(newDestination, pdfFile.name);
-						console.log(pdfFile.name + ' uploaded to ' + pdfFile.path);
+						pdfFile.path = path.join(newDestination, pdfFile.filename);
+						console.log(pdfFile.filename + ' uploaded to ' + pdfFile.path);
 						res.json(pdfFile);
 					});
 

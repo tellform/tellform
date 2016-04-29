@@ -17,8 +17,8 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 				Auth.logout();
 				Auth.ensureHasCurrentUser(User);
 				$scope.user = $rootScope.user = null;
-				$state.go('home');
-			}, 
+				$state.go('listForms');
+			},
 			function(reason) {
 			  	console.log('Logout Failed: ' + reason);
 			});

@@ -7,20 +7,11 @@ angular.module('forms').run(['Menus',
 		Menus.addMenuItem('topbar', 'My Forms', 'forms', '', '/forms', false);
 	}
 ])
-/*.filter('highlight', function() {
-    function escapeRegexp(queryToEscape) {
-        return ('' + queryToEscape).replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
-    }
-
-    return function(matchItem, query) {
-        return query && matchItem ? ('' + matchItem).replace(new RegExp(escapeRegexp(query), 'gi'), '<span class="ui-select-highlight">$&</span>') : matchItem;
-    };
-})*/
 .filter('formValidity',
     function(){
         return function(formObj){
         	if(formObj && formObj.form_fields && formObj.visible_form_fields){
-        		
+
 				//get keys
 				var formKeys = Object.keys(formObj);
 
@@ -42,7 +33,7 @@ angular.module('forms').run(['Menus',
 			return 0;
         };
 }).config(['$provide', function ($provide){
-    $provide.decorator('accordionDirective', function($delegate) { 
+    $provide.decorator('accordionDirective', function($delegate) {
         var directive = $delegate[0];
         directive.replace = true;
         return $delegate;

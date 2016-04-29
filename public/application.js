@@ -47,9 +47,9 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
         	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
         		console.log('go to home');
         		event.preventDefault(); // stop current execution
-        		$state.go('home'); // go to listForms page
+        		$state.go('listForms'); // go to listForms page
         	}
-	        
+
 	    });
 
     }

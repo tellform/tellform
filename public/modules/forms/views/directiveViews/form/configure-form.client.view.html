@@ -42,11 +42,13 @@
                         <div tabindex="-1" class="form-control file-caption">
                             <span class="file-caption-ellipsis" ng-if="!myform.pdf">…</span>
                             <div class="file-caption-name" ng-if="myform.pdf">
-                                {{myform.pdf.originalname}}
+                                {{myform.pdf.name}}
                             </div>
                         </div>
                         <div class="input-group-btn">
-                            <button type="button"  ng-if="myform.pdf" ng-click="removePDF();" title="Clear selected files" class="btn btn-danger fileinput-remove fileinput-remove-button">
+                            <button type="button"  ng-if="myform.pdf" ng-click="removePDF();"
+									title="Clear selected files"
+									class="btn btn-danger fileinput-remove fileinput-remove-button">
                                 <i class="glyphicon glyphicon-trash"  ></i> 
                                 Delete
                             </button>
@@ -56,7 +58,7 @@
                                 Cancel
                             </button>
 
-                            <div class="btn btn-success btn-file" ngf-select ngf-change="uploadPDF($files)" ng-if="!myform.pdf"> 
+                            <div class="btn btn-success btn-file" ngf-select="uploadPDF($file)">
                                 <i class="glyphicon glyphicon-upload"></i>
                                 Upload your PDF
                             </div>
