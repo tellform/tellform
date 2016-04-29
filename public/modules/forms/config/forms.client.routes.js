@@ -1,9 +1,8 @@
 'use strict';
 
 // Setting up route
-angular.module('forms').config([
-	'$stateProvider',
-
+angular.module('forms').config(['$stateProvider',
+	
 	function($stateProvider) {
 		// Forms state routing
 		$stateProvider.
@@ -46,7 +45,7 @@ angular.module('forms').config([
 			templateUrl: 'modules/forms/views/adminTabs/design.html'
 	    }).state('viewForm.analyze', {
 			url: '/analyze',
-			templateUrl: 'modules/forms/views/adminTabs/analyze.html'
+			templateUrl: 'modules/forms/views/adminTabs/analyze.html',
 	    }).state('viewForm.create', {
 			url: '/create',
 			templateUrl: 'modules/forms/views/adminTabs/create.html'

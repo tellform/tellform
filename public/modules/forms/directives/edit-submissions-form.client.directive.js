@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('forms').directive('editSubmissionsFormDirective', [
-	'$rootScope', '$http',
+angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http',
     function ($rootScope, $http) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html',
@@ -50,7 +49,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', [
                                 defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
                             // console.log('before textField2: '+data[0].form_fields[1].fieldValue);
-
+                            
                             //Iterate through form's submissions
                             for(var i=0; i<data.length; i++){
                                 for(var x=0; x<data[i].form_fields; x++){
@@ -70,8 +69,8 @@ angular.module('forms').directive('editSubmissionsFormDirective', [
                         })
                         .error(function(err){
                             console.error('Could not fetch form submissions.\nError: '+err);
-                        });
-                };
+                        });            
+                };  
 
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
@@ -80,7 +79,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', [
                         return !!row.selected;
                     }).pluck('_id').value();
 
-                    $http({ url: '/forms/'+$scope.myform._id+'/submissions',
+                    $http({ url: '/forms/'+$scope.myform._id+'/submissions', 
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
@@ -98,7 +97,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', [
                             console.log('Could not delete form submissions.\nError: ');
                             console.log(err);
                             console.error = err;
-                        });
+                        });      
                 };
 
                 //Export selected submissions of Form
