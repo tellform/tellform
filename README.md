@@ -1,6 +1,8 @@
 TellForm
 ========
 
+[![Join the chat at https://gitter.im/whitef0x0/tellform](https://badges.gitter.im/whitef0x0/tellform.svg)](https://gitter.im/whitef0x0/tellform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Current stable release: v1.3.0
 
 [![Stories in Ready](https://badge.waffle.io/whitef0x0/tellform.svg?label=ready&title=Ready)](http://waffle.io/whitef0x0/tellform)
