@@ -14,13 +14,13 @@ angular.module('forms').config(['$stateProvider',
 			url: '/forms/:formId',
 			templateUrl: 'modules/forms/views/submit-form.client.view.html',
 			data: {
-				hideNav: true,
+				hideNav: true
 			},
 			resolve: {
 				Forms: 'Forms',
 		        myForm: function (Forms, $stateParams) {
 		            return Forms.get({formId: $stateParams.formId}).$promise;
-		        },
+		        }
 			},
 			controller: 'SubmitFormController',
             controllerAs: 'ctrl'
@@ -34,7 +34,7 @@ angular.module('forms').config(['$stateProvider',
 				Forms: 'Forms',
 		        myForm: function (Forms, $stateParams) {
 		            return Forms.get({formId: $stateParams.formId}).$promise;
-		        },
+		        }
 			},
 			controller: 'AdminFormController'
 		}).state('viewForm.configure', {

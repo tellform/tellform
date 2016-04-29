@@ -43,9 +43,9 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 				$state.go('listForms'); // go to listForms page
         		}
         	}
-	        //Redirect to 'home' route if user is not authenticated
+	        //Redirect to 'signup' route if user is not authenticated
         	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
-        		console.log('go to home');
+        		console.log('go to signup');
         		event.preventDefault(); // stop current execution
         		$state.go('listForms'); // go to listForms page
         	}

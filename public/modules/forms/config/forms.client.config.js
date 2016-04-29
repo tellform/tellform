@@ -6,8 +6,7 @@ angular.module('forms').run(['Menus',
 		// Set top bar menu items
 		Menus.addMenuItem('topbar', 'My Forms', 'forms', '', '/forms', false);
 	}
-])
-.filter('formValidity',
+]).filter('formValidity',
     function(){
         return function(formObj){
         	if(formObj && formObj.form_fields && formObj.visible_form_fields){
