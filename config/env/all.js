@@ -10,7 +10,7 @@ module.exports = {
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
 
-    signupDisabled: process.env.SIGNUP_DISABLED || false;
+    signupDisabled: process.env.SIGNUP_DISABLED || false,
 	baseUrl: '',
 	tempUserCollection: 'temporary_users',
 
