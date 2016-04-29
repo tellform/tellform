@@ -155,9 +155,8 @@ NODE_ENV: 'test',
 			},
 			dev: {
 				NODE_ENV: 'development',
-				src: '/opt/deploy/.env'
+				src: '.env'
 			},
-			src: '.env'
 		},
 		mochaTest: {
 			src: watchFiles.serverTests,
