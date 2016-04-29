@@ -2,7 +2,7 @@
 
 var config = require('../../config/config');
 
-/**
+/**cd
  * Module dependencies.
  */
 exports.index = function(req, res) {
