@@ -36,7 +36,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     };
                     $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
 
-                    console.log($scope.selected);
+                    //console.log($scope.selected);
                     //Reset Timer
                     TimeCounter.restartClock();
                 };
@@ -83,13 +83,13 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 */
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index, animateScroll) {
                     if($scope.selected === null || $scope.selected._id === field_id){
-						console.log('not scrolling');
-						console.log($scope.selected);
+						//console.log('not scrolling');
+						//console.log($scope.selected);
 						return;
 		    		}
-                    console.log('field_id: '+field_id);
-                    console.log('field_index: '+field_index);
-                    console.log($scope.selected);
+                    //console.log('field_id: '+field_id);
+                    //console.log('field_index: '+field_index);
+                    //console.log($scope.selected);
 
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
@@ -106,7 +106,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
-                    console.log('nextfield');
+                    //console.log('nextfield');
                     //console.log($scope.selected.index);
 					//console.log($scope.myform.form_fields.length-1);
 					if($scope.selected.index < $scope.myform.form_fields.length-1){
@@ -150,14 +150,14 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
 							.success(function (data, status, headers) {
-								console.log('form submitted successfully');
+								//console.log('form submitted successfully');
 
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 							})
 							.error(function (error) {
 								$scope.loading = false;
-								console.log(error);
+								//console.log(error);
 								$scope.error = error.message;
 							});
 					}, 500);

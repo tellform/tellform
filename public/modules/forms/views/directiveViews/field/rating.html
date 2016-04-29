@@ -1,4 +1,6 @@
-<div class="textfield field row" ng-click="setActiveField(field._id, index, true)">
+<div class="textfield field row"
+	 ng-click="setActiveField(field._id, index, true)"
+	 on-enter-key="chooseDefaultOption('rating')">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 	    <h3>
 	    	<span class="fa fa-angle-double-right"></span> 

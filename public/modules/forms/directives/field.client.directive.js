@@ -47,7 +47,21 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			forms: '='
         },
         link: function(scope, element) {
-			console.log(scope.forms.myForm);
+
+			$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
+				if(type === 'yes_no'){
+					scope.field.fieldValue = 'true';
+				}else if(type === 'rating'){
+					scope.field.fieldValue = 0;
+				}else if(scope.field.fieldType === 'radio'){
+					console.log(scope.field);
+					scope.field.fieldValue = scope.field.fieldOptions[0].option_value;
+					console.log(scope.field.fieldValue);
+				}else if(type === 'legal'){
+					scope.field.fieldValue = 'true';
+					$rootScope.nextField();
+				}
+			};
 
             scope.setActiveField = $rootScope.setActiveField;
 
@@ -74,7 +88,8 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 						scope.field.placeholder = 'joesmith@example.com';
 						break;
 					case 'number':
-                        scope.field.input_type = 'number';
+                        scope.field.input_type = 'text';
+						scope.field.validateRegex = /^\d+$/;
                         break;
                     default:
 						scope.field.input_type = 'url';

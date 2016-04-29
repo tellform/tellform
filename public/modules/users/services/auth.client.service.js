@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('users').factory('Auth', ['$window', 
+angular.module('users').factory('Auth', ['$window',
   function($window) {
 
     var userState = {
@@ -18,24 +18,24 @@ angular.module('users').factory('Auth', ['$window',
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
         if (service._currentUser && service._currentUser.username) {
-          console.log('Using local current user.');
-          console.log(service._currentUser);
+          //console.log('Using local current user.');
+          //console.log(service._currentUser);
           return service._currentUser;
-        } 
+        }
         else if ($window.user){
-          console.log('Using cached current user.');
-          console.log($window.user);
+          //console.log('Using cached current user.');
+          //console.log($window.user);
           service._currentUser = $window.user;
           return service._currentUser;
         }
         else{
-          console.log('Fetching current user from the server.');
+          //console.log('Fetching current user from the server.');
           User.getCurrent().then(function(user) {
             // success
             service._currentUser = user;
-            userState.isLoggedIn = true; 
+            userState.isLoggedIn = true;
             $window.user = service._currentUser;
-            return service._currentUser;         
+            return service._currentUser;
           },
           function(response) {
             userState.isLoggedIn = false;
@@ -67,6 +67,6 @@ angular.module('users').factory('Auth', ['$window',
       },
     };
     return service;
-    
+
   }
 ]);

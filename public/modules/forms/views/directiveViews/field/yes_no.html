@@ -1,4 +1,5 @@
-<div class="field row radio" ng-click="setActiveField(field._id, index, true)">
+<div class="field row radio" ng-click="setActiveField(field._id, index, true)"
+		on-enter-key="chooseDefaultOption('yes_no')">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
         <h3 class="row">
             <span class="fa fa-angle-double-right"></span> {{field.title}} 
@@ -22,7 +23,7 @@
 					ng-model="field.fieldValue" 
 					ng-model-options="{ debounce: 250 }" 
 					ng-required="field.required" 
-					ng-click="$root.nextField()"
+					ng-change="$root.nextField()"
                     ng-disabled="field.disabled" />
 				<div class="letter">
 					Y
@@ -42,11 +43,11 @@
 			        ng-model="field.fieldValue" 
 			        ng-model-options="{ debounce: 250 }" 
 			        ng-required="field.required" 
-			        ng-click="$root.nextField()"
+			        ng-change="$root.nextField()"
                     ng-disabled="field.disabled"/>
                 	
 			<div class="letter">
-                  		N
+				N
 			</div>
 			<span>No</span>
                 	<i ng-show="field.fieldValue === 'false'" class="fa fa-check" aria-hidden="true"></i>
