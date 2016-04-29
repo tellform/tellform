@@ -3,7 +3,7 @@ engines:
     enabled: true
   csslint:
     enabled: true
-  eslint
+  eslint:
 		enabled: true
 	fixme:
 		enabled: true
