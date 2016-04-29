@@ -17,7 +17,7 @@ var mongoose = require('mongoose'),
 	FieldSchema = require('./form_field.server.model.js'),
 	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity');
 
-var newDemoTemplate = { 
+var newDemoTemplate = {
 	address: '880-9650 Velit. St.',
 	city: '',
 	dateOfBirth: '10',
@@ -38,10 +38,10 @@ var newDemoTemplate = {
 	sin: '',
 	spokenLanguage: 'English',
 	title: 'MS.',
-	yearOfBirth: '2015' 
+	yearOfBirth: '2015'
 };
 
-/** 
+/**
  * Form Submission Schema
  */
 var FormSubmissionSchema = new Schema({
@@ -56,64 +56,64 @@ var FormSubmissionSchema = new Schema({
 	},
 
 	form_fields: {
-		type: [Schema.Types.Mixed],
+		type: [Schema.Types.Mixed]
 	},
 
-	form: { 
-		type: Schema.Types.ObjectId, 
-		ref: 'Form', 
+	form: {
+		type: Schema.Types.ObjectId,
+		ref: 'Form',
 		required: true
 	},
 
 	ipAddr: {
-		type: String,
+		type: String
 	},
 	geoLocation: {
 		Country: {
-			type: String,
+			type: String
 		},
 		Region: {
-			type: String,
+			type: String
 		},
 		City: {
-			type: String,
+			type: String
 		}
 	},
 	device: {
 		type: {
-			type: String,
+			type: String
 		},
 		name: {
-			type: String,
+			type: String
 		}
 	},
 
 	pdfFilePath: {
-		type: Schema.Types.Mixed,
+		type: Schema.Types.Mixed
 	},
 	pdf: {
-		type: Schema.Types.Mixed,
+		type: Schema.Types.Mixed
 	},
 	fdfData: {
-		type: Schema.Types.Mixed,
+		type: Schema.Types.Mixed
 	},
 
-	timeElapsed: { 
+	timeElapsed: {
 		type: Number,
-	}, 
+	},
 	percentageComplete: {
-		type: Number,
+		type: Number
 	},
 
 	//TODO: DAVID: Need to not have this hardcoded
 	oscarDemoNum: {
-		type: Number,
+		type: Number
 	},
 
 	hasPlugins: {
 		oscarhost: {
 			type: Boolean,
-			default: false,
+			default: false
 		}
 	}
 
@@ -127,7 +127,7 @@ FormSubmissionSchema.plugin(mUtilities.timestamp, {
 
 //Oscarhost API hook
 FormSubmissionSchema.pre('save', function (next) {
-	
+
 	var self = this;
 
 	if(this.hasPlugins.oscarhost){
@@ -140,7 +140,7 @@ FormSubmissionSchema.pre('save', function (next) {
 			// console.log('FormSubmission [form_field ids]\n--------');
 			// console.log(submission_ids);
 
-			if(err) next(err);
+			if(err) return next(err);
 			// console.log(_form);
 			// console.log('should push to api');
 			// console.log( (!this.oscarDemoNum && !!_form.plugins.oscarhost.baseUrl && !!_form.plugins.oscarhost.settings.fieldMap) );
@@ -175,7 +175,7 @@ FormSubmissionSchema.pre('save', function (next) {
 	 						var date = new Date(currField.fieldValue);
 	 						_generatedDemo.dateOfBirth = date.getDate()+'';
 	 						_generatedDemo.yearOfBirth = date.getFullYear()+'';
-	 						_generatedDemo.monthOfBirth = date.getMonth()+'';			
+	 						_generatedDemo.monthOfBirth = date.getMonth()+'';
 		 				}
 		 			}
 		 			var currDate = new Date();
@@ -183,18 +183,18 @@ FormSubmissionSchema.pre('save', function (next) {
 		 			_generatedDemo.lastUpdateDate = currDate.toISOString();
 		 			return _generatedDemo;
 		 		};
-		 		
+
 		 		var submissionDemographic = generateDemo(self.form_fields, _form.plugins.oscarhost.settings.fieldMap, newDemoTemplate);
 
 		 		console.log(submissionDemographic);
 				async.waterfall([
-					function (callback) {	
+					function (callback) {
 						//Authenticate with API
 						soap.createClient(url_login, options, function(err, client) {
 							client.login(args_login, function (err, result) {
-								if(err) callback(err);
+								if(err) return callback(err);
 								console.log('SOAP authenticated');
-								callback(null, result.return);
+								return callback(null, result.return);
 							});
 						});
 					},
@@ -203,56 +203,57 @@ FormSubmissionSchema.pre('save', function (next) {
 						//Force Add Demographic
 						if(_form.plugins.oscarhost.settings.updateType === 'force_add'){
 							soap.createClient(url_demo, options, function(err, client) {
+								if(err) return callback(err);
 								client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
 
 								client.addDemographic({ arg0: submissionDemographic }, function (err, result) {
 									console.log('FORCE ADDING DEMOGRAPHIC \n');
 									// console.log(result.return);
-									if(err) callback(err);
-									callback(null, result);
+									if(err) return callback(err);
+									return callback(null, result);
 								});
 							});
 						}
 					},
 
 				], function(err, result) {
-					if(err) next(err);
+					if(err) return next(err);
 
 					self.oscarDemoNum = parseInt(result.return, 10);
 					console.log('self.oscarDemoNum: '+self.oscarDemoNum);
-					next();
-				});	
+					return next();
+				});
 			}else{
-				next();
+				return next();
 			}
 		});
 	}else{
-		next();
+		return next();
 	}
 
 });
 
-//Check for IP Address of submitting person 
+//Check for IP Address of submitting person
 FormSubmissionSchema.pre('save', function (next){
 	var self = this;
 	if(this.ipAddr){
 		if(this.isModified('ipAddr') || !this.geoLocation){
 			freegeoip.getLocation(this.ipAddr, function(err, location){
-				if(err) next(err);
+				if(err) return next(err);
 				//self.geoLocation = JSON.parse(location);
-				next();
+				return next();
 			});
 		}
 	}
-	next();
+	return next();
 });
 
-//Generate autofilled PDF if flags are set 
+//Generate autofilled PDF if flags are set
 FormSubmissionSchema.pre('save', function (next) {
 	var fdfData, dest_filename, dest_path,
 		self = this,
 		_form = this.form;
-	
+
 
 	if(this.pdf && this.pdf.path){
 		dest_filename = self.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';
@@ -264,13 +265,13 @@ FormSubmissionSchema.pre('save', function (next) {
 		pdfFiller.fillForm(self.pdf.path, dest_path, self.fdfData, function(err){
 			if(err) {
 				console.log('\n err.message: '+err.message);
-				next( new Error(err.message) );
+				return next( new Error(err.message) );
 			}
 			console.log('Field data from Form: '+self.title.replace(/ /g,'')+' outputed to new PDF: '+dest_path);
-			next();
+			return next();
 		});
 	} else {
-		next();
+		return next();
 	}
 });
 
