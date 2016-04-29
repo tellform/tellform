@@ -12,7 +12,12 @@ var mongoose = require('mongoose'),
 	mUtilities = require('mongoose-utilities'),
 	fs = require('fs-extra'),
 	async = require('async'),
+	mkdirp = require('mkdirp'),
+	Random = require('random-js'),
+	mt = Random.engines.mt19937(),
 	util = require('util');
+
+mt.autoSeed();
 
 //Mongoose Models
 var FieldSchema = require('./form_field.server.model.js');
@@ -48,7 +53,7 @@ var FormSchema = new Schema({
 	title: {
 		type: String,
 		trim: true,
-		required: 'Form Title cannot be blank',
+		required: 'Form Title cannot be blank'
 	},
 	language: {
 		type: String,
@@ -85,7 +90,7 @@ var FormSchema = new Schema({
 	startPage: {
 		showStart:{
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		introTitle:{
 			type: String,
@@ -144,7 +149,7 @@ var FormSchema = new Schema({
                 type: String,
                 match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
                 default: '#333'
-            },
+            }
 		},
 		font: String,
 		backgroundImage: { type: Schema.Types.Mixed }
@@ -153,7 +158,7 @@ var FormSchema = new Schema({
 	plugins: {
 		oscarhost: {
 			baseUrl: {
-				type: String,
+				type: String
 			},
 			settings: {
 				lookupField: {
@@ -206,16 +211,6 @@ FormSchema.plugin(mUtilities.timestamp, {
 	useVirtual: false
 });
 
-//DAVID: TODO: Make this so we don't have to update the validFields property ever save
-FormSchema.pre('save', function (next) {
-
-	if(this.plugins.oscarhost.hasOwnProperty('baseUrl')){
-		var validUpdateTypes= mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
-		this.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
-	}
-
-	next();
-});
 //Delete template PDF of current Form
 FormSchema.pre('remove', function (next) {
 	if(this.pdf && process.env.NODE_ENV === 'development'){
@@ -228,23 +223,6 @@ FormSchema.pre('remove', function (next) {
 });
 
 var _original;
-
-//Set _original
-FormSchema.pre('save', function (next) {
-
-	this.constructor
-      .findOne({_id: this._id}).exec(function(err, original){
-      	if(err) {
-      		console.log(err);
-      		next(err);
-        } else {
-        	_original = original;
-        	//console.log('_original');
-        	// console.log(_original);
-        	next();
-        }
-    });
-});
 
 function getDeletedIndexes(needle, haystack){
 	var deletedIndexes = [];
@@ -261,234 +239,240 @@ function getDeletedIndexes(needle, haystack){
 
 //Move PDF to permanent location after new template is uploaded
 FormSchema.pre('save', function (next) {
-	if(this.pdf){
-		var that = this;
-		async.series([
-			function(callback){
-				if(that.isModified('pdf') && that.pdf.path){
+	var that = this;
 
-					var new_filename = that.title.replace(/ /g,'')+'_template.pdf';
-
-				    var newDestination = path.join(config.pdfUploadPath, that.admin.username.replace(/ /g,''), that.title.replace(/ /g,'')),
-				    	stat = null;
-
-				    try {
-				        stat = fs.statSync(newDestination);
-				    } catch (err) {
-				        fs.mkdirSync(newDestination);
-				    }
-				    if (stat && !stat.isDirectory()) {
-				        return callback( new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"'), null);
-				    }
-
-				    var old_path = that.pdf.path;
-				    fs.move(old_path, path.join(newDestination, new_filename), {clobber: true}, function (err) {
-						if (err) {
-							console.error(err);
-							callback( new Error(err.message), 'task1');
-						}else {
-							that.pdf.path = path.join(newDestination, new_filename);
-							that.pdf.name = new_filename;
-
-							callback(null,'task1');
-						}
-					});
-				}else {
-					callback(null,'task1');
-				}
-
-			},
-			function(callback){
-				if(that.isGenerated){
-					that.pdf.path = path.join(config.pdfUploadPath, that.admin.username.replace(/ /g,''), that.title.replace(/ /g,''), that.title.replace(/ /g,'')+'_template.pdf');
-					that.pdf.name = that.title.replace(/ /g,'')+'_template.pdf';
-					var _typeConvMap = {
-						'Multiline': 'textarea',
-						'Text': 'textfield',
-						'Button': 'checkbox',
-						'Choice': 'radio',
-						'Password': 'password',
-						'FileSelect': 'filefield',
-						'Radio': 'radio'
-					};
-
-					// console.log('autogenerating form');
-					// console.log(that.pdf.path);
-
-					pdfFiller.generateFieldJson(that.pdf.path, function(err, _form_fields){
-						if(err){
-							callback( new Error(err.message), null);
-						}else if(!_form_fields.length || _form_fields === undefined || _form_fields === null){
-							callback( new Error('Generated formfields is empty'), null);
-						}
-
-						//Map PDF field names to FormField field names
-						for(var i = 0; i < _form_fields.length; i++){
-							var field = _form_fields[i];
-
-							//Convert types from FDF to 'FormField' types
-							if(_typeConvMap[ field.fieldType+'' ]){
-								field.fieldType = _typeConvMap[ field.fieldType+'' ];
-							}
-
-							// field = new Field(field);
-							field.required = false;
-							_form_fields[i] = field;
-						}
-
-						// console.log('NEW FORM_FIELDS: ');
-						// console.log(_form_fields);
-
-						that.form_fields = that.form_fields.concat(_form_fields);
-
-						// console.log('\n\nOLD FORM_FIELDS: ');
-						// console.log(that.form_fields);
-						that.isGenerated = false;
-						callback(null, 'task2');
-					});
-				}else{
-					callback(null, 'task2');
-				}
+	async.series([function(cb) {
+		that.constructor
+			.findOne({_id: that._id}).exec(function (err, original) {
+			if (err) {
+				console.log(err);
+				cb(err);
+			} else {
+				_original = original;
+				//console.log('_original');
+				//console.log(_original);
+				cb(null);
 			}
-		], function(err, results) {
-			if(err){
-				next(new Error({
-					message: err.message
-				}));
-			}
-			console.log('ending form save');
-			next();
-
 		});
-	}else if(_original){
-		if(_original.hasOwnProperty('pdf')){
-			fs.remove(_original.pdf.path, function (err) {
-				if(err) next(err);
-				console.log('file at '+_original.pdf.path+' successfully deleted');
-				next();
-			});
+	}, function(cb) {
+		//DAVID: TODO: Make this so we don't have to update the validFields property ever save
+		if (that.plugins.oscarhost.hasOwnProperty('baseUrl')) {
+			var validUpdateTypes = mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
+			that.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
 		}
-	}
-	next();
-});
+		cb(null);
+	},
+		function(cb) {
+			if (that.pdf) {
+				async.series([
+					function (callback) {
+						if (that.isModified('pdf') && that.pdf.path) {
 
-FormSchema.pre('save', function (next) {
+							var new_filename = that.title.replace(/ /g, '') + '_template.pdf';
 
-	// console.log('_original\n------------');
-	// console.log(_original);
-	//console.log('field has been deleted: ');
-	//console.log(this.isModified('form_fields') && !!this.form_fields && !!_original);
+							var newDestination = path.join(config.pdfUploadPath, that.admin.username.replace(/ /g, ''), that.title.replace(/ /g, '')),
+								stat = null;
 
-	if(this.isModified('form_fields') && this.form_fields && _original){
-
-		var old_form_fields = _original.form_fields,
-			new_ids = _.map(_.pluck(this.form_fields, '_id'), function(id){ return ''+id;}),
-			old_ids = _.map(_.pluck(old_form_fields, '_id'), function(id){ return ''+id;}),
-			deletedIds = getDeletedIndexes(old_ids, new_ids),
-			that = this;
-
-		// console.log('deletedId Indexes\n--------');
-		// console.log(deletedIds);
-		// console.log('old_ids\n--------');
-		// console.log(old_ids);
-		// console.log('new_ids\n--------');
-		// console.log(new_ids);
-
-		//Preserve fields that have at least one submission
-		if( deletedIds.length > 0 ){
-
-			var modifiedSubmissions = [];
-
-			async.forEachOfSeries(deletedIds,
-				function (deletedIdIndex, key, callback) {
-
-					var deleted_id = old_ids[deletedIdIndex];
-
-					//Find FormSubmissions that contain field with _id equal to 'deleted_id'
-					FormSubmission.
-						find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {_id: deleted_id} }  }).
-						exec(function(err, submissions){
-							if(err){
-								console.error(err);
-								return callback(err);
+							try {
+								stat = fs.statSync(newDestination);
+							} catch (err) {
+								mkdirp.sync(newDestination);
+							}
+							if (stat && !stat.isDirectory()) {
+								return callback(new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"'), null);
 							}
 
-							//Delete field if there are no submission(s) found
-							if(submissions.length) {
-								// console.log('adding submissions');
-								// console.log(submissions);
-								//Add submissions
-								modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
-							}
+							var old_path = that.pdf.path;
+							fs.move(old_path, path.join(newDestination, new_filename), {clobber: true}, function (err) {
+								if (err) {
+									console.error(err);
+									callback(new Error(err.message), 'task1');
+								} else {
+									that.pdf.path = path.join(newDestination, new_filename);
+									that.pdf.name = new_filename;
 
-							callback(null);
-						});
-					// }
-				},
-				function (err) {
-					if(err){
-						console.error(err.message);
-						next(err);
+									callback(null, 'task1');
+								}
+							});
+						} else {
+							callback(null, 'task1');
+						}
+					},
+					function (callback) {
+						if (that.isGenerated) {
+							that.pdf.path = config.pdfUploadPath + that.admin.username.replace(/ /g, '') + '/' + that.title.replace(/ /g, '') + '/' + that.title.replace(/ /g, '') + '_template.pdf';
+							that.pdf.name = that.title.replace(/ /g, '') + '_template.pdf';
+							var _typeConvMap = {
+								'Multiline': 'textarea',
+								'Text': 'textfield',
+								'Button': 'checkbox',
+								'Choice': 'radio',
+								'Password': 'password',
+								'FileSelect': 'filefield',
+								'Radio': 'radio'
+							};
+
+
+							pdfFiller.generateFieldJson(that.pdf.path, '', function (err, _form_fields) {
+
+								//console.log(that.pdf.path);
+
+								if (err) {
+									callback(new Error(err.message), null);
+								} else if (!_form_fields.length || _form_fields === undefined || _form_fields === null) {
+									callback(new Error('Generated formfields is empty'), null);
+								}
+
+								console.log('autogenerating form');
+
+								//Map PDF field names to FormField field names
+								for (var i = 0; i < _form_fields.length; i++) {
+									var _field = _form_fields[i];
+
+									//Convert types from FDF to 'FormField' types
+									if (_typeConvMap[_field.fieldType + '']) {
+										_field.fieldType = _typeConvMap[_field.fieldType + ''];
+									}
+
+									var new_field = {};
+									new_field.title = _field.fieldType + ' ' + Math.abs(mt());
+									new_field.fieldValue = '';
+									new_field.disabled = false;
+									new_field.fieldType = _field.fieldType;
+									new_field.deletePreserved = false;
+									new_field.required = false;
+									_form_fields[i] = new_field;
+								}
+
+								that.form_fields = _form_fields;
+
+								that.isGenerated = false;
+								callback(null, 'task2');
+							});
+						} else {
+							callback(null, 'task2');
+						}
 					}
-
-					// console.log('modifiedSubmissions\n---------\n\n');
-					// console.log(modifiedSubmissions);
-					
-	
-					//Iterate through all submissions with modified form_fields
-					async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
-
-						//Iterate through ids of deleted fields
-						for(var i = 0; i < deletedIds.length; i++){
-
-							var index = _.findIndex(submission.form_fields, function(field){
-                        var tmp_id = field._id+'';
-                        return tmp_id === old_ids[ deletedIds[i] ];
-                    }               
-); 
-
-							var deletedField = submission.form_fields[index];
-
-							//Hide field if it exists
-							if(deletedField){
-								// console.log('deletedField\n-------\n\n');
-								// console.log(deletedField);
-								//Delete old form_field
-								submission.form_fields.splice(index, 1);
-
-								deletedField.deletePreserved = true;
-
-								//Move deleted form_field to start
-								submission.form_fields.unshift(deletedField);
-								that.form_fields.unshift(deletedField);
-								// console.log('form.form_fields\n--------\n\n');
-								// console.log(that.form_fields);
-							}
-						}
-
-						submission.save(function (err) {
-						  	if(err) callback(err);
-							else callback(null);
-						});
-					}, function (err) {
-						if(err){
-							console.error(err.message);
-							next(err);
-						}
-						// console.log('form.form_fields\n--------\n\n');
-						// console.log(that.form_fields);
-						next();
+				], function (err, results) {
+					if (err) {
+						cb(new Error({
+							message: err.message
+						}));
+					} else {
+						//console.log('ending form save1');
+						cb();
+					}
+				});
+			}
+			else if (_original) {
+				if (_original.hasOwnProperty('pdf')) {
+					fs.remove(_original.pdf.path, function (err) {
+						if (err) cb(err);
+						console.log('file at ' + _original.pdf.path + ' successfully deleted');
+						cb();
 					});
 				}
-			);
-		}else {
-			next();
-		}
-	}else {
-		next();
-	}
-});
+				else cb();
+			}
+			else cb();
+		},
+		function(cb) {
 
+			if(that.isModified('form_fields') && that.form_fields && _original){
+
+				var old_form_fields = _original.form_fields,
+					new_ids = _.map(_.pluck(that.form_fields, '_id'), function(id){ return ''+id;}),
+					old_ids = _.map(_.pluck(old_form_fields, '_id'), function(id){ return ''+id;}),
+					deletedIds = getDeletedIndexes(old_ids, new_ids);
+
+				//Preserve fields that have at least one submission
+				if( deletedIds.length > 0 ){
+
+					var modifiedSubmissions = [];
+
+					async.forEachOfSeries(deletedIds,
+						function (deletedIdIndex, key, cb_id) {
+
+							var deleted_id = old_ids[deletedIdIndex];
+
+							//Find FormSubmissions that contain field with _id equal to 'deleted_id'
+							FormSubmission.
+							find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {_id: deleted_id} }  }).
+							exec(function(err, submissions){
+								if(err) {
+									console.error(err);
+									cb_id(err);
+								} else {
+									//Delete field if there are no submission(s) found
+									if (submissions.length) {
+										//Add submissions
+										modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
+									}
+
+									cb_id(null);
+								}
+							});
+						},
+						function (err) {
+							if(err){
+								console.error(err.message);
+								cb(err);
+							} else {
+
+								//Iterate through all submissions with modified form_fields
+								async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
+
+									//Iterate through ids of deleted fields
+									for (var i = 0; i < deletedIds.length; i++) {
+
+										var index = _.findIndex(submission.form_fields, function (field) {
+											var tmp_id = field._id + '';
+											return tmp_id === old_ids[deletedIds[i]];
+										});
+
+										var deletedField = submission.form_fields[index];
+
+										//Hide field if it exists
+										if (deletedField) {
+											// console.log('deletedField\n-------\n\n');
+											// console.log(deletedField);
+											//Delete old form_field
+											submission.form_fields.splice(index, 1);
+
+											deletedField.deletePreserved = true;
+
+											//Move deleted form_field to start
+											submission.form_fields.unshift(deletedField);
+											that.form_fields.unshift(deletedField);
+											// console.log('form.form_fields\n--------\n\n');
+											// console.log(that.form_fields);
+										}
+									}
+
+									submission.save(function (err) {
+										if (err) callback(err);
+										else callback(null);
+									});
+								}, function (err) {
+									if (err) {
+										console.error(err.message);
+										cb(err);
+									}
+									else cb();
+								});
+							}
+						}
+					);
+				}
+				else cb(null);
+			}
+			else cb(null);
+		}],
+		function(err, results){
+			if (err) next(err);
+			next();
+		});
+});
 
 mongoose.model('Form', FormSchema);
 

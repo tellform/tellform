@@ -17,7 +17,6 @@ var minBowerFiles = function(type){
       return exists( newPath ) ? newPath : path;
     });
 };
-
 /**
  * Load app configurations
  */

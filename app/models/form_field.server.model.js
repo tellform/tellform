@@ -35,7 +35,7 @@ var FormFieldSchema = new Schema({
 	},
 	description: {
 		type: String,
-		default: '',
+		default: ''
 	},
 
 	logicJump: {
@@ -46,11 +46,11 @@ var FormFieldSchema = new Schema({
 	fieldOptions: [FieldOptionSchema],
 	required: {
 		type: Boolean,
-		default: true,
+		default: true
 	},
 	disabled: {
 		type: Boolean,
-		default: false,
+		default: false
 	},
 
 	deletePreserved: {
@@ -84,7 +84,7 @@ var FormFieldSchema = new Schema({
 		    'yes_no',
 		    'natural',
 		    'number'
-		],
+		]
 	},
 	fieldValue: Schema.Types.Mixed
 });

@@ -58,6 +58,7 @@
     "main-bower-files": "~2.9.0",
     "math": "0.0.3",
     "method-override": "~2.3.0",
+    "mkdirp": "^0.5.1",
     "mongoose": "~3.8.8",
     "mongoose-utilities": "~0.1.1",
     "morgan": "~1.6.1",
@@ -74,6 +75,7 @@
     "path-exists": "^2.1.0",
     "pdffiller": "~0.1.1",
     "prerender-node": "^2.2.1",
+    "random-js": "^1.0.8",
     "raven": "^0.9.0",
     "soap": "^0.11.0",
     "swig": "~1.4.1"

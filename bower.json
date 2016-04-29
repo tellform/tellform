@@ -17,7 +17,7 @@
     "angular-bootstrap": "~0.14.3",
     "angular-ui-utils": "~3.0.0",
     "angular-ui-router": "~0.2.11",
-    "ng-file-upload": "~10.0.2",
+    "ng-file-upload": "^12.0.4",
     "angular-raven": "~0.5.11",
     "angular-ui-date": "~0.0.8",
     "lodash": "~3.10.0",
@@ -35,11 +35,12 @@
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
-    "angular": "1.4.x"
+    "angular": "1.4.x",
+    "ng-file-upload": "^12.0.4"
   },
   "overrides": {
-        "BOWER-PACKAGE": {
-            "main": "**/*.min.js"
-        }
+    "BOWER-PACKAGE": {
+      "main": "**/*.min.js"
     }
+  }
 }

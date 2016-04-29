@@ -69,87 +69,93 @@ module.exports = function(grunt) {
 				options: {
 					jshintrc: true
 				}
-			},
-			allTests: {
+				},
+				allTests: {
 				src: watchFiles.allTests,
 				options: {
-					jshintrc: true
+				jshintrc: true
 				}
-			}
-		},
-		csslint: {
-			options: {
-				csslintrc: '.csslintrc'
-			},
-			all: {
-				src: watchFiles.clientCSS
-			}
-		},
-		uglify: {
-			production: {
-				options: {
-					mangle: false
+				}
 				},
-				files: {
-					'public/dist/application.min.js': 'public/dist/application.js'
-				}
-			}
-		},
-		cssmin: {
-			combine: {
-				files: {
-					'public/dist/application.min.css': '<%= applicationCSSFiles %>'
-				}
-			}
-		},
-		nodemon: {
-			dev: {
-				script: 'server.js',
+				csslint: {
 				options: {
-					nodeArgs: ['--debug'],
-					ext: 'js,html',
-					watch: watchFiles.serverViews.concat(watchFiles.serverJS)
-				}
-			}
-		},
-		'node-inspector': {
-			custom: {
-				options: {
-					'web-port': 1337,
-					'web-host': 'localhost',
-					'debug-port': 5858,
-					'save-live-edit': true,
-					'no-preload': true,
-					'stack-trace-limit': 50,
-					'hidden': []
-				}
-			}
-		},
-		ngAnnotate: {
-			production: {
-				files: {
-					'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
-				}
-			}
-		},
-		concurrent: {
-			default: ['nodemon', 'watch'],
-			debug: ['nodemon', 'watch', 'node-inspector'],
-			options: {
-				logConcurrentOutput: true,
-				limit: 10
-			}
-		},
-		env: {
-			test: {
-				NODE_ENV: 'test',
-                		src: '.env'
+				csslintrc: '.csslintrc'
+				},
+				all: {
+				src: watchFiles.clientCSS
+	}
+	},
+uglify: {
+production: {
+options: {
+mangle: false
+	 },
+files: {
+	       'public/dist/application.min.js': 'public/dist/application.js'
+       }
+	    }
+	},
+cssmin: {
+combine: {
+files: {
+	       'public/dist/application.min.css': '<%= applicationCSSFiles %>'
+       }
+	 }
+	},
+nodemon: {
+dev: {
+script: 'server.js',
+	options: {
+nodeArgs: ['--debug'],
+	  ext: 'js,html',
+	  watch: watchFiles.serverViews.concat(watchFiles.serverJS)
+	}
+     }
+	 },
+	 'node-inspector': {
+custom: {
+options: {
+		 'web-port': 1337,
+		 'web-host': 'localhost',
+		 'debug-port': 5858,
+		 'save-live-edit': true,
+		 'no-preload': true,
+		 'stack-trace-limit': 50,
+		 'hidden': []
+	 }
+	}
+	 },
+ngAnnotate: {
+production: {
+files: {
+	       'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
+       }
+	    }
+	    },
+concurrent: {
+		    default: ['nodemon', 'watch'],
+debug: ['nodemon', 'watch', 'node-inspector'],
+	       options: {
+logConcurrentOutput: true,
+		     limit: 10
+	       }
+	    },
+env: {
+test: {
+NODE_ENV: 'test',
+		  src: '.env'
 			},
 			secure: {
 				NODE_ENV: 'secure',
+				src: '/opt/deploy/.env'
 			},
 			production: {
-				NODE_ENV: 'production'
+				NODE_ENV: 'production',
+				src: '/opt/deploy/.env'
+			},
+			dev: {
+				NODE_ENV: 'development',
+				src: '/opt/deploy/.env'
 			},
 			src: '.env'
 		},
@@ -282,7 +288,7 @@ module.exports = function(grunt) {
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'html2js:main', 'env', 'concurrent:default']);
-
+	grunt.registerTask('dev', ['lint', 'html2js:main', 'env:dev', 'concurrent:default']);
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
 
