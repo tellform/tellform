@@ -241,7 +241,7 @@ function getDeletedIndexes(needle, haystack){
 FormSchema.pre('save', function (next) {
 	var that = this;
 
-	async.series([function(return cb) {
+	async.series([function(cb) {
 		that.constructor
 			.findOne({_id: that._id}).exec(function (err, original) {
 			if (err) {
@@ -254,7 +254,7 @@ FormSchema.pre('save', function (next) {
 				return cb(null);
 			}
 		});
-	}, function(return cb) {
+	}, function(cb) {
 		//DAVID: TODO: Make this so we don't have to update the validFields property ever save
 		if (that.plugins.oscarhost.hasOwnProperty('baseUrl')) {
 			var validUpdateTypes = mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
@@ -262,10 +262,10 @@ FormSchema.pre('save', function (next) {
 		}
 		return cb(null);
 	},
-		function(return cb) {
+		function(cb) {
 			if (that.pdf) {
 				async.series([
-					function (return callback) {
+					function (callback) {
 						if (that.isModified('pdf') && that.pdf.path) {
 
 							var new_filename = that.title.replace(/ /g, '') + '_template.pdf';
@@ -279,7 +279,7 @@ FormSchema.pre('save', function (next) {
 								mkdirp.sync(newDestination);
 							}
 							if (stat && !stat.isDirectory()) {
-								return return callback(new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"'), null);
+								return callback(new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"'), null);
 							}
 
 							var old_path = that.pdf.path;
@@ -298,7 +298,7 @@ FormSchema.pre('save', function (next) {
 							return callback(null, 'task1');
 						}
 					},
-					function (return callback) {
+					function (callback) {
 						if (that.isGenerated) {
 							that.pdf.path = config.pdfUploadPath + that.admin.username.replace(/ /g, '') + '/' + that.title.replace(/ /g, '') + '/' + that.title.replace(/ /g, '') + '_template.pdf';
 							that.pdf.name = that.title.replace(/ /g, '') + '_template.pdf';
@@ -376,7 +376,7 @@ FormSchema.pre('save', function (next) {
 			}
 			else return cb();
 		},
-		function(return cb) {
+		function(cb) {
 
 			if(that.isModified('form_fields') && that.form_fields && _original){
 
@@ -391,7 +391,7 @@ FormSchema.pre('save', function (next) {
 					var modifiedSubmissions = [];
 
 					async.forEachOfSeries(deletedIds,
-						function (deletedIdIndex, key, return cb_id) {
+						function (deletedIdIndex, key, cb_id) {
 
 							var deleted_id = old_ids[deletedIdIndex];
 
@@ -420,7 +420,7 @@ FormSchema.pre('save', function (next) {
 							} else {
 
 								//Iterate through all submissions with modified form_fields
-								async.forEachOfSeries(modifiedSubmissions, function (submission, key, return callback) {
+								async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
 
 									//Iterate through ids of deleted fields
 									for (var i = 0; i < deletedIds.length; i++) {

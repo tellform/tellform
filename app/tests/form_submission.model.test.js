@@ -107,16 +107,16 @@ describe('FormSubmission Model Unit Tests:', function() {
 					{'fieldType':'radio', 		'title':'And your sex',  			'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''},
 					{'fieldType':'date', 	    'title':'When were you born?',  	'fieldValue': ''},
 					{'fieldType':'number', 		'title':'What\'s your phone #?',  	'fieldValue': ''}
-				],
-				plugins: {
-					oscarhost: {
-						baseUrl: config.oscarhost.baseUrl,
-						settings: {
-							updateType: 'force_add'
-						},
-						auth: config.oscarhost.auth
-					}
-				}
+				]
+				// plugins: {
+				// 	oscarhost: {
+				// 		baseUrl: config.oscarhost.baseUrl,
+				// 		settings: {
+				// 			updateType: 'force_add'
+				// 		},
+				// 		auth: config.oscarhost.auth
+				// 	}
+				// }
 			});
 
 			myForm.save(function(err, form){

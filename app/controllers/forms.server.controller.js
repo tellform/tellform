@@ -303,7 +303,7 @@ exports.formByID = function(req, res, next, id) {
 	else {
 		Form.findById(id).populate('admin').exec(function(err, form) {
 			if (err) {
-				return return next(err);
+				return next(err);
 			} else if (form === undefined || form === null) {
 				res.status(400).send({
 					message: 'Form not found'
