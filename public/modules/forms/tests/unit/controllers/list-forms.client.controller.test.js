@@ -76,7 +76,7 @@
                 }
             });
         });
-        
+
         // Load the main application module
         beforeEach(module(ApplicationConfiguration.applicationModuleName));
 
@@ -136,12 +136,12 @@
                 dupSampleForm_index = 3,
                 newSampleFormList = _.clone(sampleFormList);
             dupSampleForm._id = 'a02df75b44c1d26b6a5e05b8';
-            newSampleFormList.splice(3, 0, dupSampleForm);            
+            newSampleFormList.splice(3, 0, dupSampleForm);
 
             var controller = createListFormsController();
 
             // Set GET response
-            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList); 
+            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList);
             // Run controller functionality
             scope.findAll();
             $httpBackend.flush();
@@ -155,7 +155,7 @@
             // Test scope value
             expect( scope.myforms.length ).toEqual(newSampleFormList.length);
             for(var i=0; i<scope.myforms.length; i++){
-                expect( scope.myforms[i] ).toEqualData(newSampleFormList[i]);                
+                expect( scope.myforms[i] ).toEqualData(newSampleFormList[i]);
             }
             expect( scope.myforms[dupSampleForm_index] ).toEqualData(dupSampleForm);
         }));
@@ -186,7 +186,7 @@
             // Test scope value
             expect( scope.myforms.length ).toEqual(delSampleFormList.length);
             for(var i=0; i<scope.myforms.length; i++){
-                expect( scope.myforms[i] ).toEqualData(delSampleFormList[i]);                
+                expect( scope.myforms[i] ).toEqualData(delSampleFormList[i]);
             }
             expect( scope.myforms[0] ).not.toEqualData(delSampleForm);
         }));
@@ -205,10 +205,10 @@
                     $modelValue: 'Test Form5'
                 },
                 $dirty: true,
-                $valid: true,
+                $valid: true
             };
 
-            //Set $state transition 
+            //Set $state transition
             $state.expectTransitionTo('viewForm.create');
 
             // Set GET response

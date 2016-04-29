@@ -33,9 +33,9 @@ exports.uploadPDF = function(req, res, next) {
 
 
 		if (req.file.size === 0) {
-			next(new Error('File uploaded is EMPTY'));
+			return next(new Error('File uploaded is EMPTY'));
 		}else if(req.file.size > 100000000){
-			next(new Error('File uploaded exceeds MAX SIZE of 100MB'));
+			return next(new Error('File uploaded exceeds MAX SIZE of 100MB'));
 		}else {
 			fs.exists(_path, function(exists) {
 
@@ -52,14 +52,14 @@ exports.uploadPDF = function(req, res, next) {
 
 				    if (stat && !stat.isDirectory()) {
 				    	console.log('Directory cannot be created');
-				        next(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'));
+				        return next(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'));
 				    }
-			
+
 					console.log(path.join(newDestination, pdfFile.filename));
 
 					fs.move(pdfFile.path, path.join(newDestination, pdfFile.filename), function (err) {
 						if (err) {
-							next(new Error(err.message));
+							return next(new Error(err.message));
 						}
 						pdfFile.path = path.join(newDestination, pdfFile.filename);
 						console.log(pdfFile.filename + ' uploaded to ' + pdfFile.path);
@@ -67,12 +67,12 @@ exports.uploadPDF = function(req, res, next) {
 					});
 
 				} else {
-					next(new Error('Did NOT get your file!'));
+					return next(new Error('Did NOT get your file!'));
 				}
 			});
 		}
 	}else {
-		next(new Error('Uploaded files were NOT detected'));
+		return next(new Error('Uploaded files were NOT detected'));
 	}
 };
 
@@ -316,7 +316,7 @@ exports.formByID = function(req, res, next, id) {
 				form.provider = undefined;
 
 				req.form = form;
-				next();
+				return next();
 			}
 		});
 	}
@@ -332,5 +332,5 @@ exports.hasAuthorization = function(req, res, next) {
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});
 	}
-	next();
+	return next();
 };

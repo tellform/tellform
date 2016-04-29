@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var passport = require('passport');
+var config = require('../../config/config');
 
 module.exports = function(app) {
 	// User Routes
@@ -25,8 +26,10 @@ module.exports = function(app) {
 	app.route('/auth/reset/:token').post(users.reset);
 
 	// Setting up the users authentication api
-	app.route('/auth/signup').post(users.signup);
-	app.route('/auth/signin').post(users.signin);
+	if(!config.signupDisabled) {
+        app.route('/auth/signup').post(users.signup);
+	}
+    app.route('/auth/signin').post(users.signin);
 	app.route('/auth/signout').get(users.signout);
 
 	// // Setting the facebook oauth routes

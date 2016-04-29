@@ -1,0 +1,29 @@
+engines:
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+ratings:
+  paths:
+  - "**.css"
+  - "**.js"
+  - "**.jsx"
+  - "**.module"
+
+exclude_paths:
+- public/dist/**
+- node_modules/**
+- public/lib/**
+- uploads/**
+- docs/**
+- public/populate_template_cache.js
+- scripts/**

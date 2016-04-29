@@ -14,7 +14,7 @@
             password: 'password',
             provider: 'local',
             roles: ['user'],
-            _id: 'ed873933b1f1dea0ce12fab9',
+            _id: 'ed873933b1f1dea0ce12fab9'
         };
 
         var pdfObj = {
@@ -48,7 +48,7 @@
             isGenerated: false,
             isLive: false,
             autofillPDFs: false,
-            _id: '525a8422f6d0f87f0e407a33',
+            _id: '525a8422f6d0f87f0e407a33'
         };
 
         // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -74,7 +74,7 @@
         beforeEach(module(ApplicationConfiguration.applicationModuleName));
         beforeEach(module('module-templates'));
         beforeEach(module('stateMock'));
-        
+
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
             //Instantiate directive.
             var tmp_scope = $rootScope.$new();
@@ -120,12 +120,12 @@
         it('$scope.removePDF() should removed uploaded pdf file', function() {
             // expect(scope.isInitialized).toBeDefined()
             // expect(scope.log).toEqual('');
- 
+
             scope.myform.pdf = pdfObj;
             scope.myform.isGenerated = true;
             scope.myform.autofillPDFs = true;
 
-            scope.removePDF(); 
+            scope.removePDF();
 
             expect(scope.myform.pdf).toEqual(null);
             expect(scope.myform.isGenerated).toBe(false);
