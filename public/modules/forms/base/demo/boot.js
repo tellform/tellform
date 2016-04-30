@@ -1,10 +1,10 @@
 
+angular.module('forms', ['duScroll', 'ngResource', 'NodeForm.templates']);
+
 angular.module('NodeForm', [
-    'duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource',
-    'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven'
+    'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource',
+    'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'forms'
 ]);
-angular.module('forms', ['ngResource', 'NodeForm.templates']);
-angular.module('NodeForm').requires.push('forms');
 
 angular.module('forms').factory('Auth', [
   function() {
