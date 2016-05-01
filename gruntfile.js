@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 		serverViews: ['app/views/**/*.*'],
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 		clientViews: ['public/modules/**/views/**/*.html'],
-		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
+		clientJS: ['public/js/*.js', 'public/modules/**/*.js', '!public/modules/**/gruntfile.js'],
 		clientCSS: ['public/modules/**/*.css'],
 		serverTests: ['app/tests/**/*.js'],
 		clientTests: ['public/modules/**/tests/*.js'],
@@ -95,7 +95,7 @@ module.exports = function(grunt) {
 				files: {
 					'public/dist/application.min.js': 'public/dist/application.js'
 				}
-			}
+	    	}
 		},
 		cssmin: {
 			combine: {
@@ -125,27 +125,27 @@ module.exports = function(grunt) {
 					'stack-trace-limit': 50,
 					'hidden': []
 				}
-			 }
+			}
 		},
 		ngAnnotate: {
 			production: {
 				files: {
 					'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
-				}
-			}
-		},
+    			}
+	    	}
+	    },
 		concurrent: {
 		    default: ['nodemon', 'watch'],
 			debug: ['nodemon', 'watch', 'node-inspector'],
-	       	options: {
+			options: {
 				logConcurrentOutput: true,
-		     	limit: 10
-	       	}
+		    	limit: 10
+	    	}
 	    },
 		env: {
 			test: {
 				NODE_ENV: 'test',
-		  		src: '.env'
+				src: '.env'
 			},
 			secure: {
 				NODE_ENV: 'secure',
