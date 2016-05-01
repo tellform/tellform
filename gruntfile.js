@@ -146,6 +146,14 @@ module.exports = function(grunt) {
 		    	limit: 10
 	    	}
 	    },
+		concurrent: {
+		    default: ['nodemon', 'watch'],
+			debug: ['nodemon', 'watch', 'node-inspector'],
+			options: {
+				logConcurrentOutput: true,
+		    	limit: 10
+	    	}
+	    },
 		env: {
 			test: {
 				NODE_ENV: 'test',
