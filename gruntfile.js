@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 
 		clientViews: ['public/modules/**/views/**/*.html', '!public/modules/**/demo/**/*.html', '!public/modules/**/dist/**/*.html', '!public/modules/**/node_modules/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js', '!public/modules/**/gruntfile.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js'],
-		clientCSS: ['public/modules/**/*.css', '!public/modules/**/demo/**/*.css', '!public/modules/**/dist/**/*.css', '!public/modules/**/node_modules/**/*.css'],
+		clientCSS: ['public/modules/**/*.css', '!public/modules/**/demo/**/*.css', '!public/modules/**/dist/**/*.css', '!public/modules/**/node_modules/**/*.css'], 
 
 		serverTests: ['app/tests/**/*.js'],
 		clientTests: ['public/modules/**/tests/*.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js']
