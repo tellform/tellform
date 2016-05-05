@@ -3,7 +3,7 @@
 angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http',
     function ($rootScope, $http) {
         return {
-            templateUrl: 'modules/forms/views/directiveViews/form/edit-submissions-form.client.view.html',
+            templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-submissions-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',

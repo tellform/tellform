@@ -1,12 +1,14 @@
 
 angular.module('forms', [
 	'duScroll', 'ngResource', 'NodeForm.templates', 'pascalprecht.translate',
-	'angular-input-stars'
+	'angular-input-stars',
+	'ui.select'
 ]);
 
 angular.module('NodeForm', [
     'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource',
-    'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'forms'
+    'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'forms',
+	'ui.select'
 ]);
 
 angular.module('forms').factory('Auth', [

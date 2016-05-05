@@ -3,7 +3,7 @@
 angular.module('forms').directive('configureFormDirective', ['$rootScope', '$http', 'Upload', 'CurrentForm',
     function ($rootScope, $http, Upload, CurrentForm) {
         return {
-            templateUrl: 'modules/forms/views/directiveViews/form/configure-form.client.view.html',
+            templateUrl: 'modules/forms/admin/views/directiveViews/form/configure-form.client.view.html',
             restrict: 'E',
             scope: {
                 myform:'=',
