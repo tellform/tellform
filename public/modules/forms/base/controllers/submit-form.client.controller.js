@@ -1,10 +1,13 @@
 'use strict';
 
 // SubmitForm controller
-angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScope', '$state', 'myForm', 'Auth',
-	function($scope, $rootScope, $state, myForm, Auth) {
+angular.module('forms').controller('SubmitFormController', [
+	'$scope', '$rootScope', '$state', '$translate', 'myForm', 'Auth',
+	function($scope, $rootScope, $state, $translate, myForm, Auth) {
 		$scope.authentication = Auth;
 		$scope.myform = myForm;
+		console.log(myForm);
+		$translate.use(myForm.language);
 
 		if(!$scope.myform.isLive){
 			// Show navbar if form is not public AND user IS loggedin
@@ -19,6 +22,5 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
 		}else{
 			$scope.hideNav = $rootScope.hideNav = true;
 		}
-
 	}
 ]);

@@ -9,7 +9,7 @@
 				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 			</small>
 			{{field.title}}
-			<span class="required-error" ng-show="!field.required">optional</span>
+			<span class="required-error" ng-show="!field.required">{{ 'OPTIONAL' | translate }}</span>
 		</h3>
 	</div>
     <div class="col-xs-12 field-input">
@@ -25,12 +25,12 @@
                     type="radio" class="focusOn"
 				    ng-focus="setActiveField(field._id, index, true)"
 				    value="{{option.option_value}}"
-                    ng-model="field.fieldValue" 
-                    ng-model-options="{ debounce: 250 }" 
+                    ng-model="field.fieldValue"
+                    ng-model-options="{ debounce: 250 }"
                     ng-required="field.required"
                     ng-disabled="field.disabled"
 					ng-change="$root.nextField()"/>
-                
+
                 <span ng-bind="option.option_value"></span>
             </label>
         </div>

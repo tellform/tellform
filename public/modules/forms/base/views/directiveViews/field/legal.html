@@ -1,14 +1,14 @@
 <div class="field row radio legal"
 	 on-enter-key="nextField()"
 	 key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field">
-    <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">    	
+    <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
     	<h3>
 			<small class="field-number">
 				{{index+1}}
 				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 			</small>
 			{{field.title}}
-			<span class="required-error" ng-show="!field.required">optional</span>
+			<span class="required-error" ng-show="!field.required">{{ 'OPTIONAL' | translate }}</span>
 		</h3>
     	<br>
     	<p style="color:#ddd;">{{field.description}}</p>
@@ -19,24 +19,24 @@
 				   ng-class="{activeBtn: field.fieldValue == 'true'}">
                 <input class="focusOn"
 				    ng-focus="setActiveField(field._id, index, true)"
-                    ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
+                    ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" value="true"
-                    ng-model="field.fieldValue" 
+                    ng-model="field.fieldValue"
                     ng-model-options="{ debounce: 250 }"
-                    ng-required="field.required" 
+                    ng-required="field.required"
                     ng-disabled="field.disabled"
 					ng-change="$root.nextField()"/>
 				<div class="letter" style="float:left">
 					Y
 				</div>
-                <span> I accept </span>
+                <span> {{ 'LEGAL_ACCEPT' | translate }} </span>
             </label>
             <label class="btn col-md-5 col-md-offset-1 col-xs-12"
 				   ng-class="{activeBtn: field.fieldValue == 'false'}">
                 <input class="focusOn"
 					ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" value="false"
-                    ng-model="field.fieldValue" 
+                    ng-model="field.fieldValue"
                     ng-model-options="{ debounce: 250 }"
                     ng-required="field.required"
                     ng-disabled="field.disabled"
@@ -44,10 +44,10 @@
 				<div class="letter" style="float:left">
 					N
 				</div>
-                <span>I don't accept </span>
+                <span>{{ 'LEGAL_NO_ACCEPT' | translate }} </span>
             </label>
         </div>
-       
+
     </div>
 </div>
 <br>

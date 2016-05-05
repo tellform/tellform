@@ -9,11 +9,11 @@
     	<p class="col-xs-12" ng-if="field.description.length">{{field.description}} </p>
     	<br>
 	<div class="col-xs-offset-1 col-xs-11">
-        	<button class="btn focusOn" 
+        	<button class="btn focusOn"
 			    ng-style="{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"
                 ng-focused="setActiveField(field._id, index, true)"
                 ng-click="$root.nextField()">
-            		Continue 
+            		{{ 'CONTINUE' | translate }} 
         	</button>
 	</div>
     </div>

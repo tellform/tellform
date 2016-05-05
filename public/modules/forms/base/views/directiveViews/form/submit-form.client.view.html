@@ -1,8 +1,8 @@
 <section class="overlay submitform" ng-if="loading || (!myform.submitted && !myform.startPage.showStart)"></section>
 
 <!-- Start Page View -->
-<div ng-show="!myform.submitted && myform.startPage.showStart" 
-class="form-submitted" 
+<div ng-show="!myform.submitted && myform.startPage.showStart"
+class="form-submitted"
 style="padding-top: 35vh;">
 <div class="row">
 <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
@@ -28,8 +28,8 @@ ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.d
 <div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
 <p ng-repeat="button in myform.startPage.buttons" class="text-center" style="display:inline;">
 <button class="btn" style="background-color:rgb(156, 226, 235)" type="button" ng-style="{'background-color':button.bgColor, 'color':button.color}">
-<a href="{{button.url}}" 
-style="font-size: 1.6em; text-decoration: none;" 
+<a href="{{button.url}}"
+style="font-size: 1.6em; text-decoration: none;"
 ng-style="{'color':button.color}">
 {{button.text}}
 </a>
@@ -56,6 +56,7 @@ ng-style="{'color':button.color}">
 			<field-directive field="field" design="myform.design" index="$index" forms="forms">
 			</field-directive>
 		</div>
+
 
 		</form>
 </div>
@@ -92,42 +93,42 @@ ng-style="{'color':button.color}">
 
 	<div class="col-sm-2 hidden-xs" style="font-size: 75%; margin-top:3.25em">
 		<small>
-			press ENTER
+			{{ 'ENTER' | translate }}
 		</small>
 	</div>
 </div>
 
-<section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" 
+<section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom"
         ng-style="{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-xs-5" ng-show="!myform.submitted">
-                        <p class="lead">{{myform | formValidity}} out of {{form_fields_count}} answered</p>
+                        <p class="lead">{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p>
                 </div>
                 <div class="col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 col-xs-offset-1 col-xs-6 row">
                     <div class="col-md-4 col-md-offset-2 hidden-sm hidden-xs" ng-if="!authentication.isAuthenticated()">
                         <a href="/#!/forms" class="btn"
                             ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}">
-                            Create a TellForm
+                            {{ 'CREATE_FORM' | translate }}
                         </a>
                     </div>
                     <div class="col-md-4 col-md-offset-2 hidden-sm hidden-xs" ng-if="authentication.isAuthenticated()">
-                        <a href="/#!/forms/{{myform._id}}/admin/create" 
+                        <a href="/#!/forms/{{myform._id}}/admin/create"
                             ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
                             class="btn">
-                            Edit this TellForm
+                            {{ 'EDIT_FORM' | translate }}
                         </a>
                     </div>
                     <div class="col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12 row">
                         <button class="btn btn-lg col-xs-6" id="focusDownButton"
 				            ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
-                            ng-click="nextField()" 
+                            ng-click="nextField()"
 				            ng-disabled="selected.index > myform.form_fields.length-1">
                         	<i class="fa fa-chevron-down"></i>
                         </button>
                         <button class="btn btn-lg col-xs-6" id="focusUpButton"
                             ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
-                            ng-click="prevField()" 
+                            ng-click="prevField()"
                             ng-disabled="selected.index == 0">
                         	<i class="fa fa-chevron-up"></i>
                         </button>
@@ -144,13 +145,13 @@ ng-style="{'color':button.color}">
     style="padding-top: 5vh;">
 
     <div class="field row text-center">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center">Form entry successfully submitted!</div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center">{{ 'FROM_SUCCESS' | translate }}</div>
     </div>
     <div class="row form-actions">
         <p class="text-center">
             <button ng-click="reloadForm()" class="btn" type="button"
                 ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}">
-                <span style="font-size: 1.6em;"> Go back to Form</span>
+                <span style="font-size: 1.6em;"> {{ 'BACK_TO_FORM' | translate }}</span>
             </button>
         </p>
     </div>

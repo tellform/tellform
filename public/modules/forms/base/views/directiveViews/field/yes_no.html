@@ -10,7 +10,7 @@
 			</small>
 			{{field.title}}
             <span class="required-error" ng-show="!field.required">
-                optional
+                {{ 'OPTIONAL' | translate }}
             </span>
         </h3>
         <p class="row">
@@ -22,36 +22,36 @@
         <div class="row">
             <label class="btn btn-default col-md-2 col-sm-3 col-xs-7"
 		style="background: rgba(0,0,0,0.1); text-align:left;">
-                <input type="radio" value="true" 
+                <input type="radio" value="true"
 					class="focusOn"
                     style="opacity: 0; margin-left: 0px;"
-					ng-focus="setActiveField(field._id, index, true)"	
-					ng-model="field.fieldValue" 
-					ng-model-options="{ debounce: 250 }" 
-					ng-required="field.required" 
+					ng-focus="setActiveField(field._id, index, true)"
+					ng-model="field.fieldValue"
+					ng-model-options="{ debounce: 250 }"
+					ng-required="field.required"
 					ng-change="$root.nextField()"
                     ng-disabled="field.disabled" />
 				<div class="letter">
 					Y
-				</div>               	
+				</div>
 				<span>Yes</span>
 				<i ng-show="field.fieldValue === 'true'" class="fa fa-check" aria-hidden="true"></i>
             </label>
 	</div>
-	
+
 	<div class="row" style="margin-top: 10px;">
             <label class="btn btn-default col-md-2 col-sm-3 col-xs-7"
 		        style="background: rgba(0,0,0,0.1); text-align:left;">
-	
-                <input type="radio" value="false" 
+
+                <input type="radio" value="false"
 			        style="opacity:0; margin-left:0px;"
 			        ng-focus="setActiveField(field._id, index, true)"
-			        ng-model="field.fieldValue" 
-			        ng-model-options="{ debounce: 250 }" 
-			        ng-required="field.required" 
+			        ng-model="field.fieldValue"
+			        ng-model-options="{ debounce: 250 }"
+			        ng-required="field.required"
 			        ng-change="$root.nextField()"
                     ng-disabled="field.disabled"/>
-                	
+
 			<div class="letter">
 				N
 			</div>
