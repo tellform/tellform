@@ -1,7 +1,8 @@
 
 angular.module('forms', [
 	'duScroll', 'ngResource', 'NodeForm.templates', 'pascalprecht.translate',
-	'angular-input-stars'
+	'angular-input-stars',
+	'ui.select'
 ]);
 
 angular.module('NodeForm', [
