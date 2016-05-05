@@ -3,7 +3,7 @@
 module.exports = {
 	baseUrl: process.env.BASE_URL || 'tellform.com',
 	db: {
-		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean',
+		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || '192.168.99.100:27017') + '/mean',
 		options: {
 			user: '',
 			pass: process.env.MONGOLAB_PASS || ''

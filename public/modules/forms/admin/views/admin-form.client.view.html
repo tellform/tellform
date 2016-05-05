@@ -1,4 +1,4 @@
-<div class="container" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}"></div>
+<div class="container" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}"></div>
 
 <section class="container admin-form">
 
@@ -33,7 +33,7 @@
 			<h2 class="hidden-md hidden-lg" data-ng-bind="myform.title" style="margin-bottom: 0px;"></h2>
 		</div>
 		<div class="col-xs-1 col-sm-2">
-			<small class="pull-right">			
+			<small class="pull-right">
 				<button class="btn btn-danger" ng-click="openDeleteModal()">
 					<i class="fa fa-trash-o"></i>
 					<span class="hidden-xs">Delete</span>
@@ -42,13 +42,13 @@
 			</small>
 		</div>
 		<div class="col-xs-1 col-sm-2">
-			<small class="pull-right">			
-				<a class="btn btn-default view-form-btn" href="/#!/forms/{{myform._id}}" ng-if="myform.form_fields.length">
+			<small class="pull-right">
+				<a class="btn btn-default view-form-btn" href="/#!/forms/{{myform._id}}">
 					<span class="hidden-xs hidden-sm">
 						View
 						<span ng-show="myform.isLive">
 							Live
-						</span> 
+						</span>
 						<span ng-hide="myform.isLive">Preview</span> Form
 					</span>
 					<span class="hidden-xs hidden-md hidden-lg">

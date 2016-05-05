@@ -3,6 +3,10 @@ version: '2'
 services:
   db:
     image: mongo:3.2
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data-wt:/data/db
   web:
     build: .
     volumes:

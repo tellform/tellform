@@ -2,7 +2,7 @@
 
 // Setting up route
 angular.module('forms').config(['$stateProvider',
-	
+
 	function($stateProvider) {
 		// Forms state routing
 		$stateProvider.
@@ -26,7 +26,7 @@ angular.module('forms').config(['$stateProvider',
             controllerAs: 'ctrl'
 		}).state('viewForm', {
 			url: '/forms/:formId/admin',
-			templateUrl: 'modules/forms/views/admin-form.client.view.html',
+			templateUrl: 'modules/forms/admin/views/admin-form.client.view.html',
 			data: {
 				permissions: [ 'editForm' ]
 			},
@@ -39,16 +39,16 @@ angular.module('forms').config(['$stateProvider',
 			controller: 'AdminFormController'
 		}).state('viewForm.configure', {
 			url: '/configure',
-			templateUrl: 'modules/forms/views/adminTabs/configure.html'
+			templateUrl: 'modules/forms/admin/views/adminTabs/configure.html'
 	    }).state('viewForm.design', {
 			url: '/design',
-			templateUrl: 'modules/forms/views/adminTabs/design.html'
+			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
 	    }).state('viewForm.analyze', {
 			url: '/analyze',
-			templateUrl: 'modules/forms/views/adminTabs/analyze.html',
+			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html',
 	    }).state('viewForm.create', {
 			url: '/create',
-			templateUrl: 'modules/forms/views/adminTabs/create.html'
+			templateUrl: 'modules/forms/admin/views/adminTabs/create.html'
 	    });
 	}
 ]);
