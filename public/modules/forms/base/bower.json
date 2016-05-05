@@ -18,7 +18,7 @@
     "ng-file-upload": "~10.0.2",
     "angular-ui-date": "~0.0.8",
     "lodash": "~3.10.0",
-    "angular-input-stars": "*",
+    "angular-input-stars": "https://github.com/whitef0x0/angular-input-stars.git#master",
     "file-saver.js": "~1.20150507.2",
     "angular-scroll": "^1.0.0",
     "ui-select": "angular-ui-select#^0.16.1",
