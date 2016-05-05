@@ -7,12 +7,14 @@ services:
     build: .
     volumes:
       - .:/usr/src/app
+    command: node server.js
     ports:
       - "3000:3000"
       - "35729:35729"
     environment:
       DB_1_PORT_27017_TCP_ADDR: db
       PORT: 3000
+      BASE_URL: http://192.168.99.100:3000/
     links:
       - db
 volumes:

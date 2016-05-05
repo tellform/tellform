@@ -27,3 +27,19 @@ function(){
 		return 0;
 	};
 });
+
+angular.module('forms').value('supportedFields', [
+	'textfield',
+	'textarea',
+	'date',
+	'dropdown',
+	'hidden',
+	'password',
+	'radio',
+	'legal',
+	'statement',
+	'rating',
+	'yes_no',
+	'number',
+	'natural'
+]);
