@@ -6,11 +6,9 @@
 				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 			</small>
 			{{field.title}}
-			<span class="required-error" ng-show="!field.required">optional</span>
+			<span class="required-error" ng-show="!field.required">{{ 'OPTIONAL' | translate }}</span>
 		</h3>
-		<p>
-			<small>{{field.description}}</small>
-		</p>
+		<small>{{ 'NEWLINE' | translate }}</small>
 	</div>
 	<div class="col-xs-12 field-input">
 		<small style="font-size:0.6em;">Press SHIFT+ENTER to add a newline</small>

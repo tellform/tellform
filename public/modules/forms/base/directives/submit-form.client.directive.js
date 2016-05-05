@@ -18,9 +18,12 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }
                     return true;
                 }).length;
+
+				var nb_valid = $filter('formValidity')($scope.myform);
 				$scope.translateAdvancementData = {
-					done: $filter('formValidity')($scope.myform),
-					total: form_fields_count
+					done: nb_valid,
+					total: form_fields_count,
+					answers_not_completed: form_fields_count - nb_valid
 				};
 
                 $scope.reloadForm = function(){
@@ -114,9 +117,11 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
 
+					var nb_valid = $filter('formValidity')($scope.myform);
 					$scope.translateAdvancementData = {
-						done: $filter('formValidity')($scope.myform),
-						total: form_fields_count
+						done: nb_valid,
+						total: form_fields_count,
+						answers_not_completed: form_fields_count - nb_valid
 					};
 
                     if(animateScroll){
