@@ -11,12 +11,17 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 $scope.authentication = $rootScope.authentication;
 		        $scope.noscroll = false;
                 $scope.forms = {};
-                $scope.form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
+
+				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
                     if(field.fieldType === 'statement' || field.fieldType === 'rating'){
                         return false;
                     }
                     return true;
                 }).length;
+				$scope.translateAdvancementData = {
+					done: $filter('formValidity')($scope.myform),
+					total: form_fields_count
+				};
 
                 $scope.reloadForm = function(){
                     //Reset Form
@@ -108,6 +113,11 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
+
+					$scope.translateAdvancementData = {
+						done: $filter('formValidity')($scope.myform),
+						total: form_fields_count
+					};
 
                     if(animateScroll){
                         $scope.noscroll=true;

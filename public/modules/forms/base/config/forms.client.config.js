@@ -1,8 +1,8 @@
 'use strict';
 
 // Configuring the Forms drop-down menus
-angular.module('forms').filter('formValidity',
-function(){
+angular.module('forms')
+.filter('formValidity', function(){
 	return function(formObj){
 		if(formObj && formObj.form_fields && formObj.visible_form_fields){
 

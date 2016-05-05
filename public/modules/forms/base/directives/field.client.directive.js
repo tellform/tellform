@@ -18,7 +18,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 		if (__indexOf.call(supportedFields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
-   		return $templateCache.get('../public/'+templateUrl);
+   		return $templateCache.get(templateUrl);
     };
 
     return {
