@@ -16,7 +16,6 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
         var templateUrl = 'modules/forms/base/views/directiveViews/field/';
 
 		if (__indexOf.call(supportedFields, type) >= 0) {
-
             templateUrl = templateUrl+type+'.html';
         }
    		return $templateCache.get(templateUrl);
