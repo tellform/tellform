@@ -70,6 +70,7 @@ ng-style="{'color':button.color}">
 	<div class="col-xs-12 text-left"
 		 style="background-color:#990000; color:white;"
 		 ng-if="forms.myForm.$invalid">
+         {{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}
 		{{form_fields_count - (myform | formValidity)}} answer(s) need completing
 	</div>
 
@@ -88,7 +89,7 @@ ng-style="{'color':button.color}">
 			class="Button btn col-sm-2 col-xs-8"
 			ng-click="goToInvalid()"
 			style="font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white">
-		Review
+		{{ 'REVIEW' | translate }}
 	</button>
 
 	<div class="col-sm-2 hidden-xs" style="font-size: 75%; margin-top:3.25em">
