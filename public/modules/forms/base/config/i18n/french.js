@@ -21,7 +21,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	LEGAL_NO_ACCEPT: 'Jen n’accepte pas',
 	DELETE: 'Supprimer',
 	CANCEL: 'Réinitialiser',
-	UPLOAD_FILE: 'Envoyer des fichier'
+	UPLOAD_FILE: 'Envoyer des fichier',
+	SUBMIT: 'Enregistrer'
   });
 
 }]);

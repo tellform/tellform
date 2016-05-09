@@ -63,6 +63,7 @@ ng-style="{'color':button.color}">
 
 
 <div class="row form-actions" id="submit_field"
+<<<<<<< f4590ec7d744fde5b543eba3d589cd5727222143
 	ng-class="{activeField: selected._id == 'submit_field' }"
 	ng-style="{ 'background-color':myform.design.colors.buttonColor}"
 	style="border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; margin-top: 30vh; height: 100vh">
@@ -81,7 +82,7 @@ ng-style="{'color':button.color}">
 		ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
 		style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
 
-		Submit
+		{{ 'SUBMIT' | translate }}
 	</button>
 
 	<button ng-if="forms.myForm.$invalid"
