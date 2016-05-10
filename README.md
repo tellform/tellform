@@ -60,7 +60,12 @@ Setup environment.
 $ grunt build
 ```
 
-Create your .env file. It should look like this
+Create your user account
+```bash
+$ node ./scripts/setup.js
+```
+
+OR create your .env file
 ```
 GOOGLE_ANALYTICS_ID=yourGAID
 PRERENDER_TOKEN=yourPrerender.ioToken
