@@ -2,7 +2,7 @@
 		on-enter-key="chooseDefaultOption('yes_no')">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
         <h3 class="row">
-            <span class="fa fa-angle-double-right"></span> {{field.title}} 
+            <small>{{index}}</small>{{field.title}}
             <span class="required-error" ng-show="field.required && !field.fieldValue">
                 *(required)
             </span>

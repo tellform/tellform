@@ -31,8 +31,8 @@ angular.module('users').config(['$stateProvider',
 		var deferred = $q.defer();
 		if($window.signupDisabled) {
 			$timeout(deferred.reject());
-		}else{
-\			$timeout(deferred.resolve());
+		} else {
+			$timeout(deferred.resolve());
 		}
 		return deferred.promise;
 	};

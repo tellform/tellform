@@ -20,16 +20,18 @@ var storage = multer.diskStorage({
 	}
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({
+	storage: storage
+});
 
 module.exports = function(app) {
 	// Form Routes
 	app.route('/upload/pdf')
 		.post(users.requiresLogin, upload.single('file'), forms.uploadPDF);
 
-	app.route('/forms')
-		.get(users.requiresLogin, forms.list)
-		.post(users.requiresLogin, forms.create);
+	//TODO: Need to finish this
+	//app.route('/forms/:formId([a-zA-Z0-9]+)/upload')
+	//	.post(forms.uploadSubmissionFile);
 
 	app.route('/forms/:formId([a-zA-Z0-9]+)')
 		.get(forms.read)

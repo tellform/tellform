@@ -157,6 +157,11 @@ var questions = [
 	},
 	{
 		type: 'input',
+		name: 'COVERALLS_REPO_TOKEN',
+		message: 'What is your reCAPTCHA token? (optional)'
+	},
+	{
+		type: 'input',
 		name: 'email',
 		message: 'What should be the email for your admin account?'
 	},

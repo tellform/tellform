@@ -31,6 +31,7 @@
 }
 
 .public-form input, .public-form textarea {
+	background-color: #000000;
     background-color: rgba(0,0,0,0);
     border: 2px dashed #ddd!important;
 }
@@ -243,11 +244,13 @@ form .row.field {
 			border-radius: 3px;
 			margin: 5px;
 			padding: 10px;
+			background-color: #000000;
 			background-color: rgba(0,0,0,0.05);
 		}
 
 		form .dropdown > .field-input .ui-select-choices-row-inner.active, form .dropdown > .field-input .ui-select-choices-row-inner.active:focus {
-            background-color: rgba(0,0,0,0.1);
+			background-color: #000000;
+			background-color: rgba(0,0,0,0.1);
         }
 .config-form {
     max-width: 100%;
