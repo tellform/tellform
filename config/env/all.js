@@ -10,7 +10,9 @@ module.exports = {
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
 
-    signupDisabled: !!process.env.SIGNUP_DISABLED || false,
+	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
+
+    signupDisabled: false ? (!process.env.SIGNUP_DISABLED || !process.env.SIGNUP_DISABLED === 'false') : true,
 	baseUrl: '',
 	tempUserCollection: 'temporary_users',
 

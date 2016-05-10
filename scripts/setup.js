@@ -89,12 +89,12 @@ var questions = [
 	{
 		type: 'input',
 		name: 'APP_DESC',
-		message: 'Describe your project (for SEO)'
+		message: 'Describe your project (for SEO)  (optional)'
 	},
 	{
 		type: 'input',
 		name: 'APP_KEYWORDS',
-		message: 'What keywords are relevant to your project (seperate by commas)'
+		message: 'What keywords are relevant to your project (seperate by commas)  (optional)'
 	},
 	{
 		type: 'confirm',
@@ -138,7 +138,22 @@ var questions = [
 	{
 		type: 'input',
 		name: 'GOOGLE_ANALYTICS_ID',
-		message: 'What is your Google Analytics Tag?'
+		message: 'What is your Google Analytics Tag? (optional)'
+	},
+	{
+		type: 'input',
+		name: 'RAVEN_DSN',
+		message: 'What is your Private Raven DSN key? (optional)'
+	},
+	{
+		type: 'input',
+		name: 'PRERENDER_TOKEN',
+		message: 'What is your Prerender.io token? (optional)'
+	},
+	{
+		type: 'input',
+		name: 'COVERALLS_REPO_TOKEN',
+		message: 'What is your Coveralls.io token? (optional)'
 	},
 	{
 		type: 'input',
@@ -161,6 +176,8 @@ inquirer.prompt([questions[0]]).then(function (confirmAns) {
 
 		inquirer.prompt(questions.slice(1)).then(function (answers) {
 			answers['NODE_ENV'] = 'production';
+			answers['SIGNUP_DISABLED'] = false ? answers['SIGNUP_DISABLED'] === false : true;
+
 
 			var email = answers['email'];
 			var pass = answers['password'];
