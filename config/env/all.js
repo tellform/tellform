@@ -3,9 +3,9 @@
 module.exports = {
 	app: {
 		google_analytics_id: process.env.GOOGLE_ANALYTICS_ID || '',
-		title: 'TellForm',
-		description: 'Opensource form builder alternative to TypeForm',
-		keywords: 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs',
+		title: process.env.APP_NAME || 'TellForm',
+		description: process.env.APP_DESC || 'Opensource form builder alternative to TypeForm',
+		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
@@ -16,7 +16,7 @@ module.exports = {
 
 	mailosaur: {
 		key: process.env.MAILOSAUR_KEY || '',
-		mailbox_id: process.env.MAILOSAUR_MAILBOX || '',
+		mailbox_id: process.env.MAILOSAUR_MAILBOX || ''
 	},
 
 	//Sentry DSN Client Key
@@ -38,7 +38,7 @@ module.exports = {
 		secure: false,
 		// Only set the maxAge to null if the cookie shouldn't be expired
 		// at all. The cookie will expunge when the browser is closed.
-		maxAge: null,
+		maxAge: null
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
 		// domain: 'tellform.com'

@@ -522,10 +522,10 @@ angular.module('core').service('Menus', [
 		// Define the menus object
 		this.menus = {};
 
-		// A private function for rendering decision 
+		// A private function for rendering decision
 		var shouldRender = function(user) {
 			if (user) {
-				if (!!~this.roles.indexOf('*')) {
+				if (~this.roles.indexOf('*')) {
 					return true;
 				} else {
 					for (var userRoleIndex in user.roles) {
@@ -681,6 +681,7 @@ angular.module('core').service('Menus', [
 		this.addMenu('bottombar', false, ['*']);
 	}
 ]);
+
 'use strict';
 
 // Configuring the Forms drop-down menus
@@ -797,15 +798,15 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             },
             {
                 heading: 'Design',
-                route:   'viewForm.design',
+                route:   'viewForm.design'
             },
             {
                 heading: 'Configure',
-                route:   'viewForm.configure',
+                route:   'viewForm.configure'
             },
             {
                 heading: 'Analyze',
-                route:   'viewForm.analyze',
+                route:   'viewForm.analyze'
             }
         ];
 
@@ -818,8 +819,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             });
         };
 
-        /* 
-        ** DeleteModal Functions 
+        /*
+        ** DeleteModal Functions
         */
         $scope.openDeleteModal = function(){
             $scope.deleteModal = $uibModal.open({
@@ -851,15 +852,15 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             if($scope.deleteModal && $scope.deleteModal.opened){
 
                 $scope.deleteModal.close();
-            
+
                 var form_id = $scope.myform._id;
                 if(!form_id) throw new Error('Error - removeCurrentForm(): $scope.myform._id does not exist');
-        
+
                 $http.delete('/forms/'+form_id)
                     .success(function(data, status, headers){
                         console.log('form deleted successfully');
 
-                        $state.go('listForms', {}, {reload: true}); 
+                        $state.go('listForms', {}, {reload: true});
 
                     }).error(function(error){
                         console.log('ERROR: Form could not be deleted.');
@@ -875,7 +876,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             if(!updateImmediately){
                 continueUpdate = !$rootScope.saveInProgress;
             }
-            
+
             //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
             if(continueUpdate){
                 var err = null;
@@ -890,12 +891,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                         console.log('Error occured during form UPDATE.\n');
                         // console.log(response.data);
                         err = response.data;
-                    }).finally(function() { 
+                    }).finally(function() {
                         // console.log('finished updating');
                         if(!updateImmediately){$rootScope.saveInProgress = false; }
 
                         if( (typeof cb) === 'function'){
-                            cb(err); 
+                            return cb(err);
                         }
                     });
             }
@@ -904,6 +905,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 	}
 ]);
+
 'use strict';
 
 // Forms controller
@@ -1237,7 +1239,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                             console.log('Error occured during upload.\n');
                             console.log(resp.status);
                         },  function (evt) {
-								var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+								var progressPercentage = parseInt(100.0 * evt.loaded / evt.total, 10);
 								$scope.log = 'progress: ' + progressPercentage + '% ' +
 									evt.config.data.file.name + '\n' + $scope.log;
 
@@ -1261,7 +1263,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
             templateUrl: 'modules/forms/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
             scope: {
-                myform:'=',
+                myform:'='
             },
             controller: ["$scope", function($scope){
                 var field_ids = _($scope.myform.form_fields).pluck('_id');
@@ -1300,7 +1302,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                         if( $scope.myform.plugins.oscarhost.settings.fieldMap.hasOwnProperty(field_id) ){
                             currentFields = _(currentFields).difference($scope.myform.plugins.oscarhost.settings.fieldMap[field_id]);
-                        } 
+                        }
 
                         //Get all oscarhostFields that haven't been mapped to a formfield
                         return _(oscarhostFields).difference(currentFields).value();
@@ -1314,7 +1316,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.dropzone = {
                     handle: ' .handle',
                     containment: '.dropzoneContainer',
-                    cursor: 'grabbing',
+                    cursor: 'grabbing'
                 };
 
                 /*
@@ -1328,9 +1330,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     var fieldTitle;
 
                     for(var i = 0; i < $scope.addField.types.length; i++){
-                        if($scope.addField.types[i].name === fieldType){ 
+                        if($scope.addField.types[i].name === fieldType){
                             $scope.addField.types[i].lastAddedID++;
-                            fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;  
+                            fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;
                             break;
                         }
                     }
@@ -1345,12 +1347,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     // console.log('\n\n---------\nAdded field CLIENT');
                     // console.log(newField);
                     // newField._id = _.uniqueId();
-                    
+
                     // put newField into fields array
                     if(modifyForm){
                         $scope.myform.form_fields.push(newField);
                     }
-                    return newField;    
+                    return newField;
                 };
 
                 // Delete particular field on button click
@@ -1364,7 +1366,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
                 $scope.duplicateField = function (field_index){
-                    var currField = _.cloneDeep($scope.myform.form_fields[field_index]);  
+                    var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
                     currField.title += ' copy';
 
@@ -1413,8 +1415,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.addOption = function(field_index){
                     var currField = $scope.myform.form_fields[field_index];
 					console.log(field_index);
-					console.log(currField);	
-                    
+					console.log(currField);
+
 					if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
                         if(!currField.fieldOptions) $scope.myform.form_fields[field_index].fieldOptions = [];
 
@@ -1430,7 +1432,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         var newOption = {
                             'option_id' : Math.floor(100000*Math.random()),
                             'option_title' : 'Option '+lastOptionID,
-                            'option_value' : 'Option ' +lastOptionID,
+                            'option_value' : 'Option ' +lastOptionID
                         };
 
                         // put new option into fieldOptions array
@@ -1463,8 +1465,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     }
                 };
 
-            }],
-  
+            }]
+
         };
     }
 ]);
@@ -1520,7 +1522,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                                 defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
                             // console.log('before textField2: '+data[0].form_fields[1].fieldValue);
-                            
+
                             //Iterate through form's submissions
                             for(var i=0; i<data.length; i++){
                                 for(var x=0; x<data[i].form_fields; x++){
@@ -1540,8 +1542,8 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         })
                         .error(function(err){
                             console.error('Could not fetch form submissions.\nError: '+err);
-                        });            
-                };  
+                        });
+                };
 
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
@@ -1550,7 +1552,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         return !!row.selected;
                     }).pluck('_id').value();
 
-                    $http({ url: '/forms/'+$scope.myform._id+'/submissions', 
+                    $http({ url: '/forms/'+$scope.myform._id+'/submissions',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
@@ -1568,7 +1570,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             console.log('Could not delete form submissions.\nError: ');
                             console.log(err);
                             console.error = err;
-                        });      
+                        });
                 };
 
                 //Export selected submissions of Form
@@ -1576,7 +1578,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     var fileMIMETypeMap = {
                         'xls': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                         'json': 'json',
-                        'csv': 'csv',
+                        'csv': 'csv'
                     };
 
                     var blob = new Blob([document.getElementById('table-submission-data').innerHTM], {
@@ -1657,7 +1659,6 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 	if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
-
    		return $templateCache.get('../public/'+templateUrl);
     };
 
@@ -1828,28 +1829,30 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					$scope.fieldBottom = elemBox.bottom;
 
                     //console.log($scope.forms.myForm);
+					var field_id;
+					var field_index;
 
                     if(!$scope.noscroll){
                         //Focus on submit button
                         if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
-                            var field_index = $scope.selected.index+1;
-                            var field_id = 'submit_field';
+                            field_index = $scope.selected.index+1;
+                            field_id = 'submit_field';
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //Focus on field above submit button
                         else if($scope.selected.index === $scope.myform.form_fields.length){
                             if($scope.fieldTop > 200){
-                                var field_index = $scope.selected.index-1;
-                                var field_id = $scope.myform.form_fields[field_index]._id;
+                                field_index = $scope.selected.index-1;
+                                field_id = $scope.myform.form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
                         }else if( $scope.fieldBottom < 0){
-                            var field_index = $scope.selected.index+1;
-                            var field_id = $scope.myform.form_fields[field_index]._id;
+                            field_index = $scope.selected.index+1;
+                            field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
-                            var field_index = $scope.selected.index-1;
-                            var field_id = $scope.myform.form_fields[field_index]._id;
+                            field_index = $scope.selected.index-1;
+                            field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //console.log('$scope.selected.index: '+$scope.selected.index);
@@ -2546,7 +2549,7 @@ angular.module('users').factory('Auth', ['$window',
         $window.user = null;
         userState.isLoggedIn = false;
         service._currentUser = null;
-      },
+      }
     };
     return service;
 
@@ -2617,7 +2620,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
         return deferred.promise;
       },
-      logout: function() { 
+      logout: function() {
 
         var deferred = $q.defer();
         $http.get('/auth/signout').success(function(response) {
@@ -2628,7 +2631,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
         return deferred.promise;
       },
-      signup: function(credentials) { 
+      signup: function(credentials) {
 
         var deferred = $q.defer();
         $http.post('/auth/signup', credentials).success(function(response) {
@@ -2641,7 +2644,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      resendVerifyEmail: function(_email) { 
+      resendVerifyEmail: function(_email) {
 
         var deferred = $q.defer();
         $http.post('/auth/verify', {email: _email}).success(function(response) {
@@ -2653,7 +2656,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      validateVerifyToken: function(token) { 
+      validateVerifyToken: function(token) {
 
         //DAVID: TODO: The valid length of a token should somehow be linked to server config values
         //DAVID: TODO: SEMI-URGENT: Should we even be doing this?
@@ -2695,12 +2698,12 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         });
 
         return deferred.promise;
-      },
+      }
 
     };
 
     return userService;
-   
+
   }
 ]);
 
