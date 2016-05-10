@@ -31,7 +31,7 @@ var fs = require('fs-extra'),
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
-	
+
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
 		require(path.resolve(modelPath));
@@ -40,6 +40,7 @@ module.exports = function(db) {
 	// Setting application local variables
 	app.locals.google_analytics_id = config.app.google_analytics_id;
 	app.locals.title = config.app.title;
+	app.locals.signupDisabled = config.signupDisabled;
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
 
@@ -52,7 +53,7 @@ module.exports = function(db) {
 
     //Setup Prerender.io
     app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
-        
+
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {
 		if(config.baseUrl === ''){
@@ -107,7 +108,7 @@ module.exports = function(db) {
 	app.use(helmet.ienoopen());
 	app.disable('x-powered-by');
 
-	
+
 	// Setting the app router and static folder
 	app.use('/', express.static(path.resolve('./public')));
 	app.use('/uploads', express.static(path.resolve('./uploads')));
@@ -127,7 +128,7 @@ module.exports = function(db) {
 		cookie: config.sessionCookie,
 		name: config.sessionName
 	}));
-	
+
 	// use passport session
 	app.use(passport.initialize());
 	app.use(passport.session());
@@ -143,7 +144,7 @@ module.exports = function(db) {
 		require(path.resolve(routePath))(app);
 	});
 
-	
+
 	// Add headers for Sentry
 	/*
 	app.use(function (req, res, next) {

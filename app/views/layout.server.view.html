@@ -77,6 +77,11 @@
 		var user = {{ user | json | safe }};
 	</script>
 
+	<!--Embedding The signupDisabled Boolean-->
+	<script type="text/javascript">
+		var signupDisabled = {{signupDisabled}};
+	</script>
+
 	<!--Bower JS dependencies-->
 	{% for bowerJSFile in bowerJSFiles %}
 		<script type="text/javascript" src="{{bowerJSFile}}"></script>
