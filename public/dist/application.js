@@ -1,7 +1,7 @@
 angular.module('NodeForm.templates', []).run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("../public/modules/core/views/header.client.view.html",
-    "<section class=\"navbar navbar-fixed-top navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span></button> <a href=\"https://www.tellform.com/#!/\" class=navbar-brand><i class=\"fa fa-archive\" style=\"padding-right: 0.3em\"></i>Tell<span>Form</span></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav\" data-ng-if=authentication.isAuthenticated()><li data-ng-repeat=\"item in menu.items | orderBy: 'position'\" data-ng-if=item.shouldRender(authentication.isAuthenticated()); ng-switch=item.menuItemType ui-route={{item.uiRoute}} class={{item.menuItemClass}} ng-class=\"{active: ($uiRoute)}\" dropdown=\"item.menuItemType === 'dropdown'\"><a ng-switch-when=dropdown class=dropdown-toggle dropdown-toggle><span data-ng-bind=item.title></span> <b class=caret></b></a><ul ng-switch-when=dropdown class=dropdown-menu><li data-ng-repeat=\"subitem in item.items | orderBy: 'position'\" data-ng-if=subitem.shouldRender(authentication.isAuthenticated()); ui-route={{subitem.uiRoute}} ng-class=\"{active: $uiRoute}\"><a href=/#!/{{subitem.link}} data-ng-bind=subitem.title></a></li></ul><a ng-switch-default href=/#!/{{item.link}} data-ng-bind=item.title></a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>Sign Up</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>Sign In</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>My Settings</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>Edit Profile</a></li><li class=divider></li><li><a href=/#!/settings/password>Change Password</a></li><li data-ng-show=\"authentication.isAuthenticated().provider === 'local'\"><a href=/#!/settings/password>Change Password</a></li></ul></li><li ng-click=signout()><a>Signout</a></li></ul></nav></div></section>");
+    "<section class=\"navbar navbar-fixed-top navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span></button> <a href=\"https://www.tellform.com/#!/\" class=navbar-brand><i class=\"fa fa-archive\" style=\"padding-right: 0.3em\"></i>Tell<span>Form</span></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav\" data-ng-if=authentication.isAuthenticated()><li data-ng-repeat=\"item in menu.items | orderBy: 'position'\" data-ng-if=item.shouldRender(authentication.isAuthenticated()); ng-switch=item.menuItemType ui-route={{item.uiRoute}} class={{item.menuItemClass}} ng-class=\"{active: ($uiRoute)}\" dropdown=\"item.menuItemType === 'dropdown'\"><a ng-switch-when=dropdown class=dropdown-toggle dropdown-toggle><span data-ng-bind=item.title></span> <b class=caret></b></a><ul ng-switch-when=dropdown class=dropdown-menu><li data-ng-repeat=\"subitem in item.items | orderBy: 'position'\" data-ng-if=subitem.shouldRender(authentication.isAuthenticated()); ui-route={{subitem.uiRoute}} ng-class=\"{active: $uiRoute}\"><a href=/#!/{{subitem.link}} data-ng-bind=subitem.title></a></li></ul><a ng-switch-default href=/#!/{{item.link}} data-ng-bind=item.title></a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ng-hide=$root.signupDisabled ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>Sign Up</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>Sign In</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>My Settings</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>Edit Profile</a></li><li class=divider></li><li><a href=/#!/settings/password>Change Password</a></li><li data-ng-show=\"authentication.isAuthenticated().provider === 'local'\"><a href=/#!/settings/password>Change Password</a></li></ul></li><li ng-click=signout()><a>Signout</a></li></ul></nav></div></section>");
   $templateCache.put("../public/modules/core/views/home.client.view.html",
     "<section data-ng-controller=HomeController class=hero-section style=overflow:hidden><div class=opacity-background></div><div class=image-background></div><div class=\"jumbotron text-center\"><div class=container data-ng-if=!authentication.isAuthenticated()><div class=\"row text-center logo\" style=\"border-bottom: 1px solid rgba(255,255,255,.2); margin-bottom: 30px\"><h3 class=col-xs-12 style=\"color: #FA787E; margin-bottom:0px\"><i class=\"fa fa-archive fa-3x\"></i></h3><h2 class=col-xs-12 style=margin-top:0px><span>Tell<span style=\"text-decoration: underline; color: #FA787E\">Form</span></span></h2></div><div class=row style=margin-top:0px><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:3.8em>Craft beautiful forms in seconds.</h1><h2 class=\"lead col-sm-12 text-center hidden-md hidden-lg\" style=font-size:2.8em>Craft beautiful forms.</h2><p class=\"lead hidden-xs hidden-sm col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p><p class=\"lead col-xs-12 hidden-md hidden-lg\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p></div></div></div><div class=\"jumbotron text-center\"><div class=container data-ng-if=!authentication.isAuthenticated()><div class=row style=margin-top:0px><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:3.8em>Create your next ______.</h1><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:2.5em>Tell a story with a form.</h1></div><div class=row style=margin-top:7%><a class=\"col-xs-4 col-xs-offset-4 btn btn-info signup-btn\" href=/#!/signup style=\"background-color:#FA787E; border: none; font-size: 2em; padding: 0.3em 0.9em; color: white\">sign me up!</a></div></div></div></section><footer class=footer-basic-centered><p class=footer-company-motto>The company motto.</p><p class=footer-links><a href=\"/#!/\">Home</a> · <a href=/#!/blog>Blog</a> · <a href=https://github.com/whitef0x0/tellform>Github Source</a> · <a href=/#!/about>About</a> . <a href=/#!/terms>Privacy & Terms</a> · <a href=https://status.tellform.com>System Status</a> · <a href=mailto:polydaic@gmail.com>Contact</a></p><p class=footer-company-name>TellForm © 2016</p></footer>");
   $templateCache.put("../public/modules/forms/views/admin-form.client.view.html",
@@ -293,7 +293,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/users/views/authentication/access-denied.client.view.html",
     "<section class=\"row text-center auth\"><h3 class=col-md-12>You need to be logged in to access this page</h3><a href=/#!/sigin class=col-md-12>Login</a></section>");
   $templateCache.put("../public/modules/users/views/authentication/signin.client.view.html",
-    "<section class=\"row auth\" data-ng-controller=AuthenticationController><h3 class=\"col-md-12 text-center\">Sign into your account</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><form class=\"signin form-horizontal\" autocomplete=off><fieldset><div data-ng-show=error class=\"text-center text-danger\">Error: <strong data-ng-bind=error></strong></div><div class=form-group><label for=username>Account Email</label><input id=username name=username class=form-control data-ng-model=credentials.username placeholder=Username></div><div class=form-group><label for=password>Password</label><input type=password id=password name=password class=form-control data-ng-model=credentials.password placeholder=Password></div><div class=forgot-password><a href=/#!/password/forgot>Forgot your password?</a></div><div class=\"text-center form-group\"><button class=\"btn btn-primary\" ng-click=signin()>Sign in</button>&nbsp; or&nbsp; <a href=/#!/signup>Sign up</a></div></fieldset></form></div></section>");
+    "<section class=\"row auth\" data-ng-controller=AuthenticationController><h3 class=\"col-md-12 text-center\">Sign into your account</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><form class=\"signin form-horizontal\" autocomplete=off><fieldset><div data-ng-show=error class=\"text-center text-danger\">Error: <strong data-ng-bind=error></strong></div><div class=form-group><label for=username>Account Email</label><input id=username name=username class=form-control data-ng-model=credentials.username placeholder=Username></div><div class=form-group><label for=password>Password</label><input type=password id=password name=password class=form-control data-ng-model=credentials.password placeholder=Password></div><div class=forgot-password><a href=/#!/password/forgot>Forgot your password?</a></div><div class=\"text-center form-group\"><button class=\"btn btn-primary\" ng-click=signin()>Sign in</button> <span ng-hide=$root.signupDisabled>&nbsp; or&nbsp; <a href=/#!/signup>Sign up</a></span></div></fieldset></form></div></section>");
   $templateCache.put("../public/modules/users/views/authentication/signup-success.client.view.html",
     "<section class=\"row auth signup-view success\" data-ng-controller=AuthenticationController><h3 class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6 text-center\">Signup Successful</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><h2>You've successfully registered an account at TellForm.<br><br>But your account is <b>not activated yet</b></h2><br><br><p>Before you continue, make sure to check your email for our verification. If you don't receive it within 24h drop us a line at <a href=mail:hi@tellform.com>hi@TellForm.com</a></p><div class=\"text-center form-group\"><button type=submit class=\"btn btn-large btn-primary\"><a href=\"/#!/\" style=\"color: white; text-decoration: none\">Continue</a></button></div></div></section>");
   $templateCache.put("../public/modules/users/views/authentication/signup.client.view.html",
@@ -458,8 +458,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User',
-	function ($rootScope, $scope, Menus, $state, Auth, User) {
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window',
+	function ($rootScope, $scope, Menus, $state, Auth, User, $window) {
+		$rootScope.signupDisabled = $window.signupDisabled;
+
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 
@@ -2181,7 +2183,7 @@ angular.module('users').config(['$stateProvider',
 	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
       var deferred = $q.defer();
 
-      console.log(Auth.ensureHasCurrentUser(User));
+      //console.log(Auth.ensureHasCurrentUser(User));
 
       if (Auth.currentUser && Auth.currentUser.email) {
         $timeout(deferred.resolve);
@@ -2194,7 +2196,7 @@ angular.module('users').config(['$stateProvider',
         function() {
           Auth.logout();
           $timeout(deferred.reject());
-          $state.go('sigin', {reload: true});
+          $state.go('signin', {reload: true});
         });
       }
 
@@ -2203,11 +2205,15 @@ angular.module('users').config(['$stateProvider',
     checkLoggedin.$inject = ["$q", "$timeout", "$state", "User", "Auth"];
 
 	var checkSignupDisabled = function($window, $timeout, $q) {
-		console.log($window.signupDisabled);
 		var deferred = $q.defer();
-		$timeout(deferred.reject());
+		console.log($window.signupDisabled);
+		if($window.signupDisabled) {
+			$timeout(deferred.reject());
+		}else{
+			console.log('resolved');
+			$timeout(deferred.resolve());
+		}
 		return deferred.promise;
-		//return !$window.signupDisabled;
 	};
 	checkSignupDisabled.$inject = ["$window", "$timeout", "$q"];
 

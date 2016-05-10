@@ -20,7 +20,7 @@ angular.module('users').config(['$stateProvider',
         function() {
           Auth.logout();
           $timeout(deferred.reject());
-          $state.go('sigin', {reload: true});
+          $state.go('signin', {reload: true});
         });
       }
 
@@ -32,9 +32,8 @@ angular.module('users').config(['$stateProvider',
 		if($window.signupDisabled) {
 			$timeout(deferred.reject());
 		}else{
-			$timeout(deferred.resolve());
+\			$timeout(deferred.resolve());
 		}
-
 		return deferred.promise;
 	};
 

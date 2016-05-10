@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window'
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window',
 	function ($rootScope, $scope, Menus, $state, Auth, User, $window) {
 		$rootScope.signupDisabled = $window.signupDisabled;
 

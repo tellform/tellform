@@ -104,12 +104,6 @@ var questions = [
 	},
 	{
 		type: 'list',
-		name: 'NODE_ENV',
-		message: 'What should be the default environment',
-		choices: ['dev','production']
-	},
-	{
-		type: 'list',
 		name: 'MAILER_SERVICE_PROVIDER',
 		message: 'What email service provider are you using?',
 		choices: nodemailer_providers
@@ -166,6 +160,7 @@ inquirer.prompt([questions[0]]).then(function (confirmAns) {
 	if(confirmAns['shouldContinue']) {
 
 		inquirer.prompt(questions.slice(1)).then(function (answers) {
+			answers['NODE_ENV'] = 'production';
 
 			var email = answers['email'];
 			var pass = answers['password'];
@@ -189,7 +184,7 @@ inquirer.prompt([questions[0]]).then(function (confirmAns) {
 
 				user.save(function (err) {
 					if (err) return console.error(chalk.red(err));
-					console.log(chalk.green('Succesfully created user'));
+					console.log(chalk.green('Successfully created user'));
 					delete email;
 					delete pass;
 				});
