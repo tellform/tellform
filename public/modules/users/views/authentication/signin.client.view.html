@@ -36,8 +36,13 @@
 					<a href="/#!/password/forgot">Forgot your password?</a>
 				</div>
 				<div class="text-center form-group">
-					<button class="btn btn-primary" ng-click="signin()">Sign in</button>&nbsp; or&nbsp;
-					<a href="/#!/signup">Sign up</a>
+					<button class="btn btn-primary" ng-click="signin()">Sign in</button>
+
+					<span ng-hide="$root.signupDisabled">
+						&nbsp; or&nbsp;
+						<a href="/#!/signup">Sign up</a
+					</span>
+
 				</div>
 
 

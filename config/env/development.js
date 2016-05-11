@@ -18,9 +18,6 @@ module.exports = {
 			// stream: 'access.log'
 		}
 	},
-	app: {
-		title: 'TellForm'
-	},
 	sessionCookie: {
 		domain: process.env.BASE_URL || 'http://localhost:3000'
 	},

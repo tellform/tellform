@@ -1,7 +1,7 @@
 angular.module('NodeForm.templates', []).run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("../public/modules/core/views/header.client.view.html",
-    "<section class=\"navbar navbar-fixed-top navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span></button> <a href=\"https://www.tellform.com/#!/\" class=navbar-brand><i class=\"fa fa-archive\" style=\"padding-right: 0.3em\"></i>Tell<span>Form</span></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav\" data-ng-if=authentication.isAuthenticated()><li data-ng-repeat=\"item in menu.items | orderBy: 'position'\" data-ng-if=item.shouldRender(authentication.isAuthenticated()); ng-switch=item.menuItemType ui-route={{item.uiRoute}} class={{item.menuItemClass}} ng-class=\"{active: ($uiRoute)}\" dropdown=\"item.menuItemType === 'dropdown'\"><a ng-switch-when=dropdown class=dropdown-toggle dropdown-toggle><span data-ng-bind=item.title></span> <b class=caret></b></a><ul ng-switch-when=dropdown class=dropdown-menu><li data-ng-repeat=\"subitem in item.items | orderBy: 'position'\" data-ng-if=subitem.shouldRender(authentication.isAuthenticated()); ui-route={{subitem.uiRoute}} ng-class=\"{active: $uiRoute}\"><a href=/#!/{{subitem.link}} data-ng-bind=subitem.title></a></li></ul><a ng-switch-default href=/#!/{{item.link}} data-ng-bind=item.title></a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>Sign Up</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>Sign In</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>My Settings</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>Edit Profile</a></li><li class=divider></li><li><a href=/#!/settings/password>Change Password</a></li><li data-ng-show=\"authentication.isAuthenticated().provider === 'local'\"><a href=/#!/settings/password>Change Password</a></li></ul></li><li ng-click=signout()><a>Signout</a></li></ul></nav></div></section>");
+    "<section class=\"navbar navbar-fixed-top navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span></button> <a href=\"https://www.tellform.com/#!/\" class=navbar-brand><i class=\"fa fa-archive\" style=\"padding-right: 0.3em\"></i>Tell<span>Form</span></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav\" data-ng-if=authentication.isAuthenticated()><li data-ng-repeat=\"item in menu.items | orderBy: 'position'\" data-ng-if=item.shouldRender(authentication.isAuthenticated()); ng-switch=item.menuItemType ui-route={{item.uiRoute}} class={{item.menuItemClass}} ng-class=\"{active: ($uiRoute)}\" dropdown=\"item.menuItemType === 'dropdown'\"><a ng-switch-when=dropdown class=dropdown-toggle dropdown-toggle><span data-ng-bind=item.title></span> <b class=caret></b></a><ul ng-switch-when=dropdown class=dropdown-menu><li data-ng-repeat=\"subitem in item.items | orderBy: 'position'\" data-ng-if=subitem.shouldRender(authentication.isAuthenticated()); ui-route={{subitem.uiRoute}} ng-class=\"{active: $uiRoute}\"><a href=/#!/{{subitem.link}} data-ng-bind=subitem.title></a></li></ul><a ng-switch-default href=/#!/{{item.link}} data-ng-bind=item.title></a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ng-hide=$root.signupDisabled ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>Sign Up</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>Sign In</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>My Settings</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>Edit Profile</a></li><li class=divider></li><li><a href=/#!/settings/password>Change Password</a></li><li data-ng-show=\"authentication.isAuthenticated().provider === 'local'\"><a href=/#!/settings/password>Change Password</a></li></ul></li><li ng-click=signout()><a>Signout</a></li></ul></nav></div></section>");
   $templateCache.put("../public/modules/core/views/home.client.view.html",
     "<section data-ng-controller=HomeController class=hero-section style=overflow:hidden><div class=opacity-background></div><div class=image-background></div><div class=\"jumbotron text-center\"><div class=container data-ng-if=!authentication.isAuthenticated()><div class=\"row text-center logo\" style=\"border-bottom: 1px solid rgba(255,255,255,.2); margin-bottom: 30px\"><h3 class=col-xs-12 style=\"color: #FA787E; margin-bottom:0px\"><i class=\"fa fa-archive fa-3x\"></i></h3><h2 class=col-xs-12 style=margin-top:0px><span>Tell<span style=\"text-decoration: underline; color: #FA787E\">Form</span></span></h2></div><div class=row style=margin-top:0px><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:3.8em>Craft beautiful forms in seconds.</h1><h2 class=\"lead col-sm-12 text-center hidden-md hidden-lg\" style=font-size:2.8em>Craft beautiful forms.</h2><p class=\"lead hidden-xs hidden-sm col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p><p class=\"lead col-xs-12 hidden-md hidden-lg\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p></div></div></div><div class=\"jumbotron text-center\"><div class=container data-ng-if=!authentication.isAuthenticated()><div class=row style=margin-top:0px><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:3.8em>Create your next ______.</h1><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:2.5em>Tell a story with a form.</h1></div><div class=row style=margin-top:7%><a class=\"col-xs-4 col-xs-offset-4 btn btn-info signup-btn\" href=/#!/signup style=\"background-color:#FA787E; border: none; font-size: 2em; padding: 0.3em 0.9em; color: white\">sign me up!</a></div></div></div></section><footer class=footer-basic-centered><p class=footer-company-motto>The company motto.</p><p class=footer-links><a href=\"/#!/\">Home</a> · <a href=/#!/blog>Blog</a> · <a href=https://github.com/whitef0x0/tellform>Github Source</a> · <a href=/#!/about>About</a> . <a href=/#!/terms>Privacy & Terms</a> · <a href=https://status.tellform.com>System Status</a> · <a href=mailto:polydaic@gmail.com>Contact</a></p><p class=footer-company-name>TellForm © 2016</p></footer>");
   $templateCache.put("../public/modules/forms/views/admin-form.client.view.html",
@@ -45,9 +45,9 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/forms/views/directiveViews/entryPage/startPage.html",
     "<div class=\"field row text-center\"><div class=\"col-xs-12 text-center\"><h1>{{pageData.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\"><p style=color:#ddd>{{pageData.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in pageData.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><p class=\"col-xs-3 col-xs-offset-3 text-center\"><button class=\"btn btn-info\" type=button><a ng-click=exitpageData() style=\"color:white; font-size: 1.6em; text-decoration: none\">Continue to Form</a></button></p></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/date.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"!field.required && !field.fieldValue\">optional</span></h3></div><div class=\"col-xs-12 field-input\"><div class=\"control-group input-append\"><input ng-focus=\"setActiveField(field._id, index, true)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-class=\"{ 'no-border': !!field.fieldValue }\" ui-date=dateOptions ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled></div></div></div>");
+    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small>{{index}}</small> {{field.title}} <span class=required-error ng-show=\"!field.required && !field.fieldValue\">optional</span></h3></div><div class=\"col-xs-12 field-input\"><div class=\"control-group input-append\"><input ng-focus=\"setActiveField(field._id, index, true)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-class=\"{ 'no-border': !!field.fieldValue }\" ui-date=dateOptions ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/dropdown.html",
-    "<div class=\"field row dropdown\" ng-click=\"setActiveField(field._id, index, true)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=selectize ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index, true)\"><ui-select-match placeholder=\"Type or select an option\">{{$select.selected.option_value}}</ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-class=\"{'active': option.option_value === field.fieldValue }\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
+    "<div class=\"field row dropdown\" ng-click=\"setActiveField(field._id, index, true)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small>{{index}}</small> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=selectize ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index, true)\"><ui-select-match placeholder=\"Type or select an option\">{{$select.selected.option_value}}</ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-class=\"{'active': option.option_value === field.fieldValue }\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/file.html",
     "<div class=\"field row\" ng-if=form.autofillPDFs ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-sm-4 field-title\"><h5>{{field.title}} <span class=required-error ng-show=\"field.required && field.fieldValue == 0\">(* required)</span></h5></div><div class=\"col-sm-8 field-input\"><div class=input-group><div tabindex=-1 class=\"form-control file-caption\"><span class=file-caption-ellipsis ng-if=!form.pdf>…</span><div class=file-caption-name ng-if=form.pdf>{{field.file.originalname}}</div></div><div class=input-group-btn><button type=button ng-if=field.file ng-click=removeFile(field); title=\"Clear selected files\" class=\"btn btn-danger fileinput-remove fileinput-remove-button\"><i class=\"glyphicon glyphicon-trash\"></i> Delete</button> <button type=button ng-if=field.fileLoading title=\"Abort ongoing upload\" class=\"btn btn-default\" ng-click=cancelFileUpload(field)><i class=\"glyphicon glyphicon-ban-circle\"></i> Cancel</button><div class=\"btn btn-success btn-file\" ngf-select ngf-change=uploadPDF($files) ng-if=!field.file><i class=\"glyphicon glyphicon-upload\"></i> Upload your File</div></div></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/hidden.html",
@@ -55,18 +55,18 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/forms/views/directiveViews/field/legal.html",
     "<div class=\"field row radio legal\" ng-click=\"setActiveField(field._id, index, true)\" on-enter-key=\"chooseDefaultOption('legal')\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3>{{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3><br><p style=color:#ddd>{{field.description}}</p></div><div class=\"col-xs-12 field-input container\"><div class=row-fluid><label class=\"btn col-xs-5\" ng-class=\"{activeBtn: field.fieldValue == 'true'}\"><input ng-focus=\"setActiveField(field._id, index, true)\" class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=true ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"> <span>I accept</span></label><label class=\"btn col-xs-5 col-xs-offset-1\" ng-class=\"{activeBtn: field.fieldValue == 'false'}\"><input ng-focus=\"setActiveField(field._id, index, true)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=false ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-select=$root.nextField() ng-disabled=\"field.disabled\"> <span>I don't accept</span></label></div></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/radio.html",
-    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" ng-if=\"field.fieldOptions.length > 0\" on-enter-key=chooseDefaultOption()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=\"btn col-xs-4\" style=\"margin: 0.5em; padding-left:30px\" ng-click=$root.nextField() ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio class=focusOn value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
+    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" ng-if=\"field.fieldOptions.length > 0\" on-enter-key=chooseDefaultOption()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small>{{index}}</small>{{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=\"btn col-xs-4\" style=\"margin: 0.5em; padding-left:30px\" ng-click=$root.nextField() ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio class=focusOn value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/rating.html",
-    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\" on-enter-key=\"chooseDefaultOption('rating')\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><input-stars max=5 ng-focus=\"setActiveField(field._id, index, true)\" icon-full=fa-star icon-base=\"fa fa-3x\" icon-empty=fa-star-o ng-init=\"field.fieldValue = 1\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled class=\"angular-input-stars focusOn\"></input-stars></div></div>");
+    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\" on-enter-key=\"chooseDefaultOption('rating')\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small>{{index}}</small> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><input-stars max=5 ng-focus=\"setActiveField(field._id, index, true)\" icon-full=fa-star icon-base=\"fa fa-3x\" icon-empty=fa-star-o ng-init=\"field.fieldValue = 1\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled class=\"angular-input-stars focusOn\"></input-stars></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/statement.html",
     "<div class=\"statement field row\" on-enter-key=$root.nextField()><div class=\"row field-title field-title\"><div class=col-xs-1><i class=\"fa fa-quote-left fa-1\"></i></div><h2 class=\"text-left col-xs-9\">{{field.title}}</h2></div><div class=\"row field-title field-input\"><p class=col-xs-12 ng-if=field.description.length>{{field.description}}</p><br><div class=\"col-xs-offset-1 col-xs-11\"><button class=\"btn focusOn\" ng-style=\"{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-focused=\"setActiveField(field._id, index, true)\" ng-click=$root.nextField()>Continue</button></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/textarea.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><textarea class=textarea type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-class=\"{ 'no-border': !!field.fieldValue }\" value={{field.fieldValue}} class=focusOn ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index, true)\">\n" +
+    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small>{{index}}</small>{{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><textarea class=textarea type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-class=\"{ 'no-border': !!field.fieldValue }\" value={{field.fieldValue}} class=focusOn ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index, true)\">\n" +
     "        </textarea></div></div><div class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=!field.fieldValue ng-click=$root.nextField() ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" class=\"btn col-sm-5 col-xs-5\">OK <i class=\"fa fa-check\"></i></button><div class=\"col-sm-3 col-xs-6\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/textfield.html",
-    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=!field.required>(optional)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-focus=\"setActiveField(field._id, index, true)\" name={{field.fieldType}}{{index}} type={{field.input_type}} ng-pattern=field.validateRegex placeholder={{field.placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-required=field.required ng-disabled=field.disabled aria-describedby=inputError2Status on-enter-key=nextField()></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">Please enter a valid email address</span> <span ng-if=field.validateRegex>Please enter valid numbers only</span> <span ng-if=\"field.fieldType == 'link'\">Please a valid url</span></div></div></div><div class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">OK <i class=\"fa fa-check\"></i></button><div class=\"col-sm-3 col-xs-6\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
+    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small>{{index}}</small>{{field.title}} <span class=required-error ng-show=!field.required>(optional)</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-focus=\"setActiveField(field._id, index, true)\" name={{field.fieldType}}{{index}} type={{field.input_type}} ng-pattern=field.validateRegex placeholder={{field.placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-required=field.required ng-disabled=field.disabled aria-describedby=inputError2Status on-enter-key=nextField()></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">Please enter a valid email address</span> <span ng-if=field.validateRegex>Please enter valid numbers only</span> <span ng-if=\"field.fieldType == 'link'\">Please a valid url</span></div></div></div><div class=\"col-xs-12 row\"><div class=\"btn btn-lg btn-default row-fluid\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">OK <i class=\"fa fa-check\"></i></button><div class=\"col-sm-3 col-xs-6\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">press ENTER</small></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/yes_no.html",
-    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" on-enter-key=\"chooseDefaultOption('yes_no')\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><span class=\"fa fa-angle-double-right\"></span> {{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-4\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-focus=\"setActiveField(field._id, index, true)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>Y</div><span>Yes</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-4\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-focus=\"setActiveField(field._id, index, true)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>N</div><span>No</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
+    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" on-enter-key=\"chooseDefaultOption('yes_no')\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><small>{{index}}</small>{{field.title}} <span class=required-error ng-show=\"field.required && !field.fieldValue\">*(required)</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-4\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-focus=\"setActiveField(field._id, index, true)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>Y</div><span>Yes</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-4\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-focus=\"setActiveField(field._id, index, true)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>N</div><span>No</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/form/configure-form.client.view.html",
     "<div class=\"config-form container\"><div class=row><div class=\"col-md-6 col-sm-12 container\"><div class=row><div class=col-sm-12><h2 class=\"hidden-sm hidden-xs\">PDF Generation/EMR</h2><h3 class=\"hidden-lg hidden-md\">PDF Generation/EMR</h3></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Save Submissions as PDFs?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.autofillPDFs ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.autofillPDFs ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\" ng-if=\"myform.autofillPDFs || myform.isGenerated\"><div class=\"col-sm-6 field-title\"><h5>Upload Your PDF Template</h5></div><div class=\"col-sm-6 field-input\"><div class=input-group><div tabindex=-1 class=\"form-control file-caption\"><span class=file-caption-ellipsis ng-if=!myform.pdf>…</span><div class=file-caption-name ng-if=myform.pdf>{{myform.pdf.name}}</div></div><div class=input-group-btn><button type=button ng-if=myform.pdf ng-click=removePDF(); title=\"Clear selected files\" class=\"btn btn-danger fileinput-remove fileinput-remove-button\"><i class=\"glyphicon glyphicon-trash\"></i> Delete</button> <button type=button ng-if=pdfLoading title=\"Abort ongoing upload\" class=\"btn btn-default\" ng-click=cancelUpload()><i class=\"glyphicon glyphicon-ban-circle\"></i> Cancel</button><div class=\"btn btn-success btn-file\" ngf-select=uploadPDF($file)><i class=\"glyphicon glyphicon-upload\"></i> Upload your PDF</div></div></div></div></div><div class=\"row field\"><div class=\"col-sm-6 field-title\"><h5>Autogenerate Form?</h5></div><div class=\"col-sm-6 field-input\"><label><input type=radio data-ng-value=true ng-model=myform.isGenerated ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.isGenerated ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Use Oscarhost API?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=oscarhostAPI ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=oscarhostAPI ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Username</h5></div><div class=col-sm-8><input ng-model=myform.plugins.oscarhost.auth.user value={{myform.plugins.oscarhost.auth.user}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Password</h5></div><div class=col-sm-8><input type=password ng-model=myform.plugins.oscarhost.auth.pass value={{myform.plugins.oscarhost.auth.pass}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API URL</h5></div><div class=col-sm-8><input type=link ng-model=myform.plugins.oscarhost.baseUrl value={{myform.plugins.oscarhost.baseUrl}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Update Type</h5></div><div class=col-sm-8><select ng-model=myform.plugins.oscarhost.settings.updateType><option ng-repeat=\"updateType in myform.plugins.oscarhost.settings.validUpdateTypes\" ng-selected=\"myform.plugins.oscarhost.settings.updateType == updateType\" ng-value=updateType>{{updateType}}</option></select></div></div></div><div class=\"col-sm-12 hidden-md hidden-lg\"><br><hr></div><div class=\"col-md-5 col-md-offset-1 col-sm-12 container\"><div class=row><div class=col-sm-12><h2 class=\"hidden-sm hidden-xs\">Advanced Settings</h2><h3 class=\"hidden-lg hidden-md\">Advanced Settings</h3></div></div><div class=\"row field\"><div class=\"field-title col-sm-4\"><h5>Form Name</h5></div><div class=col-sm-8><input ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Form Status</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>Public</span></label><label><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>Private</span></label></div></div><div class=\"row field\"><div class=\"col-xs-6 field-title\">Language</div><div class=\"col-xs-4 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Display Form Footer?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>No</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-primary btn-large\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i> Save Changes</button></div><div class=col-sm-1><button class=\"btn btn-default\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i> Cancel</button></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/form/edit-form.client.view.html",
@@ -293,7 +293,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/users/views/authentication/access-denied.client.view.html",
     "<section class=\"row text-center auth\"><h3 class=col-md-12>You need to be logged in to access this page</h3><a href=/#!/sigin class=col-md-12>Login</a></section>");
   $templateCache.put("../public/modules/users/views/authentication/signin.client.view.html",
-    "<section class=\"row auth\" data-ng-controller=AuthenticationController><h3 class=\"col-md-12 text-center\">Sign into your account</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><form class=\"signin form-horizontal\" autocomplete=off><fieldset><div data-ng-show=error class=\"text-center text-danger\">Error: <strong data-ng-bind=error></strong></div><div class=form-group><label for=username>Account Email</label><input id=username name=username class=form-control data-ng-model=credentials.username placeholder=Username></div><div class=form-group><label for=password>Password</label><input type=password id=password name=password class=form-control data-ng-model=credentials.password placeholder=Password></div><div class=forgot-password><a href=/#!/password/forgot>Forgot your password?</a></div><div class=\"text-center form-group\"><button class=\"btn btn-primary\" ng-click=signin()>Sign in</button>&nbsp; or&nbsp; <a href=/#!/signup>Sign up</a></div></fieldset></form></div></section>");
+    "<section class=\"row auth\" data-ng-controller=AuthenticationController><h3 class=\"col-md-12 text-center\">Sign into your account</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><form class=\"signin form-horizontal\" autocomplete=off><fieldset><div data-ng-show=error class=\"text-center text-danger\">Error: <strong data-ng-bind=error></strong></div><div class=form-group><label for=username>Account Email</label><input id=username name=username class=form-control data-ng-model=credentials.username placeholder=Username></div><div class=form-group><label for=password>Password</label><input type=password id=password name=password class=form-control data-ng-model=credentials.password placeholder=Password></div><div class=forgot-password><a href=/#!/password/forgot>Forgot your password?</a></div><div class=\"text-center form-group\"><button class=\"btn btn-primary\" ng-click=signin()>Sign in</button> <span ng-hide=$root.signupDisabled>&nbsp; or&nbsp; <a href=/#!/signup>Sign up</a></span></div></fieldset></form></div></section>");
   $templateCache.put("../public/modules/users/views/authentication/signup-success.client.view.html",
     "<section class=\"row auth signup-view success\" data-ng-controller=AuthenticationController><h3 class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6 text-center\">Signup Successful</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><h2>You've successfully registered an account at TellForm.<br><br>But your account is <b>not activated yet</b></h2><br><br><p>Before you continue, make sure to check your email for our verification. If you don't receive it within 24h drop us a line at <a href=mail:hi@tellform.com>hi@TellForm.com</a></p><div class=\"text-center form-group\"><button type=submit class=\"btn btn-large btn-primary\"><a href=\"/#!/\" style=\"color: white; text-decoration: none\">Continue</a></button></div></div></section>");
   $templateCache.put("../public/modules/users/views/authentication/signup.client.view.html",
@@ -458,8 +458,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User',
-	function ($rootScope, $scope, Menus, $state, Auth, User) {
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window',
+	function ($rootScope, $scope, Menus, $state, Auth, User, $window) {
+		$rootScope.signupDisabled = $window.signupDisabled;
+
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 
@@ -522,10 +524,10 @@ angular.module('core').service('Menus', [
 		// Define the menus object
 		this.menus = {};
 
-		// A private function for rendering decision 
+		// A private function for rendering decision
 		var shouldRender = function(user) {
 			if (user) {
-				if (!!~this.roles.indexOf('*')) {
+				if (~this.roles.indexOf('*')) {
 					return true;
 				} else {
 					for (var userRoleIndex in user.roles) {
@@ -681,6 +683,7 @@ angular.module('core').service('Menus', [
 		this.addMenu('bottombar', false, ['*']);
 	}
 ]);
+
 'use strict';
 
 // Configuring the Forms drop-down menus
@@ -797,15 +800,15 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             },
             {
                 heading: 'Design',
-                route:   'viewForm.design',
+                route:   'viewForm.design'
             },
             {
                 heading: 'Configure',
-                route:   'viewForm.configure',
+                route:   'viewForm.configure'
             },
             {
                 heading: 'Analyze',
-                route:   'viewForm.analyze',
+                route:   'viewForm.analyze'
             }
         ];
 
@@ -818,8 +821,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             });
         };
 
-        /* 
-        ** DeleteModal Functions 
+        /*
+        ** DeleteModal Functions
         */
         $scope.openDeleteModal = function(){
             $scope.deleteModal = $uibModal.open({
@@ -851,15 +854,15 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             if($scope.deleteModal && $scope.deleteModal.opened){
 
                 $scope.deleteModal.close();
-            
+
                 var form_id = $scope.myform._id;
                 if(!form_id) throw new Error('Error - removeCurrentForm(): $scope.myform._id does not exist');
-        
+
                 $http.delete('/forms/'+form_id)
                     .success(function(data, status, headers){
                         console.log('form deleted successfully');
 
-                        $state.go('listForms', {}, {reload: true}); 
+                        $state.go('listForms', {}, {reload: true});
 
                     }).error(function(error){
                         console.log('ERROR: Form could not be deleted.');
@@ -875,7 +878,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             if(!updateImmediately){
                 continueUpdate = !$rootScope.saveInProgress;
             }
-            
+
             //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
             if(continueUpdate){
                 var err = null;
@@ -890,12 +893,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                         console.log('Error occured during form UPDATE.\n');
                         // console.log(response.data);
                         err = response.data;
-                    }).finally(function() { 
+                    }).finally(function() {
                         // console.log('finished updating');
                         if(!updateImmediately){$rootScope.saveInProgress = false; }
 
                         if( (typeof cb) === 'function'){
-                            cb(err); 
+                            return cb(err);
                         }
                     });
             }
@@ -904,6 +907,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 	}
 ]);
+
 'use strict';
 
 // Forms controller
@@ -1237,7 +1241,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                             console.log('Error occured during upload.\n');
                             console.log(resp.status);
                         },  function (evt) {
-								var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+								var progressPercentage = parseInt(100.0 * evt.loaded / evt.total, 10);
 								$scope.log = 'progress: ' + progressPercentage + '% ' +
 									evt.config.data.file.name + '\n' + $scope.log;
 
@@ -1261,7 +1265,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
             templateUrl: 'modules/forms/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
             scope: {
-                myform:'=',
+                myform:'='
             },
             controller: ["$scope", function($scope){
                 var field_ids = _($scope.myform.form_fields).pluck('_id');
@@ -1300,7 +1304,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                         if( $scope.myform.plugins.oscarhost.settings.fieldMap.hasOwnProperty(field_id) ){
                             currentFields = _(currentFields).difference($scope.myform.plugins.oscarhost.settings.fieldMap[field_id]);
-                        } 
+                        }
 
                         //Get all oscarhostFields that haven't been mapped to a formfield
                         return _(oscarhostFields).difference(currentFields).value();
@@ -1314,7 +1318,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.dropzone = {
                     handle: ' .handle',
                     containment: '.dropzoneContainer',
-                    cursor: 'grabbing',
+                    cursor: 'grabbing'
                 };
 
                 /*
@@ -1328,9 +1332,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     var fieldTitle;
 
                     for(var i = 0; i < $scope.addField.types.length; i++){
-                        if($scope.addField.types[i].name === fieldType){ 
+                        if($scope.addField.types[i].name === fieldType){
                             $scope.addField.types[i].lastAddedID++;
-                            fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;  
+                            fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;
                             break;
                         }
                     }
@@ -1345,12 +1349,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     // console.log('\n\n---------\nAdded field CLIENT');
                     // console.log(newField);
                     // newField._id = _.uniqueId();
-                    
+
                     // put newField into fields array
                     if(modifyForm){
                         $scope.myform.form_fields.push(newField);
                     }
-                    return newField;    
+                    return newField;
                 };
 
                 // Delete particular field on button click
@@ -1364,7 +1368,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
                 $scope.duplicateField = function (field_index){
-                    var currField = _.cloneDeep($scope.myform.form_fields[field_index]);  
+                    var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
                     currField.title += ' copy';
 
@@ -1413,8 +1417,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.addOption = function(field_index){
                     var currField = $scope.myform.form_fields[field_index];
 					console.log(field_index);
-					console.log(currField);	
-                    
+					console.log(currField);
+
 					if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
                         if(!currField.fieldOptions) $scope.myform.form_fields[field_index].fieldOptions = [];
 
@@ -1430,7 +1434,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         var newOption = {
                             'option_id' : Math.floor(100000*Math.random()),
                             'option_title' : 'Option '+lastOptionID,
-                            'option_value' : 'Option ' +lastOptionID,
+                            'option_value' : 'Option ' +lastOptionID
                         };
 
                         // put new option into fieldOptions array
@@ -1463,8 +1467,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     }
                 };
 
-            }],
-  
+            }]
+
         };
     }
 ]);
@@ -1520,7 +1524,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                                 defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
                             // console.log('before textField2: '+data[0].form_fields[1].fieldValue);
-                            
+
                             //Iterate through form's submissions
                             for(var i=0; i<data.length; i++){
                                 for(var x=0; x<data[i].form_fields; x++){
@@ -1540,8 +1544,8 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         })
                         .error(function(err){
                             console.error('Could not fetch form submissions.\nError: '+err);
-                        });            
-                };  
+                        });
+                };
 
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
@@ -1550,7 +1554,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         return !!row.selected;
                     }).pluck('_id').value();
 
-                    $http({ url: '/forms/'+$scope.myform._id+'/submissions', 
+                    $http({ url: '/forms/'+$scope.myform._id+'/submissions',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
@@ -1568,7 +1572,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             console.log('Could not delete form submissions.\nError: ');
                             console.log(err);
                             console.error = err;
-                        });      
+                        });
                 };
 
                 //Export selected submissions of Form
@@ -1576,7 +1580,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     var fileMIMETypeMap = {
                         'xls': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                         'json': 'json',
-                        'csv': 'csv',
+                        'csv': 'csv'
                     };
 
                     var blob = new Blob([document.getElementById('table-submission-data').innerHTM], {
@@ -1657,7 +1661,6 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 	if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
-
    		return $templateCache.get('../public/'+templateUrl);
     };
 
@@ -1828,28 +1831,30 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					$scope.fieldBottom = elemBox.bottom;
 
                     //console.log($scope.forms.myForm);
+					var field_id;
+					var field_index;
 
                     if(!$scope.noscroll){
                         //Focus on submit button
                         if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
-                            var field_index = $scope.selected.index+1;
-                            var field_id = 'submit_field';
+                            field_index = $scope.selected.index+1;
+                            field_id = 'submit_field';
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //Focus on field above submit button
                         else if($scope.selected.index === $scope.myform.form_fields.length){
                             if($scope.fieldTop > 200){
-                                var field_index = $scope.selected.index-1;
-                                var field_id = $scope.myform.form_fields[field_index]._id;
+                                field_index = $scope.selected.index-1;
+                                field_id = $scope.myform.form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
                         }else if( $scope.fieldBottom < 0){
-                            var field_index = $scope.selected.index+1;
-                            var field_id = $scope.myform.form_fields[field_index]._id;
+                            field_index = $scope.selected.index+1;
+                            field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
-                            var field_index = $scope.selected.index-1;
-                            var field_id = $scope.myform.form_fields[field_index]._id;
+                            field_index = $scope.selected.index-1;
+                            field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //console.log('$scope.selected.index: '+$scope.selected.index);
@@ -1889,13 +1894,14 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     //console.log('nextfield');
                     //console.log($scope.selected.index);
 					//console.log($scope.myform.form_fields.length-1);
+					var selected_index, selected_id;
 					if($scope.selected.index < $scope.myform.form_fields.length-1){
-                        var selected_index = $scope.selected.index+1;
-                        var selected_id = $scope.myform.form_fields[selected_index]._id;
+                        selected_index = $scope.selected.index+1;
+                        selected_id = $scope.myform.form_fields[selected_index]._id;
                         $rootScope.setActiveField(selected_id, selected_index, true);
                     } else if($scope.selected.index === $scope.myform.form_fields.length-1) {
-						var selected_index = $scope.selected.index+1;
-						var selected_id = 'submit_field';
+						selected_index = $scope.selected.index+1;
+						selected_id = 'submit_field';
 						$rootScope.setActiveField(selected_id, selected_index, true);
 					}
                 };
@@ -2178,7 +2184,7 @@ angular.module('users').config(['$stateProvider',
 	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
       var deferred = $q.defer();
 
-      // console.log(Auth.ensureHasCurrentUser(User));
+      //console.log(Auth.ensureHasCurrentUser(User));
 
       if (Auth.currentUser && Auth.currentUser.email) {
         $timeout(deferred.resolve);
@@ -2191,13 +2197,24 @@ angular.module('users').config(['$stateProvider',
         function() {
           Auth.logout();
           $timeout(deferred.reject());
-          $state.go('sigin', {reload: true});
+          $state.go('signin', {reload: true});
         });
       }
 
       return deferred.promise;
     };
     checkLoggedin.$inject = ["$q", "$timeout", "$state", "User", "Auth"];
+
+	var checkSignupDisabled = function($window, $timeout, $q) {
+		var deferred = $q.defer();
+		if($window.signupDisabled) {
+			$timeout(deferred.reject());
+		} else {
+			$timeout(deferred.resolve());
+		}
+		return deferred.promise;
+	};
+	checkSignupDisabled.$inject = ["$window", "$timeout", "$q"];
 
 	// Users state routing
 	$stateProvider.
@@ -2222,12 +2239,17 @@ angular.module('users').config(['$stateProvider',
 			url: '/settings/accounts',
 			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
 		}).
-
 		state('signup', {
+			resolve: {
+				isDisabled: checkSignupDisabled
+			},
 			url: '/signup',
 			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
 		}).
 		state('signup-success', {
+			resolve: {
+				isDisabled: checkSignupDisabled
+			},
 			url: '/signup-success',
 			templateUrl: 'modules/users/views/authentication/signup-success.client.view.html'
 		}).
@@ -2239,7 +2261,6 @@ angular.module('users').config(['$stateProvider',
 			url: '/access_denied',
 			templateUrl: 'modules/users/views/authentication/access-denied.client.view.html'
 		}).
-		
 		state('resendVerifyEmail', {
 			url: '/verify',
 			templateUrl: 'modules/users/views/verify/resend-verify-email.client.view.html'
@@ -2267,6 +2288,7 @@ angular.module('users').config(['$stateProvider',
 		});
 	}
 ]);
+
 'use strict';
 
 angular.module('users').controller('AuthenticationController', ['$scope', '$location', '$state', '$rootScope', 'User', 'Auth',
@@ -2546,7 +2568,7 @@ angular.module('users').factory('Auth', ['$window',
         $window.user = null;
         userState.isLoggedIn = false;
         service._currentUser = null;
-      },
+      }
     };
     return service;
 
@@ -2617,7 +2639,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
         return deferred.promise;
       },
-      logout: function() { 
+      logout: function() {
 
         var deferred = $q.defer();
         $http.get('/auth/signout').success(function(response) {
@@ -2628,7 +2650,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
         return deferred.promise;
       },
-      signup: function(credentials) { 
+      signup: function(credentials) {
 
         var deferred = $q.defer();
         $http.post('/auth/signup', credentials).success(function(response) {
@@ -2641,7 +2663,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      resendVerifyEmail: function(_email) { 
+      resendVerifyEmail: function(_email) {
 
         var deferred = $q.defer();
         $http.post('/auth/verify', {email: _email}).success(function(response) {
@@ -2653,7 +2675,7 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
 
-      validateVerifyToken: function(token) { 
+      validateVerifyToken: function(token) {
 
         //DAVID: TODO: The valid length of a token should somehow be linked to server config values
         //DAVID: TODO: SEMI-URGENT: Should we even be doing this?
@@ -2695,12 +2717,12 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         });
 
         return deferred.promise;
-      },
+      }
 
     };
 
     return userService;
-   
+
   }
 ]);
 

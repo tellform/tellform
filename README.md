@@ -60,7 +60,12 @@ Setup environment.
 $ grunt build
 ```
 
-Create your .env file. It should look like this
+Create your user account
+```bash
+$ node ./scripts/setup.js
+```
+
+OR create your .env file
 ```
 GOOGLE_ANALYTICS_ID=yourGAID
 PRERENDER_TOKEN=yourPrerender.ioToken
@@ -70,9 +75,10 @@ MAILER_FROM=noreply@yourdomain.com
 MAILER_PASSWORD=your_sparkpost_apikey
 MAILER_SERVICE_PROVIDER=SparkPost
 BASE_URL=yourdomain.com
+DSN_KEY=yourPrivateRavenKey
 ```
 
-Currenty we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html
+Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
 Create this directory or you will get errors.
 

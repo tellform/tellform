@@ -7,7 +7,7 @@ angular.module('users').config(['$stateProvider',
 	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
       var deferred = $q.defer();
 
-      // console.log(Auth.ensureHasCurrentUser(User));
+      //console.log(Auth.ensureHasCurrentUser(User));
 
       if (Auth.currentUser && Auth.currentUser.email) {
         $timeout(deferred.resolve);
@@ -20,12 +20,22 @@ angular.module('users').config(['$stateProvider',
         function() {
           Auth.logout();
           $timeout(deferred.reject());
-          $state.go('sigin', {reload: true});
+          $state.go('signin', {reload: true});
         });
       }
 
       return deferred.promise;
     };
+
+	var checkSignupDisabled = function($window, $timeout, $q) {
+		var deferred = $q.defer();
+		if($window.signupDisabled) {
+			$timeout(deferred.reject());
+		} else {
+			$timeout(deferred.resolve());
+		}
+		return deferred.promise;
+	};
 
 	// Users state routing
 	$stateProvider.
@@ -50,12 +60,17 @@ angular.module('users').config(['$stateProvider',
 			url: '/settings/accounts',
 			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
 		}).
-
 		state('signup', {
+			resolve: {
+				isDisabled: checkSignupDisabled
+			},
 			url: '/signup',
 			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
 		}).
 		state('signup-success', {
+			resolve: {
+				isDisabled: checkSignupDisabled
+			},
 			url: '/signup-success',
 			templateUrl: 'modules/users/views/authentication/signup-success.client.view.html'
 		}).
@@ -67,7 +82,6 @@ angular.module('users').config(['$stateProvider',
 			url: '/access_denied',
 			templateUrl: 'modules/users/views/authentication/access-denied.client.view.html'
 		}).
-		
 		state('resendVerifyEmail', {
 			url: '/verify',
 			templateUrl: 'modules/users/views/verify/resend-verify-email.client.view.html'

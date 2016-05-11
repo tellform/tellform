@@ -27,7 +27,7 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.isAuthenticated()">
-				<li ui-route="/signup" ng-class="{active: $uiRoute}">
+				<li ng-hide="$root.signupDisabled" ui-route="/signup" ng-class="{active: $uiRoute}">
 					<a href="/#!/signup">Sign Up</a>
 				</li>
 				<li class="divider-vertical"></li>

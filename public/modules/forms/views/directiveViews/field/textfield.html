@@ -1,7 +1,7 @@
 <div class="textfield field row" ng-click="setActiveField(field._id, index, true)">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
     	<h3>
-    		<span class="fa fa-angle-double-right"></span> {{field.title}} 
+    		<small>{{index}}</small>{{field.title}}
     		<span class="required-error" ng-show="!field.required">
     			(optional)
     		</span>

@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User',
-	function ($rootScope, $scope, Menus, $state, Auth, User) {
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window',
+	function ($rootScope, $scope, Menus, $state, Auth, User, $window) {
+		$rootScope.signupDisabled = $window.signupDisabled;
+
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 

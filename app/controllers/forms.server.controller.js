@@ -77,6 +77,74 @@ exports.uploadPDF = function(req, res, next) {
 };
 
 /**
+ * Upload PDF
+ */
+/*
+exports.uploadSubmissionFile = function(req, res, next) {
+
+	console.log('inside uploadPDF');
+
+	// console.log('\n\nProperty Descriptor\n-----------');
+	// console.log(Object.getOwnPropertyDescriptor(req.files.file, 'path'));
+
+	console.log(req.files);
+
+	if(req.files){
+		var file, _user, _path;
+
+		for(var i=0; i<req.files.length; i++){
+			file = req.files[i];
+			_user = req.user;
+			_path = file.path;
+
+
+			if (file.size === 0) {
+				return next(new Error('File uploaded is EMPTY'));
+			}else if(file.size > 100000000){
+				return next(new Error('File uploaded exceeds MAX SIZE of 100MB'));
+			}else {
+				fs.exists(_path, function(exists) {
+
+					//If file exists move to user's form directory
+					if(exists) {
+						var newDestination = config.tmpUploadPath+_user.username;
+						var stat = null;
+						try {
+							stat = fs.statSync(newDestination);
+						} catch (err) {
+							fs.mkdirSync(newDestination);
+						}
+
+						if (stat && !stat.isDirectory()) {
+							console.log('Directory cannot be created');
+							return next(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'));
+						}
+
+						console.log(path.join(newDestination, pdfFile.filename));
+
+						fs.move(pdfFile.path, path.join(newDestination, pdfFile.filename), function (err) {
+							if (err) {
+								return next(new Error(err.message));
+							}
+							pdfFile.path = path.join(newDestination, pdfFile.filename);
+							console.log(pdfFile.filename + ' uploaded to ' + pdfFile.path);
+							res.json(pdfFile);
+						});
+
+					} else {
+						return next(new Error('Did NOT get your file!'));
+					}
+				});
+			}
+		}
+
+	}else {
+		return next(new Error('Uploaded files were NOT detected'));
+	}
+};
+*/
+
+/**
  * Delete a forms submissions
  */
 exports.deleteSubmissions = function(req, res) {

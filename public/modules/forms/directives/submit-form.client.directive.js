@@ -111,13 +111,14 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     //console.log('nextfield');
                     //console.log($scope.selected.index);
 					//console.log($scope.myform.form_fields.length-1);
+					var selected_index, selected_id;
 					if($scope.selected.index < $scope.myform.form_fields.length-1){
-                        var selected_index = $scope.selected.index+1;
-                        var selected_id = $scope.myform.form_fields[selected_index]._id;
+                        selected_index = $scope.selected.index+1;
+                        selected_id = $scope.myform.form_fields[selected_index]._id;
                         $rootScope.setActiveField(selected_id, selected_index, true);
                     } else if($scope.selected.index === $scope.myform.form_fields.length-1) {
-						var selected_index = $scope.selected.index+1;
-						var selected_id = 'submit_field';
+						selected_index = $scope.selected.index+1;
+						selected_id = 'submit_field';
 						$rootScope.setActiveField(selected_id, selected_index, true);
 					}
                 };
