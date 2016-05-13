@@ -15,13 +15,13 @@ angular.module(ApplicationConfiguration.applicationModuleName).constant('APP_PER
   viewAdminSettings: 'viewAdminSettings',
   editAdminSettings: 'editAdminSettings',
   editForm: 'editForm',
-  viewPrivateForm: 'viewPrivateForm',
+  viewPrivateForm: 'viewPrivateForm'
 });
 //User Role constants
 angular.module(ApplicationConfiguration.applicationModuleName).constant('USER_ROLES', {
   admin: 'admin',
   normal: 'user',
-  superuser: 'superuser',
+  superuser: 'superuser'
 });
 
 angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', '$state', '$stateParams',
