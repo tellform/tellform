@@ -90,13 +90,15 @@ Edit the 'env' config in gruntfile.js to make sure your .env file is being used.
 
 To run development version:
 
-```$ grunt default```
+Set ```NODE_ENV=development``` in .env file
+```$ grunt````
 
 To run production version:
 
-```$ grunt production```
+Set ```NODE_ENV=development``` in .env file
+```$ grunt````
 
-Your application should run on port 3000, so in your browser just go to [http://localhost:3000](http://localhost:3000)
+Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
 
 
 ## Testing Your Application
