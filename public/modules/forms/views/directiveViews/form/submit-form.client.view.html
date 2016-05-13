@@ -58,26 +58,27 @@ class="row field-directive">
 </div>
 
 <div class="row form-actions" id="submit_field" 
-ng-click="setActiveField('submit_field', myform.form_fields.length)" 
-ng-class="{activeField: selected._id == 'submit_field' }" 
-ng-style="{ 'background-color':myform.design.colors.buttonColor}"
-style="border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 50vh;">
+	ng-click="setActiveField('submit_field', myform.form_fields.length)"
+	ng-class="{activeField: selected._id == 'submit_field' }"
+	ng-style="{ 'background-color':myform.design.colors.buttonColor}"
+	style="border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 100vh;">
 
-<button ng-focus="setActiveField('submit_field', myform.form_fields.length)" 
-class="Button btn col-sm-2 col-xs-4" 
-v-busy="loading" v-busy-label="Please wait" v-pressable
-ng-disabled="loading || forms.myForm.$invalid"
-ng-click="submitForm()"
-ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}" 
-style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;"> 
-Submit
-</button>
+	<button ng-focus="setActiveField('submit_field', myform.form_fields.length)"
+		class="Button btn col-sm-2 col-xs-4 focusOn"
+		v-busy="loading" v-busy-label="Please wait" v-pressable
+		ng-disabled="loading || forms.myForm.$invalid"
+		ng-click="submitForm()"
+		ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
+		style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
 
-<div class="col-sm-2 col-xs-6" style="font-size: 75%; margin-top:2.5em">
-<small>
-press ENTER
-</small>
-</div>
+		Submit
+	</button>
+
+	<div class="col-sm-2 col-xs-6" style="font-size: 75%; margin-top:3.25em">
+		<small>
+			press ENTER
+		</small>
+	</div>
 </div>
 
 <section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" 

@@ -12,13 +12,16 @@
     <div class="col-xs-12 field-input">
         <div class="control-group input-append">
             <input ng-focus="setActiveField(field._id, index, true)" 
-                ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
-                ng-class="{ 'no-border': !!field.fieldValue }"
-                ui-date="dateOptions" 
-                ng-model="field.fieldValue" 
-                ng-model-options="{ debounce: 250 }" 
-                ng-required="field.required" 
-                ng-disabled="field.disabled">
+				   :ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
+				   ng-class="{ 'no-border': !!field.fieldValue }"
+				   ui-date="dateOptions"
+				   ng-model="field.fieldValue"
+				   ng-model-options="{ debounce: 250 }"
+				   ng-required="field.required"
+				   ng-disabled="field.disabled"
+				   placeholder="MM/DD/YYYY"
+				   on-enter-key="nextField()"
+				   ng-change="$root.nextField()">
         </div>
     </div>
 </div>

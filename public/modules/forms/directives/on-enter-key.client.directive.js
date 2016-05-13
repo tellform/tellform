@@ -7,11 +7,10 @@ angular.module('forms').directive('onEnterKey', ['$rootScope', function($rootSco
 			$element.bind('keydown keypress', function(event) {
 				var keyCode = event.which || event.keyCode;
 				if(keyCode === 13) {
+					event.preventDefault();
 					$rootScope.$apply(function() {
 						$rootScope.$eval($attrs.onEnterKey);
 					});
-
-					event.preventDefault();
 				}
 			});
 		}
