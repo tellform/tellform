@@ -3,7 +3,10 @@
 	 on-enter-key="chooseDefaultOption('rating')">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 	    <h3>
-	    	<small>{{index}}</small>
+			<small class="field-number">
+				{{index+1}}
+				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			</small>
 	    	{{field.title}} 
 	    	<span class="required-error" ng-show="!field.required">optional</span>
 	    </h3>
