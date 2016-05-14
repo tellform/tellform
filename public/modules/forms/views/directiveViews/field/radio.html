@@ -1,6 +1,7 @@
 <div class="field row radio"
-	 ng-if="field.fieldOptions.length > 0"
-	 on-enter-key="chooseDefaultOption()">
+	 on-enter-key="nextField()"
+	 key-to-option field="field"
+	 ng-if="field.fieldOptions.length > 0">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 		<h3>
 			<small class="field-number">
@@ -15,11 +16,10 @@
 
         <div ng-repeat="option in field.fieldOptions" class="row-fluid">
             <label class="btn col-md-4 col-xs-12 col-sm-12"
-                    style="margin: 0.5em; padding-left:30px" 
-                    ng-click="nextField()"
+                    style="margin: 0.5em; padding-left:30px"
                     ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}">
 				<div class="letter" style="float:left">
-					{{$index}}
+					{{$index+1}}
 				</div>
 				<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" class="focusOn"
