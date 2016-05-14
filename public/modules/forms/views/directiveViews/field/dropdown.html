@@ -15,12 +15,11 @@
 				ng-model-options="{ debounce: 250 }"  
 				ng-required="field.required" 
 				ng-disabled="field.disabled"
-				ng-focus="setActiveField(field._id, index, true)">
+				ng-change="$root.nextField()">
 			<ui-select-match placeholder="Type or select an option">
 				{{$select.selected.option_value}}
 			</ui-select-match>
 			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"
-							   ng-click="$root.nextField()"
 							   ng-class="{'active': option.option_value === field.fieldValue }">
 				<span ng-bind-html="option.option_value | highlight: $select.search"></span>
 			</ui-select-choices>
