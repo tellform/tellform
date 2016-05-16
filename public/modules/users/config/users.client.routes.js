@@ -13,15 +13,16 @@ angular.module('users').config(['$stateProvider',
         $timeout(deferred.resolve);
       }
       else {
-        Auth.currentUser = User.getCurrent(function() {
-          Auth.login();
-          $timeout(deferred.resolve());
-        },
-        function() {
-          Auth.logout();
-          $timeout(deferred.reject());
-          $state.go('signin', {reload: true});
-        });
+        Auth.currentUser = User.getCurrent(
+			function() {
+			  Auth.login();
+			  $timeout(deferred.resolve());
+			},
+			function() {
+			  Auth.logout();
+			  $timeout(deferred.reject());
+			  $state.go('signin', {reload: true});
+			});
       }
 
       return deferred.promise;
@@ -90,7 +91,6 @@ angular.module('users').config(['$stateProvider',
 			url: '/verify/:token',
 			templateUrl: 'modules/users/views/verify/verify-account.client.view.html'
 		}).
-
 		state('forgot', {
 			url: '/password/forgot',
 			templateUrl: 'modules/users/views/password/forgot-password.client.view.html'

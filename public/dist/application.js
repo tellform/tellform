@@ -293,7 +293,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/users/views/authentication/access-denied.client.view.html",
     "<section class=\"row text-center auth\"><h3 class=col-md-12>You need to be logged in to access this page</h3><a href=/#!/sigin class=col-md-12>Login</a></section>");
   $templateCache.put("../public/modules/users/views/authentication/signin.client.view.html",
-    "<section class=\"row auth\" data-ng-controller=AuthenticationController><h3 class=\"col-md-12 text-center\">Sign into your account</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><form class=\"signin form-horizontal\" autocomplete=off><fieldset><div data-ng-show=error class=\"text-center text-danger\">Error: <strong data-ng-bind=error></strong></div><div class=form-group><label for=username>Account Email</label><input id=username name=username class=form-control data-ng-model=credentials.username placeholder=Username></div><div class=form-group><label for=password>Password</label><input type=password id=password name=password class=form-control data-ng-model=credentials.password placeholder=Password></div><div class=forgot-password><a href=/#!/password/forgot>Forgot your password?</a></div><div class=\"text-center form-group\"><button class=\"btn btn-primary\" ng-click=signin()>Sign in</button> <span ng-hide=$root.signupDisabled>&nbsp; or&nbsp; <a href=/#!/signup>Sign up</a></span></div></fieldset></form></div></section>");
+    "<section class=\"row auth\" data-ng-controller=AuthenticationController><h3 class=\"col-md-12 text-center\">Sign into your account</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><form class=\"signin form-horizontal\" autocomplete=off><fieldset><div data-ng-show=error class=\"text-center text-danger\">Error: <strong data-ng-bind=error></strong></div><div class=form-group><label for=username>Account Email</label><input id=username name=username class=form-control data-ng-model=credentials.username placeholder=Username></div><div class=form-group><label for=password>Password</label><input type=password id=password name=password class=form-control data-ng-model=credentials.password placeholder=Password></div><div class=forgot-password><a ui-sref=forgot>Forgot your password?</a></div><div class=\"text-center form-group\"><button class=\"btn btn-primary\" ng-click=signin()>Sign in</button> <span ng-hide=$root.signupDisabled>&nbsp; or&nbsp; <a ui-sref=signup>Sign up</a></span></div></fieldset></form></div></section>");
   $templateCache.put("../public/modules/users/views/authentication/signup-success.client.view.html",
     "<section class=\"row auth signup-view success\" data-ng-controller=AuthenticationController><h3 class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6 text-center\">Signup Successful</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><h2>You've successfully registered an account at TellForm.<br><br>But your account is <b>not activated yet</b></h2><br><br><p>Before you continue, make sure to check your email for our verification. If you don't receive it within 24h drop us a line at <a href=mail:hi@tellform.com>hi@TellForm.com</a></p><div class=\"text-center form-group\"><button type=submit class=\"btn btn-large btn-primary\"><a href=\"/#!/\" style=\"color: white; text-decoration: none\">Continue</a></button></div></div></section>");
   $templateCache.put("../public/modules/users/views/authentication/signup.client.view.html",
@@ -379,8 +379,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 	        $state.previous = fromState;
 	        //console.log('toState: '+toState.name);
 
+			var statesToIgnore = ['home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
+
 	        //Redirect to listForms if user is authenticated
-        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
+        	if(statesToIgnore.indexOf(toState.name) > 0){
         		if(Auth.isAuthenticated()){
         			event.preventDefault(); // stop current execution
         			//console.log('go to forms');
@@ -389,7 +391,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
         	}
 	        //Redirect to 'signup' route if user is not authenticated
         	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
-        		//console.log('go to signup');
+        		console.log('go to signup');
         		event.preventDefault(); // stop current execution
         		$state.go('listForms'); // go to listForms page
         	}
@@ -415,9 +417,9 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 				//console.log(permissions);
 			  	if( (permissions != null) ){
 					if( !authenticator.canAccess(permissions) ){
-			    			event.preventDefault();
-		    				//console.log('access denied');
-		      				$state.go('access_denied');
+						event.preventDefault();
+						//console.log('access denied');
+						$state.go('access_denied');
 					}
 				}
 			}
@@ -1583,7 +1585,9 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         'csv': 'csv'
                     };
 
-                    var blob = new Blob([document.getElementById('table-submission-data').innerHTM], {
+					console.log($scope.table.rows);
+
+                    var blob = new Blob([$scope.table.rows], {
                             type: 'application/'+fileMIMETypeMap[type]+';charset=utf-8'
                     });
                     saveAs(blob, $scope.myform.title+'_sumbissions_export_'+Date.now()+'.'+type);
@@ -2228,6 +2232,7 @@ angular.module('users').config(['$httpProvider',
             if(response.config.url !== '/users/me'){
               console.log('intercepted rejection of ', response.config.url, response.status);
               if (response.status === 401) {
+				  console.log($location.path());
                 // save the current location so that login can redirect back
                 $location.nextAfterLogin = $location.path();
                 $location.path('/signin');
@@ -2242,6 +2247,7 @@ angular.module('users').config(['$httpProvider',
       };
     }]);
 }]);
+
 'use strict';
 
 // Setting up route
@@ -2257,15 +2263,16 @@ angular.module('users').config(['$stateProvider',
         $timeout(deferred.resolve);
       }
       else {
-        Auth.currentUser = User.getCurrent(function() {
-          Auth.login();
-          $timeout(deferred.resolve());
-        },
-        function() {
-          Auth.logout();
-          $timeout(deferred.reject());
-          $state.go('signin', {reload: true});
-        });
+        Auth.currentUser = User.getCurrent(
+			function() {
+			  Auth.login();
+			  $timeout(deferred.resolve());
+			},
+			function() {
+			  Auth.logout();
+			  $timeout(deferred.reject());
+			  $state.go('signin', {reload: true});
+			});
       }
 
       return deferred.promise;
@@ -2336,7 +2343,6 @@ angular.module('users').config(['$stateProvider',
 			url: '/verify/:token',
 			templateUrl: 'modules/users/views/verify/verify-account.client.view.html'
 		}).
-
 		state('forgot', {
 			url: '/password/forgot',
 			templateUrl: 'modules/users/views/password/forgot-password.client.view.html'

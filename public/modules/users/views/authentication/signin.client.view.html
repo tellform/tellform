@@ -33,14 +33,14 @@
 					<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
 				</div>
 				<div class="forgot-password">
-					<a href="/#!/password/forgot">Forgot your password?</a>
+					<a ui-sref="forgot">Forgot your password?</a>
 				</div>
 				<div class="text-center form-group">
 					<button class="btn btn-primary" ng-click="signin()">Sign in</button>
 
 					<span ng-hide="$root.signupDisabled">
 						&nbsp; or&nbsp;
-						<a href="/#!/signup">Sign up</a
+						<a ui-sref="signup">Sign up</a
 					</span>
 
 				</div>

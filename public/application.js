@@ -35,8 +35,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 	        $state.previous = fromState;
 	        //console.log('toState: '+toState.name);
 
+			var statesToIgnore = ['home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
+
 	        //Redirect to listForms if user is authenticated
-        	if(toState.name === 'home' || toState.name === 'signin' || toState.name === 'resendVerifyEmail' || toState.name === 'verify' || toState.name === 'signup' || toState.name === 'signup-success'){
+        	if(statesToIgnore.indexOf(toState.name) > 0){
         		if(Auth.isAuthenticated()){
         			event.preventDefault(); // stop current execution
         			//console.log('go to forms');
@@ -45,7 +47,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
         	}
 	        //Redirect to 'signup' route if user is not authenticated
         	else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
-        		//console.log('go to signup');
+        		console.log('go to signup');
         		event.preventDefault(); // stop current execution
         		$state.go('listForms'); // go to listForms page
         	}
@@ -71,9 +73,9 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 				//console.log(permissions);
 			  	if( (permissions != null) ){
 					if( !authenticator.canAccess(permissions) ){
-			    			event.preventDefault();
-		    				//console.log('access denied');
-		      				$state.go('access_denied');
+						event.preventDefault();
+						//console.log('access denied');
+						$state.go('access_denied');
 					}
 				}
 			}
