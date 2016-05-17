@@ -4,14 +4,14 @@
 function removeDateFieldsFunc(o) {
     var clone = _.clone(o);
     function eachObject(v,k){
-        
+
 		if(k === 'lastModified' || k === 'created'){
         	delete clone[i][k];
         }
 	}
 
 	for(var i=0; i<clone.length; i++){
-        _.each(clone[i], eachObject); 
+        _.each(clone[i], eachObject);
     }
     return clone;
 }
@@ -19,7 +19,7 @@ function removeDateFieldsFunc(o) {
 _.mixin({ removeDateFields : removeDateFieldsFunc });
 
 angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', function($rootScope, $timeout) {
-  
+
     return {
         require: ['^form'],
         restrict: 'AE',
@@ -58,24 +58,24 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     $rootScope[$attrs.autoSaveCallback](true,
                         function(err){
                         if(!err){
-                            console.log('\n\nForm data persisted -- setting pristine flag');
-                            $formCtrl.$setPristine(); 
-                            $formCtrl.$setUntouched(); 
+                            //console.log('\n\nForm data persisted -- setting pristine flag');
+                            $formCtrl.$setPristine();
+                            $formCtrl.$setUntouched();
                         }else{
                             console.error('Error form data NOT persisted');
                             console.error(err);
                         }
-                    }); 
+                    });
                 };
 
                 //Update/Save Form if any Form fields are Dirty and Touched
                 $scope.$watch(function(newValue, oldValue) {
-                    console.log('introParagraphStartPage.$dirty: '+$scope.editForm.introParagraphStartPage.$dirty);
-                    console.log('introParagraphStartPage.$touched: '+$scope.editForm.introParagraphStartPage.$touched);
+                    //console.log('introParagraphStartPage.$dirty: '+$scope.editForm.introParagraphStartPage.$dirty);
+                    //console.log('introParagraphStartPage.$touched: '+$scope.editForm.introParagraphStartPage.$touched);
                     if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-                        console.log('Form saving started');
+                        //console.log('Form saving started');
                         debounceSave();
-                        console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
+                        //console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
                     }
                 });
 
@@ -99,7 +99,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     if( (!newValue && !oldValue) || !oldValue ){
                         return;
                     }
-                      
+
                     // console.log('Autosaving');
                     // console.log('\n\n----------');
                     // console.log('!$dirty: '+ !$formCtrl.$dirty );
@@ -112,7 +112,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     // console.log(oldValue.form_fields);
                     // console.log(newValue.form_fields);
 
-                    if(oldValue.form_fields.length === 0) { 
+                    if(oldValue.form_fields.length === 0) {
                         $rootScope.finishedRender = true;
                     }
 
@@ -124,9 +124,9 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                             savePromise = null;
                         }
 
-                        savePromise = $timeout(function() {   
-                            debounceSave();           
-                        }); 
+                        savePromise = $timeout(function() {
+                            debounceSave();
+                        });
                     }
                     //If we are finished rendering then form saving should be finished
                     else if($rootScope.finishedRender && $rootScope.saveInProgress){
@@ -137,5 +137,5 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
             });
         }
     };
-  
+
 }]);
