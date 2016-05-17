@@ -178,11 +178,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					}, 500);
                 };
 
-                //Load our form when the page is ready
-                //angular.element(document).ready(function() {
-                    $scope.reloadForm();
-                //});
-
+                //Reload our form
+				$scope.reloadForm();
             }
         };
     }

@@ -109,11 +109,15 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     };
 
 					console.log($scope.table.rows);
+					
+					angular.element('#table-submission-data').tableExport({type: type, escape:false});
 
+					/*
                     var blob = new Blob([$scope.table.rows], {
                             type: 'application/'+fileMIMETypeMap[type]+';charset=utf-8'
                     });
                     saveAs(blob, $scope.myform.title+'_sumbissions_export_'+Date.now()+'.'+type);
+                    */
                 };
 
             }

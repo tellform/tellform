@@ -32,7 +32,8 @@
     "v-button": "^1.1.1",
     "angular-busy": "^4.1.3",
     "angular-input-stars": "https://github.com/whitef0x0/angular-input-stars.git#master",
-    "raven-js": "^3.0.4"
+    "raven-js": "^3.0.4",
+    "tableExport.jquery.plugin": "^1.5.1"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
