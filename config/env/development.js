@@ -3,7 +3,7 @@
 module.exports = {
 	baseUrl: process.env.BASE_URL || 'http://localhost:3000',
 	db: {
-		uri: 'mongodb://localhost/mean-dev',
+		uri: 'mongodb://localhost/mean',
 		options: {
 			user: '',
 			pass: ''

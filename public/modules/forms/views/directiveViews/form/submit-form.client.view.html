@@ -41,37 +41,53 @@ ng-style="{'color':button.color}">
 <!-- Form Fields View -->
 <div class="form-fields" ng-show="!myform.submitted && !myform.startPage.showStart"
     ng-style="{ 'border-color': myform.design.colors.buttonTextColor }">
-<div class="row">
-<form name="forms.myForm" 
-novalidate 
-class="submission-form col-sm-12 col-md-offset-1 col-md-10">
-<div ng-repeat="field in myform.form_fields"  
-ng-if="!field.deletePreserved" 
-data-index="{{$index}}" 
-data-id="{{field._id}}" 
-ng-class="{activeField: selected._id == field._id }" 
-class="row field-directive">
-<field-directive field="field" design="myform.design" index="$index" forms="forms">
-</field-directive>
-</div>
-</form>
+
+	<div class="row">
+		<form name="forms.myForm"
+		novalidate
+		class="submission-form col-sm-12 col-md-offset-1 col-md-10">
+
+		<div ng-repeat="field in myform.form_fields"
+		ng-if="!field.deletePreserved"
+		data-index="{{$index}}"
+		data-id="{{field._id}}"
+		ng-class="{activeField: selected._id == field._id }"
+		class="row field-directive">
+			<field-directive field="field" design="myform.design" index="$index" forms="forms">
+			</field-directive>
+		</div>
+
+		</form>
 </div>
 
-<div class="row form-actions" id="submit_field" 
-	ng-click="setActiveField('submit_field', myform.form_fields.length)"
+
+<div class="row form-actions" id="submit_field"
 	ng-class="{activeField: selected._id == 'submit_field' }"
 	ng-style="{ 'background-color':myform.design.colors.buttonColor}"
 	style="border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; padding-bottom: 100vh;">
 
-	<button ng-focus="setActiveField('submit_field', myform.form_fields.length)"
+	<div class="col-xs-12 text-left"
+		 style="background-color:#990000; color:white;"
+		 ng-if="forms.myForm.$invalid">
+		{{form_fields_count - (myform | formValidity)}} answer(s) need completing
+	</div>
+
+	<button ng-if="!forms.myForm.$invalid"
 		class="Button btn col-sm-2 col-xs-8 focusOn"
 		v-busy="loading" v-busy-label="Please wait" v-pressable
-		ng-disabled="loading || forms.myForm.$invalid"
+		ng-disabled="loading"
 		ng-click="submitForm()"
 		ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
 		style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
 
 		Submit
+	</button>
+
+	<button ng-if="forms.myForm.$invalid"
+			class="Button btn col-sm-2 col-xs-8"
+			ng-click="goToInvalid()"
+			style="font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white">
+		Review
 	</button>
 
 	<div class="col-sm-2 hidden-xs" style="font-size: 75%; margin-top:3.25em">

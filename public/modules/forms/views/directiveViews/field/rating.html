@@ -1,5 +1,5 @@
 <div class="textfield field row"
-	 on-enter-key="nextField()">
+	 on-enter-key="nextField()"
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 	    <h3>
 			<small class="field-number">
@@ -12,6 +12,7 @@
     </div>
     <div class="col-xs-12 field-input">
 		<input-stars max="5"
+					 ng-init="field.fieldValue = 1"
 					 on-star-click="$root.nextField()"
 					 icon-full="fa-star"
 					 icon-base="fa fa-3x"

@@ -18,6 +18,7 @@
             <label class="btn col-md-5 col-xs-12"
 				   ng-class="{activeBtn: field.fieldValue == 'true'}">
                 <input class="focusOn"
+				    ng-focus="setActiveField(field._id, index, true)"
                     ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
                     type="radio" value="true"
                     ng-model="field.fieldValue" 

@@ -100,16 +100,10 @@
 	<script type="text/javascript" src="http://{{request.hostname}}:35729/livereload.js"></script>
 	{% endif %}
 
+	<script src="https://cdn.ravenjs.com/2.3.0/angular/raven.min.js"></script>
+
 	<script>
-		/*Raven.config('http://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2', {
-	   	// Raven settings
-	    })
-	     .setUser({
-	       "id": "SERVER_RENDERED_ID",
-	       "email": "SERVER_RENDERED_EMAIL"
-	     })
-	     .install()
-	     */
+		Raven.config('http://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
 	</script>
 
 	<!-- [if lt IE 9]>

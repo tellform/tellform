@@ -2335,13 +2335,19 @@ angular.module('users').config(['$stateProvider',
 			url: '/access_denied',
 			templateUrl: 'modules/users/views/authentication/access-denied.client.view.html'
 		}).
-		state('resendVerifyEmail', {
-			url: '/verify',
-			templateUrl: 'modules/users/views/verify/resend-verify-email.client.view.html'
-		}).
 		state('verify', {
+			resolve: {
+				isDisabled: checkSignupDisabled
+			},
 			url: '/verify/:token',
 			templateUrl: 'modules/users/views/verify/verify-account.client.view.html'
+		}).
+		state('resendVerifyEmail', {
+			resolve: {
+				isDisabled: checkSignupDisabled
+			},
+			url: '/verify',
+			templateUrl: 'modules/users/views/verify/resend-verify-email.client.view.html'
 		}).
 		state('forgot', {
 			url: '/password/forgot',

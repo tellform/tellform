@@ -149,7 +149,11 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }
                 };
 
-                $scope.submitForm = function() {
+				$scope.goToInvalid = function() {
+					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
+				};
+
+				$scope.submitForm = function() {
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
 					var form = _.cloneDeep($scope.myform);

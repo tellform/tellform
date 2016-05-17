@@ -23,7 +23,8 @@
 				</div>
 				<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" class="focusOn"
-                    value="{{option.option_value}}" 
+				    ng-focus="setActiveField(field._id, index, true)"
+				    value="{{option.option_value}}"
                     ng-model="field.fieldValue" 
                     ng-model-options="{ debounce: 250 }" 
                     ng-required="field.required"
