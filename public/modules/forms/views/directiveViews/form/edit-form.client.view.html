@@ -4,7 +4,7 @@
 
         <div class="row add-field-title">
             <h3 class="col-md-12 hidden-sm hidden-xs">Click to Add New Field</h3>
-            <h4 class="col-sm-12 hidden-xs hidden-md hidden-lg">Add New Field</h5>
+            <h4 class="col-sm-12 hidden-xs hidden-md hidden-lg">Add New Field</h4>
             <h5 class="col-sm-12 hidden-sm hidden-md hidden-lg">Add Field</h5>
         </div>
         <div class="panel-group row" class="draggable" ng-model="addField.types">
@@ -163,10 +163,17 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-8 dropzoneContainer">
-                <accordion close-others="accordion.oneAtATime" ui-sortable="dropzone" ng-model="myform.form_fields" class="dropzone">
 
-                    <accordion-group data-ng-repeat="field in myform.form_fields track by field._id" is-open="accordion[$index].isOpen" on-finish-render="editFormFields" ng-if="!field.deletePreserved">
+                <accordion close-others="accordion.oneAtATime"
+						   ui-floating="true"
+						   ui-sortable="sortableOptions"
+						   ng-model="myform.form_fields"
+						   class="dropzone">
 
+                    <accordion-group data-ng-repeat="field in myform.form_fields track by field._id"
+									 is-open="accordion[$index].isOpen"
+									 on-finish-render="editFormFields"
+									 ng-if="!field.deletePreserved">
                         <accordion-heading>
 
                             <div class="handle">
