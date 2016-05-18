@@ -9,7 +9,7 @@ module.exports = {
 			pass: process.env.MONGOLAB_PASS || ''
 		}
 	},
-	port: process.env.PORT || 4545, 
+	port: process.env.PORT || 4545,
 	log: {
 		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
 		format: 'combined',
@@ -55,6 +55,8 @@ module.exports = {
 		from: process.env.MAILER_FROM || 'no-reply@tellform.com',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
+			secure: false,
+			requireTLS: true,
 			auth: {
 				user: process.env.MAILER_EMAIL_ID || '',
 				pass: process.env.MAILER_PASSWORD || ''

@@ -50,6 +50,8 @@ module.exports = {
 		from: process.env.MAILER_FROM || 'no-reply@tellform.com',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
+			secure: false,
+			requireTLS: true,
 			auth: {
 				user: process.env.MAILER_EMAIL_ID || '',
 				pass: process.env.MAILER_PASSWORD || ''
