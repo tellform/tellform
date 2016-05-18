@@ -151,3 +151,10 @@ After you've generated the key and certificate, place them in the *config/sslcer
 ## Credits
 Inspired/built off the great work of the [MeanJS team](https://github.com/mean/).
 
+## Mentions on the Web
+[t3n.de](http://t3n.de/news/open-source-alternative-typeform-tellform-707295/)
+[Product Hunt](https://www.producthunt.com/tech/tellform)
+[Hacker News Post](https://news.ycombinator.com/item?id=11711095)
+[Reddit Posts](https://www.reddit.com/domain/tellform.com/)
+
+
