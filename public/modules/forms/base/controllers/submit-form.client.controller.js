@@ -6,7 +6,7 @@ angular.module('forms').controller('SubmitFormController', [
 	function($scope, $rootScope, $state, $translate, myForm, Auth) {
 		$scope.authentication = Auth;
 		$scope.myform = myForm;
-		console.log(myForm);
+
 		$translate.use(myForm.language);
 
 		if(!$scope.myform.isLive){
