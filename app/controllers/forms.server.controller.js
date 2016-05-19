@@ -362,13 +362,11 @@ exports.list = function(req, res) {
  * Form middleware
  */
 exports.formByID = function(req, res, next, id) {
-
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(400).send({
 			message: 'Form is invalid'
 		});
-	}
-	else {
+	} else {
 		Form.findById(id).populate('admin').exec(function(err, form) {
 			if (err) {
 				return next(err);

@@ -16,6 +16,17 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 /*
                 **  Initialize scope with variables
                 */
+				//Setup UI-Sortable
+				$scope.sortableOptions = {
+					appendTo: '.dropzone',
+					cursorAt: { top: -155 },
+					forceHelperSize: true,
+					forcePlaceholderSize: true
+				};
+
+
+				console.log($scope.sortableOptions);
+
                 //Populate AddField with all available form field types
                 $scope.addField = {};
                 $scope.addField.types = FormFields.types;

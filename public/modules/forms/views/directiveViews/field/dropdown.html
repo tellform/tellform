@@ -1,7 +1,12 @@
-<div class="field row dropdown" ng-click="setActiveField(field._id, index, true)" ng-if="field.fieldOptions.length > 0">
+<div class="field row dropdown"
+	 ng-click="setActiveField(field._id, index, true)"
+	 ng-if="field.fieldOptions.length > 0">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 	    <h3>
-	    	<small>{{index}}</small>
+			<small class="field-number">
+				{{index+1}}
+				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			</small>
 	    	{{field.title}} 
 	    	<span class="required-error" ng-show="!field.required">optional</span>
 	    </h3>
@@ -12,13 +17,12 @@
 				ng-model-options="{ debounce: 250 }"  
 				ng-required="field.required" 
 				ng-disabled="field.disabled"
-				ng-focus="setActiveField(field._id, index, true)">
+				ng-change="$root.nextField()">
 			<ui-select-match placeholder="Type or select an option">
 				{{$select.selected.option_value}}
 			</ui-select-match>
-			<ui-select-choices 
-                repeat="option in field.fieldOptions | filter: $select.search"
-				ng-class="{'active': option.option_value === field.fieldValue }">
+			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"
+							   ng-class="{'active': option.option_value === field.fieldValue }">
 				<span ng-bind-html="option.option_value | highlight: $select.search"></span>
 			</ui-select-choices>
         </ui-select>    

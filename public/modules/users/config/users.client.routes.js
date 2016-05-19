@@ -13,15 +13,16 @@ angular.module('users').config(['$stateProvider',
         $timeout(deferred.resolve);
       }
       else {
-        Auth.currentUser = User.getCurrent(function() {
-          Auth.login();
-          $timeout(deferred.resolve());
-        },
-        function() {
-          Auth.logout();
-          $timeout(deferred.reject());
-          $state.go('signin', {reload: true});
-        });
+        Auth.currentUser = User.getCurrent(
+			function() {
+			  Auth.login();
+			  $timeout(deferred.resolve());
+			},
+			function() {
+			  Auth.logout();
+			  $timeout(deferred.reject());
+			  $state.go('signin', {reload: true});
+			});
       }
 
       return deferred.promise;
@@ -82,15 +83,20 @@ angular.module('users').config(['$stateProvider',
 			url: '/access_denied',
 			templateUrl: 'modules/users/views/authentication/access-denied.client.view.html'
 		}).
-		state('resendVerifyEmail', {
-			url: '/verify',
-			templateUrl: 'modules/users/views/verify/resend-verify-email.client.view.html'
-		}).
 		state('verify', {
+			resolve: {
+				isDisabled: checkSignupDisabled
+			},
 			url: '/verify/:token',
 			templateUrl: 'modules/users/views/verify/verify-account.client.view.html'
 		}).
-
+		state('resendVerifyEmail', {
+			resolve: {
+				isDisabled: checkSignupDisabled
+			},
+			url: '/verify',
+			templateUrl: 'modules/users/views/verify/resend-verify-email.client.view.html'
+		}).
 		state('forgot', {
 			url: '/password/forgot',
 			templateUrl: 'modules/users/views/password/forgot-password.client.view.html'

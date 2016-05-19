@@ -1,7 +1,14 @@
-<div class="textfield field row" ng-click="setActiveField(field._id, index, true)">
-    <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
+<div class="textfield field row"
+	 ng-click="setActiveField(field._id, index, true)">
+	<div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
     	<h3>
-    		<small>{{index}}</small>{{field.title}}
+    		<small class="field-number">
+				{{index+1}}
+				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			</small>
+
+			{{field.title}}
+
     		<span class="required-error" ng-show="!field.required">
     			(optional)
     		</span>
@@ -34,8 +41,8 @@
         </div>
     </div>
 </div>
-<div class="col-xs-12 row">
-    	<div class="btn btn-lg btn-default row-fluid"
+<div>
+	<div class="btn btn-lg btn-default col-xs-12 col-sm-4"
 	 	style="padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)">
 			<button ng-disabled="!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid" 
 				ng-style="{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"
@@ -44,7 +51,7 @@
 				
 				OK <i class="fa fa-check"></i>
 			</button>
-			<div class="col-sm-3 col-xs-6" style="margin-top:0.2em">
+			<div class="col-xs-6 col-sm-3" style="margin-top:0.2em">
 				<small style="color:#ddd; font-size:70%">
 				press ENTER
 				</small>

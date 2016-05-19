@@ -90,13 +90,15 @@ Edit the 'env' config in gruntfile.js to make sure your .env file is being used.
 
 To run development version:
 
-```$ grunt default```
+Set ```NODE_ENV=development``` in .env file
+```$ grunt````
 
 To run production version:
 
-```$ grunt production```
+Set ```NODE_ENV=development``` in .env file
+```$ grunt````
 
-Your application should run on port 3000, so in your browser just go to [http://localhost:3000](http://localhost:3000)
+Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
 
 
 ## Testing Your Application
@@ -148,4 +150,17 @@ After you've generated the key and certificate, place them in the *config/sslcer
 
 ## Credits
 Inspired/built off the great work of the [MeanJS team](https://github.com/mean/).
+
+## Mentions on the Web
+
+[t3n.de](http://t3n.de/news/open-source-alternative-typeform-tellform-707295/)
+
+[BootCSS Expo](http://expo.bootcss.com/)
+
+[Product Hunt](https://www.producthunt.com/tech/tellform)
+
+[Hacker News Post](https://news.ycombinator.com/item?id=11711095)
+
+[Reddit Posts](https://www.reddit.com/domain/tellform.com/)
+
 

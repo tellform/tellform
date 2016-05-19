@@ -1,7 +1,14 @@
 <div class="field row" ng-if="form.autofillPDFs" ng-click="setActiveField(field._id, index, true)">
-    <div class="col-sm-4 field-title">
-        <h5>{{field.title}}     <span class="required-error" ng-show="field.required && field.fieldValue == 0">(* required)</span></h5>
-    </div>
+	<div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
+		<h3>
+			<small class="field-number">
+				{{index+1}}
+				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			</small>
+			{{field.title}}
+			<span class="required-error" ng-show="!field.required">optional</span>
+		</h3>
+	</div>
     <div class="col-sm-8 field-input">
         <div class="input-group ">
             <div tabindex="-1" class="form-control file-caption">

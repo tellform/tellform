@@ -1,17 +1,30 @@
 <div class="field row radio"
-	 ng-click="setActiveField(field._id, index, true)"
-	 ng-if="field.fieldOptions.length > 0"
-	 on-enter-key="chooseDefaultOption()">
-    <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}"><h3><small>{{index}}</small>{{field.title}} <span class="required-error" ng-show="!field.required">optional</span></h3></div>
+	 on-enter-key="nextField()"
+	 key-to-option field="field"
+	 ng-if="field.fieldOptions.length > 0">
+    <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
+		<h3>
+			<small class="field-number">
+				{{index+1}}
+				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			</small>
+			{{field.title}}
+			<span class="required-error" ng-show="!field.required">optional</span>
+		</h3>
+	</div>
     <div class="col-xs-12 field-input">
+
         <div ng-repeat="option in field.fieldOptions" class="row-fluid">
-            <label class="btn col-xs-4" 
-                    style="margin: 0.5em; padding-left:30px" 
-                    ng-click="$root.nextField()"
+            <label class="btn col-md-4 col-xs-12 col-sm-12"
+                    style="margin: 0.5em; padding-left:30px"
                     ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}">
-                <input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
+				<div class="letter" style="float:left">
+					{{$index+1}}
+				</div>
+				<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" class="focusOn"
-                    value="{{option.option_value}}" 
+				    ng-focus="setActiveField(field._id, index, true)"
+				    value="{{option.option_value}}"
                     ng-model="field.fieldValue" 
                     ng-model-options="{ debounce: 250 }" 
                     ng-required="field.required"

@@ -23,7 +23,6 @@
     "lodash": "~3.10.0",
     "angular-ui-sortable": "~0.13.4",
     "angular-permission": "~1.1.0",
-    "angular-input-stars": "*",
     "file-saver.js": "~1.20150507.2",
     "angular-bootstrap-colorpicker": "~3.0.19",
     "angular-ui-router-tabs": "~1.7.0",
@@ -31,12 +30,14 @@
     "ui-select": "angular-ui-select#^0.16.1",
     "angular-sanitize": "^1.5.3",
     "v-button": "^1.1.1",
-    "angular-busy": "^4.1.3"
+    "angular-busy": "^4.1.3",
+    "angular-input-stars": "https://github.com/whitef0x0/angular-input-stars.git#master",
+    "raven-js": "^3.0.4",
+    "tableExport.jquery.plugin": "^1.5.1"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
-    "angular": "1.4.x",
-    "ng-file-upload": "^12.0.4"
+    "angular": "1.4.x"
   },
   "overrides": {
     "BOWER-PACKAGE": {

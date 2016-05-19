@@ -41,43 +41,60 @@ ng-style="{'color':button.color}">
 <!-- Form Fields View -->
 <div class="form-fields" ng-show="!myform.submitted && !myform.startPage.showStart"
     ng-style="{ 'border-color': myform.design.colors.buttonTextColor }">
-<div class="row">
-<form name="forms.myForm" 
-novalidate 
-class="submission-form col-sm-12 col-md-offset-1 col-md-10">
-<div ng-repeat="field in myform.form_fields"  
-ng-if="!field.deletePreserved" 
-data-index="{{$index}}" 
-data-id="{{field._id}}" 
-ng-class="{activeField: selected._id == field._id }" 
-class="row field-directive">
-<field-directive field="field" design="myform.design" index="$index" forms="forms">
-</field-directive>
-</div>
-</form>
+
+	<div class="row">
+		<form name="forms.myForm"
+		novalidate
+		class="submission-form col-sm-12 col-md-offset-1 col-md-10">
+
+		<div ng-repeat="field in myform.form_fields"
+		ng-if="!field.deletePreserved"
+		data-index="{{$index}}"
+		data-id="{{field._id}}"
+		ng-class="{activeField: selected._id == field._id }"
+		class="row field-directive">
+			<field-directive field="field" design="myform.design" index="$index" forms="forms">
+			</field-directive>
+		</div>
+
+		</form>
 </div>
 
-<div class="row form-actions" id="submit_field" 
-ng-click="setActiveField('submit_field', myform.form_fields.length)" 
-ng-class="{activeField: selected._id == 'submit_field' }" 
-ng-style="{ 'background-color':myform.design.colors.buttonColor}"
-style="border-top: 1px solid #ddd; margin-right: -13% ;margin-left: -13%; padding-bottom: 50vh;">
 
-<button ng-focus="setActiveField('submit_field', myform.form_fields.length)" 
-class="Button btn col-sm-2 col-xs-4" 
-v-busy="loading" v-busy-label="Please wait" v-pressable
-ng-disabled="loading || forms.myForm.$invalid"
-ng-click="submitForm()"
-ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}" 
-style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;"> 
-Submit
-</button>
+<div class="row form-actions" id="submit_field"
+	ng-class="{activeField: selected._id == 'submit_field' }"
+	ng-style="{ 'background-color':myform.design.colors.buttonColor}"
+	style="border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; padding-bottom: 100vh;">
 
-<div class="col-sm-2 col-xs-6" style="font-size: 75%; margin-top:2.5em">
-<small>
-press ENTER
-</small>
-</div>
+	<div class="col-xs-12 text-left"
+		 style="background-color:#990000; color:white;"
+		 ng-if="forms.myForm.$invalid">
+		{{form_fields_count - (myform | formValidity)}} answer(s) need completing
+	</div>
+
+	<button ng-if="!forms.myForm.$invalid"
+		class="Button btn col-sm-2 col-xs-8 focusOn"
+		v-busy="loading" v-busy-label="Please wait" v-pressable
+		ng-disabled="loading"
+		ng-click="submitForm()"
+		ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
+		style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
+
+		Submit
+	</button>
+
+	<button ng-if="forms.myForm.$invalid"
+			class="Button btn col-sm-2 col-xs-8"
+			ng-click="goToInvalid()"
+			style="font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white">
+		Review
+	</button>
+
+	<div class="col-sm-2 hidden-xs" style="font-size: 75%; margin-top:3.25em">
+		<small>
+			press ENTER
+		</small>
+	</div>
 </div>
 
 <section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" 
@@ -101,14 +118,14 @@ press ENTER
                             Edit this TellForm
                         </a>
                     </div>
-                    <div class="col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12"> 
-                        <button class="btn btn-lg" id="focusDownButton"
+                    <div class="col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12 row">
+                        <button class="btn btn-lg col-xs-6" id="focusDownButton"
 				            ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
                             ng-click="nextField()" 
 				            ng-disabled="selected.index > myform.form_fields.length-1">
                         	<i class="fa fa-chevron-down"></i>
                         </button>
-                        <button class="btn btn-info btn-lg" id="focusUpButton" 
+                        <button class="btn btn-lg col-xs-6" id="focusUpButton"
                             ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
                             ng-click="prevField()" 
                             ng-disabled="selected.index == 0">
@@ -127,10 +144,10 @@ press ENTER
     style="padding-top: 5vh;">
 
     <div class="field row text-center">
-        <div class="col-xs-6 col-xs-offset-3 text-center">Form entry successfully submitted!</div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center">Form entry successfully submitted!</div>
     </div>
     <div class="row form-actions">
-        <p class="text-center col-xs-4 col-xs-offset-4">
+        <p class="text-center">
             <button ng-click="reloadForm()" class="btn" type="button"
                 ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}">
                 <span style="font-size: 1.6em;"> Go back to Form</span>

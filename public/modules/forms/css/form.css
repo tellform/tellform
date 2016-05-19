@@ -155,6 +155,10 @@ form .accordion-edit {
     z-index: 99!important;
 }
 
+form .row.field .field-number {
+	margin-right: 0.5em;
+}
+
 /* Styles for form submission view (/forms/:formID) */
 form .row.field {
     padding: 1em 0 0 0;
@@ -313,6 +317,7 @@ div.config-form .row.field {
 
 .admin-form .panel-heading {
     background-color: #f1f1f1;
+	position: relative!important;
 }
     .admin-form .panel-heading:hover {
         background-color: #fff;
