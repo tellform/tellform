@@ -93,8 +93,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 						//console.log($scope.selected);
 						return;
 		    		}
-                    console.log('field_id: '+field_id);
-                    console.log('field_index: '+field_index);
+                    //console.log('field_id: '+field_id);
+                    //console.log('field_index: '+field_index);
                     //console.log($scope.selected);
 
                     $scope.selected._id = field_id;
@@ -138,7 +138,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                         selected_id = $scope.myform.visible_form_fields[selected_index]._id;
                         $rootScope.setActiveField(selected_id, selected_index, true);
                     } else if($scope.selected.index === $scope.myform.visible_form_fields.length-1) {
-						console.log('Second last element');
+						//console.log('Second last element');
 						selected_index = $scope.selected.index+1;
 						selected_id = 'submit_field';
 						$rootScope.setActiveField(selected_id, selected_index, true);

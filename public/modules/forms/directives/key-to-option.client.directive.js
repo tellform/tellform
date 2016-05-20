@@ -2,11 +2,12 @@
 
 angular.module('forms').directive('keyToOption', function(){
 	return {
-		restrict: 'A',
+		restrict: 'AE',
+		transclude: true,
 		scope: {
-			field: '='
+			field: '&'
 		},
-		link: function($scope, $element, $attrs) {
+		link: function($scope, $element, $attrs, $select) {
 			$element.bind('keydown keypress', function(event) {
 
 				var keyCode = event.which || event.keyCode;
@@ -18,7 +19,7 @@ angular.module('forms').directive('keyToOption', function(){
 					$scope.$apply(function () {
 						$scope.field.fieldValue = $scope.field.fieldOptions[index].option_value;
 						if($attrs.type === 'dropdown'){
-							//$select.selected.option_value = $scope.field.fieldOptions[index].option_value;
+							$select.selected.option_value = $scope.field.fieldOptions[index].option_value;
 						}
 						console.log($scope);
 					});

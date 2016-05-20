@@ -334,9 +334,13 @@ div.config-form .row.field {
     width: 80%;
 }
 
-/*Override Select UI*/
-.ui-select-choices.ui-select-dropdown.selectize-dropdown {
-	top:2em!important;;
+/*Override Select2 UI*/
+.ui-select-choices.ui-select-dropdown {
+	top:2.5em!important;
+}
+.ui-select-toggle {
+	box-shadow:none!important;
+	border:none!important;
 }
 
 .current-fields .tool-panel > .panel-default:hover {
