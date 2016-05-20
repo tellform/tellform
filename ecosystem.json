@@ -2,9 +2,8 @@
   "apps" : [{
     "name"      : "tellform",
     "script"    : "/usr/local/bin/grunt",
-	  "instances" : "max",
-	  "exec_mode" : "cluster",
-	  "watch": ["app", "public/modules/"]
+	  "instances" : "4",
+	  "exec_mode" : "cluster"
 	}],
   "deploy" : {
     "stage" : {
