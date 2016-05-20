@@ -2,10 +2,15 @@
 /**
  * Module dependencies.
  */
+
+//Load ENV vars from .env
+require('dotenv').config();
+
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
 	chalk = require('chalk');
+
 
 /**
  * Main application entry file.
@@ -50,5 +55,5 @@ console.log('--');
 process.on('uncaughtException', function (err) {
 	console.error((new Date).toUTCString() + ' uncaughtException:', err.message);
 	console.error(err.stack);
-	process.exit(1)
+	process.exit(1);
 });
