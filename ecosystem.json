@@ -2,10 +2,9 @@
   "apps" : [{
     "name"      : "tellform",
     "script"    : "/usr/local/bin/grunt",
-		"instances" : "0",
+	  "instances" : "0",
 	  "exec_mode" : "cluster",
-	  "watch": ["app", "public"],   
-  	"max_memory_restart : "1G"
+	  "watch": ["app", "public"],
 	}],
   "deploy" : {
     "stage" : {
