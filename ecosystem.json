@@ -25,7 +25,7 @@
       "ref"  : "origin/master",
       "repo" : "git@github.com:whitef0x0/tellform.git",
       "path" : "/opt/deploy",
-      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production",
+      "post-deploy" : "npm install && pm2 startOrGracefulReload ecosystem.json --env production",
         "env" : {
             "NODE_ENV": "production",
             "BASE_URL": "admin.tellform.com"
