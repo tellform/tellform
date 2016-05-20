@@ -1,9 +1,10 @@
 {
   "apps" : [{
       "name"      : "tellform",
-      "script"    : "./node_modules/.bin/grunt",
-	  "instances": "4",
-	  "exec_mode": "cluster"
+      "script"    : "./server.js",
+	  "instances": "max",
+	  "exec_mode": "cluster",
+	  "max_memory_restart" : "200M"
 	}],
   "deploy" : {
     "stage" : {
