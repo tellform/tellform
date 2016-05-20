@@ -53,25 +53,25 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 
                     if(!$scope.noscroll){
                         //Focus on submit button
-                        if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
+                        if( $scope.selected.index === $scope.myform.visible_form_fields.length-1 && $scope.fieldBottom < 200){
                             field_index = $scope.selected.index+1;
                             field_id = 'submit_field';
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //Focus on field above submit button
-                        else if($scope.selected.index === $scope.myform.form_fields.length){
+                        else if($scope.selected.index === $scope.myform.visible_form_fields.length){
                             if($scope.fieldTop > 200){
                                 field_index = $scope.selected.index-1;
-                                field_id = $scope.myform.form_fields[field_index]._id;
+                                field_id = $scope.myform.visible_form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
                         }else if( $scope.fieldBottom < 0){
                             field_index = $scope.selected.index+1;
-                            field_id = $scope.myform.form_fields[field_index]._id;
+                            field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
                             field_index = $scope.selected.index-1;
-                            field_id = $scope.myform.form_fields[field_index]._id;
+                            field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //console.log('$scope.selected.index: '+$scope.selected.index);
@@ -79,6 +79,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
             		    $scope.$apply();
                     }
         		};
+
+				$rootScope.setDropdownOption = function(){
+					console.log('setDropdownOption index: ');
+				};
 
                 /*
                 ** Field Controls
@@ -103,27 +107,37 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 								$scope.noscroll = false;
 								setTimeout(function() {
 									if (document.querySelectorAll('.activeField .focusOn')[0]) {
-										console.log(document.querySelectorAll('.activeField .focusOn')[0]);
+										//console.log(document.querySelectorAll('.activeField .focusOn')[0]);
 										document.querySelectorAll('.activeField .focusOn')[0].focus();
 									} else {
+										//console.log(document.querySelectorAll('.activeField input')[0]);
 										document.querySelectorAll('.activeField input')[0].focus();
 									}
 								});
                             });
                         });
-                    }
+                    }else {
+						setTimeout(function() {
+							if (document.querySelectorAll('.activeField .focusOn')[0]) {
+								//console.log(document.querySelectorAll('.activeField .focusOn')[0]);
+								document.querySelectorAll('.activeField .focusOn')[0].focus();
+							} else {
+								document.querySelectorAll('.activeField input')[0].focus();
+							}
+						});
+					}
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
                     //console.log('nextfield');
                     //console.log($scope.selected.index);
-					//console.log($scope.myform.form_fields.length-1);
+					//console.log($scope.myform.visible_form_fields.length-1);
 					var selected_index, selected_id;
-					if($scope.selected.index < $scope.myform.form_fields.length-1){
+					if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
                         selected_index = $scope.selected.index+1;
-                        selected_id = $scope.myform.form_fields[selected_index]._id;
+                        selected_id = $scope.myform.visible_form_fields[selected_index]._id;
                         $rootScope.setActiveField(selected_id, selected_index, true);
-                    } else if($scope.selected.index === $scope.myform.form_fields.length-1) {
+                    } else if($scope.selected.index === $scope.myform.visible_form_fields.length-1) {
 						console.log('Second last element');
 						selected_index = $scope.selected.index+1;
 						selected_id = 'submit_field';
@@ -134,7 +148,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 $rootScope.prevField = $scope.prevField = function(){
                     if($scope.selected.index > 0){
                         var selected_index = $scope.selected.index - 1;
-                        var selected_id = $scope.myform.form_fields[selected_index]._id;
+                        var selected_id = $scope.myform.visible_form_fields[selected_index]._id;
                         $scope.setActiveField(selected_id, selected_index, true);
                     }
                 };
@@ -144,8 +158,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 */
                 $scope.exitStartPage = function(){
                     $scope.myform.startPage.showStart = false;
-                    if($scope.myform.form_fields.length > 0){
-                        $scope.selected._id = $scope.myform.form_fields[0]._id;
+                    if($scope.myform.visible_form_fields.length > 0){
+                        $scope.selected._id = $scope.myform.visible_form_fields[0]._id;
                     }
                 };
 

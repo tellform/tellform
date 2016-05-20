@@ -1,5 +1,6 @@
 <div class="field row dropdown"
 	 ng-click="setActiveField(field._id, index, true)"
+	 key-to-option field="field" type="dropdown"
 	 ng-if="field.fieldOptions.length > 0">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 	    <h3>
@@ -11,18 +12,22 @@
 	    	<span class="required-error" ng-show="!field.required">optional</span>
 	    </h3>
     </div>
-    <div class="col-xs-12 field-input ">
-		<ui-select ng-model="field.fieldValue" 
+    <div class="col-xs-12 field-input">
+		<ui-select ng-model="field.fieldValue"
                 theme="selectize"
 				ng-model-options="{ debounce: 250 }"  
 				ng-required="field.required" 
 				ng-disabled="field.disabled"
-				ng-change="$root.nextField()">
+				ng-change="$root.nextField()"
+			    on-enter-key="setDropdownOption()">
 			<ui-select-match placeholder="Type or select an option">
 				{{$select.selected.option_value}}
 			</ui-select-match>
 			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"
 							   ng-class="{'active': option.option_value === field.fieldValue }">
+				<div class="letter" style="float:left">
+					{{$index + 1}}
+				</div>
 				<span ng-bind-html="option.option_value | highlight: $select.search"></span>
 			</ui-select-choices>
         </ui-select>    
