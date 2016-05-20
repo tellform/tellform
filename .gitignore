@@ -1,4 +1,4 @@
-public/dist/*
+public/dist/
 npm-debug.*
 docs/Oscar_Credentials.md
 scripts/test_oscarhost.js
@@ -29,7 +29,6 @@ app/tests/coverage/
 # ======================
 config/sslcerts/*.pem
 access.log
-public/dist/
 public/dist/populate_template_cache.js
 uploads/
 # API keys file
