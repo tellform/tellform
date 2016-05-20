@@ -11,11 +11,10 @@
 	    	<span class="required-error" ng-show="!field.required">optional</span>
 	    </h3>
     </div>
-    <div class="col-xs-12 field-input ">
-		<ui-select ng-model="field.fieldValue" 
+    <div class="col-xs-12 field-input">
+		<ui-select ng-model="field.fieldValue"
                 theme="selectize"
-				ng-model-options="{ debounce: 250 }"  
-				ng-required="field.required" 
+				ng-required="field.required"
 				ng-disabled="field.disabled"
 				ng-change="$root.nextField()">
 			<ui-select-match placeholder="Type or select an option">

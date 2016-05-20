@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 ecosystem.js
-=======
-dist/
+public/dist/
 npm-debug.*
->>>>>>> 08a672a87432ca61efb3613b22e5a8b16698f722
 docs/Oscar_Credentials.md
 scripts/test_oscarhost.js
 scripts/oscarhost/private/
