@@ -56,7 +56,7 @@ module.exports = {
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			ssl: false,
-			host: "smtp.sparkpostmail.com",
+			host: 'smtp.sparkpostmail.com',
 			port: 587,
 			secure: false,
 			auth: {

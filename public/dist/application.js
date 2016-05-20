@@ -47,7 +47,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/forms/views/directiveViews/field/date.html",
     "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=\"!field.required && !field.fieldValue\">optional</span></h3></div><div class=\"col-xs-12 field-input\"><div class=\"control-group input-append\"><input ng-focus=\"setActiveField(field._id, index, true)\" class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-class=\"{ 'no-border': !!field.fieldValue }\" ui-date=dateOptions ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled placeholder=MM/DD/YYYY on-enter-key=nextField() ng-change=$root.nextField()></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/dropdown.html",
-    "<div class=\"field row dropdown\" ng-click=\"setActiveField(field._id, index, true)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=selectize ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=$root.nextField()><ui-select-match placeholder=\"Type or select an option\">{{$select.selected.option_value}}</ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-class=\"{'active': option.option_value === field.fieldValue }\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
+    "<div class=\"field row dropdown\" ng-click=\"setActiveField(field._id, index, true)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=selectize ng-required=field.required ng-disabled=field.disabled ng-change=$root.nextField()><ui-select-match placeholder=\"Type or select an option\">{{$select.selected.option_value}}</ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-class=\"{'active': option.option_value === field.fieldValue }\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/file.html",
     "<div class=\"field row\" ng-if=form.autofillPDFs ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-sm-8 field-input\"><div class=input-group><div tabindex=-1 class=\"form-control file-caption\"><span class=file-caption-ellipsis ng-if=!form.pdf>…</span><div class=file-caption-name ng-if=form.pdf>{{field.file.originalname}}</div></div><div class=input-group-btn><button type=button ng-if=field.file ng-click=removeFile(field); title=\"Clear selected files\" class=\"btn btn-danger fileinput-remove fileinput-remove-button\"><i class=\"glyphicon glyphicon-trash\"></i> Delete</button> <button type=button ng-if=field.fileLoading title=\"Abort ongoing upload\" class=\"btn btn-default\" ng-click=cancelFileUpload(field)><i class=\"glyphicon glyphicon-ban-circle\"></i> Cancel</button><div class=\"btn btn-success btn-file\" ngf-select ngf-change=uploadPDF($files) ng-if=!field.file><i class=\"glyphicon glyphicon-upload\"></i> Upload your File</div></div></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/hidden.html",
@@ -1030,7 +1030,7 @@ function removeDateFieldsFunc(o) {
     function eachObject(v,k){
 
 		if(k === 'lastModified' || k === 'created'){
-        	delete clone[i][k];
+        	delete clone[k];
         }
 	}
 
@@ -1756,23 +1756,26 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 
 angular.module('forms').directive('keyToOption', function(){
 	return {
-		restrict: 'A',
+		restrict: 'AE',
+		transclude: true,
 		scope: {
-			field: '='
+			field: '&'
 		},
-		link: function($scope, $element, $attrs) {
+		link: function($scope, $element, $attrs, $select) {
 			$element.bind('keydown keypress', function(event) {
-				console.log('keypress');
 
 				var keyCode = event.which || event.keyCode;
 				var index = parseInt(String.fromCharCode(keyCode))-1;
 				console.log($scope.field);
 
-
 				if (index < $scope.field.fieldOptions.length) {
 					event.preventDefault();
 					$scope.$apply(function () {
 						$scope.field.fieldValue = $scope.field.fieldOptions[index].option_value;
+						if($attrs.type === 'dropdown'){
+							$select.selected.option_value = $scope.field.fieldOptions[index].option_value;
+						}
+						console.log($scope);
 					});
 				}
 
@@ -1914,25 +1917,25 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 
                     if(!$scope.noscroll){
                         //Focus on submit button
-                        if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
+                        if( $scope.selected.index === $scope.myform.visible_form_fields.length-1 && $scope.fieldBottom < 200){
                             field_index = $scope.selected.index+1;
                             field_id = 'submit_field';
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //Focus on field above submit button
-                        else if($scope.selected.index === $scope.myform.form_fields.length){
+                        else if($scope.selected.index === $scope.myform.visible_form_fields.length){
                             if($scope.fieldTop > 200){
                                 field_index = $scope.selected.index-1;
-                                field_id = $scope.myform.form_fields[field_index]._id;
+                                field_id = $scope.myform.visible_form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
                         }else if( $scope.fieldBottom < 0){
                             field_index = $scope.selected.index+1;
-                            field_id = $scope.myform.form_fields[field_index]._id;
+                            field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
                             field_index = $scope.selected.index-1;
-                            field_id = $scope.myform.form_fields[field_index]._id;
+                            field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //console.log('$scope.selected.index: '+$scope.selected.index);
@@ -1940,6 +1943,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
             		    $scope.$apply();
                     }
         		};
+
+				$rootScope.setDropdownOption = function(){
+					console.log('setDropdownOption index: ');
+				};
 
                 /*
                 ** Field Controls
@@ -1950,8 +1957,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 						//console.log($scope.selected);
 						return;
 		    		}
-                    console.log('field_id: '+field_id);
-                    console.log('field_index: '+field_index);
+                    //console.log('field_id: '+field_id);
+                    //console.log('field_index: '+field_index);
                     //console.log($scope.selected);
 
                     $scope.selected._id = field_id;
@@ -1964,28 +1971,38 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 								$scope.noscroll = false;
 								setTimeout(function() {
 									if (document.querySelectorAll('.activeField .focusOn')[0]) {
-										console.log(document.querySelectorAll('.activeField .focusOn')[0]);
+										//console.log(document.querySelectorAll('.activeField .focusOn')[0]);
 										document.querySelectorAll('.activeField .focusOn')[0].focus();
 									} else {
+										//console.log(document.querySelectorAll('.activeField input')[0]);
 										document.querySelectorAll('.activeField input')[0].focus();
 									}
 								});
                             });
                         });
-                    }
+                    }else {
+						setTimeout(function() {
+							if (document.querySelectorAll('.activeField .focusOn')[0]) {
+								//console.log(document.querySelectorAll('.activeField .focusOn')[0]);
+								document.querySelectorAll('.activeField .focusOn')[0].focus();
+							} else {
+								document.querySelectorAll('.activeField input')[0].focus();
+							}
+						});
+					}
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
                     //console.log('nextfield');
                     //console.log($scope.selected.index);
-					//console.log($scope.myform.form_fields.length-1);
+					//console.log($scope.myform.visible_form_fields.length-1);
 					var selected_index, selected_id;
-					if($scope.selected.index < $scope.myform.form_fields.length-1){
+					if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
                         selected_index = $scope.selected.index+1;
-                        selected_id = $scope.myform.form_fields[selected_index]._id;
+                        selected_id = $scope.myform.visible_form_fields[selected_index]._id;
                         $rootScope.setActiveField(selected_id, selected_index, true);
-                    } else if($scope.selected.index === $scope.myform.form_fields.length-1) {
-						console.log('Second last element');
+                    } else if($scope.selected.index === $scope.myform.visible_form_fields.length-1) {
+						//console.log('Second last element');
 						selected_index = $scope.selected.index+1;
 						selected_id = 'submit_field';
 						$rootScope.setActiveField(selected_id, selected_index, true);
@@ -1995,7 +2012,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 $rootScope.prevField = $scope.prevField = function(){
                     if($scope.selected.index > 0){
                         var selected_index = $scope.selected.index - 1;
-                        var selected_id = $scope.myform.form_fields[selected_index]._id;
+                        var selected_id = $scope.myform.visible_form_fields[selected_index]._id;
                         $scope.setActiveField(selected_id, selected_index, true);
                     }
                 };
@@ -2005,8 +2022,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                 */
                 $scope.exitStartPage = function(){
                     $scope.myform.startPage.showStart = false;
-                    if($scope.myform.form_fields.length > 0){
-                        $scope.selected._id = $scope.myform.form_fields[0]._id;
+                    if($scope.myform.visible_form_fields.length > 0){
+                        $scope.selected._id = $scope.myform.visible_form_fields[0]._id;
                     }
                 };
 

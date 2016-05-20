@@ -6,7 +6,7 @@ function removeDateFieldsFunc(o) {
     function eachObject(v,k){
 
 		if(k === 'lastModified' || k === 'created'){
-        	delete clone[i][k];
+        	delete clone[k];
         }
 	}
 
