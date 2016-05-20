@@ -2,7 +2,11 @@
   "apps" : [{
     "name"      : "tellform",
     "script"    : "/usr/local/bin/grunt",
-  }],
+		"instances" : "0",
+	  "exec_mode" : "cluster",
+	  "watch": ["app", "public"],   
+  	"max_memory_restart : "1G"
+	}],
   "deploy" : {
     "stage" : {
       "user" : "polydaic",
@@ -10,7 +14,7 @@
       "ref"  : "origin/stage",
       "repo" : "git@github.com:whitef0x0/tellform.git",
       "path" : "/opt/deploy",
-      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production",
+      "post-deploy" : "npm install && pm2 startOrGracefulReload ecosystem.json --env production",
       "env" : {
         "NODE_ENV": "production",
 		"BASE_URL": "stage.tellform.com"
@@ -22,7 +26,7 @@
       "ref"  : "origin/master",
       "repo" : "git@github.com:whitef0x0/tellform.git",
       "path" : "/opt/deploy",
-      "post-deploy" : "npm install && bower install && pm2 startOrRestart ecosystem.json --env production",
+      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production",
         "env" : {
             "NODE_ENV": "production",
             "BASE_URL": "admin.tellform.com"
