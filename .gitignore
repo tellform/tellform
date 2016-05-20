@@ -1,4 +1,3 @@
-public/dist/
 npm-debug.*
 docs/Oscar_Credentials.md
 scripts/test_oscarhost.js
