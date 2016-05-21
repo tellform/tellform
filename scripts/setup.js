@@ -174,7 +174,7 @@ var questions = [
 
 console.log(chalk.green('\n\nHi, welcome to TellForm Setup'));
 
-console.log(chalk.green('This will only run the first time you run TellForm\n--------------------------------------------------\n\n'));
+console.log(chalk.green('You should only run this the first time you setup TellForm\n--------------------------------------------------\n\n'));
 
 inquirer.prompt([questions[0]]).then(function (confirmAns) {
 	if(confirmAns['shouldContinue']) {
@@ -209,6 +209,9 @@ inquirer.prompt([questions[0]]).then(function (confirmAns) {
 					console.log(chalk.green('Successfully created user'));
 					delete email;
 					delete pass;
+
+					console.log(chalk.green('Have fun using TellForm!'));
+					process.exit(1);
 				});
 			});
 		});

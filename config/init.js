@@ -15,8 +15,7 @@ module.exports = function() {
 	 * We'll Look for a valid NODE_ENV variable and if one cannot be found load the development NODE_ENV
 	 */
 	var environmentFiles = glob.sync('./config/env/' + process.env.NODE_ENV + '.js');
-	console.log('process.env.MAILER_EMAIL_ID: '+process.env.MAILER_EMAIL_ID );
-	
+
 	if (!environmentFiles.length) {
 		if (process.env.NODE_ENV) {
 			console.error(chalk.red('No configuration file found for "' + process.env.NODE_ENV + '" environment using development instead'));
