@@ -149,9 +149,17 @@ $ sh ./scripts/generate-ssl-certs.sh
 Windows users can follow instructions found [here](http://www.websense.com/support/article/kbarticle/How-to-use-OpenSSL-and-Microsoft-Certification-Authority).
 After you've generated the key and certificate, place them in the *config/sslcerts* folder.
 
+## Where to get help
 
-## Credits
-Inspired/built off the great work of the [MeanJS team](https://github.com/mean/).
+[Gitter Chat](https://gitter.im/whitef0x0/tellform)
+
+[Official Twitter](https://twitter.com/tellform_real)
+
+## Contributor list 
+
+[David Baldwynn](https://github.com/whitef0x0/)
+
+[Samuel Laulhau](https://github.com/lalop)
 
 ## Mentions on the Web
 
@@ -165,4 +173,6 @@ Inspired/built off the great work of the [MeanJS team](https://github.com/mean/)
 
 [Reddit Posts](https://www.reddit.com/domain/tellform.com/)
 
+## Credits
+Inspired/built off the great work of the [MeanJS team](https://github.com/mean/) and [Typeform](http://typeform.com)
 
