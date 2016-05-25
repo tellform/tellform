@@ -28,6 +28,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	CANCEL: 'Réinitialiser',
 	SUBMIT: 'Enregistrer',
 	UPLOAD_FILE: 'Envoyer un fichier',
+	Y: 'O',
+	N: 'N',
   });
 
 }]);
