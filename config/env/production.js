@@ -55,7 +55,10 @@ module.exports = {
 		from: process.env.MAILER_FROM || 'no-reply@tellform.com',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
-			ssl: true,
+			ssl: false,
+			host: 'smtp.sparkpostmail.com',
+			port: 587,
+			secure: false,
 			auth: {
 				user: process.env.MAILER_EMAIL_ID || '',
 				pass: process.env.MAILER_PASSWORD || ''

@@ -6,14 +6,12 @@ angular.module('forms').directive('keyToOption', function(){
 		scope: {
 			field: '='
 		},
-		link: function($scope, $element, $attrs) {
+		link: function($scope, $element, $attrs, $select) {
 			$element.bind('keydown keypress', function(event) {
-				console.log('keypress');
 
 				var keyCode = event.which || event.keyCode;
 				var index = parseInt(String.fromCharCode(keyCode))-1;
-				console.log($scope.field);
-
+				//console.log($scope.field);
 
 				if (index < $scope.field.fieldOptions.length) {
 					event.preventDefault();

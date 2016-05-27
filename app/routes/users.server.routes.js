@@ -27,7 +27,6 @@ module.exports = function(app) {
 
 	// Setting up the users authentication api
 	if(!config.signupDisabled) {
-		console.log('signupDisabled');
         app.route('/auth/signup').post(users.signup);
 	}
     app.route('/auth/signin').post(users.signin);
