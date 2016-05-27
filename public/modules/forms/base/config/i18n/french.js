@@ -4,7 +4,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
   $translateProvider.translations('french', {
     FORM_SUCCESS: 'Votre formulaire a été enregistré!',
-	REVIEW: 'Review',
+	REVIEW: 'Incomplet',
     BACK_TO_FORM: 'Retourner au formulaire',
 	EDIT_FORM: 'Éditer le Tellform',
 	CREATE_FORM: 'Créer un TellForm',
