@@ -4,7 +4,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
   $translateProvider.translations('english', {
     FORM_SUCCESS: 'Form entry successfully submitted!',
-	SUBMIT: 'Submit',
 	REVIEW: 'Review',
     BACK_TO_FORM: 'Go back to Form',
 	EDIT_FORM: 'Edit this TellForm',
@@ -27,19 +26,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	LEGAL_NO_ACCEPT: 'I don’t accept',
 	DELETE: 'Delete',
 	CANCEL: 'Cancel',
-	UPLOAD_FILE: 'Upload your File',
-<<<<<<< 04151ddc774be8fe7230557c3695e9d16fade1e6
-<<<<<<< 0e63943bc6423cb59a8a1be0d0fc09f1cd9fcfcd
-=======
-	SUBMIT: 'Submit'
->>>>>>> translate submit button
-=======
 	SUBMIT: 'Submit',
-	Y: 'Y',
-	N: 'N',
-	YES: 'Yes',
-	NO: 'No'
->>>>>>> translate yes/no field
+	UPLOAD_FILE: 'Upload your File',
   });
 
   $translateProvider.preferredLanguage('english')
