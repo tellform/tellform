@@ -88,7 +88,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 						break;
 					case 'number':
                         scope.field.input_type = 'text';
-						scope.field.validateRegex = /^\d+$/;
+						scope.field.validateRegex = /^-?\d+$/;
                         break;
                     default:
 						scope.field.input_type = 'url';
