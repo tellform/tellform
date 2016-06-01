@@ -179,14 +179,13 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
 							.success(function (data, status, headers) {
-								//console.log('form submitted successfully');
 
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 							})
 							.error(function (error) {
 								$scope.loading = false;
-								//console.log(error);
+								console.error(error);
 								$scope.error = error.message;
 							});
 					}, 500);

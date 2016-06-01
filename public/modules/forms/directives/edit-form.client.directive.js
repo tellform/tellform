@@ -124,9 +124,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							'option_value' : 'Option 0'
 						});
 					}
-
-					console.log(newField);
-
+					
                     // put newField into fields array
                     if(modifyForm){
                         $scope.myform.form_fields.push(newField);

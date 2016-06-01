@@ -46,7 +46,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			forms: '='
         },
         link: function(scope, element) {
-			
+
 			$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
 				if(type === 'yes_no'){
 					scope.field.fieldValue = 'true';
@@ -99,16 +99,6 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			}
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();
-
-			if(scope.field.fieldType === 'rating'){
-				//while($filter('toFaIcon')('Heart', false) == '-') {
-
-					//angular.element('input-stars').attr('icon-full', $filter('toFaIcon')('Heart', false));
-					//angular.element('input-stars').attr('icon-empty', $filter('toFaIcon')('Heart', true));
-
-					//console.log($filter('toFaIcon')('Heart', false));
-				//}
-			}
             var output = $compile(element.contents())(scope);
         }
     };

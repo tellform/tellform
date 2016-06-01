@@ -25,7 +25,6 @@ angular.module('forms').factory('Forms', ['$resource',
 				transformResponse: function(data, header) {
 		          	var form = angular.fromJson(data);
 
-					console.log(form.form_fields);
 					form.visible_form_fields = _.filter(form.form_fields, function(field){
 		            	return (field.deletePreserved === false);
 		            });

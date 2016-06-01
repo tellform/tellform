@@ -249,7 +249,12 @@
 							<div class="row" ng-if="showRatingOptions(field)">
 								<div class="col-md-9 col-sm-9">Number of Steps:</div>
 								<div class="col-md-3 col-sm-3">
-									<input style="width:100%" type="number" ng-model="field.ratingOptions.steps" name="ratingOptions_steps{{field._id}}" ng-value="{{field.ratingOptions.steps}}" required>
+									<input style="width:100%" type="number"
+										   min="1" max="10"
+										   ng-model="field.ratingOptions.steps"
+										   name="ratingOptions_steps{{field._id}}"
+										   ng-value="{{field.ratingOptions.steps}}"
+										   required>
 								</div>
 								<br>
 								<div class="col-md-5 col-sm-9">Shape:</div>

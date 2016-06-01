@@ -26,7 +26,9 @@ var FieldOptionSchema = new Schema({
 
 var RatingFieldSchema = new Schema({
 	steps: {
-		type: Number
+		type: Number,
+		min: 1,
+		max: 10
 	},
 	shape: {
 		type: String,
@@ -166,8 +168,6 @@ FormFieldSchema.pre('validate', function(next) {
 		//Checking that the fieldValue is between 0 and ratingOptions.steps
 		if(this.fieldValue+0 > this.ratingOptions.steps || this.fieldValue+0 < 0){
 			this.fieldValue = 1;
-			//error.errors.fieldValue =  mongoose.Error.ValidatorError({path:'fieldValue', message: 'fieldValue is not within proper range for rating field.', type: 'notvalid', value: this.fieldValue});
-			//return(next(error));
 		}
 	}
 
