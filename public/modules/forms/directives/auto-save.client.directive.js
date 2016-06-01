@@ -79,7 +79,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     }
                 });
 
-                //Autosave Form when model (specificed in $attrs.autoSaveWatch) changes
+                //Autosave Form when model (specified in $attrs.autoSaveWatch) changes
                 $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
 
                     newValue = angular.copy(newValue);

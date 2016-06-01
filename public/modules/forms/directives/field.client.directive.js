@@ -29,7 +29,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'number',
             'natural'
         ];
-	if (__indexOf.call(supported_fields, type) >= 0) {
+		if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
    		return $templateCache.get('../public/'+templateUrl);
@@ -38,7 +38,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
     return {
         template: '<div>{{field.title}}</div>',
         restrict: 'E',
-        scope: {
+		scope: {
             field: '=',
             required: '&',
             design: '=',
@@ -46,7 +46,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			forms: '='
         },
         link: function(scope, element) {
-
+			
 			$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
 				if(type === 'yes_no'){
 					scope.field.fieldValue = 'true';
@@ -99,7 +99,17 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			}
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();
-            $compile(element.contents())(scope);
+
+			if(scope.field.fieldType === 'rating'){
+				//while($filter('toFaIcon')('Heart', false) == '-') {
+
+					//angular.element('input-stars').attr('icon-full', $filter('toFaIcon')('Heart', false));
+					//angular.element('input-stars').attr('icon-empty', $filter('toFaIcon')('Heart', true));
+
+					//console.log($filter('toFaIcon')('Heart', false));
+				//}
+			}
+            var output = $compile(element.contents())(scope);
         }
     };
 }]);
