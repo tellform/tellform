@@ -1,7 +1,7 @@
 <div class="textfield field row"
 	 ng-click="setActiveField(field._id, index, true)">
-	<div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
-    	<h3>
+	<div class="col-xs-12 field-title row-fluid" ng-style="{'color': design.colors.questionColor}">
+    	<h3 class="col-xs-12">
     		<small class="field-number">
 				{{index+1}}
 				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
@@ -13,6 +13,10 @@
     			(optional)
     		</span>
     	</h3>
+
+		<p class="col-xs-12">
+			<small>{{field.description}}</small>
+		</p>
     </div>
     <div class="col-xs-12 field-input">
 		<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}" 
