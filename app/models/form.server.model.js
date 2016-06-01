@@ -65,10 +65,8 @@ var FormSchema = new Schema({
 		type: String,
 		default: ''
 	},
-	form_fields: {
-		type: [FieldSchema]
-	},
 
+	form_fields: [FieldSchema],
 	submissions: [{
 		type: Schema.Types.ObjectId,
 		ref: 'FormSubmission'

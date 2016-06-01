@@ -57,7 +57,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("../public/modules/forms/views/directiveViews/field/radio.html",
     "<div class=\"field row radio\" on-enter-key=nextField() key-to-option field=field ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=\"btn col-md-4 col-xs-12 col-sm-12\" style=\"margin: 0.5em; padding-left:30px\" ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}\"><div class=letter style=float:left>{{$index+1}}</div><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio class=focusOn ng-focus=\"setActiveField(field._id, index, true)\" value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/rating.html",
-    "<div class=\"textfield field row\" on-enter-key=nextField()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><input-stars max=5 ng-init=\"field.fieldValue = 1\" on-star-click=$root.nextField() icon-full=fa-star icon-base=\"fa fa-3x\" icon-empty=fa-star-o ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled class=\"angular-input-stars focusOn\"></input-stars></div></div>");
+    "<div class=\"textfield field row\" on-enter-key=nextField()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>optional</span></h3></div><div class=\"col-xs-12 field-input\"><input-stars max=5 ng-init=\"field.fieldValue = 1\" on-star-click=$root.nextField() ratingshapeicon=Trash icon-base=\"fa fa-3x\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled class=\"angular-input-stars focusOn\"></input-stars></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/statement.html",
     "<div class=\"statement field row\" on-enter-key=$root.nextField() ng-focus=\"setActiveField(field._id, index, true)\"><div class=\"row field-title field-title\"><div class=col-xs-1><i class=\"fa fa-quote-left fa-1\"></i></div><h2 class=\"text-left col-xs-9\">{{field.title}}</h2></div><div class=\"row field-title field-input\"><p class=col-xs-12 ng-if=field.description.length>{{field.description}}</p><br><div class=\"col-xs-offset-1 col-xs-11\"><button class=\"btn focusOn\" ng-style=\"{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-focused=\"setActiveField(field._id, index, true)\" ng-click=$root.nextField()>Continue</button></div></div></div>");
   $templateCache.put("../public/modules/forms/views/directiveViews/field/textarea.html",
@@ -1616,7 +1616,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 'use strict';
 
 angular.module('forms').directive('fieldIconDirective', function() {
-    
+
     return {
         template: '<i class="{{typeIcon}}"></i>',
         restrict: 'E',
@@ -1643,9 +1643,10 @@ angular.module('forms').directive('fieldIconDirective', function() {
 				'number': 'fa fa-slack'
 			};
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
-        }],
+        }]
     };
 });
+
 'use strict';
 
 // coffeescript's for in loop
@@ -1656,8 +1657,8 @@ var __indexOf = [].indexOf || function(item) {
     return -1;
 };
 
-angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', '$templateCache',
-    function($http, $compile, $rootScope, $templateCache) {
+angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$rootScope', '$templateCache', 'FontAwesomeIcons',
+    function($http, $compile, $rootScope, $templateCache, FontAwesomeIcons) {
 
     var getTemplateUrl = function(fieldType) {
         var type = fieldType;
@@ -1677,7 +1678,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'number',
             'natural'
         ];
-	if (__indexOf.call(supported_fields, type) >= 0) {
+		if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
    		return $templateCache.get('../public/'+templateUrl);
@@ -1694,6 +1695,14 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			forms: '='
         },
         link: function(scope, element) {
+
+			FontAwesomeIcons.get(function(data){
+				console.log('font awesome icons');
+				console.log(data);
+				console.log(data.iconCategoryList);
+				console.log(data.iconList);
+				console.log(data.iconMap);
+			});
 
 			$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
 				if(type === 'yes_no'){
@@ -1756,26 +1765,21 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 
 angular.module('forms').directive('keyToOption', function(){
 	return {
-		restrict: 'AE',
-		transclude: true,
+		restrict: 'A',
 		scope: {
-			field: '&'
+			field: '='
 		},
 		link: function($scope, $element, $attrs, $select) {
 			$element.bind('keydown keypress', function(event) {
 
 				var keyCode = event.which || event.keyCode;
 				var index = parseInt(String.fromCharCode(keyCode))-1;
-				console.log($scope.field);
+				//console.log($scope.field);
 
 				if (index < $scope.field.fieldOptions.length) {
 					event.preventDefault();
 					$scope.$apply(function () {
 						$scope.field.fieldValue = $scope.field.fieldOptions[index].option_value;
-						if($attrs.type === 'dropdown'){
-							$select.selected.option_value = $scope.field.fieldOptions[index].option_value;
-						}
-						console.log($scope);
 					});
 				}
 
@@ -1860,6 +1864,64 @@ angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", f
             }
         }
     };
+}]);
+
+'use strict';
+
+angular.module('forms').directive('ratingShapeIcon', ['FontAwesomeIcons', function(FontAwesomeIcons) {
+	var getRatingShape = function (fieldType, iconData) {
+		var iconObj = {
+			full: "",
+			base: "fa fa-3x",
+			empty: ""
+		};
+		var supported_fields = [
+			'Heart',
+			'Star',
+			'thumbs-up',
+			'thumbs-down',
+			'Circle',
+			'Square',
+			'Check Circle',
+			'Smile Outlined',
+			'Hourglass',
+			'bell',
+			'Paper Plane',
+			'Comment',
+			'Trash'
+		];
+		if (__indexOf.call(iconData.iconList, fieldType) >= 0) {
+			var iconName = __indexOf.call(iconData.iconList, fieldType);
+
+			iconObj.full = "fa-"+iconData.iconMap[iconName];
+			iconObj.empty = "fa-"+iconData.iconMap[iconName]+"-o";
+			if(iconName == "thumbs-up" || iconName == "thumbs-down"){
+				iconObj.empty = "fa-"+iconData.iconMap[iconName].split("-")[0]+"-o-"+iconData.iconMap[iconName].split("-")[1];
+			}else if(iconName == "Smile Outlined"){
+				iconObj.empty = "fa-frown-o";
+			}
+			
+			return iconObj;
+		} else {
+			throw new Error("Error no shape of type: " + fieldType + " for rating input");
+		}
+	};
+
+	return {
+		restrict: 'A',
+		priority: 10000,
+		terminal: true,
+		scope: {
+			ratingShapeIcon: '@'
+		},
+		link: function(scope, element, attrs) {
+			var attrData = getRatingShape(attrs.ratingShapeIcon);
+
+			attrs.$set('icon-full', attrData.full);
+			attrs.$set('icon-empty', attrData.empty);
+			$compile(element)(scope);
+		}
+	};
 }]);
 
 'use strict';
@@ -2083,6 +2145,44 @@ angular.module('forms').service('CurrentForm',
 );
 'use strict';
 
+//Font-awesome-icon service used for fetching and mapping icon class names
+angular.module('forms').service('FontAwesomeIcons', ['$http', '$q', '$resource',
+	function($http, $q, $resource){
+
+		var iconData = {};
+		this.get = function(callback){
+
+			//Fetch icon list from font-awesome repo
+			$http.get('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/gh-pages/icons.yml').success(function (data) {
+				var parsedData = jsyaml.load(data);
+
+				var parsedIconData = {
+					iconMap: {},
+					iconList: [],
+					iconCategoryList: []
+				};
+
+				var icons = parsedData.icons;
+
+				for (var i = 0; i < icons.length; i++) {
+					parsedIconData.iconMap[icons[i].name] = icons[i].id;
+					parsedIconData.iconList.push(icons[i].name);
+
+					for (var x = 0; x < icons[i].categories.length; x++) {
+						if (!parsedIconData.iconCategoryList[icons[i].categories[x]]) parsedIconData.iconCategoryList[icons[i].categories[x]] = [];
+						parsedIconData.iconCategoryList[icons[i].categories[x]].push(icons[i].name);
+					}
+				}
+
+				callback(parsedIconData);
+			});
+		}
+
+	}
+]);
+
+'use strict';
+
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
 angular.module('forms').service('FormFields', [
 	function() {
@@ -2166,7 +2266,7 @@ angular.module('forms').factory('Forms', ['$resource',
 		}, {
 			'query' : {
 				method: 'GET',
-				isArray: true,
+				isArray: true
 				//DAVID: TODO: Do we really need to get visible_form_fields for a Query?
 				// transformResponse: function(data, header) {
 				// 	var forms = angular.fromJson(data);
@@ -2182,7 +2282,6 @@ angular.module('forms').factory('Forms', ['$resource',
 				method: 'GET',
 				transformResponse: function(data, header) {
 		          	var form = angular.fromJson(data);
-		          	//console.log(form);
 
 		            form.visible_form_fields = _.filter(form.form_fields, function(field){
 		            	return (field.deletePreserved === false);

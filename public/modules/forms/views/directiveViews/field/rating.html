@@ -6,17 +6,21 @@
 				{{index+1}}
 				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 			</small>
-	    	{{field.title}} 
+	    	{{field.title}}
 	    	<span class="required-error" ng-show="!field.required">optional</span>
 	    </h3>
+		<p class="col-xs-12">
+			<small>{{field.description}}</small>
+		</p>
     </div>
     <div class="col-xs-12 field-input">
-		<input-stars max="5"
+
+		<input-stars max="{{field.ratingOptions.steps}}"
 					 ng-init="field.fieldValue = 1"
 					 on-star-click="$root.nextField()"
-					 icon-full="fa-star"
+					 icon-full="{{field.ratingOptions.shape}}"
 					 icon-base="fa fa-3x"
-					 icon-empty="fa-star-o"
+					 icon-empty="{{field.ratingOptions.shape}}"
 					 ng-model="field.fieldValue"
 					 ng-model-options="{ debounce: 250 }"
 					 ng-required="field.required"

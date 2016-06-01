@@ -9,9 +9,12 @@
 			{{field.title}}
 			<span class="required-error" ng-show="!field.required">optional</span>
 		</h3>
-		<small>press SHIFT+ENTER to create a newline</small>
+		<p>
+			<small>{{field.description}}</small>
+		</p>
 	</div>
 	<div class="col-xs-12 field-input">
+		<small style="font-size:0.6em;">Press SHIFT+ENTER to add a newline</small>
 		<textarea class="textarea focusOn" type="text"
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
@@ -20,7 +23,8 @@
 			ng-required="field.required"
 			ng-disabled="field.disabled"
 			ng-focus="setActiveField(field._id, index, true)"
-			on-enter-key="nextField()">
+			on-enter-key="nextField()"
+			style="border: none; border-left: lightgrey dashed 2px;">
 		</textarea>
 	</div>
 </div>
