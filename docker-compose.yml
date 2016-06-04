@@ -17,6 +17,8 @@ services:
       - "35729:35729"
     links:
       - db
+    environment:
+        DB_HOST: db
 volumes:
   mongo-data-wt:
     driver: local
