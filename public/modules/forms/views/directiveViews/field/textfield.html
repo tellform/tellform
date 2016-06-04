@@ -33,7 +33,7 @@
 			ng-required="field.required"
 			ng-disabled="field.disabled"
 	        aria-describedby="inputError2Status"
-    		on-enter-key="nextField()">
+    		on-enter-or-tab-key="nextField()">
     </div>
     <div class="col-xs-12">        
         <div ng-show="forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue " class="alert alert-danger" role="alert">

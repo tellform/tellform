@@ -172,9 +172,8 @@ FormFieldSchema.pre('validate', function(next) {
 	}
 
 
-	//If field is multiple choice check that it has ratingOptions
-	if(this.fieldType !== 'dropdown' && this.fieldType !== 'radio' && this.fieldType === 'checkbox'){
-
+	//If field is multiple choice check that it has field
+	if(this.fieldType !== 'dropdown' && this.fieldType !== 'radio' && this.fieldType !== 'checkbox'){
 		if(!this.fieldOptions || this.fieldOptions.length !== 0){
 			error.errors.ratingOptions = new mongoose.Error.ValidatorError({path:'fieldOptions', message: 'fieldOptions are only allowed for type dropdown, checkbox or radio fields.', type: 'notvalid', value: this.ratingOptions});
 			return(next(error));
@@ -185,20 +184,6 @@ FormFieldSchema.pre('validate', function(next) {
 
 	return next();
 });
-
-
-//Validate and convert dropdown value to fieldValue
-FormFieldSchema.pre('validate', function (next) {
-	return next();
-
-	/*
-	if(this.fieldType === 'dropdown' && this.fieldOptions.length > 0){
-		for(var i = 0; i<this.fieldOptions.length; i++){
-
-		}
-	}*/
-});
-
 
 var Field = mongoose.model('Field', FormFieldSchema);
 var RatingOptions = mongoose.model('RatingOptions', RatingFieldSchema);

@@ -96,7 +96,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // Add a new field
                 $scope.addNewField = function(modifyForm, fieldType){
 
-                    // incr field_id counter
+                    // increment lastAddedID counter
                     $scope.addField.lastAddedID++;
                     var fieldTitle;
 
@@ -124,7 +124,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							'option_value' : 'Option 0'
 						});
 					}
-					
+
                     // put newField into fields array
                     if(modifyForm){
                         $scope.myform.form_fields.push(newField);

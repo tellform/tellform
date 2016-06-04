@@ -1,6 +1,6 @@
 <div class="field row radio"
 	 	ng-click="setActiveField(field._id, index, true)"
-	 	on-enter-key="nextField()"
+	 	on-enter-or-tab-key="nextField()"
 	 	key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
         <h3 class="row">
