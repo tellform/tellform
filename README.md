@@ -163,6 +163,8 @@ After you've generated the key and certificate, place them in the *config/sslcer
 
 ## Mentions on the Web
 
+[Mister Ad](http://start.mister-ad.biz/newsticker/open-source-alternative-zu-typeform-tellform-in-der-kurzvorstellung/)
+
 [t3n.de](http://t3n.de/news/open-source-alternative-typeform-tellform-707295/)
 
 [BootCSS Expo](http://expo.bootcss.com/)

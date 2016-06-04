@@ -69,7 +69,11 @@
 					<th class="scope">
 						{{$index+1}}
 					</th>
-					<td data-ng-repeat="field in row.form_fields">
+					<td ng-if="field.fieldType == 'dropdown'" data-ng-repeat="field in row.form_fields">
+						{{field.fieldValue.field_title}}
+					</td>
+					
+					<td ng-if="field.fieldType != 'dropdown'" data-ng-repeat="field in row.form_fields">
 						{{field.fieldValue}}
 					</td>
 					<td ng-if="myform.plugins.oscarhost.baseUrl">
