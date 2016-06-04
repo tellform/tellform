@@ -1,5 +1,4 @@
-<div class="field row" ng-click="setActiveField(field._id, index, true)"
-	 ng-focus="setActiveField(field._id, index, true)">
+<div class="field row" ng-click="setActiveField(field._id, index, true)">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 		<h3>
 			<small class="field-number">
@@ -22,8 +21,9 @@
 			value="{{field.fieldValue}}"
 			ng-required="field.required"
 			ng-disabled="field.disabled"
-			ng-focus="setActiveField(field._id, index, true)"
-			on-enter-or-tab-key="nextField()"
+		    ng-focus="setActiveField(field._id, index, true)"
+		    on-enter-or-tab-key="nextField()"
+		    on-tab-and-shift-key="prevField()"
 			style="border: none; border-left: lightgrey dashed 2px;">
 		</textarea>
 	</div>

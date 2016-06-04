@@ -14,7 +14,9 @@
     	<p class="col-xs-12">{{field.description}}</p>
     </div>
     <div class="col-xs-12 field-input container">
-		<div class="row-fluid">
+		<div class="row-fluid"
+			 on-enter-or-tab-key="nextField()"
+			 on-tab-and-shift-key="prevField()">
             <label class="btn col-md-5 col-xs-12"
 				   ng-class="{activeBtn: field.fieldValue == 'true'}">
                 <input class="focusOn"

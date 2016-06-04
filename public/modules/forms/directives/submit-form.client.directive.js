@@ -106,12 +106,15 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                             $document.scrollToElement(angular.element('.activeField'), -10, 200).then(function() {
 								$scope.noscroll = false;
 								setTimeout(function() {
-									if (document.querySelectorAll('.activeField .focusOn')[0]) {
-										//console.log(document.querySelectorAll('.activeField .focusOn')[0]);
+									if (document.querySelectorAll('.activeField .focusOn').length) {
+										//Handle default case
 										document.querySelectorAll('.activeField .focusOn')[0].focus();
-									} else {
-										//console.log(document.querySelectorAll('.activeField input')[0]);
+									} else if(document.querySelectorAll('.activeField input').length) {
+										//Handle case for rating input
 										document.querySelectorAll('.activeField input')[0].focus();
+									} else {
+										//Handle case for dropdown input
+										document.querySelectorAll('.activeField .selectize-input')[0].focus();
 									}
 								});
                             });
@@ -119,7 +122,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }else {
 						setTimeout(function() {
 							if (document.querySelectorAll('.activeField .focusOn')[0]) {
-								//console.log(document.querySelectorAll('.activeField .focusOn')[0]);
+								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
 								document.querySelectorAll('.activeField .focusOn')[0].focus();
 							} else {
 								document.querySelectorAll('.activeField input')[0].focus();
@@ -163,11 +166,11 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }
                 };
 
-				$scope.goToInvalid = function() {
+				$rootScope.goToInvalid = $scope.goToInvalid = function() {
 					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
 				};
 
-				$scope.submitForm = function() {
+				$rootScope.goToInvalid = $scope.submitForm = function() {
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
 					var form = _.cloneDeep($scope.myform);

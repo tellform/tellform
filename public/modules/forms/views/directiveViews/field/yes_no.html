@@ -1,6 +1,6 @@
 <div class="field row radio"
 	 	ng-click="setActiveField(field._id, index, true)"
-	 	on-enter-or-tab-key="nextField()"
+	 	on-tab-and-shift-key="prevField()"
 	 	key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
         <h3 class="row">
@@ -25,8 +25,8 @@
                 <input type="radio" value="true" 
 					class="focusOn"
                     style="opacity: 0; margin-left: 0px;"
-					ng-focus="setActiveField(field._id, index, true)"	
-					ng-model="field.fieldValue" 
+					ng-model="field.fieldValue"
+				    ng-focus="setActiveField(field._id, index, true)"
 					ng-model-options="{ debounce: 250 }" 
 					ng-required="field.required" 
 					ng-change="$root.nextField()"
@@ -45,8 +45,7 @@
 	
                 <input type="radio" value="false" 
 			        style="opacity:0; margin-left:0px;"
-			        ng-focus="setActiveField(field._id, index, true)"
-			        ng-model="field.fieldValue" 
+			        ng-model="field.fieldValue"
 			        ng-model-options="{ debounce: 250 }" 
 			        ng-required="field.required" 
 			        ng-change="$root.nextField()"
