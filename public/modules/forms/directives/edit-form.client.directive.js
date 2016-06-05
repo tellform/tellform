@@ -84,7 +84,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 /*
                 ** FormFields (ui-sortable) drag-and-drop configuration
                 */
-                $scope.dropzone = {
+                $scope.dropzone = {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             qq
                     handle: ' .handle',
                     containment: '.dropzoneContainer',
                     cursor: 'grabbing'
@@ -119,14 +119,15 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					if($scope.showAddOptions(newField)){
 						newField.fieldOptions = [];
 						newField.fieldOptions.push({
-							'option_id' : Math.floor(100000*Math.random()),
+							'option_id' : Math.floor(100000*Math.random()), //Generate pseudo-random option id
 							'option_title' : 'Option 0',
 							'option_value' : 'Option 0'
 						});
 					}
 
-                    // put newField into fields array
+
                     if(modifyForm){
+						//Add newField to form_fields array
                         $scope.myform.form_fields.push(newField);
                     }
                     return newField;
