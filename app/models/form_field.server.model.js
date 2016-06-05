@@ -60,6 +60,13 @@ function BaseFieldSchema(){
 	Schema.apply(this, arguments);
 
 	this.add({
+		isSubmission: {
+			type: Boolean,
+			default: false
+		},
+		submissionId: {
+			type: Schema.Types.ObjectId
+		},
 		title: {
 			type: String,
 			trim: true,
@@ -138,6 +145,7 @@ function BaseFieldSchema(){
 		if(this.fieldType === 'rating' && this.ratingOptions.validShapes.length === 0){
 			this.ratingOptions.validShapes = mongoose.model('RatingOptions').schema.path('shape').enumValues;
 		}
+
 		next();
 	});
 }
@@ -180,10 +188,25 @@ FormFieldSchema.pre('validate', function(next) {
 		}
 	}
 
-	if(error)
+	return next();
+});
+
+//Submission fieldValue correction
+FormFieldSchema.pre('save', function(next) {
+	console.log('pre save');
+
+	console.log(this.isSubmission);
+	console.log(this._id);
+	console.log(this.submissionId);
+	console.log(this.fieldType);
+
+	if(this.isSubmission && this.fieldType === 'dropdown'){
+		this.fieldValue = this.fieldValue.option_value;
+	}
 
 	return next();
 });
+
 
 var Field = mongoose.model('Field', FormFieldSchema);
 var RatingOptions = mongoose.model('RatingOptions', RatingFieldSchema);

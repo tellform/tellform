@@ -395,7 +395,7 @@ FormSchema.pre('save', function (next) {
 
 							//Find FormSubmissions that contain field with _id equal to 'deleted_id'
 							FormSubmission.
-							find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {_id: deleted_id} }  }).
+							find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {submissionId: deleted_id} }  }).
 							exec(function(err, submissions){
 								if(err) {
 									console.error(err);

@@ -170,10 +170,12 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
 				};
 
-				$rootScope.goToInvalid = $scope.submitForm = function() {
+				$rootScope.submitForm = $scope.submitForm = function() {
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
+
 					var form = _.cloneDeep($scope.myform);
+					
 					form.timeElapsed = _timeElapsed;
 
 					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
