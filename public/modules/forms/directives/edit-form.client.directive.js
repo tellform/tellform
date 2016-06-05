@@ -84,11 +84,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 /*
                 ** FormFields (ui-sortable) drag-and-drop configuration
                 */
-                $scope.dropzone = {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             qq
-                    handle: ' .handle',
-                    containment: '.dropzoneContainer',
-                    cursor: 'grabbing'
-                };
+				$scope.dropzone = {
+					handle: '.handle',
+					containment: '.dropzoneContainer',
+					cursor: 'grabbing'
+				};
 
                 /*
                 **  Field CRUD Methods
