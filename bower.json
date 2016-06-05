@@ -38,7 +38,7 @@
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
-    "angular": "1.4.x",
+    "angular": "~1.4.7",
     "angular-ui-select": "compiled"
   },
   "overrides": {
