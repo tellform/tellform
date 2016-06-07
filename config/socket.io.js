@@ -11,7 +11,7 @@ var config = require('./config'),
 module.exports = function (app, db) {
 	var server = http.createServer(app);
 
-	var io = socketio(3000, { transports: ['websocket', 'polling'] });
+	var io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
 	var redis = require('socket.io-redis');
 	io.adapter(redis({ host: '127.0.0.1', port: 6379 }));
 
