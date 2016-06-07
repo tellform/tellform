@@ -52,6 +52,8 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 
 ## Quickstart
 
+Before you start, make sure you have Redis installed and running at 127.0.0.1:6379
+
 Install dependencies first.
 ```bash
 $ npm install
