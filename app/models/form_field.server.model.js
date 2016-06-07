@@ -193,15 +193,11 @@ FormFieldSchema.pre('validate', function(next) {
 
 //Submission fieldValue correction
 FormFieldSchema.pre('save', function(next) {
-	console.log('pre save');
 
-	console.log(this.isSubmission);
-	console.log(this._id);
-	console.log(this.submissionId);
-	console.log(this.fieldType);
-
-	if(this.isSubmission && this.fieldType === 'dropdown'){
+	if(this.fieldType === 'dropdown' && this.isSubmission){
+		//console.log(this);
 		this.fieldValue = this.fieldValue.option_value;
+		//console.log(this.fieldValue);
 	}
 
 	return next();

@@ -51,6 +51,7 @@ function formFieldsSetter(form_fields){
 		form_fields[i].submissionId = form_fields[i]._id;
 		form_fields[i]._id = new mongoose.mongo.ObjectID();
 	}
+	//console.log(form_fields)
 	return form_fields;
 }
 
@@ -127,7 +128,6 @@ var FormSubmissionSchema = new Schema({
 			default: false
 		}
 	}
-
 });
 
 FormSubmissionSchema.path('form_fields').set(formFieldsSetter);
@@ -266,7 +266,6 @@ FormSubmissionSchema.pre('save', function (next) {
 	var fdfData, dest_filename, dest_path,
 		self = this,
 		_form = this.form;
-
 
 	if(this.pdf && this.pdf.path){
 		dest_filename = self.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';

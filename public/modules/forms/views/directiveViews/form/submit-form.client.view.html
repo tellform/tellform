@@ -2,7 +2,7 @@
 
 <!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart" 
-class="form-submitted" 
+class="form-submitted"
 style="padding-top: 35vh;">
 <div class="row">
 <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
@@ -53,6 +53,7 @@ ng-style="{'color':button.color}">
 		data-id="{{field._id}}"
 		ng-class="{activeField: selected._id == field._id }"
 		class="row field-directive">
+
 			<field-directive field="field" design="myform.design" index="$index" forms="forms">
 			</field-directive>
 		</div>
