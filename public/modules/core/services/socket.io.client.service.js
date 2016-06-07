@@ -17,14 +17,13 @@
 			socket: null
 		};
 
-		console.log('https://'+window.location.hostname+':'+$window.socketPort);
-		connect('https://'+window.location.hostname+':'+$window.socketPort);
+		connect(window.location.protocol+'//'+window.location.hostname+':'+$window.socketPort);
 
 		return service;
 
 		// Connect to Socket.io server
 		function connect(url) {
-			service.socket = io();
+			service.socket = io(url, {'transports': ['websocket', 'polling']});
 		}
 
 		// Wrap the Socket.io 'emit' method
