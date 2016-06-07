@@ -83,30 +83,17 @@ module.exports = {
 			'public/*.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*/*.js',
-			'public/modules/**/*.js',
-			'public/modules/**/gruntfile.js',
-			'public/modules/**/demo/**/*.js',
-			'public/modules/**/dist/**/*.js',
-			'public/modules/**/node_modules/**/*.js',
-			'public/modules/**/tests/**/*.js'
+			'public/modules/**/*.js'
 		],
 		views: [
-			'public/modules/**/*.html',
-			'public/modules/**/demo/**/*.html',
-			'public/modules/**/dist/**/*.html',
-			'public/modules/**/node_modules/**/*.html',
-			'public/modules/**/tests/**/*.html'
+			'public/modules/**/*.html'
 		],
 		unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
-			'public/modules/*/tests/unit/**/*.js',
-			'public/modules/**/demo/**/*.js',
-			'public/modules/**/node_modules/**/*.js'
+			'public/modules/*/tests/unit/**/*.js'
 		],
 		e2e_tests: [
-			'public/modules/*/tests/e2e/**.js',
-			'public/modules/**/demo/**/*.js',
-			'public/modules/**/node_modules/**/*.js'
+			'public/modules/*/tests/e2e/**.js'
 		]
 	}
 };

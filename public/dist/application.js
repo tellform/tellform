@@ -49,7 +49,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html",
     "<div><div style=\"text-align: center; font-size: 20px;position: fixed; bottom: 0; right: 55px; background-color: gray; color: white; padding: 5px 15px 5px 10px; z-index: 10\">{{$message}}</div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/configure-form.client.view.html",
-    "<div class=\"config-form container\"><div class=row><div class=\"col-md-6 col-sm-12 container\"><div class=row><div class=col-sm-12><h2 class=\"hidden-sm hidden-xs\">PDF Generation/EMR</h2><h3 class=\"hidden-lg hidden-md\">PDF Generation/EMR</h3></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Save Submissions as PDFs?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.autofillPDFs ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.autofillPDFs ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\" ng-if=\"myform.autofillPDFs || myform.isGenerated\"><div class=\"col-sm-6 field-title\"><h5>Upload Your PDF Template</h5></div><div class=\"col-sm-6 field-input\"><div class=input-group><div tabindex=-1 class=\"form-control file-caption\"><span class=file-caption-ellipsis ng-if=!myform.pdf>…</span><div class=file-caption-name ng-if=myform.pdf>{{myform.pdf.name}}</div></div><div class=input-group-btn><button type=button ng-if=myform.pdf ng-click=removePDF(); title=\"Clear selected files\" class=\"btn btn-danger fileinput-remove fileinput-remove-button\"><i class=\"glyphicon glyphicon-trash\"></i> Delete</button> <button type=button ng-if=pdfLoading title=\"Abort ongoing upload\" class=\"btn btn-default\" ng-click=cancelUpload()><i class=\"glyphicon glyphicon-ban-circle\"></i> Cancel</button><div class=\"btn btn-success btn-file\" ngf-select=uploadPDF($file)><i class=\"glyphicon glyphicon-upload\"></i> Upload your PDF</div></div></div></div></div><div class=\"row field\"><div class=\"col-sm-6 field-title\"><h5>Autogenerate Form?</h5></div><div class=\"col-sm-6 field-input\"><label><input type=radio data-ng-value=true ng-model=myform.isGenerated ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.isGenerated ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Use Oscarhost API?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=oscarhostAPI ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=oscarhostAPI ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Username</h5></div><div class=col-sm-8><input ng-model=myform.plugins.oscarhost.auth.user value={{myform.plugins.oscarhost.auth.user}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Password</h5></div><div class=col-sm-8><input type=password ng-model=myform.plugins.oscarhost.auth.pass value={{myform.plugins.oscarhost.auth.pass}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API URL</h5></div><div class=col-sm-8><input type=link ng-model=myform.plugins.oscarhost.baseUrl value={{myform.plugins.oscarhost.baseUrl}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Update Type</h5></div><div class=col-sm-8><select ng-model=myform.plugins.oscarhost.settings.updateType><option ng-repeat=\"updateType in myform.plugins.oscarhost.settings.validUpdateTypes\" ng-selected=\"myform.plugins.oscarhost.settings.updateType == updateType\" ng-value=updateType>{{updateType}}</option></select></div></div></div><div class=\"col-sm-12 hidden-md hidden-lg\"><br><hr></div><div class=\"col-md-5 col-md-offset-1 col-sm-12 container\"><div class=row><div class=col-sm-12><h2 class=\"hidden-sm hidden-xs\">Advanced Settings</h2><h3 class=\"hidden-lg hidden-md\">Advanced Settings</h3></div></div><div class=\"row field\"><div class=\"field-title col-sm-4\"><h5>Form Name</h5></div><div class=col-sm-8><input ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Form Status</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>Public</span></label><label><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>Private</span></label></div></div><div class=\"row field\"><div class=\"col-xs-6 field-title\">Language</div><div class=\"col-xs-4 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Display Form Footer?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>No</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-primary btn-large\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i> Save Changes</button></div><div class=col-sm-1><button class=\"btn btn-default\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i> Cancel</button></div></div></div>");
+    "<div class=\"config-form container\"><div class=row><div class=\"col-md-6 col-sm-12 container\"><div class=row><div class=col-sm-12><h2 class=\"hidden-sm hidden-xs\">PDF Generation/EMR</h2><h3 class=\"hidden-lg hidden-md\">PDF Generation/EMR</h3></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Save Submissions as PDFs?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.autofillPDFs ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.autofillPDFs ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\" ng-if=\"myform.autofillPDFs || myform.isGenerated\"><div class=\"col-sm-6 field-title\"><h5>Upload Your PDF Template</h5></div><div class=\"col-sm-6 field-input\"><div class=input-group><div tabindex=-1 class=\"form-control file-caption\"><span class=file-caption-ellipsis ng-if=!myform.pdf>…</span><div class=file-caption-name ng-if=myform.pdf>{{myform.pdf.name}}</div></div><div class=input-group-btn><button type=button ng-if=myform.pdf ng-click=removePDF(); title=\"Clear selected files\" class=\"btn btn-danger fileinput-remove fileinput-remove-button\"><i class=\"glyphicon glyphicon-trash\"></i> Delete</button> <button type=button ng-if=pdfLoading title=\"Abort ongoing upload\" class=\"btn btn-default\" ng-click=cancelUpload()><i class=\"glyphicon glyphicon-ban-circle\"></i> Cancel</button><div class=\"btn btn-success btn-file\" ngf-select=uploadPDF($file)><i class=\"glyphicon glyphicon-upload\"></i> Upload your PDF</div></div></div></div></div><div class=\"row field\"><div class=\"col-sm-6 field-title\"><h5>Autogenerate Form?</h5></div><div class=\"col-sm-6 field-input\"><label><input type=radio data-ng-value=true ng-model=myform.isGenerated ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.isGenerated ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Use Oscarhost API?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=oscarhostAPI ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=oscarhostAPI ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Username</h5></div><div class=col-sm-8><input ng-model=myform.plugins.oscarhost.auth.user value={{myform.plugins.oscarhost.auth.user}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Password</h5></div><div class=col-sm-8><input type=password ng-model=myform.plugins.oscarhost.auth.pass value={{myform.plugins.oscarhost.auth.pass}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API URL</h5></div><div class=col-sm-8><input type=link ng-model=myform.plugins.oscarhost.baseUrl value={{myform.plugins.oscarhost.baseUrl}} style=\"width: 100%\" required></div></div><div class=\"row field\" ng-if=oscarhostAPI><div class=\"field-title col-sm-4\"><h5>Oscarhost API Update Type</h5></div><div class=col-sm-8><select ng-model=myform.plugins.oscarhost.settings.updateType><option ng-repeat=\"updateType in myform.plugins.oscarhost.settings.validUpdateTypes\" ng-selected=\"myform.plugins.oscarhost.settings.updateType == updateType\" ng-value=updateType>{{updateType}}</option></select></div></div></div><div class=\"col-sm-12 hidden-md hidden-lg\"><br><hr></div><div class=\"col-md-5 col-md-offset-1 col-sm-12 container\"><div class=row><div class=col-sm-12><h2 class=\"hidden-sm hidden-xs\">Advanced Settings</h2><h3 class=\"hidden-lg hidden-md\">Advanced Settings</h3></div></div><div class=\"row field\"><div class=\"field-title col-sm-4\"><h5>Form Name</h5></div><div class=col-sm-8><input ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Form Status</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>Public</span></label><label><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>Private</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-4\"><h5>Google Analytics Tracking Code</h5></div><div class=col-sm-8><input ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"col-xs-6 field-title\">Language</div><div class=\"col-xs-4 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Display Form Footer?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>No</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-6\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-6\"><label><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>Yes</span></label><label><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>No</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-primary btn-large\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i> Save Changes</button></div><div class=col-sm-1><button class=\"btn btn-default\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i> Cancel</button></div></div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-form.client.view.html",
     "<form class=\"row container\" name=editForm auto-save-form auto-save-watch=myform auto-save-callback=update><div class=\"col-xs-2 col-sm-4 col-md-5 add-field\"><div class=\"row add-field-title\"><h3 class=\"col-md-12 hidden-sm hidden-xs\">Click to Add New Field</h3><h4 class=\"col-sm-12 hidden-xs hidden-md hidden-lg\">Add New Field</h4><h5 class=\"col-sm-12 hidden-sm hidden-md hidden-lg\">Add Field</h5></div><div class=\"panel-group row\" class=draggable ng-model=addField.types><div class=\"col-xs-12 col-sm-12 col-md-6\" ng-repeat=\"type in addField.types\" style=padding-top:7.5px><div class=\"panel panel-default\" style=background-color:#f5f5f5><div class=panel-heading ng-click=\"addNewField(true, type.name)\" style=\"cursor: pointer; font-size:14px\"><span><field-icon-directive type-name={{type.name}}></field-icon-directive></span> <span class=hidden-xs style=padding-left:0.3em>{{type.value}}</span></div></div></div></div></div><div class=\"col-xs-10 col-sm-8 col-md-7 current-fields container\"><div class=row><div class=\"col-sm-12 col-md-10\"><div class=\"panel panel-default startPage\"><div class=\"panel-heading accordion-toggle collapsed\" data-toggle=collapse data-target=#collapseStart><h4 class=text-center>Start Page <span class=pull-right><i class=\"fa fa-chevron-right\" ng-hide=startPage.isOpen></i> <i class=\"fa fa-chevron-down\" ng-show=startPage.isOpen></i></span></h4></div><div id=collapseStart class=\"panel-collapse collapse\"><div class=panel-body><div class=\"row hidden-sm hidden-xs\"><div class=col-md-12><h4>Preview Start Page</h4></div><ul class=\"col-md-12 container\" style=\"list-style:none;border:2px lightgray solid\"><div class=\"field row\"><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1>{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\" style=\"overflow-wrap: break-word\"><p style=color:#ddd>{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><button ng-click=exitStartPage() class=\"btn btn-info btn btn-info col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3\" type=button><span style=\"color:white; font-size: 1.6em; text-decoration: none\">{{myform.startPage.introButtonText}}</span></button></div></ul></div><div class=row><div class=col-xs-12><h4>Edit Start Page</h4><br></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">Intro Title:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introTitle name=introTitleStartPage value={{myform.startPage.introTitle}} required></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">Intro Paragraph:</div><div class=\"col-md-8 col-sm-12\"><textarea type=text ng-model=myform.startPage.introParagraph name=\"introParagraphStartPage\">\n" +
     "                                </div>\n" +
@@ -156,13 +156,13 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "\n" +
     "                            <div class=row><br></div> \n" +
     "\n" +
-    "                            <div class=\"row description\">\n" +
+    "                            <div class=\"row description\" ng-hide=showRatingOptions(field)>\n" +
     "                                <div class=\"col-md-4 col-sm-12\">Description:</div>\n" +
     "                                <div class=\"col-md-8 col-sm-12\"><textarea type=text ng-model=field.description name=description{{field._id}} value={{field.description}}></textarea> </div>\n" +
     "                            </div>\n" +
     "\n" +
     "                            <div class=row ng-show=showAddOptions(field)><br></div>\n" +
-    "                            <div class=\"row options\" ng-show=showAddOptions(field)>\n" +
+    "                            <div class=\"row options\" ng-if=showAddOptions(field)>\n" +
     "                                <div class=\"col-md-4 col-xs-12\">Options:</div>\n" +
     "                                <div class=\"col-md-8 col-xs-12\">\n" +
     "                                    <div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=row>\n" +
@@ -179,6 +179,24 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "                                    </div>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
+    "\n" +
+    "\n" +
+    "							<div class=row ng-show=showRatingOptions(field)><br></div>\n" +
+    "							<div class=row ng-if=showRatingOptions(field)>\n" +
+    "								<div class=\"col-md-9 col-sm-9\">Number of Steps:</div>\n" +
+    "								<div class=\"col-md-3 col-sm-3\">\n" +
+    "									<input style=width:100% type=number min=1 max=10 ng-model=field.ratingOptions.steps name=ratingOptions_steps{{field._id}} ng-value={{field.ratingOptions.steps}} required>\n" +
+    "								</div>\n" +
+    "								<br>\n" +
+    "								<div class=\"col-md-5 col-sm-9\">Shape:</div>\n" +
+    "								<div class=\"col-md-7 col-sm-3\">\n" +
+    "									<select style=width:100% ng-model=field.ratingOptions.shape value={{field.ratingOptions.steps}} name=ratingOptions_shape{{field._id}} required>\n" +
+    "										<option ng-repeat=\"shapeType in field.ratingOptions.validShapes\" value={{shapeType}}>\n" +
+    "											{{select2FA[shapeType]}}\n" +
+    "										</option>\n" +
+    "									</select>\n" +
+    "								</div>\n" +
+    "							</div>\n" +
     "\n" +
     "                            <div class=row><br></div> \n" +
     "\n" +
@@ -268,201 +286,34 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "\n" +
     "</form>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-submissions-form.client.view.html",
-    "<div class=\"submissions-table row container\" ng-init=initFormSubmissions()><div class=row><div class=col-xs-2><button class=\"btn btn-danger\" ng-click=deleteSelectedSubmissions() ng-disabled=!isAtLeastOneChecked();><i class=\"fa fa-trash-o\"></i> Delete Selected</button></div><div class=\"col-xs-2 col-xs-offset-4 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('xml')\"><small>Export to Excel</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('csv')\"><small>Export to CSV</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('json')\"><small>Export to JSON</small></button></div></div><div class=\"row table-outer\"><div class=col-xs-12><table id=table-submission-data class=\"table table-striped table-hover table-condensed\"><thead><tr><th><input ng-model=table.masterChecker ng-change=toggleAllCheckers() type=\"checkbox\"></th><th>#</th><th data-ng-repeat=\"(key, value) in myform.form_fields\">{{value.title}}</th><th ng-if=myform.plugins.oscarhost.baseUrl>OscarEMR User Profile</th><th>Percentage Complete</th><th>Time Elapsed</th><th>Device</th><th>Location</th><th>IP Address</th><th>Date Submitted (UTC)</th><th ng-if=myform.autofillPDFs>Generated PDF</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.rows\" ng-click=rowClicked($index) ng-class=\"{selected: row.selected === true}\"><td><input ng-model=row.selected type=\"checkbox\"></td><th class=scope>{{$index+1}}</th><td ng-if=\"field.fieldType == 'dropdown'\" data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue.field_title}}</td><td ng-if=\"field.fieldType != 'dropdown'\" data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue}}</td><td ng-if=myform.plugins.oscarhost.baseUrl><a href=\"{{myform.plugins.oscarhost.baseUrl.split('ws')[0]}}demographic/demographiccontrol.jsp?demographic_no={{row.oscarDemoNum}}&displaymode=edit\">User Profile #{{row.oscarDemoNum}}</a></td><td>{{row.percentageComplete}}%</td><td>{{row.timeElapsed}}</td><td>{{row.device.name}}, {{row.device.type}}</td><td>{{row.geoLocation.city}}, {{row.geoLocation.country}}</td><td>{{row.ipAddr}}</td><td>{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}</td><td ng-if=row.pdf><a href={{row.pdfFilePath}} download={{row.pdf.name}} target=_self>Generated PDF</a></td></tr></tbody></table></div></div></div>");
+    "<div class=\"submissions-table row container\" ng-init=initFormSubmissions()><div class=row><div class=col-xs-4>Total Views: {{myform.analytics.views}}</div><div class=col-xs-4>Submissions: {{myform.analytics.submissions}}</div><div class=col-xs-4>Conversion Rate: {{myform.analytics.conversionRate}}%</div></div><br><div class=row><div class=col-xs-12><div class=col-xs-2><strong>Field Title</strong></div><div class=col-xs-2><strong>Field Views</strong></div><div class=col-xs-4><strong>User dropoff rate at this field</strong></div></div><div class=col-xs-12 ng-repeat=\"fieldStats in myform.analytics.fields\"><div class=col-xs-2>{{fieldStats.field.title}}</div><div class=col-xs-2>{{fieldStats.totalViews}}</div><div class=col-xs-4>{{fieldStats.dropoffRate}}%</div></div></div><br><div class=row><div class=col-xs-2><button class=\"btn btn-danger\" ng-click=deleteSelectedSubmissions() ng-disabled=!isAtLeastOneChecked();><i class=\"fa fa-trash-o\"></i> Delete Selected</button></div><div class=\"col-xs-2 col-xs-offset-4 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('xml')\"><small>Export to Excel</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('csv')\"><small>Export to CSV</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('json')\"><small>Export to JSON</small></button></div></div><div class=\"row table-outer\"><div class=col-xs-12><table id=table-submission-data class=\"table table-striped table-hover table-condensed\"><thead><tr><th><input ng-model=table.masterChecker ng-change=toggleAllCheckers() type=\"checkbox\"></th><th>#</th><th data-ng-repeat=\"(key, value) in myform.form_fields\">{{value.title}}</th><th ng-if=myform.plugins.oscarhost.baseUrl>OscarEMR User Profile</th><th>Percentage Complete</th><th>Time Elapsed</th><th>Device</th><th>Location</th><th>IP Address</th><th>Date Submitted (UTC)</th><th ng-if=myform.autofillPDFs>Generated PDF</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.rows\" ng-click=rowClicked($index) ng-class=\"{selected: row.selected === true}\"><td><input ng-model=row.selected type=\"checkbox\"></td><th class=scope>{{$index+1}}</th><td data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue}}</td><td ng-if=myform.plugins.oscarhost.baseUrl><a href=\"{{myform.plugins.oscarhost.baseUrl.split('ws')[0]}}demographic/demographiccontrol.jsp?demographic_no={{row.oscarDemoNum}}&displaymode=edit\">User Profile #{{row.oscarDemoNum}}</a></td><td>{{row.percentageComplete}}%</td><td>{{row.timeElapsed}}</td><td>{{row.device.name}}, {{row.device.type}}</td><td>{{row.geoLocation.city}}, {{row.geoLocation.country}}</td><td>{{row.ipAddr}}</td><td>{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}</td><td ng-if=row.pdf><a href={{row.pdfFilePath}} download={{row.pdf.name}} target=_self>Generated PDF</a></td></tr></tbody></table></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/entryPage/startPage.html",
     "<div class=\"field row text-center\"><div class=\"col-xs-12 text-center\"><h1>{{pageData.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\"><p style=color:#ddd>{{pageData.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in pageData.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><p class=\"col-xs-3 col-xs-offset-3 text-center\"><button class=\"btn btn-info\" type=button><a ng-click=exitpageData() style=\"color:white; font-size: 1.6em; text-decoration: none\">{{ 'CONTINUE_FORM' | translate }}</a></button></p></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/date.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=\"!field.required && !field.fieldValue\">{{ 'OPTIONAL' | translate }}</span></h3></div><div class=\"col-xs-12 field-input\"><div class=\"control-group input-append\"><input ng-focus=\"setActiveField(field._id, index, true)\" class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-class=\"{ 'no-border': !!field.fieldValue }\" ui-date=dateOptions ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled placeholder=MM/DD/YYYY on-enter-key=nextField() ng-change=$root.nextField()></div></div></div>");
+    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=\"!field.required && !field.fieldValue\">{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><div class=\"control-group input-append\"><input class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-class=\"{ 'no-border': !!field.fieldValue }\" ui-date=dateOptions ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled placeholder=MM/DD/YYYY ng-focus=\"setActiveField(field._id, index, true)\" on-tab-key=nextField() on-tab-and-shift-key=prevField() ng-change=$root.nextField()></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/dropdown.html",
-    "<div class=\"field row dropdown\" ng-click=\"setActiveField(field._id, index, true)\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=selectize ng-required=field.required ng-disabled=field.disabled ng-change=$root.nextField()><ui-select-match placeholder=\"Type or select an option\">{{$select.selected.option_value}}</ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-class=\"{'active': option.option_value === field.fieldValue }\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
+    "<div class=\"field row dropdown\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=selectize search-enabled=true search-by=option_value set-search-to-answer=true ng-required=field.required ng-disabled=field.disabled on-tab-and-shift-key=prevField() on-tab-key=nextField() ng-change=$root.nextField()><ui-select-match placeholder=\"Type or select an option\"></ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-class=\"{'active': option.option_value === field.fieldValue }\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/file.html",
     "<div class=\"field row\" ng-if=form.autofillPDFs ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3></div><div class=\"col-sm-8 field-input\"><div class=input-group><div tabindex=-1 class=\"form-control file-caption\"><span class=file-caption-ellipsis ng-if=!form.pdf>…</span><div class=file-caption-name ng-if=form.pdf>{{field.file.originalname}}</div></div><div class=input-group-btn><button type=button ng-if=field.file ng-click=removeFile(field); title=\"Clear selected files\" class=\"btn btn-danger fileinput-remove fileinput-remove-button\"><i class=\"glyphicon glyphicon-trash\"></i> {{ 'DELETE' | translate }}</button> <button type=button ng-if=field.fileLoading title=\"Abort ongoing upload\" class=\"btn btn-default\" ng-click=cancelFileUpload(field)><i class=\"glyphicon glyphicon-ban-circle\"></i> {{ 'CANCEL' | translate }}</button><div class=\"btn btn-success btn-file\" ngf-select ngf-change=uploadPDF($files) ng-if=!field.file><i class=\"glyphicon glyphicon-upload\"></i> {{ UPLOAD_FILE | translate }}</div></div></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/hidden.html",
     "<input ng-focus=\"setActiveField(field._id, index, true)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=hidden ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value={{field.fieldValue}} ng-disabled=field.disabled>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/legal.html",
-    "<div class=\"field row radio legal\" on-enter-key=nextField() key-to-truthy key-char-truthy=y key-char-falsey=n field=field><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><br><p style=color:#ddd>{{field.description}}</p></div><div class=\"col-xs-12 field-input container\"><div class=row-fluid><label class=\"btn col-md-5 col-xs-12\" ng-class=\"{activeBtn: field.fieldValue == 'true'}\"><input class=focusOn ng-focus=\"setActiveField(field._id, index, true)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=true ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"><div class=letter style=float:left>Y</div><span>{{ 'LEGAL_ACCEPT' | translate }}</span></label><label class=\"btn col-md-5 col-md-offset-1 col-xs-12\" ng-class=\"{activeBtn: field.fieldValue == 'false'}\"><input class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=false ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"><div class=letter style=float:left>N</div><span>{{ 'LEGAL_NO_ACCEPT' | translate }}</span></label></div></div></div><br>");
+    "<div class=\"field row radio legal\" on-enter-or-tab-key=nextField() key-to-truthy key-char-truthy=y key-char-falsey=n field=field><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><br><p class=col-xs-12>{{field.description}}</p></div><div class=\"col-xs-12 field-input container\"><div class=row-fluid on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField()><label class=\"btn col-md-5 col-xs-12\" ng-class=\"{activeBtn: field.fieldValue == 'true'}\"><input class=focusOn ng-focus=\"setActiveField(field._id, index, true)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=true ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"><div class=letter style=float:left>Y</div><span>{{ 'LEGAL_ACCEPT' | translate }}</span></label><label class=\"btn col-md-5 col-md-offset-1 col-xs-12\" ng-class=\"{activeBtn: field.fieldValue == 'false'}\"><input class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=false ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"><div class=letter style=float:left>N</div><span>{{ 'LEGAL_NO_ACCEPT' | translate }}</span></label></div></div></div><br>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/radio.html",
-    "<div class=\"field row radio\" on-enter-key=nextField() key-to-option field=field ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=\"btn col-md-4 col-xs-12 col-sm-12\" style=\"margin: 0.5em; padding-left:30px\" ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}\"><div class=letter style=float:left>{{$index+1}}</div><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio class=focusOn ng-focus=\"setActiveField(field._id, index, true)\" value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
+    "<div class=\"field row radio\" on-enter-or-tab-key=nextField() key-to-option field=field ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=\"btn col-md-4 col-xs-12 col-sm-12\" style=\"margin: 0.5em; padding-left:30px\" ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}\"><div class=letter style=float:left>{{$index+1}}</div><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio class=focusOn ng-focus=\"setActiveField(field._id, index, true)\" value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled ng-change=\"$root.nextField()\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/rating.html",
-    "<div class=\"textfield field row\" on-enter-key=nextField()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3></div><div class=\"col-xs-12 field-input\"><input-stars max=5 ng-init=\"field.fieldValue = 1\" on-star-click=$root.nextField() icon-full=fa-star icon-base=\"fa fa-3x\" icon-empty=fa-star-o ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled class=\"angular-input-stars focusOn\"></input-stars></div></div>");
+    "<div class=\"textfield field row\" on-enter-or-tab-key=nextField()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input-stars max={{field.ratingOptions.steps}} ng-init=\"field.fieldValue = 1\" on-star-click=$root.nextField() icon-full={{field.ratingOptions.shape}} icon-base=\"fa fa-3x\" icon-empty={{field.ratingOptions.shape}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-disabled=field.disabled on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-focus=\"setActiveField(field._id, index, true)\" class=\"angular-input-stars focusOn\"></input-stars></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/statement.html",
-    "<div class=\"statement field row\" on-enter-key=$root.nextField() ng-focus=\"setActiveField(field._id, index, true)\"><div class=\"row field-title field-title\"><div class=col-xs-1><i class=\"fa fa-quote-left fa-1\"></i></div><h2 class=\"text-left col-xs-9\">{{field.title}}</h2></div><div class=\"row field-title field-input\"><p class=col-xs-12 ng-if=field.description.length>{{field.description}}</p><br><div class=\"col-xs-offset-1 col-xs-11\"><button class=\"btn focusOn\" ng-style=\"{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-focused=\"setActiveField(field._id, index, true)\" ng-click=$root.nextField()>{{ 'CONTINUE' | translate }}</button></div></div></div>");
+    "<div class=\"statement field row\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-focus=\"setActiveField(field._id, index, true)\"><div class=\"row field-title field-title\"><div class=col-xs-1><i class=\"fa fa-quote-left fa-1\"></i></div><h2 class=\"text-left col-xs-9\">{{field.title}}</h2><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"row field-title field-input\"><p class=col-xs-12 ng-if=field.description.length>{{field.description}}</p><br><div class=\"col-xs-offset-1 col-xs-11\"><button class=\"btn focusOn\" ng-style=\"{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-focused=\"setActiveField(field._id, index, true)\" ng-click=$root.nextField()>{{ 'CONTINUE' | translate }}</button></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/textarea.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\" ng-focus=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><small>{{ 'NEWLINE' | translate }}</small></div><div class=\"col-xs-12 field-input\"><textarea class=\"textarea focusOn\" type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-class=\"{ 'no-border': !!field.fieldValue }\" value={{field.fieldValue}} ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index, true)\" on-enter-key=nextField()>\n" +
-    "		</textarea></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-sm-3 col-xs-6\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
+    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><small>{{ 'NEWLINE' | translate }}</small><p><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><small style=font-size:0.6em>Press SHIFT+ENTER to add a newline</small><textarea class=\"textarea focusOn\" type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-class=\"{ 'no-border': !!field.fieldValue }\" value={{field.fieldValue}} ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index, true)\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() style=\"border: none; border-left: lightgrey dashed 2px\">\n" +
+    "		</textarea></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-sm-3 col-xs-6\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/textfield.html",
-    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>({{ 'OPTIONAL' | translate }})</span></h3></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-focus=\"setActiveField(field._id, index, true)\" name={{field.fieldType}}{{index}} type={{field.input_type}} ng-pattern=field.validateRegex placeholder={{field.placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-required=field.required ng-disabled=field.disabled aria-describedby=inputError2Status on-enter-key=nextField()></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">{{ 'ERROR_EMAIL_INVALID' | translate }}</span> <span ng-if=field.validateRegex>{{ 'ERROR_NOT_A_NUMBER' | translate }}</span> <span ng-if=\"field.fieldType == 'link'\">{{ 'ERROR_URL_INVALID' | translate }}</span></div></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-xs-6 col-sm-3\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
+    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title row-fluid\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=col-xs-12><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>({{ 'OPTIONAL' | translate }})</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" name={{field.fieldType}}{{index}} type={{field.input_type}} ng-pattern=field.validateRegex placeholder={{field.placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-required=field.required ng-disabled=field.disabled aria-describedby=inputError2Status></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">{{ 'ERROR_EMAIL_INVALID' | translate }}</span> <span ng-if=field.validateRegex>{{ 'ERROR_NOT_A_NUMBER' | translate }}</span> <span ng-if=\"field.fieldType == 'link'\">{{ 'ERROR_URL_INVALID' | translate }}</span></div></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-xs-6 col-sm-3\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/yes_no.html",
-    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" on-enter-key=nextField() key-to-truthy key-char-truthy=y key-char-falsey=n field=field><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-focus=\"setActiveField(field._id, index, true)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'Y' | translate }}</div><span>{{ 'YES' | translate }}</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-focus=\"setActiveField(field._id, index, true)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'N' | translate }}</div><span>{{ 'NO' | translate }}</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
+    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" on-tab-and-shift-key=prevField() key-to-truthy key-char-truthy=y key-char-falsey=n field=field><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-model=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'Y' | translate }}</div><span>{{ 'YES' | translate }}</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'N' | translate }}</div><span>{{ 'NO' | translate }}</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
   $templateCache.put("modules/forms/base/views/directiveViews/form/submit-form.client.view.html",
-    "<section class=\"overlay submitform\" ng-if=\"loading || (!myform.submitted && !myform.startPage.showStart)\"></section>\n" +
-    "\n" +
-    "<!-- Start Page View -->\n" +
-    "<<<<<<< HEAD:public/modules/forms/base/views/directiveViews/form/submit-form.client.view.html\n" +
-    "<div ng-show=\"!myform.submitted && myform.startPage.showStart\"\n" +
-    "=======\n" +
-    "<div ng-show=\"!myform.submitted && myform.startPage.showStart\" \n" +
-    ">>>>>>> master:public/modules/forms/views/directiveViews/form/submit-form.client.view.html\n" +
-    "class=\"form-submitted\"\n" +
-    "style=\"padding-top: 35vh;\">\n" +
-    "<div class=\"row\">\n" +
-    "<div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word;\">\n" +
-    "<h1 style=\"font-weight: 400; nont-size: 25px;\">\n" +
-    "{{myform.startPage.introTitle}}\n" +
-    "</h1>\n" +
-    "</div>\n" +
-    "<div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word;\">\n" +
-    "<p style=\"color: grey; font-weight: 100; font-size: 16px;\">\n" +
-    "{{myform.startPage.introParagraph}}\n" +
-    "</p>\n" +
-    "</div>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px;\">\n" +
-    "<button ng-click=\"exitStartPage()\" class=\"btn\" type=\"button\"\n" +
-    "ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">\n" +
-    "<span style=\"font-size: 1.6em;\">\n" +
-    "{{myform.startPage.introButtonText}}\n" +
-    "</span>\n" +
-    "</button>\n" +
-    "</div>\n" +
-    "<div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em;\">\n" +
-    "<p ng-repeat=\"button in myform.startPage.buttons\" class=\"text-center\" style=\"display:inline;\">\n" +
-    "<button class=\"btn\" style=\"background-color:rgb(156, 226, 235)\" type=\"button\" ng-style=\"{'background-color':button.bgColor, 'color':button.color}\">\n" +
-    "<a href=\"{{button.url}}\"\n" +
-    "style=\"font-size: 1.6em; text-decoration: none;\"\n" +
-    "ng-style=\"{'color':button.color}\">\n" +
-    "{{button.text}}\n" +
-    "</a>\n" +
-    "</button>\n" +
-    "</p>\n" +
-    "</div>\n" +
-    "</div>\n" +
-    "\n" +
-    "<!-- Form Fields View -->\n" +
-    "<div class=\"form-fields\" ng-show=\"!myform.submitted && !myform.startPage.showStart\"\n" +
-    "    ng-style=\"{ 'border-color': myform.design.colors.buttonTextColor }\">\n" +
-    "\n" +
-    "	<div class=\"row\">\n" +
-    "		<form name=\"forms.myForm\"\n" +
-    "		novalidate\n" +
-    "		class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\">\n" +
-    "\n" +
-    "		<div ng-repeat=\"field in myform.form_fields\"\n" +
-    "		ng-if=\"!field.deletePreserved\"\n" +
-    "		data-index=\"{{$index}}\"\n" +
-    "		data-id=\"{{field._id}}\"\n" +
-    "		ng-class=\"{activeField: selected._id == field._id }\"\n" +
-    "		class=\"row field-directive\">\n" +
-    "\n" +
-    "			<field-directive field=\"field\" design=\"myform.design\" index=\"$index\" forms=\"forms\">\n" +
-    "			</field-directive>\n" +
-    "		</div>\n" +
-    "\n" +
-    "\n" +
-    "		</form>\n" +
-    "</div>\n" +
-    "\n" +
-    "\n" +
-    "<div class=\"row form-actions\" id=\"submit_field\"\n" +
-    "	ng-class=\"{activeField: selected._id == 'submit_field' }\"\n" +
-    "	ng-style=\"{ 'background-color':myform.design.colors.buttonColor}\"\n" +
-    "	style=\"border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; margin-top: 30vh; height: 100vh\">\n" +
-    "\n" +
-    "	<div class=\"col-xs-12 text-left\"\n" +
-    "		 style=\"background-color:#990000; color:white;\"\n" +
-    "		 ng-if=\"forms.myForm.$invalid\">\n" +
-    "         {{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}\n" +
-    "	</div>\n" +
-    "\n" +
-    "	<button ng-if=\"!forms.myForm.$invalid\"\n" +
-    "		class=\"Button btn col-sm-2 col-xs-8 focusOn\"\n" +
-    "		v-busy=\"loading\" v-busy-label=\"Please wait\" v-pressable\n" +
-    "		ng-disabled=\"loading || forms.myForm.$invalid\"\n" +
-    "		ng-click=\"submitForm()\"\n" +
-    "		on-enter-key=\"submitForm()\"\n" +
-    "		on-enter-key-disabled=\"loading || forms.myForm.$invalid\"\n" +
-    "		ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"\n" +
-    "		style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em;\">\n" +
-    "\n" +
-    "		{{ 'SUBMIT' | translate }}\n" +
-    "	</button>\n" +
-    "\n" +
-    "	<button ng-if=\"forms.myForm.$invalid\"\n" +
-    "			class=\"Button btn col-sm-2 col-xs-8 focusOn\"\n" +
-    "			ng-click=\"goToInvalid()\"\n" +
-    "			on-enter-key=\"goToInvalid()\"\n" +
-    "			on-enter-key-disabled=\"!forms.myForm.$invalid\"\n" +
-    "			style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white\">\n" +
-    "		{{ 'REVIEW' | translate }}\n" +
-    "	</button>\n" +
-    "\n" +
-    "	<div class=\"col-sm-2 hidden-xs\" style=\"font-size: 75%; margin-top:3.25em\">\n" +
-    "		<small>\n" +
-    "			{{ 'ENTER' | translate }}\n" +
-    "		</small>\n" +
-    "	</div>\n" +
-    "</div>\n" +
-    "\n" +
-    "<section ng-if=\"!myform.hideFooter\" class=\"navbar navbar-fixed-bottom\"\n" +
-    "        ng-style=\"{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}\">\n" +
-    "        <div class=\"container-fluid\">\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"col-sm-5 col-md-6 col-xs-5\" ng-show=\"!myform.submitted\">\n" +
-    "                        <p class=\"lead\">{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p>\n" +
-    "                </div>\n" +
-    "                <div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 col-xs-offset-1 col-xs-6 row\">\n" +
-    "                    <div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=\"!authentication.isAuthenticated()\">\n" +
-    "                        <a href=\"/#!/forms\" class=\"btn\"\n" +
-    "                            ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">\n" +
-    "                            {{ 'CREATE_FORM' | translate }}\n" +
-    "                        </a>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=\"authentication.isAuthenticated()\">\n" +
-    "                        <a href=\"/#!/forms/{{myform._id}}/admin/create\"\n" +
-    "                            ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"\n" +
-    "                            class=\"btn\">\n" +
-    "                            {{ 'EDIT_FORM' | translate }}\n" +
-    "                        </a>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12 row\">\n" +
-    "                        <button class=\"btn btn-lg col-xs-6\" id=\"focusDownButton\"\n" +
-    "				            ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"\n" +
-    "                            ng-click=\"nextField()\"\n" +
-    "				            ng-disabled=\"selected.index > myform.form_fields.length-1\">\n" +
-    "                        	<i class=\"fa fa-chevron-down\"></i>\n" +
-    "                        </button>\n" +
-    "                        <button class=\"btn btn-lg col-xs-6\" id=\"focusUpButton\"\n" +
-    "                            ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"\n" +
-    "                            ng-click=\"prevField()\"\n" +
-    "                            ng-disabled=\"selected.index == 0\">\n" +
-    "                        	<i class=\"fa fa-chevron-up\"></i>\n" +
-    "                        </button>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </section>\n" +
-    "</div>\n" +
-    "\n" +
-    "<!-- End Page View -->\n" +
-    "<div ng-if=\"myform.submitted && !loading\" class=\"form-submitted\"\n" +
-    "    ng-style=\"{'color':myform.design.colors.buttonTextColor}\"\n" +
-    "    style=\"padding-top: 5vh;\">\n" +
-    "\n" +
-    "    <div class=\"field row text-center\">\n" +
-    "        <div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center\">{{ 'FORM_SUCCESS' | translate }}</div>\n" +
-    "    </div>\n" +
-    "    <div class=\"row form-actions\">\n" +
-    "        <p class=\"text-center\">\n" +
-    "            <button ng-click=\"reloadForm()\" class=\"btn\" type=\"button\"\n" +
-    "                ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">\n" +
-    "                <span style=\"font-size: 1.6em;\"> {{ 'BACK_TO_FORM' | translate }}</span>\n" +
-    "            </button>\n" +
-    "        </p>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "");
+    "<section class=\"overlay submitform\" ng-if=\"loading || (!myform.submitted && !myform.startPage.showStart)\"></section><div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted style=\"padding-top: 35vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; nont-size: 25px\">{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"color: grey; font-weight: 100; font-size: 16px\">{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=exitStartPage() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{myform.startPage.introButtonText}}</span></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div><div class=form-fields ng-show=\"!myform.submitted && !myform.startPage.showStart\" ng-style=\"{ 'border-color': myform.design.colors.buttonTextColor }\"><div class=row><form name=forms.myForm novalidate class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\"><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved data-index={{$index}} data-id={{field._id}} ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index forms=forms></field-directive></div></form></div><div class=\"row form-actions\" id=submit_field ng-class=\"{activeField: selected._id == 'submit_field' }\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor}\" style=\"border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; margin-top: 30vh; height: 100vh\"><div class=\"col-xs-12 text-left\" style=\"background-color:#990000; color:white\" ng-if=forms.myForm.$invalid>{{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}</div><button ng-if=!forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" v-busy=loading v-busy-label=\"Please wait\" v-pressable ng-disabled=\"loading || forms.myForm.$invalid\" ng-click=submitForm() on-enter-key=submitForm() on-enter-key-disabled=\"loading || forms.myForm.$invalid\" ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em\">{{ 'SUBMIT' | translate }}</button> <button ng-if=forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" ng-click=goToInvalid() on-enter-key=goToInvalid() on-enter-key-disabled=!forms.myForm.$invalid style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white\">{{ 'REVIEW' | translate }}</button><div class=\"col-sm-2 hidden-xs\" style=\"font-size: 75%; margin-top:3.25em\"><small>{{ 'ENTER' | translate }}</small></div></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}\"><div class=container-fluid><div class=row><div class=\"col-sm-5 col-md-6 col-xs-5\" ng-show=!myform.submitted><p class=lead>{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p></div><div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 col-xs-offset-1 col-xs-6 row\"><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=!authentication.isAuthenticated()><a href=/#!/forms class=btn ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">{{ 'CREATE_FORM' | translate }}</a></div><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=authentication.isAuthenticated()><a href=/#!/forms/{{myform._id}}/admin/create ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" class=btn>{{ 'EDIT_FORM' | translate }}</a></div><div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12 row\"><button class=\"btn btn-lg col-xs-6\" id=focusDownButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=nextField() ng-disabled=\"selected.index > myform.form_fields.length-1\"><i class=\"fa fa-chevron-down\"></i></button> <button class=\"btn btn-lg col-xs-6\" id=focusUpButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=prevField() ng-disabled=\"selected.index == 0\"><i class=\"fa fa-chevron-up\"></i></button></div></div></div></div></section></div><div ng-if=\"myform.submitted && !loading\" class=form-submitted ng-style=\"{'color':myform.design.colors.buttonTextColor}\" style=\"padding-top: 5vh\"><div class=\"field row text-center\"><div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center\">{{ 'FORM_SUCCESS' | translate }}</div></div><div class=\"row form-actions\"><p class=text-center><button ng-click=reloadForm() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{ 'BACK_TO_FORM' | translate }}</span></button></p></div></div>");
   $templateCache.put("modules/users/views/authentication/access-denied.client.view.html",
     "<section class=\"row text-center auth\"><h3 class=col-md-12>You need to be logged in to access this page</h3><a href=/#!/sigin class=col-md-12>Login</a></section>");
   $templateCache.put("modules/users/views/authentication/signin.client.view.html",
@@ -1208,14 +1059,13 @@ angular.module('core').service('Menus', [
 			socket: null
 		};
 
-		console.log('https://'+window.location.hostname+':'+$window.socketPort);
-		connect('https://'+window.location.hostname+':'+$window.socketPort);
+		connect(window.location.protocol+'//'+window.location.hostname+':'+$window.socketPort);
 
 		return service;
 
 		// Connect to Socket.io server
 		function connect(url) {
-			service.socket = io();
+			service.socket = io(url, {'transports': ['websocket', 'polling']});
 		}
 
 		// Wrap the Socket.io 'emit' method
@@ -1244,6 +1094,54 @@ angular.module('core').service('Menus', [
 		}
 	}
 }());
+
+'use strict';
+
+module.exports = function(grunt) {
+	require('jit-grunt')(grunt);
+
+	// Project Configuration
+	grunt.initConfig({
+		ngAnnotate: {
+			production: {
+				files: {
+					'dist/form.js': [
+						'config/**/*.js', 'controllers/**/*.js',
+						'directives/**/*.js', 'services/**/*.js',
+						'dist/template.js'
+					]
+				}
+			}
+		},
+        html2js: {
+		  options: {
+		  	base: '',
+			module: 'NodeForm.templates',
+		    singleModule: true,
+			rename: function (moduleName) {
+				return 'modules/forms/base/' + moduleName;
+			}
+		  },
+		  form: {
+			src: ['views/**/*.html'],
+		    dest: 'dist/template.js'
+		  }
+	    },
+	    cssmin: {
+		  combine: {
+			  files: {
+				  'dist/form.css': 'css/**/*.css'
+			  }
+		  }
+	    },
+	});
+
+	// Making grunt default to force in order not to break the project.
+	grunt.option('force', true);
+
+	// Default task(s).
+	grunt.registerTask('default', ['html2js:form', 'ngAnnotate', 'cssmin']);
+};
 
 'use strict';
 
@@ -1356,7 +1254,6 @@ angular.module('forms').config(['$stateProvider',
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {
 
-			console.log(lastActiveIndex);
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,
@@ -1378,7 +1275,7 @@ angular.module('forms').config(['$stateProvider',
 		var service = {
 			send: send
 		};
-		
+
 		init();
 		return service;
 
@@ -2041,6 +1938,52 @@ angular.module('users').factory('Users', ['$resource',
 		});
 	}
 ]);
+'use strict';
+
+(function() {
+	describe('HeaderController', function() {
+		//Initialize global variables
+		var scope,
+			HeaderController;
+
+		// Load the main application module
+		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+		beforeEach(inject(function($controller, $rootScope) {
+			scope = $rootScope.$new();
+
+			HeaderController = $controller('HeaderController', {
+				$scope: scope
+			});
+		}));
+
+		it('should expose the authentication service', function() {
+			expect(scope.authentication).toBeTruthy();
+		});
+	});
+})();
+'use strict';
+
+(function() {
+	describe('HomeController', function() {
+		//Initialize global variables
+		var scope,
+			HomeController;
+
+		// Load the main application module
+		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+		beforeEach(inject(function($controller, $rootScope) {
+			scope = $rootScope.$new();
+
+			HomeController = $controller('HomeController', {
+				$scope: scope
+			});
+		}));
+
+	});
+})();
+
 'use strict';
 
 // Forms controller
@@ -3123,6 +3066,63 @@ angular.module('forms').controller('SubmitFormController', [
 	}
 ]);
 
+
+angular.module('forms', [
+	'duScroll', 'ngResource', 'NodeForm.templates', 'pascalprecht.translate',
+	'angular-input-stars',
+	'ui.select'
+]);
+
+angular.module('NodeForm', [
+    'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource',
+    'ui.router', 'ui.bootstrap', 'ui.utils', 'ngRaven', 'forms',
+	'ui.select'
+]);
+
+angular.module('forms').factory('Auth', [
+  function() {
+    var service = {
+      _currentUser: null,
+      get currentUser(){
+        return this._currentUser;
+      },
+      ensureHasCurrentUser: function() {
+        return null;
+      },
+      isAuthenticated: function() {
+        return false;
+      },
+      getUserState: function() {
+        return '';
+      },
+      login: function() {
+      },
+      logout: function() {
+      },
+    };
+    return service;
+  }
+]);
+angular.module('forms').factory('$state', [function() {
+    return {
+        go: function() {}
+    };
+}]);
+angular.module('forms').factory('myForm', ['Forms', function(Forms) {
+    var form = window.form;
+    form.visible_form_fields = _.filter(form.form_fields, function(field){
+    	return (field.deletePreserved === false);
+    });
+    return form;
+}]);
+angular.module('forms').constant('FORM_URL', '/form/:formId');
+
+
+angular.element(document).ready(function() {
+	//Then init the app
+	angular.bootstrap(document, ['forms']);
+});
+
 'use strict';
 
 angular.module('forms').directive('fieldIconDirective', function() {
@@ -3708,3 +3708,2539 @@ angular.module('forms').service('TimeCounter', [
 
 	}
 ]);
+
+'use strict';
+
+(function() {
+	// Forms Controller Spec
+	describe('AdminForm Controller Tests', function() {
+		// Initialize global variables
+		var AdminFormController,
+			createAdminFormController,
+			scope,
+			$httpBackend,
+			$stateParams,
+			$location,
+			$state;
+
+		var sampleUser = {
+			firstName: 'Full',
+			lastName: 'Name',
+			email: 'test@test.com',
+			username: 'test@test.com',
+			password: 'password',
+			provider: 'local',
+			roles: ['user'],
+			_id: 'ed873933b1f1dea0ce12fab9'
+		};
+
+		var sampleForm = {
+			title: 'Form Title',
+			admin: 'ed873933b1f1dea0ce12fab9',
+			language: 'english',
+			form_fields: [
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false, _id:'56340745f59a6fc9e22028e9'},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false, _id:'56e90745f5934fc9e22028a6'}
+			],
+			_id: '525a8422f6d0f87f0e407a33'
+		};
+
+		var expectedForm = {
+			title: 'Form Title',
+			admin: 'ed873933b1f1dea0ce12fab9',
+			language: 'english',
+			form_fields: [
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false, _id:'56340745f59a6fc9e22028e9'},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false, _id:'56e90745f5934fc9e22028a6'}
+			],
+			visible_form_fields: [
+				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false, _id:'56340745f59a6fc9e22028e9'},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false, _id:'56e90745f5934fc9e22028a6'}
+			],
+			_id: '525a8422f6d0f87f0e407a33'
+		};
+
+		var newFakeModal = function(){
+			var result = {
+				opened: true,
+			    result: {
+			        then: function(confirmCallback, cancelCallback) {
+			            //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+			            this.confirmCallBack = confirmCallback;
+			            this.cancelCallback = cancelCallback;
+			        }
+			    },
+			    close: function( item ) {
+			        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+			        this.opened = false;
+			        this.result.confirmCallBack( item );
+			    },
+			    dismiss: function( type ) {
+			        //The user clicked cancel on the modal dialog, call the stored cancel callback
+			        this.opened = false;
+			        this.result.cancelCallback( type );
+			    }
+			};
+			return result;
+		};
+		
+		//Mock Users Service
+        beforeEach(module(function($provide) {
+            $provide.service('myForm', function($q) {
+                return sampleForm;
+            });
+        }));
+
+
+		// The $resource service augments the response object with methods for updating and deleting the resource.
+		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+		// When the toEqualData matcher compares two objects, it takes only object properties into
+		// account and ignores methods.
+		beforeEach(function() {
+			jasmine.addMatchers({
+				toEqualData: function(util, customEqualityTesters) {
+					return {
+						compare: function(actual, expected) {
+							return {
+								pass: angular.equals(actual, expected)
+							};
+						}
+					};
+				}
+			});
+		});
+
+		// Load the main application module
+		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+		beforeEach(module('stateMock'));
+
+		//Mock Users Service
+		beforeEach(module(function($provide) {
+			$provide.service('User', function($q) {
+				return {
+					getCurrent: function() {
+						var deferred = $q.defer();
+						deferred.resolve( JSON.stringify(sampleUser) );
+						return deferred.promise;
+					},
+					login: function(credentials) {
+						var deferred = $q.defer();
+						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+							deferred.resolve( JSON.stringify(sampleUser) );
+						}else {
+							deferred.resolve('Error: User could not be loggedin');
+						}
+
+						return deferred.promise;
+					},
+					logout: function() {
+						var deferred = $q.defer();
+						deferred.resolve(null);
+						return deferred.promise;
+					},
+					signup: function(credentials) {
+						var deferred = $q.defer();
+						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+							deferred.resolve( JSON.stringify(sampleUser) );
+						}else {
+							deferred.resolve('Error: User could not be signed up');
+						}
+
+						return deferred.promise;
+					}
+				};
+			});
+		}));
+
+		//Mock Authentication Service
+		beforeEach(module(function($provide) {
+			$provide.service('Auth', function() {
+				return {
+					ensureHasCurrentUser: function() {
+						return sampleUser;
+					},
+					isAuthenticated: function() {
+						return true;
+					},
+					getUserState: function() {
+						return true;
+					}
+				};
+			});
+		}));
+
+
+		//Mock $uibModal
+		beforeEach(inject(function($uibModal) {
+			var modal = newFakeModal();
+		    spyOn($uibModal, 'open').and.returnValue(modal);
+		    //spyOn($uibModal, 'close').and.callFake(modal.close());
+		}));
+
+		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+		// This allows us to inject a service but then attach it to a variable
+		// with the same name as the service.
+		beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms) {
+			// Set a new global scope
+			scope = $rootScope.$new();
+
+			//Set CurrentForm
+			CurrentForm.setForm(sampleForm);
+
+			// Point global variables to injected services
+			$stateParams = _$stateParams_;
+			$httpBackend = _$httpBackend_;
+			$location = _$location_;
+			$state = _$state_;
+
+			$httpBackend.whenGET(/\.html$/).respond('');
+			$httpBackend.whenGET('/users/me/').respond('');
+
+			// Initialize the Forms controller.
+			createAdminFormController = function(){
+				return $controller('AdminFormController', { $scope: scope });
+			};
+ 		}));
+
+		it('AdminFormController should fetch current Form when instantiated', function() {
+			// Run controller functionality
+			var controller = createAdminFormController();
+
+			// Test scope value
+			expect(scope.myform).toEqualData(sampleForm);
+		});
+
+		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', function() {
+			var controller = createAdminFormController();
+
+			//Set $state transition 
+			$state.expectTransitionTo('listForms');
+
+			// Set DELETE response
+			$httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
+
+			//Run controller functionality
+			scope.openDeleteModal();
+			scope.removeCurrentForm();
+	
+			$httpBackend.flush();
+			$state.ensureAllTransitionsHappened();
+		});
+
+		it('$scope.update() should send a PUT request with the id of form', function() {
+			var controller = createAdminFormController();
+
+			//Set PUT response
+			$httpBackend.expect('PUT', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
+
+			//Run controller functionality
+			scope.update(false, null);
+
+			$httpBackend.flush();
+		});
+
+		it('$scope.openDeleteModal() should open scope.deleteModal', function() {
+			var controller = createAdminFormController();
+
+			//Run controller functionality
+			scope.openDeleteModal();
+			console.log(scope.deleteModal);
+			expect(scope.deleteModal.opened).toEqual(true);
+		});
+
+		it('$scope.cancelDeleteModal() should close $scope.deleteModal', inject(function($uibModal) {
+			var controller = createAdminFormController();
+
+			//Run controller functionality
+			scope.openDeleteModal();
+
+			//Run controller functionality
+			scope.cancelDeleteModal();
+			expect( scope.deleteModal.opened ).toEqual(false);
+		}));
+	});
+}());
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('ListForms Controller Tests', function() {
+        // Initialize global variables
+        var ListFormsController,
+            createListFormsController,
+            scope,
+            $httpBackend,
+            $stateParams,
+            $location,
+            $state;
+
+        var sampleForm = {
+            title: 'Form Title',
+            admin: 'ed873933b1f1dea0ce12fab9',
+            language: 'english',
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+            ],
+            _id: '525a8422f6d0f87f0e407a33'
+        };
+
+        var sampleFormList = [{
+                title: 'Form Title1',
+                admin: 'ed873933b1f1dea0ce12fab9',
+                language: 'english',
+                form_fields: [
+                    {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+                ],
+                _id: '525a8422f6d0f87f0e407a33'
+            },{
+                title: 'Form Title2',
+                admin: '39223933b1f1dea0ce12fab9',
+                language: 'english',
+                form_fields: [
+                    {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+                ],
+                _id: '52f6d0f87f5a407a384220e3'
+            },{
+                title: 'Form Title3',
+                admin: '2fab9ed873937f0e1dea0ce1',
+                language: 'english',
+                form_fields: [
+                    {fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+                    {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+                ],
+                _id: '922f6d0f87fed8730e4e1233'
+            }
+        ];
+
+
+        // The $resource service augments the response object with methods for updating and deleting the resource.
+        // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+        // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+        // When the toEqualData matcher compares two objects, it takes only object properties into
+        // account and ignores methods.
+        beforeEach(function() {
+            jasmine.addMatchers({
+                toEqualData: function(util, customEqualityTesters) {
+                    return {
+                        compare: function(actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
+        });
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+        beforeEach(module('stateMock'));
+
+        //Mock Users Service
+        beforeEach(module(function($provide) {
+            $provide.service('myForm', function($q) {
+                return sampleForm;
+            });
+        }));
+
+
+        // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+        // This allows us to inject a service but then attach it to a variable
+        // with the same name as the service.
+        beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms) {
+            // Set a new global scope
+            scope = $rootScope.$new();
+
+            //Set CurrentForm
+            CurrentForm.setForm(sampleForm);
+
+            // Point global variables to injected services
+            $stateParams = _$stateParams_;
+            $httpBackend = _$httpBackend_;
+            $location = _$location_;
+            $state = _$state_;
+
+            $httpBackend.whenGET(/\.html$/).respond('');
+            $httpBackend.whenGET('/users/me/').respond('');
+
+            // Initialize the Forms controller.
+            createListFormsController = function(){
+                return $controller('ListFormsController', { $scope: scope });
+            };
+        }));
+
+        it('$scope.findAll() should query all User\'s Forms', inject(function(Forms) {
+
+            var controller = createListFormsController();
+
+            // Set GET response
+            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList);
+
+            // Run controller functionality
+            scope.findAll();
+            $httpBackend.flush();
+
+            // Test scope value
+            expect( scope.myforms ).toEqualData(sampleFormList);
+        }));
+
+        it('$scope.duplicateForm() should duplicate a Form', inject(function(Forms) {
+
+            var dupSampleForm = sampleFormList[2],
+                dupSampleForm_index = 3,
+                newSampleFormList = _.clone(sampleFormList);
+            dupSampleForm._id = 'a02df75b44c1d26b6a5e05b8';
+            newSampleFormList.splice(3, 0, dupSampleForm);
+
+            var controller = createListFormsController();
+
+            // Set GET response
+            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList);
+            // Run controller functionality
+            scope.findAll();
+            $httpBackend.flush();
+
+            // Set GET response
+            $httpBackend.expect('POST', '/forms').respond(200, dupSampleForm);
+            // Run controller functionality
+            scope.duplicateForm(2);
+            $httpBackend.flush();
+
+            // Test scope value
+            expect( scope.myforms.length ).toEqual(newSampleFormList.length);
+            for(var i=0; i<scope.myforms.length; i++){
+                expect( scope.myforms[i] ).toEqualData(newSampleFormList[i]);
+            }
+            expect( scope.myforms[dupSampleForm_index] ).toEqualData(dupSampleForm);
+        }));
+
+        it('$scope.removeForm() should remove a Form', inject(function(Forms) {
+
+            var delIndex = 0,
+                delSampleForm = sampleFormList[delIndex],
+                delSampleFormList = _.clone(sampleFormList);
+            delSampleFormList.splice(delIndex, 1);
+
+            var controller = createListFormsController();
+
+            // Set GET response
+            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList);
+
+            // Run controller functionality
+            scope.findAll();
+            $httpBackend.flush();
+
+            // Set GET response
+            $httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, delSampleForm);
+
+            // Run controller functionality
+            scope.removeForm(delIndex);
+            $httpBackend.flush();
+
+            // Test scope value
+            expect( scope.myforms.length ).toEqual(delSampleFormList.length);
+            for(var i=0; i<scope.myforms.length; i++){
+                expect( scope.myforms[i] ).toEqualData(delSampleFormList[i]);
+            }
+            expect( scope.myforms[0] ).not.toEqualData(delSampleForm);
+        }));
+
+        it('$scope.createNewForm() should create a new Form', inject(function(Forms) {
+            var newForm = _.clone(sampleForm);
+            newForm.name = 'Test Form5';
+
+            var controller = createListFormsController();
+
+            scope.forms.createForm = {
+                language: {
+                    $modelValue: 'english'
+                },
+                title: {
+                    $modelValue: 'Test Form5'
+                },
+                $dirty: true,
+                $valid: true
+            };
+
+            //Set $state transition
+            $state.expectTransitionTo('viewForm.create');
+
+            // Set GET response
+            $httpBackend.expect('POST', '/forms').respond(200, newForm);
+
+            scope.createNewForm();
+
+            $httpBackend.flush();
+            $state.ensureAllTransitionsHappened();
+        }));
+
+    });
+}());
+
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('SubmitForm Controller Tests', function() {
+        // Initialize global variables
+        var SubmitFormController,
+            createSubmitFormController,
+            scope,
+            $httpBackend,
+            $stateParams,
+            $location,
+            $state;
+
+        var sampleUser = {
+            firstName: 'Full',
+            lastName: 'Name',
+            email: 'test@test.com',
+            username: 'test@test.com',
+            password: 'password',
+            provider: 'local',
+            roles: ['user'],
+            _id: 'ed873933b1f1dea0ce12fab9'
+        };
+
+        var sampleForm = {
+            title: 'Form Title',
+            admin: 'ed873933b1f1dea0ce12fab9',
+            language: 'english',
+            form_fields: [
+                {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
+                {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
+                {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+            ],
+            isLive: false,
+            _id: '525a8422f6d0f87f0e407a33',
+            visible_form_fields: [
+                {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
+                {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
+                {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+            ]
+        };
+
+        //Mock Users Service
+        beforeEach(module(function($provide) {
+            $provide.service('myForm', function($q) {
+                return sampleForm;
+            });
+        }));
+
+        //Mock Users Service
+        beforeEach(module(function($provide) {
+            $provide.service('User', function($q) {
+                return {
+                    getCurrent: function() {
+                        var deferred = $q.defer();
+                        deferred.resolve( JSON.stringify(sampleUser) );
+                        return deferred.promise;
+                    },
+                    login: function(credentials) {
+                        var deferred = $q.defer();
+                        if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+                            deferred.resolve( JSON.stringify(sampleUser) );
+                        }else {
+                            deferred.resolve('Error: User could not be loggedin');
+                        }
+
+                        return deferred.promise;
+                    },
+                    logout: function() {
+                        var deferred = $q.defer();
+                        deferred.resolve(null);
+                        return deferred.promise;
+                    },
+                    signup: function(credentials) {
+                        var deferred = $q.defer();
+                        if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+                            deferred.resolve( JSON.stringify(sampleUser) );
+                        }else {
+                            deferred.resolve('Error: User could not be signed up');
+                        }
+
+                        return deferred.promise;
+                    }
+                };
+            });
+        }));
+
+        //Mock Authentication Service
+        beforeEach(module(function($provide) {
+            $provide.service('Auth', function() {
+                return {
+                    ensureHasCurrentUser: function() {
+                        return sampleUser;
+                    },
+                    isAuthenticated: function() {
+                        return true;
+                    },
+                    getUserState: function() {
+                        return true;
+                    }
+                };
+            });
+        }));
+
+
+
+        // The $resource service augments the response object with methods for updating and deleting the resource.
+        // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+        // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+        // When the toEqualData matcher compares two objects, it takes only object properties into
+        // account and ignores methods.
+        beforeEach(function() {
+            jasmine.addMatchers({
+                toEqualData: function(util, customEqualityTesters) {
+                    return {
+                        compare: function(actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
+        });
+
+
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+        beforeEach(module('stateMock'));
+
+        //Mock Authentication Service
+        beforeEach(module(function($provide) {
+            $provide.service('Auth', function() {
+                return {
+                    ensureHasCurrentUser: function() {
+                        return sampleUser;
+                    },
+                    isAuthenticated: function() {
+                        return true;
+                    },
+                    getUserState: function() {
+                        return true;
+                    }
+                };
+            });
+        }));
+
+        //Mock Users Service
+        beforeEach(module(function($provide) {
+            $provide.service('User', function($q) {
+                return {
+                    getCurrent: function() {
+                        var deferred = $q.defer();
+                        deferred.resolve( JSON.stringify(sampleUser) );
+                        return deferred.promise;
+                    },
+                    login: function(credentials) {
+                        var deferred = $q.defer();
+                        if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+                            deferred.resolve( JSON.stringify(sampleUser) );
+                        }else {
+                            deferred.resolve('Error: User could not be loggedin');
+                        }
+
+                        return deferred.promise;
+                    },
+                    logout: function() {
+                        var deferred = $q.defer();
+                        deferred.resolve(null);
+                        return deferred.promise;
+                    },
+                    signup: function(credentials) {
+                        var deferred = $q.defer();
+                        if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+                            deferred.resolve( JSON.stringify(sampleUser) );
+                        }else {
+                            deferred.resolve('Error: User could not be signed up');
+                        }
+
+                        return deferred.promise;
+                    }
+                };
+            });
+        }));
+
+
+        // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+        // This allows us to inject a service but then attach it to a variable
+        // with the same name as the service.
+        beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms) {
+            // Set a new global scope
+            scope = $rootScope.$new();
+
+            //Set CurrentForm
+            CurrentForm.setForm(sampleForm);
+
+            // Point global variables to injected services
+            $stateParams = _$stateParams_;
+            $httpBackend = _$httpBackend_;
+            $location = _$location_;
+            $state = _$state_;
+
+            $httpBackend.whenGET(/\.html$/).respond('');
+            $httpBackend.whenGET('/users/me/').respond('');
+
+            // Initialize the Forms controller.
+            createSubmitFormController = function(){
+                return $controller('SubmitFormController', { $scope: scope });
+            };
+        }));
+
+
+        it('on controller instantiation it should populate $scope.myform with current Form', inject(function(Forms) {
+
+            var controller = createSubmitFormController();
+
+            $stateParams.formId = '525a8422f6d0f87f0e407a33';
+
+            // Set GET response
+            $httpBackend.expectGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
+
+            // Test scope value
+            expect( scope.myform  ).toEqualData(sampleForm);
+            expect( scope.hideNav ).toEqual(false);
+        }));
+    });
+}());
+
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('ConfigureForm Directive-Controller Tests', function() {
+        // Initialize global variables
+         var el, scope, controller, $httpBackend;
+
+        var sampleUser = {
+            firstName: 'Full',
+            lastName: 'Name',
+            email: 'test@test.com',
+            username: 'test@test.com',
+            password: 'password',
+            provider: 'local',
+            roles: ['user'],
+            _id: 'ed873933b1f1dea0ce12fab9'
+        };
+
+        var pdfObj = {
+            fieldname:'file',
+            originalname:'test.pdf',
+            name:'1440112660375.pdf',
+            encoding:'7bit',
+            mimetype:'application/pdf',
+            path:'uploads/tmp/test@test.com/1440112660375.pdf',
+            extension:'pdf',
+            size:56223,
+            truncated:false,
+            buffer:null
+        };
+
+        var sampleForm = {
+            title: 'Form Title',
+            admin: 'ed873933b1f1dea0ce12fab9',
+            language: 'english',
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
+			],
+            pdf: {},
+            pdfFieldMap: {},
+            startPage: {
+                showStart: false
+            },
+            hideFooter: false,
+            isGenerated: false,
+            isLive: false,
+            autofillPDFs: false,
+            _id: '525a8422f6d0f87f0e407a33'
+        };
+
+        // The $resource service augments the response object with methods for updating and deleting the resource.
+        // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+        // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+        // When the toEqualData matcher compares two objects, it takes only object properties into
+        // account and ignores methods.
+        beforeEach(function() {
+            jasmine.addMatchers({
+                toEqualData: function(util, customEqualityTesters) {
+                    return {
+                        compare: function(actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
+        });
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+        beforeEach(module('module-templates'));
+        beforeEach(module('stateMock'));
+
+        beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
+            //Instantiate directive.
+            var tmp_scope = $rootScope.$new();
+            tmp_scope.myform = sampleForm;
+            tmp_scope.user = sampleUser;
+
+            //gotacha: Controller and link functions will execute.
+            el = angular.element('<configure-form-directive myform=\'myform\' user=\'user\'></configure-form-directive>');
+            $compile(el)(tmp_scope);
+            $rootScope.$digest();
+
+            // Point global variables to injected services
+            $httpBackend = _$httpBackend_;
+
+            // $httpBackend.whenGET(/.+\.html$/).respond('');
+            $httpBackend.whenGET('/users/me/').respond('');
+
+            //Grab controller instance
+            controller = el.controller();
+
+            //Grab scope. Depends on type of scope.
+            //See angular.element documentation.
+            scope = el.isolateScope() || el.scope();
+
+        }));
+
+        it('$scope.uploadPDF() should upload a pdf file', function() {
+            // expect(scope.isInitialized).toBeDefined()
+            // expect(scope.log).toEqual('');
+
+            expect(scope.pdfLoading).toBe(false);
+
+            //Set POST response
+            $httpBackend.when('POST', '/upload/pdf').respond(pdfObj);
+
+            var files = [{}];
+            scope.uploadPDF(files);
+
+            $httpBackend.flush();
+            expect(scope.myform.pdf).toEqualData(pdfObj);
+        });
+
+        it('$scope.removePDF() should removed uploaded pdf file', function() {
+            // expect(scope.isInitialized).toBeDefined()
+            // expect(scope.log).toEqual('');
+
+            scope.myform.pdf = pdfObj;
+            scope.myform.isGenerated = true;
+            scope.myform.autofillPDFs = true;
+
+            scope.removePDF();
+
+            expect(scope.myform.pdf).toEqual(null);
+            expect(scope.myform.isGenerated).toBe(false);
+            expect(scope.myform.autofillPDFs).toBe(false);
+        });
+    });
+}());
+
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('EditSubmissions Directive-Controller Tests', function() {
+        // Initialize global variables
+         var el, scope, controller, $httpBackend;
+
+        var sampleUser = {
+            firstName: 'Full',
+            lastName: 'Name',
+            email: 'test@test.com',
+            username: 'test@test.com',
+            password: 'password',
+            provider: 'local',
+            roles: ['user'],
+            _id: 'ed873933b1f1dea0ce12fab9'
+        };
+
+        var pdfObj = {
+            fieldname:'file',
+            originalname:'test.pdf',
+            name:'1440112660375.pdf',
+            encoding:'7bit',
+            mimetype:'application/pdf',
+            path:'uploads/tmp/test@test.com/1440112660375.pdf',
+            extension:'pdf',
+            size:56223,
+            truncated:false,
+            buffer:null
+        };
+
+        var sampleForm = {
+            title: 'Form Title',
+            admin: 'ed873933b1f1dea0ce12fab9',
+            language: 'english',
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
+            ],
+            pdf: {},
+            pdfFieldMap: {},
+            startPage: {
+                showStart: false
+            },
+            hideFooter: false,
+            isGenerated: false,
+            isLive: false,
+            autofillPDFs: false,
+            _id: '525a8422f6d0f87f0e407a33'
+        };
+
+        var sampleSubmission = {
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: 0, deletePreserved: false}
+            ],
+            admin: sampleUser,
+            form: sampleForm,
+            timeElapsed: 17.55
+        };
+
+        var sampleSubmissions = [{
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldValue: 'The Terminator', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: 0, deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: 1, deletePreserved: false}
+            ],
+            admin: sampleUser,
+            form: sampleForm,
+            timeElapsed: 10.33
+        },
+        {
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: 0, deletePreserved: false}
+            ],
+            admin: sampleUser,
+            form: sampleForm,
+            timeElapsed: 2.33
+        },
+        {
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldValue: 'Jane Doe', deletePreserved: false},
+                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
+                {fieldType:'checkbox', title:'hockey',      fieldValue: 1, deletePreserved: false}
+            ],
+            admin: sampleUser,
+            form: sampleForm,
+            timeElapsed: 11.11
+        }];
+
+        // The $resource service augments the response object with methods for updating and deleting the resource.
+        // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+        // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+        // When the toEqualData matcher compares two objects, it takes only object properties into
+        // account and ignores methods.
+        beforeEach(function() {
+            jasmine.addMatchers({
+                toEqualData: function(util, customEqualityTesters) {
+                    return {
+                        compare: function(actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
+        });
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+		beforeEach(module('module-templates'));
+        beforeEach(module('stateMock'));
+
+        beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
+
+            // Point global variables to injected services
+            $httpBackend = _$httpBackend_;
+
+            $httpBackend.whenGET('/users/me/').respond('');
+            $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200, sampleSubmissions);
+
+            //Instantiate directive.
+            var tmp_scope = $rootScope.$new();
+            tmp_scope.myform = sampleForm;
+            tmp_scope.user = sampleUser;
+
+            //gotacha: Controller and link functions will execute.
+            el = angular.element('<edit-submissions-form-directive myform=\'myform\' user=\'user\'></edit-submissions-form-directive>');
+            $compile(el)(tmp_scope);
+            $rootScope.$digest();
+
+            //Grab controller instance
+            controller = el.controller();
+
+            //Grab scope. Depends on type of scope.
+            //See angular.element documentation.
+            scope = el.isolateScope() || el.scope();
+        }));
+
+        it('$scope.initFormSubmissions() should fetch all relevant form submissions', function() {
+            $httpBackend.expectGET(/^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200, sampleSubmissions);
+            scope.initFormSubmissions();
+            $httpBackend.flush();
+            scope.$digest();
+        });
+
+        describe('Form Table Methods', function(){
+
+            it('$scope.toggleAllCheckers should toggle all checkboxes in table', function(){
+                scope.initFormSubmissions();
+                $httpBackend.flush();
+
+                //Run Controller Logic to Test
+                scope.table.masterChecker = true;
+                scope.toggleAllCheckers();
+
+                for(var i=0; i<scope.table.rows.length; i++){
+                    expect(scope.table.rows[i].selected).toBe(true);
+                }
+                expect(scope.table.rows.length).not.toEqual(0);
+            });
+
+            it('$scope.isAtLeastOneChecked should return true when at least one checkbox is selected', function(){
+                scope.initFormSubmissions();
+                $httpBackend.flush();
+
+                scope.table.masterChecker = true;
+                scope.toggleAllCheckers();
+
+                //Run Controller Logic to Test
+                var atLeastOne = scope.isAtLeastOneChecked();
+
+                expect(atLeastOne).toBe(true);
+            });
+
+            it('$scope.deleteSelectedSubmissions should delete all submissions that are selected', function(){
+                scope.initFormSubmissions();
+                $httpBackend.flush();
+
+                scope.table.masterChecker = true;
+                scope.toggleAllCheckers();
+
+                $httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200);
+
+                //Run Controller Logic to Test
+                scope.deleteSelectedSubmissions();
+
+                $httpBackend.flush();
+                expect(scope.table.rows.length).toEqual(0);
+            });
+        });
+
+    });
+}());
+
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('EditForm Directive-Controller Tests', function() {
+        // Initialize global variables
+        var el, scope, controller, $httpBackend;
+
+        var sampleUser = {
+            firstName: 'Full',
+            lastName: 'Name',
+            email: 'test@test.com',
+            username: 'test@test.com',
+            password: 'password',
+            provider: 'local',
+            roles: ['user'],
+            _id: 'ed873933b1f1dea0ce12fab9',
+        };
+
+        var pdfObj = {
+            fieldname:'file',
+            originalname:'test.pdf',
+            name:'1440112660375.pdf',
+            encoding:'7bit',
+            mimetype:'application/pdf',
+            path:'uploads/tmp/test@test.com/1440112660375.pdf',
+            extension:'pdf',
+            size:56223,
+            truncated:false,
+            buffer:null
+        };
+
+        var sampleForm = {
+            title: 'Form Title',
+            admin: 'ed873933b1f1dea0ce12fab9',
+            language: 'english',
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
+            ],
+            pdf: {},
+            pdfFieldMap: {},
+            startPage: {
+                showStart: false,
+                buttons: [],
+            },
+            hideFooter: false,
+            isGenerated: false,
+            isLive: false,
+            autofillPDFs: false,
+            _id: '525a8422f6d0f87f0e407a33',
+        };
+
+        // The $resource service augments the response object with methods for updating and deleting the resource.
+        // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+        // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+        // When the toEqualData matcher compares two objects, it takes only object properties into
+        // account and ignores methods.
+        beforeEach(function() {
+            jasmine.addMatchers({
+                toEqualData: function(util, customEqualityTesters) {
+                    return {
+                        compare: function(actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
+        });
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+        beforeEach(module('module-templates'));
+        beforeEach(module('stateMock'));
+
+        beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
+            //Instantiate directive.
+            var tmp_scope = $rootScope.$new();
+            tmp_scope.myform = _.cloneDeep(sampleForm);
+
+            //gotacha: Controller and link functions will execute.
+            el = angular.element('<edit-form-directive myform=\'myform\'></edit-form-directive>');
+            $compile(el)(tmp_scope);
+            $rootScope.$digest();
+
+            // Point global variables to injected services
+            $httpBackend = _$httpBackend_;
+
+            //$httpBackend.whenGET(/.+\.html$/).respond('');
+            $httpBackend.whenGET('/users/me/').respond('');
+
+            //Grab controller instance
+            controller = el.controller();
+
+            //Grab scope. Depends on type of scope.
+            //See angular.element documentation.
+            scope = el.isolateScope() || el.scope();
+
+        }));
+
+        describe('> Form Field >',function(){
+
+        	beforeEach(function(){
+        		scope.myform = _.cloneDeep(sampleForm);
+        	});
+
+	        it('$scope.addNewField() should ADD a new field to $scope.myform.form_fields', function() {
+
+	        	//Run controller methods
+	            scope.addNewField(true, 'textfield');
+
+	            var expectedFormField = {
+	            	title:'Short Text2', 
+	                fieldType:'textfield', 
+	                fieldValue: '', 
+	                required: true, 
+	                disabled: false, 
+	                deletePreserved: false
+	            };
+
+	            var actualFormField = _.cloneDeep(_.last(scope.myform.form_fields));
+	            delete actualFormField._id;
+
+	            expect(scope.myform.form_fields.length).toEqual(sampleForm.form_fields.length+1);
+	            expect(actualFormField).toEqualData(expectedFormField);
+	        });
+
+	        it('$scope.deleteField() should DELETE a field to $scope.myform.form_fields', function() {
+	            
+	        	//Run controller methods
+	            scope.deleteField(0);
+
+	            expect(scope.myform.form_fields.length).toEqual(sampleForm.form_fields.length-1);
+	            expect(_.first(scope.myform.form_fields)).toEqualData(sampleForm.form_fields[1]);
+	        });
+
+	        it('$scope.duplicateField() should DUPLICATE a field and update $scope.myform.form_fields', function() {
+	            
+	        	//Run controller methods
+	            scope.duplicateField(0);
+
+	            var originalField = _.cloneDeep(scope.myform.form_fields[0]);
+	            originalField.title += ' copy';
+
+	            delete originalField._id;
+	            var copyField = _.cloneDeep(scope.myform.form_fields[1]);
+	            delete copyField._id;
+
+	            expect(scope.myform.form_fields.length).toEqual(sampleForm.form_fields.length+1);
+	            expect(originalField).toEqualData(copyField);
+	        });
+
+		});
+
+		describe('> Form Field Button >',function(){
+
+	        it('$scope.addButton() should ADD a button to $scope.myform.startPage.buttons', function() {
+	           
+	            var expectedStartPageBtn = {
+	            	bgColor:'#ddd', 
+	                color:'#ffffff', 
+	                text: 'Button'
+	            };
+
+	        	//Run controller methods
+	            scope.addButton();
+	            var actualStartPageBtn = _.cloneDeep(_.last(scope.myform.startPage.buttons));
+	            delete actualStartPageBtn._id;
+
+	            expect(scope.myform.startPage.buttons.length).toEqual(sampleForm.startPage.buttons.length+1);
+	            expect(actualStartPageBtn).toEqualData(expectedStartPageBtn);
+	        });
+
+	        it('$scope.deleteButton() should DELETE a button from $scope.myform.startPage.buttons', function() {
+	        	//Run controller methods
+	            scope.deleteButton(scope.myform.startPage.buttons[0]);
+	            
+	            expect(scope.myform.startPage.buttons.length).toEqual(0);
+	        });
+	    });
+
+        describe('> Form Field Option >',function(){
+	        it('$scope.addOption() should ADD a new option to a field.fieldOptions', function() {
+	        	var originalOptionLen = scope.myform.form_fields[1].fieldOptions.length;
+
+	        	//Run controller methods
+	            scope.addOption(1);
+
+	            expect(originalOptionLen+1).toEqual(scope.myform.form_fields[1].fieldOptions.length);
+	            expect(scope.myform.form_fields[1].fieldOptions[0].option_title).toEqualData('Option 0');
+                expect(scope.myform.form_fields[1].fieldOptions[0].option_value).toEqualData('Option 0');
+	        });
+
+	        it('$scope.deleteOption() should DELETE remove option from field.fieldOptions', function() {
+                //Run controller methods
+                scope.deleteOption(1, scope.myform.form_fields[1].fieldOptions[0]);
+
+	            expect(scope.myform.form_fields[0].fieldOptions.length).toEqual(0);
+	            expect(scope.myform.form_fields[0].fieldOptions[0]).not.toBeDefined();
+	        });
+	    });
+    });
+}());
+// 'use strict';
+
+// (function() {
+//     // Forms Controller Spec
+//     describe('entryPage Directive Tests', function() {
+//         // Initialize global variables
+//         var scope,
+//             $templateCache,
+//             $httpBackend,
+//             $compile;
+
+//         var sampleStartPage = {
+//             showStart: true,
+//             introTitle: 'Welcome to Form',
+//             introParagraph: 'Sample intro paragraph',
+//             buttons:[
+//                 {
+//                     url: 'http://google.com',
+//                     action: '',
+//                     text: 'Google',
+//                     bgColor: '#ffffff',
+//                     color: '#000000',
+//                 },
+//                 {
+//                     url: 'http://facebook.com',
+//                     action: '',
+//                     text: 'Facebook',
+//                     bgColor: '#0000ff',
+//                     color: '#000000',
+//                 }
+//             ]
+//         };
+
+
+//         // The $resource service augments the response object with methods for updating and deleting the resource.
+//         // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+//         // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+//         // When the toEqualData matcher compares two objects, it takes only object properties into
+//         // account and ignores methods.
+//         beforeEach(function() {
+//             jasmine.addMatchers({
+//                 toEqualData: function(util, customEqualityTesters) {
+//                     return {
+//                         compare: function(actual, expected) {
+//                             return {
+//                                 pass: angular.equals(actual, expected)
+//                             };
+//                         }
+//                     };
+//                 }
+//             });
+//         });
+
+//         // Load the main application module
+//         beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+//         beforeEach(inject(function($rootScope, _$compile_, _$httpBackend_) {
+//             scope = $rootScope.$new();
+//             $compile = _$compile_;
+
+//             // Point global variables to injected services
+//             $httpBackend = _$httpBackend_;
+//         }));
+
+
+//         it('should be able to render entryPage in html', function() {
+//             scope.myStartPage = _.cloneDeep(sampleStartPage);  
+//             console.log(scope.myStartPage);
+//             var element = angular.element('<entry-page pageData="myStartPage" pageType="startPage"></entry-page>');
+//             $compile(element)(scope);
+//             scope.$digest();
+
+//             // console.log(element.html());
+//             expect(element.html()).not.toEqual('<div class="ng-scope">Start Page</div>');
+//         });
+
+//         // it('exitStartPage should work for "startPage" type of entryPage', inject(function($rootScope) {
+//         //     scope.myPage = _.cloneDeep(sampleStartPage); 
+//         //     var el = angular.element('<entry-page pageData="myPage" pageType="startPage"></entry-page>');
+//         //     $compile(el)(scope);
+//         //     scope.$digest();
+
+//         //     $httpBackend.whenGET(/.+\.html$/).respond('');
+//         //     $httpBackend.whenGET('/users/me/').respond('');
+
+//         //     scope = el.isolateScope() || el.scope();
+
+//         //     scope.exitStartPage();
+//         //     // expect(scope.myStartPage.showStart).toBe(false);
+//         //     expect(el.html()).not.toEqual('<div>Start Page</div>');
+//         // }));
+//     });
+// }());
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('FieldIcon Directive Tests', function() {
+        // Initialize global variables
+        var scope,
+            FormFields,
+            faClasses = {
+                'textfield': 'fa fa-pencil-square-o',
+                'dropdown': 'fa fa-th-list',
+                'date': 'fa fa-calendar',
+                'checkbox': 'fa fa-check-square-o',
+                'radio': 'fa fa-dot-circle-o',
+                'email': 'fa fa-envelope-o',
+                'textarea': 'fa fa-pencil-square',
+                'legal': 'fa fa-legal',
+                'file': 'fa fa-cloud-upload',
+                'rating': 'fa fa-star-half-o',
+                'link': 'fa fa-link',
+                'scale': 'fa fa-sliders',
+                'stripe': 'fa fa-credit-card',
+                'statement': 'fa fa-quote-left',
+                'yes_no': 'fa fa-toggle-on',
+                'number': 'fa fa-slack'
+            };
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+        beforeEach(inject(function ($rootScope, _FormFields_) {
+            scope = $rootScope.$new();
+            FormFields = _FormFields_;
+		}));
+
+        it('should be able render all field-icon types', inject(function($compile) {
+            var currType, currClass;
+            
+            for(var i=0; i<FormFields.types.length; i++){
+                currType = FormFields.types[i];
+                currClass = faClasses[currType.name];
+
+                var element = $compile('<field-icon-directive type-name="'+currType.name+'"></field-icon-directive>')(scope);
+                scope.$digest();
+
+                expect(currClass).toBeDefined();
+
+                expect(element.find('i')).not.toBe(null);
+                expect(element.find('i').hasClass(currClass)).toBe(true);
+            }
+
+        }));
+    });
+}());
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('Field Directive Tests', function() {
+        // Initialize global variables
+        var scope,
+            FormFields,
+            $templateCache,
+            $httpBackend,
+            $compile;
+
+        var sampleUser = {
+            firstName: 'Full',
+            lastName: 'Name',
+            email: 'test@test.com',
+            username: 'test@test.com',
+            password: 'password',
+            provider: 'local',
+            roles: ['user'],
+            _id: 'ed873933b1f1dea0ce12fab9',
+        };
+
+        var sampleFields = [
+            {fieldType:'textfield', title:'First Name',                 fieldValue: 'AoeuName', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'email',     title:'Email',                      fieldValue: 'aoeu@aoeu.com', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'yes_no',    title:'Do you Play Hockey?',        fieldValue: 'true', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'url',       title:'Github Account',             fieldValue: 'http://github.com/aoeu', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'textarea',  title:'Bio',                        fieldValue: 'This is my bio.', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'number',    title:'Phone #',                    fieldValue: 5325325325, deletePreserved: false, required: true, disabled: false},
+            {fieldType:'legal',     title:'You agree to terms and conditions',  description:'By selecting \'I agree\' you are agreeing under Canadian law that you have read and accept terms and conditions outlayed below', fieldValue: '', deletePreserved: false, required: true, disabled: false},
+            {fieldType:'dropdown',  title:'Your Sex', fieldValue: '', fieldOptions:[ { 'option_id': 0, 'option_title': 'M', 'option_value': 'male' }, { 'option_id': 1, 'option_title': 'F', 'option_value': 'female' }], deletePreserved: false, required: true, disabled: false},
+            {fieldType:'radio',     title:'Your Sexual Orientation',    fieldValue: '', fieldOptions:[ { 'option_id': 0, 'option_title': 'Heterosexual', 'option_value': 'hetero' }, { 'option_id': 1, 'option_title': 'Homosexual', 'option_value': 'homo' }, { 'option_id': 2, 'option_title': 'Bisexual', 'option_value': 'bi' }, { 'option_id': 3, 'option_title': 'Asexual', 'option_value': 'asex' }], deletePreserved: false, required: true, disabled: false},
+            {fieldType:'rating',    title:'Your Current Happiness',     fieldValue: '0', deletePreserved: false, required: true, disabled: false},
+        ];
+
+
+        // The $resource service augments the response object with methods for updating and deleting the resource.
+        // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+        // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+        // When the toEqualData matcher compares two objects, it takes only object properties into
+        // account and ignores methods.
+        beforeEach(function() {
+            jasmine.addMatchers({
+                toEqualData: function(util, customEqualityTesters) {
+                    return {
+                        compare: function(actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
+        });
+
+        beforeEach(module(function ($sceProvider) {
+              $sceProvider.enabled(false);
+        }));
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+        beforeEach(module('stateMock'));
+        beforeEach(module('module-templates'));
+        
+        beforeEach(module('ngSanitize', 'ui.select'));
+
+        beforeEach(inject(function($rootScope, _FormFields_, _$compile_) {
+            scope = $rootScope.$new();
+            FormFields = _FormFields_;
+
+            $compile = _$compile_;
+        }));
+
+        it('should be able to render all field types in html', inject(function($rootScope) {
+            scope.fields = sampleFields;
+
+            for(var i=0; i<sampleFields.length; i++){ 
+                var field = sampleFields[i]; 
+                if(!field.title) field.title = ''; 
+                
+                scope.myfield = field;
+                var element = angular.element('<field-directive field="myfield"></field-directive>');
+                $compile(element)(scope);
+                scope.$digest();
+
+                console.log('Actual: ');
+                console.log(element.html());
+
+                console.log('\nExpected: ');
+
+                console.log('<div class="ng-binding ng-scope>'+field.title+'</div>');
+                expect(element.html()).not.toEqual('<div class="ng-binding ng-scope>'+field.title+'</div>');
+            }
+        }));
+    });
+}());
+
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('onFinishRender Directive Tests', function() {
+        // Initialize global variables
+        var scope,
+            FormFields;
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+        beforeEach(inject(function ($rootScope, _FormFields_) {
+            scope = $rootScope.$new();
+            FormFields = _FormFields_;
+            spyOn($rootScope, '$broadcast');
+
+        }));
+
+        it('should emit Custom "Finished" and "Started" events on ng-repeat', inject(function($compile, $rootScope) {
+        
+            scope.myfields = FormFields.types;
+
+            var e = $compile('<div><div ng-repeat="item in myfields" on-finish-render="editFormFields">{{item.name}}</div></div>')(scope);
+            scope.$digest();
+
+            //run code to test
+            expect($rootScope.$broadcast).toHaveBeenCalledWith('editFormFields Started');
+            expect(scope.$broadcast).toHaveBeenCalledWith('editFormFields Finished');
+        }));
+
+        it('should emit "ngRepeat Finished" and "ngRepeat Started" events on ng-repeat when attr is not set to string', inject(function($compile, $rootScope) {
+        
+            // console.log(FormFields.types);
+            scope.myfields = FormFields.types;
+
+            var e = $compile('<div><div ng-repeat="item in myfields" on-finish-render>{{item.name}}</div></div>')(scope);
+            scope.$digest();
+
+            //run code to test
+            expect($rootScope.$broadcast).toHaveBeenCalledWith('ngRepeat Started');
+            expect(scope.$broadcast).toHaveBeenCalledWith('ngRepeat Finished');
+        }));
+
+    });
+}());
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('SubmitForm Directive-Controller Tests', function() {
+        // Initialize global variables
+         var scope, controller, $httpBackend;
+
+        var sampleUser = {
+            firstName: 'Full',
+            lastName: 'Name',
+            email: 'test@test.com',
+            username: 'test@test.com',
+            password: 'password',
+            provider: 'local',
+            roles: ['user'],
+            _id: 'ed873933b1f1dea0ce12fab9'
+        };
+
+        var pdfObj = {
+            fieldname:'file',
+            originalname:'test.pdf',
+            name:'1440112660375.pdf',
+            encoding:'7bit',
+            mimetype:'application/pdf',
+            path:'uploads/tmp/test@test.com/1440112660375.pdf',
+            extension:'pdf',
+            size:56223,
+            truncated:false,
+            buffer:null
+        };
+
+        var sampleForm = {
+            title: 'Form Title',
+            admin: 'ed873933b1f1dea0ce12fab9',
+            language: 'english',
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}            ],
+            visible_form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}            ],
+            pdf: {},
+            pdfFieldMap: {},
+            startPage: {
+                showStart: false
+            },
+            hideFooter: false,
+            isGenerated: false,
+            isLive: false,
+            autofillPDFs: false,
+            _id: '525a8422f6d0f87f0e407a33'
+        };
+
+        var sampleSubmission = {
+            form_fields: [
+                {fieldType:'textfield', title:'First Name',             fieldValue: 'John Smith',   deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
+                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: true,           deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
+                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: false,          deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
+            ],
+            admin: sampleUser,
+            form: sampleForm,
+            timeElapsed: 17.55
+        };
+
+        var sampleSubmissions = [{
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldValue: 'The Terminator', deletePreserved: false},
+                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'true', deletePreserved: false},
+                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'false', deletePreserved: false}
+            ],
+            admin: sampleUser,
+            form: sampleForm,
+            timeElapsed: 10.33
+        },
+        {
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
+                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'true',     deletePreserved: false},
+                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'true',     deletePreserved: false}
+            ],
+            admin: sampleUser,
+            form: sampleForm,
+            timeElapsed: 2.33
+        },
+        {
+            form_fields: [
+                {fieldType:'textfield', title:'First Name', fieldValue: 'Jane Doe', deletePreserved: false},
+                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'false',    deletePreserved: false},
+                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'false',    deletePreserved: false}
+            ],
+            admin: sampleUser,
+            form: sampleForm,
+            timeElapsed: 11.11
+        }];
+
+        // The $resource service augments the response object with methods for updating and deleting the resource.
+        // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+        // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+        // When the toEqualData matcher compares two objects, it takes only object properties into
+        // account and ignores methods.
+        beforeEach(function() {
+            jasmine.addMatchers({
+                toEqualData: function(util, customEqualityTesters) {
+                    return {
+                        compare: function(actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
+        });
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+        beforeEach(module('module-templates'));
+        beforeEach(module('stateMock'));
+
+        beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
+
+            // Point global variables to injected services
+            $httpBackend = _$httpBackend_;
+            $httpBackend.whenGET('/users/me/').respond('');
+
+            //Instantiate directive.
+            var tmp_scope = $rootScope.$new();
+            tmp_scope.myform = sampleForm;
+
+            //gotacha: Controller and link functions will execute.
+            var el = angular.element('<submit-form-directive myform=\'myform\'></submit-form-directive>');
+            $compile(el)(tmp_scope);
+            tmp_scope.$digest();
+            $rootScope.$digest();
+
+            //Grab controller instance
+            controller = el.controller();
+
+            //Grab scope. Depends on type of scope.
+            //See angular.element documentation.
+            scope = el.isolateScope() || el.scope();
+
+            console.log(scope);
+        }));
+
+        var Validator = (function() {
+            return {
+                hasMinimumFields: function(entry) {
+                    return !_.isEmpty(entry._id) && !_.isEmpty(entry.title);
+                },
+                isNewForm: function(entry) {
+                    return this.hasMinimumFields(entry);
+                }
+            };
+        })();
+
+
+        it('$scope.submitForm() should submit valid form', function(){
+            //Initialize variables
+            scope.myform.form_fields = sampleSubmissions[0].form_fields;
+
+            var expectedForm = _.cloneDeep(sampleForm);
+            expectedForm.form_fields = sampleSubmissions[0].form_fields;
+            delete expectedForm.visible_form_fields;
+
+            var data = function(data) {
+                var form = angular.fromJson(data);
+                var compareForm = _.cloneDeep(form);
+                delete compareForm.timeElapsed;
+                delete compareForm.percentageComplete;
+
+                return Validator.isNewForm(form) && _.isEqual(compareForm, expectedForm);
+            };
+
+            //Set expected HTTP requests
+            $httpBackend.expect('POST',/^(\/forms\/)([0-9a-fA-F]{24})$/, data).respond(200);
+
+            //Run Controller Logic to Test
+            scope.submitForm();
+
+            $httpBackend.flush();
+
+            setTimeout(function(){
+                expect(scope.myform.submitted).toBe(true);
+                expect(scope.error).toEqual('');
+            }, 25);
+        });
+
+        it('$scope.reloadForm() should reset and reload form', function(){
+            scope.submitForm();
+            scope.reloadForm();
+
+            expect(scope.myform.submitted).toBe(false);
+            for(var i=0; i<scope.myform.form_fields.length; i++){
+                expect(scope.myform.form_fields[i].fieldValue).toEqual('');
+            }
+        });
+
+    });
+}());
+
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('CurrentForm Service Tests', function() {
+        // Initialize global variables
+        var CurrentForm,
+        	sampleForm = {
+	            title: 'Form Title',
+	            admin: 'ed873933b1f1dea0ce12fab9',
+	            language: 'english',
+	            form_fields: [
+	                {'fieldType':'textfield', 'title':'First Name', 'fieldValue': '', 'deletePreserved': false},
+	                {'fieldType':'checkbox', 'title':'nascar',      'fieldValue': '', 'deletePreserved': false},
+	                {'fieldType':'checkbox', 'title':'hockey',      'fieldValue': '', 'deletePreserved': false}
+	            ],
+	            _id: '525a8422f6d0f87f0e407a33'
+	        };
+
+
+        // The $resource service augments the response object with methods for updating and deleting the resource.
+        // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+        // the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+        // When the toEqualData matcher compares two objects, it takes only object properties into
+        // account and ignores methods.
+        beforeEach(function() {
+            jasmine.addMatchers({
+                toEqualData: function(util, customEqualityTesters) {
+                    return {
+                        compare: function(actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
+        });
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+        beforeEach(inject(function (_CurrentForm_) {
+		    CurrentForm = _CurrentForm_;
+		 }));
+
+
+        it('CurrentForm be able to get() and set() a Form', function() {
+        	CurrentForm.setForm(sampleForm);
+            var newForm = CurrentForm.getForm();
+            expect(sampleForm).toEqualData(newForm);
+        });
+    });
+}());
+'use strict';
+
+(function() {
+    // Forms Controller Spec
+    describe('TimeCounter Service Tests', function() {
+        // Initialize global variables
+        var TimeCounter;
+
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+        beforeEach(inject(function (_TimeCounter_) {
+		    TimeCounter = _TimeCounter_;
+		 }));
+
+
+        it('should be able to time 1 second interval as 1 second', function() {
+            var timeSpent = 0;
+        	TimeCounter.restartClock();
+
+            setTimeout(function(){
+                timeSpent = TimeCounter.stopClock();
+                expect(timeSpent).toEqual(1);
+            },1000);
+
+        });
+    });
+}());
+'use strict';
+
+angular.module('stateMock',[]);
+angular.module('stateMock').service('$state', ["$q", function($q){
+    this.expectedTransitions = [];
+    this.transitionTo = function(stateName){
+        if(this.expectedTransitions.length > 0){
+            var expectedState = this.expectedTransitions.shift();
+            if(expectedState !== stateName){
+                throw Error('Expected transition to state: ' + expectedState + ' but transitioned to ' + stateName );
+            }
+        }else{
+            throw Error('No more transitions were expected! Tried to transition to '+ stateName );
+        }
+        console.log('Mock transition to: ' + stateName);
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+        deferred.resolve();
+        return promise;
+    };
+
+    this.go = this.transitionTo;
+    this.expectTransitionTo = function(stateName){
+        this.expectedTransitions.push(stateName);
+    };
+
+    this.ensureAllTransitionsHappened = function(){
+        if(this.expectedTransitions.length > 0){
+            throw Error('Not all transitions happened!');
+        }
+    };
+}]);
+// 'use strict';
+
+// (function() {
+	
+
+// 	// Principal controller Spec for E2E Tests
+// 	describe('AuthenticationController E2E Tests', function() {
+
+// 		describe('/signup should work for a unique username', function() {
+// 		    beforeEach(function() {
+// 		        var ptor = protractor.getInstance();
+// 		        ptor.get('http://localhost:3000/#!/signup');
+// 		    });
+			
+// 			it('should show the signup panel on page load', function() {
+// 				expect($('section > section.row.auth > .col-md-12.text-center')).toEqual('Signup with your email');
+// 			}); 
+
+
+// 		    //Jasmine it statement : What "it" will do.
+// 		    it('Verify that the user is logged in', function() {
+// 				//Delete all cookies
+// 		        browser.driver.manage().deleteAllCookies();
+// 				//Enter UserName
+// 		        element.all(by.model('username')).get(0).sendKeys('abc@wingify.com');
+// 				//Enter Password
+// 		        element(by.model('password')).sendKeys('test');
+// 				//Click Submit button
+// 		        element(by.css('.login-form button[type="submit"]')).click();
+// 				//Wait for the current URL to change to welcome
+// 		        browser.driver.wait(function() {
+// 		            return browser.driver.getCurrentUrl().then(function(url) {
+// 		                return (/welcome/).test(url);
+// 		            });
+// 		        });
+// 		        var firstname = element(by.model('credentials.firstname')),
+// 					lastname = element(by.model('credentials.lastname')),
+// 					email = element(by.model('credentials.email')),
+// 			    	password = element(by.model('credentials.password'));
+
+// 			    email.sendKeys('admin@app.com');
+// 			    firstname.sendKeys('admin_first');
+// 			    lastname.sendKeys('admin_last');
+// 			    password.sendKeys('1234');
+
+// 			    //Click signup button
+// 			    element(by.css('.btn.btn-large.btn-primary')).click().then(function () {
+// 			        expect(browser.getCurrentUrl()).toEqual('http://localhost:3000/#!/signup-success');
+// 			    });
+
+				
+// 		    });
+// 		});
+// 	});
+	
+// 	// Principal controller Spec
+// 	describe('AuthenticationController Unit Tests', function() {
+// 		// Initialize global variables
+// 		var AuthenticationController,
+// 			scope,
+// 			$httpBackend,
+// 			$stateParams,
+// 			$location;
+
+// 		beforeEach(function() {
+// 			jasmine.addMatchers({
+// 				toEqualData: function(util, customEqualityTesters) {
+// 					return {
+// 						compare: function(actual, expected) {
+// 							return {
+// 								pass: angular.equals(actual, expected)
+// 							};
+// 						}
+// 					};
+// 				}
+// 			});
+// 		});
+
+// 		// Load the main application module
+// 		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+// 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+// 		// This allows us to inject a service but then attach it to a variable
+// 		// with the same name as the service.
+// 		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
+// 			// Set a new global scope
+// 			scope = $rootScope.$new();
+
+// 			// Point global variables to injected services
+// 			$stateParams = _$stateParams_;
+// 			$httpBackend = _$httpBackend_;
+// 			$location = _$location_;
+
+// 			// Initialize the Principal controller
+// 			AuthenticationController = $controller('AuthenticationController', {
+// 				$scope: scope
+// 			});
+// 		}));
+
+
+// 		it('$scope.signin() should login with a correct user and password', function() {
+// 			// Test expected GET request
+// 			$httpBackend.when('POST', '/auth/signin').respond(200, 'Fred');
+
+// 			scope.signin();
+// 			$httpBackend.flush();
+
+// 			// Test scope value
+// 			expect(scope.authentication.user).toEqual('Fred');
+// 			expect($location.url()).toEqual('/');
+// 		});
+
+// 		it('$scope.signin() should fail to log in with nothing', function() {
+// 			// Test expected POST request
+// 			$httpBackend.expectPOST('/auth/signin').respond(400, {
+// 				'message': 'Missing credentials'
+// 			});
+
+// 			scope.signin();
+// 			$httpBackend.flush();
+
+// 			// Test scope value
+// 			expect(scope.error).toEqual('Missing credentials');
+// 		});
+
+// 		it('$scope.signin() should fail to log in with wrong credentials', function() {
+// 			// Foo/Bar combo assumed to not exist
+// 			scope.authentication.user = 'Foo';
+// 			scope.credentials = 'Bar';
+
+// 			// Test expected POST request
+// 			$httpBackend.expectPOST('/auth/signin').respond(400, {
+// 				'message': 'Unknown user'
+// 			});
+
+// 			scope.signin();
+// 			$httpBackend.flush();
+
+// 			// Test scope value
+// 			expect(scope.error).toEqual('Unknown user');
+// 		});
+
+// 		it('$scope.signup() should register with correct data', function() {
+// 			// Test expected GET request
+// 			scope.authentication.user = 'Fred';
+// 			$httpBackend.when('POST', '/auth/signup').respond(200, 'Fred');
+
+// 			scope.signup();
+// 			$httpBackend.flush();
+
+// 			// test scope value
+// 			expect(scope.authentication.user).toBe('Fred');
+// 			expect(scope.error).toEqual(undefined);
+// 			expect($location.url()).toBe('/');
+// 		});
+
+// 		it('$scope.signup() should fail to register with duplicate Username', function() {
+// 			// Test expected POST request
+// 			$httpBackend.when('POST', '/auth/signup').respond(400, {
+// 				'message': 'Username already exists'
+// 			});
+
+// 			scope.signup();
+// 			$httpBackend.flush();
+
+// 			// Test scope value
+// 			expect(scope.error).toBe('Username already exists');
+// 		});
+// 	});
+// }());
+// 'use strict';
+
+// (function() {
+// 	// Forms Controller Spec
+// 	describe('Authentication Controller Tests', function() {
+// 		// Initialize global variables
+// 		var AuthenticationController,
+// 			scope,
+// 			$httpBackend,
+// 			$stateParams,
+// 			$location,
+// 			$state;
+
+// 		var sampleUser = {
+// 			firstName: 'Full',
+// 			lastName: 'Name',
+// 			email: 'test@test.com',
+// 			username: 'test@test.com',
+// 			password: 'password',
+// 			provider: 'local',
+// 			roles: ['user'],
+// 			_id: 'ed873933b1f1dea0ce12fab9'
+// 		};
+
+// 		var sampleForm = {
+// 			title: 'Form Title',
+// 			admin: 'ed873933b1f1dea0ce12fab9',
+// 			language: 'english',
+// 			form_fields: [
+// 				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+//                 {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+//                 {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+// 			],
+// 			_id: '525a8422f6d0f87f0e407a33'
+// 		};
+
+// 		var expectedForm = {
+// 			title: 'Form Title',
+// 			admin: 'ed873933b1f1dea0ce12fab9',
+// 			language: 'english',
+// 			form_fields: [
+// 				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+//                 {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+//                 {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+// 			],
+// 			visible_form_fields: [
+// 				{fieldType:'textfield', title:'First Name', fieldValue: '', deletePreserved: false},
+//                 {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false},
+//                 {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false}
+// 			],
+// 			_id: '525a8422f6d0f87f0e407a33'
+// 		};
+
+		// var sampleCredentials = {
+		// 	username: sampleUser.username,
+		// 	password: sampleUser.password,
+		// };
+
+
+
+// 		// The $resource service augments the response object with methods for updating and deleting the resource.
+// 		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+// 		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+// 		// When the toEqualData matcher compares two objects, it takes only object properties into
+// 		// account and ignores methods.
+// 		beforeEach(function() {
+// 			jasmine.addMatchers({
+// 				toEqualData: function(util, customEqualityTesters) {
+// 					return {
+// 						compare: function(actual, expected) {
+// 							return {
+// 								pass: angular.equals(actual, expected)
+// 							};
+// 						}
+// 					};
+// 				}
+// 			});
+// 		});
+
+
+// 		// Load the main application module
+// 		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+// 		beforeEach(module('stateMock'));
+
+// 		// Mock Users Service
+// 		beforeEach(module(function($provide) {
+// 			$provide.service('User', function($q) {
+// 				return {
+// 					getCurrent: function() {
+// 						var deferred = $q.defer();
+// 						deferred.resolve( JSON.stringify(sampleUser) );
+// 						return deferred.promise;
+// 					},
+// 					login: function(credentials) {
+// 						var deferred = $q.defer();
+// 						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+// 							deferred.resolve( JSON.stringify(sampleUser) );
+// 						}else {
+// 							deferred.resolve('Error: User could not be loggedin');
+// 						}
+
+// 						return deferred.promise;
+// 					},
+// 					logout: function() {
+// 						var deferred = $q.defer();
+// 						deferred.resolve(null);
+// 						return deferred.promise;
+// 					},
+// 					signup: function(credentials) {
+// 						var deferred = $q.defer();
+// 						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
+// 							deferred.resolve( JSON.stringify(sampleUser) );
+// 						}else {
+// 							deferred.resolve('Error: User could not be signed up');
+// 						}
+
+// 						return deferred.promise;
+// 					}
+// 				};
+// 			});
+// 		}));
+
+// 		// Mock Authentication Service
+// 		beforeEach(module(function($provide) {
+// 			$provide.service('Auth', function() {
+// 				return {
+// 					ensureHasCurrentUser: function() {
+// 						return sampleUser;
+// 					},
+// 					isAuthenticated: function() {
+// 						return true;
+// 					},
+// 					getUserState: function() {
+// 						return true;
+// 					}
+// 				};
+// 			});
+// 		}));
+
+// 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+// 		// This allows us to inject a service but then attach it to a variable
+// 		// with the same name as the service.
+// 		beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms) {
+// 			// Set a new global scope
+// 			scope = $rootScope.$new();
+// 			scope.abc = 'hello';
+
+// 			// Point global variables to injected services
+// 			$stateParams = _$stateParams_;
+// 			$httpBackend = _$httpBackend_;
+// 			$location = _$location_;
+// 			$state = _$state_;
+
+// 			// $httpBackend.whenGET(/\.html$/).respond('');
+// 			$httpBackend.whenGET('/users/me/').respond('');
+
+// 			// Initialize the Forms controller.
+// 			AuthenticationController = $controller('AuthenticationController', { $scope: scope });
+//  		}));
+
+// 		it('$scope.signin should sigin in user with valid credentials', inject(function(Auth) {
+			
+// 			//Set $state transition 
+// 			// $state.expectTransitionTo('listForms');
+// 			//Set POST response
+// 			// $httpBackend.expect('POST', '/auth/signin', sampleCredentials).respond(200, sampleUser);
+
+// 			scope.abc = 'sampleCredentials';
+// 			//Run Controller Logic to Test
+// 			scope.signin();
+
+// 			// $httpBackend.flush();
+
+// 			// Test scope value
+// 			// expect(Auth.ensureHasCurrentUser()).toEqualData(sampleUser);
+// 		}));
+
+
+// 	});
+// }());
+'use strict';
+
+(function() {
+	// Forms Controller Spec
+	describe('Auth Service Tests', function() {
+		// Initialize global variables
+		var Auth;
+
+		var sampleUser = {
+			firstName: 'Full',
+			lastName: 'Name',
+			email: 'test@test.com',
+			username: 'test@test.com',
+			password: 'password',
+			provider: 'local',
+			roles: ['user'],
+			_id: 'ed873933b1f1dea0ce12fab9'
+		};
+
+
+		// The $resource service augments the response object with methods for updating and deleting the resource.
+		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+		// When the toEqualData matcher compares two objects, it takes only object properties into
+		// account and ignores methods.
+		beforeEach(function() {
+			jasmine.addMatchers({
+				toEqualData: function(util, customEqualityTesters) {
+					return {
+						compare: function(actual, expected) {
+							return {
+								pass: angular.equals(actual, expected)
+							};
+						}
+					};
+				}
+			});
+		});
+
+
+		// Load the main application module
+		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+		// This allows us to inject a service but then attach it to a variable
+		// with the same name as the service.
+		beforeEach(inject(function(_Auth_) {
+			Auth = _Auth_;
+ 		}));
+
+		it('Auth.login() should save user in Auth.currentUser', function() {
+			//Run Service Logic to Test
+			Auth.login(sampleUser);
+			expect(Auth.currentUser).toEqualData(sampleUser);
+		});
+
+		it('Auth.logout() should remove saved user', inject(function($window) {
+			//Run Service Logic to Test
+			Auth.logout();
+
+			expect($window.user).toEqual(null);
+			expect(Auth.currentUser).toEqual(null);
+			expect(Auth.isAuthenticated()).toBe(false);
+			expect(Auth.getUserState().isLoggedIn).toBe(false);
+		}));
+
+		it('Auth.getUserState() should fetch current user state', function() {
+			
+			//Run Service Logic to Test
+			Auth.login(sampleUser);
+			var currUserState = Auth.getUserState();
+
+			expect(currUserState.isLoggedIn).toBe(true);
+
+			//Run Service Logic to Test
+			Auth.logout();
+			currUserState = Auth.getUserState();
+
+			expect(currUserState.isLoggedIn).toBe(false);
+		});
+
+		it('Auth.ensureHasCurrentUser() should fetch most current user if it exists in $window, currentUser or fetch it from /users/me', function() {
+			Auth.login(sampleUser);
+
+			//Run Service Logic to Test
+			var currUser = Auth.ensureHasCurrentUser(sampleUser);
+
+			expect(currUser).not.toEqual(null);
+			expect(currUser).toEqualData(sampleUser);
+		});
+
+	});
+}());
+'use strict';
+
+(function() {
+	// Forms Controller Spec
+	describe('Authorizer Service Tests', function() {
+		// Initialize global variables
+		var Authorizer;
+
+		var sampleUser = {
+			firstName: 'Full',
+			lastName: 'Name',
+			email: 'test@test.com',
+			username: 'test@test.com',
+			password: 'password',
+			provider: 'local',
+			roles: ['user'],
+			_id: 'ed873933b1f1dea0ce12fab9'
+		};
+
+
+		// The $resource service augments the response object with methods for updating and deleting the resource.
+		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+		// When the toEqualData matcher compares two objects, it takes only object properties into
+		// account and ignores methods.
+		beforeEach(function() {
+			jasmine.addMatchers({
+				toEqualData: function(util, customEqualityTesters) {
+					return {
+						compare: function(actual, expected) {
+							return {
+								pass: angular.equals(actual, expected)
+							};
+						}
+					};
+				}
+			});
+		});
+
+
+		// Load the main application module
+		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+		// This allows us to inject a service but then attach it to a variable
+		// with the same name as the service.
+		beforeEach(inject(function(_Authorizer_) {
+			Authorizer = _Authorizer_;
+ 		}));
+
+		it('Authorizer.canAccess() should return expected values for \'admin\' and \'user\' accounts', function() {
+			var sampleAdminUser = _.cloneDeep(sampleUser);
+			sampleAdminUser.roles.push('admin');
+
+			//Run Service Logic to Test
+			var authenticatorUser = new Authorizer(sampleUser);
+			var authenticatorAdmin = new Authorizer(sampleAdminUser);
+
+			expect(authenticatorUser.canAccess('editForm')).toBe(true);
+			expect(authenticatorUser.canAccess('editAdminSettings')).toBe(false);
+			expect(authenticatorUser.canAccess('viewAdminSettings')).toBe(false);
+
+			expect(authenticatorAdmin.canAccess('editForm')).toBe(true);
+			expect(authenticatorAdmin.canAccess('editAdminSettings')).toBe(true);
+			expect(authenticatorAdmin.canAccess('viewAdminSettings')).toBe(true);
+		});
+
+	});
+}());
+'use strict';
+
+(function() {
+	// Forms Controller Spec
+	describe('User Service Tests', function() {
+		// Initialize global variables
+		var User,
+			$httpBackend;
+
+		var sampleUser = {
+			firstName: 'Full',
+			lastName: 'Name',
+			email: 'test@test.com',
+			username: 'test@test.com',
+			password: 'password',
+			provider: 'local',
+			roles: ['user'],
+			_id: 'ed873933b1f1dea0ce12fab9'
+		};
+
+		var sampleVerifyToken = 'WyuAIchArQnstkq5erx0kiTcTbBbgixYeBGtThFmRpcAJNQ2';
+		var sampleForgotToken = 'c2e8f74455cdccc454dfef941ff315fa4f7b1f0a';
+		var sampleCredentials = {
+			username: sampleUser.username,
+			password: sampleUser.password,
+		};
+
+		var samplePasswordDetails = {
+			newPassword: sampleUser.password,
+			verifyPassword: sampleUser.password,
+		};
+
+		// The $resource service augments the response object with methods for updating and deleting the resource.
+		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
+		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
+		// When the toEqualData matcher compares two objects, it takes only object properties into
+		// account and ignores methods.
+		beforeEach(function() {
+			jasmine.addMatchers({
+				toEqualData: function(util, customEqualityTesters) {
+					return {
+						compare: function(actual, expected) {
+							return {
+								pass: angular.equals(actual, expected)
+							};
+						}
+					};
+				}
+			});
+		});
+
+
+		// Load the main application module
+		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+		beforeEach(module('stateMock'));
+
+		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+		// This allows us to inject a service but then attach it to a variable
+		// with the same name as the service.
+		beforeEach(inject(function(_$httpBackend_, _User_) {
+			// Point global variables to injected services
+			$httpBackend = _$httpBackend_;
+			User = _User_;
+ 		}));
+
+		it('User.login() should send a POST request to /auth/signin', function() {
+			
+			//Set POST response
+			$httpBackend.expect('POST', '/auth/signin', sampleCredentials).respond(200, sampleUser);
+
+			//Run Service Logic to Test
+			User.login(sampleCredentials);
+
+			$httpBackend.flush();
+		});
+
+		it('User.logout() should logout user with /auth/signout', function() {
+			
+			//Set POST response
+			$httpBackend.expect('GET', '/auth/signout').respond(200);
+
+			//Run Service Logic to Test
+			User.logout();
+
+			$httpBackend.flush();
+		});
+
+		it('User.getCurrent() should fetch user from /users/me', function() {
+			
+			//Set POST response
+			$httpBackend.expect('GET', '/users/me').respond(200, sampleUser);
+
+			//Run Service Logic to Test
+			User.getCurrent();
+
+			$httpBackend.flush();
+		});
+
+
+		it('User.signup() should signup user with /auth/signup', function() {
+			
+			//Set POST response
+			$httpBackend.expect('POST', '/auth/signup', sampleCredentials).respond(200);
+
+			//Run Service Logic to Test
+			User.signup(sampleCredentials);
+
+			$httpBackend.flush();
+		});
+
+		it('User.resendVerifyEmail() should send POST request to /auth/verify', function() {
+			
+			//Set POST response
+			$httpBackend.expect('POST', '/auth/verify', {email: sampleUser.email}).respond(200);
+
+			//Run Service Logic to Test
+			User.resendVerifyEmail(sampleUser.email);
+
+			$httpBackend.flush();
+		});
+
+		it('User.validateVerifyToken() should send GET request to /auth/verify/:token', function() {
+			
+			//Set POST response
+			$httpBackend.expect('GET', '/auth/verify/'+sampleVerifyToken).respond(200);
+
+			//Run Service Logic to Test
+			expect(function(){ User.validateVerifyToken(sampleVerifyToken); }).not.toThrow();
+
+			$httpBackend.flush();
+		});
+
+		it('User.resetPassword() should send GET request to /auth/forgot/:token', function() {
+			
+			//Set POST response
+			$httpBackend.expect('GET', '/auth/password/'+sampleForgotToken).respond(200);
+
+			//Run Service Logic to Test
+			User.resetPassword(samplePasswordDetails, sampleForgotToken);
+
+			$httpBackend.flush();
+		});
+
+		it('User.askForPasswordReset() should send POST request to /auth/forgot', function() {
+			
+			//Set POST response
+			$httpBackend.expect('POST', '/auth/forgot', sampleCredentials).respond(200, sampleUser);
+
+			//Run Service Logic to Test
+			User.askForPasswordReset(sampleCredentials);
+
+			$httpBackend.flush();
+		});
+
+
+	});
+}());
