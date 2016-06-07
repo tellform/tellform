@@ -13,7 +13,6 @@
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {
 
-			console.log(lastActiveIndex);
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,
@@ -35,7 +34,7 @@
 		var service = {
 			send: send
 		};
-		
+
 		init();
 		return service;
 

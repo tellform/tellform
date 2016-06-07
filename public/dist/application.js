@@ -727,14 +727,13 @@ angular.module('core').service('Menus', [
 			socket: null
 		};
 
-		console.log('https://'+window.location.hostname+':'+$window.socketPort);
-		connect('https://'+window.location.hostname+':'+$window.socketPort);
+		connect(window.location.protocol+'//'+window.location.hostname+':'+$window.socketPort);
 
 		return service;
 
 		// Connect to Socket.io server
 		function connect(url) {
-			service.socket = io();
+			service.socket = io({'transports': ['websocket', 'polling']});
 		}
 
 		// Wrap the Socket.io 'emit' method
@@ -1115,7 +1114,6 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {
 
-			console.log(lastActiveIndex);
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,
@@ -1137,7 +1135,7 @@ angular.module('forms').controller('SubmitFormController', ['$scope', '$rootScop
 		var service = {
 			send: send
 		};
-		
+
 		init();
 		return service;
 
