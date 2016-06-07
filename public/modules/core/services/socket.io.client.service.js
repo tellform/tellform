@@ -24,7 +24,7 @@
 
 		// Connect to Socket.io server
 		function connect(url) {
-			service.socket = io();
+			service.socket = io('https://stage.tellform.com', { transports: ['websocket', 'polling'] });
 		}
 
 		// Wrap the Socket.io 'emit' method

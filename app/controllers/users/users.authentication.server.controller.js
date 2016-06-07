@@ -51,11 +51,11 @@ var config_nev = function () {
 
 	}, function(err, options){
 		if(err) throw err;
-		nev.generateTempUserModel(User);
 	});
 };
 
 config_nev();
+nev.generateTempUserModel(User);
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
