@@ -220,13 +220,13 @@
 
                             <div class="row"><br></div> 
 
-                            <div class="row description">
+                            <div class="row description" ng-hide="showRatingOptions(field)">
                                 <div class="col-md-4 col-sm-12">Description:</div>
                                 <div class="col-md-8 col-sm-12"><textarea type="text" ng-model="field.description" name="description{{field._id}}"value="{{field.description}}"></textarea> </div>
                             </div>
 
                             <div class="row" ng-show="showAddOptions(field)"><br></div>
-                            <div class="row options" ng-show="showAddOptions(field)">
+                            <div class="row options" ng-if="showAddOptions(field)">
                                 <div class="col-md-4 col-xs-12">Options:</div>
                                 <div class="col-md-8 col-xs-12">
                                     <div ng-repeat="option in field.fieldOptions track by option.option_id" class="row">
@@ -243,6 +243,32 @@
                                     </div>
                                 </div>
                             </div>
+
+
+							<div class="row" ng-show="showRatingOptions(field)"><br></div>
+							<div class="row" ng-if="showRatingOptions(field)">
+								<div class="col-md-9 col-sm-9">Number of Steps:</div>
+								<div class="col-md-3 col-sm-3">
+									<input style="width:100%" type="number"
+										   min="1" max="10"
+										   ng-model="field.ratingOptions.steps"
+										   name="ratingOptions_steps{{field._id}}"
+										   ng-value="{{field.ratingOptions.steps}}"
+										   required>
+								</div>
+								<br>
+								<div class="col-md-5 col-sm-9">Shape:</div>
+								<div class="col-md-7 col-sm-3">
+									<select style="width:100%" ng-model="field.ratingOptions.shape"
+											value="{{field.ratingOptions.steps}}"
+											name="ratingOptions_shape{{field._id}}" required>
+										<option ng-repeat="shapeType in field.ratingOptions.validShapes"
+												value="{{shapeType}}">
+											{{select2FA[shapeType]}}
+										</option>
+									</select>
+								</div>
+							</div>
 
                             <div class="row"><br></div> 
 

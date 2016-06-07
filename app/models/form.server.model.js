@@ -46,6 +46,21 @@ var ButtonSchema = new Schema({
 	}
 });
 
+var VisitorDataSchema = new Schema({
+	referrer: {
+		type: String
+	},
+	lastActiveField: {
+		type: Schema.Types.ObjectId
+	},
+	timeElapsed: {
+		type: Number
+	},
+	isSubmitted: {
+		type: Boolean
+	}
+});
+
 /**
  * Form Schema
  */
@@ -65,10 +80,15 @@ var FormSchema = new Schema({
 		type: String,
 		default: ''
 	},
-	form_fields: {
-		type: [FieldSchema]
+
+	analytics:{
+		gaCode: {
+			type: String
+		},
+		visitors: [VisitorDataSchema]
 	},
 
+	form_fields: [FieldSchema],
 	submissions: [{
 		type: Schema.Types.ObjectId,
 		ref: 'FormSubmission'
@@ -195,14 +215,89 @@ var FormSchema = new Schema({
 			},
 			auth: {
 				user: {
-					type: String,
+					type: String
 				},
 				pass: {
-					type: String,
+					type: String
 				}
 			}
 		}
 	}
+});
+
+/*
+** In-Form Analytics Virtual Attributes
+ */
+FormSchema.virtual('analytics.views').get(function () {
+	return this.analytics.visitors.length;
+});
+
+FormSchema.virtual('analytics.submissions').get(function () {
+	return this.submissions.length;
+});
+
+FormSchema.virtual('analytics.conversionRate').get(function () {
+	return this.submissions.length/this.analytics.visitors.length*100;
+});
+
+FormSchema.virtual('analytics.fields').get(function () {
+	var fieldDropoffs = [];
+	var visitors = this.analytics.visitors;
+	var that = this;
+
+	for(var i=0; i<this.form_fields.length; i++){
+		var field = this.form_fields[i];
+
+		if(!field.deletePreserved){
+
+			var dropoffViews =  _.reduce(visitors, function(sum, visitorObj){
+
+					if(visitorObj.lastActiveField+'' === field._id+'' && !visitorObj.isSubmitted){
+						return sum + 1;
+					}
+					return sum;
+				}, 0);
+
+			var continueViews, nextIndex;
+
+			if(i !== this.form_fields.length-1){
+				continueViews =  _.reduce(visitors, function(sum, visitorObj){
+					nextIndex = that.form_fields.indexOf(_.find(that.form_fields, function(o) {
+						return o._id+'' === visitorObj.lastActiveField+'';
+					}));
+
+					if(nextIndex > i){
+						return sum + 1;
+					}
+					return sum;
+				}, 0);
+			}else {
+				continueViews =  _.reduce(visitors, function(sum, visitorObj){
+					if(visitorObj.lastActiveField+'' === field._id+'' && visitorObj.isSubmitted){
+						return sum + 1;
+					}
+					return sum;
+				}, 0);
+
+			}
+
+			var totalViews = dropoffViews+continueViews;
+			var continueRate = continueViews/totalViews*100;
+			var dropoffRate = dropoffViews/totalViews*100;
+
+			fieldDropoffs[i] = {
+				dropoffViews: dropoffViews,
+				continueViews: continueViews,
+				totalViews: totalViews,
+				continueRate: continueRate,
+				dropoffRate: dropoffRate,
+				field: field
+			};
+
+		}
+	}
+
+	return fieldDropoffs;
 });
 
 FormSchema.plugin(mUtilities.timestamp, {
@@ -397,7 +492,7 @@ FormSchema.pre('save', function (next) {
 
 							//Find FormSubmissions that contain field with _id equal to 'deleted_id'
 							FormSubmission.
-							find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {_id: deleted_id} }  }).
+							find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {submissionId: deleted_id} }  }).
 							exec(function(err, submissions){
 								if(err) {
 									console.error(err);

@@ -53,6 +53,7 @@ ng-style="{'color':button.color}">
 		data-id="{{field._id}}"
 		ng-class="{activeField: selected._id == field._id }"
 		class="row field-directive">
+
 			<field-directive field="field" design="myform.design" index="$index" forms="forms">
 			</field-directive>
 		</div>
@@ -76,8 +77,10 @@ ng-style="{'color':button.color}">
 	<button ng-if="!forms.myForm.$invalid"
 		class="Button btn col-sm-2 col-xs-8 focusOn"
 		v-busy="loading" v-busy-label="Please wait" v-pressable
-		ng-disabled="loading"
+		ng-disabled="loading || forms.myForm.$invalid"
 		ng-click="submitForm()"
+		on-enter-key="submitForm()"
+		on-enter-key-disabled="loading || forms.myForm.$invalid"
 		ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}"
 		style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
 
@@ -85,8 +88,10 @@ ng-style="{'color':button.color}">
 	</button>
 
 	<button ng-if="forms.myForm.$invalid"
-			class="Button btn col-sm-2 col-xs-8"
+			class="Button btn col-sm-2 col-xs-8 focusOn"
 			ng-click="goToInvalid()"
+			on-enter-key="goToInvalid()"
+			on-enter-key-disabled="!forms.myForm.$invalid"
 			style="font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white">
 		{{ 'REVIEW' | translate }}
 	</button>

@@ -53,7 +53,7 @@ if (process.env.NODE_ENV === 'secure') {
 console.log('--');
 
 process.on('uncaughtException', function (err) {
-	console.error((new Date).toUTCString() + ' uncaughtException:', err.message);
+	console.error((new Date()).toUTCString() + ' uncaughtException:', err.message);
 	console.error(err.stack);
 	process.exit(1);
 });

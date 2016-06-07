@@ -1,5 +1,5 @@
 <div class="field row radio"
-	 on-enter-key="nextField()"
+	 on-enter-or-tab-key="nextField()"
 	 key-to-option field="field"
 	 ng-if="field.fieldOptions.length > 0">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
@@ -11,6 +11,9 @@
 			{{field.title}}
 			<span class="required-error" ng-show="!field.required">{{ 'OPTIONAL' | translate }}</span>
 		</h3>
+		<p class="col-xs-12">
+			<small>{{field.description}}</small>
+		</p>
 	</div>
     <div class="col-xs-12 field-input">
 

@@ -237,12 +237,6 @@ form .row.field {
 	form .row.field.dropdown > .field-input input:focus {
 		border: none;
 	}
-    
-		form .row.field.dropdown > .field-input .ui-select-match {
-        	border: 0 grey solid;
-        	border-width: 0 0 2px 0;
-			border-radius: 5px;
-		}		
 
 	   	form .dropdown > .field-input .ui-select-choices-row-inner {
 			border-radius: 3px;

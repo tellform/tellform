@@ -172,50 +172,51 @@ var questions = [
 	}
 ];
 
-console.log(chalk.green('\n\nHi, welcome to TellForm Setup'));
+if(!fs.existsSync('./\.env')) {
+	console.log(chalk.green('\n\nHi, welcome to TellForm Setup'));
 
-console.log(chalk.green('You should only run this the first time you setup TellForm\n--------------------------------------------------\n\n'));
+	console.log(chalk.green('You should only run this the first time you setup TellForm\n--------------------------------------------------\n\n'));
 
-inquirer.prompt([questions[0]]).then(function (confirmAns) {
-	if(confirmAns['shouldContinue']) {
+	inquirer.prompt([questions[0]]).then(function (confirmAns) {
+		if (confirmAns['shouldContinue']) {
 
-		inquirer.prompt(questions.slice(1)).then(function (answers) {
-			answers['NODE_ENV'] = 'production';
-			answers['SIGNUP_DISABLED'] = false ? answers['SIGNUP_DISABLED'] === false : true;
+			inquirer.prompt(questions.slice(1)).then(function (answers) {
+				answers['NODE_ENV'] = 'production';
+				answers['SIGNUP_DISABLED'] = false ? answers['SIGNUP_DISABLED'] === false : true;
 
+				var email = answers['email'];
+				var pass = answers['password'];
+				delete answers['email'];
+				delete answers['password'];
 
-			var email = answers['email'];
-			var pass = answers['password'];
-			delete answers['email'];
-			delete answers['password'];
+				envfile.stringify(answers, function (err, str) {
+					fs.outputFile('./\.env', str, function (err) {
+						if (err) return console.error(chalk.red(err));
+						console.log(chalk.green('Successfully created .env file'));
+					});
+					user = new User({
+						firstName: 'Admin',
+						lastName: 'Account',
+						email: email,
+						username: email,
+						password: pass,
+						provider: 'local',
+						roles: ['admin', 'user']
+					});
 
-			envfile.stringify(answers, function (err, str) {
-				fs.outputFile('..//.env', str, function(err){
-					if (err) return console.error(chalk.red(err));
-					console.log(chalk.green('Successfully created .env file'));
-				});
-				user = new User({
-					firstName: 'Admin',
-					lastName: 'Account',
-					email: email,
-					username: email,
-					password: pass,
-					provider: 'local',
-					roles: ['admin', 'user']
-				});
+					user.save(function (err) {
+						if (err) return console.error(chalk.red(err));
+						console.log(chalk.green('Successfully created user'));
+						delete email;
+						delete pass;
 
-				user.save(function (err) {
-					if (err) return console.error(chalk.red(err));
-					console.log(chalk.green('Successfully created user'));
-					delete email;
-					delete pass;
-
-					console.log(chalk.green('Have fun using TellForm!'));
-					process.exit(1);
+						console.log(chalk.green('Have fun using TellForm!'));
+						process.exit(1);
+					});
 				});
 			});
-		});
-	} else {
-		console.log(chalk.green('Have fun using TellForm!'));
-	}
-});
+		} else {
+			console.log(chalk.green('Have fun using TellForm!'));
+		}
+	});
+}

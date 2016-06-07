@@ -26,7 +26,16 @@ var fs = require('fs-extra'),
 	device = require('express-device'),
 	client = new raven.Client(config.DSN);
 
+/**
+ * Configure Socket.io
+ */
+var configureSocketIO = function (app, db) {
+	// Load the Socket.io configuration
+	var server = require('./socket.io')(app, db);
 
+	// Return server object
+	return server;
+};
 
 module.exports = function(db) {
 	// Initialize express app
@@ -43,6 +52,7 @@ module.exports = function(db) {
 	app.locals.signupDisabled = config.signupDisabled;
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
+	app.locals.socketPort = config.socketPort;
 
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();
@@ -147,11 +157,11 @@ module.exports = function(db) {
 
 
 	// Add headers for Sentry
-	/*
+
 	app.use(function (req, res, next) {
 
 	    // Website you wish to allow to connect
-	    res.setHeader('Access-Control-Allow-Origin', 'http://sentry.polydaic.com');
+	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.polydaic.com');
 
 	    // Request methods you wish to allow
 	    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -166,7 +176,7 @@ module.exports = function(db) {
 	    // Pass to next layer of middleware
 	    next();
 	});
-	*/
+
 	// Sentry (Raven) middleware
 	// app.use(raven.middleware.express.requestHandler(config.DSN));
 
@@ -211,6 +221,8 @@ module.exports = function(db) {
 		// Return HTTPS server instance
 		return httpsServer;
 	}
+
+	app = configureSocketIO(app, db);
 
 	// Return Express server instance
 	return app;

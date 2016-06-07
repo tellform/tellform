@@ -9,11 +9,13 @@
     		{{field.title}}
     		<span class="required-error" ng-show="!field.required && !field.fieldValue">{{ 'OPTIONAL' | translate }}</span>
     	</h3>
+		<p class="col-xs-12">
+			<small>{{field.description}}</small>
+		</p>
     </div>
     <div class="col-xs-12 field-input">
         <div class="control-group input-append">
-            <input ng-focus="setActiveField(field._id, index, true)"
-				   class="focusOn"
+            <input class="focusOn"
 				   ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
 				   ng-class="{ 'no-border': !!field.fieldValue }"
 				   ui-date="dateOptions"
@@ -22,7 +24,9 @@
 				   ng-required="field.required"
 				   ng-disabled="field.disabled"
 				   placeholder="MM/DD/YYYY"
-				   on-enter-key="nextField()"
+				   ng-focus="setActiveField(field._id, index, true)"
+				   on-tab-key="nextField()"
+				   on-tab-and-shift-key="prevField()"
 				   ng-change="$root.nextField()">
         </div>
     </div>

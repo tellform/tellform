@@ -24,8 +24,25 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					forcePlaceholderSize: true
 				};
 
-
-				console.log($scope.sortableOptions);
+				/*
+				**  Setup Angular-Input-Star Shape Dropdown
+				 */
+				//Populate Name to Font-awesomeName Conversion Map
+				 $scope.select2FA = {
+					'Heart': 'Heart',
+					'Star': 'Star',
+					'thumbs-up': 'Thumbs Up',
+					'thumbs-down':'Thumbs Down',
+					'Circle': 'Circle',
+					'Square':'Square',
+					'Check Circle': 'Checkmark',
+					'Smile Outlined': 'Smile',
+					'Hourglass': 'Hourglass',
+					'bell': 'Bell',
+					'Paper Plane': 'Paper Plane',
+					'Comment': 'Chat Bubble',
+					'Trash': 'Trash Can'
+				};
 
                 //Populate AddField with all available form field types
                 $scope.addField = {};
@@ -67,11 +84,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 /*
                 ** FormFields (ui-sortable) drag-and-drop configuration
                 */
-                $scope.dropzone = {
-                    handle: ' .handle',
-                    containment: '.dropzoneContainer',
-                    cursor: 'grabbing'
-                };
+				$scope.dropzone = {
+					handle: '.handle',
+					containment: '.dropzoneContainer',
+					cursor: 'grabbing'
+				};
 
                 /*
                 **  Field CRUD Methods
@@ -79,7 +96,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // Add a new field
                 $scope.addNewField = function(modifyForm, fieldType){
 
-                    // incr field_id counter
+                    // increment lastAddedID counter
                     $scope.addField.lastAddedID++;
                     var fieldTitle;
 
@@ -98,12 +115,19 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         disabled: false,
                         deletePreserved: false
                     };
-                    // console.log('\n\n---------\nAdded field CLIENT');
-                    // console.log(newField);
-                    // newField._id = _.uniqueId();
 
-                    // put newField into fields array
+					if($scope.showAddOptions(newField)){
+						newField.fieldOptions = [];
+						newField.fieldOptions.push({
+							'option_id' : Math.floor(100000*Math.random()), //Generate pseudo-random option id
+							'option_title' : 'Option 0',
+							'option_value' : 'Option 0'
+						});
+					}
+
+
                     if(modifyForm){
+						//Add newField to form_fields array
                         $scope.myform.form_fields.push(newField);
                     }
                     return newField;
@@ -168,20 +192,17 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // add new option to the field
                 $scope.addOption = function(field_index){
                     var currField = $scope.myform.form_fields[field_index];
-					console.log(field_index);
-					console.log(currField);
+					//console.log(field_index);
+					//console.log(currField);
 
 					if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
-                        if(!currField.fieldOptions) $scope.myform.form_fields[field_index].fieldOptions = [];
+                        if(!currField.fieldOptions){
+							$scope.myform.form_fields[field_index].fieldOptions = [];
+						}
 
-                        var lastOptionID = 0;
-
-                        if(currField.fieldOptions[currField.fieldOptions.length-1]){
-                            lastOptionID = currField.fieldOptions[currField.fieldOptions.length-1].option_id;
-                        }
+						var lastOptionID = $scope.myform.form_fields[field_index].fieldOptions.length+1;
 
                         // new option's id
-                        var option_id = lastOptionID + 1;
 
                         var newOption = {
                             'option_id' : Math.floor(100000*Math.random()),
@@ -219,7 +240,17 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     }
                 };
 
-            }
+				// decides whether field options block will be shown (true for dropdown and radio fields)
+				$scope.showRatingOptions = function (field){
+					if(field.fieldType === 'rating'){
+						return true;
+					} else {
+						return false;
+					}
+				};
+
+
+			}
 
         };
     }

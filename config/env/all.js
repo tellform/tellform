@@ -7,7 +7,9 @@ module.exports = {
 		description: process.env.APP_DESC || 'Opensource form builder alternative to TypeForm',
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
-	port: process.env.PORT || 3000,
+	port: process.env.PORT || 5000,
+	socketPort: process.env.SOCKET_PORT || 35729,
+
 	templateEngine: 'swig',
 
 	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
@@ -70,9 +72,9 @@ module.exports = {
 	assets: {
 		css: [
 			'public/modules/**/css/*.css',
-			'!public/modules/**/demo/**/*.css',
-			'!public/modules/**/dist/**/*.css',
-			'!public/modules/**/node_modules/**/*.css'
+			'public/modules/**/demo/**/*.css',
+			'public/modules/**/dist/**/*.css',
+			'public/modules/**/node_modules/**/*.css'
 		],
 		js: [
 			'public/dist/populate_template_cache.js',
@@ -82,29 +84,29 @@ module.exports = {
 			'public/modules/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/**/*.js',
-			'!public/modules/**/gruntfile.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/dist/**/*.js',
-			'!public/modules/**/node_modules/**/*.js',
-			'!public/modules/**/tests/**/*.js'
+			'public/modules/**/gruntfile.js',
+			'public/modules/**/demo/**/*.js',
+			'public/modules/**/dist/**/*.js',
+			'public/modules/**/node_modules/**/*.js',
+			'public/modules/**/tests/**/*.js'
 		],
 		views: [
 			'public/modules/**/*.html',
-			'!public/modules/**/demo/**/*.html',
-			'!public/modules/**/dist/**/*.html',
-			'!public/modules/**/node_modules/**/*.html',
-			'!public/modules/**/tests/**/*.html'
+			'public/modules/**/demo/**/*.html',
+			'public/modules/**/dist/**/*.html',
+			'public/modules/**/node_modules/**/*.html',
+			'public/modules/**/tests/**/*.html'
 		],
 		unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
 			'public/modules/*/tests/unit/**/*.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/node_modules/**/*.js'
+			'public/modules/**/demo/**/*.js',
+			'public/modules/**/node_modules/**/*.js'
 		],
 		e2e_tests: [
 			'public/modules/*/tests/e2e/**.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/node_modules/**/*.js'
+			'public/modules/**/demo/**/*.js',
+			'public/modules/**/node_modules/**/*.js'
 		]
 	}
 };

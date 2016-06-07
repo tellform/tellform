@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('forms').directive('fieldIconDirective', function() {
-    
+
     return {
         template: '<i class="{{typeIcon}}"></i>',
         restrict: 'E',
@@ -28,6 +28,6 @@ angular.module('forms').directive('fieldIconDirective', function() {
 				'number': 'fa fa-slack'
 			};
 			$scope.typeIcon = iconTypeMap[$scope.typeName];
-        },
+        }
     };
 });

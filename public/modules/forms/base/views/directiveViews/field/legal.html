@@ -1,5 +1,5 @@
 <div class="field row radio legal"
-	 on-enter-key="nextField()"
+	 on-enter-or-tab-key="nextField()"
 	 key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
     	<h3>
@@ -11,10 +11,12 @@
 			<span class="required-error" ng-show="!field.required">{{ 'OPTIONAL' | translate }}</span>
 		</h3>
     	<br>
-    	<p style="color:#ddd;">{{field.description}}</p>
+    	<p class="col-xs-12">{{field.description}}</p>
     </div>
     <div class="col-xs-12 field-input container">
-		<div class="row-fluid">
+		<div class="row-fluid"
+			 on-enter-or-tab-key="nextField()"
+			 on-tab-and-shift-key="prevField()">
             <label class="btn col-md-5 col-xs-12"
 				   ng-class="{activeBtn: field.fieldValue == 'true'}">
                 <input class="focusOn"

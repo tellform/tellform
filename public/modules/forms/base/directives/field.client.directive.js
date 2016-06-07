@@ -13,9 +13,24 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 
     var getTemplateUrl = function(fieldType) {
         var type = fieldType;
-        var templateUrl = 'modules/forms/base/views/directiveViews/field/';
 
-		if (__indexOf.call(supportedFields, type) >= 0) {
+        var supported_fields = [
+            'textfield',
+            'textarea',
+            'date',
+            'dropdown',
+            'hidden',
+            'password',
+            'radio',
+            'legal',
+            'statement',
+            'rating',
+            'yes_no',
+            'number',
+            'natural'
+        ];
+		if (__indexOf.call(supported_fields, type) >= 0) {
+			var templateUrl = 'modules/forms/views/directiveViews/field/';
             templateUrl = templateUrl+type+'.html';
         }
    		return $templateCache.get(templateUrl);
@@ -24,7 +39,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
     return {
         template: '<div>{{field.title}}</div>',
         restrict: 'E',
-        scope: {
+		scope: {
             field: '=',
             required: '&',
             design: '=',
@@ -85,7 +100,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			}
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();
-            $compile(element.contents())(scope);
+            var output = $compile(element.contents())(scope);
         }
     };
 }]);

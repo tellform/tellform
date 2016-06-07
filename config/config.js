@@ -12,6 +12,7 @@ var _ = require('lodash'),
 var exists = require('path-exists').sync;
 
 var minBowerFiles = function(type){
+	console.log(type);
     return bowerFiles(type).map( function(path, index, arr) {
       var newPath = path.replace(/.([^.]+)$/g, '.min.$1');
       return exists( newPath ) ? newPath : path;

@@ -19,12 +19,12 @@ var mongoose = require('mongoose'),
  */
 exports.uploadPDF = function(req, res, next) {
 
-	console.log('inside uploadPDF');
+	//console.log('inside uploadPDF');
 
 	// console.log('\n\nProperty Descriptor\n-----------');
 	// console.log(Object.getOwnPropertyDescriptor(req.files.file, 'path'));
 
-	console.log(req.file);
+	//console.log(req.file);
 
 	if(req.file){
 		var pdfFile = req.file;
@@ -159,9 +159,20 @@ exports.deleteSubmissions = function(req, res) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
+			return;
 		}
 
-		res.status(200).send('Form submissions successfully deleted');
+		form.analytics.visitors = [];
+		form.save(function(err){
+			if(err){
+				res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+				return;
+			}
+			res.status(200).send('Form submissions successfully deleted');
+
+		});
 	});
 };
 
@@ -171,8 +182,6 @@ exports.deleteSubmissions = function(req, res) {
 exports.createSubmission = function(req, res) {
 
 	var form = req.form;
-	// console.log('in createSubmission()');
-	// console.log(req.body);
 
 	var submission = new FormSubmission({
 		admin: req.form.admin._id,
@@ -210,10 +219,9 @@ exports.createSubmission = function(req, res) {
 	}
 
 	submission.save(function(err, submission){
-		// console.log('in submissions.save()\n submission: '+JSON.stringify(submission) )
 		if(err){
 			console.log(err.message);
-			res.status(400).send({
+			res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
@@ -281,8 +289,9 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
 	var validUpdateTypes= Form.schema.path('plugins.oscarhost.settings.updateType').enumValues;
 
-	var newForm = JSON.parse(JSON.stringify(req.form));
+	var newForm = req.form.toJSON({virtuals : true});
 	newForm.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
+
 	res.json(newForm);
 };
 
@@ -377,11 +386,12 @@ exports.formByID = function(req, res, next, id) {
 			}
 			else {
 				//Remove sensitive information from User object
-				form.admin.password = undefined;
-				form.admin.salt = undefined;
-				form.provider = undefined;
+				var _form = form;
+				_form.admin.password = undefined;
+				_form.admin.salt = undefined;
+				_form.provider = undefined;
 
-				req.form = form;
+				req.form = _form;
 				return next();
 			}
 		});
