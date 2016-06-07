@@ -113,12 +113,7 @@
 					</th>
 
 					<td data-ng-repeat="field in row.form_fields">
-						<span ng-if="field.fieldValue == 'dropdown'">
-							{{field.fieldValue}}
-						</span>
-						<span ng-if="field.fieldValue != 'dropdown'">
-							{{field.fieldValue}}
-						</span>
+						{{field.fieldValue}}
 					</td>
 					<td ng-if="myform.plugins.oscarhost.baseUrl">
 						<a href="{{myform.plugins.oscarhost.baseUrl.split('ws')[0]}}demographic/demographiccontrol.jsp?demographic_no={{row.oscarDemoNum}}&displaymode=edit">

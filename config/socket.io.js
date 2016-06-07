@@ -4,8 +4,7 @@
 var config = require('./config'),
 	path = require('path'),
 	http = require('http'),
-	socketio = require('socket.io'),
-	session = require('express-session');
+	socketio = require('socket.io');
 
 // Define the Socket.io configuration method
 module.exports = function (app, db) {

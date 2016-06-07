@@ -53,7 +53,7 @@ module.exports = function(db) {
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
 	app.locals.socketPort = config.socketPort;
-	
+
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();
 	app.locals.bowerOtherFiles = config.getBowerOtherAssets();
