@@ -111,9 +111,10 @@
 					<th class="scope">
 						{{$index+1}}
 					</th>
+
 					<td data-ng-repeat="field in row.form_fields">
 						<span ng-if="field.fieldValue == 'dropdown'">
-							{{field.fieldValue.option_value}}
+							{{field.fieldValue}}
 						</span>
 						<span ng-if="field.fieldValue != 'dropdown'">
 							{{field.fieldValue}}
