@@ -19,7 +19,7 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test && grunt coveralls",
-    "postinstall": "bower install --config.interactive=false; grunt build"
+    "postinstall": "bower install --config.interactive=false; grunt build; node scripts/setup.js;"
   },
   "dependencies": {
     "async": "^1.4.2",
@@ -63,13 +63,14 @@
     "math": "0.0.3",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
-    "mongoose": "3.8.40",
+    "mongoose": "~4.4.19",
     "mongoose-utilities": "~0.1.1",
     "morgan": "~1.6.1",
     "multer": "~1.1.0",
     "node-freegeoip": "0.0.1",
     "nodemailer": "~1.10.0",
     "passport": "~0.3.0",
+    "passport-anonymous": "^1.0.1",
     "passport-facebook": "~2.0.0",
     "passport-github": "~1.0.0",
     "passport-google-oauth": "~0.2.0",
@@ -82,6 +83,7 @@
     "random-js": "^1.0.8",
     "raven": "^0.9.0",
     "soap": "^0.11.0",
+    "socket.io": "^1.4.6",
     "swig": "~1.4.1"
   },
   "devDependencies": {

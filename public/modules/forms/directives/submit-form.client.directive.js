@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'Auth',
-    function ($http, TimeCounter, $filter, $rootScope, Auth) {
+angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'Auth', 'SendVisitorData',
+    function ($http, TimeCounter, $filter, $rootScope, Auth, SendVisitorData) {
         return {
             templateUrl: 'modules/forms/views/directiveViews/form/submit-form.client.view.html',
             restrict: 'E',
@@ -41,6 +41,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     TimeCounter.restartClock();
                 };
 
+				//Fire event when window is scrolled
 				$window.onscroll = function(){
             		$scope.scrollPos = document.body.scrollTop || document.documentElement.scrollTop || 0;
 					var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
@@ -80,13 +81,22 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }
         		};
 
-				$rootScope.setDropdownOption = function(){
-					console.log('setDropdownOption index: ');
-				};
-
                 /*
                 ** Field Controls
                 */
+				var getActiveField = function(){
+					if($scope.selected === null){
+						console.error('current active field is null');
+						throw new Error('current active field is null');
+					}
+
+					if($scope.selected._id === 'submit_field') {
+						return $scope.myform.form_fields.length - 1;
+					} else {
+						return $scope.selected.index;
+					}
+				};
+
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index, animateScroll) {
                     if($scope.selected === null || $scope.selected._id === field_id){
 						//console.log('not scrolling');
@@ -106,12 +116,15 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                             $document.scrollToElement(angular.element('.activeField'), -10, 200).then(function() {
 								$scope.noscroll = false;
 								setTimeout(function() {
-									if (document.querySelectorAll('.activeField .focusOn')[0]) {
-										//console.log(document.querySelectorAll('.activeField .focusOn')[0]);
+									if (document.querySelectorAll('.activeField .focusOn').length) {
+										//Handle default case
 										document.querySelectorAll('.activeField .focusOn')[0].focus();
-									} else {
-										//console.log(document.querySelectorAll('.activeField input')[0]);
+									} else if(document.querySelectorAll('.activeField input').length) {
+										//Handle case for rating input
 										document.querySelectorAll('.activeField input')[0].focus();
+									} else {
+										//Handle case for dropdown input
+										document.querySelectorAll('.activeField .selectize-input')[0].focus();
 									}
 								});
                             });
@@ -119,13 +132,15 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }else {
 						setTimeout(function() {
 							if (document.querySelectorAll('.activeField .focusOn')[0]) {
-								//console.log(document.querySelectorAll('.activeField .focusOn')[0]);
+								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
 								document.querySelectorAll('.activeField .focusOn')[0].focus();
 							} else {
 								document.querySelectorAll('.activeField input')[0].focus();
 							}
 						});
 					}
+
+					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
@@ -163,30 +178,39 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     }
                 };
 
-				$scope.goToInvalid = function() {
+				$rootScope.goToInvalid = $scope.goToInvalid = function() {
 					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
 				};
 
-				$scope.submitForm = function() {
+				$rootScope.submitForm = $scope.submitForm = function() {
+
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
+
 					var form = _.cloneDeep($scope.myform);
+
 					form.timeElapsed = _timeElapsed;
 
 					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
 					delete form.visible_form_fields;
 
+					for(var i=0; i < $scope.myform.form_fields.length; i++){
+						if($scope.myform.form_fields[i].fieldType === 'dropdown' && !$scope.myform.form_fields[i].deletePreserved){
+							$scope.myform.form_fields[i].fieldValue = $scope.myform.form_fields[i].fieldValue.option_value;
+						}
+					}
+
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
 							.success(function (data, status, headers) {
-								//console.log('form submitted successfully');
-
+								console.log($scope.myform.form_fields[0]);
 								$scope.myform.submitted = true;
 								$scope.loading = false;
+								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);
 							})
 							.error(function (error) {
 								$scope.loading = false;
-								//console.log(error);
+								console.error(error);
 								$scope.error = error.message;
 							});
 					}, 500);

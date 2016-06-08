@@ -7,7 +7,9 @@ module.exports = {
 		description: process.env.APP_DESC || 'Opensource form builder alternative to TypeForm',
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
-	port: process.env.PORT || 3000,
+	port: process.env.PORT || 5000,
+	socketPort: process.env.SOCKET_PORT || 35729,
+
 	templateEngine: 'swig',
 
 	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
@@ -81,15 +83,15 @@ module.exports = {
 		views: [
 			'public/modules/*/views/*.html',
 			'public/modules/*/views/*/*.html',
-			'public/modules/*/views/*/*/*.html',
+			'public/modules/*/views/*/*/*.html'
 		],
 		unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
 			'public/modules/*/tests/unit/*.js',
-			'public/modules/*/tests/unit/**/*.js',
+			'public/modules/*/tests/unit/**/*.js'
 		],
 		e2e_tests: [
-			'public/modules/*/tests/e2e/**.js',
+			'public/modules/*/tests/e2e/**.js'
 		]
 	}
 };

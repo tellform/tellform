@@ -17,6 +17,8 @@ var mongoose = require('mongoose'),
 	FieldSchema = require('./form_field.server.model.js'),
 	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity');
 
+var FieldSchema = require('./form_field.server.model.js');
+
 var newDemoTemplate = {
 	address: '880-9650 Velit. St.',
 	city: '',
@@ -41,6 +43,18 @@ var newDemoTemplate = {
 	yearOfBirth: '2015'
 };
 
+
+// Setter function for form_fields
+function formFieldsSetter(form_fields){
+	for(var i=0; i<form_fields.length; i++){
+		form_fields[i].isSubmission = true;
+		form_fields[i].submissionId = form_fields[i]._id;
+		form_fields[i]._id = new mongoose.mongo.ObjectID();
+	}
+	//console.log(form_fields)
+	return form_fields;
+}
+
 /**
  * Form Submission Schema
  */
@@ -55,9 +69,7 @@ var FormSubmissionSchema = new Schema({
 		required: true
 	},
 
-	form_fields: {
-		type: [Schema.Types.Mixed]
-	},
+	form_fields: [FieldSchema],
 
 	form: {
 		type: Schema.Types.ObjectId,
@@ -99,7 +111,7 @@ var FormSubmissionSchema = new Schema({
 	},
 
 	timeElapsed: {
-		type: Number,
+		type: Number
 	},
 	percentageComplete: {
 		type: Number
@@ -116,8 +128,9 @@ var FormSubmissionSchema = new Schema({
 			default: false
 		}
 	}
-
 });
+
+FormSubmissionSchema.path('form_fields').set(formFieldsSetter);
 
 FormSubmissionSchema.plugin(mUtilities.timestamp, {
 	createdPath: 'created',
@@ -214,7 +227,7 @@ FormSubmissionSchema.pre('save', function (next) {
 								});
 							});
 						}
-					},
+					}
 
 				], function(err, result) {
 					if(err) return next(err);
@@ -253,7 +266,6 @@ FormSubmissionSchema.pre('save', function (next) {
 	var fdfData, dest_filename, dest_path,
 		self = this,
 		_form = this.form;
-
 
 	if(this.pdf && this.pdf.path){
 		dest_filename = self.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';

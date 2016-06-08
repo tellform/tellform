@@ -80,7 +80,11 @@
 	<!--Embedding The signupDisabled Boolean-->
 	<script type="text/javascript">
 		var signupDisabled = {{signupDisabled | safe}};
+		var socketPort = {{socketPort | safe}};
 	</script>
+
+	<!--Socket.io Client Dependency-->
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
 	<!--Bower JS dependencies-->
 	{% for bowerJSFile in bowerJSFiles %}
@@ -103,7 +107,7 @@
 	<script src="https://cdn.ravenjs.com/2.3.0/angular/raven.min.js"></script>
 
 	<script>
-		Raven.config('http://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
+		Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
 	</script>
 
 	<!-- [if lt IE 9]>

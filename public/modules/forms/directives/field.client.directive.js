@@ -29,7 +29,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'number',
             'natural'
         ];
-	if (__indexOf.call(supported_fields, type) >= 0) {
+		if (__indexOf.call(supported_fields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
         }
    		return $templateCache.get('../public/'+templateUrl);
@@ -38,7 +38,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
     return {
         template: '<div>{{field.title}}</div>',
         restrict: 'E',
-        scope: {
+		scope: {
             field: '=',
             required: '&',
             design: '=',
@@ -99,7 +99,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			}
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();
-            $compile(element.contents())(scope);
+            var output = $compile(element.contents())(scope);
         }
     };
 }]);

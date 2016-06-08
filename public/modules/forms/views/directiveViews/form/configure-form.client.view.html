@@ -271,6 +271,22 @@
                     <!-- <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span> -->
                 </div>
             </div>
+
+			<div class="row field">
+				<div class="field-title col-sm-4">
+					<h5>Google Analytics Tracking Code</h5>
+				</div>
+
+				<div class="col-sm-8">
+					<input type="text"
+						   ng-model="myform.analytics.gaCode"
+						   value="{{myform.analytics.gaCode}}"
+						   style="width: 100%;"
+						   ng-minlength="4"
+						   placeholder="UA-XXXXX-Y"
+						   ng-pattern="/\bUA-\d{4,10}-\d{1,4}\b/">
+				</div>
+			</div>
             
             <div class="row field">
                 <div class="col-xs-6 field-title">Language</div>

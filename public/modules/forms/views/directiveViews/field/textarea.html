@@ -1,5 +1,4 @@
-<div class="field row" ng-click="setActiveField(field._id, index, true)"
-	 ng-focus="setActiveField(field._id, index, true)">
+<div class="field row" ng-click="setActiveField(field._id, index, true)">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 		<h3>
 			<small class="field-number">
@@ -9,9 +8,12 @@
 			{{field.title}}
 			<span class="required-error" ng-show="!field.required">optional</span>
 		</h3>
-		<small>press SHIFT+ENTER to create a newline</small>
+		<p>
+			<small>{{field.description}}</small>
+		</p>
 	</div>
 	<div class="col-xs-12 field-input">
+		<small style="font-size:0.6em;">Press SHIFT+ENTER to add a newline</small>
 		<textarea class="textarea focusOn" type="text"
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
@@ -19,14 +21,16 @@
 			value="{{field.fieldValue}}"
 			ng-required="field.required"
 			ng-disabled="field.disabled"
-			ng-focus="setActiveField(field._id, index, true)"
-			on-enter-key="nextField()">
+		    ng-focus="setActiveField(field._id, index, true)"
+		    on-enter-or-tab-key="nextField()"
+		    on-tab-and-shift-key="prevField()"
+			style="border: none; border-left: lightgrey dashed 2px;">
 		</textarea>
 	</div>
 </div>
 
 <div>
-	<div class="btn btn-lg btn-default col-xs-12 col-sm-4"
+	<div class="btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs"
 		 style="padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)">
 		<button ng-disabled="!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid"
 				ng-style="{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"

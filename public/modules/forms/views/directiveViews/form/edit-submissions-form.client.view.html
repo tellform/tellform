@@ -1,5 +1,47 @@
 <div class="submissions-table row container" ng-init="initFormSubmissions()">
+	<div class="row">
+		<div class="col-xs-4">
+			Total Views: {{myform.analytics.views}}
+		</div>
 
+		<div class="col-xs-4">
+			Submissions: {{myform.analytics.submissions}}
+		</div>
+
+		<div class="col-xs-4">
+			Conversion Rate: {{myform.analytics.conversionRate}}%
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-xs-12">
+
+			<div class="col-xs-2">
+				<strong>Field Title</strong>
+			</div>
+			<div class="col-xs-2">
+				<strong>Field Views</strong>
+			</div>
+
+			<div class="col-xs-4">
+				<strong>User dropoff rate at this field</strong>
+			</div>
+		</div>
+		<div class="col-xs-12" ng-repeat="fieldStats in myform.analytics.fields">
+
+			<div class="col-xs-2">
+				{{fieldStats.field.title}}
+			</div>
+			<div class="col-xs-2">
+				{{fieldStats.totalViews}}
+			</div>
+
+			<div class="col-xs-4">
+				{{fieldStats.dropoffRate}}%
+			</div>
+		</div>
+	</div>
+	<br>
 	<div class="row">
 		<div class="col-xs-2">	
 			<button class="btn btn-danger" ng-click="deleteSelectedSubmissions()" ng-disabled="!isAtLeastOneChecked();">
@@ -69,11 +111,8 @@
 					<th class="scope">
 						{{$index+1}}
 					</th>
-					<td ng-if="field.fieldType == 'dropdown'" data-ng-repeat="field in row.form_fields">
-						{{field.fieldValue.field_title}}
-					</td>
-					
-					<td ng-if="field.fieldType != 'dropdown'" data-ng-repeat="field in row.form_fields">
+
+					<td data-ng-repeat="field in row.form_fields">
 						{{field.fieldValue}}
 					</td>
 					<td ng-if="myform.plugins.oscarhost.baseUrl">
