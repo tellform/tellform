@@ -81,6 +81,7 @@ module.exports = {
             'public/application.js',
 			'public/dist/populate_template_cache.js',
 			'public/modules/*/*.js',
+			'public/modules/*/*/*/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/*/*/*/*.js',
 			'!public/modules/**/gruntfile.js',
