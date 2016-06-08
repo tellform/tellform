@@ -127,6 +127,7 @@ module.exports = function(db) {
 	app.use(cookieParser());
 
 	// Express MongoDB session storage
+
 	app.use(session({
 		saveUninitialized: true,
 		resave: true,

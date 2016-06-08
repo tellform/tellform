@@ -3,20 +3,22 @@ version: '2'
 services:
   db:
     image: mongo:3.2
+    ports:
+      - "27017:27017"
     volumes:
       - mongo-data-wt:/data/db
   web:
     build: .
     volumes:
       - .:/usr/src/app
+    command: node server.js
     ports:
       - "3000:3000"
       - "35729:35729"
-    environment:
-      DB_1_PORT_27017_TCP_ADDR: db
-      PORT: 3000
     links:
       - db
+    environment:
+        DB_HOST: db
 volumes:
   mongo-data-wt:
     driver: local

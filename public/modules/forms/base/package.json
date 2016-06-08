@@ -1,0 +1,33 @@
+{
+  "name": "angular-tellform",
+  "description": "Opensource alternative to TypeForm",
+  "version": "1.3.0",
+  "homepage": "https://github.com/whitef0x0/tellform",
+  "authors": [
+    "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)",
+    "Samuel Laulhau <sam@lalop.co> (https://samuellaulhau.fr)"
+  ],
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tellform/angular-tellform.git"
+  },
+  "engines": {
+    "node": "~5.0.0",
+    "npm": "~2.11.2"
+  },
+  "scripts": {
+    "postinstall": "node node_modules/.bin/bower install --config.interactive=false; node node_modules/.bin/grunt build"
+  },
+  "dependencies": {
+    "bower": "~1.6.5",
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-cssmin": "~0.14.0",
+    "grunt-contrib-uglify": "~0.11.0",
+    "grunt-html2js": "~0.3.5",
+    "grunt-ng-annotate": "~1.0.1",
+    "jit-grunt": "^0.10.0"
+  }
+}

@@ -7,15 +7,19 @@ module.exports = function(grunt) {
 
 	// Unified Watch Object
 	var watchFiles = {
+
 		serverViews: ['app/views/**/*.*'],
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
-		clientViews: ['public/modules/**/views/**/*.html'],
-		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
-		clientCSS: ['public/modules/**/*.css'],
+
+		clientViews: ['public/modules/**/views/**/*.html', '!public/modules/**/demo/**/*.html', '!public/modules/**/dist/**/*.html', '!public/modules/**/node_modules/**/*.html'],
+		clientJS: ['public/js/*.js', 'public/modules/**/*.js', '!public/modules/**/gruntfile.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js'],
+		clientCSS: ['public/modules/**/*.css', '!public/modules/**/demo/**/*.css', '!public/modules/**/dist/**/*.css', '!public/modules/**/node_modules/**/*.css'],
+
 		serverTests: ['app/tests/**/*.js'],
-		clientTests: ['public/modules/**/tests/*.js'],
-		allTests: ['public/modules/**/tests/*.js', 'app/tests/**/*.js'],
+		clientTests: ['public/modules/**/tests/*.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js']
 	};
+
+	watchFiles.allTests = watchFiles.serverTests.concat(watchFiles.clientTests);
 
 	// Project Configuration
 	grunt.initConfig({
@@ -95,7 +99,7 @@ module.exports = function(grunt) {
 				files: {
 					'public/dist/application.min.js': 'public/dist/application.js'
 				}
-			}
+	    	}
 		},
 		cssmin: {
 			combine: {
@@ -125,7 +129,7 @@ module.exports = function(grunt) {
 					'stack-trace-limit': 50,
 					'hidden': []
 				}
-			 }
+			}
 		},
 		ngAnnotate: {
 			production: {
@@ -137,15 +141,15 @@ module.exports = function(grunt) {
 		concurrent: {
 		    default: ['nodemon', 'watch'],
 			debug: ['nodemon', 'watch', 'node-inspector'],
-	       	options: {
+	    	options: {
 				logConcurrentOutput: true,
-		     	limit: 10
-	       	}
+		    	limit: 10
+	    	}
 	    },
 		env: {
 			test: {
 				NODE_ENV: 'test',
-		  		src: '.env'
+				src: '.env'
 			},
 			secure: {
 				NODE_ENV: 'secure',
@@ -234,7 +238,7 @@ module.exports = function(grunt) {
         },
 		html2js: {
 			options: {
-				base: 'NodeForm',
+				base: 'public',
 				watch: true,
 				module: 'NodeForm.templates',
 				singleModule: true,

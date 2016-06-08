@@ -23,6 +23,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).constant('USER_RO
   normal: 'user',
   superuser: 'superuser'
 });
+//form url
+angular.module(ApplicationConfiguration.applicationModuleName).constant('FORM_URL', '/forms/:formId');
 
 angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', '$state', '$stateParams',
     function($rootScope, Auth, $state, $stateParams) {

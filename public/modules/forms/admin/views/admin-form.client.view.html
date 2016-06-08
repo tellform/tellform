@@ -1,0 +1,78 @@
+<div class="container" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}"></div>
+
+<section class="container admin-form">
+
+	<!-- Modal Delete Dialog Template -->
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h2 class="modal-title hidden-md hidden-lg">Are you ABSOLUTELY sure?</h2>
+            <h3 class="modal-title hidden-xs hidden-sm">Are you ABSOLUTELY sure?</h3>
+        </div>
+        <div class="modal-body">
+        	<div class="modal-body-alert">
+			    Unexpected bad things will happen if you don’t read this!
+			</div>
+       		<p class="hidden-xs hidden-sm">
+       		 	This action <strong>CANNOT</strong> be undone.This will permanently delete the <strong>{{myform.title}}</strong> form, form submissions and remove all associated pdfs.
+       		</p>
+            <p>Please type in the name of the form to confirm.</p>
+        </div>
+        <div class="modal-footer">
+	        <p>
+				<input type="text" data-ng-model="deleteConfirm" class="input-block" autofocus required aria-label="Type in the name of the form to confirm that you want to delete this form.">
+			</p>
+            <button type="submit" ng-click="removeCurrentForm()" class="btn btn-block btn-danger" ng-disabled="myform.title != deleteConfirm">
+            	I understand the consequences, delete this form
+            </button>
+        </div>
+    </script>
+
+	<div class="page-header row" style="padding-bottom: 0px;">
+		<div class="col-xs-10 col-sm-8">
+			<h1 class="hidden-sm hidden-xs" data-ng-bind="myform.title" style="margin-bottom: 0px;"></h1>
+			<h2 class="hidden-md hidden-lg" data-ng-bind="myform.title" style="margin-bottom: 0px;"></h2>
+		</div>
+		<div class="col-xs-1 col-sm-2">
+			<small class="pull-right">
+				<button class="btn btn-danger" ng-click="openDeleteModal()">
+					<i class="fa fa-trash-o"></i>
+					<span class="hidden-xs">Delete</span>
+					<span class="hidden-xs hidden-sm">Form</span>
+				</button>
+			</small>
+		</div>
+		<div class="col-xs-1 col-sm-2">
+			<small class="pull-right">
+				<a class="btn btn-default view-form-btn" href="/#!/forms/{{myform._id}}">
+					<span class="hidden-xs hidden-sm">
+						View
+						<span ng-show="myform.isLive">
+							Live
+						</span>
+						<span ng-hide="myform.isLive">Preview</span> Form
+					</span>
+					<span class="hidden-xs hidden-md hidden-lg">
+						View
+						<span ng-if="myform.isLive">Live</span>
+						<span ng-if="!myform.isLive">Preview</span>
+					</span>
+					<i class="status-light status-light-on fa fa-dot-circle-o" ng-if="myform.isLive"></i>
+					<i class="status-light status-light-off fa fa-dot-circle-o" ng-if="!myform.isLive"></i>
+				</a>
+			</small>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- <tabset> -->
+			<tabs data="tabData"></tabs>
+			<!-- </tabset> -->
+		</div>
+
+		<div class="col-xs-12">
+			<ui-view></ui-view>
+		</div>
+
+	</div>
+</section>
