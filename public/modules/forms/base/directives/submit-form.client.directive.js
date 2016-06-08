@@ -4,7 +4,8 @@
 angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'Auth', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, Auth, SendVisitorData) {
         return {
-            templateUrl: 'modules/forms/base/views/directiveViews/form/submit-form.client.view.html',                restrict: 'E',
+            templateUrl: 'modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
+			restrict: 'E',
             scope: {
                 myform:'='
             },

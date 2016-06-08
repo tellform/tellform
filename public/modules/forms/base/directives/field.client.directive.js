@@ -99,6 +99,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 				fieldType = 'textfield';
 			}
             var template = getTemplateUrl(fieldType);
+			console.log(template);
            	element.html(template).show();
             var output = $compile(element.contents())(scope);
         }

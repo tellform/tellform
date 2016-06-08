@@ -72,9 +72,9 @@ module.exports = {
 	assets: {
 		css: [
 			'public/modules/**/css/*.css',
-			'public/modules/**/demo/**/*.css',
-			'public/modules/**/dist/**/*.css',
-			'public/modules/**/node_modules/**/*.css'
+			'!public/modules/**/demo/**/*.css',
+			'!public/modules/**/dist/**/*.css',
+			'!public/modules/**/node_modules/**/*.css'
 		],
 		js: [
 			'public/dist/populate_template_cache.js',
@@ -83,10 +83,19 @@ module.exports = {
 			'public/*.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*/*.js',
-			'public/modules/**/*.js'
+			'public/modules/*/*/*/*.js',
+			'!public/modules/**/gruntfile.js',
+			'!public/modules/**/demo/**/*.js',
+			'!public/modules/**/dist/**/*.js',
+			'!public/modules/**/node_modules/**/*.js',
+			'!public/modules/**/tests/**/*.js'
 		],
 		views: [
-			'public/modules/**/*.html'
+			'public/modules/**/*.html',
+			'!public/modules/**/demo/**/*.html',
+			'!public/modules/**/dist/**/*.html',
+			'!public/modules/**/node_modules/**/*.html',
+			'!public/modules/**/tests/**/*.html'
 		],
 		unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
