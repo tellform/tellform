@@ -49,6 +49,9 @@ angular.module('forms').factory('myForm', ['Forms', function(Forms) {
 }]);
 angular.module('forms').constant('FORM_URL', '/form/:formId');
 
+angular.module('forms').value('SendVisitorData', {
+	send: function(){}
+});
 
 angular.element(document).ready(function() {
 	//Then init the app
