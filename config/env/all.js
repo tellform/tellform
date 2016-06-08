@@ -77,10 +77,9 @@ module.exports = {
 			'!public/modules/**/node_modules/**/*.css'
 		],
 		js: [
-			'public/dist/populate_template_cache.js',
 			'public/config.js',
             'public/application.js',
-			'public/*.js',
+			'public/dist/populate_template_cache.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/*/*/*/*.js',

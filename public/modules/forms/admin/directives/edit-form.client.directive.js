@@ -9,6 +9,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 myform:'='
             },
             controller: function($scope){
+
+				console.log($scope.myform);
                 var field_ids = _($scope.myform.form_fields).pluck('_id');
                 for(var i=0; i<field_ids.length; i++){
                     $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
