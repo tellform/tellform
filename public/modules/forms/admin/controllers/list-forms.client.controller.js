@@ -3,10 +3,19 @@
 // Forms controller
 angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http',
 	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
-        
+
         $scope = $rootScope;
         $scope.forms = {};
         $scope.showCreateModal = false;
+
+		$scope.languageRegExp = $scope.myPt = {
+			regExp: /[@!#$%^&*()\-+={}\[\]|\\/'";:`.,~№?<>]+/i,
+			test: function(val) {
+				console.log(val);
+				return !this.regExp.test(val);
+			}
+		};
+
 
         // Return all user's Forms
         $scope.findAll = function() {
@@ -37,15 +46,15 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.duplicateForm = function(form_index){
             var form = _.cloneDeep($scope.myforms[form_index]);
             delete form._id;
-       
+
             $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
                     $scope.myforms.splice(form_index+1, 0, data);
                 }).error(function(errorResponse){
                     console.error(errorResponse);
                     if(errorResponse === null){
-                        $scope.error = errorResponse.data.message;   
-                    } 
+                        $scope.error = errorResponse.data.message;
+                    }
                 });
         };
 
@@ -61,7 +70,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
                     console.log('new form created');
-                    // Redirect after save 
+                    // Redirect after save
                     $scope.goToWithId('viewForm.create', data._id+'');
                 }).error(function(errorResponse){
                     console.error(errorResponse);

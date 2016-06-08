@@ -99,10 +99,14 @@ module.exports = {
 		],
 		unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
-			'public/modules/*/tests/unit/**/*.js'
+			'public/modules/*/tests/unit/**/*.js',
+			'!public/modules/**/demo/**/*.js',
+			'!public/modules/**/node_modules/**/*.js'
 		],
 		e2e_tests: [
-			'public/modules/*/tests/e2e/**.js'
+			'public/modules/*/tests/e2e/**.js',
+			'!public/modules/**/demo/**/*.js',
+			'!public/modules/**/node_modules/**/*.js'
 		]
 	}
 };

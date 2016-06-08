@@ -27,8 +27,8 @@
                     style="opacity: 0; margin-left: 0px;"
 					ng-model="field.fieldValue"
 				    ng-focus="setActiveField(field._id, index, true)"
-					ng-model-options="{ debounce: 250 }" 
-					ng-required="field.required" 
+					ng-model-options="{ debounce: 250 }"
+					ng-required="field.required"
 					ng-change="$root.nextField()"
                     ng-disabled="field.disabled" />
 				<div class="letter">
@@ -46,8 +46,8 @@
                 <input type="radio" value="false"
 			        style="opacity:0; margin-left:0px;"
 			        ng-model="field.fieldValue"
-			        ng-model-options="{ debounce: 250 }" 
-			        ng-required="field.required" 
+			        ng-model-options="{ debounce: 250 }"
+			        ng-required="field.required"
 			        ng-change="$root.nextField()"
                     ng-disabled="field.disabled"/>
 

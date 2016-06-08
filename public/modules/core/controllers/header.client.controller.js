@@ -7,7 +7,7 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 
-		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish'];
+		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish', 'italian', 'german'];
 
 		$scope.isCollapsed = false;
 		$rootScope.hideNav = false;

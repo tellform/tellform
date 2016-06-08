@@ -94,7 +94,7 @@ var UserSchema = new Schema({
 	},
 	language: {
 		type: String,
-		enum: ['english', 'french', 'spanish'],
+		enum: ['english', 'french', 'spanish', 'italian', 'german'],
 		default: 'english',
 		required: 'User must have a language'
 	},

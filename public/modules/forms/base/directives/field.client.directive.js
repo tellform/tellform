@@ -29,12 +29,13 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'number',
             'natural'
         ];
-		if (__indexOf.call(supported_fields, type) >= 0) {
-			var templateUrl = 'modules/forms/base/views/directiveViews/field/';
+
+        var templateUrl = 'modules/forms/base/views/directiveViews/field/';
+
+		if (__indexOf.call(supportedFields, type) >= 0) {
             templateUrl = templateUrl+type+'.html';
-			return $templateCache.get(templateUrl);
-		}
-		return null;
+        }
+   		return $templateCache.get(templateUrl);
     };
 
     return {

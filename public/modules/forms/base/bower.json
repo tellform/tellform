@@ -33,6 +33,8 @@
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
     "angular": "1.4.x"
+    "restangular": "~1.5.2",
+	"angular-ui-select": "whitef0x0/ui-select#compiled",
   },
   "overrides": {
     "BOWER-PACKAGE": {

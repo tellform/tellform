@@ -72,7 +72,7 @@ var FormSchema = new Schema({
 	},
 	language: {
 		type: String,
-		enum: ['english', 'french', 'spanish'],
+		enum: ['english', 'french', 'spanish', 'german', 'italian'],
 		required: 'Form must have a language',
 		default: 'english'
 	},
