@@ -24,7 +24,10 @@ var fs = require('fs-extra'),
 	consolidate = require('consolidate'),
 	path = require('path'),
 	device = require('express-device'),
-	client = new raven.Client(config.DSN);
+	client = new raven.Client(config.DSN),
+	connect = require('connect');
+
+var mongoose = require('mongoose');
 
 /**
  * Configure Socket.io
@@ -40,6 +43,7 @@ var configureSocketIO = function (app, db) {
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
+	var url = require('url');
 
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
@@ -59,7 +63,61 @@ module.exports = function(db) {
 	app.locals.bowerOtherFiles = config.getBowerOtherAssets();
 
 	app.locals.jsFiles = config.getJavaScriptAssets();
+	app.locals.formJSFiles = config.getFormJavaScriptAssets();
 	app.locals.cssFiles = config.getCSSAssets();
+
+	app.use(function (req, res, next) {
+		var User = mongoose.model('User');
+		var path = '/' + 'subdomain' + '/';
+		var ignoreWWW = true;
+		var ignoreWithStartPath = 'static';
+		var subdomains = req.subdomains;
+		var host = req.hostname;
+
+		// remove www if chosen to ignore
+		if (ignoreWWW) {
+			var wwwi = subdomains.indexOf('www');
+			if (wwwi >= 0) subdomains.splice(wwwi, 1);
+		}
+
+		// continue if no subdomains
+		if (!subdomains.length) return next();
+
+		if(ignoreWithStartPath !== ''){
+			if(url.parse(req.url).path.split('/')[1] === ignoreWithStartPath) return next();
+		}
+
+		User.findOne({username: req.subdomains[0]}).exec(function (err, user) {
+			if (err) {
+				console.log(err);
+				req.subdomains = null;
+				// Error page
+				return res.status(404).render('404', {
+					error: 'Page Does Not Exist'
+				});
+			}
+			if (user === null){
+				// Error page
+				return res.status(404).render('404', {
+					error: 'Page Does Not Exist'
+				});
+			}
+
+			// rebuild url
+			path += subdomains.join('/') + req.url;
+
+			// TODO: check path and query strings are preserved
+			// reassign url
+			req.url = path;
+
+			req.userId = user._id;
+
+			// Q.E.D.
+			next();
+		});
+
+
+	});
 
     //Setup Prerender.io
     app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
@@ -120,7 +178,7 @@ module.exports = function(db) {
 
 
 	// Setting the app router and static folder
-	app.use('/', express.static(path.resolve('./public')));
+	app.use('/static', express.static(path.resolve('./public')));
 	app.use('/uploads', express.static(path.resolve('./uploads')));
 
 	// CookieParser should be above session
@@ -178,10 +236,10 @@ module.exports = function(db) {
 	});
 
 	// Sentry (Raven) middleware
-	// app.use(raven.middleware.express.requestHandler(config.DSN));
+	app.use(raven.middleware.express.requestHandler(config.DSN));
 
 	// Should come before any other error middleware
-	// app.use(raven.middleware.express.errorHandler(config.DSN));
+	app.use(raven.middleware.express.errorHandler(config.DSN));
 
 	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
 	app.use(function(err, req, res, next) {
@@ -221,6 +279,7 @@ module.exports = function(db) {
 		// Return HTTPS server instance
 		return httpsServer;
 	}
+
 
 	app = configureSocketIO(app, db);
 

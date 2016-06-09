@@ -292,7 +292,20 @@ exports.read = function(req, res) {
 	var newForm = req.form.toJSON({virtuals : true});
 	newForm.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
 
-	res.json(newForm);
+
+	if (req.userId) {
+		if(req.form.admin._id+'' === req.userId+''){
+			return res.json(newForm);
+		}
+		return res.status(404).send({
+			message: 'Form Does Not Exist'
+		});
+	}
+
+	return res.status(404).send({
+		message: 'Form Does Not Exist'
+	});
+
 };
 
 /**

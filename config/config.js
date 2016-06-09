@@ -39,11 +39,12 @@ if( fs.existsSync('./config/env/api_keys.js') ){
 /**
  * Get files by glob patterns
  */
-module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
+module.exports.getGlobbedFiles = function(globPatterns, removeRoot, addRoot) {
 
 	var files = gruntFile.expand(globPatterns);
 	if (removeRoot) {
 		files = files.map(function(file) {
+			if(addRoot) return file.replace(removeRoot, addRoot);
 			return file.replace(removeRoot, '');
 		});
 	}
@@ -51,9 +52,10 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 	return files;
 };
 
-module.exports.removeRootDir = function(files, root) {
+module.exports.removeRootDir = function(files, removeRoot, addRoot) {
 	return files.map(function(file) {
-		return file.replace(path.join(process.cwd(),root), '');
+		if (addRoot) return file.replace(path.join(process.cwd(), removeRoot), addRoot);
+		return file.replace(path.join(process.cwd(), removeRoot), '');
 	});
 };
 
@@ -61,24 +63,24 @@ module.exports.removeRootDir = function(files, root) {
  * Get the app's bower dependencies
  */
 module.exports.getBowerJSAssets = function() {
-	return this.removeRootDir(minBowerFiles('**/**.js'), 'public/');
+	return this.removeRootDir(minBowerFiles('**/**.js'), 'public/', 'static/');
 };
 module.exports.getBowerCSSAssets = function() {
-	return this.removeRootDir(minBowerFiles('**/**.css'), 'public/');
+	return this.removeRootDir(minBowerFiles('**/**.css'), 'public/', 'static/');
 };
 module.exports.getBowerOtherAssets = function() {
-	return this.removeRootDir(minBowerFiles('**/!(*.js|*.css|*.less)'), 'public/');
+	return this.removeRootDir(minBowerFiles('**/!(*.js|*.css|*.less)'), 'public/', 'static/');
 };
 
 /**
  * Get the modules JavaScript files
  */
 module.exports.getJavaScriptAssets = function(includeTests) {
-	var output = this.getGlobbedFiles(this.assets.js, 'public/');
+	var output = this.getGlobbedFiles(this.assets.js, 'public/', 'static/');
 
 	// To include tests
 	if (includeTests) {
-		output = _.union(output, this.getGlobbedFiles(this.assets.tests));
+		output = _.union(output, this.getGlobbedFiles(this.assets.unit_tests));
 	}
 
 	return output;
@@ -88,6 +90,20 @@ module.exports.getJavaScriptAssets = function(includeTests) {
  * Get the modules CSS files
  */
 module.exports.getCSSAssets = function() {
-	var output = this.getGlobbedFiles(this.assets.css, 'public/');
+	var output = this.getGlobbedFiles(this.assets.css, 'public/', 'static/');
+	return output;
+};
+
+/**
+ * Get the modules Form JavaScript files
+ */
+module.exports.getFormJavaScriptAssets = function(includeTests) {
+	var output = this.getGlobbedFiles(this.assets.form_js, 'public/', 'static/');
+
+	// To include tests
+	if (includeTests) {
+		output = _.union(output, this.getGlobbedFiles(this.assets.form_unit_tests));
+	}
+
 	return output;
 };

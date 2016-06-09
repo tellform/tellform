@@ -128,7 +128,6 @@ UserSchema.plugin(mUtilities.timestamp, {
 
 //Create folder for user's pdfs
 UserSchema.pre('save', function (next) {
-	this.username = this.email;
 	if(process.env.NODE_ENV === 'local-development'){
 		var newDestination = path.join(config.pdfUploadPath, this.username.replace(/ /g,'')),
 			stat = null;

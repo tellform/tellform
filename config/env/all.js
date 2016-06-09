@@ -90,6 +90,20 @@ module.exports = {
 			'!public/modules/**/node_modules/**/*.js',
 			'!public/modules/**/tests/**/*.js'
 		],
+		form_js: [
+			'public/config.js',
+			'public/application.js',
+			'public/dist/populate_template_cache.js',
+			'public/form_modules/*/*.js',
+			'public/form_modules/*/*/*/*/*.js',
+			'public/form_modules/*/*/*.js',
+			'public/form_modules/*/*/*/*.js',
+			'!public/form_modules/**/gruntfile.js',
+			'!public/form_modules/**/demo/**/*.js',
+			'!public/form_modules/**/dist/**/*.js',
+			'!public/form_modules/**/node_modules/**/*.js',
+			'!public/form_modules/**/tests/**/*.js'
+		],
 		views: [
 			'public/modules/**/*.html',
 			'!public/modules/**/demo/**/*.html',
@@ -107,6 +121,17 @@ module.exports = {
 			'public/modules/*/tests/e2e/**.js',
 			'!public/modules/**/demo/**/*.js',
 			'!public/modules/**/node_modules/**/*.js'
+		],
+		form_unit_tests: [
+			'public/lib/angular-mocks/angular-mocks.js',
+			'public/form_modules/*/tests/unit/**/*.js',
+			'!public/form_modules/**/demo/**/*.js',
+			'!public/form_modules/**/node_modules/**/*.js'
+		],
+		form_e2e_tests: [
+			'public/form_modules/*/tests/e2e/**.js',
+			'!public/form_modules/**/demo/**/*.js',
+			'!public/form_modules/**/node_modules/**/*.js'
 		]
 	}
 };

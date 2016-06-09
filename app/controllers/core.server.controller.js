@@ -11,3 +11,10 @@ exports.index = function(req, res) {
 		request: req
 	});
 };
+
+exports.form = function(req, res) {
+	res.render('form', {
+		user: req.user || null,
+		request: req
+	});
+};

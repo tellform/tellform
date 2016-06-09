@@ -1,0 +1,24 @@
+<div class="statement field row"
+	 on-enter-or-tab-key="nextField()"
+	 on-tab-and-shift-key="prevField()"
+	 ng-focus="setActiveField(field._id, index, true)">
+    <div class="row field-title field-title">
+    	<div class="col-xs-1"><i class="fa fa-quote-left fa-1"></i></div>
+    	<h2 class="text-left col-xs-9">{{field.title}}</h2>
+		<p class="col-xs-12">
+			<small>{{field.description}}</small>
+		</p>
+    </div>
+    <div class="row field-title field-input">
+    	<p class="col-xs-12" ng-if="field.description.length">{{field.description}} </p>
+    	<br>
+	<div class="col-xs-offset-1 col-xs-11">
+        	<button class="btn focusOn"
+			    ng-style="{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"
+                ng-focused="setActiveField(field._id, index, true)"
+                ng-click="$root.nextField()">
+            		{{ 'CONTINUE' | translate }} 
+        	</button>
+	</div>
+    </div>
+</div>

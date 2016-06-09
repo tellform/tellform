@@ -99,14 +99,12 @@ exports.signup = function(req, res) {
 	// For security measures we remove the roles from the req.body object
 	if (req.body) {
 		delete req.body.roles;
-		console.log(req.body);
 
 		// Init Variables
 		var user = new User(req.body);
 
 		// Add missing user fields
 		user.provider = 'local';
-		user.username = user.email;
 
 		// Then save the temporary user
 		nev.createTempUser(user, function (err, newTempUser) {
