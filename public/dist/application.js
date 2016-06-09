@@ -690,7 +690,11 @@ angular.module('core').service('Menus', [
 
 		// Connect to Socket.io server
 		function connect(url) {
+<<<<<<< HEAD
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
+=======
+			service.socket = io('https://stage.tellform.com', { transports: ['websocket', 'polling'] });
+>>>>>>> ffc615a26240cdaebe88ff1064508f7120f0f4d5
 		}
 
 		// Wrap the Socket.io 'emit' method
