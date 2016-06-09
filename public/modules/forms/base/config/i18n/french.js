@@ -29,7 +29,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	SUBMIT: 'Enregistrer',
 	UPLOAD_FILE: 'Envoyer un fichier',
 	Y: 'O',
-	N: 'N',
+	N: 'N'
   });
 
 }]);
