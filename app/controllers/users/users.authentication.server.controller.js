@@ -53,7 +53,9 @@ var config_nev = function () {
 		if(err) throw err;
 	});
 
-	nev.generateTempUserModel(User);
+	nev.generateTempUserModel(User, function(err){
+		if(err) throw err;
+	});
 };
 
 config_nev();
