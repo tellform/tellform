@@ -3,7 +3,7 @@
 		<div class="navbar-header">
 			<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
 				<span class="sr-only">Toggle navigation</span>
-				<span>MENU</span>
+				<span>{{ 'MENU_BTN' | translate }}</span>
 			</button>
 			<a href="https://www.tellform.com/#!/" class="navbar-brand">
 				<i class="fa fa-archive" style="padding-right: 0.3em;"></i>Tell<span>Form</span>
@@ -26,34 +26,31 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.isAuthenticated()">
 				<li ng-hide="$root.signupDisabled" ui-route="/signup" ng-class="{active: $uiRoute}">
-					<a href="/#!/signup">Sign Up</a>
+					<a href="/#!/signup">{{ 'SIGNUP_TAB' | translate }}</a>
 				</li>
 				<li class="divider-vertical"></li>
 				<li ui-route="/signin" ng-class="{active: $uiRoute}">
-					<a href="/#!/signin">Sign In</a>
+					<a href="/#!/signin">{{ 'SIGNIN_TAB' | translate }}</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.isAuthenticated()">
 				<li class="dropdown" uib-dropdown>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" dropdown-toggle>
-						<span>My Settings</span> 
+						<span>{{ 'MY_SETTINGS' | translate }}</span>
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="/#!/settings/profile">Edit Profile</a>
+							<a href="/#!/settings/profile">{{ 'EDIT_PROFILE' | translate }}</a>
 						</li>
 						<li class="divider"></li>
 						<li>
-							<a href="/#!/settings/password">Change Password</a>
-						</li>
-						<li data-ng-show="authentication.isAuthenticated().provider === 'local'">
-							<a href="/#!/settings/password">Change Password</a>
+							<a href="/#!/settings/password"> {{ 'CHANGE_PASSWORD' | translate }}</a>
 						</li>
 					</ul>
 				</li>
 				<li ng-click="signout()">
-					<a>Signout</a>
+					<a>{{ 'SIGNOUT_TAB' | translate }}</a>
 				</li>
 			</ul>
 		</nav>

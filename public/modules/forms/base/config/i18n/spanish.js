@@ -2,7 +2,7 @@
 
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('spanish', {
+  $translateProvider.translations('es', {
 	FORM_SUCCESS: '¡El formulario ha sido enviado con éxito!',
 	REVIEW: 'Revisar',
 	BACK_TO_FORM: 'Regresar al formulario',

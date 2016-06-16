@@ -2,7 +2,7 @@
 
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('german', {
+  $translateProvider.translations('de', {
 	FORM_SUCCESS: 'Ihre Angaben wurden gespeichert.',
 	REVIEW: 'Unvollständig',
 	BACK_TO_FORM: 'Zurück zum Formular',

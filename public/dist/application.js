@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -120,9 +120,7 @@ angular.element(document).ready(function() {
 angular.module('NodeForm.templates', []).run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("modules/core/views/header.client.view.html",
-    "<section class=\"navbar navbar-fixed-top navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span></button> <a href=\"https://www.tellform.com/#!/\" class=navbar-brand><i class=\"fa fa-archive\" style=\"padding-right: 0.3em\"></i>Tell<span>Form</span></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav\" data-ng-if=authentication.isAuthenticated()><li data-ng-repeat=\"item in menu.items | orderBy: 'position'\" data-ng-if=item.shouldRender(authentication.isAuthenticated()); ng-switch=item.menuItemType ui-route={{item.uiRoute}} class={{item.menuItemClass}} ng-class=\"{active: ($uiRoute)}\" dropdown=\"item.menuItemType === 'dropdown'\"><a ng-switch-when=dropdown class=dropdown-toggle dropdown-toggle><span data-ng-bind=item.title></span> <b class=caret></b></a><ul ng-switch-when=dropdown class=dropdown-menu><li data-ng-repeat=\"subitem in item.items | orderBy: 'position'\" data-ng-if=subitem.shouldRender(authentication.isAuthenticated()); ui-route={{subitem.uiRoute}} ng-class=\"{active: $uiRoute}\"><a href=/#!/{{subitem.link}} data-ng-bind=subitem.title></a></li></ul><a ng-switch-default href=/#!/{{item.link}} data-ng-bind=item.title></a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ng-hide=$root.signupDisabled ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>Sign Up</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>Sign In</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>My Settings</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>Edit Profile</a></li><li class=divider></li><li><a href=/#!/settings/password>Change Password</a></li><li data-ng-show=\"authentication.isAuthenticated().provider === 'local'\"><a href=/#!/settings/password>Change Password</a></li></ul></li><li ng-click=signout()><a>Signout</a></li></ul></nav></div></section>");
-  $templateCache.put("modules/core/views/home.client.view.html",
-    "<section data-ng-controller=HomeController class=hero-section style=overflow:hidden><div class=opacity-background></div><div class=image-background></div><div class=\"jumbotron text-center\"><div class=container data-ng-if=!authentication.isAuthenticated()><div class=\"row text-center logo\" style=\"border-bottom: 1px solid rgba(255,255,255,.2); margin-bottom: 30px\"><h3 class=col-xs-12 style=\"color: #FA787E; margin-bottom:0px\"><i class=\"fa fa-archive fa-3x\"></i></h3><h2 class=col-xs-12 style=margin-top:0px><span>Tell<span style=\"text-decoration: underline; color: #FA787E\">Form</span></span></h2></div><div class=row style=margin-top:0px><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:3.8em>Craft beautiful forms in seconds.</h1><h2 class=\"lead col-sm-12 text-center hidden-md hidden-lg\" style=font-size:2.8em>Craft beautiful forms.</h2><p class=\"lead hidden-xs hidden-sm col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p><p class=\"lead col-xs-12 hidden-md hidden-lg\" style=\"font-size:1.5em; color:rgba(255,255,255,.75)\"><i>TellForm is an opensource <b>alternative to TypeForm</b> that can create stunning forms from PDFs or from scratch</i></p></div></div></div><div class=\"jumbotron text-center\"><div class=container data-ng-if=!authentication.isAuthenticated()><div class=row style=margin-top:0px><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:3.8em>Create your next ______.</h1><h1 class=\"lead col-md-10 col-md-offset-1 hidden-xs hidden-sm\" style=font-size:2.5em>Tell a story with a form.</h1></div><div class=row style=margin-top:7%><a class=\"col-xs-4 col-xs-offset-4 btn btn-info signup-btn\" href=/#!/signup style=\"background-color:#FA787E; border: none; font-size: 2em; padding: 0.3em 0.9em; color: white\">sign me up!</a></div></div></div></section><footer class=footer-basic-centered><p class=footer-company-motto>The company motto.</p><p class=footer-links><a href=\"/#!/\">Home</a> · <a href=/#!/blog>Blog</a> · <a href=https://github.com/whitef0x0/tellform>Github Source</a> · <a href=/#!/about>About</a> . <a href=/#!/terms>Privacy & Terms</a> · <a href=https://status.tellform.com>System Status</a> · <a href=mailto:polydaic@gmail.com>Contact</a></p><p class=footer-company-name>TellForm © 2016</p></footer>");
+    "<section class=\"navbar navbar-fixed-top navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span>{{ 'MENU_BTN' | translate }}</span></button> <a href=\"https://www.tellform.com/#!/\" class=navbar-brand><i class=\"fa fa-archive\" style=\"padding-right: 0.3em\"></i>Tell<span>Form</span></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav\" data-ng-if=authentication.isAuthenticated()><li data-ng-repeat=\"item in menu.items | orderBy: 'position'\" data-ng-if=item.shouldRender(authentication.isAuthenticated()); ng-switch=item.menuItemType ui-route={{item.uiRoute}} class={{item.menuItemClass}} ng-class=\"{active: ($uiRoute)}\" dropdown=\"item.menuItemType === 'dropdown'\"><a ng-switch-when=dropdown class=dropdown-toggle dropdown-toggle><span data-ng-bind=item.title></span> <b class=caret></b></a><ul ng-switch-when=dropdown class=dropdown-menu><li data-ng-repeat=\"subitem in item.items | orderBy: 'position'\" data-ng-if=subitem.shouldRender(authentication.isAuthenticated()); ui-route={{subitem.uiRoute}} ng-class=\"{active: $uiRoute}\"><a href=/#!/{{subitem.link}} data-ng-bind=subitem.title></a></li></ul><a ng-switch-default href=/#!/{{item.link}} data-ng-bind=item.title></a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ng-hide=$root.signupDisabled ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>Sign Up</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>Sign In</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>My Settings</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>{{ 'EDIT_PROFILE_TAB' | translate }}</a></li><li class=divider></li><li><a href=/#!/settings/password>{{ 'CHANGE_PASSWORD_TAB' | translate }}</a></li></ul></li><li ng-click=signout()><a>Signout</a></li></ul></nav></div></section>");
   $templateCache.put("modules/forms/admin/views/admin-form.client.view.html",
     "<div class=container cg-busy=\"{promise:updatePromise,templateUrl:'modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}\"></div><section class=\"container admin-form\"><script type=text/ng-template id=myModalContent.html><div class=\"modal-header\">\n" +
     "            <h2 class=\"modal-title hidden-md hidden-lg\">Are you ABSOLUTELY sure?</h2>\n" +
@@ -146,7 +144,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "            </button>\n" +
     "        </div></script><div class=\"page-header row\" style=\"padding-bottom: 0px\"><div class=\"col-xs-10 col-sm-8\"><h1 class=\"hidden-sm hidden-xs\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h1><h2 class=\"hidden-md hidden-lg\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h2></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><button class=\"btn btn-danger\" ng-click=openDeleteModal()><i class=\"fa fa-trash-o\"></i> <span class=hidden-xs>Delete</span> <span class=\"hidden-xs hidden-sm\">Form</span></button></small></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><a class=\"btn btn-default view-form-btn\" href=/#!/forms/{{myform._id}}><span class=\"hidden-xs hidden-sm\">View <span ng-show=myform.isLive>Live</span> <span ng-hide=myform.isLive>Preview</span> Form</span> <span class=\"hidden-xs hidden-md hidden-lg\">View <span ng-if=myform.isLive>Live</span> <span ng-if=!myform.isLive>Preview</span></span> <i class=\"status-light status-light-on fa fa-dot-circle-o\" ng-if=myform.isLive></i> <i class=\"status-light status-light-off fa fa-dot-circle-o\" ng-if=!myform.isLive></i></a></small></div></div><div class=row><div class=col-xs-12><tabs data=tabData></tabs></div><div class=col-xs-12><ui-view></ui-view></div></div></section>");
   $templateCache.put("modules/forms/admin/views/list-forms.client.view.html",
-    "<section class=overlay ng-if=showCreateModal ng-click=closeCreateModal()></section><section data-ng-controller=\"ListFormsController as ctrl\" data-ng-init=findAll() class=container><br><div class=row><div ng-click=openCreateModal() class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new\"><div class=\"title-row col-xs-12\"><h4 class=\"fa fa-plus fa-6\"></h4></div><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>Create a new form</small></div></div><form name=forms.createForm class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form\" ng-if=showCreateModal><div class=\"title-row row\"><div class=\"col-xs-5 field-title text-left\">Name</div><div class=\"col-xs-12 field-input\"><input name=title required ng-model=formTitle ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\" ng-minlength=\"4\"></div></div><div class=\"details-row row\"><div class=\"col-xs-5 field-title text-left\">Language</div><div class=\"col-xs-12 field-input\"><div class=\"button custom-select\"><select style=color:black name=language required ng-model=formLanguage ng-init=\"formLanguage = user.language\"><option ng-repeat=\"language in languages\" value={{language}}>{{language}}</option></select></div></div></div><div class=\"details-row submit row\"><div class=\"col-xs-12 field-title text-center\"><button class=\"btn btn-primary\" ng-disabled=forms.createForm.$invalid ng-click=createNewForm()>Create Form</button></div></div></form><div data-ng-repeat=\"form in myforms\" ng-style=\"{ 'background-color': form.design.colors.backgroundColor, 'color': form.design.colors.answerColor }\" class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container\"><div class=row><span class=pull-right><i style=cursor:pointer class=\"fa fa-trash-o\" ng-click=removeForm($index)></i> <i style=cursor:pointer class=\"fa fa-files-o\" ng-click=duplicateForm($index)></i></span></div><div class=row><a data-ng-href=#!/forms/{{form._id}}/admin/create ng-style=\"{ 'color': form.design.colors.answerColor }\" class=\"title-row col-xs-12\"><h4 class=list-group-item-heading data-ng-bind=form.title></h4></a></div><div class=\"row footer\"><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>Created on <span data-ng-bind=\"form.created | date:'shortDate'\"></span></small></div></div></div></div></section>");
+    "<section class=overlay ng-if=showCreateModal ng-click=closeCreateModal()></section><section data-ng-controller=\"ListFormsController as ctrl\" data-ng-init=findAll() class=container><br><div class=row><div ng-click=openCreateModal() class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new\"><div class=\"title-row col-xs-12\"><h4 class=\"fa fa-plus fa-6\"></h4></div><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>Create a new form</small></div></div><form name=forms.createForm class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form\" ng-if=showCreateModal><div class=\"title-row row\"><div class=\"col-xs-5 field-title text-left\">Name</div><div class=\"col-xs-12 field-input\"><input name=title required ng-model=formTitle ng-pattern=languageRegExp ng-minlength=4 style=\"color:black\"></div></div><div class=\"details-row row\"><div class=\"col-xs-5 field-title text-left\">Language</div><div class=\"col-xs-12 field-input\"><div class=\"button custom-select\"><select style=color:black name=language required ng-model=formLanguage ng-init=\"formLanguage = user.language\"><option ng-repeat=\"language in languages\" value={{language}}>{{language}}</option></select></div></div></div><div class=\"details-row submit row\"><div class=\"col-xs-12 field-title text-center\"><button class=\"btn btn-primary\" ng-disabled=forms.createForm.$invalid ng-click=createNewForm()>Create Form</button></div></div></form><div data-ng-repeat=\"form in myforms\" ng-style=\"{ 'background-color': form.design.colors.backgroundColor, 'color': form.design.colors.answerColor }\" class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container\"><div class=row><span class=pull-right><i style=cursor:pointer class=\"fa fa-trash-o\" ng-click=removeForm($index)></i> <i style=cursor:pointer class=\"fa fa-files-o\" ng-click=duplicateForm($index)></i></span></div><div class=row><a data-ng-href=#!/forms/{{form._id}}/admin/create ng-style=\"{ 'color': form.design.colors.answerColor }\" class=\"title-row col-xs-12\"><h4 class=list-group-item-heading data-ng-bind=form.title></h4></a></div><div class=\"row footer\"><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>Created on <span data-ng-bind=\"form.created | date:'shortDate'\"></span></small></div></div></div></div></section>");
   $templateCache.put("modules/forms/base/views/submit-form.client.view.html",
     "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n" +
     "				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n" +
@@ -195,7 +193,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><small>{{ 'NEWLINE' | translate }}</small><p><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><small style=font-size:0.6em>Press SHIFT+ENTER to add a newline</small><textarea class=\"textarea focusOn\" type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-class=\"{ 'no-border': !!field.fieldValue }\" value={{field.fieldValue}} ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index, true)\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() style=\"border: none; border-left: lightgrey dashed 2px\">\n" +
     "		</textarea></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-sm-3 col-xs-6\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/textfield.html",
-    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title row-fluid\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=col-xs-12><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>({{ 'OPTIONAL' | translate }})</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" name={{field.fieldType}}{{index}} type={{field.input_type}} ng-pattern=field.validateRegex placeholder={{field.placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-required=field.required ng-disabled=field.disabled aria-describedby=inputError2Status></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">{{ 'ERROR_EMAIL_INVALID' | translate }}</span> <span ng-if=field.validateRegex>{{ 'ERROR_NOT_A_NUMBER' | translate }}</span> <span ng-if=\"field.fieldType == 'link'\">{{ 'ERROR_URL_INVALID' | translate }}</span></div></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-xs-6 col-sm-3\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
+    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title row-fluid\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=col-xs-12><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>({{ 'OPTIONAL' | translate }})</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" name={{field.fieldType}}{{index}} type={{field.input_type}} ng-pattern=field.validateRegex placeholder={{field.placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-required=field.required ng-disabled=field.disabled aria-describedby=inputError2Status></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">{{ 'ERROR_EMAIL_INVALID' | translate }}</span> <span ng-if=field.validateRegex>{{ 'ERROR_NOT_A_NUMBER' | translate }}</span> <span ng-if=\"field.fieldType == 'link'\">{{ 'ERROR_URL_INVALID' | translate }}</span></div></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-xs-6 col-sm-3\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/yes_no.html",
     "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" on-tab-and-shift-key=prevField() key-to-truthy key-char-truthy=y key-char-falsey=n field=field><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-model=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'Y' | translate }}</div><span>{{ 'YES' | translate }}</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'N' | translate }}</div><span>{{ 'NO' | translate }}</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
   $templateCache.put("modules/forms/base/views/directiveViews/form/submit-form.client.view.html",
@@ -238,7 +236,7 @@ ApplicationConfiguration.registerModule('core', ['users']);
 // Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('forms', [
 	'ngFileUpload', 'ui.router.tabs', 'ui.date', 'ui.sortable',
-	'angular-input-stars', 'users', 'pascalprecht.translate'
+	'angular-input-stars', 'users'
 ]);//, 'colorpicker.module' @TODO reactivate this module
 
 'use strict';
@@ -274,7 +272,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	DELETE: 'Delete',
 	CANCEL: 'Cancel',
 	SUBMIT: 'Submit',
-	UPLOAD_FILE: 'Upload your File',
+	UPLOAD_FILE: 'Upload your File'
   });
 
   $translateProvider.preferredLanguage('english')
@@ -314,7 +312,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	SUBMIT: 'Enregistrer',
 	UPLOAD_FILE: 'Envoyer un fichier',
 	Y: 'O',
-	N: 'N',
+	N: 'N'
   });
 
 }]);
@@ -327,8 +325,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	FORM_SUCCESS: 'Ihre Angaben wurden gespeichert.',
 	REVIEW: 'Unvollständig',
 	BACK_TO_FORM: 'Zurück zum Formular',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
+	EDIT_FORM: 'Bearbeiten Sie diese TellForm',
+	CREATE_FORM: 'Erstellen Sie eine TellForm',
 	ADVANCEMENT: '{{done}} von {{total}} beantwortet',
 	CONTINUE_FORM: 'Zum Formular',
 	REQUIRED: 'verpflichtend',
@@ -343,14 +341,14 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	NO: 'Nein',
 	NEWLINE: 'Für eine neue Zeile SHIFT+ENTER drücken',
 	CONTINUE: 'Weiter',
-	LEGAL_ACCEPT: 'I accept',
-	LEGAL_NO_ACCEPT: 'I don’t accept',
+	LEGAL_ACCEPT: 'Ich akzeptiere',
+	LEGAL_NO_ACCEPT: 'Ich akzeptiere nicht',
 	DELETE: 'Entfernen',
 	CANCEL: 'Canceln',
 	SUBMIT: 'Speichern',
 	UPLOAD_FILE: 'Datei versenden',
 	Y: 'J',
-	N: 'N',
+	N: 'N'
   });
 
 }]);
@@ -363,8 +361,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	FORM_SUCCESS: 'Il formulario è stato inviato con successo!',
 	REVIEW: 'Incompleto',
 	BACK_TO_FORM: 'Ritorna al formulario',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
+	EDIT_FORM: 'Modifica questo Tellform',
+	CREATE_FORM: 'Creare un TellForm',
 	ADVANCEMENT: '{{done}} su {{total}} completate',
 	CONTINUE_FORM: 'Vai al formulario',
 	REQUIRED: 'obbligatorio',
@@ -379,14 +377,14 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	NO: 'No',
 	NEWLINE: 'premere SHIFT+INVIO per creare una nuova linea',
 	CONTINUE: 'Continua',
-	LEGAL_ACCEPT: 'I accept',
-	LEGAL_NO_ACCEPT: 'I don’t accept',
+	LEGAL_ACCEPT: 'Accetto',
+	LEGAL_NO_ACCEPT: 'Non accetto',
 	DELETE: 'Cancella',
 	CANCEL: 'Reset',
 	SUBMIT: 'Registra',
 	UPLOAD_FILE: 'Invia un file',
 	Y: 'S',
-	N: 'N',
+	N: 'N'
   });
 
 }]);
@@ -399,8 +397,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	FORM_SUCCESS: '¡El formulario ha sido enviado con éxito!',
 	REVIEW: 'Revisar',
 	BACK_TO_FORM: 'Regresar al formulario',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
+	EDIT_FORM: 'Crear un TellForm',
+	CREATE_FORM: 'Editar este TellForm',
 	ADVANCEMENT: '{{done}} de {{total}} contestadas',
 	CONTINUE_FORM: 'Continuar al formulario',
 	REQUIRED: 'Información requerida',
@@ -415,8 +413,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	NO: 'No',
 	NEWLINE: 'presione SHIFT+INTRO para crear una nueva línea',
 	CONTINUE: 'Continuar',
-	LEGAL_ACCEPT: 'I accept',
-	LEGAL_NO_ACCEPT: 'I don’t accept',
+	LEGAL_ACCEPT: 'Acepto',
+	LEGAL_NO_ACCEPT: 'No acepto',
 	DELETE: 'Eliminar',
 	CANCEL: 'Cancelar',
 	SUBMIT: 'Registrar',
@@ -439,14 +437,17 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window',
-	function ($rootScope, $scope, Menus, $state, Auth, User, $window) {
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window', '$translate',
+	function ($rootScope, $scope, Menus, $state, Auth, User, $window, $translate) {
+
 		$rootScope.signupDisabled = $window.signupDisabled;
 
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 
 		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish', 'italian', 'german'];
+
+		$translate.use($scope.user.language);
 
 		$scope.isCollapsed = false;
 		$rootScope.hideNav = false;
@@ -481,15 +482,6 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		    }
 		});
 
-	}
-]);
-
-'use strict';
-
-
-angular.module('core').controller('HomeController', ['$rootScope', '$scope', 'User', '$state',
-	function($rootScope, $scope, User, $state) {
-		$scope = $rootScope;
 	}
 ]);
 
@@ -690,11 +682,7 @@ angular.module('core').service('Menus', [
 
 		// Connect to Socket.io server
 		function connect(url) {
-<<<<<<< HEAD
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
-=======
-			service.socket = io('https://stage.tellform.com', { transports: ['websocket', 'polling'] });
->>>>>>> ffc615a26240cdaebe88ff1064508f7120f0f4d5
 		}
 
 		// Wrap the Socket.io 'emit' method
@@ -1130,7 +1118,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
 	function($scope, $stateParams, $state, User) {
 		$scope.error = '';
-
+		
 		// Submit forgotten password account id
 		$scope.askForPasswordReset = function() {
 			User.askForPasswordReset($scope.credentials).then(
@@ -1171,7 +1159,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 	function($scope, $rootScope, $http, $state, Users) {
 		$scope.user = $rootScope.user;
 
-		// Check if there are additional accounts
+		// Check if there are additional accounts 
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
 			for (var i in $scope.user.additionalProvidersData) {
 				return true;
@@ -1521,6 +1509,27 @@ angular.module('users').factory('Users', ['$resource',
 ]);
 'use strict';
 
+angular.module('core').config(['$translateProvider', function ($translateProvider) {
+
+	$translateProvider.translations('english', {
+		MENU: 'MENU',
+		SIGNUP_TAB: 'Sign Up',
+		SIGNIN_TAB: 'Sign In',
+		SIGNOUT_TAB: 'Signout',
+		EDIT_PROFILE: 'Edit Profile',
+		MY_FORMS: 'My Forms',
+		MY_SETTINGS: 'My Settings',
+		CHANGE_PASSWORD: 'Change Password'
+	});
+
+	$translateProvider.preferredLanguage('english')
+		.fallbackLanguage('english')
+		.useSanitizeValueStrategy('escape');
+
+}]);
+
+'use strict';
+
 // Forms controller
 angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm',
 	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm) {
@@ -1657,6 +1666,15 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.forms = {};
         $scope.showCreateModal = false;
 
+		$scope.languageRegExp = $scope.myPt = {
+			regExp: /[@!#$%^&*()\-+={}\[\]|\\/'";:`.,~№?<>]+/i,
+			test: function(val) {
+				console.log(val);
+				return !this.regExp.test(val);
+			}
+		};
+
+
         // Return all user's Forms
         $scope.findAll = function() {
             Forms.query(function(_forms){
@@ -1735,6 +1753,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         };
     }
 ]);
+
 'use strict';
 
 
@@ -2343,7 +2362,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     };
 
 					console.log($scope.table.rows);
-
+					
 					angular.element('#table-submission-data').tableExport({type: type, escape:false});
 
 					/*
@@ -2423,15 +2442,15 @@ angular.module('forms').service('FormFields', [
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : 'Payment'
+		    //     value : 'Payment' 
 		    // },
 		    {
 		        name : 'statement',
-		        value : 'Statement'
+		        value : 'Statement' 
 		    }
 		];
 	}
-
+		
 ]);
 
 'use strict';
@@ -2444,7 +2463,7 @@ angular.module('forms').factory('Submissions', ['$resource',
 			formId: '@_id'
 		}, {
 			'query' : {
-				method: 'GET',
+				method: 'GET', 
 				isArray: true,
 			},
 			'update': {
@@ -2459,33 +2478,6 @@ angular.module('forms').factory('Submissions', ['$resource',
 'use strict';
 
 // Configuring the Forms drop-down menus
-angular.module('forms')
-.filter('formValidity', function(){
-	return function(formObj){
-		if(formObj && formObj.form_fields && formObj.visible_form_fields){
-
-			//get keys
-			var formKeys = Object.keys(formObj);
-
-			//we only care about things that don't start with $
-			var fieldKeys = formKeys.filter(function(key){
-				return key[0] !== '$';
-			});
-
-			var fields = formObj.form_fields;
-
-			var valid_count = fields.filter(function(field){
-				if(typeof field === 'object' && field.fieldType !== 'statement' && field.fieldType !== 'rating'){
-					return !!(field.fieldValue);
-				}
-
-			}).length;
-			return valid_count - (formObj.form_fields.length - formObj.visible_form_fields.length);
-		}
-		return 0;
-	};
-});
-
 angular.module('forms').value('supportedFields', [
 	'textfield',
 	'textarea',
@@ -2755,7 +2747,7 @@ angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", f
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-
+			
             //Don't do anything if we don't have a ng-repeat on the current element
             if(!element.attr('ng-repeat') && !element.attr('data-ng-repeat')){
                 return;
@@ -3117,3 +3109,24 @@ angular.module('forms').service('TimeCounter', [
 
 	}
 ]);
+
+'use strict';
+
+angular.module('users').config(['$translateProvider', function ($translateProvider) {
+
+	$translateProvider.translations('english', {
+		MENU_BTN: 'MENU',
+		SIGNUP_TAB: 'Sign Up',
+		SIGNIN_TAB: 'Sign In',
+		SIGNOUT_TAB: 'Signout',
+		EDIT_PROFILE_TAB: 'Edit Profile',
+		MY_FORMS_TAB: 'My Forms',
+		MY_SETTINGS_TAB: 'My Settings',
+		CHANGE_PASSWORD_TAB: 'Change Password'
+	});
+
+	$translateProvider.preferredLanguage('english')
+		.fallbackLanguage('english')
+		.useSanitizeValueStrategy('escape');
+
+}]);

@@ -11,11 +11,9 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 		$scope.languageRegExp = $scope.myPt = {
 			regExp: /[@!#$%^&*()\-+={}\[\]|\\/'";:`.,~№?<>]+/i,
 			test: function(val) {
-				console.log(val);
 				return !this.regExp.test(val);
 			}
 		};
-
 
         // Return all user's Forms
         $scope.findAll = function() {
@@ -69,7 +67,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
                 $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
-                    console.log('new form created');
+                    //console.log('new form created');
                     // Redirect after save
                     $scope.goToWithId('viewForm.create', data._id+'');
                 }).error(function(errorResponse){
@@ -86,10 +84,10 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
             $http.delete('/forms/'+$scope.myforms[form_index]._id)
                 .success(function(data, status, headers){
-                    console.log('form deleted successfully');
+                    //console.log('form deleted successfully');
                     $scope.myforms.splice(form_index, 1);
                 }).error(function(error){
-                    console.log('ERROR: Form could not be deleted.');
+                    //console.log('ERROR: Form could not be deleted.');
                     console.error(error);
                 });
         };

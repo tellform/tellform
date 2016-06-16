@@ -22,28 +22,42 @@
 		<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" novalidate autocomplete="off">
 			<fieldset>
 				<div data-ng-show="error" id="signup_errors" class="text-center text-danger">
-					Couldn't submit form due to errors: <br>
+					Couldn't complete registration due to errors: <br>
 					<strong data-ng-bind="error"></strong>
 				</div>
 				<div class="form-group">
-					<label for="firstName">First Name</label>
+					<label for="firstName">{{ 'FIRST_NAME_LABEL' | translate }}</label>
 					<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="firstName" name="firstName" class="form-control" ng-model="credentials.firstName" placeholder="First Name">
 				</div>
 				<div class="form-group">
-					<label for="lastName">Last Name</label>
+					<label for="lastName">{{ 'LAST_NAME_LABEL' | translate }}</label>
 					<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="lastName" name="lastName" class="form-control" ng-model="credentials.lastName" placeholder="Last Name">
+				</div>
+				<div class="row form-group">
+					<div class="col-xs-7 field-title">
+						<b>{{ 'LANGUAGE_LABEL' | translate }}</b>
+					</div>
+					<div class="col-xs-12 field-input">
+						<select ng-model="user.language" required>
+							<option ng-repeat="language in languages"
+									ng-selected="language == user.language"
+									value="{{language}}">
+								{{language}}
+							</option>
+						</select>
+					</div>
 				</div>
 				<hr>
 				<div class="form-group">
-					<label for="email">Email</label>
+					<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
 					<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="Email">
 				</div>
 				<div class="form-group">
-					<label for="password">Password</label>
+					<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>
 					<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="Password">
 				</div>
 				<div class="text-center form-group">
-					<button type="submit" class="btn btn-large btn-primary">Sign up</button>
+					<button type="submit" class="btn btn-large btn-primary">{{ 'SIGNUP_BTN' | translate }}</button>
 				</div>
 				
 			</fieldset>

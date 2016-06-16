@@ -5,24 +5,24 @@
 	<!-- Modal Delete Dialog Template -->
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
-            <h2 class="modal-title hidden-md hidden-lg">Are you ABSOLUTELY sure?</h2>
-            <h3 class="modal-title hidden-xs hidden-sm">Are you ABSOLUTELY sure?</h3>
+            <h2 class="modal-title hidden-md hidden-lg">{{ 'ARE_YOU_SURE' | translate }}</h2>
+            <h3 class="modal-title hidden-xs hidden-sm">{{ 'ARE_YOU_SURE' | translate }}</h3>
         </div>
         <div class="modal-body">
         	<div class="modal-body-alert">
-			    Unexpected bad things will happen if you don’t read this!
+				{{ 'READ_WARNING' | translate }}
 			</div>
        		<p class="hidden-xs hidden-sm">
-       		 	This action <strong>CANNOT</strong> be undone.This will permanently delete the <strong>{{myform.title}}</strong> form, form submissions and remove all associated pdfs.
+       		 	{{ 'DELETE_WARNING1' | translate }}<strong>{{myform.title}}</strong> {{ 'DELETE_WARNING2' | translate }}
        		</p>
-            <p>Please type in the name of the form to confirm.</p>
+            <p>{{ 'DELETE_CONFIRM' | translate }}</p>
         </div>
         <div class="modal-footer">
 	        <p>
 				<input type="text" data-ng-model="deleteConfirm" class="input-block" autofocus required aria-label="Type in the name of the form to confirm that you want to delete this form.">
 			</p>
             <button type="submit" ng-click="removeCurrentForm()" class="btn btn-block btn-danger" ng-disabled="myform.title != deleteConfirm">
-            	I understand the consequences, delete this form
+            	{{ 'I_UNDERSTAND' | translate }}
             </button>
         </div>
     </script>
@@ -36,8 +36,8 @@
 			<small class="pull-right">
 				<button class="btn btn-danger" ng-click="openDeleteModal()">
 					<i class="fa fa-trash-o"></i>
-					<span class="hidden-xs">Delete</span>
-					<span class="hidden-xs hidden-sm">Form</span>
+					<span class="show-sm hidden-lg hidden-md hidden-xs">{{ 'DELETE_FORM_SM' | translate}}</span>
+					<span class="hidden-xs hidden-sm">{{ 'DELETE_FORM_MD' | translate}}</span>
 				</button>
 			</small>
 		</div>
@@ -45,16 +45,16 @@
 			<small class="pull-right">
 				<a class="btn btn-default view-form-btn" href="/#!/forms/{{myform._id}}">
 					<span class="hidden-xs hidden-sm">
-						View
+						{{ 'VIEW' | translate }}
 						<span ng-show="myform.isLive">
-							Live
+							{{ 'LIVE' | translate }}
 						</span>
-						<span ng-hide="myform.isLive">Preview</span> Form
+						<span ng-hide="myform.isLive">{{ 'PREVIEW' | translate }}</span> {{ 'FORM' | translate }}
 					</span>
 					<span class="hidden-xs hidden-md hidden-lg">
 						View
-						<span ng-if="myform.isLive">Live</span>
-						<span ng-if="!myform.isLive">Preview</span>
+						<span ng-if="myform.isLive">{{ 'LIVE' | translate }}</span>
+						<span ng-if="!myform.isLive">{{ 'PREVIEW' | translate }}</span>
 					</span>
 					<i class="status-light status-light-on fa fa-dot-circle-o" ng-if="myform.isLive"></i>
 					<i class="status-light status-light-off fa fa-dot-circle-o" ng-if="!myform.isLive"></i>

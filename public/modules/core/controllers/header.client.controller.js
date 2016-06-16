@@ -1,13 +1,23 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window',
-	function ($rootScope, $scope, Menus, $state, Auth, User, $window) {
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window', '$translate', '$locale',
+	function ($rootScope, $scope, Menus, $state, Auth, User, $window, $translate, $locale) {
+
 		$rootScope.signupDisabled = $window.signupDisabled;
 
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 	    $scope.authentication = $rootScope.authentication = Auth;
 
-		$rootScope.languages = $scope.languages = ['english', 'french', 'spanish', 'italian', 'german'];
+		$rootScope.languages = $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
+
+		console.log($locale.id);
+		//Set global app language
+		if($scope.authentication.isAuthenticated()){
+			$rootScope.language = $scope.user.language;
+		}else {
+			$rootScope.language = $locale.id.substring(0,2);
+		}
+		$translate.use($rootScope.language);
 
 		$scope.isCollapsed = false;
 		$rootScope.hideNav = false;

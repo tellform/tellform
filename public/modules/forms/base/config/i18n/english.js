@@ -2,7 +2,7 @@
 
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('english', {
+  $translateProvider.translations('en', {
     FORM_SUCCESS: 'Form entry successfully submitted!',
 	REVIEW: 'Review',
     BACK_TO_FORM: 'Go back to Form',
@@ -29,9 +29,5 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	SUBMIT: 'Submit',
 	UPLOAD_FILE: 'Upload your File'
   });
-
-  $translateProvider.preferredLanguage('english')
-  	.fallbackLanguage('english')
-	.useSanitizeValueStrategy('escape');
-
+	
 }]);
