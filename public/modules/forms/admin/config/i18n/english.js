@@ -61,9 +61,17 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CLICK_FIELDS_FOOTER: 'Click on fields to add them here',
 
 		//Edit Submissions View
-		TOTAL_VIEWS: 'Total Views',
-		SUBMISSIONS: 'Submissions',
-		CONVERSION_RATE: 'Conversion Rate',
+		TOTAL_VIEWS: 'total unique visits',
+		RESPONSES: 'responses',
+		COMPLETION_RATE: 'completion rate',
+		AVERAGE_TIME_TO_COMPLETE: 'avg. completion time',
+
+		DESKTOP_AND_LAPTOP: 'Desktops/Laptops',
+		TABLETS: 'Tablets',
+		PHONES: 'Phones',
+		OTHER: 'Other',
+		UNIQUE_VISITS: 'Unique Visits',
+
 		FIELD_TITLE: 'Field Title',
 		FIELD_VIEWS: 'Field Views',
 		FIELD_DROPOFF: 'User dropoff rate at this field',

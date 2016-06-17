@@ -6,22 +6,42 @@
 		.module('forms')
 		.factory('SendVisitorData', SendVisitorData);
 
-	SendVisitorData.$inject = ['Socket', '$state'];
+	SendVisitorData.$inject = ['Socket', '$state', '$http', 'deviceDetector'];
 
-	function SendVisitorData(Socket, $state) {
+	function SendVisitorData(Socket, $state, $http) {
 
 		// Create a controller method for sending visitor data
-		function send(form, lastActiveIndex, timeElapsed) {
-
+		function send(form, lastActiveIndex, timeElapsed, deviceDetector) {
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,
 				isSubmitted: form.submitted,
 				formId: form._id,
 				lastActiveField: form.form_fields[lastActiveIndex]._id,
-				timeElapsed: timeElapsed
+				timeElapsed: timeElapsed,
+				//@TODO @FIXME: David: Need to make this get the language from the HTTP Header instead
+				language: window.navigator.userLanguage || window.navigator.language
 			};
-			Socket.emit('form-visitor-data', visitorData);
+
+			$http.get('http://jsonip.com/').success(function(response) {
+					visitorData.ipAddr = response['ip']+'';
+				}).error(function(error) {
+					console.error('Could not get users\'s ip');
+					visitorData.ipAddr = '';
+				}).finally(function(){
+					visitorData.userAgent = deviceDetector.raw;
+
+					if(deviceDetector.isTablet()) {
+						visitorData.deviceType = 'tablet';
+					}else if(deviceDetector.isMobile()){
+						visitorData.deviceType = 'phone';
+					}else {
+						visitorData.deviceType = 'desktop';
+					}
+					Socket.emit('form-visitor-data', visitorData);
+
+				});
+
 		}
 
 		function init(){

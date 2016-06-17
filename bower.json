@@ -35,7 +35,8 @@
     "tableExport.jquery.plugin": "^1.5.1",
     "js-yaml": "^3.6.1",
     "angular-ui-select": "whitef0x0/ui-select#compiled",
-    "angular-translate": "~2.11.0"
+    "angular-translate": "~2.11.0",
+    "ng-device-detector": "^3.0.1"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",

@@ -48,17 +48,37 @@ var ButtonSchema = new Schema({
 
 var VisitorDataSchema = new Schema({
 	referrer: {
-		type: String
+		type: String,
+		required: true
 	},
 	lastActiveField: {
 		type: Schema.Types.ObjectId
 	},
 	timeElapsed: {
-		type: Number
+		type: Number,
+		required: true
 	},
 	isSubmitted: {
-		type: Boolean
+		type: Boolean,
+		required: true
+	},
+	language: {
+		type: String
+	},
+	ipAddr: {
+		type: String,
+		default: ''
+	},
+	deviceType: {
+		type: String,
+		enum: ['desktop', 'phone', 'tablet', 'other'],
+		default: 'other',
+		required: true
+	},
+	userAgent: {
+		type: String
 	}
+
 });
 
 /**
