@@ -1,0 +1,46 @@
+.analytics .header-title {
+	font-size: 1em;
+	color: #bab8b8;
+}
+
+.analytics .header-numbers {
+	font-size: 4em;
+	padding-bottom: 0.1em;
+	margin-bottom: 0.5em;
+	border-bottom: #fafafa solid 1px;
+}
+
+.analytics .detailed-title {
+	font-size: 1.8em;
+	margin-bottom: 1.1em;
+}
+
+.analytics .detailed-row {
+	padding-bottom: 0.8em;
+}
+.analytics .detailed-row .row {
+	font-size: 1.2em;
+}
+.analytics .detailed-row .row.header {
+	font-size: 0.8em;
+	color: #bab8b8;
+	text-transform: uppercase;
+}
+
+.field-title-row {
+	padding-top: 2em;
+	padding-bottom:1em;
+	border-top: #fafafa solid 1px;
+	font-size: 1.2em;
+	color: #bab8b8;
+	text-transform: uppercase;
+}
+.field-detailed-row {
+	font-size: 1.2em;
+	padding-bottom:0.3em;
+}
+
+.table-tools {
+	border-top: #fafafa solid 1px;
+	padding-top: 2.5em;
+}

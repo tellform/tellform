@@ -6,7 +6,11 @@ angular.module('forms').run(['Menus',
 		// Set top bar menu items
 		Menus.addMenuItem('topbar', 'My Forms', 'forms', '', '/forms', false);
 	}
-]).filter('formValidity',
+]).filter('secondsToDateTime', [function() {
+	return function(seconds) {
+		return new Date(1970, 0, 1).setSeconds(seconds);
+	};
+}]).filter('formValidity',
     function(){
         return function(formObj){
         	if(formObj && formObj.form_fields && formObj.visible_form_fields){

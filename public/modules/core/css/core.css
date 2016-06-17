@@ -42,6 +42,9 @@ body {
 	background-color: #ddd;
 	border:none;
 }
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+	color: white;
+}
 .navbar-inverse .navbar-collapse{
 	border: none;
 }

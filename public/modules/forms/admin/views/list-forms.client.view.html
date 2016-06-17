@@ -10,7 +10,7 @@
 			<div class="col-xs-12 details-row">
 				
 				<small class="list-group-item-text">
-					Create a new form
+					{{ 'CREATE_A_NEW_FORM' | translate }}
 				</small>
 
 			</div>	
@@ -38,7 +38,7 @@
 			<div class="details-row submit row">			
 			    <div class="col-xs-12 field-title text-center">
 			    	<button class="btn btn-primary" ng-disabled="forms.createForm.$invalid" ng-click="createNewForm()">
-			    		Create Form
+						{{ 'CREATE_FORM' | translate }}
 			    	</button>
 			    </div>
 			</div>		
@@ -67,12 +67,9 @@
 				<div class="col-xs-12 details-row">
 					
 					<small class="list-group-item-text">
-						Created on
+						{{ 'CREATED_ON' | translate }}
 						<span data-ng-bind="form.created | date:'shortDate'"></span>
 					</small>
-						<!--by
-						<span data-ng-bind="form.admin.username"></span>
-					</small> -->
 
 				</div>
 			</div>

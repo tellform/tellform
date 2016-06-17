@@ -3,9 +3,9 @@
     <div class="col-xs-2 col-sm-4 col-md-5 add-field">
 
         <div class="row add-field-title">
-            <h3 class="col-md-12 hidden-sm hidden-xs">Click to Add New Field</h3>
-            <h4 class="col-sm-12 hidden-xs hidden-md hidden-lg">Add New Field</h4>
-            <h5 class="col-sm-12 hidden-sm hidden-md hidden-lg">Add Field</h5>
+            <h3 class="col-md-12 hidden-sm hidden-xs">{{ 'ADD_FIELD_LG' | translate }}</h3>
+            <h4 class="col-sm-12 hidden-xs hidden-md hidden-lg">{{ 'ADD_FIELD_MD' | translate }}</h4>
+            <h5 class="col-sm-12 hidden-sm hidden-md hidden-lg">{{ 'ADD_FIELD_SM' | translate }}</h5>
         </div>
         <div class="panel-group row" class="draggable" ng-model="addField.types">
 
@@ -45,7 +45,7 @@
 
                             <div class="row hidden-sm hidden-xs">
                                 <div class="col-md-12">
-                                    <h4>Preview Start Page</h4>
+                                    <h4>{{ 'PREVIEW_START_PAGE' | translate }}</h4>
                                 </div>
                                 <ul class="col-md-12 container" style="list-style:none;border:2px lightgray solid;">
    
@@ -78,13 +78,13 @@
 
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <h4>Edit Start Page</h4>
+                                    <h4>{{ 'EDIT_START_PAGE' | translate }}</h4>
                                     <br>
                                 </div>
                             </div> 
 
                             <div class="row question">
-                                <div class="col-md-4 col-sm-12">Intro Title:</div>
+                                <div class="col-md-4 col-sm-12">{{ 'INTRO_TITLE' | translate }}:</div>
                                 <div class="col-md-8 col-sm-12">
                                     <input type="text" 
                                     ng-model="myform.startPage.introTitle" 
@@ -94,7 +94,7 @@
                             </div>
 
                             <div class="row question">
-                                <div class="col-md-4 col-sm-12">Intro Paragraph:</div>
+                                <div class="col-md-4 col-sm-12">{{ 'INTRO_PARAGRAPH' | translate }}:</div>
                                 <div class="col-md-8 col-sm-12">
                                     <textarea type="text"
                                     ng-model="myform.startPage.introParagraph" 
@@ -103,7 +103,7 @@
                             </div>
             
                             <div class="row question">
-                                <div class="col-md-4 col-sm-12">Intro Button:</div>
+                                <div class="col-md-4 col-sm-12">{{ 'INTRO_BTN' | translate }}:</div>
                                 <div class="col-md-8 col-sm-12">
                                     <input type="text"
                                     ng-model="myform.startPage.introButtonText"
@@ -120,7 +120,7 @@
                                     <div ng-repeat="button in myform.startPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
 
                                         <div class="col-xs-5">
-                                            <span>Text</span>
+                                            <span>{{ 'BUTTON_TEXT' | translate }}</span>
                                             <input type="text" 
                                             name="{{button.text}}_buttonText_startPage" 
                                             ng-model="button.text" 
@@ -130,7 +130,7 @@
 
 
                                         <div class="col-xs-5">
-                                            <span>Link</span>
+                                            <span>{{ 'BUTTON_LINK' | translate }}</span>
                                             <input type="text" 
                                             name="{{button.url}}_url_startPage" 
                                             ng-model="button.url" 
@@ -148,7 +148,7 @@
                                     <div class="row"><br></div> 
                                     <div class="row">                                   
                                         <button class="btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8" type="button" ng-click="addButton()">
-                                            <i class="icon-plus icon-white"></i> Add Button
+                                            <i class="icon-plus icon-white"></i> {{ 'ADD_BUTTON' | translate }}
                                         </button>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
 
                             <div class="row hidden-sm hidden-xs">
                                 <div class="col-md-12">
-                                    <h4>Preview Field</h4>
+                                    <h4>{{ 'PREVIEW_FIELD' | translate }}</h4>
                                 </div>
                                 <ul class="col-md-12 container" style="list-style:none;border:2px lightgray solid;">
                                     <field-directive field="field" validate="false">
@@ -207,13 +207,13 @@
 
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <h4>Edit Field</h4>
+                                    <h4>{{ 'EDIT_FIELD' | translate }}</h4>
                                     <br>
                                 </div>
                             </div> 
 
                             <div class="row question">
-                                <div class="col-md-4 col-sm-12">Question Title:</div>
+                                <div class="col-md-4 col-sm-12">{{ 'QUESTION_TITLE' | translate }}:</div>
                                 <div class="col-md-8 col-sm-12">
                                 <input type="text" ng-model="field.title" name="title{{field._id}}" value="{{field.title}}" required></div>
                             </div>
@@ -221,13 +221,13 @@
                             <div class="row"><br></div> 
 
                             <div class="row description" ng-hide="showRatingOptions(field)">
-                                <div class="col-md-4 col-sm-12">Description:</div>
+                                <div class="col-md-4 col-sm-12">{{ 'QUESTION_DESCRIPTION' | translate }}:</div>
                                 <div class="col-md-8 col-sm-12"><textarea type="text" ng-model="field.description" name="description{{field._id}}"value="{{field.description}}"></textarea> </div>
                             </div>
 
                             <div class="row" ng-show="showAddOptions(field)"><br></div>
                             <div class="row options" ng-if="showAddOptions(field)">
-                                <div class="col-md-4 col-xs-12">Options:</div>
+                                <div class="col-md-4 col-xs-12">{{ 'OPTIONS' | translate }}:</div>
                                 <div class="col-md-8 col-xs-12">
                                     <div ng-repeat="option in field.fieldOptions track by option.option_id" class="row">
                                         <input type="text" name="{{option.option_value}}{{field._id}}" ng-model="option.option_value" class="col-xs-5">
@@ -238,7 +238,7 @@
                                     </div>
                                     <div class="row">                                                
                                         <button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption($index)">
-                                            <i class="icon-plus icon-white"></i> Add Option
+                                            <i class="icon-plus icon-white"></i> {{ 'ADD_OPTION' | translate }}
                                         </button>
                                     </div>
                                 </div>
@@ -247,7 +247,7 @@
 
 							<div class="row" ng-show="showRatingOptions(field)"><br></div>
 							<div class="row" ng-if="showRatingOptions(field)">
-								<div class="col-md-9 col-sm-9">Number of Steps:</div>
+								<div class="col-md-9 col-sm-9">{{ 'NUM_OF_STEPS' | translate }}</div>
 								<div class="col-md-3 col-sm-3">
 									<input style="width:100%" type="number"
 										   min="1" max="10"
@@ -277,12 +277,12 @@
                                 <div class="col-md-8 col-xs-12 field-input">
                                     <label class="btn col-xs-5">
                                         <input type="radio" ng-value="true" ng-model="field.required" name="required{{field._id}}"/>
-                                        <span> &nbsp; Yes</span>
+                                        <span> &nbsp; {{ 'YES' | translate }}</span>
                                     </label>
 
                                     <label class="btn col-xs-5 col-xs-offset-1">
                                         <input type="radio" ng-value="false" ng-model="field.required" name="required{{field._id}}"/>
-                                        <span> &nbsp; No</span>
+                                        <span> &nbsp; {{ 'NO' | translate }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -293,13 +293,13 @@
                                     <label class="btn col-xs-5">
                                         <input type="radio" ng-value="true" 
                                         ng-model="field.disabled" name="disabled{{field._id}}"/>
-                                        <span> &nbsp; Yes</span>
+                                        <span> &nbsp; {{ 'YES' | translate }}</span>
                                     </label>
 
                                     <label class="btn col-xs-5 col-xs-offset-1">
                                         <input type="radio" ng-value="false" 
                                         ng-model="field.disabled" name="disabled{{field._id}}"/>
-                                        <span> &nbsp; No</span>
+                                        <span> &nbsp; {{ 'NO' | translate }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -310,7 +310,7 @@
                     <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
                         <div class="panel-heading">
                             <h4 class="panel-title text-center" style="color: #a9a9a9;">
-                                Click on Fields to add them here
+								{{ 'CLICK_FIELDS_FOOTER' | translate }}
                             </h4>
                         </div>
                     </div>

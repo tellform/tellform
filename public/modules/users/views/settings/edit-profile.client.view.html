@@ -4,16 +4,16 @@
 		<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
 				<div data-ng-show="success" class="text-center text-success">
-					<strong>Profile Saved Successfully</strong>
+					<strong>{{ 'PROFILE_SAVE_SUCCESS' | translate }}</strong>
 				</div>
 				<div data-ng-show="error" class="text-center text-danger">
-					Couldn't Save Your Profile.<br>
-					Error: <strong data-ng-bind="error"></strong>
+					{{ 'PROFILE_SAVE_ERROR' | translate }}<br>
+					<strong data-ng-bind="error"></strong>
 				</div>
 				
 				<div class="form-group row">
 					<div class="col-xs-7 field-title">
-						<b>First Name</b>
+						<b>{{ 'FIRST_NAME_LABEL' | translate }}</b>
 				    </div>
 					<div class="col-xs-12 field-input">
 						<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name" ng-pattern="/^[a-zA-Z0-9 \-.]*$/">
@@ -32,7 +32,7 @@
 				</div>
 				<div class="row form-group">
 				    <div class="col-xs-7 field-title">
-				    	<b>Language</b> 
+				    	<b>{{ 'LANGUAGE_LABEL' | translate }}</b>
 				    </div>
 				    <div class="col-xs-12 field-input">
 						<select ng-model="user.language" required>
@@ -47,8 +47,7 @@
 
 				<div class="row form-group">
 				    <div class="col-xs-7 field-title">
-				    	<b>Email</b> 
-				    	<small>(also your username)</small> 
+				    	<b>{{ 'EMAIL_LABEL' | translate }}</b>
 				    </div>
 				    <div class="col-xs-12 field-input">
 						<input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="Email">
@@ -56,7 +55,9 @@
 				</div>
 
 				<div class="text-center form-group">
-					<button type="submit" class="btn btn-large btn-primary" style="font-size:1.6em;">Update Profile</button>
+					<button type="submit" class="btn btn-large btn-primary" style="font-size:1.6em;">
+						{{ 'SUBMIT_BTN' | translate }}
+					</button>
 				</div>
 
 			</fieldset>

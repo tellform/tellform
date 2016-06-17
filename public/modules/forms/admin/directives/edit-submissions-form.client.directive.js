@@ -15,6 +15,85 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     rows: []
                 };
 
+				(function initController(){
+
+					var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+
+					//Iterate through form's submissions
+
+					var submissions = _.cloneDeep($scope.myform.submissions);
+					for(var i = 0; i < submissions.length; i++){
+						for(var x = 0; x < submissions[i].form_fields; x++){
+							var oldValue = submissions[i].form_fields[x].fieldValue || '';
+							submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
+							submissions[i].form_fields[x].fieldValue = oldValue;
+						}
+						submissions[i].selected = false;
+					}
+					// console.log('after textField2: '+data[0].form_fields[1].fieldValue);
+
+					$scope.table.rows = submissions;
+
+					// console.log('form submissions successfully fetched');
+					// console.log( JSON.parse(JSON.stringify($scope.submissions)) ) ;
+					// console.log( JSON.parse(JSON.stringify($scope.myform.form_fields)) );
+
+				})();
+
+				/*
+				** Analytics Functions
+				*/
+				$scope.AverageTimeElapsed = (function(){
+					var totalTime = 0;
+					var numSubmissions = $scope.table.rows.length;
+
+					for(var i=0; i<$scope.table.rows.length; i++){
+						totalTime += $scope.table.rows[i].timeElapsed;
+					}
+
+					console.log(totalTime/numSubmissions);
+					return totalTime/numSubmissions;
+				})();
+
+				$scope.DeviceStatistics = (function(){
+					var newStatItem = function(){
+						return {
+							visits: 0,
+							responses: 0,
+							completion: 0,
+							average_time: 0,
+							total_time: 0
+						}
+					};
+
+					var stats = {
+						desktop: newStatItem(),
+						tablet: newStatItem(),
+						phone: newStatItem(),
+						other: newStatItem()
+					};
+
+					var visitors = $scope.myform.analytics.visitors;
+
+					console.log(visitors);
+					for(var i=0; i<visitors.length; i++){
+						var visitor = visitors[i];
+						var deviceType = visitor.deviceType;
+
+						stats[deviceType].visits++;
+
+						stats[deviceType].total_time =+ visitor.timeElapsed;
+						stats[deviceType].average_time = stats[deviceType].total_time/stats[deviceType].visits || 0;
+
+						if(visitor.isSubmitted) stats[deviceType].responses++;
+
+						stats[deviceType].completion = stats[deviceType].response/stats[deviceType].visits || 0;
+					}
+
+					console.log(stats);
+					return stats;
+				})();
+
                 /*
                 ** Table Functions
                 */
@@ -41,36 +120,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 */
 
                 //Fetch and display submissions of Form
-                $scope.initFormSubmissions = function(){
-                    $http.get('/forms/'+$scope.myform._id+'/submissions')
-                        .success(function(data, status, headers){
-
-                            var _tmpSubFormFields,
-                                defaultFormFields = _.cloneDeep($scope.myform.form_fields);
-
-                            // console.log('before textField2: '+data[0].form_fields[1].fieldValue);
-
-                            //Iterate through form's submissions
-                            for(var i=0; i<data.length; i++){
-                                for(var x=0; x<data[i].form_fields; x++){
-                                    var oldValue = data[i].form_fields[x].fieldValue || '';
-                                    data[i].form_fields[x] =  _.merge(defaultFormFields, data[i].form_fields);
-                                    data[i].form_fields[x].fieldValue = oldValue;
-                                }
-                                data[i].selected = false;
-                            }
-                            // console.log('after textField2: '+data[0].form_fields[1].fieldValue);
-
-                            $scope.table.rows = data;
-
-                            // console.log('form submissions successfully fetched');
-                            // console.log( JSON.parse(JSON.stringify($scope.submissions)) ) ;
-                            // console.log( JSON.parse(JSON.stringify($scope.myform.form_fields)) );
-                        })
-                        .error(function(err){
-                            console.error('Could not fetch form submissions.\nError: '+err);
-                        });
-                };
 
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
@@ -109,7 +158,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     };
 
 					console.log($scope.table.rows);
-					
+
 					angular.element('#table-submission-data').tableExport({type: type, escape:false});
 
 					/*

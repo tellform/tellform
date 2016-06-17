@@ -1,8 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
 
         $scope = $rootScope;
         $scope.animationsEnabled = true;
@@ -13,19 +13,19 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
         $scope.tabData   = [
             {
-                heading: 'Create',
+                heading: $filter('translate')('CREATE_TAB'),
                 route:   'viewForm.create'
             },
             {
-                heading: 'Design',
+                heading: $filter('translate')('DESIGN_TAB'),
                 route:   'viewForm.design'
             },
             {
-                heading: 'Configure',
+                heading: $filter('translate')('CONFIGURE_TAB'),
                 route:   'viewForm.configure'
             },
             {
-                heading: 'Analyze',
+                heading: $filter('translate')('ANALYZE_TAB'),
                 route:   'viewForm.analyze'
             }
         ];

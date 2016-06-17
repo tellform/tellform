@@ -19,13 +19,6 @@ var mongoose = require('mongoose'),
  */
 exports.uploadPDF = function(req, res, next) {
 
-	//console.log('inside uploadPDF');
-
-	// console.log('\n\nProperty Descriptor\n-----------');
-	// console.log(Object.getOwnPropertyDescriptor(req.files.file, 'path'));
-
-	//console.log(req.file);
-
 	if(req.file){
 		var pdfFile = req.file;
 		var _user = req.user;
@@ -376,7 +369,7 @@ exports.formByID = function(req, res, next, id) {
 			message: 'Form is invalid'
 		});
 	} else {
-		Form.findById(id).populate('admin').exec(function(err, form) {
+		Form.findById(id).populate('admin').populate('submissions').exec(function(err, form) {
 			if (err) {
 				return next(err);
 			} else if (form === undefined || form === null) {

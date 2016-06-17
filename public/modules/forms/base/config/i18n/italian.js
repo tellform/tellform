@@ -2,12 +2,12 @@
 
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('italian', {
+  $translateProvider.translations('it', {
 	FORM_SUCCESS: 'Il formulario è stato inviato con successo!',
 	REVIEW: 'Incompleto',
 	BACK_TO_FORM: 'Ritorna al formulario',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
+	EDIT_FORM: 'Modifica questo Tellform',
+	CREATE_FORM: 'Creare un TellForm',
 	ADVANCEMENT: '{{done}} su {{total}} completate',
 	CONTINUE_FORM: 'Vai al formulario',
 	REQUIRED: 'obbligatorio',
@@ -22,14 +22,14 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	NO: 'No',
 	NEWLINE: 'premere SHIFT+INVIO per creare una nuova linea',
 	CONTINUE: 'Continua',
-	LEGAL_ACCEPT: 'I accept',
-	LEGAL_NO_ACCEPT: 'I don’t accept',
+	LEGAL_ACCEPT: 'Accetto',
+	LEGAL_NO_ACCEPT: 'Non accetto',
 	DELETE: 'Cancella',
 	CANCEL: 'Reset',
 	SUBMIT: 'Registra',
 	UPLOAD_FILE: 'Invia un file',
 	Y: 'S',
-	N: 'N',
+	N: 'N'
   });
 
 }]);

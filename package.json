@@ -19,7 +19,8 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test && grunt coveralls",
-    "postinstall": "bower install --config.interactive=false; grunt build; node scripts/setup.js;"
+    "setup": "node scripts/setup.js;",
+    "postinstall": "bower install --config.interactive=false; grunt build;"
   },
   "dependencies": {
     "async": "^1.4.2",

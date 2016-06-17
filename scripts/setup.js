@@ -219,4 +219,7 @@ if(!fs.existsSync('./\.env')) {
 			console.log(chalk.green('Have fun using TellForm!'));
 		}
 	});
+}else{ 
+	console.log(chalk.red('You already have a .env file'));
+	process.exit(1);
 }

@@ -1,66 +1,262 @@
-<div class="submissions-table row container" ng-init="initFormSubmissions()">
-	<div class="row">
-		<div class="col-xs-4">
-			Total Views: {{myform.analytics.views}}
-		</div>
-
-		<div class="col-xs-4">
-			Submissions: {{myform.analytics.submissions}}
-		</div>
-
-		<div class="col-xs-4">
-			Conversion Rate: {{myform.analytics.conversionRate}}%
-		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="col-xs-12">
-
-			<div class="col-xs-2">
-				<strong>Field Title</strong>
-			</div>
-			<div class="col-xs-2">
-				<strong>Field Views</strong>
+<div class="submissions-table row container">
+	<div class="row text-center analytics">
+		<div class="row col-xs-12 header-title">
+			<div class="col-xs-3">
+				{{ 'TOTAL_VIEWS' | translate }}
 			</div>
 
-			<div class="col-xs-4">
-				<strong>User dropoff rate at this field</strong>
+			<div class="col-xs-3">
+				{{ 'RESPONSES' | translate }}
+			</div>
+
+			<div class="col-xs-3">
+				{{ 'COMPLETION_RATE' | translate }}
+			</div>
+
+			<div class="col-xs-3">
+				{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
 			</div>
 		</div>
-		<div class="col-xs-12" ng-repeat="fieldStats in myform.analytics.fields">
 
-			<div class="col-xs-2">
+		<div class="row col-xs-12 header-numbers">
+			<div class="col-xs-3">
+				{{myform.analytics.views}}
+			</div>
+
+			<div class="col-xs-3">
+				{{myform.analytics.submissions}}
+			</div>
+
+			<div class="col-xs-3">
+				{{myform.analytics.conversionRate | number:0}}%
+			</div>
+
+			<div class="col-xs-3">
+				{{AverageTimeElapsed | secondsToDateTime | date:'mm:ss'}}
+			</div>
+		</div>
+
+		<div class="row col-xs-12 detailed-title">
+			<div class="col-xs-3">
+				{{ 'DESKTOP_AND_LAPTOP' | translate }}
+			</div>
+
+			<div class="col-xs-3">
+				{{ 'TABLETS' | translate }}
+			</div>
+
+			<div class="col-xs-3">
+				{{ 'PHONES' | translate }}
+			</div>
+
+			<div class="col-xs-3">
+				{{ 'OTHER' | translate }}
+			</div>
+		</div>
+
+		<div class="row col-xs-12 detailed-row">
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'UNIQUE_VISITS' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.desktop.visits}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'UNIQUE_VISITS' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.tablet.visits}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'UNIQUE_VISITS' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.tablet.visits}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'UNIQUE_VISITS' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.other.visits}}
+				</div>
+			</div>
+		</div>
+
+		<div class="row col-xs-12 detailed-row">
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'RESPONSES' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.desktop.responses}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'RESPONSES' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.tablet.responses}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'RESPONSES' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.phone.responses}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'RESPONSES' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.other.responses}}
+				</div>
+			</div>
+		</div>
+
+		<div class="row col-xs-12 detailed-row">
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'COMPLETION_RATE' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.desktop.completion}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'COMPLETION_RATE' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.tablet.completion}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'COMPLETION_RATE' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.phone.completion}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'COMPLETION_RATE' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.other.completion}}
+				</div>
+			</div>
+		</div>
+
+		<div class="row col-xs-12 detailed-row">
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.desktop.average_time | secondsToDateTime | date:'mm:ss'}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.tablet.average_time | secondsToDateTime | date:'mm:ss'}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.phone.average_time | secondsToDateTime | date:'mm:ss'}}
+				</div>
+			</div>
+
+			<div class="col-xs-3">
+				<div class="row header">
+					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
+				</div>
+				<div class="row">
+					{{DeviceStatistics.other.average_time | secondsToDateTime | date:'mm:ss'}}
+				</div>
+			</div>
+		</div>
+
+		<div class="row col-xs-12 field-title-row">
+			<div class="col-xs-3">
+				<strong>{{ 'FIELD_TITLE' | translate }}</strong>
+			</div>
+			<div class="col-xs-3">
+				<strong>{{ 'FIELD_VIEWS' | translate }}</strong>
+			</div>
+			<div class="col-xs-3">
+				<strong>{{ 'FIELD_RESPONSES' | translate }}</strong>
+			</div>
+
+			<div class="col-xs-3">
+				<strong>{{ 'FIELD_DROPOFF' | translate }}</strong>
+			</div>
+		</div>
+		<div class="row col-xs-12 field-detailed-row" ng-repeat="fieldStats in myform.analytics.fields">
+
+			<div class="col-xs-3">
 				{{fieldStats.field.title}}
 			</div>
-			<div class="col-xs-2">
+			<div class="col-xs-3">
 				{{fieldStats.totalViews}}
 			</div>
-
-			<div class="col-xs-4">
-				{{fieldStats.dropoffRate}}%
+			<div class="col-xs-3">
+				{{fieldStats.responses}}
+			</div>
+			<div class="col-xs-3">
+				{{fieldStats.continueRate}}%
 			</div>
 		</div>
 	</div>
 	<br>
-	<div class="row">
+	<div class="row table-tools">
 		<div class="col-xs-2">	
 			<button class="btn btn-danger" ng-click="deleteSelectedSubmissions()" ng-disabled="!isAtLeastOneChecked();">
-				<i class="fa fa-trash-o"></i> Delete Selected
+				<i class="fa fa-trash-o"></i> {{ 'DELETE_SELECTED' | translate }}
 			</button>
 		</div>
 		<div class="col-xs-2 col-xs-offset-4 text-right">	
 			<button class="btn btn-default" ng-click="exportSubmissions('xml')">
-				<small>Export to Excel</small>
+				<small>{{ 'EXPORT_TO_EXCEL' | translate }}</small>
 			</button>
 		</div>
 		<div class="col-md-2 text-right">	
 			<button class="btn btn-default" ng-click="exportSubmissions('csv')">
-				<small>Export to CSV</small>
+				<small>{{ 'EXPORT_TO_CSV' | translate }}</small>
 			</button>
 		</div>
 		<div class="col-md-2 text-right">	
 			<button class="btn btn-default" ng-click="exportSubmissions('json')">
-				<small>Export to JSON</small>
+				<small>{{ 'EXPORT_TO_JSON' | translate }}</small>
 			</button>
 		</div>
 	</div>
@@ -76,29 +272,26 @@
 					<th data-ng-repeat="(key, value) in myform.form_fields">
 						{{value.title}}
 					</th>
-					<th ng-if="myform.plugins.oscarhost.baseUrl">
-						OscarEMR User Profile
+					<th>
+						{{ 'PERCENTAGE_COMPLETE' | translate }}
 					</th>
 					<th>
-						Percentage Complete
+						{{ 'TIME_ELAPSED' | translate }}
 					</th>
 					<th>
-						Time Elapsed
+						{{ 'DEVICE' | translate }}
 					</th>
 					<th>
-						Device 
+						{{ 'LOCATION' | translate }}
 					</th>
 					<th>
-						Location
+						{{ 'IP_ADDRESS' | translate }}
 					</th>
 					<th>
-						IP Address
-					</th>
-					<th>
-						Date Submitted (UTC)
+						{{ 'DATE_SUBMITTED' | translate }} (UTC)
 					</th>
 					<th ng-if="myform.autofillPDFs">
-						Generated PDF
+						{{ 'GENERATED_PDF' | translate }}
 					</th>
 				</tr>
 			</thead>
@@ -115,22 +308,17 @@
 					<td data-ng-repeat="field in row.form_fields">
 						{{field.fieldValue}}
 					</td>
-					<td ng-if="myform.plugins.oscarhost.baseUrl">
-						<a href="{{myform.plugins.oscarhost.baseUrl.split('ws')[0]}}demographic/demographiccontrol.jsp?demographic_no={{row.oscarDemoNum}}&displaymode=edit">
-						User Profile #{{row.oscarDemoNum}}
-						</a>
-					</td>
 					<td>
 						{{row.percentageComplete}}%
 					</td>
 					<td>
-						{{row.timeElapsed}}
+						{{row.timeElapsed | secondsToDateTime | date:'mm:ss'}}
 					</td>
 					<td>
 						{{row.device.name}}, {{row.device.type}}
 					</td>
 					<td>
-						{{row.geoLocation.city}}, {{row.geoLocation.country}}
+						{{row.geoLocation.city}}, {{row.geoLocation.country_name}}
 					</td>
 					<td>
 						{{row.ipAddr}}
@@ -139,7 +327,7 @@
 						{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}
 					</td>
 					<td ng-if="row.pdf">
-						<a href="{{row.pdfFilePath}}" download="{{row.pdf.name}}" target="_self">Generated PDF</a>
+						<a href="{{row.pdfFilePath}}" download="{{row.pdf.name}}" target="_self">{{ 'GENERATED_PDF' | translate }}</a>
 					</td>
 				</tr>
 			</tbody>

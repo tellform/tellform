@@ -54,11 +54,29 @@ var VisitorDataSchema = new Schema({
 		type: Schema.Types.ObjectId
 	},
 	timeElapsed: {
-		type: Number
+		type: Number,
+		required: true
 	},
 	isSubmitted: {
-		type: Boolean
+		type: Boolean,
+		required: true
+	},
+	language: {
+		type: String
+	},
+	ipAddr: {
+		type: String,
+		default: ''
+	},
+	deviceType: {
+		type: String,
+		enum: ['desktop', 'phone', 'tablet', 'other'],
+		default: 'other'
+	},
+	userAgent: {
+		type: String
 	}
+
 });
 
 /**
@@ -72,9 +90,9 @@ var FormSchema = new Schema({
 	},
 	language: {
 		type: String,
-		enum: ['english', 'french', 'spanish', 'german', 'italian'],
-		required: 'Form must have a language',
-		default: 'english'
+		enum: ['en', 'fr', 'es', 'it', 'de'],
+		default: 'en',
+		required: 'Form must have a language'
 	},
 	description: {
 		type: String,
@@ -282,12 +300,13 @@ FormSchema.virtual('analytics.fields').get(function () {
 			}
 
 			var totalViews = dropoffViews+continueViews;
+			var responses = continueViews;
 			var continueRate = continueViews/totalViews*100;
 			var dropoffRate = dropoffViews/totalViews*100;
 
 			fieldDropoffs[i] = {
 				dropoffViews: dropoffViews,
-				continueViews: continueViews,
+				responses: continueViews,
 				totalViews: totalViews,
 				continueRate: continueRate,
 				dropoffRate: dropoffRate,

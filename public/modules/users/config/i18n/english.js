@@ -1,0 +1,55 @@
+'use strict';
+
+angular.module('users').config(['$translateProvider', function ($translateProvider) {
+
+	$translateProvider.translations('en', {
+		ACCESS_DENIED_TEXT: 'You need to be logged in to access this page',
+		USERNAME_LABEL: 'Username',
+		PASSWORD_LABEL: 'Password',
+		CURRENT_PASSWORD_LABEL: 'Current Password',
+		NEW_PASSWORD_LABEL: 'New Password',
+		VERIFY_PASSWORD_LABEL: 'Verify Password',
+		UPDATE_PASSWORD_LABEL: 'Update Password',
+		FIRST_NAME_LABEL: 'First Name',
+		LAST_NAME_LABEL: 'Last Name',
+		LANGUAGE_LABEL: 'Language',
+		EMAIL_LABEL: 'Email',
+
+		UPDATE_PROFILE_BTN: 'Update Profile',
+		PROFILE_SAVE_SUCCESS: 'Profile saved successfully',
+		PROFILE_SAVE_ERROR: 'Could\'t Save Your Profile.',
+
+		FORGOT_PASSWORD_LINK: 'Forgot your password?',
+		REVERIFY_ACCOUNT_LINK: 'Resend your verification email',
+
+		SIGNIN_BTN: 'Sign in',
+		SIGNUP_BTN: 'Sign up',
+		SAVE_PASSWORD_BTN: 'Save Password',
+
+		SUCCESS_HEADER: 'Signup Successful',
+		SUCCESS_TEXT: 'You\'ve successfully registered an account at TellForm.',
+		VERIFICATION_EMAIL_SENT: 'A verification email has been sent to',
+		NOT_ACTIVATED_YET: 'But your account is not activated yet',
+		BEFORE_YOU_CONTINUE: 'Before you continue, make sure to check your email for our verification. If you don\'t receive it within 24h drop us a line at ',
+		CHECK_YOUR_EMAIL: 'Check your email and click on the activation link to activate your account. If you have any questions drop us a line at',
+
+		PASSWORD_RESTORE_HEADER: 'Restore your password',
+		ENTER_YOUR_EMAIL: 'Enter your account email.',
+		SUBMIT_BTN: 'Submit',
+
+		ASK_FOR_NEW_PASSWORD: 'Ask for new password reset',
+		PASSWORD_RESET_INVALID: 'Password reset is invalid',
+		PASSWORD_RESET_SUCCESS: 'Passport successfully reset',
+		PASSWORD_CHANGE_SUCCESS: 'Passport successfully changed',
+
+		CONTINUE_TO_LOGIN: 'Continue to login page',
+
+		VERIFY_SUCCESS: 'Account successfully activated',
+		VERIFY_ERROR: 'Verification link is invalid or has expired'
+	});
+
+	$translateProvider.preferredLanguage('en')
+		.fallbackLanguage('en')
+		.useSanitizeValueStrategy('escape');
+
+}]);
