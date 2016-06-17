@@ -27,7 +27,7 @@
 	text-transform: uppercase;
 }
 
-.field-title {
+.field-title-row {
 	padding-top: 2em;
 	padding-bottom:1em;
 	border-top: #fafafa solid 1px;
@@ -35,12 +35,12 @@
 	color: #bab8b8;
 	text-transform: uppercase;
 }
-.field-row {
+.field-detailed-row {
 	font-size: 1.2em;
 	padding-bottom:0.3em;
 }
 
-.row.table-tools {
+.table-tools {
 	border-top: #fafafa solid 1px;
 	padding-top: 2.5em;
 }

@@ -300,12 +300,13 @@ FormSchema.virtual('analytics.fields').get(function () {
 			}
 
 			var totalViews = dropoffViews+continueViews;
+			var responses = continueViews;
 			var continueRate = continueViews/totalViews*100;
 			var dropoffRate = dropoffViews/totalViews*100;
 
 			fieldDropoffs[i] = {
 				dropoffViews: dropoffViews,
-				continueViews: continueViews,
+				responses: continueViews,
 				totalViews: totalViews,
 				continueRate: continueRate,
 				dropoffRate: dropoffRate,

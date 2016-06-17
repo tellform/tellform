@@ -56,12 +56,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 				})();
 
 				$scope.DeviceStatistics = (function(){
-					var stats = {
-						desktop: null,
-						tablet: null,
-						phone: null,
-						other: null
-					};
 					var newStatItem = function(){
 						return {
 							visits: 0,
@@ -72,6 +66,13 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						}
 					};
 
+					var stats = {
+						desktop: newStatItem(),
+						tablet: newStatItem(),
+						phone: newStatItem(),
+						other: newStatItem()
+					};
+
 					var visitors = $scope.myform.analytics.visitors;
 
 					console.log(visitors);
@@ -79,9 +80,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						var visitor = visitors[i];
 						var deviceType = visitor.deviceType;
 
-						if(!stats[deviceType]){
-							stats[deviceType] = newStatItem();
-						}
 						stats[deviceType].visits++;
 
 						stats[deviceType].total_time =+ visitor.timeElapsed;
