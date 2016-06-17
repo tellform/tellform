@@ -253,7 +253,7 @@ FormSubmissionSchema.pre('save', function (next){
 		if(this.isModified('ipAddr') || !this.geoLocation){
 			freegeoip.getLocation(this.ipAddr, function(err, location){
 				if(err) return next(err);
-				//self.geoLocation = JSON.parse(location);
+				self.geoLocation = JSON.parse(location);
 				return next();
 			});
 		}
