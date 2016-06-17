@@ -66,7 +66,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		COMPLETION_RATE: 'completion rate',
 		AVERAGE_TIME_TO_COMPLETE: 'avg. completion time',
 
-		DESKTOP_AND_LAPTOP: 'Desktops/Laptops',
+		DESKTOP_AND_LAPTOP: 'Desktops',
 		TABLETS: 'Tablets',
 		PHONES: 'Phones',
 		OTHER: 'Other',
@@ -74,7 +74,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
 		FIELD_TITLE: 'Field Title',
 		FIELD_VIEWS: 'Field Views',
-		FIELD_DROPOFF: 'User dropoff rate at this field',
+		FIELD_DROPOFF: 'Field Completion Rate',
 		DELETE_SELECTED: 'Delete Selected',
 		EXPORT_TO_EXCEL: 'Export to Excel',
 		EXPORT_TO_CSV: 'Export to CSV',

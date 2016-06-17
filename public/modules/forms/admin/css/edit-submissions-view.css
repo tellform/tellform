@@ -19,10 +19,28 @@
 	padding-bottom: 0.8em;
 }
 .analytics .detailed-row .row {
-	font-size: 1.3em;
+	font-size: 1.2em;
 }
 .analytics .detailed-row .row.header {
 	font-size: 0.8em;
 	color: #bab8b8;
 	text-transform: uppercase;
+}
+
+.field-title {
+	padding-top: 2em;
+	padding-bottom:1em;
+	border-top: #fafafa solid 1px;
+	font-size: 1.2em;
+	color: #bab8b8;
+	text-transform: uppercase;
+}
+.field-row {
+	font-size: 1.2em;
+	padding-bottom:0.3em;
+}
+
+.row.table-tools {
+	border-top: #fafafa solid 1px;
+	padding-top: 2.5em;
 }
