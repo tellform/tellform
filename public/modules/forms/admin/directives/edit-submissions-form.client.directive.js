@@ -85,11 +85,11 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						stats[deviceType].visits++;
 
 						stats[deviceType].total_time =+ visitor.timeElapsed;
-						stats[deviceType].average_time = stats[deviceType].total_time/stats[deviceType].visits;
+						stats[deviceType].average_time = stats[deviceType].total_time/stats[deviceType].visits || 0;
 
-						if(stats[deviceType].isSubmitted) stats[deviceType].responses++;
+						if(visitor.isSubmitted) stats[deviceType].responses++;
 
-						stats[deviceType].completion = stats[deviceType].response/stats[deviceType].visits;
+						stats[deviceType].completion = stats[deviceType].response/stats[deviceType].visits || 0;
 					}
 
 					console.log(stats);

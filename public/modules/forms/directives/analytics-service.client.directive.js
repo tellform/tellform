@@ -8,10 +8,10 @@
 
 	SendVisitorData.$inject = ['Socket', '$state', '$http', 'deviceDetector'];
 
-	function SendVisitorData(Socket, $state, $http) {
+	function SendVisitorData(Socket, $state, $http, deviceDetector) {
 
 		// Create a controller method for sending visitor data
-		function send(form, lastActiveIndex, timeElapsed, deviceDetector) {
+		function send(form, lastActiveIndex, timeElapsed) {
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,
@@ -20,15 +20,17 @@
 				lastActiveField: form.form_fields[lastActiveIndex]._id,
 				timeElapsed: timeElapsed,
 				//@TODO @FIXME: David: Need to make this get the language from the HTTP Header instead
-				language: window.navigator.userLanguage || window.navigator.language
+				language: window.navigator.userLanguage || window.navigator.language,
+				ipAddr: '',
+				deviceType: ''
 			};
 
 			$http.get('http://jsonip.com/').success(function(response) {
 					visitorData.ipAddr = response['ip']+'';
 				}).error(function(error) {
 					console.error('Could not get users\'s ip');
-					visitorData.ipAddr = '';
-				}).finally(function(){
+				}).then(function(){
+
 					visitorData.userAgent = deviceDetector.raw;
 
 					if(deviceDetector.isTablet()) {
@@ -38,8 +40,8 @@
 					}else {
 						visitorData.deviceType = 'desktop';
 					}
+					console.log(visitorData.deviceType);
 					Socket.emit('form-visitor-data', visitorData);
-
 				});
 
 		}

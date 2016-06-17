@@ -48,8 +48,7 @@ var ButtonSchema = new Schema({
 
 var VisitorDataSchema = new Schema({
 	referrer: {
-		type: String,
-		required: true
+		type: String
 	},
 	lastActiveField: {
 		type: Schema.Types.ObjectId
@@ -72,8 +71,7 @@ var VisitorDataSchema = new Schema({
 	deviceType: {
 		type: String,
 		enum: ['desktop', 'phone', 'tablet', 'other'],
-		default: 'other',
-		required: true
+		default: 'other'
 	},
 	userAgent: {
 		type: String

@@ -25,7 +25,10 @@ module.exports = function (io, socket) {
 				referrer: data.referrer,
 				lastActiveField: data.lastActiveField,
 				timeElapsed: data.timeElapsed,
-				isSubmitted: data.isSubmitted
+				isSubmitted: data.isSubmitted,
+				language: data.language,
+				ipAddr: data.ipAddr,
+				deviceType: data.deviceType
 			};
 
 			form.analytics.visitors.push(newVisitor);
@@ -51,7 +54,7 @@ module.exports = function (io, socket) {
 
 		// a user has visited our page - add them to the visitorsData object
 		socket.on('form-visitor-data', function(data) {
-			
+
 				console.log('\n\nuser has visited our page');
 
 				visitorsData[socket.id] = data;
