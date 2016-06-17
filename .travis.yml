@@ -4,8 +4,7 @@ node_js:
   - "5.0.0"
   - "4.0.0"
 env:
-  - NODE_ENV=travis
-  - TRAVIS=travis CXX=g++-4.8
+  - NODE_ENV=travis TRAVIS=travis CXX=g++-4.8
 services:
   - mongodb
 addons:
