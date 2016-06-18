@@ -7,6 +7,7 @@ env:
   - NODE_ENV=travis TRAVIS=travis CXX=g++-4.8
 services:
   - mongodb
+  - redis
 addons:
   code_climate:
     repo_token: 6c3a1b81a09b2338d6f30913c1bcad115026689752cbb499a0a25061cda6fbcf
