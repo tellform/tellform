@@ -1,5 +1,8 @@
 <div class="submissions-table row container">
 	<div class="row text-center analytics">
+		<div class="row col-xs-12 header-numbers">
+			Overview Analytics
+		</div>
 		<div class="row col-xs-12 header-title">
 			<div class="col-xs-3">
 				{{ 'TOTAL_VIEWS' | translate }}
@@ -17,7 +20,6 @@
 				{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
 			</div>
 		</div>
-
 		<div class="row col-xs-12 header-numbers">
 			<div class="col-xs-3">
 				{{myform.analytics.views}}
@@ -35,7 +37,9 @@
 				{{AverageTimeElapsed | secondsToDateTime | date:'mm:ss'}}
 			</div>
 		</div>
-
+		<div class="row col-xs-12 header-numbers">
+			Device Analytics
+		</div>
 		<div class="row col-xs-12 detailed-title">
 			<div class="col-xs-3">
 				{{ 'DESKTOP_AND_LAPTOP' | translate }}
@@ -206,6 +210,9 @@
 			</div>
 		</div>
 
+		<div class="row col-xs-12 text-center" style="font-size:5em;">
+			Field Analytics
+		</div>
 		<div class="row col-xs-12 field-title-row">
 			<div class="col-xs-3">
 				<strong>{{ 'FIELD_TITLE' | translate }}</strong>
@@ -221,6 +228,7 @@
 				<strong>{{ 'FIELD_DROPOFF' | translate }}</strong>
 			</div>
 		</div>
+
 		<div class="row col-xs-12 field-detailed-row" ng-repeat="fieldStats in myform.analytics.fields">
 
 			<div class="col-xs-3">
@@ -238,6 +246,9 @@
 		</div>
 	</div>
 	<br>
+	<div class="row col-xs-12 header-numbers text-center" style="font-size:5em;">
+		Responses Table
+	</div>
 	<div class="row table-tools">
 		<div class="col-xs-2">	
 			<button class="btn btn-danger" ng-click="deleteSelectedSubmissions()" ng-disabled="!isAtLeastOneChecked();">
