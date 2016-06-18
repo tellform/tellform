@@ -36,7 +36,8 @@
     "js-yaml": "^3.6.1",
     "angular-ui-select": "whitef0x0/ui-select#compiled",
     "angular-translate": "~2.11.0",
-    "ng-device-detector": "^3.0.1"
+    "ng-device-detector": "^3.0.1",
+    "ng-translate": "*"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
