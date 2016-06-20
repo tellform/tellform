@@ -19,12 +19,13 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test && grunt coveralls",
-    "setup": "node scripts/setup.js;",
-    "postinstall": "bower install --config.interactive=false; grunt build;"
+    "postinstall": "bower install --config.interactive=false; grunt build;",
+    "init": "node scripts/setup.js"
   },
   "dependencies": {
     "async": "^1.4.2",
     "aws-sdk": "^2.3.9",
+    "bcrypt": "^0.8.7",
     "body-parser": "~1.14.1",
     "bower": "~1.6.5",
     "chalk": "^1.1.3",

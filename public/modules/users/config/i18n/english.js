@@ -27,10 +27,10 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SAVE_PASSWORD_BTN: 'Save Password',
 
 		SUCCESS_HEADER: 'Signup Successful',
-		SUCCESS_TEXT: 'You\'ve successfully registered an account at TellForm.',
+		SUCCESS_TEXT: 'You’ve successfully registered an account at TellForm.',
 		VERIFICATION_EMAIL_SENT: 'A verification email has been sent to',
 		NOT_ACTIVATED_YET: 'But your account is not activated yet',
-		BEFORE_YOU_CONTINUE: 'Before you continue, make sure to check your email for our verification. If you don\'t receive it within 24h drop us a line at ',
+		BEFORE_YOU_CONTINUE: 'Before you continue, make sure to check your email for our verification. If you don’t receive it within 24h drop us a line at ',
 		CHECK_YOUR_EMAIL: 'Check your email and click on the activation link to activate your account. If you have any questions drop us a line at',
 
 		PASSWORD_RESTORE_HEADER: 'Restore your password',

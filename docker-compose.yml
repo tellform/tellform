@@ -7,6 +7,9 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data-wt:/data/db
+  redis:
+    image: redis
+
   web:
     build: .
     volumes:
@@ -17,8 +20,10 @@ services:
       - "35729:35729"
     links:
       - db
+      - redis
     environment:
         DB_HOST: db
+        REDIS_HOST: redis
 volumes:
   mongo-data-wt:
     driver: local
