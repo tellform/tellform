@@ -74,7 +74,8 @@ module.exports = function(db) {
 		var subdomains = req.subdomains;
 		var host = req.hostname;
 
-
+		console.log(subdomains);
+		console.log(host);
 		// remove www if chosen to ignore
 		if (ignoreWWW) {
 			var wwwi = subdomains.indexOf('www');
