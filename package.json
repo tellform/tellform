@@ -34,7 +34,7 @@
     "consolidate": "~0.13.1",
     "cookie-parser": "~1.4.0",
     "dotenv": "^2.0.0",
-    "email-verification": "whitef0x0/node-email-verification",
+    "email-verification": "email-verification",
     "envfile": "^2.0.1",
     "express": "~4.13.3",
     "express-device": "~0.4.2",

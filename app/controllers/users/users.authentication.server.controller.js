@@ -124,7 +124,8 @@ exports.signup = function(req, res) {
 
 				// new user created
 				if (newTempUser) {
-					nev.registerTempUser(newTempUser, function (err) {
+					var URL = newTempUser[nev.options.URLFieldName];
+					nev.sendVerificationEmail(user.email, URL, function (err, info) {
 						if (err) {
 							console.log('Error: ');
 							console.log(err);
