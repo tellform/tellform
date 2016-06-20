@@ -1,4 +1,4 @@
-<section class="row auth" data-ng-controller="SettingsController" >
+1<section class="row auth" data-ng-controller="SettingsController" >
 	<h3 class="col-xs-offset-1 col-xs-10 text-center">Edit your profile</h3>
 	<div class="col-xs-offset-3 col-xs-6">
 		<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="signin form-horizontal" autocomplete="off">
@@ -43,6 +43,15 @@
 							</option>
 				        </select>    
 				    </div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-xs-7 field-title">
+						<b>Username</b>
+					</div>
+					<div class="col-xs-12 field-input">
+						<input type="text" id="username" name="username" class="form-control" data-ng-model="user.username" placeholder="Username">
+					</div>
 				</div>
 
 				<div class="row form-group">

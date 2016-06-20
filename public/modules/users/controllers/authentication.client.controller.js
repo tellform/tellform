@@ -8,7 +8,6 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope.error = '';
 
 	    $scope.signin = function() {
-			$scope.credentials.email = $scope.credentials.username;
 			User.login($scope.credentials).then(
 				function(response) {
 					Auth.login(response);

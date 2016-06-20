@@ -4,13 +4,13 @@
 # TEAM
 
     David Baldwynn -- Developer -- @davidbaldwynn
+    Samuel Laulhau -- Developer -- @_samuel_
 
 # THANKS
 
     Grace Lam
 
-
 # TECHNOLOGY COLOPHON
 
     HTML5, CSS3, AngularJS
-    jQuery, Modernizr, ExpressJS
+    jQuery, ExpressJS, NodeJS

@@ -31,16 +31,16 @@
 	<meta name="twitter:image" content="/img/brand/logo.png">
 
 	<!-- Fav Icon -->
-	<link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+	<link href="/static/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css">
 	<!--Bower CSS dependencies-->
 	{% for bowerCssFile in bowerCssFiles %}
 		<link rel="stylesheet" href="{{bowerCssFile}}">
 	{% endfor %}
-	<link rel="stylesheet" href="/lib/angular-input-stars/angular-input-stars.css">
-	<link rel="stylesheet" href="/lib/jquery-ui/themes/flick/jquery-ui.css"/>
-	<link rel="stylesheet" href="/modules/core/css/github-fork-ribbon.css"/>
+	<link rel="stylesheet" href="/static/lib/angular-input-stars/angular-input-stars.css">
+	<link rel="stylesheet" href="/static//lib/jquery-ui/themes/flick/jquery-ui.css"/>
+	<link rel="stylesheet" href="/static/modules/core/css/github-fork-ribbon.css"/>
 
 	<!--[if lt IE 9]>
         <link rel="stylesheet" href="gh-fork-ribbon.ie.css">
@@ -66,12 +66,12 @@
             <a href="https://github.com/whitef0x0/tellform">Fork me on GitHub</a>
         </div>
     </div>
-	<header data-ng-include="'/modules/core/views/header.client.view.html'"></header>
+	<header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
 	<section class="content">
 		{% block content %}{% endblock %}
 	</section>
 
-	<script src="lib/file-saver.js/FileSaver.js" type="text/javascript"></script>
+	<script src="/static/lib/file-saver.js/FileSaver.js" type="text/javascript"></script>
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
 		var user = {{ user | json | safe }};
