@@ -24,7 +24,8 @@ module.exports = {
 	},
 	assets: {
 		css: 'public/dist/application.min.css',
-		js: 'public/dist/application.min.js'
+		js: 'public/dist/application.min.js',
+		form_js: 'public/dist/form-application.min.js'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

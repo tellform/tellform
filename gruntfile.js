@@ -12,8 +12,8 @@ module.exports = function(grunt) {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 
 		clientViews: ['public/modules/**/views/**/*.html', '!public/modules/**/demo/**/*.html', '!public/modules/**/dist/**/*.html', '!public/modules/**/node_modules/**/*.html'],
-		clientJS: ['public/js/*.js', 'public/modules/**/*.js', '!public/modules/**/gruntfile.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js'],
-		clientCSS: ['public/modules/**/*.css', '!public/modules/**/demo/**/*.css', '!public/modules/**/dist/**/*.css', '!public/modules/**/node_modules/**/*.css'],
+		clientJS: ['public/js/*.js', 'public/form_modules/**/*.js', 'public/modules/**/*.js', '!public/modules/**/gruntfile.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js'],
+		clientCSS: ['public/modules/**/*.css', 'public/form_modules/**/*.css', '!public/modules/**/demo/**/*.css', '!public/modules/**/dist/**/*.css', '!public/modules/**/node_modules/**/*.css'],
 
 		serverTests: ['app/tests/**/*.js'],
 		clientTests: ['public/modules/**/tests/*.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js']
@@ -97,7 +97,8 @@ module.exports = function(grunt) {
 					mangle: false
 				},
 				files: {
-					'public/dist/application.min.js': 'public/dist/application.js'
+					'public/dist/application.min.js': 'public/dist/application.js',
+					'public/dist/form-application.min.js': 'public/dist/form-application.js'
 				}
 	    	}
 		},
@@ -134,7 +135,8 @@ module.exports = function(grunt) {
 		ngAnnotate: {
 			production: {
 				files: {
-					'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
+					'public/dist/application.js': '<%= applicationJavaScriptFiles %>',
+					'public/dist/form-application.js': '<%= formApplicationJavaScriptFiles %>'
 				}
 			}
 		},
@@ -177,7 +179,7 @@ module.exports = function(grunt) {
 			unit: {
 				configFile: 'karma.conf.js',
 			    singleRun: true
-            }
+             }
 		},
 		protractor: {
 			options: {
@@ -286,6 +288,7 @@ module.exports = function(grunt) {
 		var config = require('./config/config');
 
 		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
+		grunt.config.set('formApplicationJavaScriptFiles', config.assets.form_js);
 		grunt.config.set('applicationCSSFiles', config.assets.css);
 	});
 
