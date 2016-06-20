@@ -7,8 +7,8 @@ module.exports = {
 		description: process.env.APP_DESC || 'Opensource form builder alternative to TypeForm',
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
-	port: process.env.PORT || 5000,
-	socketPort: process.env.SOCKET_PORT || 35729,
+	port: process.env.PORT || 3000,
+	socketPort: process.env.SOCKET_PORT || 20523,
 
 	templateEngine: 'swig',
 
@@ -94,15 +94,10 @@ module.exports = {
 			'public/config.js',
 			'public/application.js',
 			'public/dist/populate_template_cache.js',
-			'public/form_modules/*/*.js',
-			'public/form_modules/*/*/*/*/*.js',
-			'public/form_modules/*/*/*.js',
-			'public/form_modules/*/*/*/*.js',
-			'!public/form_modules/**/gruntfile.js',
-			'!public/form_modules/**/demo/**/*.js',
-			'!public/form_modules/**/dist/**/*.js',
-			'!public/form_modules/**/node_modules/**/*.js',
-			'!public/form_modules/**/tests/**/*.js'
+			'public/form_modules/forms/*.js',
+			'public/form_modules/forms/*/*/*/*.js',
+			'public/form_modules/forms/*/*.js',
+			'public/form_modules/forms/*/*/*.js'
 		],
 		views: [
 			'public/modules/**/*.html',

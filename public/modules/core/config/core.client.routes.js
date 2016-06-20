@@ -55,7 +55,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 				authenticator = new Authorizer(user);
 				//console.log('access denied: '+!authenticator.canAccess(permissions));
 				//console.log(permissions);
-				if( (permissions != null) ){
+				if( (permissions !== null) ){
 					if( !authenticator.canAccess(permissions) ){
 						event.preventDefault();
 						//console.log('access denied');

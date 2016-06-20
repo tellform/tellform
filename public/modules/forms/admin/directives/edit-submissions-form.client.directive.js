@@ -63,7 +63,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 							completion: 0,
 							average_time: 0,
 							total_time: 0
-						}
+						};
 					};
 
 					var stats = {

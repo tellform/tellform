@@ -74,10 +74,15 @@ module.exports = function(db) {
 		var subdomains = req.subdomains;
 		var host = req.hostname;
 
+
 		// remove www if chosen to ignore
 		if (ignoreWWW) {
 			var wwwi = subdomains.indexOf('www');
 			if (wwwi >= 0) subdomains.splice(wwwi, 1);
+		}
+
+		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
+			subdomains = subdomains.slice(4);
 		}
 
 		// continue if no subdomains
@@ -87,7 +92,7 @@ module.exports = function(db) {
 			if(url.parse(req.url).path.split('/')[1] === ignoreWithStartPath) return next();
 		}
 
-		User.findOne({username: req.subdomains[0]}).exec(function (err, user) {
+		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
 			if (err) {
 				console.log(err);
 				req.subdomains = null;
