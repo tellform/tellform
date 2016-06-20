@@ -73,12 +73,16 @@ module.exports = function(db) {
 		var ignoreWithStartPath = 'static';
 		var subdomains = req.subdomains;
 		var host = req.hostname;
-
-
-		// remove www if chosen to ignore
-		if (ignoreWWW) {
-			var wwwi = subdomains.indexOf('www');
-			if (wwwi >= 0) subdomains.splice(wwwi, 1);
+        
+		// ignore subdomains that are part of baseURL
+		var baseURL = process.env.BASE_URL.split('.');
+        if (baseURL.length > 2) {
+                            
+            var numSubDomains = baseURL.length;
+            for(var i=0; i<numSubDomains; i++){
+                var idx = subdomains.indexOf(baseURL[i]);
+                if(idx > -1) subdomains.splice(idx, 1);
+            }
 		}
 
 		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
