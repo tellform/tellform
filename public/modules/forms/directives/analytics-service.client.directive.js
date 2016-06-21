@@ -25,7 +25,7 @@
 				deviceType: ''
 			};
 
-			$http.get('http://jsonip.com/').success(function(response) {
+			$http.get('https://jsonip.com/').success(function(response) {
 					visitorData.ipAddr = response['ip']+'';
 				}).error(function(error) {
 					console.error('Could not get users\'s ip');
