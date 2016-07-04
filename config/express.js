@@ -66,14 +66,28 @@ module.exports = function(db) {
 	app.locals.formJSFiles = config.getFormJavaScriptAssets();
 	app.locals.cssFiles = config.getCSSAssets();
 
+    // Add headers for wildcard subdomains
+    app.use(function(req, res, next) {
+        console.log(req.headers.origin);
+        var regexAllSubdomains = /[^.\s]+\.tellform\.com/g;
+        var origin = req.headers.origin;
+        if(regexAllSubdomains.exec(origin)){
+            res.setHeader('Access-Control-Allow-Origin', origin);
+        }
+        res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        res.header('Access-Control-Allow-Credentials', true);
+        return next();
+    });
+
 	app.use(function (req, res, next) {
 		var User = mongoose.model('User');
 		var path = '/' + 'subdomain' + '/';
-		var ignoreWWW = true;
 		var ignoreWithStartPath = 'static';
 		var subdomains = req.subdomains;
 		var host = req.hostname;
-        
+       
+        /* 
 		// ignore subdomains that are part of baseURL
 		var baseURL = process.env.BASE_URL.split('.');
         if (baseURL.length > 2) {
@@ -84,6 +98,7 @@ module.exports = function(db) {
                 if(idx > -1) subdomains.splice(idx, 1);
             }
 		}
+        */
 
 		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
 			subdomains = subdomains.slice(4);
@@ -92,11 +107,19 @@ module.exports = function(db) {
 		// continue if no subdomains
 		if (!subdomains.length) return next();
 
-		if(ignoreWithStartPath !== ''){
-			if(url.parse(req.url).path.split('/')[1] === ignoreWithStartPath) return next();
-		}
+		if(subdomains.indexOf('static') > -1 || subdomains.indexOf('stage') > -1) return next();
 
-		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
+        //console.log(url.parse(req.path).path);
+        //console.log('req.host: ');
+        //console.log(req.host);
+        var uriPaths = url.parse(req.path).path.split('/');
+        if(uriPaths[1] === 'static'){
+            //uriPaths.splice(1,1);
+            console.log('redirecting static path');
+            return res.redirect(301, 'https://' + 'stage.tellform.com' + uriPaths.join('/'));
+        }
+		
+        User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
 			if (err) {
 				console.log(err);
 				req.subdomains = null;
@@ -228,7 +251,9 @@ module.exports = function(db) {
 	app.use(function (req, res, next) {
 
 	    // Website you wish to allow to connect
-	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.polydaic.com');
+        res.setHeader('Access-Control-Allow-Origin', 'https://admin.polydaic.com');
+        res.setHeader('Access-Control-Allow-Origin', 'https://stage.tellform.com');
+	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.tellform.com');
 
 	    // Request methods you wish to allow
 	    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
