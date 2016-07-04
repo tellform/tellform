@@ -54,12 +54,10 @@ var VisitorDataSchema = new Schema({
 		type: Schema.Types.ObjectId
 	},
 	timeElapsed: {
-		type: Number,
-		required: true
+		type: Number
 	},
 	isSubmitted: {
-		type: Boolean,
-		required: true
+		type: Boolean
 	},
 	language: {
 		type: String

@@ -87,7 +87,8 @@
     "soap": "^0.11.0",
     "socket.io": "^1.4.6",
     "socket.io-redis": "^1.0.0",
-    "swig": "~1.4.1"
+    "swig": "~1.4.1",
+    "wildcard-subdomains": "github:whitef0x0/wildcard-subdomains"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
