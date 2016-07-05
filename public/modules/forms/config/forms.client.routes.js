@@ -9,7 +9,21 @@ angular.module('forms').config(['$stateProvider',
 		state('listForms', {
 			url: '/forms',
 			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html'
-  		}).state('viewForm', {
+  		}).state('submitForm', {
+			url: '/forms/:formId',
+			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
+			data: {
+				hideNav: true
+			},
+			resolve: {
+				Forms: 'Forms',
+				myForm: function (Forms, $stateParams) {
+					return Forms.get({formId: $stateParams.formId}).$promise;
+				}
+			},
+			controller: 'SubmitFormController',
+			controllerAs: 'ctrl'
+		}).state('viewForm', {
 			url: '/forms/:formId/admin',
 			templateUrl: 'modules/forms/admin/views/admin-form.client.view.html',
 			data: {
