@@ -168,7 +168,7 @@ UserSchema.pre('save', function (next) {
 			subject: 'Your TellForm Username has Changed', // Subject line
 			text: 'Due to upgrades, your TellForm username has change from ' + this.email + ' to ' + this.username + '. Please use your new username to login.\n Using your old username will not work.\n We apologize for the inconvenience,\n - the TellForm team', // plaintext body
 		};
-		transporter.sendMail(mailOptions, function(error, info){
+		smtpTransport.sendMail(mailOptions, function(error, info){
 			if(error){
 				return console.error(error);
 			}
