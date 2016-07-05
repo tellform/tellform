@@ -24,20 +24,13 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 ## Features	
 
 ###Currently following features are implemented:
-	-User login system to manage forms
 	-Multi-Language Support
-	-User CRUD 
-	-Form CRUD
 	-11 possible types of form fields
 	-Editable startpage
-	-Push form data to OsacrHost EMR
-	-Create forms from FDF-formatted PDFs (unstable)
-	-Save form submissions as FDF-formatted PDFs (unstable)
-	-Toggle forms as private (viewable only if logged in as Form's user) or public (viewable by anyone)
-	-Drag and drop functionality to editing form field order
-	-Viewable form submissions 
-	-Google Analytics Support
-	-In-app Form Submission Analytics (dropoff rate of fields, conversion rate, etc)
+	-Export Submissions to XLS, JSON or CSV
+	-Native Analytics and Google Analytics Support
+	-Custom subdomains
+	-Embeddable Forms
 
 ###TODO:
 	-Implement encryption for all form data
