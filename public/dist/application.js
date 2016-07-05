@@ -1703,7 +1703,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
         CurrentForm.setForm($scope.myform);
 
-		$scope.formURL = $scope.myform.admin.username + '.' + window.location.host;
+	$scope.formURL = $scope.myform.admin.username + '.tellform.com';
 
         $scope.tabData   = [
             {
