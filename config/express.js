@@ -69,18 +69,8 @@ module.exports = function(db) {
 	app.use(function (req, res, next) {
 		var User = mongoose.model('User');
 		var path = '/' + 'subdomain' + '/';
-		var ignoreWWW = true;
-		var ignoreWithStartPath = 'static';
 		var subdomains = req.subdomains;
 		var host = req.hostname;
-
-		console.log(subdomains);
-		console.log(host);
-		// remove www if chosen to ignore
-		if (ignoreWWW) {
-			var wwwi = subdomains.indexOf('www');
-			if (wwwi >= 0) subdomains.splice(wwwi, 1);
-		}
 
 		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
 			subdomains = subdomains.slice(4);
@@ -89,9 +79,17 @@ module.exports = function(db) {
 		// continue if no subdomains
 		if (!subdomains.length) return next();
 
-		if(ignoreWithStartPath !== ''){
-			if(url.parse(req.url).path.split('/')[1] === ignoreWithStartPath) return next();
+		var urlPath = url.parse(req.url).path.split('/');
+		if(urlPath.indexOf('static')){
+			urlPath.splice(1,1);
+			req.root = 'https://' + config.baseUrl + urlPath.join('/');
+			return next();
 		}
+
+		if(subdomains.indexOf('stage') || subdomains.indexOf('admin')){
+			return next();
+		}
+
 
 		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
 			if (err) {
