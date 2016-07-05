@@ -25,6 +25,7 @@
 					{{$index+1}}
 				</div>
 				<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
+                   	style="visibility:hidden;"
                     type="radio" class="focusOn"
 				    ng-focus="setActiveField(field._id, index, true)"
 				    value="{{option.option_value}}"
