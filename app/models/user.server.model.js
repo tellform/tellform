@@ -132,7 +132,7 @@ UserSchema.plugin(mUtilities.timestamp, {
 	useVirtual: false
 });
 
-
+/*
 UserSchema.pre('find', function (next) {
 
 	//Change username if it is still the user's email
@@ -153,7 +153,7 @@ UserSchema.pre('find', function (next) {
 			console.log('Username change message sent: ' + info.response);
 		});
 	}
-});
+});*/
 
 UserSchema.pre('save', function (next) {
 
