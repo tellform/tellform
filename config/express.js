@@ -72,6 +72,7 @@ module.exports = function(db) {
 		var subdomains = req.subdomains;
 		var host = req.hostname;
 
+
 		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
 			subdomains = subdomains.slice(4);
 		}
