@@ -13,6 +13,9 @@ exports.index = function(req, res) {
 };
 
 exports.form = function(req, res) {
+	//Allow form to be embeded
+        res.removeHeader('X-Frame-Options');
+
 	res.render('form', {
 		user: req.user || null,
 		request: req

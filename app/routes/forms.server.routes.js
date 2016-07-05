@@ -29,10 +29,6 @@ module.exports = function(app) {
 	app.route('/upload/pdf')
 		.post(users.requiresLogin, upload.single('file'), forms.uploadPDF);
 
-	//TODO: Need to finish this for file upload field
-	//app.route('/forms/:formId([a-zA-Z0-9]+)/upload')
-	//	.post(forms.uploadSubmissionFile);
-
 	app.route('/forms')
 		.get(users.requiresLogin, forms.list)
 		.post(users.requiresLogin, forms.create);

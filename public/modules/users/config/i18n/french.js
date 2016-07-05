@@ -2,7 +2,7 @@
 
 angular.module('users').config(['$translateProvider', function ($translateProvider) {
 
-	$translateProvider.translations('en', {
+	$translateProvider.translations('fr', {
 		ACCESS_DENIED_TEXT: 'Vouz n’êtes pas autorisé à accéder à cette page.',
 		USERNAME_LABEL: 'Nom d’utilisateur',
 		PASSWORD_LABEL: 'Mot de Passe',

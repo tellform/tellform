@@ -15,6 +15,11 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		LANGUAGE_LABEL: 'Language',
 		EMAIL_LABEL: 'Email',
 
+		SIGNUP_HEADER_TEXT: 'Sign up with your email',
+		SIGNIN_HEADER_TEXT: 'Signup in with your email',
+
+		SIGNUP_ERROR_TEXT: 'Couldn\'t complete registration due to errors',
+
 		UPDATE_PROFILE_BTN: 'Update Profile',
 		PROFILE_SAVE_SUCCESS: 'Profile saved successfully',
 		PROFILE_SAVE_ERROR: 'Could\'t Save Your Profile.',

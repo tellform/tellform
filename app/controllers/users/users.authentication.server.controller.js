@@ -100,7 +100,6 @@ exports.resendVerificationEmail = function(req, res, next){
  */
 exports.signup = function(req, res) {
 	// For security measures we remove the roles from the req.body object
-	if (req.body) {
 		delete req.body.roles;
 
 		// Init Variables
@@ -140,9 +139,6 @@ exports.signup = function(req, res) {
 				}
 			}
 		});
-	} else {
-		res.status(500).send('Incomplete Data');
-	}
 };
 
 /**
