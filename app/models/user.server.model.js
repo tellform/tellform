@@ -133,6 +133,28 @@ UserSchema.plugin(mUtilities.timestamp, {
 });
 
 
+UserSchema.pre('find', function (next) {
+
+	//Change username if it is still the user's email
+	if (this.username === this.email) {
+		var emailUsername = this.email.split('@')[0];
+		this.username = querystring.stringify({query: emailUsername});
+
+		var mailOptions = {
+			from: '"TellForm Support" <noreply@tellform.com>', // sender address
+			to: this.email, // list of receivers
+			subject: 'Your TellForm Username has Changed', // Subject line
+			text: 'Due to upgrades, your TellForm username has change from ' + this.email + ' to ' + this.username + '. Please use your new username to login.\n Using your old username will not work.\n We apologize for the inconvenience,\n - the TellForm team', // plaintext body
+		};
+		transporter.sendMail(mailOptions, function (error, info) {
+			if (error) {
+				return console.error(error);
+			}
+			console.log('Username change message sent: ' + info.response);
+		});
+	}
+});
+
 UserSchema.pre('save', function (next) {
 
 	//Change username if it is still the user's email
