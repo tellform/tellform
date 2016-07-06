@@ -92,7 +92,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, cb){
 
             var continueUpdate = true;
             if(!updateImmediately){
@@ -105,7 +105,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
                 if(!updateImmediately){ $rootScope.saveInProgress = true; }
 
-                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
+				console.log(diffChanges);
+
+                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
                         // console.log(response.data);

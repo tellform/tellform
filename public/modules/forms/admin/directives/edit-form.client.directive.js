@@ -10,7 +10,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
             },
             controller: function($scope){
 
-				console.log($scope.myform);
                 var field_ids = _($scope.myform.form_fields).pluck('_id');
                 for(var i=0; i<field_ids.length; i++){
                     $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
@@ -109,7 +108,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         }
                     }
                     var newField = {
-                        title: fieldTitle,
+                        title: fieldTitle + ' ' + $scope.myform.form_fields.length+1,
                         fieldType: fieldType,
                         fieldValue: '',
                         required: true,
@@ -125,7 +124,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							'option_value' : 'Option 0'
 						});
 					}
-
 
                     if(modifyForm){
 						//Add newField to form_fields array
