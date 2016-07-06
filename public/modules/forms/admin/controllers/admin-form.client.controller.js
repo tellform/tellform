@@ -107,7 +107,11 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 				console.log(diffChanges);
 
+<<<<<<< HEAD
                 $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
+=======
+                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { form: $scope.myform, changes: diffChanges })
+>>>>>>> 34dca69d6e91b25f91b8b28b135aec00858dcd98
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
                         // console.log(response.data);
