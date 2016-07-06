@@ -83,23 +83,24 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			if(scope.field.fieldType === 'number' || scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
 				switch(scope.field.fieldType){
 					case 'textfield':
-						scope.field.input_type = 'text';
+						scope.input_type = 'text';
 						break;
 					case 'email':
-						scope.field.input_type = 'email';
-						scope.field.placeholder = 'joesmith@example.com';
+						scope.input_type = 'email';
+						scope.placeholder = 'joesmith@example.com';
 						break;
 					case 'number':
-                        scope.field.input_type = 'text';
-						scope.field.validateRegex = /^-?\d+$/;
+                        scope.input_type = 'text';
+						scope.validateRegex = /^-?\d+$/;
                         break;
                     default:
-						scope.field.input_type = 'url';
-						scope.field.placeholder = 'http://example.com';
+						scope.input_type = 'url';
+						scope.placeholder = 'http://example.com';
 						break;
 				}
 				fieldType = 'textfield';
 			}
+
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();
             var output = $compile(element.contents())(scope);

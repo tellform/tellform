@@ -32,7 +32,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                 $rootScope.finishedRender = false;
                 $scope.$on('editFormFields Started', function(ngRepeatFinishedEvent) {
-                    // console.log('hello');
                     $rootScope.finishedRender = false;
                 });
                 $scope.$on('editFormFields Finished', function(ngRepeatFinishedEvent) {
@@ -52,13 +51,11 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     return false;
                 };
 
-                var debounceSave = function () {
-                    $rootScope.saveInProgress = true;
+                var debounceSave = function (diffChanges) {
 
-                    $rootScope[$attrs.autoSaveCallback](true,
+                    $rootScope[$attrs.autoSaveCallback](true, diffChanges,
                         function(err){
                         if(!err){
-                            //console.log('\n\nForm data persisted -- setting pristine flag');
                             $formCtrl.$setPristine();
                             $formCtrl.$setUntouched();
                         }else{
@@ -70,12 +67,10 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                 //Update/Save Form if any Form fields are Dirty and Touched
                 $scope.$watch(function(newValue, oldValue) {
-                    //console.log('introParagraphStartPage.$dirty: '+$scope.editForm.introParagraphStartPage.$dirty);
-                    //console.log('introParagraphStartPage.$touched: '+$scope.editForm.introParagraphStartPage.$touched);
+
                     if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-                        //console.log('Form saving started');
-                        debounceSave();
-                        //console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
+						delete newValue.visible_form_fields;
+						debounceSave(DeepDiff.diff(oldValue, newValue));
                     }
                 });
 
@@ -89,7 +84,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
                     var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
-                    var changedFieldMap = false;
 
                     if(oldValue.hasOwnProperty('plugins.oscarhost.settings.fieldMap')){
                     	changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
@@ -117,7 +111,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     }
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && ((changedFields && !$formCtrl.$dirty) || changedFieldMap)  && !$rootScope.saveInProgress) {
+                    if( $rootScope.finishedRender && (changedFields && !$formCtrl.$dirty)  && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
@@ -125,7 +119,12 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         }
 
                         savePromise = $timeout(function() {
-                            debounceSave();
+							$rootScope.saveInProgress = true;
+							
+							delete newValue.visible_form_fields;
+							delete newValue.visible_form_fields;
+							var _diff = DeepDiff.diff(oldValue, newValue);
+                            debounceSave(_diff);
                         });
                     }
                     //If we are finished rendering then form saving should be finished

@@ -21,9 +21,9 @@
     <div class="col-xs-12 field-input">
 		<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
 			name="{{field.fieldType}}{{index}}"
-            type="{{field.input_type}}"
-		   	ng-pattern="field.validateRegex"
-			placeholder="{{field.placeholder}}"
+            type="{{input_type}}"
+		   	ng-pattern="validateRegex"
+			placeholder="{{placeholder}}"
 			ng-class="{ 'no-border': !!field.fieldValue }"
             class="focusOn text-field-input"
 			ng-model="field.fieldValue"
