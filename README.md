@@ -3,8 +3,7 @@ TellForm
 
 Current stable release: v1.3.0 
 
-Donate Now to Help Pay for our Server Costs: [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UY555MCBZM722)
-
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UY555MCBZM722)
 [![Stories in Ready](https://badge.waffle.io/whitef0x0/tellform.svg?label=ready&title=Ready)](http://waffle.io/whitef0x0/tellform)
 [![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
 ![Project Status](https://img.shields.io/badge/status-beta-yellow.svg)
@@ -152,6 +151,10 @@ After you've generated the key and certificate, place them in the *config/sslcer
 
 [Official Twitter](https://twitter.com/tellform_real)
 
+## Sponsors
+
+![Digital Ocean](https://www.digitalocean.com/assets/images/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png "Digital Ocean")
+
 ## Contributor list 
 
 [David Baldwynn](https://github.com/whitef0x0/)
@@ -176,4 +179,3 @@ After you've generated the key and certificate, place them in the *config/sslcer
 
 ## Credits
 Inspired/built off the great work of the [MeanJS team](https://github.com/mean/) and [Typeform](http://typeform.com)
-
