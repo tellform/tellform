@@ -135,14 +135,6 @@ To calculate your client-side test coverage with Istanbul, run the coverage task
 $ grunt coverage:client
 ```
 
-## Running in a secure environment
-To run your application in a secure manner you'll need to use OpenSSL and generate a set of self-signed certificates. Unix-based users can use the following command:
-```bash
-$ sh ./scripts/generate-ssl-certs.sh
-```
-Windows users can follow instructions found [here](http://www.websense.com/support/article/kbarticle/How-to-use-OpenSSL-and-Microsoft-Certification-Authority).
-After you've generated the key and certificate, place them in the *config/sslcerts* folder.
-
 ## Where to get help
 
 [Gitter Chat](https://gitter.im/whitef0x0/tellform)
