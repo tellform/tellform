@@ -13,11 +13,6 @@ Current stable release: v1.3.0
 
 TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
-## Sponsors
-
-![Digital Ocean](https://www.digitalocean.com/assets/images/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png "Digital Ocean")
-![Sentry](https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png "Get Sentry")
-
 ##Demo Forms
 [See examples here](https://tellform.com/examples) 
 
@@ -154,6 +149,11 @@ After you've generated the key and certificate, place them in the *config/sslcer
 
 [Official Twitter](https://twitter.com/tellform_real)
 
+## Sponsors
+
+![Digital Ocean](https://www.digitalocean.com/assets/images/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png "Digital Ocean")
+
+![Sentry](https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png "Get Sentry")
 
 ## Contributor list 
 
