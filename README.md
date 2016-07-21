@@ -13,14 +13,16 @@ Current stable release: v1.3.0
 
 TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
-##Demo Forms
 [See examples here](https://tellform.com/examples) 
 
 ##Screenshots
-![screenshot](design/screenshots/tellform_screenshot1.png)
-![screenshot](design/screenshots/analytics.png)
-![screenshot](design/screenshots/tellform_rating.png)
+<img src="design/screenshots/tellform_screenshot1.png" width="500px">
+<img src="design/screenshots/analytics.png" width="500px">
 
+## Sponsors
+[<img src="https://www.digitalocean.com/assets/images/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
+[<img src="https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png" width="250px">](https://getsentry.com/)
+[<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
 
 ## Features	
 
@@ -140,12 +142,6 @@ $ grunt coverage:client
 [Gitter Chat](https://gitter.im/whitef0x0/tellform)
 
 [Official Twitter](https://twitter.com/tellform_real)
-
-## Sponsors
-
-[<img src="https://www.digitalocean.com/assets/images/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
-[<img src="https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png" width="250px">](https://getsentry.com/)
-[<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
 
 ## Contributor list 
 
