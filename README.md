@@ -15,11 +15,6 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 
 [See examples here](https://tellform.com/examples) 
 
-## Sponsors
-[<img src="https://www.digitalocean.com/assets/images/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
-[<img src="https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png" width="250px">](https://getsentry.com/)
-[<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
-
 ##Screenshots
 <img src="design/screenshots/tellform_screenshot1.png" width="500px">
 <img src="design/screenshots/analytics.png" width="500px">
@@ -136,6 +131,11 @@ To calculate your client-side test coverage with Istanbul, run the coverage task
 ```bash
 $ grunt coverage:client
 ```
+
+## Sponsors
+[<img src="https://www.digitalocean.com/assets/images/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
+[<img src="https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png" width="250px">](https://getsentry.com/)
+[<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
 
 ## Where to get help
 
