@@ -169,5 +169,7 @@ $ grunt coverage:client
 
 [Reddit Posts](https://www.reddit.com/domain/tellform.com/)
 
+[Betapage](https://betapage.co/startup/tellform)
+
 ## Credits
 Inspired/built off the great work of the [MeanJS team](https://github.com/mean/) and [Typeform](http://typeform.com)
