@@ -9,6 +9,7 @@ angular.module('forms').value('supportedFields', [
 	'hidden',
 	'password',
 	'radio',
+	'checkbox',
 	'legal',
 	'statement',
 	'rating',

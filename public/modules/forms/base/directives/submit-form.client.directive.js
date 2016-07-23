@@ -199,6 +199,12 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 				};
 
 				$rootScope.submitForm = $scope.submitForm = function() {
+                     for (var i = 0; i < $scope.myform.form_fields.length; i++) {
+                        if ($scope.myform.form_fields[i].fieldType === 'checkbox'){
+                            var tmp2 = _.map($scope.myform.form_fields[i].fieldValue,function(ele) {return ele}).toString();
+                            $scope.myform.form_fields[i].fieldValue =  tmp2;
+                        }
+                    }
 
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
