@@ -127,6 +127,7 @@ function BaseFieldSchema(){
 				'hidden',
 				'yes_no',
 				'natural',
+				'stripe',
 				'number'
 			]
 		},

@@ -16,7 +16,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		EMAIL_LABEL: 'Email',
 
 		SIGNUP_HEADER_TEXT: 'Sign up with your email',
-		SIGNIN_HEADER_TEXT: 'Signup in with your email',
+		SIGNIN_HEADER_TEXT: 'Sign in with your email or username',
 
 		SIGNUP_ERROR_TEXT: 'Couldn\'t complete registration due to errors',
 

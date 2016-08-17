@@ -121,7 +121,6 @@ module.exports = function(db) {
 			next();
 		});
 
-
 	});
 
     //Setup Prerender.io

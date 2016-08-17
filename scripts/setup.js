@@ -166,6 +166,11 @@ var questions = [
 		message: 'What should be the email for your admin account?'
 	},
 	{
+		type: 'input',
+		name: 'username',
+		message: 'What should be the username for your admin account?'
+	},
+	{
 		type: 'password',
 		name: 'password',
 		message: 'What should be the password for your admin account?'
@@ -175,7 +180,7 @@ var questions = [
 if(!fs.existsSync('./\.env')) {
 	console.log(chalk.green('\n\nHi, welcome to TellForm Setup'));
 
-	console.log(chalk.green('You should only run this the first time you setup TellForm\n--------------------------------------------------\n\n'));
+	console.log(chalk.green('You should only run this the first time you run TellForm\n--------------------------------------------------\n\n'));
 
 	inquirer.prompt([questions[0]]).then(function (confirmAns) {
 		if (confirmAns['shouldContinue']) {
@@ -185,6 +190,7 @@ if(!fs.existsSync('./\.env')) {
 				answers['SIGNUP_DISABLED'] = false ? answers['SIGNUP_DISABLED'] === false : true;
 
 				var email = answers['email'];
+				var username = answers['email'];
 				var pass = answers['password'];
 				delete answers['email'];
 				delete answers['password'];
@@ -198,7 +204,7 @@ if(!fs.existsSync('./\.env')) {
 						firstName: 'Admin',
 						lastName: 'Account',
 						email: email,
-						username: email,
+						username: username,
 						password: pass,
 						provider: 'local',
 						roles: ['admin', 'user']
@@ -219,7 +225,7 @@ if(!fs.existsSync('./\.env')) {
 			console.log(chalk.green('Have fun using TellForm!'));
 		}
 	});
-}else{ 
+}else{
 	console.log(chalk.red('You already have a .env file'));
 	process.exit(1);
 }

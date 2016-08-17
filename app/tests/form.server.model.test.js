@@ -12,9 +12,7 @@ var should = require('should'),
 	config = require('../../config/config'),
 	FormSubmission = mongoose.model('FormSubmission');
 
-
-
-var exampleDemo = { 
+var exampleDemo = {
 	activeCount: 1,
 	DOB: '',
 	address: '880-9650 Velit. St.',
@@ -48,7 +46,7 @@ var exampleDemo = {
 	sin: '',
 	spokenLanguage: 'English',
 	title: 'MS.',
-	yearOfBirth: '2015' 
+	yearOfBirth: '2015'
 };
 
 /**

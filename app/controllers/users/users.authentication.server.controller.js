@@ -99,46 +99,46 @@ exports.resendVerificationEmail = function(req, res, next){
  * Signup
  */
 exports.signup = function(req, res) {
+
 	// For security measures we remove the roles from the req.body object
-		delete req.body.roles;
+	delete req.body.roles;
 
-		// Init Variables
-		var user = new User(req.body);
+	// Init Variables
+	var user = new User(req.body);
 
-		// Add missing user fields
-		user.provider = 'local';
+	// Add missing user fields
+	user.provider = 'local';
 
-		// Then save the temporary user
-		nev.createTempUser(user, function (err, newTempUser) {
+	// Then save the temporary user
+	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
+		debugger;
+		if (err) {
+			console.log('Error: ');
+			console.log(err);
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
 
-			if (err) {
-				console.log('Error: ');
-				console.log(err);
-				return res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			} else {
-
-				// new user created
-				if (newTempUser) {
-					var URL = newTempUser[nev.options.URLFieldName];
-					nev.sendVerificationEmail(user.email, URL, function (err, info) {
-						if (err) {
-							console.log('Error: ');
-							console.log(err);
-							return res.status(400).send({
-								message: errorHandler.getErrorMessage(err)
-							});
-						} else {
-							return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
-						}
+		// new user created
+		if (newTempUser) {
+			var URL = newTempUser[nev.options.URLFieldName];
+			nev.sendVerificationEmail(user.email, URL, function (err, info) {
+				if (err) {
+					console.log('Error: ');
+					console.log(err);
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					console.log('Error: User already exists!');
-					return res.status(400).send({message: 'Error: User already exists!'});
+					return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 				}
-			}
-		});
+			});
+		} else {
+			console.log('Error: User already exists!');
+			return res.status(400).send({message: 'Error: User already exists!'});
+		}
+	});
 };
 
 /**
