@@ -1,5 +1,14 @@
 'use strict';
 
+//FIXME: Should find an appropriate place for this
+//Setting up jsep
+jsep.addBinaryOp("contains", 10);
+jsep.addBinaryOp("!contains", 10);
+jsep.addBinaryOp("begins", 10);
+jsep.addBinaryOp("!begins", 10);
+jsep.addBinaryOp("ends", 10);
+jsep.addBinaryOp("!ends", 10);
+
 /**
  * Calculate a 32 bit FNV-1a hash
  * Found here: https://gist.github.com/vaiorabbit/5657561
@@ -121,15 +130,62 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 */
 				var evaluateLogicJump = function(field){
 					console.log('evaluateLogicJump');
+					console.log(field.fieldValue);
 					var logicJump = field.logicJump;
-					if (logicJump.expressionString && logicJump.valueB) {
-						var valA = hashFnv32a(String(field.fieldValue));
-						var valB = hashFnv32a(String(logicJump.valueB));
-						var scope = {
-							'a': valA,
-							'b': valB
-						};
-						return math.eval(logicJump.expressionString, scope);
+
+					if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
+						var parse_tree = jsep(logicJump.expressionString);
+						var left, right;
+
+						console.log(parse_tree);
+
+						if(parse_tree.left.name === 'field'){
+							left = field.fieldValue;
+							right = logicJump.valueB
+						} else {
+							left = logicJump.valueB;
+							right = field.fieldValue;
+						}
+
+						if(field.fieldType === 'number' || field.fieldType === 'scale' || field.fieldType === 'rating'){
+							switch(parse_tree.operator) {
+								case '==':
+									return (parseInt(left) === parseInt(right));
+								case '!==':
+									return (parseInt(left) !== parseInt(right));
+								case '>':
+									return (parseInt(left) > parseInt(right));
+								case '>=':
+									return (parseInt(left) > parseInt(right));
+								case '<':
+									return (parseInt(left) < parseInt(right));
+								case '<=':
+									return (parseInt(left) <= parseInt(right));
+								default:
+									return false;
+							}
+						} else {
+							switch(parse_tree.operator) {
+								case '==':
+									return (left === right);
+								case '!==':
+									return (left !== right);
+								case 'contains':
+									return (left.indexOf(right) > -1);
+								case '!contains':
+									return !(left.indexOf(right) > -1);
+								case 'begins':
+									return left.startsWith(right);
+								case '!begins':
+									return !left.startsWith(right);
+								case 'ends':
+									return left.endsWith(right);
+								case '!ends':
+									return left.endsWith(right);
+								default:
+									return false;
+							}
+						}
 					}
 				};
 
@@ -210,7 +266,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
                 $rootScope.nextField = $scope.nextField = function(){
 					var currField = $scope.myform.visible_form_fields[$scope.selected.index];
-					console.log(currField.logicJump);
 
 					if($scope.selected && $scope.selected.index > -1){
 						//Jump to logicJump's destination if it is true

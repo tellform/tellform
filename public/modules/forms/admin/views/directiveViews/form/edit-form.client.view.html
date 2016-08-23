@@ -308,10 +308,10 @@
                                 </div>
                             </div>
 
-							<div class="row" ng-if="myform.form_fields.length > 1 && myform.form_fields[$index].logicJump.fieldA">
+							<div class="row" ng-if="myform.form_fields.length > 1">
 								<h4> Logic Jump </h4>
 							</div>
-							<div class="row" ng-if="myform.form_fields.length > 1 && myform.form_fields[$index].logicJump.fieldA">
+							<div class="row" ng-if="myform.form_fields.length > 1">
 								<div class="col-md-4 col-xs-12 field-input">{{ 'ADD_LOGIC_JUMP' | translate }}</div>
 								<div class="col-md-8 col-xs-12 field-input">
 									<label class="btn col-xs-5">
@@ -330,27 +330,73 @@
 
 							<div class="row question" ng-if="myform.form_fields.length > 1 && myform.form_fields[$index].logicJump.fieldA">
 								<div class="col-md-4 col-sm-12">
+									<!-- FIX ME: translate this -->
 									<b> If this field </b>
 								</div>
 								<div class="col-md-4 col-sm-12">
 									<select style="width:100%" ng-model="field.logicJump.expressionString"
 											value="{{field.logicJump.expressionString}}"
 											name="logicjump_expressionString{{field._id}}">
-										<option value="a == b">
+										<option value="field == static">
+											<!-- FIX ME: translate this -->
 											is equal to
 										</option>
-										<option value="a !== b">
+										<option value="field != static">
+											<!-- FIX ME: translate this -->
 											is not equal to
+										</option>
+
+										<option value="field > static" ng-if-start="field.fieldType === 'number' || field.fieldType === 'rating' || field.fieldType === 'number'">
+											<!-- FIX ME: translate this -->
+											is greater than
+										</option>
+										<option value="field >= static">
+											<!-- FIX ME: translate this -->
+											is greater or equal than
+										</option>
+										<option value="field < static">
+											<!-- FIX ME: translate this -->
+											is smaller than
+										</option>
+										<option value="field <= static" ng-if-end>
+											<!-- FIX ME: translate this -->
+											is smaller or equal than
+										</option>
+
+										<option value="field contains static" ng-if-start="field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'">
+											<!-- FIX ME: translate this -->
+											contains
+										</option>
+										<option value="field !contains static">
+											<!-- FIX ME: translate this -->
+											does not contain
+										</option>
+										<option value="field ends static">
+											<!-- FIX ME: translate this -->
+											ends with
+										</option>
+										<option value="field !ends static">
+											<!-- FIX ME: translate this -->
+											does not end with
+										</option>
+										<option value="field starts static">
+											<!-- FIX ME: translate this -->
+											starts with
+										</option>
+										<option value="field !starts static" ng-if-end>
+											<!-- FIX ME: translate this -->
+											does not start with
 										</option>
 									</select>
 								</div>
 								<div class="col-md-4 col-sm-12">
 									<input type="text" ng-model="field.logicJump.valueB"/>
 								</div>
-								<div class="col-md-4 col-md-offset-2">
+								<div class="col-md-2">
+									<!-- FIX ME: translate this -->
 									<b>Jumps to </b>
 								</div>
-								<div class="col-md-6 col-sm-12">
+								<div class="col-md-10">
 									<select style="width:100%" ng-model="field.logicJump.jumpTo"
 											value="{{field.logicJump.jumpTo}}"
 											name="logicjump_jumpTo{{field._id}}">
