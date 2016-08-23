@@ -37,7 +37,8 @@
     "angular-ui-select": "https://github.com/whitef0x0/ui-select.git#compiled",
     "angular-translate": "~2.11.0",
     "ng-device-detector": "~3.0.1",
-    "ng-translate": "*"
+    "ng-translate": "*",
+    "mathjs": "^3.4.1"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",

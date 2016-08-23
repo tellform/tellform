@@ -72,6 +72,7 @@ module.exports = function(db) {
 		var subdomains = req.subdomains;
 		var host = req.hostname;
 
+		console.log(subdomains);
 
 		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
 			subdomains = subdomains.slice(4);
@@ -81,18 +82,18 @@ module.exports = function(db) {
 		if (!subdomains.length) return next();
 
 		var urlPath = url.parse(req.url).path.split('/');
-		if(urlPath.indexOf('static')){
+		if(urlPath.indexOf('static') > -1){
 			urlPath.splice(1,1);
 			req.root = 'https://' + config.baseUrl + urlPath.join('/');
 			return next();
 		}
 
-		if(subdomains.indexOf('stage') || subdomains.indexOf('admin')){
+		if(subdomains.indexOf('stage') > -1 || subdomains.indexOf('admin') > -1){
 			return next();
 		}
 
-
 		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
+			console.log(user);
 			if (err) {
 				console.log(err);
 				req.subdomains = null;
@@ -116,6 +117,8 @@ module.exports = function(db) {
 			req.url = path;
 
 			req.userId = user._id;
+
+			console.log('\n\n\ngot subdomain: '+ req.subdomains.reverse()[0]);
 
 			// Q.E.D.
 			next();
