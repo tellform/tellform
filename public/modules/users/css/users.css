@@ -1,11 +1,33 @@
-.row.auth form .field-input select {
-    padding: 0.45em 0.9em;
-    width: 100%;
-    background: transparent;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    height: 34px;
+section.auth {
+	margin-top: -5em;
+	padding-top: 5em;
+	color: white;
+	background-color: #1e5799; /* Old browsers */
+	background: -moz-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%);
+	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#50B5C1', endColorstr='#6450A0', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+
 }
+	section.auth > h3{
+		font-size: 3em;
+		font-weight: 500;
+	}
+
+	section.auth.signup-view > h3 {
+		font-size: 4.4em;
+		padding-bottom: 0.5em;
+	}
+
+	.row.auth form .field-input select {
+		padding: 0.45em 0.9em;
+		width: 100%;
+		background: transparent;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		height: 34px;
+	}
 
 @media (min-width: 992px) {
 	.nav-users {
@@ -22,20 +44,3 @@
 	position: absolute;
 }
 
-section.auth {
-	margin-top: 5em;
-}
-	section.auth > h3{
-		font-size: 3em;
-		font-weight: 500;
-		color: #777;
-	}
-
-	section.auth.signup-view > h3 {
-		font-size: 4.4em;
-		padding-bottom: 0.5em;
-	}
-
-/*	section.auth.signup-view.success > h3 {
-		padding-bottom: 1.2em;
-	}*/

@@ -2,28 +2,30 @@ body {
 	overflow-x: hidden;
 }
 
+section.content {
+	padding-top: 5em;
+}
+
 /*Navbar Custom CSS*/
 .navbar-inverse {
-	background-color:#fafafa;
+	background-color:#588EB4;
 	border: 0;
 }
 .navbar .navbar-brand {
 	font-size: 1.6em;
 	font-weight: 900;
-	color: rgb(255,131,131);
-}
-.navbar .navbar-brand:hover, .navbar .navbar-brand:visited {
-	color: #FA787E;
-}
-.navbar li.dropdown a.dropdown-toggle:hover > *{
-	color: black;
-}
-.navbar li.dropdown a.dropdown-toggle > *{
-	color: #d9d9d9;
-}
-.navbar li.dropdown.open a.dropdown-toggle:hover > *{
 	color: white;
 }
+.navbar .navbar-brand:hover, .navbar .navbar-brand:visited {
+	color: #ddd;
+}
+.navbar li.dropdown a.dropdown-toggle:hover > *{
+	color: #f9f9f9;
+}
+.navbar li.dropdown a.dropdown-toggle > *{
+	color: #ddd;
+}
+
 .navbar .navbar-brand span {
 	text-decoration: underline;
 }
@@ -32,11 +34,11 @@ body {
 }
 
 .navbar-inverse .navbar-nav>li>a, .navbar li.dropdown a.dropdown-toggle > * {
-    color: rgb(131,131,131);
+    color: #ddd;
 }
 .navbar-inverse .navbar-nav .active > a, .navbar li.dropdown.open a.dropdown-toggle > *, .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
-	background-color: rgb(131,131,131);
-    color: white!important;
+	background-color: #6450A0;
+    color: #ddd;
 }
 .navbar-inverse .navbar-toggle {
 	background-color: #ddd;
