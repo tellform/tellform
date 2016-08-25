@@ -60,11 +60,11 @@ section.content p.breakwords {
     word-break: break-all;
 }
 
-.btn {
+.public-form .btn {
     border: 1px solid #c6c6c6;
 }
 
-.btn[type='submit'] {
+.public-form .btn[type='submit'] {
     font-size: 1.5em;
     padding: 0.35em 1.2em 0.35em 1.2em;
 }
@@ -82,7 +82,7 @@ section.content > section > section.container {
     font-size: 18px;
     font-weight: normal;
 }
-.input-block {
+.public-form .input-block {
     display: block;
     width: 100%;
 }
@@ -116,7 +116,7 @@ div.form-fields {
 	position: relative;
 	padding-top: 35vh;
 }
-.letter {
+.public-form .letter {
 	position: relative;
     display: -moz-inline-stack;
     display: inline-block;

@@ -34,6 +34,8 @@
 	<link href="/static/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900'>
+
 	<!--Bower CSS dependencies-->
 	{% for bowerCssFile in bowerCssFiles %}
 		<link rel="stylesheet" href="{{bowerCssFile}}">
@@ -66,7 +68,6 @@
             <a href="https://github.com/whitef0x0/tellform">Fork me on GitHub</a>
         </div>
     </div>-->
-	<header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
 	{% block content %}{% endblock %}
 
 	<script src="/static/lib/file-saver.js/FileSaver.js" type="text/javascript"></script>

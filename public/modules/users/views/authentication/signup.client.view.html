@@ -1,4 +1,4 @@
-<section class="row auth signup-view" data-ng-controller="AuthenticationController">
+<section class="auth signup-view valign-wrapper" data-ng-controller="AuthenticationController">
 <!-- 	<h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
 	<div class="col-md-12 text-center">
 		<a href="/auth/facebook" class="undecorated-link">
@@ -17,54 +17,64 @@
 			<img src="/modules/users/img/buttons/github.png">
 		</a>
 	</div> -->
-	<h3 class="col-md-12 text-center">{{ 'SIGNUP_HEADER_TEXT' | translate }}</h3>
-	<div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
-		<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
-			<fieldset>
-				<div data-ng-show="error" id="signup_errors" class="text-center text-danger">
-					{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
-					<strong data-ng-bind="error"></strong>
-				</div>
-				<div class="form-group">
-					<label for="firstName">{{ 'FIRST_NAME_LABEL' | translate }}</label>
-					<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="firstName" name="firstName" class="form-control" ng-model="credentials.firstName" placeholder="First Name">
-				</div>
-				<div class="form-group">
-					<label for="lastName">{{ 'LAST_NAME_LABEL' | translate }}</label>
-					<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="lastName" name="lastName" class="form-control" ng-model="credentials.lastName" placeholder="Last Name">
-				</div>
-				<div class="row form-group">
-					<div class="field-title">
-						<b>{{ 'LANGUAGE_LABEL' | translate }}</b>
+	<!--<h3 class="col-md-12 text-center">{{ 'SIGNUP_HEADER_TEXT' | translate }}</h3>-->
+
+	<div class="row valign">
+		<div class="col-md-12 text-center vcenter" style="padding-bottom: 50px;">
+			<img src="/static/modules/core/img/logo_white.svg" height="100px">
+		</div>
+		<div class="col-xs-offset-3 col-xs-6 col-sm-offset-4 col-sm-4">
+			<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
+				<fieldset>
+					<div data-ng-show="error" id="signup_errors" class="text-center text-danger">
+						{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
+						<strong data-ng-bind="error"></strong>
 					</div>
-					<div class="field-input">
-						<select ng-model="user.language" required>
-							<option ng-repeat="language in languages"
-									ng-selected="language == user.language"
-									value="{{language}}">
-								{{language}}
-							</option>
-						</select>
+					<!--<div class="form-group">
+						<label for="firstName">{{ 'FIRST_NAME_LABEL' | translate }}</label>
+						<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="firstName" name="firstName" class="form-control" ng-model="credentials.firstName" placeholder="First Name">
 					</div>
-				</div>
-				<hr>
-				<div class="form-group">
-					<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>
-					<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="Username">
-				</div>
-				<div class="form-group">
-					<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
-					<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="Email">
-				</div>
-				<div class="form-group">
-					<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>
-					<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="Password">
-				</div>
-				<div class="text-center form-group">
-					<button type="submit" class="btn btn-large btn-primary">{{ 'SIGNUP_BTN' | translate }}</button>
-				</div>
-				
-			</fieldset>
-		</form>
+					<div class="form-group">
+						<label for="lastName">{{ 'LAST_NAME_LABEL' | translate }}</label>
+						<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="lastName" name="lastName" class="form-control" ng-model="credentials.lastName" placeholder="Last Name">
+					</div>-->
+					<!--<div class="row form-group">
+						<div class="field-title">
+							<b>{{ 'LANGUAGE_LABEL' | translate }}</b>
+						</div>
+						<div class="field-input">
+							<select ng-model="user.language" required>
+								<option ng-repeat="language in languages"
+										ng-selected="language == user.language"
+										value="{{language}}">
+									{{language}}
+								</option>
+							</select>
+						</div>
+					</div>
+					<hr>-->
+					<div class="form-group">
+						<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
+						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}">
+					</div>
+					<div class="form-group">
+						<!--<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>-->
+						<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="{{ 'EMAIL_LABEL' | translate }}">
+					</div>
+					<div class="form-group">
+						<!--<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>-->
+						<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}">
+					</div>
+					<div class="text-center form-group">
+						<button type="submit" class="btn btn-signup">{{ 'SIGNUP_BTN' | translate }}</button>
+					</div>
+
+				</fieldset>
+			</form>
+
+			<div class="text-center forgot-password">
+				<a ui-sref="signin">{{ 'SIGN_IN_ACCOUNT_LINK' | translate }}</a>
+			</div>
+		</div>
 	</div>
 </section>

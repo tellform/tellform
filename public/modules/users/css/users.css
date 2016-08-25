@@ -1,6 +1,10 @@
 section.auth {
-	margin-top: -5em;
-	padding-top: 5em;
+	padding: 70px 0;
+	position: absolute;
+	min-height: 100%;
+	top: 0;
+	left: 0;
+	width: 100%;
 	color: white;
 	background-color: #1e5799; /* Old browsers */
 	background: -moz-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* FF3.6-15 */
@@ -8,25 +12,67 @@ section.auth {
 	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%);
 	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#50B5C1', endColorstr='#6450A0', GradientType=1); /* IE6-9 fallback on horizontal gradient */
-
 }
 	section.auth > h3{
-		font-size: 3em;
+		font-size: 2em;
 		font-weight: 500;
 	}
 
+	.valign-wrapper {
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
+	}
+
+	.valign-wrapper .valign {
+		display: block;
+		width: 100%;
+	}
+
+	section.auth a {
+		color: white;
+		text-decoration: underline;
+	}
+
 	section.auth.signup-view > h3 {
-		font-size: 4.4em;
+		font-size: 3em;
 		padding-bottom: 0.5em;
 	}
 
-	.row.auth form .field-input select {
+	section.auth form .field-input select {
 		padding: 0.45em 0.9em;
 		width: 100%;
 		background: transparent;
 		font-size: 16px;
 		border: 1px solid #ccc;
 		height: 34px;
+	}
+
+	section.auth input {
+		color: #4c4c4c;
+	}
+
+	.btn {
+		border-radius: 100px;
+		font-size: 14px;
+		padding: 12px 28px;
+		margin-top: 1em;
+		text-transform: uppercase;
+	}
+
+	section.auth .btn-signup {
+		background-color: #FFD747;
+		color: #896D0B;
+		border: 2px #FFD747 solid;
+		width: 100%;
+	}
+	section.auth .btn-signup:hover {
+		color: #FFD747;
+		background-color: #896D0B;
+		border: 2px #896D0B solid;
 	}
 
 @media (min-width: 992px) {
@@ -44,3 +90,15 @@ section.auth {
 	position: absolute;
 }
 
+input.form-control {
+	border: none;
+	border-radius: 4px;
+	color: white;
+	box-shadow: none;
+	font-size: 18px;
+	padding: 30px 20px;
+}
+
+.btn {
+	border: none;
+}

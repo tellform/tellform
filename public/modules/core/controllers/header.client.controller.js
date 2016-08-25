@@ -30,9 +30,12 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 				Auth.ensureHasCurrentUser(User);
 				$scope.user = $rootScope.user = null;
 				$state.go('listForms');
+
+				//Refresh view
+				$state.reload();
 			},
 			function(reason) {
-			  	console.log('Logout Failed: ' + reason);
+			  	console.error('Logout Failed: ' + reason);
 			});
 	    };
 

@@ -1,66 +1,46 @@
 body {
 	overflow-x: hidden;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 16px;
 }
 
-section.content {
-	padding-top: 5em;
+.vcenter {
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
 }
 
 /*Navbar Custom CSS*/
+.navbar {
+	min-height: 60px;
+}
 .navbar-inverse {
 	background-color:#588EB4;
 	border: 0;
+	color: white!important;
 }
-.navbar .navbar-brand {
-	font-size: 1.6em;
-	font-weight: 900;
+.navbar li > * {
+	border-bottom: 4px solid white;
 	color: white;
 }
-.navbar .navbar-brand:hover, .navbar .navbar-brand:visited {
-	color: #ddd;
+.navbar li:hover > * {
+	border-bottom: 2px solid #ddd;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: white;
 }
 .navbar li.dropdown a.dropdown-toggle:hover > *{
 	color: #f9f9f9;
 }
-.navbar li.dropdown a.dropdown-toggle > *{
-	color: #ddd;
-}
-
-.navbar .navbar-brand span {
-	text-decoration: underline;
-}
-.nav.navbar-nav.navbar-right li {
-	padding-right: 20px;
-}
-
-.navbar-inverse .navbar-nav>li>a, .navbar li.dropdown a.dropdown-toggle > * {
-    color: #ddd;
-}
-.navbar-inverse .navbar-nav .active > a, .navbar li.dropdown.open a.dropdown-toggle > *, .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
-	background-color: #6450A0;
-    color: #ddd;
-}
 .navbar-inverse .navbar-toggle {
-	background-color: #ddd;
 	border:none;
 }
-.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-	color: white;
-}
-.navbar-inverse .navbar-collapse{
-	border: none;
-}
-
 .undecorated-link:hover {
 	text-decoration: none;
 }
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 	display: none !important;
-}
-.browsehappy.jumbotron.hide,
-body.ng-cloak
-{
-	display: block;
 }
 
 /*Hero Section CSS (for /home)*/
