@@ -6,7 +6,7 @@ section.auth {
 	left: 0;
 	width: 100%;
 	color: white;
-	background-color: #1e5799; /* Old browsers */
+	background-color: #50B5C1; /* Old browsers */
 	background: -moz-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%);
@@ -55,6 +55,7 @@ section.auth {
 		color: #4c4c4c;
 	}
 
+<<<<<<< HEAD
 	section.auth .btn {
 		border-radius: 100px;
 		font-size: 14px;
@@ -63,16 +64,29 @@ section.auth {
 		text-transform: uppercase;
 	}
 
-	section.auth .btn-signup {
+
+	.btn-rounded.btn-signup {
 		background-color: #FFD747;
 		color: #896D0B;
 		border: 2px #FFD747 solid;
-		width: 100%;
 	}
-	section.auth .btn-signup:hover {
+
+	.btn-rounded.btn-signup:hover {
 		color: #FFD747;
 		background-color: #896D0B;
 		border: 2px #896D0B solid;
+	}
+
+	.btn-rounded.btn-default {
+		background-color: transparent;
+		color: white;
+		border: 2px white solid;
+	}
+
+	.btn-rounded.btn-default:focus, .btn-rounded.btn-default:hover {
+		color: #6450A0;
+		background-color: white;
+		border-color: white;
 	}
 
 @media (min-width: 992px) {
@@ -90,10 +104,12 @@ section.auth {
 	position: absolute;
 }
 
-input.form-control {
+section.auth input.form-control {
 	border: none;
+}
+
+input.form-control {
 	border-radius: 4px;
-	color: white;
 	box-shadow: none;
 	font-size: 18px;
 	padding: 30px 20px;

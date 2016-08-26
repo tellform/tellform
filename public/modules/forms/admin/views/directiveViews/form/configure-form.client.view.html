@@ -1,22 +1,21 @@
 <div class="config-form container">
-    <div class="row">
-
-        <!-- Settings -->
-        <div class="col-sm-12 container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h2 class="hidden-sm hidden-xs">{{ 'ADVANCED_SETTINGS' | translate }}</h2>
-                    <h3 class="hidden-lg hidden-md">{{ 'ADVANCED_SETTINGS' | translate }}</h3>
-                </div>
-            </div>
-
+	<!--<div class="row">
+		<div class="col-sm-offset-2 col-sm-10">
+			<h2 class="hidden-sm hidden-xs">{{ 'ADVANCED_SETTINGS' | translate }}</h2>
+			<h3 class="hidden-lg hidden-md">{{ 'ADVANCED_SETTINGS' | translate }}</h3>
+		</div>
+	</div>-->
+	<!-- Settings -->
+	<div class="row">
+        <div class="col-sm-offset-2 col-sm-4">
             <div class="row field">
-                <div class="field-title col-sm-4">
+                <div class="field-title col-sm-12">
                     <h5>{{ 'FORM_NAME' | translate }}</h5>
                 </div>
 
-                <div class="col-sm-8">
-                    <input type="text" 
+                <div class="col-sm-12">
+                    <input class="form-control"
+					    type="text"
                         ng-model="myform.title" 
                         value="{{myform.title}}"
                         style="width: 100%;"
@@ -26,44 +25,28 @@
             </div>
 
             <div class="row field">
-                <div class="field-title col-sm-6">
+                <div class="field-title col-sm-12">
                     <h5>{{ 'FORM_STATUS' | translate }}</h5>
                 </div>
 
-                <div class="field-input col-sm-6">
+                <div class="field-input col-sm-12">
 
-                    <label>
+                    <label style="display: inline-block;">
                         <input type="radio" data-ng-value="true" ng-model="myform.isLive"  ng-required="true" style="background-color:#33CC00;"/>
                         &nbsp;<span>{{ 'PUBLIC' | translate }}</span>
                     </label>
 
-                    <label>
+                    <label style="display: inline-block;">
                         <input type="radio" data-ng-value="false" ng-model="myform.isLive"  ng-required="true" />
                         &nbsp;<span>{{ 'PRIVATE' | translate }}</span>
                     </label>
 
                 </div>
             </div>
-
-			<div class="row field">
-				<div class="field-title col-sm-4">
-					<h5>{{ 'GA_TRACKING_CODE' | translate }}</h5>
-				</div>
-
-				<div class="col-sm-8">
-					<input type="text"
-						   ng-model="myform.analytics.gaCode"
-						   value="{{myform.analytics.gaCode}}"
-						   style="width: 100%;"
-						   ng-minlength="4"
-						   placeholder="UA-XXXXX-Y"
-						   ng-pattern="/\bUA-\d{4,10}-\d{1,4}\b/">
-				</div>
-			</div>
             
             <div class="row field">
-                <div class="col-xs-6 field-title">Language</div>
-                <div class="col-xs-4 field-input">
+                <div class="col-sm-12 field-title">Language</div>
+                <div class="col-sm-12 field-input">
                     <select ng-model="myform.language">
                         <option ng-repeat="language in languages" 
                                 ng-selected="language == myform.language"
@@ -74,51 +57,69 @@
                     <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
                 </div>
             </div>
-            <div class="row field">
-                <div class="field-title col-sm-6">
-                    <h5>{{ 'DISPLAY_FOOTER' | translate }}</h5>
-                </div>
-
-                <div class="field-input col-sm-6">
-                    <label>
-                        <input type="radio" data-ng-value="false" ng-model="myform.hideFooter"  ng-required="true" />
-                        &nbsp;<span>{{ 'YES' | translate }}</span>
-                    </label>
-
-                    <label>
-                        <input type="radio" data-ng-value="true" ng-model="myform.hideFooter"  ng-required="true" />
-                        &nbsp;<span>{{ 'No' | translate }}</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="row field">
-                <div class="field-title col-sm-6">
-                    <h5>Display Start Page?</h5>
-                </div>
-
-                <div class="field-input col-sm-6">
-
-                    <label>
-                        <input type="radio" data-ng-value="true" ng-model="myform.startPage.showStart"  ng-required="true" style="background-color:#33CC00;"/>
-                        &nbsp;<span>{{ 'YES' | translate }}</span>
-                    </label>
-
-                    <label>
-                        <input type="radio" data-ng-value="false" ng-model="myform.startPage.showStart"  ng-required="true" />
-                        &nbsp;<span>{{ 'NO' | translate }}</span>
-                    </label>
-
-                </div>
-            </div>
         </div>
+		<div class="col-sm-4">
+			<div class="row field">
+				<div class="field-title col-sm-12">
+					<h5>{{ 'GA_TRACKING_CODE' | translate }}</h5>
+				</div>
+
+				<div class="col-sm-12">
+					<input class="form-control"
+						   type="text"
+						   ng-model="myform.analytics.gaCode"
+						   value="{{myform.analytics.gaCode}}"
+						   style="width: 100%;"
+						   ng-minlength="4"
+						   placeholder="UA-XXXXX-Y"
+						   ng-pattern="/\bUA-\d{4,10}-\d{1,4}\b/">
+				</div>
+			</div>
+			<div class="row field">
+				<div class="field-title col-sm-12">
+					<h5>{{ 'DISPLAY_FOOTER' | translate }}</h5>
+				</div>
+
+				<div class="field-input col-sm-12">
+					<label style="display: inline-block;">
+						<input type="radio" data-ng-value="false" ng-model="myform.hideFooter"  ng-required="true" />
+						&nbsp;<span>{{ 'YES' | translate }}</span>
+					</label>
+
+					<label style="display: inline-block;">
+						<input type="radio" data-ng-value="true" ng-model="myform.hideFooter"  ng-required="true" />
+						&nbsp;<span>{{ 'No' | translate }}</span>
+					</label>
+				</div>
+			</div>
+
+			<div class="row field">
+				<div class="field-title col-sm-12">
+					<h5>Display Start Page?</h5>
+				</div>
+
+				<div class="field-input col-sm-12">
+
+					<label style="display: inline-block;">
+						<input type="radio" data-ng-value="true" ng-model="myform.startPage.showStart"  ng-required="true" style="background-color:#33CC00;"/>
+						&nbsp;<span>{{ 'YES' | translate }}</span>
+					</label>
+
+					<label style="display: inline-block;">
+						<input type="radio" data-ng-value="false" ng-model="myform.startPage.showStart"  ng-required="true" />
+						&nbsp;<span>{{ 'NO' | translate }}</span>
+					</label>
+
+				</div>
+			</div>
+		</div>
     </div>
     <div class="row">
-            <div class="col-sm-offset-4 col-sm-2">
-                <button class="btn btn-primary btn-large" type="button" ng-click="update(false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
-            </div>
-            <div class="col-sm-1">
-                <button class="btn btn-default" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'CANCEL' | translate }}</button>
-            </div>
+		<div class="col-sm-offset-4 col-sm-2">
+			<button class="btn btn-signup btn-rounded" type="button" ng-click="update(false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
+		</div>
+		<div class="col-sm-1">
+			<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'CANCEL' | translate }}</button>
+		</div>
     </div>
 </div>
