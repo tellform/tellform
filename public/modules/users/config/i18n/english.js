@@ -21,6 +21,8 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SIGNIN_HEADER_TEXT: 'Sign in',
 
 		SIGNUP_ERROR_TEXT: 'Couldn\'t complete registration due to errors',
+		ENTER_ACCOUNT_EMAIL: 'Enter your account email.',
+		RESEND_VERIFICATION_EMAIL: 'Resend Verification Email',
 
 		UPDATE_PROFILE_BTN: 'Update Profile',
 		PROFILE_SAVE_SUCCESS: 'Profile saved successfully',
