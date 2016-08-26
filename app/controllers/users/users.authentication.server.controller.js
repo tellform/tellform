@@ -11,7 +11,9 @@ var _ = require('lodash'),
 	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
 	crypto = require('crypto'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	tokgen = require("../../libs/tokenGenerator");
+
 
 var nev = require('email-verification')(mongoose);
 
@@ -303,4 +305,44 @@ exports.removeOAuthProvider = function(req, res, next) {
 			}
 		});
 	}
+};
+
+/* Generate API Key for User */
+exports.generateAPIKey = function(req, res) {
+	if (!req.isAuthenticated()){
+		return res.status(400).send({
+			message: 'User is not Authorized'
+		});
+	}
+
+	User.findById(req.user.id)
+		.exec( function(err, user) {
+			if (err) return res.status(400).send(err);
+
+			if (!user) {
+				return res.status(400).send({
+					message: 'User does not Exist'
+				});
+			}
+
+			user.apiKey = tokgen();
+
+			user.save(function(err, _user) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+
+				var newUser = _user.toObject();
+				delete newUser.salt;
+				delete newUser.__v;
+				delete newUser.passwordHash;
+				delete newUser.provider;
+
+				console.log(newUser);
+				return res.json(newUser);
+			});
+
+		});
 };
