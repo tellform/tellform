@@ -1,0 +1,468 @@
+{
+  "swagger": "2.0",
+  "info": {
+	"version": "1.0.0",
+	"title": "TellForm API",
+	"contact": {
+	  "name": "TellForm Team",
+	  "url": "http://tellform.com"
+	},
+	"license": {
+	  "name": "Creative Commons 4.0 International",
+	  "url": "http://creativecommons.org/licenses/by/4.0/"
+	}
+  },
+  "host": "tellform.com",
+  "basePath": "/api",
+  "schemes": [
+	"http"
+  ],
+  "paths": {
+	"/forms": {
+	  "get": {
+		"tags": [
+		  "Form Operations"
+		],
+		"summary": "Finds forms in the system",
+		"responses": {
+		  "200": {
+			"description": "forms response",
+			"schema": {
+			  "type": "array",
+			  "items": {
+				"$ref": "#/definitions/Form"
+			  }
+			},
+			"headers": {
+			  "x-expires": {
+				"type": "string"
+			  }
+			}
+		  }
+		}
+	  }
+	}
+  },
+  "definitions": {
+	"User": {
+	  "type": "object",
+	  "required": [
+		"language",
+		"email",
+		"username"
+	  ],
+	  "properties": {
+		"id": {
+		  "type": "string",
+		},
+		"firstName": {
+		  "type": "string"
+		},
+		"lastName": {
+		  "type": "string"
+		},
+		"language": {
+		  "type": "string",
+		  "enum": ["en", "fr", "es", "it", "de"],
+		  "default": "en",
+		  "required": "User must have a language"
+		},
+		"email": {
+		  "type": "string",
+		  "format": "email",
+		  "required": "User email cannot be blank",
+		  "unique": "true"
+		},
+		"username": {
+		  "type": "string",
+		  "required": "Username cannot be blank"
+		  "unique": "true"
+		},
+		"passwordHash": {
+		  "type": "string",
+		  "default": ""
+		},
+		"salt": {
+		  "type": "string"
+		},
+		"provider": {
+			"type": "string",
+		  	"required": "provider is required",
+		    "default": "local"
+		},
+		"providerData": {
+		  "type": "object"
+		},
+		"additionalProvidersData": {
+		  "type": "object"
+		},
+		"roles": {
+		  "type": "array",
+		  "items": {
+			"type": "string",
+			"enum": ["user", "admin", "superuser"]
+		  },
+		  "default": ["user"]
+		}
+	  }
+	  "lastModified": {
+		"type": "date"
+	  },
+	  "created": {
+		"type": "date"
+	  },
+	  "resetPasswordToken": {
+		"type": "string"
+	  },
+	  "resetPasswordExpires": {
+		"type": "date"
+	  },
+	  "token": {
+		"type": "string"
+	  },
+	  "apiKey": {
+		"type": "string",
+		"unique": true,
+		"index": true,
+		"sparse": true
+	  }
+	},
+
+	"LogicJump"
+
+	"FieldOption": {
+	  "type": "object",
+	  "properties": {
+		"option_id": {
+		  "type": "number"
+		},
+		"option_title": {
+		  "type": "string"
+		},
+		"option_value": {
+		  "type": "string",
+		  "trim": true
+		}
+	  }
+	},
+
+	"RatingField": {
+	  "type": "object",
+	  "properties": {
+		"steps": {
+		  "type": "number",
+		  "min": 1,
+		  "max": 10
+		},
+		"shape": {
+		  "type": "string",
+		  "enum": [
+			"Heart",
+			"Star",
+			"thumbs-up",
+			"thumbs-down",
+			"Circle",
+			"Square",
+			"Check Circle",
+			"Smile Outlined",
+			"Hourglass",
+			"bell",
+			"Paper Plane",
+			"Comment",
+			"Trash"
+		  ]
+		},
+		"validShapes": {
+		  "type": "array",
+          "items": {
+			"type": "string"
+		  }
+		}
+	  }
+	},
+
+	"FormField": {
+	  "required":[
+		"title",
+		"fieldType"
+	  ],
+	  "properties": {
+
+		"isSubmission": {
+		  "type": "boolean",
+		  "default": false
+		},
+		"submissionId": {
+		  "type": "string"
+		},
+		"title": {
+		  "type": "string",
+		  "trim": true,
+		  "required": "Field Title cannot be blank"
+		},
+		"description": {
+		  "type": "string",
+		  "default": ""
+		},
+
+		"logicJump": {
+		  "$ref": "#/definitions/FormFields"
+		},
+
+		"ratingOptions": {
+		  "type": "#/definitions/RatingField",
+		},
+		"fieldOptions": {
+		  "type": "array",
+		  "items": "#/definitions/FieldOption"
+		},
+		"required": {
+		  "type": "boolean",
+		  "default": true
+		},
+		"disabled": {
+		  "type": "boolean",
+		  "default": false
+		},
+
+		"deletePreserved": {
+		  "type": "boolean",
+		  "default": false
+		},
+		"validFieldTypes": {
+		  "type": "array",
+		  "items": {
+			"type": "string"
+		  }
+		},
+		"fieldType": {
+		  "type": "string",
+		  "required": true,
+		  "enum": [
+			"textfield",
+			"date",
+			"email",
+			"link",
+			"legal",
+			"url",
+			"textarea",
+			"statement",
+			"welcome",
+			"thankyou",
+			"file",
+			"dropdown",
+			"scale",
+			"rating",
+			"radio",
+			"checkbox",
+			"hidden",
+			"yes_no",
+			"natural",
+			"stripe",
+			"number"
+		  ]
+		},
+		"fieldValue": {
+		  "type": "string"
+		}
+
+	  }
+	},
+
+	"VisitorData": {
+	  "type": "object",
+	  "properties": {
+		"referrer": {
+		  "type": "string"
+		},
+		"lastActiveField": {
+		  "type": "string"
+		},
+		"timeElapsed": {
+		  "type": "number"
+		},
+		"isSubmitted": {
+		  "type": "boolean"
+		},
+		"language": {
+		  "type": "string"
+		},
+		"ipAddr": {
+		  "type": "string",
+		  "default": ""
+		},
+		"deviceType": {
+		  "type": "string",
+		  "enum": ["desktop", "phone", "tablet", "other"],
+		  "default": "other"
+		},
+		"userAgent": {
+		  "type": "string"
+		}
+	  }
+	},
+	"Button": {
+	  "type": "object",
+	  "properties": {
+		"url": {
+		  "type": "string",
+		  "pattern": "/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/"
+		},
+		"action": {
+		  "type": "string"
+		},
+		"text": {
+		  "type": "string"
+		},
+		"bgColor": {
+		  "type": "string",
+		  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+		  "default": "5bc0de"
+		},
+		"color": {
+		  "type": "string",
+		  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+		  "default": "#ffffff"
+		}
+	  }
+	},
+	"Form": {
+	  "type": "object",
+	  "required": [
+		"language",
+		"admin",
+		"title"
+	  ],
+	  "properties": {
+		"id": {
+		  "type": "string",
+		},
+		"title": {
+		  "type": "string",
+		  "required": "Form Title cannot be blank"
+		},
+		"language": {
+		  "type": "string",
+		  "enum": ["en", "fr", "es", "it", "de"],
+		  "default": "en",
+		  "required": "Form must have a language"
+		},
+		"analytics": {
+		  "properties": {
+			"gaCode": {
+			  "type": "string"
+			},
+			"visitors": {
+			  "type": "array",
+			  "items": {
+				"type": "#/definitions/VisitorData"
+			  }
+			}
+		  }
+		},
+
+		"form_fields": {
+		  "type": "array",
+		  "items": "#/definitions/FormFields"
+		},
+		"submissions": {
+		  "type": "array",
+		  "items": {
+			"$ref": "#/definitions/FormSubmission"
+		  }
+		},
+
+		"admin": {
+		  "$ref": "#/definitions/User",
+		  "required": "Form must have an Admin"
+		},
+
+		"pdf": {
+		  "type": "object"
+		},
+		"pdfFieldMap": {
+		  "type": "object"
+		},
+
+		"startPage": {
+		  "properties": {
+			"showStart": {
+			  "type": "boolean",
+			  "default": false
+			},
+			"introTitle": {
+			  "type": "string",
+			  "default": "Welcome to Form"
+			},
+			"introParagraph": {
+			  "type": "string"
+			},
+			"introButtonText": {
+			  "type": "string",
+			  "default": "Start"
+			},
+			"buttons": {
+			  "type": "array",
+			  "items": "#/definitions/Button"
+			}
+		  }
+		},
+
+		"hideFooter": {
+		  "type": "boolean",
+		  "default": false
+		},
+		"isGenerated": {
+		  "type": "boolean",
+		  "default": false
+		},
+		"isLive": {
+		  "type": "boolean",
+		  "default": false
+		},
+		"autofillPDFs": {
+		  "type": "boolean",
+		  "default": false
+		},
+
+		"design": {
+		  "colors":{
+			"backgroundColor": {
+			  "type": "string",
+			  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+			  "default": "#fff"
+			},
+			"questionColor": {
+			  "type": "string",
+			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+			  "default": "#333"
+			},
+			"answerColor"": {
+			  "type": "string",
+			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+			  "default": "#333"
+			},
+			"buttonColor": {
+			  "type": "string"
+			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+			  "default": "#fff"
+			},
+			"buttonTextColor": {
+			  "type": "string",
+			  "pattern": "[/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]",
+			  "default": "#333"
+			}
+		  },
+		  "font": "string"
+		}
+	},
+	"Address": {
+	  "type": "object",
+	  "properties": {
+		"addressLine1": {
+		  "type": "string"
+		}
+	  }
+	},
+  }
+}

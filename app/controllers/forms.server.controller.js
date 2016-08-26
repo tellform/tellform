@@ -185,8 +185,6 @@ exports.createSubmission = function(req, res) {
 		percentageComplete: req.body.percentageComplete
 	});
 
-	if(!!form.plugins.oscarhost.baseUrl) submission.hasPlugins.oscarhost = true;
-
 	if(form.pdf) submission.pdf = form.pdf;
 
 	//Save submitter's IP Address
@@ -280,10 +278,7 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-	var validUpdateTypes= Form.schema.path('plugins.oscarhost.settings.updateType').enumValues;
-
 	var newForm = req.form.toJSON({virtuals : true});
-	newForm.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
 
 	if (req.userId) {
 		if(req.form.admin._id+'' === req.userId+''){
@@ -294,7 +289,7 @@ exports.read = function(req, res) {
 		});
 	}
 	return res.json(newForm);
-	
+
 };
 
 /**
