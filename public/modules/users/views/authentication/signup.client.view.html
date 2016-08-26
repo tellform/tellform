@@ -55,7 +55,7 @@
 					<hr>-->
 					<div class="form-group">
 						<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
-						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}">
+						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}" ng-minlength="4">
 					</div>
 					<div class="form-group">
 						<!--<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>-->
@@ -63,7 +63,7 @@
 					</div>
 					<div class="form-group">
 						<!--<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>-->
-						<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}">
+						<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" ng-minlength="4">
 					</div>
 					<div class="text-center form-group">
 						<button type="submit" class="btn btn-signup">{{ 'SIGNUP_BTN' | translate }}</button>

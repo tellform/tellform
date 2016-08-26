@@ -19,12 +19,29 @@ body {
 	border: 0;
 	color: white!important;
 }
-.navbar li > * {
-	border-bottom: 4px solid white;
+.navbar .navbar-brand {
+	min-height: 60px;
+	padding: 10px;
+}
+
+.navbar-nav {
+	min-height: 60px;
+}
+
+.navbar-nav > li {
+
+	min-height: 60px;
+}
+.navbar-nav > li > a {
 	color: white;
 }
-.navbar li:hover > * {
-	border-bottom: 2px solid #ddd;
+.navbar-nav > li:hover, .navbar-nav > li.active {
+	background-color: #4b7096;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+	background-color: transparent;
+	color: inherit;
+	border: none;
 }
 
 .navbar-inverse .navbar-nav>li>a {
@@ -41,6 +58,10 @@ body {
 }
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 	display: none !important;
+}
+
+.dropdown-menu>li>a {
+	color: #515151;
 }
 
 /*Hero Section CSS (for /home)*/
