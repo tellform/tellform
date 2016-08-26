@@ -1,4 +1,6 @@
-1<section class="row auth" data-ng-controller="SettingsController" >
+<header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
+
+<section class="row" data-ng-controller="SettingsController">
 	<h3 class="col-xs-offset-1 col-xs-10 text-center">Edit your profile</h3>
 	<div class="col-xs-offset-3 col-xs-6">
 		<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="signin form-horizontal" autocomplete="off">

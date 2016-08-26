@@ -20,6 +20,7 @@ var config_nev = function () {
 
 	var User = require('../../models/user.server.model');
 
+
 	nev.configure({
 	    persistentUserModel: User,
 	    tempUserCollection: config.tempUserCollection,
@@ -30,7 +31,7 @@ var config_nev = function () {
 	    verifyMailOptions: {
 	        from: config.mailer.from,
 	        subject: 'Confirm your account',
-	        html: '<p>Please verify your account by clicking <a href="${URL}">this link</a>. If you are unable to do so, copy and ' +
+	        html: '<p>Please verify your account by clicking <a href="http://${URL}">this link</a>. If you are unable to do so, copy and ' +
 	                'paste the following link into your browser:</p><p>${URL}</p>',
 	        text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
 	    },
@@ -86,7 +87,6 @@ exports.resendVerificationEmail = function(req, res, next){
 	    }
 
 	    if (userFound){
-	    	console.log('hello');
 	        res.status(200).send('Verification email successfully Re-Sent');
 	    }else {
 	        // user hasn't been found yet

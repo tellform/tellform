@@ -55,7 +55,7 @@ section.auth {
 		color: #4c4c4c;
 	}
 
-	.btn {
+	section.auth .btn {
 		border-radius: 100px;
 		font-size: 14px;
 		padding: 12px 28px;
