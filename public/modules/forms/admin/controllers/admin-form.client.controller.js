@@ -1,8 +1,12 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
+
+		$scope.trustSrc = function(src) {
+			return $sce.trustAsResourceUrl(src);
+		};
 
         $scope = $rootScope;
         $scope.animationsEnabled = true;
@@ -11,24 +15,34 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
         CurrentForm.setForm($scope.myform);
 
-	$scope.formURL = $scope.myform.admin.username + '.tellform.com';
+		$scope.formURL = "/#!/forms/" + $scope.myform._id;
 
-        $scope.tabData   = [
+
+		console.log($scope.myform);
+		$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + "/#!/forms/" + $scope.myform._id;
+
+
+		var refreshFrame = $scope.refreshFrame = function(){
+			document.getElementById('iframe').contentWindow.location.reload();
+		};
+
+
+		$scope.tabData   = [
             {
                 heading: $filter('translate')('CREATE_TAB'),
-                route:   'viewForm.create'
+                templateName: 'create'
             },
-            {
+            /*{
                 heading: $filter('translate')('DESIGN_TAB'),
-                route:   'viewForm.design'
-            },
+                templateName:   'design'
+            },*/
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-                route:   'viewForm.configure'
+				templateName:   'configure'
             },
             {
                 heading: $filter('translate')('ANALYZE_TAB'),
-                route:   'viewForm.analyze'
+				templateName:   'analyze'
             }
         ];
 
@@ -93,6 +107,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
         // Update existing Form
         $scope.update = $rootScope.update = function(updateImmediately, cb){
+			refreshFrame();
 
             var continueUpdate = true;
             if(!updateImmediately){

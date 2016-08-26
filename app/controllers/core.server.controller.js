@@ -13,8 +13,8 @@ exports.index = function(req, res) {
 };
 
 exports.form = function(req, res) {
-	//Allow form to be embeded
-        res.removeHeader('X-Frame-Options');
+	//Allow form to be embedded
+	res.set('X-Frame-Options', 'GOFORIT');
 
 	res.render('form', {
 		user: req.user || null,

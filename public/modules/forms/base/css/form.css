@@ -1,3 +1,19 @@
+/* Custom Tab CSS */
+.nav.nav-pills.nav-stacked {
+	width: 16.66666667%;
+	float: left;
+	position: relative;
+	min-height: 1px;
+	padding-right: 15px;
+}
+div.tab-content {
+	width: 83.33333333%;
+	position: relative;
+	min-height: 1px;
+	float:left;
+	padding-top: 0!important;
+}
+
 .panel-default.startPage {
     border-style: dashed;
     border-color: #a9a9a9;
@@ -302,6 +318,8 @@ div.config-form .row.field {
 }
 .admin-form .page-header {
     border: none;
+	margin-top: none;
+	margin-bottom: none;
 }
 
 /*Styles for admin view tabs */

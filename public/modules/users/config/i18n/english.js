@@ -4,7 +4,8 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 
 	$translateProvider.translations('en', {
 		ACCESS_DENIED_TEXT: 'You need to be logged in to access this page',
-		USERNAME_LABEL: 'Username or Email',
+		USERNAME_OR_EMAIL_LABEL: 'Username or Email',
+		USERNAME_LABEL: 'Username',
 		PASSWORD_LABEL: 'Password',
 		CURRENT_PASSWORD_LABEL: 'Current Password',
 		NEW_PASSWORD_LABEL: 'New Password',
@@ -23,6 +24,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SIGNUP_ERROR_TEXT: 'Couldn\'t complete registration due to errors',
 		ENTER_ACCOUNT_EMAIL: 'Enter your account email.',
 		RESEND_VERIFICATION_EMAIL: 'Resend Verification Email',
+		SAVE_CHANGES: 'Save Changes',
 
 		UPDATE_PROFILE_BTN: 'Update Profile',
 		PROFILE_SAVE_SUCCESS: 'Profile saved successfully',

@@ -55,35 +55,25 @@ section.auth {
 		color: #4c4c4c;
 	}
 
-	section.auth .btn {
-		border-radius: 100px;
-		font-size: 14px;
-		padding: 10px 28px;
-		margin: 0 2px;
-		margin-top: 1em;
-		text-transform: uppercase;
-		text-decoration: none!important;
-	}
-
-	section.auth .btn-signup {
+	.btn-rounded.btn-signup {
 		background-color: #FFD747;
 		color: #896D0B;
 		border: 2px #FFD747 solid;
-		width: 100%;
 	}
-	section.auth .btn-signup:hover {
+
+	.btn-rounded.btn-signup:hover {
 		color: #FFD747;
 		background-color: #896D0B;
 		border: 2px #896D0B solid;
 	}
 
-	section.auth .btn-default {
+	.btn-rounded.btn-default {
 		background-color: transparent;
 		color: white;
 		border: 2px white solid;
 	}
 
-	section.auth .btn-default:focus, section.auth .btn-default:hover {
+	.btn-rounded.btn-default:focus, .btn-rounded.btn-default:hover {
 		color: #6450A0;
 		background-color: white;
 		border-color: white;
@@ -104,10 +94,13 @@ section.auth {
 	position: absolute;
 }
 
-input.form-control {
+section.auth input.form-control {
 	border: none;
-	border-radius: 4px;
 	color: white;
+}
+
+input.form-control {
+	border-radius: 4px;
 	box-shadow: none;
 	font-size: 18px;
 	padding: 30px 20px;

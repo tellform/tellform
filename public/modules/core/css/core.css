@@ -10,6 +10,27 @@ body {
 	float: none;
 }
 
+/* Custom CSS for Buttons */
+.btn-rounded {
+	border-radius: 100px;
+	font-size: 14px;
+	padding: 10px 28px;
+	margin: 0 2px;
+	margin-top: 1em;
+	text-transform: uppercase;
+	text-decoration: none!important;
+}
+
+.btn-secondary {
+	background: #DDDDDD;
+	color: #4c4c4c;
+	border: 2px #4c4c4c solid;
+}
+.btn-secondary:hover {
+	background: #cacaca;
+	border-color: #cacaca;
+}
+
 /*Navbar Custom CSS*/
 .navbar {
 	min-height: 60px;
@@ -33,6 +54,7 @@ body {
 	min-height: 60px;
 }
 .navbar-nav > li > a {
+	padding-top: 20px;
 	color: white;
 }
 .navbar-nav > li:hover, .navbar-nav > li.active {

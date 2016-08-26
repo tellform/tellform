@@ -32,14 +32,14 @@
 						</div>
 						<div class="form-group">
 							<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
-							<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}" ng-minlength="4">
+							<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="{{ 'USERNAME_OR_EMAIL_LABEL' | translate }}" ng-minlength="4">
 						</div>
 						<div class="form-group">
 							<!--<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>-->
 							<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" ng-minlength="4">
 						</div>
 						<div class="form-group">
-							<button class="btn btn-signup" ng-click="signin()">{{ 'SIGNIN_BTN' | translate }}</button>
+							<button class="btn btn-signup btn-rounded btn-block" ng-click="signin()">{{ 'SIGNIN_BTN' | translate }}</button>
 						</div>
 						<div class="text-center forgot-password">
 							<a ui-sref="forgot">{{ 'FORGOT_PASSWORD_LINK' | translate }}</a>
