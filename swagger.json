@@ -128,7 +128,7 @@
 	  }
 	},
 
-	"LogicJump"
+	"LogicJump":
 
 	"FieldOption": {
 	  "type": "object",
