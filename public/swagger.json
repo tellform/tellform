@@ -5,14 +5,10 @@
 	"title": "TellForm API",
 	"contact": {
 	  "name": "TellForm Team",
-	  "url": "http://tellform.com"
-	},
-	"license": {
-	  "name": "Creative Commons 4.0 International",
-	  "url": "http://creativecommons.org/licenses/by/4.0/"
+	  "url": "http://www.tellform.com"
 	}
   },
-  "host": "tellform.com",
+  "host": "api.tellform.com",
   "basePath": "/api",
   "schemes": [
 	"http"
@@ -23,8 +19,17 @@
 		"tags": [
 		  "Form Operations"
 		],
-		"summary": "Finds forms in the system",
+		"summary": "Finds all forms",
 		"responses": {
+		  "405": {
+			"description": "Missing Form Input"
+		  },
+		  "400": {
+			"description": "Form is Invalid"
+		  },
+		  "404": {
+			"description": "Form not Found"
+		  },
 		  "200": {
 			"description": "forms response",
 			"schema": {
@@ -41,7 +46,125 @@
 		  }
 		}
 	  }
+	},
+	"/form/:form_id": {
+	  "get": {
+		"tags": [
+		  "Form Operations"
+		],
+		"summary": "Find form by ID",
+		"responses": {
+		  "200": {
+			"description": "forms response",
+			"schema": {
+			  "$ref": "#/definitions/Form"
+			},
+			"headers": {
+			  "x-expires": {
+				"type": "string"
+			  }
+			}
+		  }
+		}
+	  },
+	  "post": {
+		"tags": [
+		  "Form Operations"
+		],
+		"summary": "Create a new form",
+		"description": "Create and save a new form",
+		"operationId": "addForm",
+		"consumes": [
+		  "application/json"
+		],
+		"produces": [
+		  "application/json"
+		],
+		"parameters": [
+		  {
+			"in": "body",
+			"name": "form",
+			"description": "Form object that is to be created",
+			"required": true,
+			"schema": {
+			  "$ref": "#/definitions/Form"
+			}
+		  }
+		],
+		"responses": {
+		  "405": {
+			"description": "Missing Form Input"
+		  },
+		  "400": {
+			"description": "Form is Invalid"
+		  },
+		  "404": {
+			"description": "Form not Found"
+		  },
+		  "200": {
+			"description": "successful operation",
+			"schema": {
+			  "$ref": "#/definitions/Form"
+			}
+		  }
+		},
+		"security": [
+		],
+		"x-code-samples": [
+		]
+	  },
+	  "put": {
+		"tags": [
+		  "Form Operations"
+		],
+		"summary": "Update an existing form",
+		"description": "",
+		"operationId": "updateForm",
+		"consumes": [
+		  "application/json",
+		  "application/xml"
+		],
+		"produces": [
+		  "application/xml",
+		  "application/json"
+		],
+		"parameters": [
+		  {
+			"in": "body",
+			"name": "form",
+			"description": "Form object that needs to be updated",
+			"required": true,
+			"schema": {
+			  "$ref": "#/definitions/Form"
+			}
+		  }
+		],
+		"responses": {
+		  "405": {
+			"description": "Missing Form Input"
+		  },
+		  "400": {
+			"description": "Form is Invalid"
+		  },
+		  "404": {
+			"description": "Form not Found"
+		  },
+		  "200": {
+			"description": "successful operation",
+			"schema": {
+			  "$ref": "#/definitions/Form"
+			}
+		  }
+		},
+		"security": [
+		  {
+		  }
+		],
+		"x-code-samples": [
+		]
+	  }
 	}
+
   },
   "definitions": {
 	"User": {
@@ -63,7 +186,13 @@
 		},
 		"language": {
 		  "type": "string",
-		  "enum": ["en", "fr", "es", "it", "de"],
+		  "enum": [
+			"en",
+			"fr",
+			"es",
+			"it",
+			"de"
+		  ],
 		  "default": "en",
 		  "required": "User must have a language"
 		},
@@ -75,7 +204,7 @@
 		},
 		"username": {
 		  "type": "string",
-		  "required": "Username cannot be blank"
+		  "required": "Username cannot be blank",
 		  "unique": "true"
 		},
 		"passwordHash": {
@@ -86,9 +215,9 @@
 		  "type": "string"
 		},
 		"provider": {
-			"type": "string",
-		  	"required": "provider is required",
-		    "default": "local"
+		  "type": "string",
+		  "required": "provider is required",
+		  "default": "local"
 		},
 		"providerData": {
 		  "type": "object"
@@ -100,11 +229,17 @@
 		  "type": "array",
 		  "items": {
 			"type": "string",
-			"enum": ["user", "admin", "superuser"]
+			"enum": [
+			  "user",
+			  "admin",
+			  "superuser"
+			]
 		  },
-		  "default": ["user"]
+		  "default": [
+			"user"
+		  ]
 		}
-	  }
+	  },
 	  "lastModified": {
 		"type": "date"
 	  },
@@ -127,9 +262,34 @@
 		"sparse": true
 	  }
 	},
-
-	"LogicJump":
-
+	"LogicJump": {
+	  "expressionString": {
+		"type": "string",
+		"enum": [
+		  "field == static",
+		  "field != static",
+		  "field > static",
+		  "field >= static",
+		  "field <= static",
+		  "field < static",
+		  "field contains static",
+		  "field !contains static",
+		  "field begins static",
+		  "field !begins static",
+		  "field ends static",
+		  "field !ends static"
+		]
+	  },
+	  "fieldA": {
+		$ref: "#/definitions/FormField",
+	  },
+	  "valueB": {
+		"type": "string"
+	  },
+	  "jumpTo": {
+		"$ref": "#/definitions/FormField",
+	  }
+	},
 	"FieldOption": {
 	  "type": "object",
 	  "properties": {
@@ -145,7 +305,6 @@
 		}
 	  }
 	},
-
 	"RatingField": {
 	  "type": "object",
 	  "properties": {
@@ -174,20 +333,18 @@
 		},
 		"validShapes": {
 		  "type": "array",
-          "items": {
+		  "items": {
 			"type": "string"
 		  }
 		}
 	  }
 	},
-
 	"FormField": {
-	  "required":[
+	  "required": [
 		"title",
 		"fieldType"
 	  ],
 	  "properties": {
-
 		"isSubmission": {
 		  "type": "boolean",
 		  "default": false
@@ -204,11 +361,9 @@
 		  "type": "string",
 		  "default": ""
 		},
-
 		"logicJump": {
-		  "$ref": "#/definitions/FormFields"
+		  "$ref": "#/definitions/FormField"
 		},
-
 		"ratingOptions": {
 		  "type": "#/definitions/RatingField",
 		},
@@ -224,7 +379,6 @@
 		  "type": "boolean",
 		  "default": false
 		},
-
 		"deletePreserved": {
 		  "type": "boolean",
 		  "default": false
@@ -265,10 +419,8 @@
 		"fieldValue": {
 		  "type": "string"
 		}
-
 	  }
 	},
-
 	"VisitorData": {
 	  "type": "object",
 	  "properties": {
@@ -293,7 +445,12 @@
 		},
 		"deviceType": {
 		  "type": "string",
-		  "enum": ["desktop", "phone", "tablet", "other"],
+		  "enum": [
+			"desktop",
+			"phone",
+			"tablet",
+			"other"
+		  ],
 		  "default": "other"
 		},
 		"userAgent": {
@@ -306,7 +463,7 @@
 	  "properties": {
 		"url": {
 		  "type": "string",
-		  "pattern": "/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/"
+		  "format": "url"
 		},
 		"action": {
 		  "type": "string"
@@ -323,6 +480,76 @@
 		  "type": "string",
 		  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
 		  "default": "#ffffff"
+		}
+	  }
+	},
+	"FormSubmission": {
+	  "type": "object",
+	  "required": [
+		"language",
+		"admin",
+		"title"
+	  ],
+	  "properties": {
+		"title": {
+		  "type": "string",
+		  "required": "Form Title cannot be blank"
+		},
+		"language": {
+		  "type": "string",
+		  "enum": [
+			"en",
+			"fr",
+			"es",
+			"it",
+			"de"
+		  ],
+		  "default": "en",
+		  "required": "Form must have a language"
+		},
+		"admin": {
+		  "$ref": "#/definitions/User",
+		},
+		"ipAddr": {
+			"type": "string"
+		},
+		"geoLocation": {
+		  "type": "object",
+		  "properties": {
+			"Country": {
+			  "type": "string"
+			},
+			"Region": {
+			  "type": "string"
+			},
+			"City": {
+			  "type": "string"
+			}
+		  }
+	  	},
+		"device": {
+		  "type": "object",
+		  "properties": {
+			"type": {
+			  "type": "string"
+			},
+			"name": {
+			  "type": "string"
+			}
+		  }
+		},
+		"pdfFilePath": {
+		  "type": "string"
+		},
+		"pdf": {
+		  "type": "string"
+		},
+
+		"timeElapsed": {
+		  "type": "number"
+		},
+		"percentageComplete": {
+		  "type": "number"
 		}
 	  }
 	},
@@ -343,11 +570,18 @@
 		},
 		"language": {
 		  "type": "string",
-		  "enum": ["en", "fr", "es", "it", "de"],
+		  "enum": [
+			"en",
+			"fr",
+			"es",
+			"it",
+			"de"
+		  ],
 		  "default": "en",
 		  "required": "Form must have a language"
 		},
 		"analytics": {
+		  "type": "object",
 		  "properties": {
 			"gaCode": {
 			  "type": "string"
@@ -360,10 +594,9 @@
 			}
 		  }
 		},
-
 		"form_fields": {
 		  "type": "array",
-		  "items": "#/definitions/FormFields"
+		  "items": "#/definitions/FormField"
 		},
 		"submissions": {
 		  "type": "array",
@@ -371,19 +604,15 @@
 			"$ref": "#/definitions/FormSubmission"
 		  }
 		},
-
 		"admin": {
-		  "$ref": "#/definitions/User",
-		  "required": "Form must have an Admin"
+		  "$ref": "#/definitions/User"
 		},
-
 		"pdf": {
 		  "type": "object"
 		},
 		"pdfFieldMap": {
 		  "type": "object"
 		},
-
 		"startPage": {
 		  "properties": {
 			"showStart": {
@@ -407,7 +636,6 @@
 			}
 		  }
 		},
-
 		"hideFooter": {
 		  "type": "boolean",
 		  "default": false
@@ -424,9 +652,8 @@
 		  "type": "boolean",
 		  "default": false
 		},
-
 		"design": {
-		  "colors":{
+		  "colors": {
 			"backgroundColor": {
 			  "type": "string",
 			  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
@@ -437,32 +664,25 @@
 			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
 			  "default": "#333"
 			},
-			"answerColor"": {
+			"answerColor": {
 			  "type": "string",
 			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
 			  "default": "#333"
 			},
 			"buttonColor": {
-			  "type": "string"
+			  "type": "string",
 			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
 			  "default": "#fff"
 			},
 			"buttonTextColor": {
 			  "type": "string",
-			  "pattern": "[/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]",
+			  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
 			  "default": "#333"
 			}
 		  },
 		  "font": "string"
 		}
-	},
-	"Address": {
-	  "type": "object",
-	  "properties": {
-		"addressLine1": {
-		  "type": "string"
-		}
 	  }
-	},
+	}
   }
 }

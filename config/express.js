@@ -72,7 +72,6 @@ module.exports = function(db) {
 		var subdomains = req.subdomains;
 		var host = req.hostname;
 
-
 		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
 			subdomains = subdomains.slice(4);
 		}
@@ -81,16 +80,29 @@ module.exports = function(db) {
 		if (!subdomains.length) return next();
 
 		var urlPath = url.parse(req.url).path.split('/');
-		if(urlPath.indexOf('static')){
+		if(urlPath.indexOf('static') > -1){
 			urlPath.splice(1,1);
 			req.root = 'https://' + config.baseUrl + urlPath.join('/');
 			return next();
 		}
 
-		if(subdomains.indexOf('stage') || subdomains.indexOf('admin')){
+		if(subdomains.indexOf('stage') > -1 || subdomains.indexOf('admin') > -1){
 			return next();
 		}
 
+		console.log(subdomains);
+		console.log("is api subdomain: "+ (subdomains.indexOf("api") > -1));
+		console.log(req.url);
+		if(subdomains.indexOf('api') > -1){
+			// rebuild url
+			path += 'api' + req.url;
+			console.log(req.url);
+			// TODO: check path and query strings are preserved
+			// reassign url
+			req.url = path;
+			console.log(req.url);
+			return next();
+		}
 
 		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
 			if (err) {
