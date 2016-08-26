@@ -174,7 +174,6 @@ exports.signin = function(req, res, next) {
  */
 exports.signout = function(req, res) {
 	req.logout();
-	//res.redirect('/');
 	return res.status(200).send('You have successfully logged out.');
 
 };

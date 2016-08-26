@@ -5,21 +5,43 @@
 	"title": "TellForm API",
 	"contact": {
 	  "name": "TellForm Team",
-	  "url": "http://www.tellform.com"
+	  "email": "team@tellform.com"
 	}
   },
+  "externalDocs": {
+	"description": "Find out how to host your own TellForm instance.",
+	"url": "https://github.com/whitef0x0/tellform"
+  },
   "host": "api.tellform.com",
-  "basePath": "/api",
+  "basePath": "/",
   "schemes": [
-	"http"
+	"http",
+	"https"
   ],
+  "tags": [
+	{
+	  "name": "form",
+	  "description": "Everything about your Forms"
+	},
+	{
+	  "name": "user",
+	  "description": "Everything about your Account"
+	}
+  ],
+  "securityDefinitions": {
+	"api_key": {
+	  "type": "apiKey",
+	  "name": "apikey",
+	  "in": "header"
+	}
+  },
   "paths": {
 	"/forms": {
 	  "get": {
 		"tags": [
-		  "Form Operations"
+		  "form"
 		],
-		"summary": "Finds all forms",
+		"summary": "Find all forms",
 		"responses": {
 		  "405": {
 			"description": "Missing Form Input"
@@ -37,20 +59,20 @@
 			  "items": {
 				"$ref": "#/definitions/Form"
 			  }
-			},
-			"headers": {
-			  "x-expires": {
-				"type": "string"
-			  }
 			}
 		  }
-		}
+		},
+		"security": [
+		  {
+			"api_key": []
+		  }
+		]
 	  }
 	},
 	"/form/:form_id": {
 	  "get": {
 		"tags": [
-		  "Form Operations"
+		  "form"
 		],
 		"summary": "Find form by ID",
 		"responses": {
@@ -65,11 +87,16 @@
 			  }
 			}
 		  }
-		}
+		},
+		"security": [
+		  {
+			"api_key": []
+		  }
+		]
 	  },
 	  "post": {
 		"tags": [
-		  "Form Operations"
+		  "form"
 		],
 		"summary": "Create a new form",
 		"description": "Create and save a new form",
@@ -83,7 +110,7 @@
 		"parameters": [
 		  {
 			"in": "body",
-			"name": "form",
+			"name": "body",
 			"description": "Form object that is to be created",
 			"required": true,
 			"schema": {
@@ -109,23 +136,24 @@
 		  }
 		},
 		"security": [
+		  {
+			"api_key": []
+		  }
 		],
 		"x-code-samples": [
 		]
 	  },
 	  "put": {
 		"tags": [
-		  "Form Operations"
+		  "form"
 		],
 		"summary": "Update an existing form",
 		"description": "",
 		"operationId": "updateForm",
 		"consumes": [
-		  "application/json",
-		  "application/xml"
+		  "application/json"
 		],
 		"produces": [
-		  "application/xml",
 		  "application/json"
 		],
 		"parameters": [
@@ -158,6 +186,99 @@
 		},
 		"security": [
 		  {
+			"api_key": []
+		  }
+		],
+		"x-code-samples": [
+		]
+	  }
+	},
+	"/users/me": {
+	  "get": {
+		"tags": [
+		  "user"
+		],
+		"summary": "Retrieve current User",
+		"description": "",
+		"operationId": "getUser",
+		"produces": [
+		  "application/json"
+		],
+		"responses": {
+		  "500": {
+			"description": "Could not Update User"
+		  },
+		  "401": {
+			"description": "User is not Signed in"
+		  },
+		  "403": {
+			"description": "User is not Authorized"
+		  },
+		  "404": {
+			"description": "User does not exsit"
+		  },
+		  "200": {
+			"description": "successful operation",
+			"schema": {
+			  "$ref": "#/definitions/User"
+			}
+		  }
+		},
+		"security": [
+		  {
+			"api_key": []
+		  }
+		]
+	  }
+	},
+	"/users": {
+	  "put": {
+		"tags": [
+		  "user"
+		],
+		"summary": "Update the current user",
+		"description": "",
+		"operationId": "updateUser",
+		"consumes": [
+		  "application/json"
+		],
+		"produces": [
+		  "application/json"
+		],
+		"parameters": [
+		  {
+			"in": "body",
+			"name": "body",
+			"description": "User object that needs to be updated",
+			"required": true,
+			"schema": {
+			  "$ref": "#/definitions/User"
+			}
+		  }
+		],
+		"responses": {
+		  "500": {
+			"description": "Could not Update User"
+		  },
+		  "401": {
+			"description": "User is not Signed in"
+		  },
+		  "403": {
+			"description": "User is not Authorized"
+		  },
+		  "404": {
+			"description": "User does not exsit"
+		  },
+		  "200": {
+			"description": "successful operation",
+			"schema": {
+			  "$ref": "#/definitions/User"
+			}
+		  }
+		},
+		"security": [
+		  {
+			"api_key": []
 		  }
 		],
 		"x-code-samples": [
@@ -175,14 +296,15 @@
 		"username"
 	  ],
 	  "properties": {
-		"id": {
-		  "type": "string",
-		},
 		"firstName": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "First name of User",
+		  "example": "John"
 		},
 		"lastName": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "First name of User",
+		  "example": "Doe"
 		},
 		"language": {
 		  "type": "string",
@@ -194,36 +316,24 @@
 			"de"
 		  ],
 		  "default": "en",
-		  "required": "User must have a language"
+		  "required": "User must have a language",
+		  "description": "Language of User (for internationalization)",
+		  "example": "fr"
 		},
 		"email": {
 		  "type": "string",
 		  "format": "email",
 		  "required": "User email cannot be blank",
-		  "unique": "true"
+		  "unique": "true",
+		  "description": "Email of User",
+		  "example": "john.doe@somewhere.com"
 		},
 		"username": {
 		  "type": "string",
 		  "required": "Username cannot be blank",
-		  "unique": "true"
-		},
-		"passwordHash": {
-		  "type": "string",
-		  "default": ""
-		},
-		"salt": {
-		  "type": "string"
-		},
-		"provider": {
-		  "type": "string",
-		  "required": "provider is required",
-		  "default": "local"
-		},
-		"providerData": {
-		  "type": "object"
-		},
-		"additionalProvidersData": {
-		  "type": "object"
+		  "unique": "true",
+		  "description": "Username of User",
+		  "example": "johndoe"
 		},
 		"roles": {
 		  "type": "array",
@@ -235,31 +345,42 @@
 			  "superuser"
 			]
 		  },
-		  "default": [
-			"user"
-		  ]
+		  "default": [ "user" ],
+		  "description": "Security Roles of User"
 		}
 	  },
 	  "lastModified": {
-		"type": "date"
+		"type": "date",
+		"description": "Date that user was last modified",
+		"example": "2016-08-26T20:19:30.146Z"
 	  },
 	  "created": {
-		"type": "date"
+		"type": "date",
+		"description": "Date that user was created on",
+		"example": "5dHuKJgeCZmFOdJTnmg0lrxApmz0tbbBrM59rTv4k79"
 	  },
 	  "resetPasswordToken": {
-		"type": "string"
+		"type": "string",
+		"description": "Reset password token  of User",
+		"example": "5dHuKJgeCZmFOdJTnmg0lrxApmz0tbbBrM59rTv4k79"
 	  },
 	  "resetPasswordExpires": {
-		"type": "date"
+		"type": "date",
+		"example": "2016-08-26T20:19:30.146Z",
+		"description": "Date that the User's password reset token expires"
 	  },
 	  "token": {
-		"type": "string"
+		"type": "string",
+		"description": "Verification token of User",
+		"example": "5dHuKJgeCZmFOdJTnmg0lrxApmz0tbbBrM59rTv4k79"
 	  },
 	  "apiKey": {
 		"type": "string",
 		"unique": true,
 		"index": true,
-		"sparse": true
+		"sparse": true,
+		"description": "API Key of User",
+		"example": "5dHuKJgeCZmFOdJTnmg0lrxApmz0tbbBrM59rTv4k79"
 	  }
 	},
 	"LogicJump": {
@@ -281,13 +402,13 @@
 		]
 	  },
 	  "fieldA": {
-		$ref: "#/definitions/FormField",
+		"$ref": "#/definitions/FormField"
 	  },
 	  "valueB": {
 		"type": "string"
 	  },
 	  "jumpTo": {
-		"$ref": "#/definitions/FormField",
+		"$ref": "#/definitions/FormField"
 	  }
 	},
 	"FieldOption": {
@@ -347,41 +468,57 @@
 	  "properties": {
 		"isSubmission": {
 		  "type": "boolean",
-		  "default": false
+		  "default": false,
+		  "description": "Specifies whether Field is part of a Submission or not",
+		  "example": true
 		},
 		"submissionId": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "ID of Submission that this Field belongs to",
+		  "example": "57bca0969ca8e18b825bcc2b"
 		},
 		"title": {
 		  "type": "string",
 		  "trim": true,
-		  "required": "Field Title cannot be blank"
+		  "required": "Field Title cannot be blank",
+		  "description": "Description of Field",
+		  "example": "Your Current University"
 		},
 		"description": {
 		  "type": "string",
-		  "default": ""
+		  "default": "",
+		  "description": "Description of Field",
+		  "example": "Please do not use abbreviations for your school name"
 		},
 		"logicJump": {
 		  "$ref": "#/definitions/FormField"
 		},
 		"ratingOptions": {
-		  "type": "#/definitions/RatingField",
+		  "type": "#/definitions/RatingField"
 		},
 		"fieldOptions": {
 		  "type": "array",
-		  "items": "#/definitions/FieldOption"
+		  "items": {
+			"type": "FieldOption"
+		  }
 		},
 		"required": {
 		  "type": "boolean",
-		  "default": true
+		  "default": true,
+		  "description": "Specifies whether Field is required",
+		  "example": true
 		},
 		"disabled": {
 		  "type": "boolean",
-		  "default": false
+		  "default": false,
+		  "description": "Specifies whether Field is disabled",
+		  "example": true
 		},
 		"deletePreserved": {
 		  "type": "boolean",
-		  "default": false
+		  "default": false,
+		  "description": "Specifies whether Field should be preserved if it is deleted",
+		  "example": false
 		},
 		"validFieldTypes": {
 		  "type": "array",
@@ -414,10 +551,14 @@
 			"natural",
 			"stripe",
 			"number"
-		  ]
+		  ],
+		  "description": "Type of Field",
+		  "example": "textfield"
 		},
 		"fieldValue": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "Value of Field",
+		  "example": "University of British Columbia"
 		}
 	  }
 	},
@@ -425,23 +566,35 @@
 	  "type": "object",
 	  "properties": {
 		"referrer": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "Referring site of Form Visitor",
+		  "example": "http://google.com"
 		},
 		"lastActiveField": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "ID of Last Active Field",
+		  "example": "57bca0969ca8e18b825bcc2b"
 		},
 		"timeElapsed": {
-		  "type": "number"
+		  "type": "number",
+		  "description": "Time Elasped for Visitor on Form (in seconds)",
+		  "example": "333.33"
 		},
 		"isSubmitted": {
-		  "type": "boolean"
+		  "type": "boolean",
+		  "description": "Specifies whether user submitted form before leaving page",
+		  "example": false
 		},
 		"language": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "Language of User using form",
+		  "example": "en"
 		},
 		"ipAddr": {
 		  "type": "string",
-		  "default": ""
+		  "default": "",
+		  "description": "IP Address of User",
+		  "example": "324.332.322.333"
 		},
 		"deviceType": {
 		  "type": "string",
@@ -451,10 +604,14 @@
 			"tablet",
 			"other"
 		  ],
-		  "default": "other"
+		  "default": "other",
+		  "description": "Device Type of User",
+		  "example": "phone"
 		},
 		"userAgent": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "User Agent of User",
+		  "example": "Mozilla/5.0 (Linux; <Android Version>; <Build Tag etc.>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) Chrome/<Chrome Rev> Mobile Safari/<WebKit Rev>"
 		}
 	  }
 	},
@@ -463,23 +620,33 @@
 	  "properties": {
 		"url": {
 		  "type": "string",
-		  "format": "url"
+		  "format": "url",
+		  "description": "URL of Button Link",
+		  "example": "http://you-are-awesome.com"
 		},
 		"action": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "Angular Action fired during Button click",
+		  "example": "openModal()"
 		},
 		"text": {
-		  "type": "string"
+		  "type": "string",
+		  "description": "Text of Button",
+		  "example": "Go to HomePage"
 		},
 		"bgColor": {
 		  "type": "string",
 		  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
-		  "default": "5bc0de"
+		  "default": "#5bc0de",
+		  "description": "Background Color of Button (in hex)",
+		  "example": "#5bc0de"
 		},
 		"color": {
 		  "type": "string",
 		  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
-		  "default": "#ffffff"
+		  "default": "#ffffff",
+		  "description": "Font Color of Button (in hex)",
+		  "example": "#ffffff"
 		}
 	  }
 	},
@@ -561,12 +728,12 @@
 		"title"
 	  ],
 	  "properties": {
-		"id": {
-		  "type": "string",
-		},
+
 		"title": {
 		  "type": "string",
-		  "required": "Form Title cannot be blank"
+		  "required": "Form Title cannot be blank",
+		  "description": "Public Title of Form",
+		  "example": "UBC CPSC221 Course Waitlist Form"
 		},
 		"language": {
 		  "type": "string",
@@ -578,13 +745,18 @@
 			"de"
 		  ],
 		  "default": "en",
-		  "required": "Form must have a language"
+		  "required": "Form must have a language",
+		  "description": "Language of Form",
+		  "example": "en"
 		},
 		"analytics": {
 		  "type": "object",
+		  "description": "Analytics of Form",
 		  "properties": {
 			"gaCode": {
-			  "type": "string"
+			  "type": "string",
+			  "description": "Analytics of Form",
+			  "example": "UA-000000-01"
 			},
 			"visitors": {
 			  "type": "array",
@@ -596,7 +768,9 @@
 		},
 		"form_fields": {
 		  "type": "array",
-		  "items": "#/definitions/FormField"
+		  "items": {
+			"type": "FormField"
+		  }
 		},
 		"submissions": {
 		  "type": "array",
@@ -605,82 +779,102 @@
 		  }
 		},
 		"admin": {
-		  "$ref": "#/definitions/User"
-		},
-		"pdf": {
-		  "type": "object"
-		},
-		"pdfFieldMap": {
-		  "type": "object"
+		  "type": "User",
+		  "description": "User that this Form belongs to"
 		},
 		"startPage": {
+		  "type": "object",
 		  "properties": {
 			"showStart": {
 			  "type": "boolean",
-			  "default": false
+			  "default": false,
+			  "description": "Specifies whether Form StarPage should be displayed",
+			  "example": false
 			},
 			"introTitle": {
 			  "type": "string",
-			  "default": "Welcome to Form"
+			  "default": "Welcome to Form",
+			  "description": "Title of Form's StartPage",
+			  "example": "Welcome to our Awesome Form!"
 			},
 			"introParagraph": {
-			  "type": "string"
+			  "type": "string",
+			  "description": "Introduction paragraph for Form's StartPage.",
+			  "example": "Welcome to our Awesome Form!"
 			},
 			"introButtonText": {
 			  "type": "string",
-			  "default": "Start"
+			  "default": "Start",
+			  "description": "StartPage Continue Button",
+			  "example": "Continue"
 			},
 			"buttons": {
 			  "type": "array",
-			  "items": "#/definitions/Button"
+			  "items": {
+				type: "Button"
+			  }
 			}
 		  }
 		},
 		"hideFooter": {
 		  "type": "boolean",
-		  "default": false
-		},
-		"isGenerated": {
-		  "type": "boolean",
-		  "default": false
+		  "default": false,
+		  "description": "Specifies whether to hide or show Form Footer",
+		  "example": true
 		},
 		"isLive": {
 		  "type": "boolean",
-		  "default": false
-		},
-		"autofillPDFs": {
-		  "type": "boolean",
-		  "default": false
+		  "default": false,
+		  "description": "Specifies whether form is Publically available or Private",
+		  "example": true
 		},
 		"design": {
-		  "colors": {
-			"backgroundColor": {
-			  "type": "string",
-			  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
-			  "default": "#fff"
+		  "type": "object",
+		  "properties": {
+			"colors": {
+			  "type": "object",
+			  "properties": {
+				"backgroundColor": {
+				  "type": "string",
+				  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+				  "default": "#fff",
+				  "description": "Background color of Form",
+				  "example": "#4c4c4c"
+				},
+				"questionColor": {
+				  "type": "string",
+				  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+				  "default": "#333",
+				  "description": "Question text font color (in hex)",
+				  "example": "#fff"
+				},
+				"answerColor": {
+				  "type": "string",
+				  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+				  "default": "#333",
+				  "description": "Answer text font color (in hex)",
+				  "example": "#f9f9f9"
+				},
+				"buttonColor": {
+				  "type": "string",
+				  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+				  "default": "#fff",
+				  "description": "Background color of Form Buttons (in hex)",
+				  "example": "#555"
+				},
+				"buttonTextColor": {
+				  "type": "string",
+				  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+				  "default": "#333",
+				  "description": "Font color of Form Buttons (in hex)",
+				  "example": "#fff"
+				}
+			  }
 			},
-			"questionColor": {
-			  "type": "string",
-			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
-			  "default": "#333"
-			},
-			"answerColor": {
-			  "type": "string",
-			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
-			  "default": "#333"
-			},
-			"buttonColor": {
-			  "type": "string",
-			  "match": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
-			  "default": "#fff"
-			},
-			"buttonTextColor": {
-			  "type": "string",
-			  "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
-			  "default": "#333"
+			"font": {
+			  "type": "string"
 			}
-		  },
-		  "font": "string"
+		  }
 		}
 	  }
 	}
