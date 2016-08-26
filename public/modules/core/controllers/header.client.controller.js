@@ -6,11 +6,12 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		$rootScope.signupDisabled = $window.signupDisabled;
 
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
+
+		console.log(Auth.ensureHasCurrentUser(User));
 	    $scope.authentication = $rootScope.authentication = Auth;
 
 		$rootScope.languages = $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
 
-		console.log($locale.id);
 		//Set global app language
 		if($scope.authentication.isAuthenticated()){
 			$rootScope.language = $scope.user.language;
@@ -30,9 +31,12 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 				Auth.ensureHasCurrentUser(User);
 				$scope.user = $rootScope.user = null;
 				$state.go('listForms');
+
+				//Refresh view
+				$state.reload();
 			},
 			function(reason) {
-			  	console.log('Logout Failed: ' + reason);
+			  	console.error('Logout Failed: ' + reason);
 			});
 	    };
 

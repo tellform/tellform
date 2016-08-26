@@ -1,6 +1,8 @@
+<header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
+
 <div class="container" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}"></div>
 
-<section class="container admin-form">
+<section class="admin-form">
 
 	<!-- Modal Delete Dialog Template -->
     <script type="text/ng-template" id="myModalContent.html">
@@ -27,7 +29,7 @@
         </div>
     </script>
 
-	<div class="page-header row-fluid" style="padding-bottom: 1em;">
+	<div class="page-header" style="padding-bottom: 1em;">
 		<div class="col-xs-10 col-sm-8">
 			<h1 class="hidden-sm hidden-xs" data-ng-bind="myform.title" style="margin-bottom: 0px;"></h1>
 			<h2 class="hidden-md hidden-lg" data-ng-bind="myform.title" style="margin-bottom: 0px;"></h2>
@@ -43,13 +45,13 @@
 		</div>
 		<div class="col-xs-1 col-sm-2">
 			<small class="pull-right">
-				<a class="btn btn-default view-form-btn" href="//{{formURL}}/#!/forms/{{myform._id}}">
+				<a class="btn btn-secondary view-form-btn" href="{{actualFormURL}}">
 					<span class="hidden-xs hidden-sm">
 						{{ 'VIEW' | translate }}
 						<span ng-show="myform.isLive">
 							{{ 'LIVE' | translate }}
 						</span>
-						<span ng-hide="myform.isLive">{{ 'PREVIEW' | translate }}</span> {{ 'FORM' | translate }}
+						<span ng-hide="myform.isLive">{{ 'PREVIEW' | translate }}</span>
 					</span>
 					<span class="hidden-xs hidden-md hidden-lg">
 						View
@@ -63,16 +65,84 @@
 		</div>
 	</div>
 
-	<div class="row-fluid">
+	<div class="row">
 		<div class="col-xs-12">
-			<!-- <tabset> -->
-			<tabs data="tabData"></tabs>
-			<!-- </tabset> -->
-		</div>
+			<uib-tabset active="activePill" vertical="true" type="pills">
+				<uib-tab ng-repeat="tab in tabData" index="$index" heading="{{tab.heading}}">
+					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
+				</uib-tab>
+				<uib-tab heading="Design" index="5">
+					<div class="config-form design container">
+						<div class="row">
+							<div class="col-md-4 col-sm-12 container">
+								<div class="row field">
+									<div class="field-title col-sm-5">
+										<h5>{{ 'BACKGROUND_COLOR' | translate }}</h5>
+									</div>
+									<div class="field-input col-sm-6">
+										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.backgroundColor" ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
+									</div>
+								</div>
 
-		<div class="col-xs-12">
-			<ui-view></ui-view>
-		</div>
+								<div class="row field">
+									<div class="field-title col-sm-5">
+										<h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5>
+									</div>
 
+									<div class="field-input col-sm-6">
+										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.questionColor" ng-style="{ 'background-color': myform.design.colors.questionColor }"/>
+									</div>
+								</div>
+
+								<div class="row field">
+									<div class="field-title col-sm-5">
+										<h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5>
+									</div>
+
+									<div class="field-input col-sm-6">
+										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
+									</div>
+								</div>
+
+								<div class="row field">
+									<div class="field-title col-sm-5">
+										<h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5>
+									</div>
+
+									<div class="field-input col-sm-6">
+										<input class="form-control" colorpicker="hex" type="text"
+											   ng-model="myform.design.colors.buttonColor"
+											   ng-style="{ 'background-color': myform.design.colors.buttonColor }"/>
+									</div>
+								</div>
+								<div class="row field">
+									<div class="field-title col-sm-5">
+										<h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5>
+									</div>
+
+									<div class="field-input col-sm-6">
+										<input class="form-control" colorpicker="hex" type="text"
+											   ng-model="myform.design.colors.buttonTextColor"
+											   ng-style="{ 'background-color': myform.design.colors.buttonTextColor }"/>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-8 hide-md hide-lg">
+								<iframe id="iframe" ng-if="!!formURL" src="{{trustSrc(formURL)}}" style="border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute;"></iframe>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-offset-4 col-sm-2">
+								<button class="btn btn-signup btn-rounded" type="button" ng-click="update(false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
+							</div>
+							<div class="col-sm-1">
+								<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'CANCEL' | translate }}</button>
+							</div>
+						</div>
+					</div>
+				</uib-tab>
+			</uib-tabset>
+		</div>
 	</div>
 </section>

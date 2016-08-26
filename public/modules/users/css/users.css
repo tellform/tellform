@@ -1,11 +1,83 @@
-.row.auth form .field-input select {
-    padding: 0.45em 0.9em;
-    width: 100%;
-    background: transparent;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    height: 34px;
+section.auth {
+	padding: 70px 0;
+	position: absolute;
+	min-height: 100%;
+	top: 0;
+	left: 0;
+	width: 100%;
+	color: white;
+	background-color: #50B5C1; /* Old browsers */
+	background: -moz-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%);
+	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#50B5C1', endColorstr='#6450A0', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 }
+	section.auth > h3{
+		font-size: 2em;
+		font-weight: 500;
+	}
+
+	.valign-wrapper {
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
+	}
+
+	.valign-wrapper .valign {
+		display: block;
+		width: 100%;
+	}
+
+	section.auth a {
+		color: white;
+		text-decoration: underline;
+	}
+
+	section.auth.signup-view > h3 {
+		font-size: 3em;
+		padding-bottom: 0.5em;
+	}
+
+	section.auth form .field-input select {
+		padding: 0.45em 0.9em;
+		width: 100%;
+		background: transparent;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		height: 34px;
+	}
+
+	section.auth input {
+		color: #4c4c4c;
+	}
+
+	.btn-rounded.btn-signup {
+		background-color: #FFD747;
+		color: #896D0B;
+		border: 2px #FFD747 solid;
+	}
+
+	.btn-rounded.btn-signup:hover {
+		color: #FFD747;
+		background-color: #896D0B;
+		border: 2px #896D0B solid;
+	}
+
+	.btn-rounded.btn-default {
+		background-color: transparent;
+		color: white;
+		border: 2px white solid;
+	}
+
+	.btn-rounded.btn-default:focus, .btn-rounded.btn-default:hover {
+		color: #6450A0;
+		background-color: white;
+		border-color: white;
+	}
 
 @media (min-width: 992px) {
 	.nav-users {
@@ -22,20 +94,17 @@
 	position: absolute;
 }
 
-section.auth {
-	margin-top: 5em;
+section.auth input.form-control {
+	border: none;
 }
-	section.auth > h3{
-		font-size: 3em;
-		font-weight: 500;
-		color: #777;
-	}
 
-	section.auth.signup-view > h3 {
-		font-size: 4.4em;
-		padding-bottom: 0.5em;
-	}
+input.form-control {
+	border-radius: 4px;
+	box-shadow: none;
+	font-size: 18px;
+	padding: 30px 20px;
+}
 
-/*	section.auth.signup-view.success > h3 {
-		padding-bottom: 1.2em;
-	}*/
+.btn {
+	border: none;
+}

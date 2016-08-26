@@ -1,21 +1,12 @@
 <div class="config-form design container">
 	<div class="row">
-        <div class="col-md-12 container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h2 class="hidden-sm hidden-xs">{{ 'DESIGN_HEADER' | translate }}</h2>
-                    <h3 class="hidden-lg hidden-md">{{ 'DESIGN_HEADER' | translate }}</h3>
-                </div>
-            </div>
-
+        <div class="col-md-4 col-sm-12 container">
             <div class="row field">
                 <div class="field-title col-sm-3">
                     <h5>{{ 'BACKGROUND_COLOR' | translate }}</h5>
                 </div>
-
-                <div class="field-input col-sm-9">
-
-                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.backgroundColor" ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
+                <div class="field-input col-sm-6">
+                    <input ng-change="refreshIframe()" class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.backgroundColor" ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
                 </div>
             </div>
 
@@ -24,11 +15,8 @@
                     <h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5>
                 </div>
 
-                <div class="field-input col-sm-9">
-
-                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.questionColor" ng-style="{ 'background-color': myform.design.colors.questionColor }"/>
-
-
+                <div class="field-input col-sm-6">
+                    <input ng-change="refreshIframe()" class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.questionColor" ng-style="{ 'background-color': myform.design.colors.questionColor }"/>
                 </div>
             </div>
 
@@ -37,8 +25,8 @@
                     <h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5>
                 </div>
 
-                <div class="field-input col-sm-9">
-                    <input colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
+                <div class="field-input col-sm-6">
+                    <input ng-change="refreshIframe()" class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
                 </div>
             </div>
 
@@ -47,8 +35,8 @@
                     <h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5>
                 </div>
 
-                <div class="field-input col-sm-9">
-                    <input colorpicker="hex" type="text" 
+                <div class="field-input col-sm-6">
+                    <input ng-change="refreshIframe()" class="form-control" colorpicker="hex" type="text"
                         ng-model="myform.design.colors.buttonColor" 
                         ng-style="{ 'background-color': myform.design.colors.buttonColor }"/>
                 </div>
@@ -58,21 +46,24 @@
                     <h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5>
                 </div>
 
-                <div class="field-input col-sm-9">
-                    <input colorpicker="hex" type="text" 
+                <div class="field-input col-sm-6">
+                    <input ng-change="refreshIframe()" class="form-control" colorpicker="hex" type="text"
                         ng-model="myform.design.colors.buttonTextColor" 
                         ng-style="{ 'background-color': myform.design.colors.buttonTextColor }"/>
                 </div>
             </div>
         </div>
+		<div class="col-md-8 hide-md hide-lg">
+			<iframe refreshable="refreshDesign" ng-if="!!form_url" src="{{form_url}}" style="border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 95vh; width: 90%; position: absolute;"></iframe>
+		</div>
     </div>
 
 	<div class="row">
-        <div class="col-sm-offset-4 col-sm-2">
-            <button class="btn btn-primary btn-large" type="button" ng-click="update(false, null)"><i class="icon-arrow-left icon-white"></i> Save Changes</button>
-        </div>
-        <div class="col-sm-1">
-            <button class="btn btn-default" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i> Cancel</button>
-        </div>
+		<div class="col-sm-offset-4 col-sm-2">
+			<button class="btn btn-signup btn-rounded" type="button" ng-click="update(false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
+		</div>
+		<div class="col-sm-1">
+			<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'CANCEL' | translate }}</button>
+		</div>
 	</div>
 </div>

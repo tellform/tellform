@@ -1,4 +1,4 @@
-<section class="navbar navbar-fixed-top navbar-inverse" data-ng-controller="HeaderController" ng-hide="hideNav">
+<section class="navbar navbar-inverse" data-ng-controller="HeaderController" ng-hide="hideNav">
 	<div class="container" >
 		<div class="navbar-header">
 			<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
@@ -6,7 +6,7 @@
 				<span>{{ 'MENU_BTN' | translate }}</span>
 			</button>
 			<a href="https://www.tellform.com/#!/" class="navbar-brand">
-				<i class="fa fa-archive" style="padding-right: 0.3em;"></i>Tell<span>Form</span>
+				<img src="/static/modules/core/img/logo_white.svg" height="100%">
 			</a>
 		</div>
 		<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
@@ -49,8 +49,8 @@
 						</li>
 					</ul>
 				</li>
-				<li ng-click="signout()">
-					<a>{{ 'SIGNOUT_TAB' | translate }}</a>
+				<li>
+					<a href='/' ng-click="signout()">{{ 'SIGNOUT_TAB' | translate }}</a>
 				</li>
 			</ul>
 		</nav>
