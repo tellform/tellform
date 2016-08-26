@@ -30,29 +30,6 @@
 						{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
 						<strong data-ng-bind="error"></strong>
 					</div>
-					<!--<div class="form-group">
-						<label for="firstName">{{ 'FIRST_NAME_LABEL' | translate }}</label>
-						<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="firstName" name="firstName" class="form-control" ng-model="credentials.firstName" placeholder="First Name">
-					</div>
-					<div class="form-group">
-						<label for="lastName">{{ 'LAST_NAME_LABEL' | translate }}</label>
-						<input type="text" ng-pattern="/^[a-zA-Z0-9 \-.]*$/" required id="lastName" name="lastName" class="form-control" ng-model="credentials.lastName" placeholder="Last Name">
-					</div>-->
-					<!--<div class="row form-group">
-						<div class="field-title">
-							<b>{{ 'LANGUAGE_LABEL' | translate }}</b>
-						</div>
-						<div class="field-input">
-							<select ng-model="user.language" required>
-								<option ng-repeat="language in languages"
-										ng-selected="language == user.language"
-										value="{{language}}">
-									{{language}}
-								</option>
-							</select>
-						</div>
-					</div>
-					<hr>-->
 					<div class="form-group">
 						<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
 						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}" ng-minlength="4">
