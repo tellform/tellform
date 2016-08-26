@@ -326,7 +326,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	SUBMIT: 'Submit',
 	UPLOAD_FILE: 'Upload your File'
   });
-	
+
 }]);
 
 'use strict';
@@ -1268,7 +1268,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
 	function($scope, $stateParams, $state, User) {
 		$scope.error = '';
-		
+
 		// Submit forgotten password account id
 		$scope.askForPasswordReset = function() {
 			User.askForPasswordReset($scope.credentials).then(
@@ -1309,7 +1309,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 	function($scope, $rootScope, $http, $state, Users) {
 		$scope.user = $rootScope.user;
 
-		// Check if there are additional accounts 
+		// Check if there are additional accounts
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
 			for (var i in $scope.user.additionalProvidersData) {
 				return true;
@@ -1788,7 +1788,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, cb){
 
             var continueUpdate = true;
             if(!updateImmediately){
@@ -1801,7 +1801,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
                 if(!updateImmediately){ $rootScope.saveInProgress = true; }
 
-                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
+				console.log(diffChanges);
+
+                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
                         // console.log(response.data);
@@ -1954,7 +1956,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                 $rootScope.finishedRender = false;
                 $scope.$on('editFormFields Started', function(ngRepeatFinishedEvent) {
-                    // console.log('hello');
                     $rootScope.finishedRender = false;
                 });
                 $scope.$on('editFormFields Finished', function(ngRepeatFinishedEvent) {
@@ -1974,13 +1975,11 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     return false;
                 };
 
-                var debounceSave = function () {
-                    $rootScope.saveInProgress = true;
+                var debounceSave = function (diffChanges) {
 
-                    $rootScope[$attrs.autoSaveCallback](true,
+                    $rootScope[$attrs.autoSaveCallback](true, diffChanges,
                         function(err){
                         if(!err){
-                            //console.log('\n\nForm data persisted -- setting pristine flag');
                             $formCtrl.$setPristine();
                             $formCtrl.$setUntouched();
                         }else{
@@ -1992,12 +1991,10 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                 //Update/Save Form if any Form fields are Dirty and Touched
                 $scope.$watch(function(newValue, oldValue) {
-                    //console.log('introParagraphStartPage.$dirty: '+$scope.editForm.introParagraphStartPage.$dirty);
-                    //console.log('introParagraphStartPage.$touched: '+$scope.editForm.introParagraphStartPage.$touched);
+
                     if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-                        //console.log('Form saving started');
-                        debounceSave();
-                        //console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
+						delete newValue.visible_form_fields;
+						debounceSave(DeepDiff.diff(oldValue, newValue));
                     }
                 });
 
@@ -2011,7 +2008,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
                     var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
-                    var changedFieldMap = false;
 
                     if(oldValue.hasOwnProperty('plugins.oscarhost.settings.fieldMap')){
                     	changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
@@ -2039,7 +2035,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     }
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && ((changedFields && !$formCtrl.$dirty) || changedFieldMap)  && !$rootScope.saveInProgress) {
+                    if( $rootScope.finishedRender && (changedFields && !$formCtrl.$dirty)  && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
@@ -2047,7 +2043,14 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         }
 
                         savePromise = $timeout(function() {
-                            debounceSave();
+							$rootScope.saveInProgress = true;
+
+							console.log(newValue);
+							console.log(oldValue);
+							delete newValue.visible_form_fields;
+							delete newValue.visible_form_fields;
+							var _diff = DeepDiff.diff(oldValue, newValue);
+                            debounceSave(_diff);
                         });
                     }
                     //If we are finished rendering then form saving should be finished
@@ -2169,7 +2172,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
             },
             controller: ["$scope", function($scope){
 
-				console.log($scope.myform);
                 var field_ids = _($scope.myform.form_fields).pluck('_id');
                 for(var i=0; i<field_ids.length; i++){
                     $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
@@ -2268,7 +2270,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         }
                     }
                     var newField = {
-                        title: fieldTitle,
+                        title: fieldTitle + ' ' + $scope.myform.form_fields.length+1,
                         fieldType: fieldType,
                         fieldValue: '',
                         required: true,
@@ -2284,7 +2286,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							'option_value' : 'Option 0'
 						});
 					}
-
 
                     if(modifyForm){
 						//Add newField to form_fields array
@@ -2656,15 +2657,15 @@ angular.module('forms').service('FormFields', [
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : 'Payment' 
+		    //     value : 'Payment'
 		    // },
 		    {
 		        name : 'statement',
-		        value : 'Statement' 
+		        value : 'Statement'
 		    }
 		];
 	}
-		
+
 ]);
 
 'use strict';
@@ -2677,7 +2678,7 @@ angular.module('forms').factory('Submissions', ['$resource',
 			formId: '@_id'
 		}, {
 			'query' : {
-				method: 'GET', 
+				method: 'GET',
 				isArray: true,
 			},
 			'update': {
@@ -2854,23 +2855,25 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			if(scope.field.fieldType === 'number' || scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
 				switch(scope.field.fieldType){
 					case 'textfield':
-						scope.field.input_type = 'text';
+						scope.input_type = 'text';
 						break;
 					case 'email':
-						scope.field.input_type = 'email';
-						scope.field.placeholder = 'joesmith@example.com';
+						scope.input_type = 'email';
+						scope.placeholder = 'joesmith@example.com';
 						break;
 					case 'number':
-                        scope.field.input_type = 'text';
-						scope.field.validateRegex = /^-?\d+$/;
+                        scope.input_type = 'text';
+						scope.validateRegex = /^-?\d+$/;
                         break;
                     default:
-						scope.field.input_type = 'url';
-						scope.field.placeholder = 'http://example.com';
+						scope.input_type = 'url';
+						scope.placeholder = 'http://example.com';
 						break;
 				}
 				fieldType = 'textfield';
 			}
+
+			console.log(scope.input_type);
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();
             var output = $compile(element.contents())(scope);
@@ -2961,7 +2964,7 @@ angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", f
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-			
+
             //Don't do anything if we don't have a ng-repeat on the current element
             if(!element.attr('ng-repeat') && !element.attr('data-ng-repeat')){
                 return;

@@ -35,6 +35,7 @@
     "connect-mongo": "~0.8.2",
     "consolidate": "~0.13.1",
     "cookie-parser": "~1.4.0",
+    "deep-diff": "^0.3.4",
     "dotenv": "^2.0.0",
     "email-verification": "~0.4.1",
     "envfile": "^2.0.1",
