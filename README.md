@@ -167,4 +167,4 @@ $ grunt coverage:client
 [Betapage](https://betapage.co/startup/tellform)
 
 ## Credits
-Inspired/built off the great work of the [MeanJS team](https://github.com/mean/) and [Typeform](http://typeform.com)
+Inspired/built off the great work of the [MeanJS team](https://github.com/meanjs/) and [Typeform](http://typeform.com)
