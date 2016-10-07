@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "async": "^1.4.2",
+    "async-boolean-expression-evaluator": "^1.1.1",
     "aws-sdk": "^2.3.9",
     "bcrypt": "^0.8.7",
     "body-parser": "~1.14.1",
@@ -65,6 +66,7 @@
     "lodash": "^2.4.1",
     "main-bower-files": "~2.9.0",
     "math": "0.0.3",
+    "mathjs": "^3.4.1",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
     "mongoose": "~4.4.19",
