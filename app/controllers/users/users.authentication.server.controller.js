@@ -101,6 +101,7 @@ exports.resendVerificationEmail = function(req, res, next){
  * Signup
  */
 exports.signup = function(req, res) {
+	debugger;
 
 	// For security measures we remove the roles from the req.body object
 	delete req.body.roles;
