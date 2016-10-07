@@ -55,6 +55,15 @@ section.auth {
 		color: #4c4c4c;
 	}
 
+	section.auth .btn {
+		border-radius: 100px;
+		font-size: 14px;
+		padding: 12px 28px;
+		margin-top: 1em;
+		text-transform: uppercase;
+	}
+
+
 	.btn-rounded.btn-signup {
 		background-color: #FFD747;
 		color: #896D0B;

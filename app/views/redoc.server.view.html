@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>{{title}}</title>
+
+	<!-- General META -->
+	<meta charset="utf-8">
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<!-- Semantic META -->
+	<meta name="keywords" content="{{keywords}}">
+	<meta name="description" content="{{description}}">
+
+	<!-- Facebook META -->
+	<meta property="og:site_name" content="{{title}}">
+	<meta property="og:title" content="{{title}}">
+	<meta property="og:description" content="{{description}}">
+	<meta property="og:url" content="{{url}}">
+	<meta property="og:image" content="/img/brand/logo.png">
+	<meta property="og:type" content="website">
+
+	<!-- Twitter META -->
+	<meta name="twitter:title" content="{{title}}">
+	<meta name="twitter:description" content="{{description}}">
+	<meta name="twitter:url" content="{{url}}">
+	<meta name="twitter:image" content="/img/brand/logo.png">
+
+	<!-- Fav Icon -->
+	<link href="/static/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900'>
+
+	<!--Bower CSS dependencies-->
+
+	<!-- end Bower CSS dependencies-->
+
+	<!--Application CSS Files-->
+	{% for cssFile in cssFiles %}
+	<link rel="stylesheet" href="{{cssFile}}">
+	{% endfor %}
+	<!-- end Application CSS Files-->
+
+
+	<!-- HTML5 Shim -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+	<redoc spec-url='/static/swagger.json'></redoc>
+	<script src="https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js"> </script>
+
+	<!--Bower JS dependencies-->
+		{% for bowerJSFile in bowerJSFiles %}
+		<script type="text/javascript" src="{{bowerJSFile}}"></script>
+		{% endfor %}
+	<!-- end Bower JS dependencies-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+
+	{% if process.env.NODE_ENV === 'development' %}
+
+	<script src="https://cdn.ravenjs.com/2.3.0/angular/raven.min.js"></script>
+
+	<script>
+		Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
+	</script>
+
+	<!-- [if lt IE 9]>
+	<section class="browsehappy jumbotron hide">
+		<h1>Hello there!</h1>
+		<p>You are using an old browser which we unfortunately do not support.</p>
+		<p>Please <a href="http://browsehappy.com/">click here</a> to update your browser before using the website.</p>
+		<p><a href="http://browsehappy.com" class="btn btn-primary btn-lg" role="button">Yes, upgrade my browser!</a></p>
+	</section>
+	<![endif] -->
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		ga('create', '{{google_analytics_id}}', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+</body>
+
+</html>

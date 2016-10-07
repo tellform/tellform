@@ -3,16 +3,17 @@
 /**
  * Module dependencies.
  */
-var passport = require('passport');
-var config = require('../../config/config');
+var passport = require('passport'),
+	config = require('../../config/config'),
+	auth = require('../../config/passport_helpers');
 
 module.exports = function(app) {
 	// User Routes
 	var users = require('../../app/controllers/users.server.controller');
 
 	// Setting up the users profile api
-	app.route('/users/me').get(users.requiresLogin, users.getUser);
-	app.route('/users').put(users.requiresLogin, users.update);
+	app.route('/users/me').get(auth.isAuthenticatedOrApiKey, users.getUser);
+	app.route('/users').put(auth.isAuthenticatedOrApiKey, users.update);
 	app.route('/users/accounts').delete(users.requiresLogin, users.removeOAuthProvider);
 
 	// Setting up the users account verification api
@@ -31,6 +32,8 @@ module.exports = function(app) {
 	}
     app.route('/auth/signin').post(users.signin);
 	app.route('/auth/signout').get(users.signout);
+
+	app.route('/auth/genkey').get(users.requiresLogin, users.generateAPIKey);
 
 	// // Setting the facebook oauth routes
 	// app.route('/auth/facebook').get(passport.authenticate('facebook', {

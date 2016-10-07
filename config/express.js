@@ -72,8 +72,6 @@ module.exports = function(db) {
 		var subdomains = req.subdomains;
 		var host = req.hostname;
 
-		console.log(subdomains);
-
 		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
 			subdomains = subdomains.slice(4);
 		}
@@ -89,6 +87,20 @@ module.exports = function(db) {
 		}
 
 		if(subdomains.indexOf('stage') > -1 || subdomains.indexOf('admin') > -1){
+			return next();
+		}
+
+		//console.log(subdomains);
+		//console.log("is api subdomain: "+ (subdomains.indexOf("api") > -1));
+		//console.log(req.url);
+		if(subdomains.indexOf('api') > -1){
+			// rebuild url
+			path += 'api' + req.url;
+			console.log(req.url);
+			// TODO: check path and query strings are preserved
+			// reassign url
+			req.url = path;
+			console.log(req.url);
 			return next();
 		}
 

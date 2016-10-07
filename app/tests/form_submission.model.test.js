@@ -150,13 +150,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 		beforeEach(function(done){
 
 			var myFieldMap = {};
-			myFieldMap[myForm.form_fields[0]._id+''] = 'firstName';
-			myFieldMap[myForm.form_fields[1]._id+''] = 'lastName';
-			myFieldMap[myForm.form_fields[2]._id+''] = 'sex';
-			myFieldMap[myForm.form_fields[3]._id+''] = 'DOB';
-			myFieldMap[myForm.form_fields[4]._id+''] = 'phone';
-
-			myForm.plugins.oscarhost.settings.fieldMap = myFieldMap;
 
 			myForm.save(function(err, form){
 				if(err) done(err);
@@ -175,49 +168,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 			});
 		});
 
-		// it('should add Patient to OscarHost EMR after save', function(done){
-		// 	var url_login = myForm.plugins.oscarhost.baseUrl+'/LoginService?wsdl',
-	 // 			url_demo = myForm.plugins.oscarhost.baseUrl+'/DemographicService?wsdl',
-	 // 			args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};
-
-	 // 		var options = {
-	 // 		    ignoredNamespaces: {
-	 // 		        namespaces: ['targetNamespace', 'typedNamespace'],
-	 // 		        override: true
-	 // 		    }
-	 // 		};
-
-		// 	async.waterfall([
-		// 		function (callback) {
-		// 			//Authenticate with API
-		// 			soap.createClient(url_login, options, function(err, client) {
-		// 				client.login(args_login, function (err, result) {
-		// 					if(err) callback(err);
-		// 					callback(null, result.return);
-		// 				});
-		// 			});
-		// 		},
-
-		// 		function (security_obj, callback) {
-		// 			soap.createClient(url_demo, options, function(err, client) {
-		// 				client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
-
-		// 				client.getDemographic({ arg0: oscar_demo_num }, function (err, result) {
-		// 					if(err) callback(err);
-		// 					callback(null, result);
-		// 				});
-		// 			});
-		// 		},
-
-		// 	], function(err, result) {
-		// 		if(err) done(err);
-
-		// 		should.exist(result);
-		// 		console.log(result.return);
-
-		// 		done();
-		// 	});
-		// });
 	});
 
 	describe('Method Find', function(){

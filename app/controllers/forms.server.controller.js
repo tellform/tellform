@@ -118,8 +118,6 @@ exports.createSubmission = function(req, res) {
 		percentageComplete: req.body.percentageComplete
 	});
 
-	if(!!form.plugins.oscarhost.baseUrl) submission.hasPlugins.oscarhost = true;
-
 	if(form.pdf) submission.pdf = form.pdf;
 
 	//Save submitter's IP Address
@@ -189,23 +187,27 @@ exports.listSubmissions = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
+
+
+	if(!req.body.form){
+		console.log(err);
+		return res.status(400).send({
+			message: "Invalid Input"
+		});
+	}
 	var form = new Form(req.body.form);
 
 	form.admin = req.user._id;
-	console.log('Create a new form');
-	console.log(form);
-	console.log(req.body.form);
-	console.log(req.user);
 
 	form.save(function(err) {
 		if (err) {
 			console.log(err);
-			res.status(400).send({
+			return res.status(405).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.json(form);
 		}
+
+		res.json(form);
 	});
 };
 
@@ -213,10 +215,7 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-	var validUpdateTypes= Form.schema.path('plugins.oscarhost.settings.updateType').enumValues;
-
 	var newForm = req.form.toJSON({virtuals : true});
-	newForm.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
 
 	if (req.userId) {
 		if(req.form.admin._id+'' === req.userId+''){
@@ -239,6 +238,7 @@ exports.update = function(req, res) {
 	delete req.body.form.__v;
 	delete req.body.form._id;
 	*/
+	if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
 
 	if(req.body.changes){
 		var formChanges = req.body.changes;
@@ -248,7 +248,6 @@ exports.update = function(req, res) {
 		});
 	} else {
 		//Unless we have 'admin' privileges, updating form admin is disabled
-		if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
 
 		//Do this so we can create duplicate fields
 		var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
@@ -265,7 +264,7 @@ exports.update = function(req, res) {
 	form.save(function(err, form) {
 		if (err) {
 			console.log(err);
-			res.status(400).send({
+			res.status(405).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
@@ -325,7 +324,7 @@ exports.formByID = function(req, res, next, id) {
 			if (err) {
 				return next(err);
 			} else if (form === undefined || form === null) {
-				res.status(400).send({
+				res.status(404).send({
 					message: 'Form not found'
 				});
 			}

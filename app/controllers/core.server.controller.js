@@ -21,3 +21,11 @@ exports.form = function(req, res) {
 		request: req
 	});
 };
+
+
+exports.redoc = function(req, res) {
+	res.render('redoc', {
+		request: req
+	});
+};
+

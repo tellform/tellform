@@ -92,11 +92,6 @@ var FormSchema = new Schema({
 		default: 'en',
 		required: 'Form must have a language'
 	},
-	description: {
-		type: String,
-		default: ''
-	},
-
 	analytics:{
 		gaCode: {
 			type: String
@@ -187,8 +182,7 @@ var FormSchema = new Schema({
                 default: '#333'
             }
 		},
-		font: String,
-		backgroundImage: { type: Schema.Types.Mixed }
+		font: String
 	},
 
 	plugins: {
@@ -367,11 +361,6 @@ FormSchema.pre('save', function (next) {
 			}
 		});
 	}, function(cb) {
-		//DAVID: TODO: Make this so we don't have to update the validFields property ever save
-		if (that.plugins.oscarhost.hasOwnProperty('baseUrl')) {
-			var validUpdateTypes = mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
-			that.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
-		}
 		return cb(null);
 	},
 		function(cb) {
