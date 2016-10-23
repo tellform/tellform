@@ -190,7 +190,7 @@ if(!fs.existsSync('./\.env')) {
 				answers['SIGNUP_DISABLED'] = false ? answers['SIGNUP_DISABLED'] === false : true;
 
 				var email = answers['email'];
-				var username = answers['email'];
+				var username = answers['username'];
 				var pass = answers['password'];
 				delete answers['email'];
 				delete answers['password'];

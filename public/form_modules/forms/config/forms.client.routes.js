@@ -17,6 +17,6 @@ angular.module('view-form').config(['$stateProvider',
 			},
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
-		})
+		});
 	}
 ]);
