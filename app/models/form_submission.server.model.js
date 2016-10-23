@@ -45,8 +45,8 @@ var newDemoTemplate = {
 
 
 // Setter function for form_fields
-function formFieldsSetter(form_fields){
-	for(var i=0; i<form_fields.length; i++){
+function formFieldsSetter(form_fields) {
+	for (var i = 0; i < form_fields.length; i++) {
 		form_fields[i].isSubmission = true;
 		form_fields[i].submissionId = form_fields[i]._id;
 		form_fields[i]._id = new mongoose.mongo.ObjectID();
@@ -143,9 +143,11 @@ FormSubmissionSchema.pre('save', function (next) {
 
 	var self = this;
 
-	if(this.hasPlugins.oscarhost){
-		mongoose.model('Form').findById(self.form, function(err, _form){
-			var form_ids = _.map(_.pluck(_form.form_fields, '_id'), function(id){ return ''+id;}),
+	if (this.hasPlugins.oscarhost) {
+		mongoose.model('Form').findById(self.form, function (err, _form) {
+			var form_ids = _.map(_.pluck(_form.form_fields, '_id'), function (id) {
+					return '' + id;
+				}),
 				submission_ids = _.pluck(self.form_fields, '_id');
 
 			// console.log('Form form_field ids\n--------');
@@ -153,59 +155,59 @@ FormSubmissionSchema.pre('save', function (next) {
 			// console.log('FormSubmission [form_field ids]\n--------');
 			// console.log(submission_ids);
 
-			if(err) return next(err);
+			if (err) return next(err);
 			// console.log(_form);
 			// console.log('should push to api');
 			// console.log( (!this.oscarDemoNum && !!_form.plugins.oscarhost.baseUrl && !!_form.plugins.oscarhost.settings.fieldMap) );
-			if(!this.oscarDemoNum && _form.plugins.oscarhost.baseUrl && _form.plugins.oscarhost.settings.fieldMap){
+			if (!this.oscarDemoNum && _form.plugins.oscarhost.baseUrl && _form.plugins.oscarhost.settings.fieldMap) {
 				console.log('OSCARHOST API HOOK');
-		 		var url_login = _form.plugins.oscarhost.baseUrl+'/LoginService?wsdl',
-		 			url_demo = _form.plugins.oscarhost.baseUrl+'/DemographicService?wsdl';
+				var url_login = _form.plugins.oscarhost.baseUrl + '/LoginService?wsdl',
+					url_demo = _form.plugins.oscarhost.baseUrl + '/DemographicService?wsdl';
 
-		 		var args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};
+				var args_login = {arg0: config.oscarhost.auth.user, arg1: config.oscarhost.auth.pass};
 
-		 		var options = {
-		 		    ignoredNamespaces: {
-		 		        namespaces: ['targetNamespace', 'typedNamespace'],
-		 		        override: true
-		 		    }
-		 		};
-		 		// console.log(self.form_fields);
+				var options = {
+					ignoredNamespaces: {
+						namespaces: ['targetNamespace', 'typedNamespace'],
+						override: true
+					}
+				};
+				// console.log(self.form_fields);
 
-		 		//Generate demographics from hashmap
-		 		var generateDemo = function(formFields, conversionMap, demographicsTemplate){
-		 			console.log('generating Demo fields');
-		 			console.log(conversionMap);
-		 			var _generatedDemo = {}, currField, propertyName;
+				//Generate demographics from hashmap
+				var generateDemo = function (formFields, conversionMap, demographicsTemplate) {
+					console.log('generating Demo fields');
+					console.log(conversionMap);
+					var _generatedDemo = {}, currField, propertyName;
 
-		 			for(var y=0; y<formFields.length; y++){
-		 				currField = formFields[y];
-		 				propertyName = conversionMap[currField._id];
+					for (var y = 0; y < formFields.length; y++) {
+						currField = formFields[y];
+						propertyName = conversionMap[currField._id];
 
-		 				if(demographicsTemplate.hasOwnProperty(conversionMap[currField._id])){
-		 					_generatedDemo[propertyName] = currField.fieldValue+'';
-		 				}else if(propertyName === 'DOB'){
-	 						var date = new Date(currField.fieldValue);
-	 						_generatedDemo.dateOfBirth = date.getDate()+'';
-	 						_generatedDemo.yearOfBirth = date.getFullYear()+'';
-	 						_generatedDemo.monthOfBirth = date.getMonth()+'';
-		 				}
-		 			}
-		 			var currDate = new Date();
-		 			var dateString = currDate.toISOString().split('T')[0] + ' ' + currDate.toISOString().split('T')[1].slice(0,8);
-		 			_generatedDemo.lastUpdateDate = currDate.toISOString();
-		 			return _generatedDemo;
-		 		};
+						if (demographicsTemplate.hasOwnProperty(conversionMap[currField._id])) {
+							_generatedDemo[propertyName] = currField.fieldValue + '';
+						} else if (propertyName === 'DOB') {
+							var date = new Date(currField.fieldValue);
+							_generatedDemo.dateOfBirth = date.getDate() + '';
+							_generatedDemo.yearOfBirth = date.getFullYear() + '';
+							_generatedDemo.monthOfBirth = date.getMonth() + '';
+						}
+					}
+					var currDate = new Date();
+					var dateString = currDate.toISOString().split('T')[0] + ' ' + currDate.toISOString().split('T')[1].slice(0, 8);
+					_generatedDemo.lastUpdateDate = currDate.toISOString();
+					return _generatedDemo;
+				};
 
-		 		var submissionDemographic = generateDemo(self.form_fields, _form.plugins.oscarhost.settings.fieldMap, newDemoTemplate);
+				var submissionDemographic = generateDemo(self.form_fields, _form.plugins.oscarhost.settings.fieldMap, newDemoTemplate);
 
-		 		console.log(submissionDemographic);
+				console.log(submissionDemographic);
 				async.waterfall([
 					function (callback) {
 						//Authenticate with API
-						soap.createClient(url_login, options, function(err, client) {
+						soap.createClient(url_login, options, function (err, client) {
 							client.login(args_login, function (err, result) {
-								if(err) return callback(err);
+								if (err) return callback(err);
 								console.log('SOAP authenticated');
 								return callback(null, result.return);
 							});
@@ -214,46 +216,46 @@ FormSubmissionSchema.pre('save', function (next) {
 
 					function (security_obj, callback) {
 						//Force Add Demographic
-						if(_form.plugins.oscarhost.settings.updateType === 'force_add'){
-							soap.createClient(url_demo, options, function(err, client) {
-								if(err) return callback(err);
-								client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey) );
+						if (_form.plugins.oscarhost.settings.updateType === 'force_add') {
+							soap.createClient(url_demo, options, function (err, client) {
+								if (err) return callback(err);
+								client.setSecurity(new OscarSecurity(security_obj.securityId, security_obj.securityTokenKey));
 
-								client.addDemographic({ arg0: submissionDemographic }, function (err, result) {
+								client.addDemographic({arg0: submissionDemographic}, function (err, result) {
 									console.log('FORCE ADDING DEMOGRAPHIC \n');
 									// console.log(result.return);
-									if(err) return callback(err);
+									if (err) return callback(err);
 									return callback(null, result);
 								});
 							});
 						}
 					}
 
-				], function(err, result) {
-					if(err) return next(err);
+				], function (err, result) {
+					if (err) return next(err);
 
 					self.oscarDemoNum = parseInt(result.return, 10);
-					console.log('self.oscarDemoNum: '+self.oscarDemoNum);
+					console.log('self.oscarDemoNum: ' + self.oscarDemoNum);
 					return next();
 				});
-			}else{
+			} else {
 				return next();
 			}
 		});
-	}else{
+	} else {
 		return next();
 	}
 
 });
 
 //Check for IP Address of submitting person
-FormSubmissionSchema.pre('save', function (next){
+FormSubmissionSchema.pre('save', function (next) {
 	var self = this;
-	if(this.ipAddr){
-		if(this.isModified('ipAddr') || !this.geoLocation){
-			freegeoip.getLocation(this.ipAddr, function(err, location){
-				if(err) return next(err);
-				self.geoLocation = location
+	if (this.ipAddr) {
+		if (this.isModified('ipAddr') || !this.geoLocation) {
+			freegeoip.getLocation(this.ipAddr, function (err, location) {
+				if (err) return next(err);
+				self.geoLocation = location;
 				return next();
 			});
 		}
@@ -267,19 +269,19 @@ FormSubmissionSchema.pre('save', function (next) {
 		self = this,
 		_form = this.form;
 
-	if(this.pdf && this.pdf.path){
-		dest_filename = self.title.replace(/ /g,'')+'_submission_'+Date.now()+'.pdf';
-		var __path = this.pdf.path.split('/').slice(0,this.pdf.path.split('/').length-1).join('/');
+	if (this.pdf && this.pdf.path) {
+		dest_filename = self.title.replace(/ /g, '') + '_submission_' + Date.now() + '.pdf';
+		var __path = this.pdf.path.split('/').slice(0, this.pdf.path.split('/').length - 1).join('/');
 		dest_path = path.join(__path, dest_filename);
 
 		self.pdfFilePath = dest_path;
 
-		pdfFiller.fillForm(self.pdf.path, dest_path, self.fdfData, function(err){
-			if(err) {
-				console.log('\n err.message: '+err.message);
-				return next( new Error(err.message) );
+		pdfFiller.fillForm(self.pdf.path, dest_path, self.fdfData, function (err) {
+			if (err) {
+				console.log('\n err.message: ' + err.message);
+				return next(new Error(err.message));
 			}
-			console.log('Field data from Form: '+self.title.replace(/ /g,'')+' outputed to new PDF: '+dest_path);
+			console.log('Field data from Form: ' + self.title.replace(/ /g, '') + ' outputed to new PDF: ' + dest_path);
 			return next();
 		});
 	} else {
