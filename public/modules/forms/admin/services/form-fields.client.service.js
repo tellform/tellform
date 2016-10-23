@@ -14,6 +14,10 @@ angular.module('forms').service('FormFields', [
 		    },
 		    {
 		        name : 'radio',
+		        value : 'Unique Choice'
+		    },
+			{
+		        name : 'checkbox',
 		        value : 'Multiple Choice'
 		    },
 		    {

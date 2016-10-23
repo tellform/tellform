@@ -22,6 +22,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'hidden',
             'password',
             'radio',
+            'checkbox',
             'legal',
             'statement',
             'rating',
