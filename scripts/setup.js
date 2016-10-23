@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'product	ion';
 
 var init = require('../config/init')(),
 	config = require('../config/config'),
@@ -190,7 +190,7 @@ if(!fs.existsSync('./\.env')) {
 				answers['SIGNUP_DISABLED'] = false ? answers['SIGNUP_DISABLED'] === false : true;
 
 				var email = answers['email'];
-				var username = answers['email'];
+				var username = answers['username'];
 				var pass = answers['password'];
 				delete answers['email'];
 				delete answers['password'];
