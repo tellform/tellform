@@ -72,6 +72,7 @@
     "multer": "~1.1.0",
     "node-freegeoip": "0.0.1",
     "nodemailer": "~1.10.0",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemailer-sparkpost-transport": "^1.0.0",
     "passport": "~0.3.0",
     "passport-anonymous": "^1.0.1",
