@@ -85,17 +85,17 @@ Create this directory or you will get errors.
 mkdir uploads/pdfs
 ```
 
-Edit the 'env' config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
+Edit the `env` config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
 
 To run development version:
 
 Set ```NODE_ENV=development``` in .env file
-```$ grunt````
+```$ grunt```
 
 To run production version:
 
-Set ```NODE_ENV=development``` in .env file
-```$ grunt````
+Set ```NODE_ENV=production``` in .env file
+```$ grunt```
 
 Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
 
