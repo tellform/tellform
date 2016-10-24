@@ -12,7 +12,7 @@ module.exports = function (app, db) {
 
 	var io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
 	var redis = require('socket.io-redis');
-	io.adapter(redis(process.env.REDIS_HOST || { host: '127.0.0.1', port: 6379 }));
+	io.adapter(redis(process.env.REDIS_URL || { host: '127.0.0.1', port: 6379 }));
 
 	// Add an event listener to the 'connection' event
 	io.on('connection', function (socket) {
