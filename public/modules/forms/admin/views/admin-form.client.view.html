@@ -53,11 +53,11 @@
 						</span>
 						<span ng-hide="myform.isLive">{{ 'PREVIEW' | translate }}</span>
 					</span>
-					<span class="hidden-xs hidden-md hidden-lg">
-						View
-						<span ng-if="myform.isLive">{{ 'LIVE' | translate }}</span>
-						<span ng-if="!myform.isLive">{{ 'PREVIEW' | translate }}</span>
-					</span>
+					<!--<span class="hidden-xs hidden-md hidden-lg">-->
+						<!--View-->
+						<!--<span ng-if="myform.isLive">{{ 'LIVE' | translate }}</span>-->
+						<!--<span ng-if="!myform.isLive">{{ 'PREVIEW' | translate }}</span>-->
+					<!--</span>-->
 					<i class="status-light status-light-on fa fa-dot-circle-o" ng-if="myform.isLive"></i>
 					<i class="status-light status-light-off fa fa-dot-circle-o" ng-if="!myform.isLive"></i>
 				</a>
@@ -68,10 +68,13 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<uib-tabset active="activePill" vertical="true" type="pills">
-				<uib-tab ng-repeat="tab in tabData" index="$index" heading="{{tab.heading}}">
+				<uib-tab index="0" heading="{{ 'CREATE_TAB' | translate }}">
+					<edit-form-directive myform="myform"></edit-form-directive>
+				</uib-tab>
+				<uib-tab ng-repeat="tab in tabData" index="{{$index}}+1" heading="{{tab.heading}}">
 					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
 				</uib-tab>
-				<uib-tab heading="Design" index="5">
+				<uib-tab ng-if="tabData && myform.form_fields.length" heading="Design" index="{{tabData.length}}">
 					<div class="config-form design container">
 						<div class="row">
 							<div class="col-md-4 col-sm-12 container">

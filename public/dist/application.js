@@ -86,9 +86,9 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "            <button type=\"submit\" ng-click=\"removeCurrentForm()\" class=\"btn btn-block btn-danger\" ng-disabled=\"myform.title != deleteConfirm\">\n" +
     "            	{{ 'I_UNDERSTAND' | translate }}\n" +
     "            </button>\n" +
-    "        </div></script><div class=page-header style=\"padding-bottom: 1em\"><div class=\"col-xs-10 col-sm-8\"><h1 class=\"hidden-sm hidden-xs\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h1><h2 class=\"hidden-md hidden-lg\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h2></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><button class=\"btn btn-danger\" ng-click=openDeleteModal()><i class=\"fa fa-trash-o\"></i> <span class=\"show-sm hidden-lg hidden-md hidden-xs\">{{ 'DELETE_FORM_SM' | translate}}</span> <span class=\"hidden-xs hidden-sm\">{{ 'DELETE_FORM_MD' | translate}}</span></button></small></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><a class=\"btn btn-secondary view-form-btn\" href={{actualFormURL}}><span class=\"hidden-xs hidden-sm\">{{ 'VIEW' | translate }} <span ng-show=myform.isLive>{{ 'LIVE' | translate }}</span> <span ng-hide=myform.isLive>{{ 'PREVIEW' | translate }}</span></span> <span class=\"hidden-xs hidden-md hidden-lg\">View <span ng-if=myform.isLive>{{ 'LIVE' | translate }}</span> <span ng-if=!myform.isLive>{{ 'PREVIEW' | translate }}</span></span> <i class=\"status-light status-light-on fa fa-dot-circle-o\" ng-if=myform.isLive></i> <i class=\"status-light status-light-off fa fa-dot-circle-o\" ng-if=!myform.isLive></i></a></small></div></div><div class=row><div class=col-xs-12><uib-tabset active=activePill vertical=true type=pills><uib-tab ng-repeat=\"tab in tabData\" index=$index heading={{tab.heading}}><div class=row data-ng-include=\"'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'\" onload=\"form_url = trustSrc(formURL)\"></div></uib-tab><uib-tab heading=Design index=5><div class=\"config-form design container\"><div class=row><div class=\"col-md-4 col-sm-12 container\"><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.backgroundColor ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.questionColor ng-style=\"{ 'background-color': myform.design.colors.questionColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.answerColor ng-style=\"{ 'background-color': myform.design.colors.answerColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonColor ng-style=\"{ 'background-color': myform.design.colors.buttonColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonTextColor ng-style=\"{ 'background-color': myform.design.colors.buttonTextColor }\"></div></div></div><div class=\"col-md-8 hide-md hide-lg\"><iframe id=iframe ng-if=!!formURL src={{trustSrc(formURL)}} style=\"border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute\"></iframe></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div></uib-tab></uib-tabset></div></div></section>");
+    "        </div></script><div class=page-header style=\"padding-bottom: 1em\"><div class=\"col-xs-10 col-sm-8\"><h1 class=\"hidden-sm hidden-xs\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h1><h2 class=\"hidden-md hidden-lg\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h2></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><button class=\"btn btn-danger\" ng-click=openDeleteModal()><i class=\"fa fa-trash-o\"></i> <span class=\"show-sm hidden-lg hidden-md hidden-xs\">{{ 'DELETE_FORM_SM' | translate}}</span> <span class=\"hidden-xs hidden-sm\">{{ 'DELETE_FORM_MD' | translate}}</span></button></small></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><a class=\"btn btn-secondary view-form-btn\" href={{actualFormURL}}><span class=\"hidden-xs hidden-sm\">{{ 'VIEW' | translate }} <span ng-show=myform.isLive>{{ 'LIVE' | translate }}</span> <span ng-hide=myform.isLive>{{ 'PREVIEW' | translate }}</span></span> <i class=\"status-light status-light-on fa fa-dot-circle-o\" ng-if=myform.isLive></i> <i class=\"status-light status-light-off fa fa-dot-circle-o\" ng-if=!myform.isLive></i></a></small></div></div><div class=row><div class=col-xs-12><uib-tabset active=activePill vertical=true type=pills><uib-tab index=0 heading=\"{{ 'CREATE_TAB' | translate }}\"><edit-form-directive myform=myform></edit-form-directive></uib-tab><uib-tab ng-repeat=\"tab in tabData\" index={{$index}}+1 heading={{tab.heading}}><div class=row data-ng-include=\"'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'\" onload=\"form_url = trustSrc(formURL)\"></div></uib-tab><uib-tab ng-if=\"tabData && myform.form_fields.length\" heading=Design index={{tabData.length}}><div class=\"config-form design container\"><div class=row><div class=\"col-md-4 col-sm-12 container\"><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.backgroundColor ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.questionColor ng-style=\"{ 'background-color': myform.design.colors.questionColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.answerColor ng-style=\"{ 'background-color': myform.design.colors.answerColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonColor ng-style=\"{ 'background-color': myform.design.colors.buttonColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonTextColor ng-style=\"{ 'background-color': myform.design.colors.buttonTextColor }\"></div></div></div><div class=\"col-md-8 hide-md hide-lg\"><iframe id=iframe ng-if=!!formURL src={{trustSrc(formURL)}} style=\"border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute\"></iframe></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div></uib-tab></uib-tabset></div></div></section>");
   $templateCache.put("modules/forms/admin/views/list-forms.client.view.html",
-    "<header data-ng-include=\"'/static/modules/core/views/header.client.view.html'\"></header><section class=overlay ng-if=showCreateModal ng-click=closeCreateModal()></section><section data-ng-controller=\"ListFormsController as ctrl\" data-ng-init=findAll() class=container><br><div class=row><div class=\"col-xs-4 col-xs-offset-4\"><h3 class=\"text-center forms-list-title\">My Forms</h3></div></div><div class=row><div ng-click=openCreateModal() class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new\"><div class=\"title-row col-xs-12\"><h4 class=\"fa fa-plus fa-6\"></h4></div><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>{{ 'CREATE_A_NEW_FORM' | translate }}</small></div></div><form name=forms.createForm class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form\" ng-if=showCreateModal><div class=\"title-row row\"><div class=\"col-xs-5 field-title text-left\">Name</div><div class=\"col-xs-12 field-input\"><input name=title required ng-model=formTitle ng-pattern=languageRegExp ng-minlength=4 style=\"color:black\"></div></div><div class=\"details-row row\"><div class=\"col-xs-5 field-title text-left\">Language</div><div class=\"col-xs-12 field-input\"><div class=\"button custom-select\"><select style=color:black name=language required ng-model=formLanguage ng-init=\"formLanguage = user.language\"><option ng-repeat=\"language in languages\" value={{language}}>{{language}}</option></select></div></div></div><div class=\"details-row submit row\"><div class=\"col-xs-12 field-title text-center\"><button class=\"btn btn-primary\" ng-disabled=forms.createForm.$invalid ng-click=createNewForm()>{{ 'CREATE_FORM' | translate }}</button></div></div></form><div data-ng-repeat=\"form in myforms\" class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container\" ng-class=\"{'paused': !form.isLive}\"><div class=row><span class=pull-right><i style=cursor:pointer class=\"fa fa-trash-o\" ng-click=removeForm($index)></i> <i style=cursor:pointer class=\"fa fa-files-o\" ng-click=duplicateForm($index)></i></span></div><div class=row><a data-ng-href=#!/forms/{{form._id}}/admin/create class=\"title-row col-xs-12\"><h4 class=list-group-item-heading data-ng-bind=form.title></h4></a><div class=\"col-xs-12 responses-row\"><small class=list-group-item-text><span>{{ form.submissions.length }} responses</span></small> <small ng-if=!form.isLive class=list-group-item-text><span>Form Paused</span></small></div></div></div></div></section>");
+    "<header data-ng-include=\"'/static/modules/core/views/header.client.view.html'\"></header><section class=overlay ng-if=showCreateModal ng-click=closeCreateModal()></section><section data-ng-controller=\"ListFormsController as ctrl\" data-ng-init=findAll() class=container><br><div class=row><div class=\"col-xs-4 col-xs-offset-4\"><h3 class=\"text-center forms-list-title\">My Forms</h3></div></div><div class=row><div ng-click=openCreateModal() class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new\"><div class=\"title-row col-xs-12\"><h4 class=\"fa fa-plus fa-6\"></h4></div><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>{{ 'CREATE_A_NEW_FORM' | translate }}</small></div></div><form name=forms.createForm class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form\" ng-if=showCreateModal><div class=\"title-row row\"><div class=\"col-xs-5 field-title text-left\">Name</div><div class=\"col-xs-12 field-input\"><input name=title required ng-model=formTitle ng-pattern=languageRegExp ng-minlength=4 style=\"color:black\"></div></div><div class=\"details-row row\"><div class=\"col-xs-5 field-title text-left\">Language</div><div class=\"col-xs-12 field-input\"><div class=\"button custom-select\"><select style=color:black name=language required ng-model=formLanguage ng-init=\"formLanguage = user.language\"><option ng-repeat=\"language in languages\" value={{language}}>{{language}}</option></select></div></div></div><div class=\"details-row submit row\"><div class=\"col-xs-12 field-title text-center\"><button class=\"btn btn-primary\" ng-disabled=forms.createForm.$invalid ng-click=createNewForm()>{{ 'CREATE_FORM' | translate }}</button></div></div></form><div data-ng-repeat=\"form in myforms\" class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container\" ng-class=\"{'paused': !form.isLive}\"><div class=row><span class=pull-right><i style=cursor:pointer class=\"fa fa-trash-o\" ng-click=removeForm($index)></i> <i style=cursor:pointer class=\"fa fa-files-o\" ng-click=duplicateForm($index)></i></span></div><div class=row><a data-ng-href=#!/forms/{{form._id}}/admin/create class=\"title-row col-xs-12\"><h4 class=list-group-item-heading data-ng-bind=form.title></h4></a><div class=\"col-xs-12 responses-row\"><small class=list-group-item-text><span>{{ form.submissions.length }} responses</span></small><br><br><small ng-if=!form.isLive class=list-group-item-text><span>Form Paused</span></small></div></div></div></div></section>");
   $templateCache.put("modules/forms/base/views/submit-form.client.view.html",
     "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n" +
     "				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n" +
@@ -957,7 +957,7 @@ angular.module('forms').config(['$stateProvider',
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {
 			// Create a new message object
-			var visitorData = {
+			/*var visitorData = {
 				referrer: document.referrer,
 				isSubmitted: form.submitted,
 				formId: form._id,
@@ -986,15 +986,15 @@ angular.module('forms').config(['$stateProvider',
 					}
 					console.log(visitorData.deviceType);
 					Socket.emit('form-visitor-data', visitorData);
-				});
+				});*/
 
 		}
 
 		function init(){
 			// Make sure the Socket is connected
-			if (!Socket.socket) {
+			/*if (!Socket.socket) {
 				Socket.connect();
-			}
+			}*/
 		}
 
 		var service = {
@@ -1717,6 +1717,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 			return $sce.trustAsResourceUrl(src);
 		};
 
+		//Set active tab to Create
+		$scope.activePill = 0;
+
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
@@ -1730,16 +1733,18 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 
 		var refreshFrame = $scope.refreshFrame = function(){
-			document.getElementById('iframe').contentWindow.location.reload();
+			if(document.getElementById('iframe')) {
+				document.getElementById('iframe').contentWindow.location.reload();
+			}
 		};
 
 
 		$scope.tabData   = [
-            {
+			/*{
                 heading: $filter('translate')('CREATE_TAB'),
                 templateName: 'create'
             },
-            /*{
+            {
                 heading: $filter('translate')('DESIGN_TAB'),
                 templateName:   'design'
             },*/
@@ -2013,53 +2018,48 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     });
                 };
 
-                //Update/Save Form if any Form fields are Dirty and Touched
-                $scope.$watch(function(newValue, oldValue) {
-
-                    if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-						delete newValue.visible_form_fields;
-						debounceSave(DeepDiff.diff(oldValue, newValue));
-                    }
-                });
-
                 //Autosave Form when model (specified in $attrs.autoSaveWatch) changes
                 $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
+
+					if( !newValue || !oldValue ) {
+						$rootScope.finishedRender = true;
+						return;
+					}
 
                     newValue = angular.copy(newValue);
                     oldValue = angular.copy(oldValue);
 
-                    newValue.form_fields = _.removeDateFields(newValue.form_fields);
-                    oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
+					delete newValue.visible_form_fields;
+					delete oldValue.visible_form_fields;
+					newValue.form_fields = _.removeDateFields(newValue.form_fields);
+					oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
-                    var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
+					var changedFields = !!DeepDiff.diff(oldValue, newValue) && DeepDiff.diff(oldValue, newValue).length > 0;
 
-                    if(oldValue.hasOwnProperty('plugins.oscarhost.settings.fieldMap')){
-                    	changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
-                    }
+					//If our form is undefined, don't save form
+					if(!changedFields){
+						$rootScope.finishedRender = true;
+						return;
+					}
 
-                    //If our form is undefined, don't save form
-                    if( (!newValue && !oldValue) || !oldValue ){
-                        return;
-                    }
+					if(oldValue.form_fields.length === 0) {
+						$rootScope.finishedRender = true;
+					}
 
-                    // console.log('Autosaving');
-                    // console.log('\n\n----------');
-                    // console.log('!$dirty: '+ !$formCtrl.$dirty );
-                    // console.log('changedFields: '+changedFields);
+					//console.log('Autosaving');
+					//console.log('\n\n----------');
+                    //console.log('!$dirty: '+ !$formCtrl.$dirty );
+
                     // console.log('changedFieldMap: '+changedFieldMap);
-                    // console.log('finishedRender: '+$rootScope.finishedRender);
-                    // console.log('!saveInProgress: '+!$rootScope.saveInProgress);
+					//console.log('finishedRender: '+$rootScope.finishedRender);
+                    //console.log('!saveInProgress: '+!$rootScope.saveInProgress);
                     // console.log('newValue: '+newValue);
                     // console.log('oldValue: '+oldValue);
                     // console.log(oldValue.form_fields);
                     // console.log(newValue.form_fields);
 
-                    if(oldValue.form_fields.length === 0) {
-                        $rootScope.finishedRender = true;
-                    }
-
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && (changedFields && !$formCtrl.$dirty)  && !$rootScope.saveInProgress) {
+                    if( $rootScope.finishedRender && (changedFields) && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
@@ -2068,7 +2068,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                         savePromise = $timeout(function() {
 							$rootScope.saveInProgress = true;
-							
+
 							delete newValue.visible_form_fields;
 							delete newValue.visible_form_fields;
 							var _diff = DeepDiff.diff(oldValue, newValue);
@@ -2189,15 +2189,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
+			transclude: true,
             scope: {
-                myform:'='
+               myform:'='
             },
             controller: ["$scope", function($scope){
 
-                var field_ids = _($scope.myform.form_fields).pluck('_id');
-                for(var i=0; i<field_ids.length; i++){
-                    $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
-                }
                 /*
                 **  Initialize scope with variables
                 */
@@ -2318,15 +2315,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 };
 
                 // Delete particular field on button click
-                $scope.deleteField = function (field_index){
-
-                    //Delete field from field map
-                    var currFieldId = $scope.myform.form_fields[field_index]._id;
-                    if($scope.myform.hasOwnProperty('plugins.oscarhost.baseUrl')) delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
-
-                    //Delete field
+                $scope.deleteField = function (field_index) {
+					console.log($scope.myform.form_fields);
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
+
                 $scope.duplicateField = function (field_index){
                     var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
@@ -2432,10 +2425,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						return false;
 					}
 				};
-
-
 			}]
-
         };
     }
 ]);
@@ -2517,7 +2507,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 					var visitors = $scope.myform.analytics.visitors;
 
-					console.log(visitors);
 					for(var i=0; i<visitors.length; i++){
 						var visitor = visitors[i];
 						var deviceType = visitor.deviceType;

@@ -5,15 +5,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
+			transclude: true,
             scope: {
-                myform:'='
+               myform:'='
             },
             controller: function($scope){
 
-                var field_ids = _($scope.myform.form_fields).pluck('_id');
-                for(var i=0; i<field_ids.length; i++){
-                    $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
-                }
                 /*
                 **  Initialize scope with variables
                 */
@@ -134,15 +131,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 };
 
                 // Delete particular field on button click
-                $scope.deleteField = function (field_index){
-
-                    //Delete field from field map
-                    var currFieldId = $scope.myform.form_fields[field_index]._id;
-                    if($scope.myform.hasOwnProperty('plugins.oscarhost.baseUrl')) delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
-
-                    //Delete field
+                $scope.deleteField = function (field_index) {
+					console.log($scope.myform.form_fields);
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
+
                 $scope.duplicateField = function (field_index){
                     var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();

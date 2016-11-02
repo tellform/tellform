@@ -64,9 +64,14 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         }
                     });
                 };
-				
+
                 //Autosave Form when model (specified in $attrs.autoSaveWatch) changes
                 $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
+
+					if( !newValue || !oldValue ) {
+						$rootScope.finishedRender = true;
+						return;
+					}
 
                     newValue = angular.copy(newValue);
                     oldValue = angular.copy(oldValue);
@@ -79,7 +84,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 					var changedFields = !!DeepDiff.diff(oldValue, newValue) && DeepDiff.diff(oldValue, newValue).length > 0;
 
 					//If our form is undefined, don't save form
-					if( !newValue || !oldValue || !changedFields){
+					if(!changedFields){
 						$rootScope.finishedRender = true;
 						return;
 					}
@@ -91,9 +96,9 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 					//console.log('Autosaving');
 					//console.log('\n\n----------');
                     //console.log('!$dirty: '+ !$formCtrl.$dirty );
-                    console.log('changedFields: '+changedFields);
+
                     // console.log('changedFieldMap: '+changedFieldMap);
-                    //console.log('finishedRender: '+$rootScope.finishedRender);
+					//console.log('finishedRender: '+$rootScope.finishedRender);
                     //console.log('!saveInProgress: '+!$rootScope.saveInProgress);
                     // console.log('newValue: '+newValue);
                     // console.log('oldValue: '+oldValue);

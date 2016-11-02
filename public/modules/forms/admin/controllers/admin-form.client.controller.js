@@ -8,6 +8,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 			return $sce.trustAsResourceUrl(src);
 		};
 
+		//Set active tab to Create
+		$scope.activePill = 0;
+
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
@@ -21,16 +24,18 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 
 		var refreshFrame = $scope.refreshFrame = function(){
-			document.getElementById('iframe').contentWindow.location.reload();
+			if(document.getElementById('iframe')) {
+				document.getElementById('iframe').contentWindow.location.reload();
+			}
 		};
 
 
 		$scope.tabData   = [
-            {
+			/*{
                 heading: $filter('translate')('CREATE_TAB'),
                 templateName: 'create'
             },
-            /*{
+            {
                 heading: $filter('translate')('DESIGN_TAB'),
                 templateName:   'design'
             },*/
