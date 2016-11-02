@@ -31,7 +31,7 @@ if( fs.existsSync('./config/env/api_keys.js') ){
 		exports,
 		require('./env/api_keys')
 	);
-}else {
+} else {
 	module.exports = exports;
 }
 

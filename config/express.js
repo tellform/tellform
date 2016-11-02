@@ -81,8 +81,14 @@ module.exports = function(db) {
 
 		var urlPath = url.parse(req.url).path.split('/');
 		if(urlPath.indexOf('static') > -1){
+			//console.log("STATIC FILE\n\n\n\n");
 			urlPath.splice(1,1);
 			req.root = 'https://' + config.baseUrl + urlPath.join('/');
+			console.log(req.root);
+			return next();
+		}
+
+		if(urlPath.indexOf('users') > -1 && urlPath.indexOf('me') > -1){
 			return next();
 		}
 
@@ -105,8 +111,7 @@ module.exports = function(db) {
 		}
 
 		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
-			console.log("user");
-			console.log(user);
+
 			if (err) {
 				console.log(err);
 				req.subdomains = null;
@@ -127,6 +132,7 @@ module.exports = function(db) {
 
 			// TODO: check path and query strings are preserved
 			// reassign url
+			console.log("path: "+path);
 			req.url = path;
 
 			req.userId = user._id;
