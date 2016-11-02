@@ -64,22 +64,15 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         }
                     });
                 };
-
-                //Update/Save Form if any Form fields are Dirty and Touched
-                $scope.$watch(function(newValue, oldValue) {
-
-                    if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-						delete newValue.visible_form_fields;
-						debounceSave(DeepDiff.diff(oldValue, newValue));
-                    }
-                });
-
+				
                 //Autosave Form when model (specified in $attrs.autoSaveWatch) changes
                 $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
 
                     newValue = angular.copy(newValue);
                     oldValue = angular.copy(oldValue);
 
+					delete newValue.visible_form_fields;
+					delete oldValue.visible_form_fields;
 					newValue.form_fields = _.removeDateFields(newValue.form_fields);
 					oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
@@ -95,20 +88,20 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 						$rootScope.finishedRender = true;
 					}
 
-					console.log('Autosaving');
-					console.log('\n\n----------');
-                    console.log('!$dirty: '+ !$formCtrl.$dirty );
+					//console.log('Autosaving');
+					//console.log('\n\n----------');
+                    //console.log('!$dirty: '+ !$formCtrl.$dirty );
                     console.log('changedFields: '+changedFields);
                     // console.log('changedFieldMap: '+changedFieldMap);
-                    console.log('finishedRender: '+$rootScope.finishedRender);
-                    console.log('!saveInProgress: '+!$rootScope.saveInProgress);
+                    //console.log('finishedRender: '+$rootScope.finishedRender);
+                    //console.log('!saveInProgress: '+!$rootScope.saveInProgress);
                     // console.log('newValue: '+newValue);
                     // console.log('oldValue: '+oldValue);
                     // console.log(oldValue.form_fields);
                     // console.log(newValue.form_fields);
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && (changedFields)  && !$rootScope.saveInProgress) {
+                    if( $rootScope.finishedRender && (changedFields) && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
