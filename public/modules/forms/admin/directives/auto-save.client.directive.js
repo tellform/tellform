@@ -80,38 +80,35 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     newValue = angular.copy(newValue);
                     oldValue = angular.copy(oldValue);
 
-                    newValue.form_fields = _.removeDateFields(newValue.form_fields);
-                    oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
+					newValue.form_fields = _.removeDateFields(newValue.form_fields);
+					oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
-                    var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
+					var changedFields = !!DeepDiff.diff(oldValue, newValue) && DeepDiff.diff(oldValue, newValue).length > 0;
 
-                    if(oldValue.hasOwnProperty('plugins.oscarhost.settings.fieldMap')){
-                    	changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
-                    }
+					//If our form is undefined, don't save form
+					if( !newValue || !oldValue || !changedFields){
+						$rootScope.finishedRender = true;
+						return;
+					}
 
-                    //If our form is undefined, don't save form
-                    if( (!newValue && !oldValue) || !oldValue ){
-                        return;
-                    }
+					if(oldValue.form_fields.length === 0) {
+						$rootScope.finishedRender = true;
+					}
 
-                    // console.log('Autosaving');
-                    // console.log('\n\n----------');
-                    // console.log('!$dirty: '+ !$formCtrl.$dirty );
-                    // console.log('changedFields: '+changedFields);
+					console.log('Autosaving');
+					console.log('\n\n----------');
+                    console.log('!$dirty: '+ !$formCtrl.$dirty );
+                    console.log('changedFields: '+changedFields);
                     // console.log('changedFieldMap: '+changedFieldMap);
-                    // console.log('finishedRender: '+$rootScope.finishedRender);
-                    // console.log('!saveInProgress: '+!$rootScope.saveInProgress);
+                    console.log('finishedRender: '+$rootScope.finishedRender);
+                    console.log('!saveInProgress: '+!$rootScope.saveInProgress);
                     // console.log('newValue: '+newValue);
                     // console.log('oldValue: '+oldValue);
                     // console.log(oldValue.form_fields);
                     // console.log(newValue.form_fields);
 
-                    if(oldValue.form_fields.length === 0) {
-                        $rootScope.finishedRender = true;
-                    }
-
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && (changedFields && !$formCtrl.$dirty)  && !$rootScope.saveInProgress) {
+                    if( $rootScope.finishedRender && (changedFields)  && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
@@ -120,7 +117,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                         savePromise = $timeout(function() {
 							$rootScope.saveInProgress = true;
-							
+
 							delete newValue.visible_form_fields;
 							delete newValue.visible_form_fields;
 							var _diff = DeepDiff.diff(oldValue, newValue);

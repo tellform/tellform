@@ -248,10 +248,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						return false;
 					}
 				};
-
-
 			}
-
         };
     }
 ]);

@@ -232,11 +232,10 @@ exports.read = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
-	debugger;
 	var form = req.form;
 
-
 	if(req.body.changes){
+		console.log('SENDING DIFFS\n\n\n');
 		var formChanges = req.body.changes;
 
 		formChanges.forEach(function (change) {

@@ -13,7 +13,7 @@
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {
 			// Create a new message object
-			var visitorData = {
+			/*var visitorData = {
 				referrer: document.referrer,
 				isSubmitted: form.submitted,
 				formId: form._id,
@@ -42,15 +42,15 @@
 					}
 					console.log(visitorData.deviceType);
 					Socket.emit('form-visitor-data', visitorData);
-				});
+				});*/
 
 		}
 
 		function init(){
 			// Make sure the Socket is connected
-			if (!Socket.socket) {
+			/*if (!Socket.socket) {
 				Socket.connect();
-			}
+			}*/
 		}
 
 		var service = {

@@ -55,12 +55,8 @@ module.exports = function (io, socket) {
 		// a user has visited our page - add them to the visitorsData object
 		socket.on('form-visitor-data', function(data) {
 
-				console.log('\n\nuser has visited our page');
-
 				visitorsData[socket.id] = data;
-
-				console.log(data);
-
+			
 				if (data.isSubmitted) {
 					saveVisitorData(data, function () {
 						console.log('\n\n user submitted form');
