@@ -435,18 +435,28 @@ section.public-form .form-submitted {
 section.public-form .btn {
     border: 1px solid;
 }
-    
+
 .form-item {
+	border-radius: 5px;
     text-align: center;
-    border-bottom: 6px inset #ccc;
     background-color: #eee;
     width: 180px;
-    /*width:100%;*/
     position: relative;
     height: 215px;
-    /*padding-bottom: 25%;*/
     margin-bottom: 45px;
 }
+
+
+.form-item.paused {
+	background-color: red;
+	color: white;
+}
+
+.form-item.paused:hover {
+	background-color: darkred;
+	color: white;
+}
+
 .form-item.create-new input[type='text']{
     width: inherit;
     color:black; 
@@ -454,8 +464,13 @@ section.public-form .btn {
 }
 
 .form-item.create-new {
-    background-color: rgb(131,131,131);
+    background-color: #3FA2F7;
     color: white;
+}
+
+
+.form-item.create-new:hover {
+	background-color: #276496;
 }
 
 /*CREATE-NEW FORM MODAL*/
@@ -464,7 +479,7 @@ section.public-form .btn {
     z-index: 11;
 }
 .form-item.create-new.new-form:hover {
-    background-color: rgb(300,100,100);
+    background-color: #3079b5;
 }
     .form-item.new-form input[type='text'] {
         margin-top:0.2em;
@@ -531,10 +546,23 @@ section.public-form .btn {
 	.activeField input {
 		background-color: transparent;
 	}
+h3.forms-list-title {
+	color: #3FA2F7;
+	weight: 600;
+	margin-bottom: 3em;
+}
+.form-item {
+	color: #71AADD;
+	background-color: #E4F1FD;
+}
+.form-item:hover {
+	background-color: #3FA2F7;
+	color: #23527C;
+}
 
-.form-item:hover, .form-item.create-new:hover {
-    border-bottom: 8px inset #ccc;
+.form-item.create-new:hover {
     background-color: #d9d9d9;
+	color: white;
 }
 
 .form-item.create-new:hover {
@@ -547,15 +575,17 @@ section.public-form .btn {
     left: 30%;
 }
 
-.form-item .title-row{
+.form-item .title-row {
     position: relative;
     top: 15px;
     padding-top:3em;
-    padding-bottom:3.65em; 
+    padding-bottom:1em;
 }
     .form-item .title-row h4 {
         font-size: 1.3em;
     }
+.form-item .responses-row {
+}
 
 .form-item.create-new  .title-row{
     padding: 0;

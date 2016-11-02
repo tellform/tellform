@@ -44,7 +44,9 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 
 ## Quickstart
 
-Before you start, make sure you have Redis installed and running at 127.0.0.1:6379
+Before you start, make sure you have Redis installed and running at 127.0.0.1:6379 and MongoDB installed.
+
+Also make sure to install DNS Masq or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
 
 Install dependencies first.
 ```bash

@@ -75,6 +75,7 @@ var UserSchema = new Schema({
 		type: String,
 		unique: true,
 		required: false,
+		lowercase: true,
 		trim: true
 	},
 	passwordHash: {

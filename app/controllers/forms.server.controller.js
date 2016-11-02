@@ -233,12 +233,9 @@ exports.read = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
+	debugger;
 	var form = req.form;
-	/*
-	delete req.body.form.__v;
-	delete req.body.form._id;
-	*/
-	if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
+
 
 	if(req.body.changes){
 		var formChanges = req.body.changes;
@@ -248,6 +245,7 @@ exports.update = function(req, res) {
 		});
 	} else {
 		//Unless we have 'admin' privileges, updating form admin is disabled
+		if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
 
 		//Do this so we can create duplicate fields
 		var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
@@ -259,7 +257,6 @@ exports.update = function(req, res) {
 		}
 		form = _.extend(form, req.body.form);
 	}
-
 
 	form.save(function(err, form) {
 		if (err) {

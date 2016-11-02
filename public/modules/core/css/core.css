@@ -1,3 +1,5 @@
+
+
 body {
 	overflow-x: hidden;
 	font-family: 'Source Sans Pro', sans-serif;
@@ -34,9 +36,10 @@ body {
 /*Navbar Custom CSS*/
 .navbar {
 	min-height: 60px;
+	padding: 10px 0 10px 0;
 }
 .navbar-inverse {
-	background-color:#588EB4;
+	background-color:#3FA2F7;
 	border: 0;
 	color: white!important;
 }

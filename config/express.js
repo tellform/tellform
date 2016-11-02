@@ -90,7 +90,7 @@ module.exports = function(db) {
 			return next();
 		}
 
-		//console.log(subdomains);
+		console.log(req.subdomains.reverse()[0]);
 		//console.log("is api subdomain: "+ (subdomains.indexOf("api") > -1));
 		//console.log(req.url);
 		if(subdomains.indexOf('api') > -1){
@@ -105,6 +105,7 @@ module.exports = function(db) {
 		}
 
 		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
+			console.log("user");
 			console.log(user);
 			if (err) {
 				console.log(err);
