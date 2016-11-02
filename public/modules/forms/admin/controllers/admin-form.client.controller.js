@@ -11,6 +11,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 		//Set active tab to Create
 		$scope.activePill = 0;
 
+		$scope.copied = false;
+		$scope.onCopySuccess = function(e) {
+			console.log("COPY SUCCESSFUL!");
+			$scope.copied = true;
+		};
+
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;

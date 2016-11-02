@@ -1,6 +1,6 @@
-<div class="submissions-table row container">
+<div class="submissions-table container">
 	<div class="row text-center analytics">
-		<div class="row col-xs-12 header-title">
+		<div class="col-xs-12 header-title">
 			<div class="col-xs-3">
 				{{ 'TOTAL_VIEWS' | translate }}
 			</div>
@@ -17,7 +17,7 @@
 				{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
 			</div>
 		</div>
-		<div class="row col-xs-12 header-numbers">
+		<div class="col-xs-12 header-numbers">
 			<div class="col-xs-3">
 				{{myform.analytics.views}}
 			</div>
@@ -34,7 +34,7 @@
 				{{AverageTimeElapsed | secondsToDateTime | date:'mm:ss'}}
 			</div>
 		</div>
-		<div class="row col-xs-12 detailed-title">
+		<div class="col-xs-12 detailed-title">
 			<div class="col-xs-3">
 				{{ 'DESKTOP_AND_LAPTOP' | translate }}
 			</div>
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 
-		<div class="row col-xs-12 detailed-row">
+		<div class="col-xs-12 detailed-row">
 			<div class="col-xs-3">
 				<div class="row header">
 					{{ 'UNIQUE_VISITS' | translate }}
@@ -90,7 +90,7 @@
 			</div>
 		</div>
 
-		<div class="row col-xs-12 detailed-row">
+		<div class="col-xs-12 detailed-row">
 			<div class="col-xs-3">
 				<div class="row header">
 					{{ 'RESPONSES' | translate }}
@@ -128,7 +128,7 @@
 			</div>
 		</div>
 
-		<div class="row col-xs-12 detailed-row">
+		<div class="col-xs-12 detailed-row">
 			<div class="col-xs-3">
 				<div class="row header">
 					{{ 'COMPLETION_RATE' | translate }}
@@ -166,7 +166,7 @@
 			</div>
 		</div>
 
-		<div class="row col-xs-12 detailed-row">
+		<div class="col-xs-12 detailed-row">
 			<div class="col-xs-3">
 				<div class="row header">
 					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
@@ -204,7 +204,7 @@
 			</div>
 		</div>
 
-		<div class="row col-xs-12 field-title-row">
+		<div class="col-xs-12 field-title-row">
 
 			<div class="col-xs-3">
 				<strong>{{ 'FIELD_TITLE' | translate }}</strong>
@@ -221,7 +221,7 @@
 			</div>
 		</div>
 
-		<div class="row col-xs-12 field-detailed-row" ng-repeat="fieldStats in myform.analytics.fields">
+		<div class="col-xs-12 field-detailed-row" ng-repeat="fieldStats in myform.analytics.fields">
 
 			<div class="col-xs-3">
 				{{fieldStats.field.title}}
