@@ -1,11 +1,7 @@
 "use strict";
 
 var should = require('should'),
-	app = require('../../server'),
-	mongoose = require('mongoose'),
-	Form = mongoose.model('Form'),
-	Field = mongoose.model('Field'),
-	User = mongoose.model('User');
+	mongoose = require('mongoose');
 
 var user, myForm;
 
@@ -17,6 +13,10 @@ var credentials = {
 };
 
 describe('Login E2E Tests', function() {
+	var Form = mongoose.model('Form'),
+		Field = mongoose.model('Field'),
+		User = mongoose.model('User');
+
 	this.timeout(50000);
 	before(function async() {
 		return new Promise(function(resolve, reject) {
@@ -115,7 +115,28 @@ describe('Login E2E Tests', function() {
 				return browser.getUrl() !== 'http://tellform.dev:3001/#!/forms' && browser.isExisting('h2.hidden-md.hidden-lg');
 			}, 5000, 'expected form admin panel to open after 5s');
 
-			var titleExists = ( browser.getText('h1.hidden-sm.hidden-xs') === 'Form Title' || browser.getText('h2.hidden-md.hidden-lg') === 'Form Title')
+			var titleExists = ( browser.getText('h1.hidden-sm.hidden-xs') === 'Form Title' || browser.getText('h2.hidden-md.hidden-lg') === 'Form Title');
+			titleExists.should.be.true();
+		});
+
+		it('should be able to create a new form', function () {
+			browser.click('.navbar-header a.navbar-brand');
+
+			browser.waitUntil(function () {
+				return browser.getUrl() === 'http://tellform.dev:3001/#!/forms'
+			}, 5000, 'expected form list view to open after 5s');
+
+			browser.click('.form-item.create-new');
+			browser.isVisible('.form-item.create-new.new-form');
+
+			browser.setValue('.create-new .title-row input', 'New Form');
+			browser.click('.create-new .submit.row .btn');
+
+			browser.waitUntil(function () {
+				return browser.getUrl() !== 'http://tellform.dev:3001/#!/forms' && browser.isExisting('h2.hidden-md.hidden-lg');
+			}, 5000, 'expected form admin panel to open after 5s');
+
+			var titleExists = ( browser.getText('h1.hidden-sm.hidden-xs') === 'New Form' || browser.getText('h2.hidden-md.hidden-lg') === 'New Form');
 			titleExists.should.be.true();
 		});
 	});

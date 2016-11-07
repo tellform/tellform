@@ -32,7 +32,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -42,7 +42,7 @@ exports.config = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instance available you can make sure that not more than
         // 5 instance gets started at a time.
-        maxInstances: 5,
+        maxInstances: 1,
         //
         browserName: 'chrome'
     }],
@@ -136,12 +136,14 @@ exports.config = {
     //
     // Gets executed before test execution begins. At this point you can access all global
     // variables, such as `browser`. It is the perfect place to define custom commands.
-    // before: function (capabilities, specs) {
-    // },
+    before: function (capabilities, specs) {
+		var server = require('./server');
+		return server.promise;
+	},
     //
     // Hook that gets executed before the suite starts
-    // beforeSuite: function (suite) {
-    // },
+    //beforeSuite: function (suite) {
+    //},
     //
     // Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
     // beforeEach in Mocha)
@@ -159,7 +161,7 @@ exports.config = {
     //
     // Runs before a WebdriverIO command gets executed.
     // beforeCommand: function (commandName, args) {
-    // },
+	// },
     //
     // Runs after a WebdriverIO command gets executed
     // afterCommand: function (commandName, args, result, error) {

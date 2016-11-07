@@ -11,7 +11,6 @@ var init = require('./config/init')(),
 	mongoose = require('mongoose'),
 	chalk = require('chalk');
 
-
 /**
  * Main application entry file.
  * Please note that the order of loading is important.
@@ -36,10 +35,18 @@ var app = require('./config/express')(db);
 require('./config/passport')();
 
 // Start the app by listening on <port>
-app.listen(config.port);
+var promise = new Promise(function(resolve, reject) {
+	app.listen(config.port, function(err) {
+		if(err) return reject();
+		resolve();
+	});
+});
 
 // Expose app
-exports = module.exports = app;
+exports = module.exports = {
+	app: app,
+	promise: promise
+};
 
 // Logging initialization
 console.log('--');

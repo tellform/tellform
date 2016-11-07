@@ -1,15 +1,14 @@
-/*
 "use strict";
 
-var should = require('should'),
-	app = require('../../server'),
-	mongoose = require('mongoose'),
-	User = mongoose.model('User');
+var	should = require('should'),
+	mongoose = require('mongoose');
 
 var credentials, user;
 
 describe('Login E2E Tests', function() {
 	this.timeout(50000);
+	var User = mongoose.model('User');
+
 	beforeEach(function async() {
 		return new Promise(function(resolve, reject) {
 
@@ -108,4 +107,3 @@ describe('Login E2E Tests', function() {
 		});
 	});
 });
-*/
