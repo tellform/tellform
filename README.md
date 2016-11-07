@@ -138,6 +138,11 @@ To calculate your client-side test coverage with Istanbul, run the coverage task
 $ grunt coverage:client
 ```
 
+To run the selenium e2e tests run the e2e task
+```bash
+$ npm run test:e2e
+```
+
 ## Where to get help
 
 [Gitter Chat](https://gitter.im/whitef0x0/tellform)

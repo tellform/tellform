@@ -19,6 +19,7 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test && grunt coveralls",
+    "test:e2e": "wdio wdio.conf.js",
     "postinstall": "bower install --config.interactive=false; grunt build;",
     "init": "node scripts/setup.js"
   },
@@ -124,8 +125,11 @@
     "node-mandrill": "^1.0.1",
     "phantomjs": "^1.9.18",
     "selenium-server": "^3.0.1",
+    "selenium-standalone": "^5.8.0",
     "should": "~7.1.1",
     "supertest": "~1.2.0",
-    "supertest-session": "~2.0.1"
+    "supertest-session": "~2.0.1",
+    "wdio-mocha-framework": "^0.2.12",
+    "webdriverio": "^4.3.0"
   }
 }
