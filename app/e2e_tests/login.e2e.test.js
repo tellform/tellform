@@ -1,3 +1,4 @@
+/*
 "use strict";
 
 var should = require('should'),
@@ -8,12 +9,14 @@ var should = require('should'),
 var credentials, user;
 
 describe('Login E2E Tests', function() {
+	this.timeout(50000);
 	beforeEach(function async() {
 		return new Promise(function(resolve, reject) {
+
 			// Create user credentials
 			credentials = {
-				email: 'testoeoeoeeo243423e@test.com',
-				username: 'tesoeeote234234ooe',
+				email: 'testoeoeoee'+Math.floor(1000%Math.random()*1000)+'@test.com',
+				username: 'tesoeeo'+Math.floor(1000%Math.random()*1000),
 				password: 'passwordeoeo'
 			};
 
@@ -35,13 +38,65 @@ describe('Login E2E Tests', function() {
 		});
 	});
 
-	it('should be able to show login page', function () {
+	it('should be able to login with valid credentials', function () {
 		browser.url('http://tellform.dev:3001');
+
+		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
+		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
 		var title = browser.getTitle();
 		title.should.equal('TellForm Test');
 
-		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block')
+		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
 		siginButtonText.should.equal('SIGN IN');
+
+		browser.setValue('input#username', credentials.email);
+		browser.setValue('input#password', credentials.password);
+
+		browser.click('button.btn.btn-signup.btn-rounded.btn-block');
+
+		browser.waitForExist('h3.text-center.forms-list-title', 10000);
+		browser.getText('h3.text-center.forms-list-title').should.equal('My Forms');
+		browser.getUrl().should.equal('http://tellform.dev:3001/#!/forms');
+	});
+
+	it('should be not able to login with invalid credentials', function () {
+		browser.url('http://tellform.dev:3001');
+
+		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
+		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
+		var title = browser.getTitle();
+		title.should.equal('TellForm Test');
+
+		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
+		siginButtonText.should.equal('SIGN IN');
+
+		browser.setValue('input#username', 'aoeuaoeu');
+		browser.setValue('input#password', 'aoeuaoeu');
+
+		browser.click('button.btn.btn-signup.btn-rounded.btn-block');
+
+		browser.waitForExist('.text-center.text-danger', 10000);
+		browser.getText('.text-center.text-danger').should.equal('Error: Unknown user or invalid password');
+		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
+	});
+
+	it('should be not able to login with no credentials', function () {
+		browser.url('http://tellform.dev:3001');
+
+		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
+		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
+		var title = browser.getTitle();
+		title.should.equal('TellForm Test');
+
+		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
+		siginButtonText.should.equal('SIGN IN');
+
+		browser.setValue('input#username', '');
+		browser.setValue('input#password', '');
+
+		browser.click('button.btn.btn-signup.btn-rounded.btn-block');
+
+		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
 	});
 
 	afterEach(function async() {
@@ -53,3 +108,4 @@ describe('Login E2E Tests', function() {
 		});
 	});
 });
+*/

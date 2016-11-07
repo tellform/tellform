@@ -5,6 +5,9 @@ scripts/oscarhost/private/
 coverage/
 uploads/
 
+#Selenium
+app/e2e_tests/screenshots/*
+
 # iOS / Apple
 # ===========
 .DS_Store

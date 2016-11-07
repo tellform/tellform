@@ -47,7 +47,7 @@ describe('Form Routes Unit tests', function() {
 			should.not.exist(err);
 			myForm = {
 				title: 'Form Title',
-				language: 'english',
+				language: 'en',
 				admin: user.id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
@@ -55,7 +55,7 @@ describe('Form Routes Unit tests', function() {
 					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
 				]
 			};
-                
+
             //Initialize Session
             userSession = Session(app);
 

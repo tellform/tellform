@@ -100,7 +100,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			myForm = new Form({
 				title: 'Form Title1',
 				admin: user._id,
-				language: 'english',
+				language: 'en',
 				form_fields: [
 					{'fieldType':'textfield', 	'title':'What\'s your first name', 	'fieldValue': ''},
 					{'fieldType':'textfield', 	'title':'And your last name',  		'fieldValue': ''},

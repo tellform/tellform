@@ -47,7 +47,7 @@ describe('Form Submission Routes Unit tests', function() {
 			if(err) return done(err);
 			FormObj = new Form({
 				title: 'Form Title',
-				language: 'english',
+				language: 'en',
 				admin: user._id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
