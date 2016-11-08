@@ -1,10 +1,10 @@
-[<img src="/" width="250px">](https://digitalocean.com/)
+TellForm 2.0.0
 ========
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UY555MCBZM722)
 [![Stories in Ready](https://badge.waffle.io/whitef0x0/tellform.svg?label=ready&title=Ready)](http://waffle.io/whitef0x0/tellform)
 [![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
-![Project Status](https://img.shields.io/badge/status-beta-yellow.svg)
+![Project Status](https://img.shields.io/badge/status-2.0.0-green.svg)
 [![Code Climate](https://codeclimate.com/github/whitef0x0/tellform/badges/gpa.svg)](https://codeclimate.com/github/whitef0x0/tellform)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=whitef0x0/tellform&amp;utm_campaign=Badge_Grade)
 [![Gitter](https://badges.gitter.im/whitef0x0/tellform.svg)](https://gitter.im/whitef0x0/tellform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -15,7 +15,7 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 
 ####Sponsored by
 [<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
-[<img src="https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png" width="250px">](https://getsentry.com/)
+[<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png" width="250px">](https://getsentry.com/)
 [<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
 [<img src="http://bcsrq.com/wp-content/uploads/2014/04/StickerMuleLogo300.png" width="250px">](https://stickermule.com/)
 [<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="250px">](https://sparkpost.com/)
@@ -35,6 +35,7 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 	-Native Analytics and Google Analytics Support
 	-Custom subdomains
 	-Embeddable Forms
+	-Form API
 
 ###TODO:
 	-Implement encryption for all form data
@@ -42,7 +43,6 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 	-Add Typeform API integration
 	-Add plugin/3rd party integration support (ala Slack)
 	-Create wiki for easy installation and setup
-
 
 ## Quickstart
 
