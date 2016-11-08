@@ -1,4 +1,4 @@
-TellForm
+[<img src="/" width="250px">](https://digitalocean.com/)
 ========
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UY555MCBZM722)
@@ -14,8 +14,8 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 [See examples here](https://tellform.com/examples) 
 
 ####Sponsored by
-[<img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/DigitalOcean_logo.svg/1024px-DigitalOcean_logo.svg.png" width="250px">](https://digitalocean.com/)
-[<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png" width="250px">](https://getsentry.com/)
+[<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
+[<img src="https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png" width="250px">](https://getsentry.com/)
 [<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
 [<img src="http://bcsrq.com/wp-content/uploads/2014/04/StickerMuleLogo300.png" width="250px">](https://stickermule.com/)
 [<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="250px">](https://sparkpost.com/)
@@ -49,6 +49,8 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 Before you start, make sure you have 
 1. Redis installed and running at 127.0.0.1:6379
 2. MongoDB installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
+
+Also make sure to install DNS Masq or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
 
 Install dependencies first.
 ```bash

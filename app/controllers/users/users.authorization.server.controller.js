@@ -23,7 +23,9 @@ exports.userByID = function (req, res, next, id) {
     if (err) {
       return next(err);
     } else if (!user) {
-      return next(new Error('Failed to load User ' + id));
+		return res.status(404).send({
+			message: 'User does not exist'
+		});
     }
 
     req.profile = user;

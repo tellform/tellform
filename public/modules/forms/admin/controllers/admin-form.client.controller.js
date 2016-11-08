@@ -1,8 +1,21 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
+
+		$scope.trustSrc = function(src) {
+			return $sce.trustAsResourceUrl(src);
+		};
+
+		//Set active tab to Create
+		$scope.activePill = 0;
+
+		$scope.copied = false;
+		$scope.onCopySuccess = function(e) {
+			console.log("COPY SUCCESSFUL!");
+			$scope.copied = true;
+		};
 
         $scope = $rootScope;
         $scope.animationsEnabled = true;
@@ -11,24 +24,38 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
         CurrentForm.setForm($scope.myform);
 
-	$scope.formURL = $scope.myform.admin.username + '.tellform.com';
+		$scope.formURL = "/#!/forms/" + $scope.myform._id;
 
-        $scope.tabData   = [
-            {
+		if(window.location.host.split('.') < 3){
+			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + "/#!/forms/" + $scope.myform._id;
+		} else {
+			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') + "/#!/forms/" + $scope.myform._id;
+		}
+
+
+		var refreshFrame = $scope.refreshFrame = function(){
+			if(document.getElementById('iframe')) {
+				document.getElementById('iframe').contentWindow.location.reload();
+			}
+		};
+
+
+		$scope.tabData   = [
+			/*{
                 heading: $filter('translate')('CREATE_TAB'),
-                route:   'viewForm.create'
+                templateName: 'create'
             },
             {
                 heading: $filter('translate')('DESIGN_TAB'),
-                route:   'viewForm.design'
-            },
+                templateName:   'design'
+            },*/
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-                route:   'viewForm.configure'
+				templateName:   'configure'
             },
             {
                 heading: $filter('translate')('ANALYZE_TAB'),
-                route:   'viewForm.analyze'
+				templateName:   'analyze'
             }
         ];
 
@@ -92,7 +119,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, cb){
+			refreshFrame();
 
             var continueUpdate = true;
             if(!updateImmediately){
@@ -105,7 +133,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
                 if(!updateImmediately){ $rootScope.saveInProgress = true; }
 
-                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
+                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
                         // console.log(response.data);

@@ -5,25 +5,11 @@
 				<span class="sr-only">Toggle navigation</span>
 				<span>{{ 'MENU_BTN' | translate }}</span>
 			</button>
-			<a href="https://www.tellform.com/#!/" class="navbar-brand">
+			<a href="/#!/" class="navbar-brand">
 				<img src="/static/modules/core/img/logo_white.svg" height="100%">
 			</a>
 		</div>
 		<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
-			<ul class="nav navbar-nav" data-ng-if="authentication.isAuthenticated()">
-				<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.isAuthenticated());" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
-					<a ng-switch-when="dropdown" class="dropdown-toggle" dropdown-toggle>
-						<span data-ng-bind="item.title"></span>
-						<b class="caret"></b>
-					</a>
-					<ul ng-switch-when="dropdown" class="dropdown-menu">
-						<li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.isAuthenticated());" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
-							<a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
-						</li>
-					</ul>
-					<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
-				</li>
-			</ul>
 			<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.isAuthenticated()">
 				<li ng-hide="$root.signupDisabled" ui-route="/signup" ng-class="{active: $uiRoute}">
 					<a href="/#!/signup">{{ 'SIGNUP_TAB' | translate }}</a>

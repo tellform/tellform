@@ -13,8 +13,6 @@ var init = require('../config/init')(),
 	fs = require('fs-extra'),
 	chalk = require('chalk');
 
-console.log(config);
-
 // Bootstrap db connection
 var db = mongoose.connect(config.db.uri, config.db.options, function(err) {
 	if (err) {

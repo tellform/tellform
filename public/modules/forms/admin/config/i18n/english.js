@@ -39,6 +39,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		PREVIEW: 'Preview',
 
 		//Edit Form View
+		DISABLED: 'Disabled:',
+		YES: 'YES',
+		NO: 'NO',
+		ADD_LOGIC_JUMP: 'Add Logic Jump',
 		ADD_FIELD_LG: 'Click to Add New Field',
 		ADD_FIELD_MD: 'Add New Field',
 		ADD_FIELD_SM: 'Add Field',

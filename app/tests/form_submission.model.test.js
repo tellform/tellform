@@ -148,13 +148,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 		beforeEach(function(done){
 
 			var myFieldMap = {};
-			myFieldMap[myForm.form_fields[0]._id+''] = 'firstName';
-			myFieldMap[myForm.form_fields[1]._id+''] = 'lastName';
-			myFieldMap[myForm.form_fields[2]._id+''] = 'sex';
-			myFieldMap[myForm.form_fields[3]._id+''] = 'DOB';
-			myFieldMap[myForm.form_fields[4]._id+''] = 'phone';
-
-			myForm.plugins.oscarhost.settings.fieldMap = myFieldMap;
 
 			myForm.save(function(err, form){
 				if(err) done(err);

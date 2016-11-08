@@ -6,76 +6,76 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	_ = require('lodash'),
-	math = require('math');
+	math = require('mathjs');
 
-
-var BooleanExpressionSchema = new Schema({
-	expressionString: {
-		type: String,
+var schemaOptions = {
+	toObject: {
+		virtuals: true
 	},
-	result: {
-		type: Boolean,
-	}
-});
-
-
-BooleanExpressionSchema.methods.evaluate = function(){
-	if(this.expressionString){
-		//Get headNode
-		var headNode = math.parse(this.expressionString);
-		var expressionScope = {};
-		var that = this;
-
-		//Create scope
-		headNode.traverse(function (node, path, parent) {
-			if(node.type === 'SymbolNode'){
-
-				mongoose.model('Field')
-					.findOne({_id: node.name}).exec(function(err, field){
-						if(err) {
-							console.log(err);
-							throw new Error(err);
-						} 
-
-						if(!!_.parseInt(field.fieldValue)){
-							that.expressionScope[node.name] = _.parseInt(field.fieldValue);
-						}else {
-							that.expressionScope[node.name] = field.fieldValue;						
-						}
-						console.log('_id: '+node.name);
-						console.log('value: '+that.expressionScope[node.name]);
-			    });
-			}
-		});
-
-		var code = headNode.compile(); 
-		var result = code.eval(expressionScope);
-
-		this.result = result;
-		return result;
-	}else{
-		return null;
+	toJSON: {
+		virtuals: true
 	}
 };
 
-mongoose.model('BooleanExpression', BooleanExpressionSchema);
-/**
- * Form Schema
- */
 var LogicJumpSchema = new Schema({
-	created: {
-		type: Date,
-		default: Date.now
+	expressionString: {
+		type: String,
+		enum: [
+			'field == static',
+			'field != static',
+			'field > static',
+			'field >= static',
+			'field <= static',
+			'field < static',
+			'field contains static',
+			'field !contains static',
+			'field begins static',
+			'field !begins static',
+			'field ends static',
+			'field !ends static',
+		]
 	},
-	lastModified: {
-		type: Date,
-	},
-
-	BooleanExpression: {
+	fieldA: {
 		type: Schema.Types.ObjectId,
-		ref: 'BooleanExpression'
+		ref: 'FormField'
 	},
+	valueB: {
+		type: Schema.Types.String
+	},
+	jumpTo: {
+		type: Schema.Types.ObjectId,
+		ref: 'FormField'
+	}
+}, schemaOptions);
 
-});
+/*
+	IS EQUAL TO statement
+
+	var scope = {
+	 a: val1,
+	 b: val2
+	};
+
+	math.eval('a == b', scope);
+
+	IS NOT EQUAL TO statement
+	var scope = {
+	a: val1,
+	b: val2
+	};
+
+	math.eval('a !== b', scope);
+
+	BEGINS WITH statement
+
+	ENDS WITH statement
+
+	CONTAINS statement
+
+	DOES NOT CONTAIN statement
+
+ */
 
 mongoose.model('LogicJump', LogicJumpSchema);
+
+module.exports = LogicJumpSchema;

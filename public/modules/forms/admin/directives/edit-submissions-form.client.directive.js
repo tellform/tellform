@@ -75,7 +75,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 					var visitors = $scope.myform.analytics.visitors;
 
-					console.log(visitors);
 					for(var i=0; i<visitors.length; i++){
 						var visitor = visitors[i];
 						var deviceType = visitor.deviceType;

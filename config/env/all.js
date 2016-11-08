@@ -22,7 +22,7 @@ module.exports = {
 
 	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
 
-    signupDisabled: !!process.env.SIGNUP_DISABLED,
+    signupDisabled: (process.env.SIGNUP_DISABLED === "TRUE"),
 	baseUrl: '',
 	tempUserCollection: 'temporary_users',
 

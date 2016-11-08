@@ -72,7 +72,6 @@ module.exports = function(db) {
 		var subdomains = req.subdomains;
 		var host = req.hostname;
 
-
 		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
 			subdomains = subdomains.slice(4);
 		}
@@ -81,18 +80,38 @@ module.exports = function(db) {
 		if (!subdomains.length) return next();
 
 		var urlPath = url.parse(req.url).path.split('/');
-		if(urlPath.indexOf('static')){
+		if(urlPath.indexOf('static') > -1){
+			//console.log("STATIC FILE\n\n\n\n");
 			urlPath.splice(1,1);
 			req.root = 'https://' + config.baseUrl + urlPath.join('/');
+			console.log(req.root);
 			return next();
 		}
 
-		if(subdomains.indexOf('stage') || subdomains.indexOf('admin')){
+		if(urlPath.indexOf('users') > -1 && urlPath.indexOf('me') > -1){
 			return next();
 		}
 
+		if(subdomains.indexOf('stage') > -1 || subdomains.indexOf('admin') > -1){
+			return next();
+		}
+
+		console.log(req.subdomains.reverse()[0]);
+		//console.log("is api subdomain: "+ (subdomains.indexOf("api") > -1));
+		//console.log(req.url);
+		if(subdomains.indexOf('api') > -1){
+			// rebuild url
+			path += 'api' + req.url;
+			console.log(req.url);
+			// TODO: check path and query strings are preserved
+			// reassign url
+			req.url = path;
+			console.log(req.url);
+			return next();
+		}
 
 		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
+
 			if (err) {
 				console.log(err);
 				req.subdomains = null;
@@ -113,9 +132,12 @@ module.exports = function(db) {
 
 			// TODO: check path and query strings are preserved
 			// reassign url
+			console.log("path: "+path);
 			req.url = path;
 
 			req.userId = user._id;
+
+			console.log('\n\n\ngot subdomain: '+ req.subdomains.reverse()[0]);
 
 			// Q.E.D.
 			next();

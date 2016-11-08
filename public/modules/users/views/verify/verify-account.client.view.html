@@ -1,14 +1,38 @@
 <section class="auth" data-ng-controller="VerifyController" ng-init="validateVerifyToken()">
 
 	<section class="row text-center" ng-if="isResetSent">
-		<h3 class="col-md-12"></h3>
-		<a href="/#!/signin" class="col-md-12">{{ 'CONTINUE_TO_LOGIN' | translate }}</a>
+		<div class="col-md-4 col-md-offset-4">
+			<div class="col-md-12 text-center" style="padding-bottom: 50px;">
+				<img src="/static/modules/core/img/logo_white.svg" height="100px">
+			</div>
+			<h3 class="col-md-12">
+				{{ 'VERIFY_SUCCESS' | translate }}
+			</h3>
+			<div class="col-md-12">
+				<a href="/#!/signin" class="btn btn-signup btn-rounded btn-block">{{ 'CONTINUE_TO_LOGIN' | translate }}</a>
+			</div>
+		</div>
 	</section>
 
 	<section class="row text-center" ng-if="!isResetSent">
-		<h3 class="col-md-12">{{ 'VERIFY_ERROR' | translate }}</h3>
-		<a href="/#!/verify" class="col-md-6">{{ 'REVERIFY_ACCOUNT_LINK' | translate }}</a>
-		<a href="/#!/signin" class="col-md-6">{{ 'SIGNIN_BTN' | translate }}</a>
+		<div class="col-md-4 col-md-offset-4">
+			<div class="col-md-12 text-center" style="padding-bottom: 50px;">
+				<img src="/static/modules/core/img/logo_white.svg" height="100px">
+			</div>
+			<h3 class="col-md-12">
+				{{ 'VERIFY_ERROR' | translate }}
+			</h3>
+			<div class="col-md-12">
+				<a href="/#!/verify" class="btn btn-rounded btn-default">
+					{{ 'REVERIFY_ACCOUNT_LINK' | translate }}
+				</a>
+			</div>
+			<div class="col-sm-12">
+				<a href="/#!/signin" class="btn btn-rounded btn-primary">
+					{{ 'SIGNIN_BTN' | translate }}
+				</a>
+			</div>
+		</div>
 	</section>
 
 </section>
