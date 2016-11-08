@@ -37,7 +37,7 @@ describe('Login E2E Tests', function() {
 		});
 	});
 
-	it('should be able to login with valid credentials', function () {
+	it('should be able to login with valid email and password', function () {
 		browser.url('http://tellform.dev:3001');
 
 		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
@@ -49,6 +49,27 @@ describe('Login E2E Tests', function() {
 		siginButtonText.should.equal('SIGN IN');
 
 		browser.setValue('input#username', credentials.email);
+		browser.setValue('input#password', credentials.password);
+
+		browser.click('button.btn.btn-signup.btn-rounded.btn-block');
+
+		browser.waitForExist('h3.text-center.forms-list-title', 10000);
+		browser.getText('h3.text-center.forms-list-title').should.equal('My Forms');
+		browser.getUrl().should.equal('http://tellform.dev:3001/#!/forms');
+	});
+
+	it('should be able to login with valid username and password', function () {
+		browser.url('http://tellform.dev:3001');
+
+		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
+		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
+		var title = browser.getTitle();
+		title.should.equal('TellForm Test');
+
+		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
+		siginButtonText.should.equal('SIGN IN');
+
+		browser.setValue('input#username', credentials.username);
 		browser.setValue('input#password', credentials.password);
 
 		browser.click('button.btn.btn-signup.btn-rounded.btn-block');

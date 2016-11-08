@@ -12,7 +12,7 @@ var credentials = {
 	password: 'passwordeoeo'
 };
 
-describe('Login E2E Tests', function() {
+describe('List Forms E2E Tests', function() {
 	var Form = mongoose.model('Form'),
 		Field = mongoose.model('Field'),
 		User = mongoose.model('User');

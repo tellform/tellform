@@ -37,7 +37,7 @@
 				    	{{ 'LANGUAGE_LABEL' | translate }}
 				    </div>
 				    <div class="col-xs-12 field-input">
-						<select ng-model="user.language" required>
+						<select id="language" ng-model="user.language" required>
 							<option ng-repeat="language in languages" 
 									ng-selected="language == user.language"
 									value="{{language}}">

@@ -130,6 +130,7 @@
     "supertest": "~1.2.0",
     "supertest-session": "~2.0.1",
     "wdio-mocha-framework": "^0.2.12",
+    "wdio-spec-reporter": "0.0.3",
     "webdriverio": "^4.3.0"
   }
 }

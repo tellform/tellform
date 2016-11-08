@@ -334,7 +334,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	SUBMIT: 'Submit',
 	UPLOAD_FILE: 'Upload your File'
   });
-	
+
 }]);
 
 'use strict';
@@ -1276,7 +1276,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
 	function($scope, $stateParams, $state, User) {
-		
+
 		$scope.error = '';
 
 		// Submit forgotten password account id
@@ -2679,15 +2679,15 @@ angular.module('forms').service('FormFields', [
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : 'Payment' 
+		    //     value : 'Payment'
 		    // },
 		    {
 		        name : 'statement',
-		        value : 'Statement' 
+		        value : 'Statement'
 		    }
 		];
 	}
-		
+
 ]);
 
 'use strict';
@@ -2700,7 +2700,7 @@ angular.module('forms').factory('Submissions', ['$resource',
 			formId: '@_id'
 		}, {
 			'query' : {
-				method: 'GET', 
+				method: 'GET',
 				isArray: true,
 			},
 			'update': {
@@ -2985,7 +2985,7 @@ angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", f
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-			
+
             //Don't do anything if we don't have a ng-repeat on the current element
             if(!element.attr('ng-repeat') && !element.attr('data-ng-repeat')){
                 return;
@@ -3401,7 +3401,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		ASK_FOR_NEW_PASSWORD: 'Ask for new password reset',
 		PASSWORD_RESET_INVALID: 'Password reset is invalid',
 		PASSWORD_RESET_SUCCESS: 'Passport successfully reset',
-		PASSWORD_CHANGE_SUCCESS: 'Passport successfully changed',
+		PASSWORD_CHANGE_SUCCESS: 'Password successfully changed',
 
 		CONTINUE_TO_LOGIN: 'Continue to login page',
 
