@@ -14,8 +14,7 @@ var mongoose = require('mongoose'),
 	mUtilities = require('mongoose-utilities'),
 	soap = require('soap'),
 	async = require('async'),
-	FieldSchema = require('./form_field.server.model.js'),
-	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity');
+	FieldSchema = require('./form_field.server.model.js');
 
 var FieldSchema = require('./form_field.server.model.js');
 

@@ -13,10 +13,7 @@ var init = require('../config/init')(),
 	fs = require('fs-extra'),
 	chalk = require('chalk');
 
-/**
- * Main application entry file.
- * Please note that the order of loading is important.
- */
+console.log(config);
 
 // Bootstrap db connection
 var db = mongoose.connect(config.db.uri, config.db.options, function(err) {
