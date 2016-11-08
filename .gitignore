@@ -4,6 +4,7 @@ scripts/test_oscarhost.js
 scripts/oscarhost/private/
 coverage/
 uploads/
+app/e2e_tests/screeshots/*
 
 # iOS / Apple
 # ===========
