@@ -44,7 +44,9 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 
 ## Quickstart
 
-Before you start, make sure you have Redis installed and running at 127.0.0.1:6379 and MongoDB installed.
+Before you start, make sure you have:
+1. Redis installed and running at 127.0.0.1:6379 
+2. MongoDB installed and running at 127.0.0.1:27017
 
 Also make sure to install DNS Masq or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
 
@@ -79,12 +81,6 @@ DSN_KEY=yourPrivateRavenKey
 
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
-Create this directory or you will get errors.
-
-```
-mkdir uploads/pdfs
-```
-
 Edit the 'env' config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
 
 To run development version:
@@ -108,6 +104,12 @@ $ grunt test
 ```
 
 This will run both the server-side tests (located in the app/tests/ directory) and the client-side tests (located in the public/modules/*/tests/).
+
+To run the selenium e2e test (which are not executed in 'grunt test') run:
+
+'''
+$ npm run test:e2e
+'''
 
 To execute only the server tests, run the test:server task:
 
@@ -136,11 +138,6 @@ $ grunt coverage:server
 To calculate your client-side test coverage with Istanbul, run the coverage task
 ```bash
 $ grunt coverage:client
-```
-
-To run the selenium e2e tests run the e2e task
-```bash
-$ npm run test:e2e
 ```
 
 ## Where to get help
