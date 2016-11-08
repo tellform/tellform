@@ -176,7 +176,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
 ApplicationConfiguration.registerModule('view-form', [
 	'ngFileUpload', 'ui.router.tabs', 'ui.date', 'ui.sortable',
 	'angular-input-stars', 'pascalprecht.translate'
-]);//, 'colorpicker.module' @TODO reactivate this module
+]);
 
 'use strict';
 
@@ -612,110 +612,111 @@ angular.module('view-form').directive('fieldIconDirective', function() {
 
 // coffeescript's for in loop
 var __indexOf = [].indexOf || function(item) {
-    for (var i = 0, l = this.length; i < l; i++) {
-        if (i in this && this[i] === item) return i;
-    }
-    return -1;
-};
+		for (var i = 0, l = this.length; i < l; i++) {
+			if (i in this && this[i] === item) return i;
+		}
+		return -1;
+	};
 
 angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$rootScope', '$templateCache', 'supportedFields',
-    function($http, $compile, $rootScope, $templateCache, supportedFields) {
+	function($http, $compile, $rootScope, $templateCache, supportedFields) {
 
-    var getTemplateUrl = function(fieldType) {
-        var type = fieldType;
+		var getTemplateUrl = function(fieldType) {
+			var type = fieldType;
 
-        var supported_fields = [
-            'textfield',
-            'textarea',
-            'date',
-            'dropdown',
-            'hidden',
-            'password',
-            'radio',
-            'legal',
-            'statement',
-            'rating',
-            'yes_no',
-            'number',
-            'natural'
-        ];
+			var supported_fields = [
+				'textfield',
+				'textarea',
+				'date',
+				'dropdown',
+				'hidden',
+				'password',
+				'radio',
+				'legal',
+				'statement',
+				'rating',
+				'yes_no',
+				'number',
+				'natural'
+			];
 
-        var templateUrl = 'modules/forms/base/views/directiveViews/field/';
+			var templateUrl = 'modules/forms/base/views/directiveViews/field/';
 
-		if (__indexOf.call(supportedFields, type) >= 0) {
-            templateUrl = templateUrl+type+'.html';
-        }
-   		return $templateCache.get(templateUrl);
-    };
-
-    return {
-        template: '<div>{{field.title}}</div>',
-        restrict: 'E',
-		scope: {
-            field: '=',
-            required: '&',
-            design: '=',
-            index: '=',
-			forms: '='
-        },
-        link: function(scope, element) {
-
-			$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
-				if(type === 'yes_no'){
-					scope.field.fieldValue = 'true';
-				}else if(type === 'rating'){
-					scope.field.fieldValue = 0;
-				}else if(scope.field.fieldType === 'radio'){
-					console.log(scope.field);
-					scope.field.fieldValue = scope.field.fieldOptions[0].option_value;
-					console.log(scope.field.fieldValue);
-				}else if(type === 'legal'){
-					scope.field.fieldValue = 'true';
-					$rootScope.nextField();
-				}
-			};
-
-            scope.setActiveField = $rootScope.setActiveField;
-
-            //Set format only if field is a date
-            if(scope.field.fieldType === 'date'){
-                scope.dateOptions = {
-                    changeYear: true,
-                    changeMonth: true,
-                    altFormat: 'mm/dd/yyyy',
-                    yearRange: '1900:-0',
-                    defaultDate: 0
-                };
-            }
-
-            var fieldType = scope.field.fieldType;
-
-			if(scope.field.fieldType === 'number' || scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
-				switch(scope.field.fieldType){
-					case 'textfield':
-						scope.field.input_type = 'text';
-						break;
-					case 'email':
-						scope.field.input_type = 'email';
-						scope.field.placeholder = 'joesmith@example.com';
-						break;
-					case 'number':
-                        scope.field.input_type = 'text';
-						scope.field.validateRegex = /^-?\d+$/;
-                        break;
-                    default:
-						scope.field.input_type = 'url';
-						scope.field.placeholder = 'http://example.com';
-						break;
-				}
-				fieldType = 'textfield';
+			if (__indexOf.call(supportedFields, type) >= 0) {
+				templateUrl = templateUrl+type+'.html';
 			}
-            var template = getTemplateUrl(fieldType);
-           	element.html(template).show();
-            var output = $compile(element.contents())(scope);
-        }
-    };
-}]);
+			return $templateCache.get(templateUrl);
+		};
+
+		return {
+			template: '<div>{{field.title}}</div>',
+			restrict: 'E',
+			scope: {
+				field: '=',
+				required: '&',
+				design: '=',
+				index: '=',
+				forms: '='
+			},
+			link: function(scope, element) {
+
+				$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
+					if(type === 'yes_no'){
+						scope.field.fieldValue = 'true';
+					}else if(type === 'rating'){
+						scope.field.fieldValue = 0;
+					}else if(scope.field.fieldType === 'radio'){
+						console.log(scope.field);
+						scope.field.fieldValue = scope.field.fieldOptions[0].option_value;
+						console.log(scope.field.fieldValue);
+					}else if(type === 'legal'){
+						scope.field.fieldValue = 'true';
+						$rootScope.nextField();
+					}
+				};
+
+				scope.setActiveField = $rootScope.setActiveField;
+
+				//Set format only if field is a date
+				if(scope.field.fieldType === 'date'){
+					scope.dateOptions = {
+						changeYear: true,
+						changeMonth: true,
+						altFormat: 'mm/dd/yyyy',
+						yearRange: '1900:-0',
+						defaultDate: 0
+					};
+				}
+
+				var fieldType = scope.field.fieldType;
+
+				if(scope.field.fieldType === 'number' || scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
+					switch(scope.field.fieldType){
+						case 'textfield':
+							scope.input_type = 'text';
+							break;
+						case 'email':
+							scope.input_type = 'email';
+							scope.placeholder = 'joesmith@example.com';
+							break;
+						case 'number':
+							scope.input_type = 'text';
+							scope.validateRegex = /^-?\d+$/;
+							break;
+						default:
+							scope.input_type = 'url';
+							scope.placeholder = 'http://example.com';
+							break;
+					}
+					fieldType = 'textfield';
+				}
+
+				var template = getTemplateUrl(fieldType);
+				element.html(template).show();
+				var output = $compile(element.contents())(scope);
+			}
+		};
+	}]);
 
 'use strict';
 
@@ -824,6 +825,42 @@ angular.module('view-form').directive('onFinishRender', ["$rootScope", "$timeout
 
 'use strict';
 
+//FIXME: Should find an appropriate place for this
+//Setting up jsep
+jsep.addBinaryOp("contains", 10);
+jsep.addBinaryOp("!contains", 10);
+jsep.addBinaryOp("begins", 10);
+jsep.addBinaryOp("!begins", 10);
+jsep.addBinaryOp("ends", 10);
+jsep.addBinaryOp("!ends", 10);
+
+/**
+ * Calculate a 32 bit FNV-1a hash
+ * Found here: https://gist.github.com/vaiorabbit/5657561
+ * Ref.: http://isthe.com/chongo/tech/comp/fnv/
+ *
+ * @param {string} str the input value
+ * @param {boolean} [asString=false] set to true to return the hash value as
+ *     8-digit hex string instead of an integer
+ * @param {integer} [seed] optionally pass the hash of the previous chunk
+ * @returns {integer | string}
+ */
+function hashFnv32a(str, asString, seed) {
+	/*jshint bitwise:false */
+	var i, l,
+		hval = (seed === undefined) ? 0x811c9dc5 : seed;
+
+	for (i = 0, l = str.length; i < l; i++) {
+		hval ^= str.charCodeAt(i);
+		hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
+	}
+	if( asString ){
+		// Convert to 8 digit hex string
+		return ("0000000" + (hval >>> 0).toString(16)).substr(-8);
+	}
+	return hval >>> 0;
+}
+;
 
 angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
@@ -916,6 +953,67 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 /*
                 ** Field Controls
                 */
+				var evaluateLogicJump = function(field){
+					console.log('evaluateLogicJump');
+					console.log(field.fieldValue);
+					var logicJump = field.logicJump;
+
+					if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
+						var parse_tree = jsep(logicJump.expressionString);
+						var left, right;
+
+						console.log(parse_tree);
+
+						if(parse_tree.left.name === 'field'){
+							left = field.fieldValue;
+							right = logicJump.valueB
+						} else {
+							left = logicJump.valueB;
+							right = field.fieldValue;
+						}
+
+						if(field.fieldType === 'number' || field.fieldType === 'scale' || field.fieldType === 'rating'){
+							switch(parse_tree.operator) {
+								case '==':
+									return (parseInt(left) === parseInt(right));
+								case '!==':
+									return (parseInt(left) !== parseInt(right));
+								case '>':
+									return (parseInt(left) > parseInt(right));
+								case '>=':
+									return (parseInt(left) > parseInt(right));
+								case '<':
+									return (parseInt(left) < parseInt(right));
+								case '<=':
+									return (parseInt(left) <= parseInt(right));
+								default:
+									return false;
+							}
+						} else {
+							switch(parse_tree.operator) {
+								case '==':
+									return (left === right);
+								case '!==':
+									return (left !== right);
+								case 'contains':
+									return (left.indexOf(right) > -1);
+								case '!contains':
+									return !(left.indexOf(right) > -1);
+								case 'begins':
+									return left.startsWith(right);
+								case '!begins':
+									return !left.startsWith(right);
+								case 'ends':
+									return left.endsWith(right);
+								case '!ends':
+									return left.endsWith(right);
+								default:
+									return false;
+							}
+						}
+					}
+				};
+
 				var getActiveField = function(){
 					if($scope.selected === null){
 						console.error('current active field is null');
@@ -941,6 +1039,15 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
+					if(!field_index){
+						for(var i=0; i<$scope.myform.visible_form_fields.length; i++){
+							var currField = $scope.myform.visible_form_fields[i];
+							if(field_id == currField._id){
+								$scope.selected.index = i;
+								break;
+							}
+						}
+					}
 
 					var nb_valid = $filter('formValidity')($scope.myform);
 					$scope.translateAdvancementData = {
@@ -983,20 +1090,26 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
-                    //console.log('nextfield');
-                    //console.log($scope.selected.index);
-					//console.log($scope.myform.visible_form_fields.length-1);
-					var selected_index, selected_id;
-					if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
-                        selected_index = $scope.selected.index+1;
-                        selected_id = $scope.myform.visible_form_fields[selected_index]._id;
-                        $rootScope.setActiveField(selected_id, selected_index, true);
-                    } else if($scope.selected.index === $scope.myform.visible_form_fields.length-1) {
-						//console.log('Second last element');
-						selected_index = $scope.selected.index+1;
-						selected_id = 'submit_field';
-						$rootScope.setActiveField(selected_id, selected_index, true);
+					var currField = $scope.myform.visible_form_fields[$scope.selected.index];
+
+					if($scope.selected && $scope.selected.index > -1){
+						//Jump to logicJump's destination if it is true
+						if(currField.logicJump && evaluateLogicJump(currField)){
+							$rootScope.setActiveField(currField.logicJump.jumpTo, null, true);
+						} else {
+							var selected_index, selected_id;
+							if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
+								selected_index = $scope.selected.index+1;
+								selected_id = $scope.myform.visible_form_fields[selected_index]._id;
+								$rootScope.setActiveField(selected_id, selected_index, true);
+							} else if($scope.selected.index === $scope.myform.visible_form_fields.length-1) {
+								selected_index = $scope.selected.index+1;
+								selected_id = 'submit_field';
+								$rootScope.setActiveField(selected_id, selected_index, true);
+							}
+						}
 					}
+
                 };
 
                 $rootScope.prevField = $scope.prevField = function(){

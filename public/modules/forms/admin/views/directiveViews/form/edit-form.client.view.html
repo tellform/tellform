@@ -1,7 +1,7 @@
 <form class="row container" name="editForm" auto-save-form auto-save-watch="myform" auto-save-callback="update">
 
 	<!-- Add Fields Element -->
-    <div class="col-xs-2 col-sm-4 col-md-4 add-field">
+    <div class="col-xs-2 col-sm-4 add-field">
 
         <div class="row add-field-title">
             <h3 class="col-md-12 hidden-sm hidden-xs">{{ 'ADD_FIELD_LG' | translate }}</h3>
@@ -249,7 +249,6 @@
                                 </div>
                             </div>
 
-
 							<div class="row" ng-show="showRatingOptions(field)"><br></div>
 							<div class="row" ng-if="showRatingOptions(field)">
 								<div class="col-md-9 col-sm-9">{{ 'NUM_OF_STEPS' | translate }}</div>
@@ -293,7 +292,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4 col-xs-12 field-input">Disabled:</div>
+                                <div class="col-md-4 col-xs-12 field-input">{{ 'DISABLED' | translate }}</div>
                                 <div class="col-md-8 col-xs-12 field-input">
                                     <label class="btn col-xs-5">
                                         <input type="radio" ng-value="true" 
@@ -308,6 +307,106 @@
                                     </label>
                                 </div>
                             </div>
+
+							<div class="row" ng-if="myform.form_fields.length > 1">
+								<h4> Logic Jump </h4>
+							</div>
+							<div class="row" ng-if="myform.form_fields.length > 1">
+								<div class="col-md-4 col-xs-12 field-input">{{ 'ADD_LOGIC_JUMP' | translate }}</div>
+								<div class="col-md-8 col-xs-12 field-input">
+									<label class="btn col-xs-5">
+										<input type="radio" ng-checked="!!myform.form_fields[$index].logicJump.fieldA"
+											   name="logicJumpYes{{field._id}}" ng-click="addNewLogicJump($index)"/>
+										<span> &nbsp; {{ 'YES' | translate }}</span>
+									</label>
+
+									<label class="btn col-xs-5 col-xs-offset-1">
+										<input type="radio" ng-checked="!myform.form_fields[$index].logicJump.fieldA"
+											   name="logicJumpNo{{field._id}}" ng-click="removeLogicJump($index)"/>
+										<span> &nbsp; {{ 'NO' | translate }}</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="row question" ng-if="myform.form_fields.length > 1 && myform.form_fields[$index].logicJump.fieldA">
+								<div class="col-md-4 col-sm-12">
+									<!-- FIX ME: translate this -->
+									<b> If this field </b>
+								</div>
+								<div class="col-md-4 col-sm-12">
+									<select style="width:100%" ng-model="field.logicJump.expressionString"
+											value="{{field.logicJump.expressionString}}"
+											name="logicjump_expressionString{{field._id}}">
+										<option value="field == static">
+											<!-- FIX ME: translate this -->
+											is equal to
+										</option>
+										<option value="field != static">
+											<!-- FIX ME: translate this -->
+											is not equal to
+										</option>
+
+										<option value="field > static" ng-if-start="field.fieldType === 'number' || field.fieldType === 'rating' || field.fieldType === 'number'">
+											<!-- FIX ME: translate this -->
+											is greater than
+										</option>
+										<option value="field >= static">
+											<!-- FIX ME: translate this -->
+											is greater or equal than
+										</option>
+										<option value="field < static">
+											<!-- FIX ME: translate this -->
+											is smaller than
+										</option>
+										<option value="field <= static" ng-if-end>
+											<!-- FIX ME: translate this -->
+											is smaller or equal than
+										</option>
+
+										<option value="field contains static" ng-if-start="field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'">
+											<!-- FIX ME: translate this -->
+											contains
+										</option>
+										<option value="field !contains static">
+											<!-- FIX ME: translate this -->
+											does not contain
+										</option>
+										<option value="field ends static">
+											<!-- FIX ME: translate this -->
+											ends with
+										</option>
+										<option value="field !ends static">
+											<!-- FIX ME: translate this -->
+											does not end with
+										</option>
+										<option value="field starts static">
+											<!-- FIX ME: translate this -->
+											starts with
+										</option>
+										<option value="field !starts static" ng-if-end>
+											<!-- FIX ME: translate this -->
+											does not start with
+										</option>
+									</select>
+								</div>
+								<div class="col-md-4 col-sm-12">
+									<input type="text" ng-model="field.logicJump.valueB"/>
+								</div>
+								<div class="col-md-2">
+									<!-- FIX ME: translate this -->
+									<b>Jumps to </b>
+								</div>
+								<div class="col-md-10">
+									<select style="width:100%" ng-model="field.logicJump.jumpTo"
+											value="{{field.logicJump.jumpTo}}"
+											name="logicjump_jumpTo{{field._id}}">
+										<option ng-repeat="jump_field in myform.form_fields"
+												value="{{jump_field._id}}">
+											{{jump_field.title}}
+										</option>
+									</select>
+								</div>
+							</div>
 
                         </div>
                     </accordion-group>

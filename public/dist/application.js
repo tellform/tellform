@@ -180,7 +180,7 @@ ApplicationConfiguration.registerModule('core', ['users']);
 // Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('forms', [
 	'ngFileUpload', 'ui.router.tabs', 'ui.date', 'ui.sortable',
-	'angular-input-stars', 'users'
+	'angular-input-stars', 'users', 'ngclipboard'
 ]);//, 'colorpicker.module' @TODO reactivate this module
 
 'use strict';
@@ -228,6 +228,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		PREVIEW: 'Preview',
 
 		//Edit Form View
+		DISABLED: 'Disabled:',
+		YES: 'YES',
+		NO: 'NO',
+		ADD_LOGIC_JUMP: 'Add Logic Jump',
 		ADD_FIELD_LG: 'Click to Add New Field',
 		ADD_FIELD_MD: 'Add New Field',
 		ADD_FIELD_SM: 'Add Field',
@@ -549,11 +553,12 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		$rootScope.signupDisabled = $window.signupDisabled;
 
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
+
+		console.log(Auth.ensureHasCurrentUser(User));
 	    $scope.authentication = $rootScope.authentication = Auth;
 
 		$rootScope.languages = $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
 
-		console.log($locale.id);
 		//Set global app language
 		if($scope.authentication.isAuthenticated()){
 			$rootScope.language = $scope.user.language;
@@ -952,7 +957,7 @@ angular.module('forms').config(['$stateProvider',
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {
 			// Create a new message object
-			var visitorData = {
+			/*var visitorData = {
 				referrer: document.referrer,
 				isSubmitted: form.submitted,
 				formId: form._id,
@@ -981,15 +986,15 @@ angular.module('forms').config(['$stateProvider',
 					}
 					console.log(visitorData.deviceType);
 					Socket.emit('form-visitor-data', visitorData);
-				});
+				});*/
 
 		}
 
 		function init(){
 			// Make sure the Socket is connected
-			if (!Socket.socket) {
+			/*if (!Socket.socket) {
 				Socket.connect();
-			}
+			}*/
 		}
 
 		var service = {
@@ -1267,8 +1272,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
 	function($scope, $stateParams, $state, User) {
-		$scope.error = '';
 		
+		$scope.error = '';
+
 		// Submit forgotten password account id
 		$scope.askForPasswordReset = function() {
 			User.askForPasswordReset($scope.credentials).then(
@@ -1303,18 +1309,24 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 		};
 	}
 ]);
+
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users',
-	function($scope, $rootScope, $http, $state, Users) {
-		$scope.user = $rootScope.user;
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth',
+	function($scope, $rootScope, $http, $state, Users, Auth) {
 
-		// Check if there are additional accounts 
+		$scope.user = Auth.currentUser;
+
+		// Check if there are additional accounts
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
 			for (var i in $scope.user.additionalProvidersData) {
 				return true;
 			}
 			return false;
+		};
+
+		$scope.cancel = function(){
+			$scope.user = Auth.currentUser;
 		};
 
 		// Check if provider is already in use with current user
@@ -1371,6 +1383,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 
 	}
 ]);
+
 'use strict';
 
 angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams',
@@ -1697,8 +1710,21 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
+
+		$scope.trustSrc = function(src) {
+			return $sce.trustAsResourceUrl(src);
+		};
+
+		//Set active tab to Create
+		$scope.activePill = 0;
+
+		$scope.copied = false;
+		$scope.onCopySuccess = function(e) {
+			console.log("COPY SUCCESSFUL!");
+			$scope.copied = true;
+		};
 
         $scope = $rootScope;
         $scope.animationsEnabled = true;
@@ -1707,24 +1733,34 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
         CurrentForm.setForm($scope.myform);
 
-	$scope.formURL = $scope.myform.admin.username + '.tellform.com';
+		$scope.formURL = "/#!/forms/" + $scope.myform._id;
 
-        $scope.tabData   = [
-            {
+		$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + "/#!/forms/" + $scope.myform._id;
+
+
+		var refreshFrame = $scope.refreshFrame = function(){
+			if(document.getElementById('iframe')) {
+				document.getElementById('iframe').contentWindow.location.reload();
+			}
+		};
+
+
+		$scope.tabData   = [
+			/*{
                 heading: $filter('translate')('CREATE_TAB'),
-                route:   'viewForm.create'
+                templateName: 'create'
             },
             {
                 heading: $filter('translate')('DESIGN_TAB'),
-                route:   'viewForm.design'
-            },
+                templateName:   'design'
+            },*/
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-                route:   'viewForm.configure'
+				templateName:   'configure'
             },
             {
                 heading: $filter('translate')('ANALYZE_TAB'),
-                route:   'viewForm.analyze'
+				templateName:   'analyze'
             }
         ];
 
@@ -1788,7 +1824,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, cb){
+			refreshFrame();
 
             var continueUpdate = true;
             if(!updateImmediately){
@@ -1801,7 +1838,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
                 if(!updateImmediately){ $rootScope.saveInProgress = true; }
 
-                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, {form: $scope.myform})
+                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
                     .then(function(response){
                         $rootScope.myform = $scope.myform = response.data;
                         // console.log(response.data);
@@ -1954,7 +1991,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
                 $rootScope.finishedRender = false;
                 $scope.$on('editFormFields Started', function(ngRepeatFinishedEvent) {
-                    // console.log('hello');
                     $rootScope.finishedRender = false;
                 });
                 $scope.$on('editFormFields Finished', function(ngRepeatFinishedEvent) {
@@ -1974,13 +2010,11 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     return false;
                 };
 
-                var debounceSave = function () {
-                    $rootScope.saveInProgress = true;
+                var debounceSave = function (diffChanges) {
 
-                    $rootScope[$attrs.autoSaveCallback](true,
+                    $rootScope[$attrs.autoSaveCallback](true, diffChanges,
                         function(err){
                         if(!err){
-                            //console.log('\n\nForm data persisted -- setting pristine flag');
                             $formCtrl.$setPristine();
                             $formCtrl.$setUntouched();
                         }else{
@@ -1990,56 +2024,48 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     });
                 };
 
-                //Update/Save Form if any Form fields are Dirty and Touched
-                $scope.$watch(function(newValue, oldValue) {
-                    //console.log('introParagraphStartPage.$dirty: '+$scope.editForm.introParagraphStartPage.$dirty);
-                    //console.log('introParagraphStartPage.$touched: '+$scope.editForm.introParagraphStartPage.$touched);
-                    if($rootScope.finishedRender && $scope.anyDirtyAndTouched($scope.editForm) && !$rootScope.saveInProgress){
-                        //console.log('Form saving started');
-                        debounceSave();
-                        //console.log('introParagraphStartPage.$dirty AFTER: '+$scope.editForm.introParagraphStartPage.$dirty);
-                    }
-                });
-
                 //Autosave Form when model (specified in $attrs.autoSaveWatch) changes
                 $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
+
+					if( !newValue || !oldValue ) {
+						$rootScope.finishedRender = true;
+						return;
+					}
 
                     newValue = angular.copy(newValue);
                     oldValue = angular.copy(oldValue);
 
-                    newValue.form_fields = _.removeDateFields(newValue.form_fields);
-                    oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
+					delete newValue.visible_form_fields;
+					delete oldValue.visible_form_fields;
+					newValue.form_fields = _.removeDateFields(newValue.form_fields);
+					oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
-                    var changedFields = !_.isEqual(oldValue.form_fields,newValue.form_fields) || !_.isEqual(oldValue.startPage, newValue.startPage);
-                    var changedFieldMap = false;
+					var changedFields = !!DeepDiff.diff(oldValue, newValue) && DeepDiff.diff(oldValue, newValue).length > 0;
 
-                    if(oldValue.hasOwnProperty('plugins.oscarhost.settings.fieldMap')){
-                    	changedFieldMap = !!oldValue.plugins.oscarhost.settings.fieldMap && !_.isEqual(oldValue.plugins.oscarhost.settings.fieldMap,newValue.plugins.oscarhost.settings.fieldMap);
-                    }
+					//If our form is undefined, don't save form
+					if(!changedFields){
+						$rootScope.finishedRender = true;
+						return;
+					}
 
-                    //If our form is undefined, don't save form
-                    if( (!newValue && !oldValue) || !oldValue ){
-                        return;
-                    }
+					if(oldValue.form_fields.length === 0) {
+						$rootScope.finishedRender = true;
+					}
 
-                    // console.log('Autosaving');
-                    // console.log('\n\n----------');
-                    // console.log('!$dirty: '+ !$formCtrl.$dirty );
-                    // console.log('changedFields: '+changedFields);
+					//console.log('Autosaving');
+					//console.log('\n\n----------');
+                    //console.log('!$dirty: '+ !$formCtrl.$dirty );
+
                     // console.log('changedFieldMap: '+changedFieldMap);
-                    // console.log('finishedRender: '+$rootScope.finishedRender);
-                    // console.log('!saveInProgress: '+!$rootScope.saveInProgress);
+					//console.log('finishedRender: '+$rootScope.finishedRender);
+                    //console.log('!saveInProgress: '+!$rootScope.saveInProgress);
                     // console.log('newValue: '+newValue);
                     // console.log('oldValue: '+oldValue);
                     // console.log(oldValue.form_fields);
                     // console.log(newValue.form_fields);
 
-                    if(oldValue.form_fields.length === 0) {
-                        $rootScope.finishedRender = true;
-                    }
-
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && ((changedFields && !$formCtrl.$dirty) || changedFieldMap)  && !$rootScope.saveInProgress) {
+                    if( $rootScope.finishedRender && (changedFields) && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
@@ -2047,7 +2073,12 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         }
 
                         savePromise = $timeout(function() {
-                            debounceSave();
+							$rootScope.saveInProgress = true;
+
+							delete newValue.visible_form_fields;
+							delete newValue.visible_form_fields;
+							var _diff = DeepDiff.diff(oldValue, newValue);
+                            debounceSave(_diff);
                         });
                     }
                     //If we are finished rendering then form saving should be finished
@@ -2164,16 +2195,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
+			transclude: true,
             scope: {
-                myform:'='
+               myform:'='
             },
             controller: ["$scope", function($scope){
 
-				console.log($scope.myform);
-                var field_ids = _($scope.myform.form_fields).pluck('_id');
-                for(var i=0; i<field_ids.length; i++){
-                    $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
-                }
                 /*
                 **  Initialize scope with variables
                 */
@@ -2222,24 +2249,24 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
 
-                //Many-to-many Select for Mapping OscarhostFields -> FormFields
-                $scope.oscarFieldsLeft = function(field_id){
+				// LOGIC JUMP METHODS
+				$scope.removeLogicJump = function (field_index) {
+					var currField = $scope.myform.form_fields[field_index];
+					currField.logicJump = {};
+				};
 
-                    if($scope.myform && $scope.myform.plugins.oscarhost.settings.validFields.length > 0){
-                        if(!$scope.myform.plugins.oscarhost.settings.fieldMap) $scope.myform.plugins.oscarhost.settings.fieldMap = {};
+				$scope.addNewLogicJump = function (field_index) {
+					var form_fields = $scope.myform.form_fields;
+					var currField = form_fields[field_index];
+					console.log(currField);
+					if (form_fields.length > 1 && currField._id) {
 
-                        var oscarhostFields = $scope.myform.plugins.oscarhost.settings.validFields;
-                        var currentFields = _($scope.myform.plugins.oscarhost.settings.fieldMap).invert().keys().value();
-
-                        if( $scope.myform.plugins.oscarhost.settings.fieldMap.hasOwnProperty(field_id) ){
-                            currentFields = _(currentFields).difference($scope.myform.plugins.oscarhost.settings.fieldMap[field_id]);
-                        }
-
-                        //Get all oscarhostFields that haven't been mapped to a formfield
-                        return _(oscarhostFields).difference(currentFields).value();
-                    }
-                    return [];
-                };
+						var newLogicJump = {
+							fieldA: currField._id
+						};
+						currField.logicJump = newLogicJump;
+					}
+				};
 
                 /*
                 ** FormFields (ui-sortable) drag-and-drop configuration
@@ -2268,12 +2295,13 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         }
                     }
                     var newField = {
-                        title: fieldTitle,
+                        title: fieldTitle + ' ' + $scope.myform.form_fields.length+1,
                         fieldType: fieldType,
                         fieldValue: '',
                         required: true,
                         disabled: false,
-                        deletePreserved: false
+                        deletePreserved: false,
+						logicJump: {}
                     };
 
 					if($scope.showAddOptions(newField)){
@@ -2285,7 +2313,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						});
 					}
 
-
                     if(modifyForm){
 						//Add newField to form_fields array
                         $scope.myform.form_fields.push(newField);
@@ -2294,15 +2321,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 };
 
                 // Delete particular field on button click
-                $scope.deleteField = function (field_index){
-
-                    //Delete field from field map
-                    var currFieldId = $scope.myform.form_fields[field_index]._id;
-                    if($scope.myform.hasOwnProperty('plugins.oscarhost.baseUrl')) delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
-
-                    //Delete field
+                $scope.deleteField = function (field_index) {
+					console.log($scope.myform.form_fields);
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
+
                 $scope.duplicateField = function (field_index){
                     var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
@@ -2408,10 +2431,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						return false;
 					}
 				};
-
-
 			}]
-
         };
     }
 ]);
@@ -2493,7 +2513,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 					var visitors = $scope.myform.analytics.visitors;
 
-					console.log(visitors);
 					for(var i=0; i<visitors.length; i++){
 						var visitor = visitors[i];
 						var deviceType = visitor.deviceType;
@@ -2854,23 +2873,24 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			if(scope.field.fieldType === 'number' || scope.field.fieldType === 'textfield' || scope.field.fieldType === 'email' || scope.field.fieldType === 'link'){
 				switch(scope.field.fieldType){
 					case 'textfield':
-						scope.field.input_type = 'text';
+						scope.input_type = 'text';
 						break;
 					case 'email':
-						scope.field.input_type = 'email';
-						scope.field.placeholder = 'joesmith@example.com';
+						scope.input_type = 'email';
+						scope.placeholder = 'joesmith@example.com';
 						break;
 					case 'number':
-                        scope.field.input_type = 'text';
-						scope.field.validateRegex = /^-?\d+$/;
+                        scope.input_type = 'text';
+						scope.validateRegex = /^-?\d+$/;
                         break;
                     default:
-						scope.field.input_type = 'url';
-						scope.field.placeholder = 'http://example.com';
+						scope.input_type = 'url';
+						scope.placeholder = 'http://example.com';
 						break;
 				}
 				fieldType = 'textfield';
 			}
+
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();
             var output = $compile(element.contents())(scope);
@@ -3330,7 +3350,8 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 
 	$translateProvider.translations('en', {
 		ACCESS_DENIED_TEXT: 'You need to be logged in to access this page',
-		USERNAME_LABEL: 'Username or Email',
+		USERNAME_OR_EMAIL_LABEL: 'Username or Email',
+		USERNAME_LABEL: 'Username',
 		PASSWORD_LABEL: 'Password',
 		CURRENT_PASSWORD_LABEL: 'Current Password',
 		NEW_PASSWORD_LABEL: 'New Password',
@@ -3347,6 +3368,9 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SIGNIN_HEADER_TEXT: 'Sign in',
 
 		SIGNUP_ERROR_TEXT: 'Couldn\'t complete registration due to errors',
+		ENTER_ACCOUNT_EMAIL: 'Enter your account email.',
+		RESEND_VERIFICATION_EMAIL: 'Resend Verification Email',
+		SAVE_CHANGES: 'Save Changes',
 
 		UPDATE_PROFILE_BTN: 'Update Profile',
 		PROFILE_SAVE_SUCCESS: 'Profile saved successfully',

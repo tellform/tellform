@@ -5,16 +5,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
+			transclude: true,
             scope: {
-                myform:'='
+               myform:'='
             },
             controller: function($scope){
 
-				console.log($scope.myform);
-                var field_ids = _($scope.myform.form_fields).pluck('_id');
-                for(var i=0; i<field_ids.length; i++){
-                    $scope.myform.plugins.oscarhost.settings.fieldMap[field_ids[i]] = null;
-                }
                 /*
                 **  Initialize scope with variables
                 */
@@ -63,24 +59,24 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
 
-                //Many-to-many Select for Mapping OscarhostFields -> FormFields
-                $scope.oscarFieldsLeft = function(field_id){
+				// LOGIC JUMP METHODS
+				$scope.removeLogicJump = function (field_index) {
+					var currField = $scope.myform.form_fields[field_index];
+					currField.logicJump = {};
+				};
 
-                    if($scope.myform && $scope.myform.plugins.oscarhost.settings.validFields.length > 0){
-                        if(!$scope.myform.plugins.oscarhost.settings.fieldMap) $scope.myform.plugins.oscarhost.settings.fieldMap = {};
+				$scope.addNewLogicJump = function (field_index) {
+					var form_fields = $scope.myform.form_fields;
+					var currField = form_fields[field_index];
+					console.log(currField);
+					if (form_fields.length > 1 && currField._id) {
 
-                        var oscarhostFields = $scope.myform.plugins.oscarhost.settings.validFields;
-                        var currentFields = _($scope.myform.plugins.oscarhost.settings.fieldMap).invert().keys().value();
-
-                        if( $scope.myform.plugins.oscarhost.settings.fieldMap.hasOwnProperty(field_id) ){
-                            currentFields = _(currentFields).difference($scope.myform.plugins.oscarhost.settings.fieldMap[field_id]);
-                        }
-
-                        //Get all oscarhostFields that haven't been mapped to a formfield
-                        return _(oscarhostFields).difference(currentFields).value();
-                    }
-                    return [];
-                };
+						var newLogicJump = {
+							fieldA: currField._id
+						};
+						currField.logicJump = newLogicJump;
+					}
+				};
 
                 /*
                 ** FormFields (ui-sortable) drag-and-drop configuration
@@ -109,12 +105,13 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         }
                     }
                     var newField = {
-                        title: fieldTitle,
+                        title: fieldTitle + ' ' + $scope.myform.form_fields.length+1,
                         fieldType: fieldType,
                         fieldValue: '',
                         required: true,
                         disabled: false,
-                        deletePreserved: false
+                        deletePreserved: false,
+						logicJump: {}
                     };
 
 					if($scope.showAddOptions(newField)){
@@ -126,7 +123,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						});
 					}
 
-
                     if(modifyForm){
 						//Add newField to form_fields array
                         $scope.myform.form_fields.push(newField);
@@ -135,15 +131,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 };
 
                 // Delete particular field on button click
-                $scope.deleteField = function (field_index){
-
-                    //Delete field from field map
-                    var currFieldId = $scope.myform.form_fields[field_index]._id;
-                    if($scope.myform.hasOwnProperty('plugins.oscarhost.baseUrl')) delete $scope.myform.plugins.oscarhost.settings.fieldMap[currFieldId];
-
-                    //Delete field
+                $scope.deleteField = function (field_index) {
+					console.log($scope.myform.form_fields);
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
+
                 $scope.duplicateField = function (field_index){
                     var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
@@ -249,10 +241,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						return false;
 					}
 				};
-
-
 			}
-
         };
     }
 ]);

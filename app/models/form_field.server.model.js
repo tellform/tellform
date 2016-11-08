@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
 	util = require('util'),
 	mUtilities = require('mongoose-utilities'),
 	_ = require('lodash'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+	LogicJumpSchema = require('./logic_jump.server.model');
 
 var FieldOptionSchema = new Schema({
 	option_id: {
@@ -77,10 +78,7 @@ function BaseFieldSchema(){
 			default: ''
 		},
 
-		logicJump: {
-			type: Schema.Types.ObjectId,
-			ref: 'LogicJump'
-		},
+		logicJump: LogicJumpSchema,
 
 		ratingOptions: {
 			type: RatingFieldSchema,
@@ -162,6 +160,7 @@ FormFieldSchema.pre('validate', function(next) {
 
 		if(this.ratingOptions && this.ratingOptions.steps && this.ratingOptions.shape){
 			error.errors.ratingOptions = new mongoose.Error.ValidatorError({path: 'ratingOptions', message: 'ratingOptions is only allowed for type \'rating\' fields.', type: 'notvalid', value: this.ratingOptions});
+			console.error(error);
 			return(next(error));
 		}
 
@@ -183,8 +182,9 @@ FormFieldSchema.pre('validate', function(next) {
 
 	//If field is multiple choice check that it has field
 	if(this.fieldType !== 'dropdown' && this.fieldType !== 'radio' && this.fieldType !== 'checkbox'){
-		if(!this.fieldOptions || this.fieldOptions.length !== 0){
+		if(this.fieldOptions && this.fieldOptions.length > 0){
 			error.errors.ratingOptions = new mongoose.Error.ValidatorError({path:'fieldOptions', message: 'fieldOptions are only allowed for type dropdown, checkbox or radio fields.', type: 'notvalid', value: this.ratingOptions});
+			console.error(error);
 			return(next(error));
 		}
 	}
@@ -192,13 +192,18 @@ FormFieldSchema.pre('validate', function(next) {
 	return next();
 });
 
+//LogicJump Save
+FormFieldSchema.pre('save', function(next) {
+	if(this.logicJump && this.logicJump.fieldA){
+		if(this.logicJump.jumpTo = '') delete this.logicJump.jumpTo;
+	}
+	next();
+});
+
 //Submission fieldValue correction
 FormFieldSchema.pre('save', function(next) {
-
 	if(this.fieldType === 'dropdown' && this.isSubmission){
-		//console.log(this);
 		this.fieldValue = this.fieldValue.option_value;
-		//console.log(this.fieldValue);
 	}
 
 	return next();

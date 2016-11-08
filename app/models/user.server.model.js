@@ -75,6 +75,7 @@ var UserSchema = new Schema({
 		type: String,
 		unique: true,
 		required: false,
+		lowercase: true,
 		trim: true
 	},
 	passwordHash: {
@@ -119,7 +120,13 @@ var UserSchema = new Schema({
 	resetPasswordExpires: {
 		type: Date
 	},
-	token: String
+	token: String,
+	apiKey: {
+		type: String,
+		unique: true,
+		index: true,
+		sparse: true
+	},
 });
 
 UserSchema.virtual('displayName').get(function () {

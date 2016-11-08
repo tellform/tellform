@@ -92,11 +92,6 @@ var FormSchema = new Schema({
 		default: 'en',
 		required: 'Form must have a language'
 	},
-	description: {
-		type: String,
-		default: ''
-	},
-
 	analytics:{
 		gaCode: {
 			type: String
@@ -146,15 +141,7 @@ var FormSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
-	isGenerated: {
-		type: Boolean,
-		default: false
-	},
 	isLive: {
-		type: Boolean,
-		default: false
-	},
-	autofillPDFs: {
 		type: Boolean,
 		default: false
 	},
@@ -187,57 +174,7 @@ var FormSchema = new Schema({
                 default: '#333'
             }
 		},
-		font: String,
-		backgroundImage: { type: Schema.Types.Mixed }
-	},
-
-	plugins: {
-		oscarhost: {
-			baseUrl: {
-				type: String
-			},
-			settings: {
-				lookupField: {
-					type: Schema.Types.ObjectId,
-					ref: 'Field'
-				},
-				updateType: {
-					type: String,
-					enum: ['upsert', 'force_add', 'force_update', 'fetch'],
-				},
-				fieldMap: {
-					type: Schema.Types.Mixed,
-				},
-				validUpdateTypes: {
-					type: [String]
-				},
-				validFields : {
-					type: [String],
-					default: [
-						'address',
-						'city',
-						'email',
-						'firstName',
-						'hin',
-						'lastName',
-						'phone',
-						'postal',
-						'province',
-						'sex',
-						'spokenLanguage',
-						'title',
-						'DOB']
-				}
-			},
-			auth: {
-				user: {
-					type: String
-				},
-				pass: {
-					type: String
-				}
-			}
-		}
+		font: String
 	}
 });
 
@@ -367,11 +304,6 @@ FormSchema.pre('save', function (next) {
 			}
 		});
 	}, function(cb) {
-		//DAVID: TODO: Make this so we don't have to update the validFields property ever save
-		if (that.plugins.oscarhost.hasOwnProperty('baseUrl')) {
-			var validUpdateTypes = mongoose.model('Form').schema.path('plugins.oscarhost.settings.updateType').enumValues;
-			that.plugins.oscarhost.settings.validUpdateTypes = validUpdateTypes;
-		}
 		return cb(null);
 	},
 		function(cb) {
@@ -489,12 +421,18 @@ FormSchema.pre('save', function (next) {
 			else return cb();
 		},
 		function(cb) {
-
-			if(that.isModified('form_fields') && that.form_fields && _original){
+			var hasIds = true;
+			for(var i=0; i<that.form_fields.length; i++){
+				if(!that.form_fields.hasOwnProperty('_id')){
+					hasIds = false;
+					break;
+				}
+			}
+			if(that.isModified('form_fields') && that.form_fields && _original && hasIds){
 
 				var old_form_fields = _original.form_fields,
-					new_ids = _.map(_.pluck(that.form_fields, '_id'), function(id){ return ''+id;}),
-					old_ids = _.map(_.pluck(old_form_fields, '_id'), function(id){ return ''+id;}),
+					new_ids = _.map(_.pluck(that.form_fields, 'id'), function(id){ return ''+id;}),
+					old_ids = _.map(_.pluck(old_form_fields, 'id'), function(id){ return ''+id;}),
 					deletedIds = getDeletedIndexes(old_ids, new_ids);
 
 				//Preserve fields that have at least one submission

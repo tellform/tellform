@@ -1,15 +1,20 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users',
-	function($scope, $rootScope, $http, $state, Users) {
-		$scope.user = $rootScope.user;
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth',
+	function($scope, $rootScope, $http, $state, Users, Auth) {
 
-		// Check if there are additional accounts 
+		$scope.user = Auth.currentUser;
+
+		// Check if there are additional accounts
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
 			for (var i in $scope.user.additionalProvidersData) {
 				return true;
 			}
 			return false;
+		};
+
+		$scope.cancel = function(){
+			$scope.user = Auth.currentUser;
 		};
 
 		// Check if provider is already in use with current user

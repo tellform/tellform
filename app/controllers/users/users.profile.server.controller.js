@@ -27,13 +27,13 @@ exports.update = function(req, res) {
 
 		user.save(function(err) {
 			if (err) {
-				return res.status(400).send({
+				return res.status(500).send({
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
 				req.login(user, function(err) {
 					if (err) {
-						res.status(400).send(err);
+						res.status(500).send(err);
 					} else {
 						res.json(user);
 					}
@@ -41,7 +41,7 @@ exports.update = function(req, res) {
 			}
 		});
 	} else {
-		res.status(400).send({
+		res.status(401).send({
 			message: 'User is not signed in'
 		});
 	}
