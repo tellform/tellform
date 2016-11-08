@@ -81,12 +81,6 @@ DSN_KEY=yourPrivateRavenKey
 
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
-Create this directory or you will get errors.
-
-```
-mkdir uploads/pdfs
-```
-
 Edit the `env` config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
 
 To run development version:
