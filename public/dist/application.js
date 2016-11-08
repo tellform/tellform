@@ -1739,7 +1739,11 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 		$scope.formURL = "/#!/forms/" + $scope.myform._id;
 
-		$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + "/#!/forms/" + $scope.myform._id;
+		if(window.location.host.split('.') < 3){
+			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + "/#!/forms/" + $scope.myform._id;
+		} else {
+			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') + "/#!/forms/" + $scope.myform._id;
+		}
 
 
 		var refreshFrame = $scope.refreshFrame = function(){
