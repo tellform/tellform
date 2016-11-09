@@ -84,21 +84,20 @@ describe('FormSubmission Model Unit Tests:', function() {
 			lastName: 'Name',
 			displayName: 'Full Name',
 			email: 'test1@test.com'+Date.now(),
-			username: 'test1@test.com'+Date.now(),
+			username: 'test1'+Date.now(),
 			password: 'password',
 			provider: 'local'
 		});
 
 		user.save(function(err) {
 			if(err){
-				console.log(err.errors);
 				done(err);
 				return;
 			}
 			myForm = new Form({
 				title: 'Form Title1',
 				admin: user._id,
-				language: 'english',
+				language: 'en',
 				form_fields: [
 					{'fieldType':'textfield', 	'title':'What\'s your first name', 	'fieldValue': ''},
 					{'fieldType':'textfield', 	'title':'And your last name',  		'fieldValue': ''},
@@ -106,15 +105,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 					{'fieldType':'date', 	    'title':'When were you born?',  	'fieldValue': ''},
 					{'fieldType':'number', 		'title':'What\'s your phone #?',  	'fieldValue': ''}
 				]
-				// plugins: {
-				// 	oscarhost: {
-				// 		baseUrl: config.oscarhost.baseUrl,
-				// 		settings: {
-				// 			updateType: 'force_add'
-				// 		},
-				// 		auth: config.oscarhost.auth
-				// 	}
-				// }
 			});
 
 			myForm.save(function(err, form){
@@ -156,11 +146,9 @@ describe('FormSubmission Model Unit Tests:', function() {
 		});
 
 		it('should be able to save a FormSubmission without problems', function(done) {
-			return mySubmission.save(function(err, submission) {
+			 mySubmission.save(function(err, submission) {
 				should.not.exist(err);
 				should.exist(submission);
-				// should.exist(submission.oscarDemoNum);
-				// oscar_demo_num = submission.oscarDemoNum;
 
 				done();
 			});
@@ -174,7 +162,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			});
 		});
 		it('should be able to findOne FormSubmission without problems', function(done) {
-			return FormSubmission.findOne({_id: mySubmission._id}).exec(function(err,submission) {
+			 FormSubmission.findOne({_id: mySubmission._id}).exec(function(err,submission) {
 				should.not.exist(err);
 				should.exist(submission);
 				should.deepEqual(submission.toObject(), mySubmission.toObject());
@@ -183,7 +171,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 		});
 
 		it('should be able to find FormSubmission by $elemMatch on form_fields id', function(done){
-			return FormSubmission.findOne({ form: myForm._id, admin: user, form_fields: {$elemMatch: {_id: myForm.form_fields[0]._id} }  })
+			 FormSubmission.findOne({ form: myForm._id, admin: user, form_fields: {$elemMatch: {_id: myForm.form_fields[0]._id} }  })
 				.exec(function(err, submission){
 					should.not.exist(err);
 					should.exist(submission);

@@ -78,9 +78,6 @@ var VisitorDataSchema = new Schema({
 });
 
 var formSchemaOptions = {
-	toObject: {
-		virtuals: true
-	},
 	toJSON: {
 		virtuals: true
 	}

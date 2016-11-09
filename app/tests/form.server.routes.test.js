@@ -11,22 +11,21 @@ var should = require('should'),
 	Field = mongoose.model('Field'),
 	FormSubmission = mongoose.model('FormSubmission');
 
+/**
+ * Globals
+ */
+var credentials, user, myForm, userSession;
 
 /**
  * Form routes tests
  */
 describe('Form Routes Unit tests', function() {
-	/**
-	 * Globals
-	 */
-	//this.timeout(15000);
-	var credentials, user, myForm, userSession;
 
 	beforeEach(function(done) {
 
 		// Create user credentials
 		credentials = {
-			username: 'test@test.com',
+			username: 'test',
             email: 'test@test.com',
 			password: 'password'
 		};
@@ -36,7 +35,7 @@ describe('Form Routes Unit tests', function() {
 			firstName: 'Full',
 			lastName: 'Name',
 			displayName: 'Full Name',
-			email: 'test@test.com',
+			email: credentials.email,
 			username: credentials.username,
 			password: credentials.password,
 			provider: 'local'
@@ -47,7 +46,7 @@ describe('Form Routes Unit tests', function() {
 			should.not.exist(err);
 			myForm = {
 				title: 'Form Title',
-				language: 'english',
+				language: 'en',
 				admin: user.id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
@@ -55,7 +54,7 @@ describe('Form Routes Unit tests', function() {
 					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
 				]
 			};
-                
+
             //Initialize Session
             userSession = Session(app);
 
@@ -90,7 +89,6 @@ describe('Form Routes Unit tests', function() {
 							.expect('Content-Type', /json/)
 							.expect(200)
 							.end(function(FormsGetErr, FormsGetRes) {
-								console.log('get forms');
                                 // Handle Form save error
 								if (FormsGetErr) return done(FormsGetErr);
 
@@ -115,7 +113,6 @@ describe('Form Routes Unit tests', function() {
 			.send({form: myForm})
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
-				(FormSaveRes.body.message).should.equal('User is not logged in');
 				// Call the assertion callback
 				done(FormSaveErr);
 			});
@@ -125,7 +122,6 @@ describe('Form Routes Unit tests', function() {
 		userSession.get('/forms')
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
-				(FormSaveRes.body.message).should.equal('User is not logged in');
 				// Call the assertion callback
 				done(FormSaveErr);
 			});
@@ -272,8 +268,6 @@ describe('Form Routes Unit tests', function() {
 			userSession.delete('/forms/' + FormObj._id)
 				.expect(401)
 				.end(function(FormDeleteErr, FormDeleteRes) {
-					// Set message assertion
-					(FormDeleteRes.body.message).should.match('User is not logged in');
 
 					// Handle Form error error
 					done(FormDeleteErr);

@@ -29,35 +29,33 @@ describe('User CRUD tests', function() {
 	beforeEach(function() {
 		// Create user credentials
 		credentials = {
-			username: 'test7@test.com',
-			password: 'password'
+			email: 'test732@test.com',
+			username: 'test732',
+			password: 'password3223'
 		};
 
 		//Create a new user
 		_User = {
-			firstName: 'Full',
-			lastName: 'Name',
-			email: credentials.username,
+			email: credentials.email,
 			username: credentials.username,
 			password: credentials.password,
-			provider: 'local'
 		};
-        
+
         //Initialize Session
-        userSession = Session(app);        
+        userSession = Session(app);
 	});
 
-	describe(' > Create, Verify and Activate a User > ', function() {
-		//this.timeout(15000);
+	it(' > Create, Verify and Activate a User > ', function() {
 
 		it('should be able to create a temporary (non-activated) User', function(done) {
 			userSession.post('/auth/signup')
 				.send(_User)
 				.expect(200)
 				.end(function(FormSaveErr, FormSaveRes) {
+					console.log('CREATING USER');
 					// Handle error
 					should.not.exist(FormSaveErr);
-                    
+
                     tmpUser.findOne({username: _User.username}, function (err, user) {
                         should.not.exist(err);
                         should.exist(user);
@@ -67,15 +65,14 @@ describe('User CRUD tests', function() {
                         _User.firstName.should.equal(user.firstName);
                         _User.lastName.should.equal(user.lastName);
                         activateToken = user.GENERATED_VERIFYING_URL;
-                        console.log('activateToken: '+activateToken);
-                        
+
                         userSession.get('/auth/verify/'+activateToken)
                             .expect(200)
                             .end(function(VerifyErr, VerifyRes) {
                                 // Handle error
                                 if (VerifyErr) return done(VerifyErr);
                                 (VerifyRes.text).should.equal('User successfully verified');
-                                
+
                                 userSession.post('/auth/signin')
                                     .send(credentials)
                                     .expect('Content-Type', /json/)
@@ -107,8 +104,6 @@ describe('User CRUD tests', function() {
 	});
 
 	it(' > should be able to reset a User\'s password');
-
-	it(' > should be able to delete a User account without any problems');
 
 	afterEach(function(done) {
 		User.remove().exec(function () {

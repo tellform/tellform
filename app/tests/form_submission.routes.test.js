@@ -28,7 +28,7 @@ describe('Form Submission Routes Unit tests', function() {
 		// Create user credentials
 		credentials = {
 			email: 	  'test@test.com',
-			username: 'test@test.com',
+			username: 'test',
 			password: 'password'
 		};
 
@@ -36,7 +36,7 @@ describe('Form Submission Routes Unit tests', function() {
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			email: 'test@test.com',
+			email: credentials.email,
 			username: credentials.username,
 			password: credentials.password,
 			provider: 'local'
@@ -47,7 +47,7 @@ describe('Form Submission Routes Unit tests', function() {
 			if(err) return done(err);
 			FormObj = new Form({
 				title: 'Form Title',
-				language: 'english',
+				language: 'en',
 				admin: user._id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
@@ -170,9 +170,6 @@ describe('Form Submission Routes Unit tests', function() {
 			.end(function(err, res) {
 				should.not.exist(err);
 
-				// Set assertions
-				(res.body.message).should.equal('User is not logged in');
-
 				// Call the assertion callback
 				done();
 			});
@@ -195,7 +192,6 @@ describe('Form Submission Routes Unit tests', function() {
 
 					// Set assertions
 					should.not.exist(err);
-					(res.body.message).should.equal('User is not logged in');
 
 					// Call the assertion callback
 					done();

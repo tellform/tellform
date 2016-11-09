@@ -12,43 +12,6 @@ var should = require('should'),
 	config = require('../../config/config'),
 	FormSubmission = mongoose.model('FormSubmission');
 
-var exampleDemo = {
-	activeCount: 1,
-	DOB: '',
-	address: '880-9650 Velit. St.',
-	chartNo: '',
-	city: '',
-	dateJoined: Date.now(),
-	dateOfBirth: '10',
-	displayName: 'LITTLE, URIAH',
-	email: '',
-	familyDoctor: '<rdohip></rdohip><rd></rd>',
-	firstName: 'Uriah F.',
-	hcType: 'BC',
-	hin: '',
-	hsAlertCount: 0,
-	lastName: 'Little',
-	lastUpdateDate: Date.now(),
-	lastUpdateUser: '',
-	links: '',
-	monthOfBirth: '05',
-	officialLanguage: 'English',
-	patientStatus: 'AC',
-	patientStatusDate: Date.now(),
-	phone: '250-',
-	phone2: '',
-	postal: 'S4M 7T8',
-	providerNo: '4',
-	province: 'BC',
-	rosterStatus: '',
-	sex: 'M',
-	sexDesc: 'Female',
-	sin: '',
-	spokenLanguage: 'English',
-	title: 'MS.',
-	yearOfBirth: '2015'
-};
-
 /**
  * Globals
  */
@@ -63,7 +26,6 @@ describe('Form Model Unit Tests:', function() {
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
 			email: 'test@test.com',
 			username: 'aueoaueoa',
 			password: 'password',
@@ -78,7 +40,7 @@ describe('Form Model Unit Tests:', function() {
 			myForm = new Form({
 				title: 'Form Title',
 				admin: user,
-				language: 'english',
+				language: 'en',
 				form_fields: [
 					{'fieldType':'textfield', title:'First Name', 'fieldValue': ''},
 					{'fieldType':'checkbox',  title:'nascar',     'fieldValue': ''},
@@ -91,7 +53,7 @@ describe('Form Model Unit Tests:', function() {
 
 	describe('Method Save', function() {
 		it('should be able to save without problems', function(done) {
-			return myForm.save(function(err) {
+			 myForm.save(function(err) {
 				should.not.exist(err);
 				done();
 			});
@@ -102,7 +64,7 @@ describe('Form Model Unit Tests:', function() {
 			var _form = myForm;
 			_form.title = '';
 
-			return _form.save(function(err) {
+			 _form.save(function(err) {
 				should.exist(err);
 				should.equal(err.errors.title.message, 'Form Title cannot be blank');
 				done();
@@ -118,10 +80,11 @@ describe('Form Model Unit Tests:', function() {
 			});
 		});
 		it('should be able to findOne my form without problems', function(done) {
-			return Form.findOne({title: myForm.title}).exec(function(err,form) {
+			 Form.findOne({title: myForm.title}).exec(function(err,form) {
 				should.not.exist(err);
 				should.exist(form);
-				should.deepEqual(form.toObject(), myForm.toObject());
+
+				should.equal(form.toObject().id, myForm.toObject().id);
 				done();
 			});
 		});
