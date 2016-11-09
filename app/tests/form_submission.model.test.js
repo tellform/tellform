@@ -10,9 +10,7 @@ var should = require('should'),
 	Field = mongoose.model('Field'),
 	_ = require('lodash'),
 	async = require('async'),
-	soap = require('soap'),
 	config = require('../../config/config'),
-	OscarSecurity = require('../../scripts/oscarhost/OscarSecurity'),
 	FormSubmission = mongoose.model('FormSubmission');
 
 var exampleDemo = {
@@ -167,7 +165,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 				done();
 			});
 		});
-
 	});
 
 	describe('Method Find', function(){

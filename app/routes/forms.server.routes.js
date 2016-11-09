@@ -27,9 +27,6 @@ var upload = multer({
 
 module.exports = function(app) {
 	// Form Routes
-	app.route('/upload/pdf')
-		.post(auth.isAuthenticatedOrApiKey, upload.single('file'), forms.uploadPDF);
-
 	app.route('/forms')
 		.get(auth.isAuthenticatedOrApiKey, forms.list)
 		.post(auth.isAuthenticatedOrApiKey, forms.create);

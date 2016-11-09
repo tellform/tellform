@@ -1,10 +1,10 @@
-[<img src="/" width="250px">](https://digitalocean.com/)
+TellForm 2.0.0
 ========
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UY555MCBZM722)
 [![Stories in Ready](https://badge.waffle.io/whitef0x0/tellform.svg?label=ready&title=Ready)](http://waffle.io/whitef0x0/tellform)
 [![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
-![Project Status](https://img.shields.io/badge/status-beta-yellow.svg)
+![Project Status](https://img.shields.io/badge/status-2.0.0-green.svg)
 [![Code Climate](https://codeclimate.com/github/whitef0x0/tellform/badges/gpa.svg)](https://codeclimate.com/github/whitef0x0/tellform)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=whitef0x0/tellform&amp;utm_campaign=Badge_Grade)
 [![Gitter](https://badges.gitter.im/whitef0x0/tellform.svg)](https://gitter.im/whitef0x0/tellform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -15,9 +15,11 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 
 ####Sponsored by
 [<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
-[<img src="https://a0wx592cvgzripj.global.ssl.fastly.net/_static/780f0361d74cc3da6680cfa4f855336a/getsentry/images/branding/png/sentry-horizontal-black.png" width="250px">](https://getsentry.com/)
+[<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png" width="250px">](https://getsentry.com/)
 [<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
 [<img src="http://bcsrq.com/wp-content/uploads/2014/04/StickerMuleLogo300.png" width="250px">](https://stickermule.com/)
+[<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="250px">](https://sparkpost.com/)
+[<img src="https://cdn.shopify.com/s/files/1/0192/8184/t/11/assets/logo.png?2608345842081938086" width="250px">](https://therooststand.com/)
 
 ##Screenshots
 <img src="design/screenshots/tellform_screenshot1.png" width="500px">
@@ -33,6 +35,7 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 	-Native Analytics and Google Analytics Support
 	-Custom subdomains
 	-Embeddable Forms
+	-Form API
 
 ###TODO:
 	-Implement encryption for all form data
@@ -41,12 +44,11 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 	-Add plugin/3rd party integration support (ala Slack)
 	-Create wiki for easy installation and setup
 
-
 ## Quickstart
 
-Before you start, make sure you have:
-1. Redis installed and running at 127.0.0.1:6379 
-2. MongoDB installed and running at 127.0.0.1:27017
+Before you start, make sure you have 
+1. Redis installed and running at 127.0.0.1:6379
+2. MongoDB installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
 
 Also make sure to install DNS Masq or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
 
@@ -81,17 +83,21 @@ DSN_KEY=yourPrivateRavenKey
 
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
+<<<<<<< HEAD
 Edit the 'env' config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
+=======
+Edit the `env` config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
+>>>>>>> master
 
 To run development version:
 
 Set ```NODE_ENV=development``` in .env file
-```$ grunt````
+```$ grunt```
 
 To run production version:
 
-Set ```NODE_ENV=development``` in .env file
-```$ grunt````
+Set ```NODE_ENV=production``` in .env file
+```$ grunt```
 
 Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
 
@@ -171,4 +177,4 @@ $ grunt coverage:client
 [Betapage](https://betapage.co/startup/tellform)
 
 ## Credits
-Inspired/built off the great work of the [MeanJS team](https://github.com/mean/) and [Typeform](http://typeform.com)
+Inspired/built off the great work of the [MeanJS team](https://github.com/meanjs/) and [Typeform](http://typeform.com)
