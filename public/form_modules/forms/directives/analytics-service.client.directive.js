@@ -27,7 +27,7 @@
 			} else if (window.screenX != 0) {
 				deviceType = 'desktop';
 			}
-			
+
 			$.ajaxSetup( { "async": false } );
 			var result = $.getJSON('myUrl');
 			var geoData = $.getJSON('//freegeoip.net/json/?callback=?');
