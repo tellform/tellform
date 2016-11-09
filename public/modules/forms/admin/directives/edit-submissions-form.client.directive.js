@@ -7,7 +7,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
             restrict: 'E',
             scope: {
                 user:'=',
-				myform: '@'
+				myform: '='
             },
             controller: function($scope){
 
@@ -23,8 +23,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 					Forms.get({
 						formId: $stateParams.formId
 					}, function(form){
-						console.log('running init controller');
-						console.log(form);
 						$scope.myform = form;
 						var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
@@ -42,69 +40,75 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 						$scope.table.rows = submissions;
 
+
+						/*
+						 ** Analytics Functions
+						 */
+						
+						$scope.AverageTimeElapsed = (function(){
+							var totalTime = 0;
+							var numSubmissions = $scope.table.rows.length;
+
+							console.log("AverageTimeElapsed");
+							console.log($scope.table.rows);
+
+							for(var i=0; i<$scope.table.rows.length; i++){
+								totalTime += $scope.table.rows[i].timeElapsed;
+							}
+
+							return totalTime/numSubmissions;
+						})();
+
+						$scope.DeviceStatistics = (function(){
+							var newStatItem = function(){
+								return {
+									visits: 0,
+									responses: 0,
+									completion: 0,
+									average_time: 0,
+									total_time: 0
+								};
+							};
+
+							var stats = {
+								desktop: newStatItem(),
+								tablet: newStatItem(),
+								phone: newStatItem(),
+								other: newStatItem()
+							};
+
+							if($scope.myform.analytics && $scope.myform.analytics.visitors) {
+								var visitors = $scope.myform.analytics.visitors;
+								for (var i = 0; i < visitors.length; i++) {
+									var visitor = visitors[i];
+									var deviceType = visitor.deviceType;
+
+									stats[deviceType].visits++;
+
+									stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
+									stats[deviceType].average_time = stats[deviceType].total_time / stats[deviceType].visits || 0;
+
+									if (visitor.isSubmitted) stats[deviceType].responses++;
+
+									stats[deviceType].completion = stats[deviceType].response / stats[deviceType].visits || 0;
+								}
+							}
+
+							return stats;
+						})();
+
 					});
 
 				};
 				initController();
 
-				var updateFields = $interval(initController, 500);
+				var updateFields = $interval(initController, 2000);
 
 				$scope.$on("$destroy", function() {
 					if (updateFields) {
 						$interval.cancel($scope.updateFields);
 					}
 				});
-
-				/*
-				** Analytics Functions
-				*/
-				$scope.AverageTimeElapsed = (function(){
-					var totalTime = 0;
-					var numSubmissions = $scope.table.rows.length;
-
-					for(var i=0; i<$scope.table.rows.length; i++){
-						totalTime += $scope.table.rows[i].timeElapsed;
-					}
-
-					return totalTime/numSubmissions;
-				})();
-
-				$scope.DeviceStatistics = (function(){
-					var newStatItem = function(){
-						return {
-							visits: 0,
-							responses: 0,
-							completion: 0,
-							average_time: 0,
-							total_time: 0
-						};
-					};
-
-					var stats = {
-						desktop: newStatItem(),
-						tablet: newStatItem(),
-						phone: newStatItem(),
-						other: newStatItem()
-					};
-
-					if($scope.myform.analytics && $scope.myform.analytics.visitors) {
-						for (var i = 0; i < visitors.length; i++) {
-							var visitor = visitors[i];
-							var deviceType = visitor.deviceType;
-
-							stats[deviceType].visits++;
-
-							stats[deviceType].total_time = +visitor.timeElapsed;
-							stats[deviceType].average_time = stats[deviceType].total_time / stats[deviceType].visits || 0;
-
-							if (visitor.isSubmitted) stats[deviceType].responses++;
-
-							stats[deviceType].completion = stats[deviceType].response / stats[deviceType].visits || 0;
-						}
-					}
-
-					return stats;
-				})();
 
                 /*
                 ** Table Functions

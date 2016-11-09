@@ -118,7 +118,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-form.client.view.html",
     "<form class=\"row container\" name=editForm auto-save-form auto-save-watch=myform auto-save-callback=update><div class=\"col-xs-2 col-sm-4 add-field\"><div class=\"row add-field-title\"><h3 class=\"col-md-12 hidden-sm hidden-xs\">{{ 'ADD_FIELD_LG' | translate }}</h3><h4 class=\"col-sm-12 hidden-xs hidden-md hidden-lg\">{{ 'ADD_FIELD_MD' | translate }}</h4><h5 class=\"col-xs-12 hidden-sm hidden-md hidden-lg\">{{ 'ADD_FIELD_SM' | translate }}</h5></div><div class=\"panel-group row\" class=draggable ng-model=addField.types><div class=\"col-xs-12 col-sm-12 col-md-6\" ng-repeat=\"type in addField.types\" style=padding-top:7.5px><div class=\"panel panel-default\" style=background-color:#f5f5f5><div class=panel-heading ng-click=\"addNewField(true, type.name)\" style=\"cursor: pointer; font-size:12px; padding-left: 10px; padding-right: 10px\"><span><field-icon-directive type-name={{type.name}}></field-icon-directive></span> <span class=hidden-xs style=padding-left:0.3em>{{type.value}}</span></div></div></div></div></div><div class=\"col-xs-10 col-sm-8 current-fields container\"><div class=row><div class=col-sm-12><div class=\"panel panel-default startPage\"><div class=\"panel-heading accordion-toggle collapsed\" data-toggle=collapse data-target=#collapseStart><h4 class=text-center>{{ 'WELCOME_SCREEN' | translate }} <span class=pull-right><i class=\"fa fa-chevron-right\" ng-hide=startPage.isOpen></i> <i class=\"fa fa-chevron-down\" ng-show=startPage.isOpen></i></span></h4></div><div id=collapseStart class=\"panel-collapse collapse\"><div class=panel-body><div class=\"row hidden-sm hidden-xs\"><div class=col-md-12><h4>{{ 'PREVIEW_START_PAGE' | translate }}</h4></div><ul class=\"col-md-12 container\" style=\"list-style:none; border:2px lightgray solid; padding-bottom: 2em\"><div class=\"field row\"><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1>{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\" style=\"overflow-wrap: break-word\"><p style=color:#ddd>{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><button class=\"btn btn-info btn btn-info col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3\" type=button><span style=\"color:white; font-size: 1.6em; text-decoration: none\">{{myform.startPage.introButtonText}}</span></button></div></ul></div><div class=row><div class=col-xs-12><h4>{{ 'EDIT_START_PAGE' | translate }}</h4><br></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_TITLE' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introTitle name=introTitleStartPage value={{myform.startPage.introTitle}} required></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_PARAGRAPH' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><textarea type=text ng-model=myform.startPage.introParagraph name=introParagraphStartPage></textarea></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_BTN' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introButtonText name=introButtonText value={{myform.startPage.introButtonText}} required></div></div><div class=row><br><br></div><div class=\"row options buttons\"><div class=\"col-md-3 col-xs-12\">Buttons:</div><div class=\"col-md-9 col-xs-12\"><div ng-repeat=\"button in myform.startPage.buttons track by button._id\" class=row style=padding-bottom:1em><div class=col-xs-5><span>{{ 'BUTTON_TEXT' | translate }}</span> <input name={{button.text}}_buttonText_startPage ng-model=button.text value={{button.text}} placeholder=\"Button Text\"></div><div class=col-xs-5><span>{{ 'BUTTON_LINK' | translate }}</span> <input name={{button.url}}_url_startPage ng-model=button.url value={{button.url}} placeholder=http://aeouaou.com/aoeuoa></div><div class=col-xs-2><a class=\"btn btn-danger btn-mini right\" type=button ng-click=deleteButton(button)><i class=\"fa fa-trash-o\"></i></a></div></div><div class=row><br></div><div class=row><button class=\"btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8\" type=button ng-click=addButton()><i class=\"icon-plus icon-white\"></i> {{ 'ADD_BUTTON' | translate }}</button></div></div></div></div></div></div></div></div><div class=row><div class=col-sm-12><hr></div></div><div class=row><div class=\"col-sm-12 col-md-10 dropzoneContainer\"><accordion close-others=accordion.oneAtATime ui-sortable=sortableOptions ng-model=myform.form_fields class=dropzone><accordion-group ng-repeat=\"field in myform.form_fields track by field._id\" is-open=accordion[$index].isOpen on-finish-render=editFormFields ng-if=!field.deletePreserved><accordion-heading><div class=handle><span class=col-xs-1 ng-switch=field.fieldType><field-icon-directive type-name={{field.fieldType}}></field-icon-directive></span> <span class=col-xs-10>{{field.title}} <span ng-show=field.required>*</span></span> <span class=pull-right><i class=\"fa fa-chevron-right\" ng-hide=accordion[$index].isOpen></i> <i class=\"fa fa-chevron-down\" ng-show=accordion[$index].isOpen></i></span></div></accordion-heading><div class=\"accordion-edit container\"><div class=\"row hidden-sm hidden-xs\"><div class=col-md-12><h4>{{ 'PREVIEW_FIELD' | translate }}</h4></div><ul class=\"col-md-12 container\" style=\"list-style:none;border:2px lightgray solid\"><field-directive field=field validate=false></field-directive></ul><hr></div><div class=row><div class=col-xs-12><h4>{{ 'EDIT_FIELD' | translate }}</h4><br></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'QUESTION_TITLE' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=field.title name=title{{field._id}} value={{field.title}} required></div></div><div class=row><br></div><div class=\"row description\" ng-hide=showRatingOptions(field)><div class=\"col-md-4 col-sm-12\">{{ 'QUESTION_DESCRIPTION' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><textarea type=text ng-model=field.description name=description{{field._id}} value={{field.description}}></textarea></div></div><div class=row ng-show=showAddOptions(field)><br></div><div class=\"row options\" ng-if=showAddOptions(field)><div class=\"col-md-4 col-xs-12\">{{ 'OPTIONS' | translate }}:</div><div class=\"col-md-8 col-xs-12\"><div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=row><input name={{option.option_value}}{{field._id}} ng-model=option.option_value class=col-xs-5> <a class=\"btn btn-danger btn-mini right\" type=button ng-click=\"deleteOption($index, option)\" class=col-xs-3><i class=\"fa fa-trash-o\"></i></a></div><div class=row><button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=button ng-click=addOption($index)><i class=\"icon-plus icon-white\"></i> {{ 'ADD_OPTION' | translate }}</button></div></div></div><div class=row ng-show=showRatingOptions(field)><br></div><div class=row ng-if=showRatingOptions(field)><div class=\"col-md-9 col-sm-9\">{{ 'NUM_OF_STEPS' | translate }}</div><div class=\"col-md-3 col-sm-3\"><input style=width:100% type=number min=1 max=10 ng-model=field.ratingOptions.steps name=ratingOptions_steps{{field._id}} ng-value={{field.ratingOptions.steps}} required></div><br><div class=\"col-md-5 col-sm-9\">Shape:</div><div class=\"col-md-7 col-sm-3\"><select style=width:100% ng-model=field.ratingOptions.shape value={{field.ratingOptions.steps}} name=ratingOptions_shape{{field._id}} required><option ng-repeat=\"shapeType in field.ratingOptions.validShapes\" value={{shapeType}}>{{select2FA[shapeType]}}</option></select></div></div><div class=row><br></div><div class=row><div class=\"col-md-4 col-xs-12 field-title\">Required:</div><div class=\"col-md-8 col-xs-12 field-input\"><label class=\"btn col-xs-5\"><input type=radio ng-value=true ng-model=field.required name=\"required{{field._id}}\"> <span>&nbsp; {{ 'YES' | translate }}</span></label><label class=\"btn col-xs-5 col-xs-offset-1\"><input type=radio ng-value=false ng-model=field.required name=\"required{{field._id}}\"> <span>&nbsp; {{ 'NO' | translate }}</span></label></div></div><div class=row><div class=\"col-md-4 col-xs-12 field-input\">{{ 'DISABLED' | translate }}</div><div class=\"col-md-8 col-xs-12 field-input\"><label class=\"btn col-xs-5\"><input type=radio ng-value=true ng-model=field.disabled name=\"disabled{{field._id}}\"> <span>&nbsp; {{ 'YES' | translate }}</span></label><label class=\"btn col-xs-5 col-xs-offset-1\"><input type=radio ng-value=false ng-model=field.disabled name=\"disabled{{field._id}}\"> <span>&nbsp; {{ 'NO' | translate }}</span></label></div></div><div class=row ng-if=\"myform.form_fields.length > 1\"><h4>Logic Jump</h4></div><div class=row ng-if=\"myform.form_fields.length > 1\"><div class=\"col-md-4 col-xs-12 field-input\">{{ 'ADD_LOGIC_JUMP' | translate }}</div><div class=\"col-md-8 col-xs-12 field-input\"><label class=\"btn col-xs-5\"><input type=radio ng-checked=!!myform.form_fields[$index].logicJump.fieldA name=logicJumpYes{{field._id}} ng-click=\"addNewLogicJump($index)\"> <span>&nbsp; {{ 'YES' | translate }}</span></label><label class=\"btn col-xs-5 col-xs-offset-1\"><input type=radio ng-checked=!myform.form_fields[$index].logicJump.fieldA name=logicJumpNo{{field._id}} ng-click=\"removeLogicJump($index)\"> <span>&nbsp; {{ 'NO' | translate }}</span></label></div></div><div class=\"row question\" ng-if=\"myform.form_fields.length > 1 && myform.form_fields[$index].logicJump.fieldA\"><div class=\"col-md-4 col-sm-12\"><b>If this field</b></div><div class=\"col-md-4 col-sm-12\"><select style=width:100% ng-model=field.logicJump.expressionString value={{field.logicJump.expressionString}} name=logicjump_expressionString{{field._id}}><option value=\"field == static\">is equal to</option><option value=\"field != static\">is not equal to</option><option value=\"field > static\" ng-if-start=\"field.fieldType === 'number' || field.fieldType === 'rating' || field.fieldType === 'number'\">is greater than</option><option value=\"field >= static\">is greater or equal than</option><option value=\"field < static\">is smaller than</option><option value=\"field <= static\" ng-if-end>is smaller or equal than</option><option value=\"field contains static\" ng-if-start=\"field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'\">contains</option><option value=\"field !contains static\">does not contain</option><option value=\"field ends static\">ends with</option><option value=\"field !ends static\">does not end with</option><option value=\"field starts static\">starts with</option><option value=\"field !starts static\" ng-if-end>does not start with</option></select></div><div class=\"col-md-4 col-sm-12\"><input ng-model=\"field.logicJump.valueB\"></div><div class=col-md-2><b>Jumps to</b></div><div class=col-md-10><select style=width:100% ng-model=field.logicJump.jumpTo value={{field.logicJump.jumpTo}} name=logicjump_jumpTo{{field._id}}><option ng-repeat=\"jump_field in myform.form_fields\" value={{jump_field._id}}>{{jump_field.title}}</option></select></div></div></div></accordion-group><div class=\"panel panel-default\" style=\"border-style: dashed; border-color: #a9a9a9\"><div class=panel-heading><h4 class=\"panel-title text-center\" style=\"color: #a9a9a9\">{{ 'CLICK_FIELDS_FOOTER' | translate }}</h4></div></div><hr></accordion></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=deleteField($index)><span class=text-center><a href=\"\" class=\"fa fa-trash-o\"></a></span></div></div></div></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=duplicateField($index)><span class=text-center><a href=\"\" class=\"fa fa-files-o\"></a></span></div></div></div></div></div></div></form>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-submissions-form.client.view.html",
-    "<div class=\"submissions-table container\"><div class=\"row text-center analytics\"><div class=\"col-xs-12 header-title\"><div class=col-xs-3>{{ 'TOTAL_VIEWS' | translate }}</div><div class=col-xs-3>{{ 'RESPONSES' | translate }}</div><div class=col-xs-3>{{ 'COMPLETION_RATE' | translate }}</div><div class=col-xs-3>{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div></div><div class=\"col-xs-12 header-numbers\"><div class=col-xs-3>{{myform.analytics.views}}</div><div class=col-xs-3>{{myform.analytics.submissions}}</div><div class=col-xs-3>{{myform.analytics.conversionRate | number:0}}%</div><div class=col-xs-3>{{AverageTimeElapsed | secondsToDateTime | date:'mm:ss'}}</div></div><div class=\"col-xs-12 detailed-title\"><div class=col-xs-3>{{ 'DESKTOP_AND_LAPTOP' | translate }}</div><div class=col-xs-3>{{ 'TABLETS' | translate }}</div><div class=col-xs-3>{{ 'PHONES' | translate }}</div><div class=col-xs-3>{{ 'OTHER' | translate }}</div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.desktop.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.tablet.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.tablet.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.other.visits}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.desktop.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.tablet.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.phone.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.other.responses}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.desktop.completion}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.tablet.completion}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.phone.completion}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.other.completion}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.desktop.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.tablet.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.phone.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.other.average_time | secondsToDateTime | date:'mm:ss'}}</div></div></div><div class=\"col-xs-12 field-title-row\"><div class=col-xs-3><strong>{{ 'FIELD_TITLE' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_VIEWS' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_RESPONSES' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_DROPOFF' | translate }}</strong></div></div><div class=\"col-xs-12 field-detailed-row\" ng-repeat=\"fieldStats in myform.analytics.fields\"><div class=col-xs-3>{{fieldStats.field.title}}</div><div class=col-xs-3>{{fieldStats.totalViews}}</div><div class=col-xs-3>{{fieldStats.responses}}</div><div class=col-xs-3>{{fieldStats.continueRate}}%</div></div></div><br><div class=\"row table-tools\"><div class=col-xs-2><button class=\"btn btn-danger\" ng-click=deleteSelectedSubmissions() ng-disabled=!isAtLeastOneChecked();><i class=\"fa fa-trash-o\"></i> {{ 'DELETE_SELECTED' | translate }}</button></div><div class=\"col-xs-2 col-xs-offset-4 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('xml')\"><small>{{ 'EXPORT_TO_EXCEL' | translate }}</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('csv')\"><small>{{ 'EXPORT_TO_CSV' | translate }}</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('json')\"><small>{{ 'EXPORT_TO_JSON' | translate }}</small></button></div></div><div class=\"row table-outer\"><div class=col-xs-12><table id=table-submission-data class=\"table table-striped table-hover table-condensed\"><thead><tr><th><input ng-model=table.masterChecker ng-change=toggleAllCheckers() type=\"checkbox\"></th><th>#</th><th data-ng-repeat=\"(key, value) in myform.form_fields\">{{value.title}}</th><th>{{ 'PERCENTAGE_COMPLETE' | translate }}</th><th>{{ 'TIME_ELAPSED' | translate }}</th><th>{{ 'DEVICE' | translate }}</th><th>{{ 'LOCATION' | translate }}</th><th>{{ 'IP_ADDRESS' | translate }}</th><th>{{ 'DATE_SUBMITTED' | translate }} (UTC)</th><th ng-if=myform.autofillPDFs>{{ 'GENERATED_PDF' | translate }}</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.rows\" ng-click=rowClicked($index) ng-class=\"{selected: row.selected === true}\"><td><input ng-model=row.selected type=\"checkbox\"></td><th class=scope>{{$index+1}}</th><td data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue}}</td><td>{{row.percentageComplete}}%</td><td>{{row.timeElapsed | secondsToDateTime | date:'mm:ss'}}</td><td>{{row.device.name}}, {{row.device.type}}</td><td>{{row.geoLocation.city}}, {{row.geoLocation.country_name}}</td><td>{{row.ipAddr}}</td><td>{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}</td><td ng-if=row.pdf><a href={{row.pdfFilePath}} download={{row.pdf.name}} target=_self>{{ 'GENERATED_PDF' | translate }}</a></td></tr></tbody></table></div></div></div>");
+    "<div class=\"submissions-table container\" ng-if=table.rows><div class=\"row text-center analytics\"><div class=\"col-xs-12 header-title\"><div class=col-xs-3>{{ 'TOTAL_VIEWS' | translate }}</div><div class=col-xs-3>{{ 'RESPONSES' | translate }}</div><div class=col-xs-3>{{ 'COMPLETION_RATE' | translate }}</div><div class=col-xs-3>{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div></div><div class=\"col-xs-12 header-numbers\"><div class=col-xs-3>{{myform.analytics.views}}</div><div class=col-xs-3>{{table.rows.length}}</div><div class=col-xs-3>{{myform.analytics.conversionRate | number:0}}%</div><div class=col-xs-3>{{AverageTimeElapsed | secondsToDateTime | date:'mm:ss'}}</div></div><div class=\"col-xs-12 detailed-title\"><div class=col-xs-3>{{ 'DESKTOP_AND_LAPTOP' | translate }}</div><div class=col-xs-3>{{ 'TABLETS' | translate }}</div><div class=col-xs-3>{{ 'PHONES' | translate }}</div><div class=col-xs-3>{{ 'OTHER' | translate }}</div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.desktop.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.tablet.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.tablet.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.other.visits}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.desktop.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.tablet.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.phone.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.other.responses}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.desktop.completion}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.tablet.completion}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.phone.completion}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.other.completion}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.desktop.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.tablet.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.phone.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.other.average_time | secondsToDateTime | date:'mm:ss'}}</div></div></div><div class=\"col-xs-12 field-title-row\"><div class=col-xs-3><strong>{{ 'FIELD_TITLE' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_VIEWS' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_RESPONSES' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_DROPOFF' | translate }}</strong></div></div><div class=\"col-xs-12 field-detailed-row\" ng-repeat=\"fieldStats in myform.analytics.fields\"><div class=col-xs-3>{{fieldStats.field.title}}</div><div class=col-xs-3>{{fieldStats.totalViews}}</div><div class=col-xs-3>{{fieldStats.responses}}</div><div class=col-xs-3>{{fieldStats.continueRate}}%</div></div></div><br><div class=\"row table-tools\"><div class=col-xs-2><button class=\"btn btn-danger\" ng-click=deleteSelectedSubmissions() ng-disabled=!isAtLeastOneChecked();><i class=\"fa fa-trash-o\"></i> {{ 'DELETE_SELECTED' | translate }}</button></div><div class=\"col-xs-2 col-xs-offset-4 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('xml')\"><small>{{ 'EXPORT_TO_EXCEL' | translate }}</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('csv')\"><small>{{ 'EXPORT_TO_CSV' | translate }}</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-default\" ng-click=\"exportSubmissions('json')\"><small>{{ 'EXPORT_TO_JSON' | translate }}</small></button></div></div><div class=\"row table-outer\"><div class=col-xs-12><table id=table-submission-data class=\"table table-striped table-hover table-condensed\"><thead><tr><th><input ng-model=table.masterChecker ng-change=toggleAllCheckers() type=\"checkbox\"></th><th>#</th><th data-ng-repeat=\"(key, value) in myform.form_fields\">{{value.title}}</th><th>{{ 'PERCENTAGE_COMPLETE' | translate }}</th><th>{{ 'TIME_ELAPSED' | translate }}</th><th>{{ 'DEVICE' | translate }}</th><th>{{ 'LOCATION' | translate }}</th><th>{{ 'IP_ADDRESS' | translate }}</th><th>{{ 'DATE_SUBMITTED' | translate }} (UTC)</th><th ng-if=myform.autofillPDFs>{{ 'GENERATED_PDF' | translate }}</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.rows\" ng-click=rowClicked($index) ng-class=\"{selected: row.selected === true}\"><td><input ng-model=row.selected type=\"checkbox\"></td><th class=scope>{{$index+1}}</th><td data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue}}</td><td>{{row.percentageComplete}}%</td><td>{{row.timeElapsed | secondsToDateTime | date:'mm:ss'}}</td><td>{{row.device.name}}, {{row.device.type}}</td><td>{{row.geoLocation.city}}, {{row.geoLocation.country_name}}</td><td>{{row.ipAddr}}</td><td>{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}</td><td ng-if=row.pdf><a href={{row.pdfFilePath}} download={{row.pdf.name}} target=_self>{{ 'GENERATED_PDF' | translate }}</a></td></tr></tbody></table></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/entryPage/startPage.html",
     "<div class=\"field row text-center\"><div class=\"col-xs-12 text-center\"><h1>{{pageData.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\"><p style=color:#ddd>{{pageData.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in pageData.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><p class=\"col-xs-3 col-xs-offset-3 text-center\"><button class=\"btn btn-info\" type=button><a ng-click=exitpageData() style=\"color:white; font-size: 1.6em; text-decoration: none\">{{ 'CONTINUE_FORM' | translate }}</a></button></p></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/field/date.html",
@@ -938,7 +938,7 @@ angular.module('forms').config(['$stateProvider',
 			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
 	    }).state('viewForm.analyze', {
 			url: '/analyze',
-			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html',
+			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html'
 	    }).state('viewForm.create', {
 			url: '/create',
 			templateUrl: 'modules/forms/admin/views/adminTabs/create.html'
@@ -1738,19 +1738,17 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 		$scope.formURL = "/#!/forms/" + $scope.myform._id;
 
-		if(window.location.host.split('.') < 3){
-			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + "/#!/forms/" + $scope.myform._id;
+		if(window.location.host.split('.').length < 3){
+			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + $scope.formURL;
 		} else {
-			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') + "/#!/forms/" + $scope.myform._id;
+			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') +  $scope.formURL;
 		}
-
 
 		var refreshFrame = $scope.refreshFrame = function(){
 			if(document.getElementById('iframe')) {
 				document.getElementById('iframe').contentWindow.location.reload();
 			}
 		};
-
 
 		$scope.tabData   = [
             {
@@ -1766,6 +1764,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.setForm = function(form){
             $scope.myform = form;
         };
+		
         $rootScope.resetForm = function(){
             $scope.myform = Forms.get({
                 formId: $stateParams.formId
@@ -2437,25 +2436,33 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 'use strict';
 
-angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http',
-    function ($rootScope, $http) {
+angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http', 'Forms', '$stateParams', '$interval',
+    function ($rootScope, $http, Forms, $stateParams, $interval) {
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-submissions-form.client.view.html',
             restrict: 'E',
             scope: {
-                myform:'=',
-                user:'='
+                user:'=',
+				myform: '='
             },
             controller: ["$scope", function($scope){
+
                 $scope.table = {
                     masterChecker: false,
                     rows: []
                 };
 
-				(function initController(){
+				$scope.table.rows = [];
 
-					var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
-					var submissions = $scope.myform.submissions;
+				var initController = function(){
+
+					Forms.get({
+						formId: $stateParams.formId
+					}, function(form){
+						$scope.myform = form;
+						var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+
+						var submissions = $scope.myform.submissions || [];
 
 						//Iterate through form's submissions
 						for(var i = 0; i < submissions.length; i++){
@@ -2469,59 +2476,75 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 						$scope.table.rows = submissions;
 
-				})();
 
-				/*
-				** Analytics Functions
-				*/
-				$scope.AverageTimeElapsed = (function(){
-					var totalTime = 0;
-					var numSubmissions = $scope.table.rows.length;
+						/*
+						 ** Analytics Functions
+						 */
+						
+						$scope.AverageTimeElapsed = (function(){
+							var totalTime = 0;
+							var numSubmissions = $scope.table.rows.length;
 
-					for(var i=0; i<$scope.table.rows.length; i++){
-						totalTime += $scope.table.rows[i].timeElapsed;
+							console.log("AverageTimeElapsed");
+							console.log($scope.table.rows);
+
+							for(var i=0; i<$scope.table.rows.length; i++){
+								totalTime += $scope.table.rows[i].timeElapsed;
+							}
+
+							return totalTime/numSubmissions;
+						})();
+
+						$scope.DeviceStatistics = (function(){
+							var newStatItem = function(){
+								return {
+									visits: 0,
+									responses: 0,
+									completion: 0,
+									average_time: 0,
+									total_time: 0
+								};
+							};
+
+							var stats = {
+								desktop: newStatItem(),
+								tablet: newStatItem(),
+								phone: newStatItem(),
+								other: newStatItem()
+							};
+
+							if($scope.myform.analytics && $scope.myform.analytics.visitors) {
+								var visitors = $scope.myform.analytics.visitors;
+								for (var i = 0; i < visitors.length; i++) {
+									var visitor = visitors[i];
+									var deviceType = visitor.deviceType;
+
+									stats[deviceType].visits++;
+
+									stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
+									stats[deviceType].average_time = stats[deviceType].total_time / stats[deviceType].visits || 0;
+
+									if (visitor.isSubmitted) stats[deviceType].responses++;
+
+									stats[deviceType].completion = stats[deviceType].response / stats[deviceType].visits || 0;
+								}
+							}
+
+							return stats;
+						})();
+
+					});
+
+				};
+				initController();
+
+				var updateFields = $interval(initController, 2000);
+
+				$scope.$on("$destroy", function() {
+					if (updateFields) {
+						$interval.cancel($scope.updateFields);
 					}
-
-					return totalTime/numSubmissions;
-				})();
-
-				$scope.DeviceStatistics = (function(){
-					var newStatItem = function(){
-						return {
-							visits: 0,
-							responses: 0,
-							completion: 0,
-							average_time: 0,
-							total_time: 0
-						};
-					};
-
-					var stats = {
-						desktop: newStatItem(),
-						tablet: newStatItem(),
-						phone: newStatItem(),
-						other: newStatItem()
-					};
-
-					var visitors = $scope.myform.analytics.visitors;
-
-					for(var i=0; i<visitors.length; i++){
-						var visitor = visitors[i];
-						var deviceType = visitor.deviceType;
-
-						stats[deviceType].visits++;
-
-						stats[deviceType].total_time =+ visitor.timeElapsed;
-						stats[deviceType].average_time = stats[deviceType].total_time/stats[deviceType].visits || 0;
-
-						if(visitor.isSubmitted) stats[deviceType].responses++;
-
-						stats[deviceType].completion = stats[deviceType].response/stats[deviceType].visits || 0;
-					}
-
-					console.log(stats);
-					return stats;
-				})();
+				});
 
                 /*
                 ** Table Functions
@@ -2586,16 +2609,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         'csv': 'csv'
                     };
 
-					console.log($scope.table.rows);
-
 					angular.element('#table-submission-data').tableExport({type: type, escape:false});
-
-					/*
-                    var blob = new Blob([$scope.table.rows], {
-                            type: 'application/'+fileMIMETypeMap[type]+';charset=utf-8'
-                    });
-                    saveAs(blob, $scope.myform.title+'_sumbissions_export_'+Date.now()+'.'+type);
-                    */
                 };
 
             }]
@@ -3265,16 +3279,6 @@ angular.module('forms').factory('Forms', ['$resource', 'FORM_URL',
 			'query' : {
 				method: 'GET',
 				isArray: true
-				//DAVID: TODO: Do we really need to get visible_form_fields for a Query?
-				// transformResponse: function(data, header) {
-				// 	var forms = angular.fromJson(data);
-				// 	angular.forEach(forms, function(form, idx) {
-				// 		form.visible_form_fields = _.filter(form.form_fields, function(field){
-				// 			return (field.deletePreserved === false);
-				// 		});
-				// 	});
-		  //         return forms;
-		  //       }
 			},
 			'get' : {
 				method: 'GET',

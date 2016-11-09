@@ -270,17 +270,6 @@ FormSchema.plugin(mUtilities.timestamp, {
 	useVirtual: false
 });
 
-//Delete template PDF of current Form
-FormSchema.pre('remove', function (next) {
-	if(this.pdf && process.env.NODE_ENV === 'development'){
-		//Delete template form
-		fs.unlink(this.pdf.path, function(err){
-			if (err) throw err;
-		  	console.log('successfully deleted', this.pdf.path);
-		});
-	}
-});
-
 var _original;
 
 function getDeletedIndexes(needle, haystack){
@@ -296,7 +285,6 @@ function getDeletedIndexes(needle, haystack){
 	return deletedIndexes;
 }
 
-//Move PDF to permanent location after new template is uploaded
 FormSchema.pre('save', function (next) {
 	var that = this;
 
@@ -316,120 +304,6 @@ FormSchema.pre('save', function (next) {
 	}, function(cb) {
 		return cb(null);
 	},
-		function(cb) {
-			if (that.pdf) {
-				async.series([
-					function (callback) {
-						if (that.isModified('pdf') && that.pdf.path) {
-
-							var new_filename = that.title.replace(/ /g, '') + '_template.pdf';
-
-							var newDestination = path.join(config.pdfUploadPath, that.admin.username.replace(/ /g, ''), that.title.replace(/ /g, '')),
-								stat = null;
-
-							try {
-								stat = fs.statSync(newDestination);
-							} catch (err) {
-								mkdirp.sync(newDestination);
-							}
-							if (stat && !stat.isDirectory()) {
-								return callback(new Error('Directory cannot be created because an inode of a different type exists at "' + config.pdfUploadPath + '"'), null);
-							}
-
-							var old_path = that.pdf.path;
-							fs.move(old_path, path.join(newDestination, new_filename), {clobber: true}, function (err) {
-								if (err) {
-									console.error(err);
-									return callback(new Error(err.message), 'task1');
-								} else {
-									that.pdf.path = path.join(newDestination, new_filename);
-									that.pdf.name = new_filename;
-
-									return callback(null, 'task1');
-								}
-							});
-						} else {
-							return callback(null, 'task1');
-						}
-					},
-					function (callback) {
-						if (that.isGenerated) {
-							that.pdf.path = config.pdfUploadPath + that.admin.username.replace(/ /g, '') + '/' + that.title.replace(/ /g, '') + '/' + that.title.replace(/ /g, '') + '_template.pdf';
-							that.pdf.name = that.title.replace(/ /g, '') + '_template.pdf';
-							var _typeConvMap = {
-								'Multiline': 'textarea',
-								'Text': 'textfield',
-								'Button': 'checkbox',
-								'Choice': 'radio',
-								'Password': 'password',
-								'FileSelect': 'filefield',
-								'Radio': 'radio'
-							};
-
-
-							pdfFiller.generateFieldJson(that.pdf.path, '', function (err, _form_fields) {
-
-								//console.log(that.pdf.path);
-
-								if (err) {
-									return callback(new Error(err.message), null);
-								} else if (!_form_fields.length || _form_fields === undefined || _form_fields === null) {
-									return callback(new Error('Generated formfields is empty'), null);
-								}
-
-								console.log('autogenerating form');
-
-								//Map PDF field names to FormField field names
-								for (var i = 0; i < _form_fields.length; i++) {
-									var _field = _form_fields[i];
-
-									//Convert types from FDF to 'FormField' types
-									if (_typeConvMap[_field.fieldType + '']) {
-										_field.fieldType = _typeConvMap[_field.fieldType + ''];
-									}
-
-									var new_field = {};
-									new_field.title = _field.fieldType + ' ' + Math.abs(mt());
-									new_field.fieldValue = '';
-									new_field.disabled = false;
-									new_field.fieldType = _field.fieldType;
-									new_field.deletePreserved = false;
-									new_field.required = false;
-									_form_fields[i] = new_field;
-								}
-
-								that.form_fields = _form_fields;
-
-								that.isGenerated = false;
-								return callback(null, 'task2');
-							});
-						} else {
-							return callback(null, 'task2');
-						}
-					}
-				], function (err, results) {
-					if (err) {
-						return cb(new Error({
-							message: err.message
-						}));
-					} else {
-						//console.log('ending form save1');
-						return cb();
-					}
-				});
-			}
-			else if (_original) {
-				if (_original.hasOwnProperty('pdf')) {
-					fs.remove(_original.pdf.path, function (err) {
-						if (err) return cb(err);
-						console.log('file at ' + _original.pdf.path + ' successfully deleted');
-						return cb();
-					});
-				}
-				else return cb();
-			}
-			else return cb();
-		},
 		function(cb) {
 			var hasIds = true;
 			for(var i=0; i<that.form_fields.length; i++){

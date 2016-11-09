@@ -31,6 +31,7 @@ module.exports = function (io, socket) {
 				deviceType: data.deviceType
 			};
 
+
 			form.analytics.visitors.push(newVisitor);
 
 			form.save(function (err) {
@@ -39,6 +40,7 @@ module.exports = function (io, socket) {
 					throw new Error(errorHandler.getErrorMessage(err));
 				}
 				console.log('\n\nVisitor data successfully added!');
+				console.log(newVisitor);
 
 				delete visitorsData[socket.id];
 
@@ -56,7 +58,7 @@ module.exports = function (io, socket) {
 		socket.on('form-visitor-data', function(data) {
 
 				visitorsData[socket.id] = data;
-			
+
 				if (data.isSubmitted) {
 					saveVisitorData(data, function () {
 						console.log('\n\n user submitted form');

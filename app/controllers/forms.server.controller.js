@@ -151,7 +151,8 @@ exports.read = function(req, res) {
 		}
 
 
-		var newForm = req.form.toJSON({virtuals : true});
+		var newForm = req.form.toJSON();
+		console.log(newForm.analytics);
 		newForm.submissions = _submissions;
 
 		if (req.userId) {
