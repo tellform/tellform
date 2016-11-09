@@ -4,7 +4,7 @@ Selenium Installation Docs
 Note: *This guide assumes you have the LTS of Node and NPM installed*
 
 1. Install selenium-standalone
-```npm install selenium-standalone```
+```npm install -g selenium-standalone```
 
 2. Install the default selenium instance
 ```selenium-standalone install```
