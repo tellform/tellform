@@ -77,6 +77,16 @@ var VisitorDataSchema = new Schema({
 
 });
 
+var formSchemaOptions = {
+	toObject: {
+		virtuals: true
+	},
+	toJSON: {
+		virtuals: true
+	}
+};
+
+
 /**
  * Form Schema
  */
@@ -176,7 +186,7 @@ var FormSchema = new Schema({
 		},
 		font: String
 	}
-});
+}, formSchemaOptions);
 
 /*
 ** In-Form Analytics Virtual Attributes

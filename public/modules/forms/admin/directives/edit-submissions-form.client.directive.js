@@ -1,44 +1,59 @@
 'use strict';
 
-angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http',
-    function ($rootScope, $http) {
+angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope', '$http', 'Forms', '$stateParams', '$interval',
+    function ($rootScope, $http, Forms, $stateParams, $interval) {
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-submissions-form.client.view.html',
             restrict: 'E',
             scope: {
-                myform:'=',
-                user:'='
+                user:'=',
+				myform: '@'
             },
             controller: function($scope){
+
                 $scope.table = {
                     masterChecker: false,
                     rows: []
                 };
 
-				(function initController(){
+				$scope.table.rows = [];
 
-					var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+				var initController = function(){
 
-					//Iterate through form's submissions
+					Forms.get({
+						formId: $stateParams.formId
+					}, function(form){
+						console.log('running init controller');
+						console.log(form);
+						$scope.myform = form;
+						var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
-					var submissions = _.cloneDeep($scope.myform.submissions);
-					for(var i = 0; i < submissions.length; i++){
-						for(var x = 0; x < submissions[i].form_fields; x++){
-							var oldValue = submissions[i].form_fields[x].fieldValue || '';
-							submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
-							submissions[i].form_fields[x].fieldValue = oldValue;
+						var submissions = $scope.myform.submissions || [];
+
+						//Iterate through form's submissions
+						for(var i = 0; i < submissions.length; i++){
+							for(var x = 0; x < submissions[i].form_fields; x++){
+								var oldValue = submissions[i].form_fields[x].fieldValue || '';
+								submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
+								submissions[i].form_fields[x].fieldValue = oldValue;
+							}
+							submissions[i].selected = false;
 						}
-						submissions[i].selected = false;
+
+						$scope.table.rows = submissions;
+
+					});
+
+				};
+				initController();
+
+				var updateFields = $interval(initController, 500);
+
+				$scope.$on("$destroy", function() {
+					if (updateFields) {
+						$interval.cancel($scope.updateFields);
 					}
-					// console.log('after textField2: '+data[0].form_fields[1].fieldValue);
-
-					$scope.table.rows = submissions;
-
-					// console.log('form submissions successfully fetched');
-					// console.log( JSON.parse(JSON.stringify($scope.submissions)) ) ;
-					// console.log( JSON.parse(JSON.stringify($scope.myform.form_fields)) );
-
-				})();
+				});
 
 				/*
 				** Analytics Functions
@@ -51,7 +66,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						totalTime += $scope.table.rows[i].timeElapsed;
 					}
 
-					console.log(totalTime/numSubmissions);
 					return totalTime/numSubmissions;
 				})();
 
@@ -73,23 +87,22 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						other: newStatItem()
 					};
 
-					var visitors = $scope.myform.analytics.visitors;
+					if($scope.myform.analytics && $scope.myform.analytics.visitors) {
+						for (var i = 0; i < visitors.length; i++) {
+							var visitor = visitors[i];
+							var deviceType = visitor.deviceType;
 
-					for(var i=0; i<visitors.length; i++){
-						var visitor = visitors[i];
-						var deviceType = visitor.deviceType;
+							stats[deviceType].visits++;
 
-						stats[deviceType].visits++;
+							stats[deviceType].total_time = +visitor.timeElapsed;
+							stats[deviceType].average_time = stats[deviceType].total_time / stats[deviceType].visits || 0;
 
-						stats[deviceType].total_time =+ visitor.timeElapsed;
-						stats[deviceType].average_time = stats[deviceType].total_time/stats[deviceType].visits || 0;
+							if (visitor.isSubmitted) stats[deviceType].responses++;
 
-						if(visitor.isSubmitted) stats[deviceType].responses++;
-
-						stats[deviceType].completion = stats[deviceType].response/stats[deviceType].visits || 0;
+							stats[deviceType].completion = stats[deviceType].response / stats[deviceType].visits || 0;
+						}
 					}
 
-					console.log(stats);
 					return stats;
 				})();
 
@@ -156,16 +169,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         'csv': 'csv'
                     };
 
-					console.log($scope.table.rows);
-
 					angular.element('#table-submission-data').tableExport({type: type, escape:false});
-
-					/*
-                    var blob = new Blob([$scope.table.rows], {
-                            type: 'application/'+fileMIMETypeMap[type]+';charset=utf-8'
-                    });
-                    saveAs(blob, $scope.myform.title+'_sumbissions_export_'+Date.now()+'.'+type);
-                    */
                 };
 
             }

@@ -44,7 +44,7 @@ angular.module('forms').config(['$stateProvider',
 			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
 	    }).state('viewForm.analyze', {
 			url: '/analyze',
-			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html',
+			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html'
 	    }).state('viewForm.create', {
 			url: '/create',
 			templateUrl: 'modules/forms/admin/views/adminTabs/create.html'

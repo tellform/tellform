@@ -13,7 +13,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 		$scope.copied = false;
 		$scope.onCopySuccess = function(e) {
-			console.log("COPY SUCCESSFUL!");
 			$scope.copied = true;
 		};
 
@@ -26,12 +25,11 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 		$scope.formURL = "/#!/forms/" + $scope.myform._id;
 
-		if(window.location.host.split('.') < 3){
-			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + "/#!/forms/" + $scope.myform._id;
+		if(window.location.host.split('.').length < 3){
+			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + $scope.formURL;
 		} else {
-			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') + "/#!/forms/" + $scope.myform._id;
+			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') +  $scope.formURL;
 		}
-
 
 		var refreshFrame = $scope.refreshFrame = function(){
 			if(document.getElementById('iframe')) {
@@ -39,16 +37,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 			}
 		};
 
-
 		$scope.tabData   = [
-			/*{
-                heading: $filter('translate')('CREATE_TAB'),
-                templateName: 'create'
-            },
-            {
-                heading: $filter('translate')('DESIGN_TAB'),
-                templateName:   'design'
-            },*/
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
 				templateName:   'configure'
@@ -62,6 +51,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.setForm = function(form){
             $scope.myform = form;
         };
+		
         $rootScope.resetForm = function(){
             $scope.myform = Forms.get({
                 formId: $stateParams.formId

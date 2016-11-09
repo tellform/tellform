@@ -7,74 +7,14 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Form = mongoose.model('Form'),
 	FormSubmission = mongoose.model('FormSubmission'),
-	pdfFiller = require('pdffiller'),
 	config = require('../../config/config'),
-	fs = require('fs-extra'),
-	async = require('async'),
-	path = require('path'),
 	diff = require('deep-diff'),
 	_ = require('lodash');
-
-/**
- * Upload PDF
- */
-exports.uploadPDF = function(req, res, next) {
-
-	if(req.file){
-		var pdfFile = req.file;
-		var _user = req.user;
-		var _path = req.file.path;
-
-
-		if (req.file.size === 0) {
-			return next(new Error('File uploaded is EMPTY'));
-		}else if(req.file.size > 100000000){
-			return next(new Error('File uploaded exceeds MAX SIZE of 100MB'));
-		}else {
-			fs.exists(_path, function(exists) {
-
-				//If file exists move to user's tmp directory
-				if(exists) {
-
-					var newDestination = config.tmpUploadPath+_user.username;
-				    var stat = null;
-				    try {
-				        stat = fs.statSync(newDestination);
-				    } catch (err) {
-				        fs.mkdirSync(newDestination);
-				    }
-
-				    if (stat && !stat.isDirectory()) {
-				    	console.log('Directory cannot be created');
-				        return next(new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"'));
-				    }
-
-					console.log(path.join(newDestination, pdfFile.filename));
-
-					fs.move(pdfFile.path, path.join(newDestination, pdfFile.filename), function (err) {
-						if (err) {
-							return next(new Error(err.message));
-						}
-						pdfFile.path = path.join(newDestination, pdfFile.filename);
-						console.log(pdfFile.filename + ' uploaded to ' + pdfFile.path);
-						res.json(pdfFile);
-					});
-
-				} else {
-					return next(new Error('Did NOT get your file!'));
-				}
-			});
-		}
-	}else {
-		return next(new Error('Uploaded files were NOT detected'));
-	}
-};
 
 /**
  * Delete a forms submissions
  */
 exports.deleteSubmissions = function(req, res) {
-	console.log(req.body);
 
 	var submission_id_list = req.body.deleted_submissions,
 		form = req.form;
@@ -106,7 +46,6 @@ exports.deleteSubmissions = function(req, res) {
  * Submit a form entry
  */
 exports.createSubmission = function(req, res) {
-
 	var form = req.form;
 
 	var submission = new FormSubmission({
@@ -118,38 +57,36 @@ exports.createSubmission = function(req, res) {
 		percentageComplete: req.body.percentageComplete
 	});
 
-	if(form.pdf) submission.pdf = form.pdf;
-
 	//Save submitter's IP Address
 	if(req.headers['x-forwarded-for'] || req.connection.remoteAddress){
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 		if(ip && process.env.NODE_ENV !== 'development') submission.ipAddr = ip;
 	}
 
-	if(req.device){
+	if (req.device) {
 		submission.device = req.device;
 	}
 
-	if(form.autofillPDFs){
-		try {
-			submission.fdfData = pdfFiller.convFieldJson2FDF(submission.form_fields);
-		} catch(err){
-			res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-	}else{
-		submission.fdfData = null;
-	}
-
 	submission.save(function(err, submission){
-		if(err){
-			console.log(err.message);
-			res.status(500).send({
+
+		if (err) {
+			console.error(err.message);
+			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		res.status(200).send('Form submission successfully saved');
+
+		form.submissions.push(submission);
+
+		form.save(function (err) {
+			if (err) {
+				console.error(err);
+				return res.status(500).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			}
+			res.status(200).send('Form submission successfully saved');
+		});
 	});
 };
 
@@ -159,25 +96,15 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 	var _user = req.user;
-	console.log('listSubmissions');
 
 	FormSubmission.find({ form: _form._id }).exec(function(err, _submissions) {
 		if (err) {
-			console.log(err);
+			console.error(err);
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-
-		_form.update({ $set : { submissions: _submissions }}).exec(function(err, form){
-			if (err) {
-				console.log(err);
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
-			res.json(_submissions);
-		});
+		res.json(_submissions);
 
 	});
 
@@ -187,7 +114,6 @@ exports.listSubmissions = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
-
 
 	if(!req.body.form){
 		console.log(err);
@@ -215,17 +141,29 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-	var newForm = req.form.toJSON({virtuals : true});
 
-	if (req.userId) {
-		if(req.form.admin._id+'' === req.userId+''){
-			return res.json(newForm);
+	FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
+		if (err) {
+			console.log(err);
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
 		}
-		return res.status(404).send({
-			message: 'Form Does Not Exist'
-		});
-	}
-	return res.json(newForm);
+
+
+		var newForm = req.form.toJSON({virtuals : true});
+		newForm.submissions = _submissions;
+
+		if (req.userId) {
+			if(req.form.admin._id+'' === req.userId+''){
+				return res.json(newForm);
+			}
+			return res.status(404).send({
+				message: 'Form Does Not Exist'
+			});
+		}
+		return res.json(newForm);
+	});
 };
 
 /**
@@ -234,8 +172,7 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var form = req.form;
 
-	if(req.body.changes){
-		console.log('SENDING DIFFS\n\n\n');
+	if (req.body.changes) {
 		var formChanges = req.body.changes;
 
 		formChanges.forEach(function (change) {

@@ -8,6 +8,8 @@ if ((process.env.NODE_ENV || 'development') === 'development') {
 	require('dotenv').config();
 }
 
+require('events').EventEmitter.prototype._maxListeners = 0;
+
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),

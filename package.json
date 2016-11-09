@@ -27,6 +27,7 @@
     "async-boolean-expression-evaluator": "^1.1.1",
     "aws-sdk": "^2.3.9",
     "bcrypt": "^0.8.7",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.14.1",
     "bower": "~1.6.5",
     "chalk": "^1.1.3",

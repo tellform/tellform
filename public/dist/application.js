@@ -1726,7 +1726,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 		$scope.copied = false;
 		$scope.onCopySuccess = function(e) {
-			console.log("COPY SUCCESSFUL!");
 			$scope.copied = true;
 		};
 
@@ -1754,14 +1753,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 
 		$scope.tabData   = [
-			/*{
-                heading: $filter('translate')('CREATE_TAB'),
-                templateName: 'create'
-            },
-            {
-                heading: $filter('translate')('DESIGN_TAB'),
-                templateName:   'design'
-            },*/
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
 				templateName:   'configure'
@@ -2464,25 +2455,19 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 				(function initController(){
 
 					var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+					var submissions = $scope.myform.submissions;
 
-					//Iterate through form's submissions
-
-					var submissions = _.cloneDeep($scope.myform.submissions);
-					for(var i = 0; i < submissions.length; i++){
-						for(var x = 0; x < submissions[i].form_fields; x++){
-							var oldValue = submissions[i].form_fields[x].fieldValue || '';
-							submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
-							submissions[i].form_fields[x].fieldValue = oldValue;
+						//Iterate through form's submissions
+						for(var i = 0; i < submissions.length; i++){
+							for(var x = 0; x < submissions[i].form_fields; x++){
+								var oldValue = submissions[i].form_fields[x].fieldValue || '';
+								submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
+								submissions[i].form_fields[x].fieldValue = oldValue;
+							}
+							submissions[i].selected = false;
 						}
-						submissions[i].selected = false;
-					}
-					// console.log('after textField2: '+data[0].form_fields[1].fieldValue);
 
-					$scope.table.rows = submissions;
-
-					// console.log('form submissions successfully fetched');
-					// console.log( JSON.parse(JSON.stringify($scope.submissions)) ) ;
-					// console.log( JSON.parse(JSON.stringify($scope.myform.form_fields)) );
+						$scope.table.rows = submissions;
 
 				})();
 
@@ -2497,7 +2482,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						totalTime += $scope.table.rows[i].timeElapsed;
 					}
 
-					console.log(totalTime/numSubmissions);
 					return totalTime/numSubmissions;
 				})();
 
