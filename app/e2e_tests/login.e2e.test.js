@@ -1,130 +1,120 @@
 "use strict";
 
-var	should = require('should'),
-	mongoose = require('mongoose');
+var	mongoose = require('mongoose');
 
 var credentials, user;
 
 describe('Login E2E Tests', function() {
-	this.timeout(50000);
 	var User = mongoose.model('User');
 
-	beforeEach(function async() {
-		return new Promise(function(resolve, reject) {
+	beforeEach(function(done) {
 
-			// Create user credentials
-			credentials = {
-				email: 'testoeoeoee'+Math.floor(1000%Math.random()*1000)+'@test.com',
-				username: 'tesoeeo'+Math.floor(1000%Math.random()*1000),
-				password: 'passwordeoeo'
-			};
+		// Create user credentials
+		credentials = {
+			email: 'testoeoeoee'+Math.floor(1000%Math.random()*1000)+'@test.com',
+			username: 'tesoeeo'+Math.floor(1000%Math.random()*1000),
+			password: 'passwordeoeo'
+		};
 
-			// Create a new user
-			user = new User({
-				firstName: 'Full',
-				lastName: 'Name',
-				email: credentials.email,
-				username: credentials.username,
-				password: credentials.password,
-				provider: 'local'
-			});
+		// Create a new user
+		user = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			email: credentials.email,
+			username: credentials.username,
+			password: credentials.password,
+			provider: 'local'
+		});
 
-			// Save a user to the test db and create new Form
-			user.save(function (err) {
-				if (err) return reject(err);
-				resolve();
+		// Save a user to the test db and create new Form
+		user.save(function (err) {
+			if (err) return done(err);
+			done()
+		});
+	});
+
+	it('should be able to login with valid email and password', function (done) {
+		browser.get('http://tellform.dev:3001').then(function(){
+
+			expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/signin');
+
+			expect(browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).getText()).toBe('SIGN IN');
+
+			browser.findElement(By.css('input#username')).sendKeys(credentials.email);
+			browser.findElement(By.css('input#password')).sendKeys(credentials.password);
+
+			browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).click().then(function(){
+				expect(browser.findElement(By.css('h3.text-center.forms-list-title')).getText()).toBe('My Forms');
+				expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/forms');
+				done();
 			});
 		});
 	});
 
-	it('should be able to login with valid email and password', function () {
-		browser.url('http://tellform.dev:3001');
+	it('should be able to login with valid username and password', function (done) {
+		browser.get('http://tellform.dev:3001').then(function(){
 
-		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
-		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
-		var title = browser.getTitle();
-		title.should.equal('TellForm Test');
+			expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/signin');
 
-		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
-		siginButtonText.should.equal('SIGN IN');
+			expect(browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).getText()).toBe('SIGN IN');
 
-		browser.setValue('input#username', credentials.email);
-		browser.setValue('input#password', credentials.password);
+			browser.findElement(By.css('input#username')).sendKeys(credentials.username);
+			browser.findElement(By.css('input#password')).sendKeys(credentials.password);
 
-		browser.click('button.btn.btn-signup.btn-rounded.btn-block');
-
-		browser.waitForExist('h3.text-center.forms-list-title', 10000);
-		browser.getText('h3.text-center.forms-list-title').should.equal('My Forms');
-		browser.getUrl().should.equal('http://tellform.dev:3001/#!/forms');
-	});
-
-	it('should be able to login with valid username and password', function () {
-		browser.url('http://tellform.dev:3001');
-
-		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
-		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
-		var title = browser.getTitle();
-		title.should.equal('TellForm Test');
-
-		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
-		siginButtonText.should.equal('SIGN IN');
-
-		browser.setValue('input#username', credentials.username);
-		browser.setValue('input#password', credentials.password);
-
-		browser.click('button.btn.btn-signup.btn-rounded.btn-block');
-
-		browser.waitForExist('h3.text-center.forms-list-title', 10000);
-		browser.getText('h3.text-center.forms-list-title').should.equal('My Forms');
-		browser.getUrl().should.equal('http://tellform.dev:3001/#!/forms');
-	});
-
-	it('should be not able to login with invalid credentials', function () {
-		browser.url('http://tellform.dev:3001');
-
-		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
-		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
-		var title = browser.getTitle();
-		title.should.equal('TellForm Test');
-
-		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
-		siginButtonText.should.equal('SIGN IN');
-
-		browser.setValue('input#username', 'aoeuaoeu');
-		browser.setValue('input#password', 'aoeuaoeu');
-
-		browser.click('button.btn.btn-signup.btn-rounded.btn-block');
-
-		browser.waitForExist('.text-center.text-danger', 10000);
-		browser.getText('.text-center.text-danger').should.equal('Error: Unknown user or invalid password');
-		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
-	});
-
-	it('should be not able to login with no credentials', function () {
-		browser.url('http://tellform.dev:3001');
-
-		browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
-		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
-		var title = browser.getTitle();
-		title.should.equal('TellForm Test');
-
-		var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
-		siginButtonText.should.equal('SIGN IN');
-
-		browser.setValue('input#username', '');
-		browser.setValue('input#password', '');
-
-		browser.click('button.btn.btn-signup.btn-rounded.btn-block');
-
-		browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
-	});
-
-	afterEach(function async() {
-		return new Promise(function(resolve, reject) {
-			User.remove({}).exec(function(err){
-				if (err) return reject(err);
-				resolve();
+			browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).click().then(function(){
+				expect(browser.findElement(By.css('h3.text-center.forms-list-title')).getText()).toBe('My Forms');
+				expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/forms');
+				done();
 			});
+		});
+	});
+
+	it('should be not able to login with invalid credentials', function (done) {
+		browser.get('http://tellform.dev:3001').then(function(){
+
+			expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/signin');
+
+			expect(browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).getText()).toBe('SIGN IN');
+
+			browser.findElement(By.css('input#username')).sendKeys('aoeuaoeu');
+			browser.findElement(By.css('input#password')).sendKeys('aoeuaoeu');
+
+			browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).click().then(function(){
+				expect(browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).getText()).toBe('SIGN IN');
+				expect(browser.getCurrentUrl()).not.toBe('http://tellform.dev:3001/#!/forms');
+				done();
+			});
+		});
+	});
+
+	it('should be not able to login with no credentials', function (done) {
+		browser.get('http://tellform.dev:3001').then(function(){
+
+			expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/signin');
+
+			expect(browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).getText()).toBe('SIGN IN');
+
+			browser.findElement(By.css('input#username')).sendKeys('');
+			browser.findElement(By.css('input#password')).sendKeys('');
+
+			browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).click().then(function(){
+				expect(browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).getText()).toBe('SIGN IN');
+				expect(browser.getCurrentUrl()).not.toBe('http://tellform.dev:3001/#!/forms');
+				done();
+			});
+		});
+	});
+
+	it('should output the coverage object.', function() {
+		browser.driver.executeScript("return __coverage__;").then(function(val) {
+			fs.writeFileSync("e2e_coverage/coverageE2E.json", JSON.stringify(val));
+		});
+	});
+
+	afterEach(function (done) {
+		User.remove({}).exec(function(err){
+			if (err) return done(err);
+			done();
 		});
 	});
 });

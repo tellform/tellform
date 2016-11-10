@@ -181,7 +181,7 @@ module.exports = function(grunt) {
 			    singleRun: true
              }
 		},
-		protractor: {
+		/*protractor: {
 			options: {
 				configFile: 'protractor.conf.js',
 				keepAlive: true,
@@ -189,10 +189,10 @@ module.exports = function(grunt) {
 			},
 			e2e: {
 				options: {
-					args: {} // Target-specific arguments
+					args: {}
 				}
 			}
-	    },
+	    },*/
 	    mocha_istanbul: {
             coverage: {
                 src: watchFiles.allTests, // a folder works nicely
@@ -238,6 +238,28 @@ module.exports = function(grunt) {
             }
           }
         },
+		protractor_coverage: {
+			options: {
+				keepAlive: true,
+				noColor: false,
+				coverageDir: 'e2e_coverage',
+				args: {
+					baseUrl: 'http://tellform.dev:3001'
+				}
+			},
+			local: {
+				options: {
+					configFile: 'protractor.conf.js'
+				}
+			}
+		},
+		instrument: {
+			files: 'app/e2e_tests/**.js',
+			options: {
+				lazy: true,
+				basePath: "instrumented"
+			}
+		},
 		html2js: {
 			options: {
 				base: 'public',
