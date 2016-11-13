@@ -105,12 +105,6 @@ describe('Login E2E Tests', function() {
 		});
 	});
 
-	it('should output the coverage object.', function() {
-		browser.driver.executeScript("return __coverage__;").then(function(val) {
-			fs.writeFileSync("e2e_coverage/coverageE2E.json", JSON.stringify(val));
-		});
-	});
-
 	afterEach(function (done) {
 		User.remove({}).exec(function(err){
 			if (err) return done(err);

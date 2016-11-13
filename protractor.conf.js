@@ -2,18 +2,19 @@
 
 // Protractor configuration
 exports.config = {
+	allScriptsTimeout: 110000,
+
 	plugins : [{
-		path: './node_modules/protractor-istanbul-plugin/index.js'
+		path: './node_modules/protractor-istanbul-plugin',
+		logAssertions: true,
+		failAssertions: true
 	}],
 	framework: 'jasmine',
 	seleniumAddress: 'http://localhost:4444/wd/hub',
-	specs: ['app/e2e_tests/login.e2e.test.js'],
+	specs: ['./app/e2e_tests/login.e2e.test.js'],
 	beforeLaunch: './server.js',
+
 	jasmineNodeOpts: {
-		onComplete: function () {},
-		isVerbose: true,
-		showColors: true,
-		includeStackTrace: true,
-		defaultTimeoutInterval: 90000
+		defaultTimeoutInterval: 30000
 	}
 };
