@@ -334,7 +334,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	SUBMIT: 'Submit',
 	UPLOAD_FILE: 'Upload your File'
   });
-	
+
 }]);
 
 'use strict';
@@ -1276,7 +1276,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
 	function($scope, $stateParams, $state, User) {
-		
+
 		$scope.error = '';
 
 		// Submit forgotten password account id
@@ -1764,7 +1764,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.setForm = function(form){
             $scope.myform = form;
         };
-		
+
         $rootScope.resetForm = function(){
             $scope.myform = Forms.get({
                 formId: $stateParams.formId
@@ -2256,7 +2256,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				$scope.addNewLogicJump = function (field_index) {
 					var form_fields = $scope.myform.form_fields;
 					var currField = form_fields[field_index];
-					console.log(currField);
 					if (form_fields.length > 1 && currField._id) {
 
 						var newLogicJump = {
@@ -2480,7 +2479,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						/*
 						 ** Analytics Functions
 						 */
-						
+
 						$scope.AverageTimeElapsed = (function(){
 							var totalTime = 0;
 							var numSubmissions = $scope.table.rows.length;
@@ -2681,15 +2680,15 @@ angular.module('forms').service('FormFields', [
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : 'Payment' 
+		    //     value : 'Payment'
 		    // },
 		    {
 		        name : 'statement',
-		        value : 'Statement' 
+		        value : 'Statement'
 		    }
 		];
 	}
-		
+
 ]);
 
 'use strict';
@@ -2702,7 +2701,7 @@ angular.module('forms').factory('Submissions', ['$resource',
 			formId: '@_id'
 		}, {
 			'query' : {
-				method: 'GET', 
+				method: 'GET',
 				isArray: true,
 			},
 			'update': {
@@ -2987,7 +2986,7 @@ angular.module('forms').directive('onFinishRender', ["$rootScope", "$timeout", f
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-			
+
             //Don't do anything if we don't have a ng-repeat on the current element
             if(!element.attr('ng-repeat') && !element.attr('data-ng-repeat')){
                 return;
