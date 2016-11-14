@@ -2256,7 +2256,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				$scope.addNewLogicJump = function (field_index) {
 					var form_fields = $scope.myform.form_fields;
 					var currField = form_fields[field_index];
-					console.log(currField);
 					if (form_fields.length > 1 && currField._id) {
 
 						var newLogicJump = {
