@@ -6,7 +6,6 @@ var passport = require("passport");
 var User = require('mongoose').model('User');
 
 module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next) {
-	debugger;
 	if (req.isAuthenticated()) {
 		return next();
 	} else {

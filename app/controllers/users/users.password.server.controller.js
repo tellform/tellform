@@ -31,7 +31,10 @@ exports.forgot = function(req, res, next) {
 		function(token, done) {
 			if (req.body.username) {
 				User.findOne({
-					username: req.body.username
+					$or: [
+						{'username': req.body.username},
+						{'email': req.body.username}
+					]
 				}, '-salt -password', function(err, user) {
 					if(err){
 						return res.status(500).send({
@@ -40,7 +43,7 @@ exports.forgot = function(req, res, next) {
 					}
 					if (!user) {
 						return res.status(400).send({
-							message: 'No account with that username has been found'
+							message: 'No account with that username or email has been found'
 						});
 					} else if (user.provider !== 'local') {
 						return res.status(400).send({
