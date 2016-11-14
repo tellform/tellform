@@ -1,4 +1,4 @@
-tmp/
+tmp/*
 npm-debug.*
 docs/Oscar_Credentials.md
 scripts/test_oscarhost.js
@@ -6,7 +6,8 @@ scripts/oscarhost/private/
 coverage/
 e2e_coverage/
 uploads/
-app/e2e_tests/screeshots/*
+app/e2e_tests/screeshots/
+.nyc_output/
 
 #Selenium
 app/e2e_tests/screenshots/*

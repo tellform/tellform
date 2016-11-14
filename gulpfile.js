@@ -40,7 +40,7 @@ gulp.task('test:webdriver-update', webdriverUpdate);
 
 /* 3. Start server */
 gulp.task('test:server', /*['test:instrument'],*/ function (cb) {
-	exec('NODE_ENV=test wnode server.js', {
+	exec('NODE_ENV=test node server.js', {
 			cwd: './tmp/'
 		},
 		function (err, stdout, stderr){

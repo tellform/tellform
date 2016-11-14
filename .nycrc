@@ -1,6 +1,8 @@
 {
   "reporter": [
     "lcov",
-    "text-summary"
-  ]
+    "text-summary",
+    "html"
+  ],
+  "report-dir": "./e2e_coverage"
 }

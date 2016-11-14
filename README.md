@@ -107,7 +107,22 @@ $ grunt test
 
 This will run both the server-side tests (located in the app/tests/ directory) and the client-side tests (located in the public/modules/*/tests/).
 
-To run the selenium e2e test (which are not executed in 'grunt test') run:
+####To run the e2e tests:
+
+
+1. Make sure NYC and protractor are installed globally
+'''
+$ npm install -g nyc
+$ npm instal -g protractor
+'''
+
+2. Start the selenium server
+
+'''
+$ webdriver-manager start
+'''
+
+3. Then run protractor (in a seperate console window)
 
 '''
 $ npm run test:e2e
@@ -125,7 +140,7 @@ And to run only the client tests, run the test:client task:
 $ grunt test:client
 ```
 
-Currently the live example uses heroku github deployments. The Docker file is out of date and does not work. If someone wishes to get it working feel free to submit a pull request.
+Currently the live example uses Digital Ocean and pm2 for deployments. The Docker file is out of date and does not work. If someone wishes to get it working feel free to submit a pull request.
 
 To calculate your total test coverage with Istanbul, run the coverage task
 ```bash

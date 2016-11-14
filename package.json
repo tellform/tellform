@@ -19,8 +19,9 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test && grunt coveralls",
-    "test:e2e": "./node_modules/.bin/gulp test:report-coverage",
-    "postinstall": "bower install --config.interactive=false; grunt build;",
+    "test:pree2e": "rm -r ./tmp/*; cp -R app ./tmp/app; cp -R public ./tmp/public; cp server.js ./tmp/server.js;  cp bower.json ./tmp/bower.json; cp .bowerrc ./tmp/.bowerrc; cp .env ./tmp/.env; cp -R node_modules ./tmp/node_modules; cp -R config ./tmp/config; cp protractor.conf.js ./tmp/protractor.conf.js; nyc instrument public/modules/ tmp/public/modules/;  nyc instrument public/form_modules/ tmp/public/form_modules/; nyc instrument public/application.js tmp/public/; nyc instrument public/config.js tmp/public/;",
+    "test:e2e": "cd tmp; protractor protractor.conf.js; cd ..; cp -R ./tmp/coverage ./e2e_coverage; nyc report;",
+	"postinstall": "bower install --config.interactive=false; grunt build;",
     "init": "node scripts/setup.js"
   },
   "dependencies": {
