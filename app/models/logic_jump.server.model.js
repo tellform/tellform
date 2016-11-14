@@ -32,7 +32,7 @@ var LogicJumpSchema = new Schema({
 			'field begins static',
 			'field !begins static',
 			'field ends static',
-			'field !ends static',
+			'field !ends static'
 		]
 	},
 	fieldA: {
