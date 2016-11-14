@@ -2,6 +2,29 @@
 
 <section class="overlay" ng-if="showCreateModal" ng-click="closeCreateModal()"></section>
 
+<!-- Modal Delete Dialog Template -->
+<script type="text/ng-template" id="deleteModalListForms.html">
+	<div class="modal-header">
+		<h2 class="modal-title hidden-md hidden-lg">{{ 'ARE_YOU_SURE' | translate }}</h2>
+		<h3 class="modal-title hidden-xs hidden-sm">{{ 'ARE_YOU_SURE' | translate }}</h3>
+	</div>
+	<div class="modal-body">
+		<div class="modal-body-alert">
+			{{ 'READ_WARNING' | translate }}
+		</div>
+		<p class="hidden-xs hidden-sm">
+			{{ 'DELETE_WARNING1' | translate }} <strong>{{content.currFormTitle}}</strong> {{ 'DELETE_WARNING2' | translate }}
+		</p>
+		<p>{{ 'DELETE_CONFIRM' | translate }}</p>
+	</div>
+	<div class="modal-footer">
+		<input type="text" style="width:100%" data-ng-model="deleteConfirm" class="input-block" autofocus required aria-label="Type in the name of the form to confirm that you want to delete this form.">
+		<button type="submit" ng-click="deleteForm" class="btn btn-block btn-danger" ng-disabled="content.currFormTitle != deleteConfirm">
+			{{ 'I_UNDERSTAND' | translate }}
+		</button>
+	</div>
+</script>
+
 <section data-ng-controller="ListFormsController as ctrl" data-ng-init="findAll()" class="container">
 	<br>
 	<div class="row">
@@ -59,14 +82,14 @@
 
 			<div class="row">
 				<span class="pull-right"> 
-					<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="removeForm($index)"></i>
+					<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="openDeleteModal($index)"></i>
 					<i style="cursor:pointer;" class="fa fa-files-o" ng-click="duplicateForm($index)"></i>
 				</span>
 			</div>
 
 			<div class="row">
 				<a data-ng-href="#!/forms/{{form._id}}/admin/create"
-					class="title-row col-xs-12">
+					class="title-row col-xs-12" style="color: white;">
 					<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
 				</a>
 				<div class="col-xs-12 responses-row">

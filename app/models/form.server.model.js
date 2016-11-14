@@ -182,7 +182,7 @@ var FormSchema = new Schema({
             }
 		},
 		font: String
-	}
+	},
 }, formSchemaOptions);
 
 /*

@@ -116,7 +116,6 @@ exports.listSubmissions = function(req, res) {
 exports.create = function(req, res) {
 
 	if(!req.body.form){
-		console.log(err);
 		return res.status(400).send({
 			message: "Invalid Input"
 		});
