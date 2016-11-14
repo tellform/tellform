@@ -5,6 +5,7 @@ scripts/oscarhost/private/
 coverage/
 uploads/
 app/e2e_tests/screeshots/*
+tmp
 
 # iOS / Apple
 # ===========

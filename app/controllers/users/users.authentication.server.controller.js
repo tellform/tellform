@@ -26,7 +26,7 @@ var config_nev = function () {
 	nev.configure({
 	    persistentUserModel: User,
 	    tempUserCollection: config.tempUserCollection,
-	    expirationTime: 1800,  // 30 minutes
+	    expirationTime: 86400,  // 24 hours
 
 	    verificationURL: config.baseUrl+'/#!/verify/${URL}',
 	    transportOptions: config.mailer.options,
