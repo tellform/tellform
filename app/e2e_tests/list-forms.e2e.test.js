@@ -17,7 +17,7 @@ describe('List Forms E2E Tests', function() {
 		Field = mongoose.model('Field'),
 		User = mongoose.model('User');
 
-	before(function (done) {
+	beforeAll(function (done) {
 
 		// Create a new user
 		user = new User({
@@ -52,7 +52,7 @@ describe('List Forms E2E Tests', function() {
 	});
 
 	describe('authenticated tests', function () {
-		before(function (done) {
+		beforeAll(function (done) {
 			browser.get('http://tellform.dev:3001').then(function(){
 
 				expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/signin');
@@ -75,19 +75,15 @@ describe('List Forms E2E Tests', function() {
 		});
 
 		it('should be able to duplicate a form', function (done) {
-
 			browser.findElement(By.css('.fa.fa-files-o')).click().then(function(){
-				var formNames = browser.getText('h4.list-group-item-heading');
-				expect(browser.findElement(By.css('h4.list-group-item-heading')).getText()).toEqual(['Form Title', 'Form Title']);
+				expect(browser.findElement(By.css('h4.list-group-item-heading')).getText()).toEqual('Form Title');
 				done();
 			});
-
-
 		});
 
 		it('should be able to open the admin panel of a form', function (done) {
 			browser.findElement(By.css('a.title-row.col-xs-12')).click().then(function(){
-				expect(browser.getUrl()).not.toBe('http://tellform.dev:3001/#!/forms');
+				expect(browser.getCurrentUrl()).not.toBe('http://tellform.dev:3001/#!/forms');
 				expect(browser.findElement(By.css('h1.hidden-sm.hidden-xs')).getText()).toBe('Form Title');
 				done();
 			});
@@ -96,14 +92,15 @@ describe('List Forms E2E Tests', function() {
 		it('should be able to create a new form', function (done) {
 
 			browser.findElement(By.css('.navbar-header a.navbar-brand')).click().then(function(){
-				expect(browser.getUrl()).toBe('http://tellform.dev:3001/#!/forms');
+				expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/forms');
 
 				browser.findElement(By.css('.form-item.create-new')).click().then(function() {
-					expect(browser.getUrl()).not.toBe('http://tellform.dev:3001/#!/forms');
+					expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/forms');
 
 					browser.findElement(By.css('.create-new .title-row input')).sendKeys('Example Form');
 
 					browser.findElement(By.css('.create-new .submit.row .btn')).click().then(function(){
+						expect(browser.getCurrentUrl()).not.toBe('http://tellform.dev:3001/#!/forms');
 						expect(browser.findElement(By.css('h1.hidden-sm.hidden-xs')).getText()).toBe('Example Form');
 						done();
 					});
@@ -113,7 +110,7 @@ describe('List Forms E2E Tests', function() {
 		});
 	});
 
-	after(function(done) {
+	afterAll(function(done) {
 		User.remove({}).exec(function(err){
 			if (err) return done(err);
 			done();
