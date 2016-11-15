@@ -111,22 +111,22 @@ This will run both the server-side tests (located in the app/tests/ directory) a
 
 
 1. Make sure NYC and protractor are installed globally
-'''
+```
 $ npm install -g nyc
 $ npm instal -g protractor
-'''
+```
 
 2. Start the selenium server
 
-'''
+```
 $ webdriver-manager start
-'''
+``
 
 3. Then run protractor (in a seperate console window)
 
-'''
+```
 $ npm run test:e2e
-'''
+```
 
 To execute only the server tests, run the test:server task:
 
