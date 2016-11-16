@@ -18,7 +18,7 @@ $ sudo brew services start dnsmasq
 $ sudo launchctl stop homebrew.mxcl.dnsmasq
 $ sudo launchctl start homebrew.mxcl.dnsmasq
 ```
-- For OS X to _resolve_ requests from `*.local` to **localhost** we need to add a _resolver_:
+- For OS X to _resolve_ requests from `*.dev` to **localhost** we need to add a _resolver_:
 ```
 $ sudo mkdir /etc/resolver
 $ sudo touch /etc/resolver/local
