@@ -90,7 +90,7 @@ describe('Form Routes Unit tests', function() {
 							.expect('Content-Type', /json/)
 							.expect(200)
 							.end(function(FormsGetErr, FormsGetRes) {
-								console.log('get forms');
+								//console.log('get forms');
                                 // Handle Form save error
 								if (FormsGetErr) return done(FormsGetErr);
 

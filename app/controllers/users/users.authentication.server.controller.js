@@ -340,7 +340,6 @@ exports.generateAPIKey = function(req, res) {
 				delete newUser.passwordHash;
 				delete newUser.provider;
 
-				console.log(newUser);
 				return res.json(newUser);
 			});
 

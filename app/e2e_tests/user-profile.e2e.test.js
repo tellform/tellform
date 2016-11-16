@@ -1,9 +1,8 @@
 /*
 "use strict";
  */
-/*
-var should = require('should'),
-	mongoose = require('mongoose');
+
+var mongoose = require('mongoose');
 
 var user, myForm;
 
@@ -19,137 +18,134 @@ describe('User Profile E2E Tests', function() {
 		Field = mongoose.model('Field'),
 		User = mongoose.model('User');
 
-	this.timeout(50000);
-	before(function async() {
-		return new Promise(function(resolve, reject) {
+	beforeAll(function(done) {
+		// Create a new user
+		user = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			email: credentials.email,
+			username: credentials.username,
+			password: credentials.password,
+			provider: 'local'
+		});
 
-			// Create a new user
-			user = new User({
-				firstName: 'Full',
-				lastName: 'Name',
-				email: credentials.email,
-				username: credentials.username,
-				password: credentials.password,
-				provider: 'local'
+		// Save a user to the test db and create new Form
+		user.save(function (err) {
+
+			if (err) return done(err);
+
+			myForm = new Form({
+				title: 'Form Title',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
+				]
 			});
 
-			// Save a user to the test db and create new Form
-			user.save(function (err) {
-				should.not.exist(err);
-				if (err) return reject(err);
-
-				myForm = new Form({
-					title: 'Form Title',
-					language: 'en',
-					admin: user.id,
-					form_fields: [
-						new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
-						new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
-						new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
-					]
-				});
-
-				myForm.save(function(err){
-					if (err) return reject(err);
-					resolve();
-				});
+			myForm.save(function(err){
+				if (err) done(err);
+				done();
 			});
 		});
 	});
 
 	describe('Edit Profile Tests', function () {
-		before(function () {
-			browser.url('http://tellform.dev:3001');
+		beforeAll(function (done) {
+			browser.get('http://tellform.dev:3001').then(function () {
 
-			browser.waitForExist('button.btn.btn-signup.btn-rounded.btn-block', 5000);
-			browser.getUrl().should.equal('http://tellform.dev:3001/#!/signin');
-			var title = browser.getTitle();
-			title.should.equal('TellForm Test');
+				expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/signin');
 
-			var siginButtonText = browser.getText('button.btn.btn-signup.btn-rounded.btn-block');
-			siginButtonText.should.equal('SIGN IN');
+				expect(browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).getText()).toBe('SIGN IN');
 
-			browser.findElement(By.css('input#username')).sendKeys(credentials.email);
-			browser.findElement(By.css('input#password')).sendKeys(credentials.password);
+				browser.findElement(By.css('input#username')).sendKeys(credentials.email);
+				browser.findElement(By.css('input#password')).sendKeys(credentials.password);
 
-			browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).click();
-
-			browser.waitForExist('h3.text-center.forms-list-title', 10000);
-			browser.getText('h3.text-center.forms-list-title').should.equal('My Forms');
-			browser.getUrl().should.equal('http://tellform.dev:3001/#!/forms');
-
+				browser.findElement(By.css('button.btn.btn-signup.btn-rounded.btn-block')).click().then(function () {
+					expect(browser.findElement(By.css('h3.text-center.forms-list-title')).getText()).toBe('My Forms');
+					expect(browser.getCurrentUrl()).toBe('http://tellform.dev:3001/#!/forms');
+					done();
+				});
+			});
 		});
 
 		it('should be able to display edit profile view', function (done) {
 			browser.findElement(By.css('li.dropdown')).click();
 			browser.findElement(By.css('a#edit-profile')).click().then(function(){
-				browser.findElement(By.css('.col-xs-offset-1.col-xs-10.text-center')).should.equal('Edit your profile');
+				expect(browser.findElement(By.css('.col-xs-offset-1.col-xs-10.text-center')).getText()).toBe('Edit your profile');
 				done();
 			});
 		});
 
-		it('should be able to save valid profile', function () {
+		it('should be able to save valid profile', function (done) {
+			browser.findElement(By.css('input#firstName')).clear();
+			browser.findElement(By.css('input#lastName')).clear();
+
 			browser.findElement(By.css('input#firstName')).sendKeys('Sample First Name');
 			browser.findElement(By.css('input#lastName')).sendKeys('Sample Last Name');
 
-			browser.click('button[type="submit"].btn.btn-signup');
-
-			browser.waitForVisible('.text-center.text-success', 5000);
-			browser.isVisible('.text-center.text-danger').should.be.false;
-
-			browser.getValue('input#firstName').should.equal('Sample First Name');
-			browser.getValue('input#lastName').should.equal('Sample Last Name');
+			browser.findElement(By.css('button[type="submit"]')).click().then(function(){
+				expect(browser.findElement(By.css('input#firstName')).getAttribute('value')).toBe('Sample First Name');
+				expect(browser.findElement(By.css('input#lastName')).getAttribute('value')).toBe('Sample Last Name');
+				done();
+			});
 		});
 
-		it('should be not be able to save invalid profile', function () {
-			browser.setValue('input#email', 'aoeuaoeu');
+		it('should be not be able to save invalid profile', function (done) {
 
-			browser.click('button[type="submit"].btn.btn-signup');
+			browser.findElement(By.css('input#email')).clear();
+			browser.findElement(By.css('input#email')).sendKeys('aoeuaoeu');
 
-			browser.waitForVisible('input#email.ng-invalid', 5000);
+			browser.findElement(By.css('button[type="submit"].btn.btn-signup')).click().then(function(){
+				expect(element.all(By.css('input#email.ng-invalid')).count()).toEqual(1);
+				done();
+			});
 		});
 	});
 
 	describe('Change Password Tests', function () {
 
-		it('should be able to display change password view', function () {
-			browser.click('li.dropdown');
-			browser.click('a#edit-password');
-			browser.waitForExist('h3.col-md-12.text-center', 5000);
-			browser.getText('h3.col-md-12.text-center').should.equal('Change your password');
+		it('should be able to display change password view', function (done) {
+			browser.findElement(By.css('li.dropdown')).click().then(function(){
+				browser.findElement(By.css('a#edit-password')).click().then(function(){
+					expect(element.all(By.css('h3.col-md-12.text-center')).getText()).toEqual(['Change your password']);
+					done();
+				});
+			});
 		});
 
-		it('should not be able to change password if current password is incorrect', function () {
+		it('should not be able to change password if current password is incorrect', function (done) {
 			browser.findElement(By.css('input#currentPassword')).sendKeys('aoeuoeu');
 
 			browser.findElement(By.css('input#newPassword')).sendKeys('nttntntn');
 			browser.findElement(By.css('input#verifyPassword')).sendKeys('nttntntn');
 
-			browser.findElement(By.css('button[type="submit"]')).click();
-
-			browser.waitForExist('.text-center.text-danger', 5000);
-			browser.getText('.text-center.text-danger').should.equal('Current password is incorrect');
+			browser.findElement(By.css('button[type="submit"]')).click().then(function(){
+				expect(browser.findElement(By.css('.text-center.text-danger')).getText()).toBe('Current password is incorrect');
+				done();
+			});
 		});
 
-		it('should not be able to change password if current password is correct', function () {
+		it('should not be able to change password if current password is correct', function (done) {
 			browser.findElement(By.css('input#currentPassword')).sendKeys(credentials.password);
 
 			browser.findElement(By.css('input#newPassword')).sendKeys('nttntntn');
 			browser.findElement(By.css('input#verifyPassword')).sendKeys('nttntntn');
 
-			browser.findElement(By.css('button[type="submit"]')).click();
-
-			browser.waitForExist('.text-center.text-success', 5000);
-		});
-	});
-
-	after(function async() {
-		return new Promise(function(resolve, reject) {
-			User.remove({}).exec(function(err){
-				if (err) return reject(err);
-				resolve();
+			browser.findElement(By.css('button[type="submit"]')).click().then(function(){
+				expect(element.all(By.css('.text-center.text-success')).count()).toEqual(1);
+				done();
 			});
 		});
 	});
+
+	afterAll(function(done) {
+		User.remove({}).exec(function(err){
+			if (err) return done(err);
+			done();
+		});
+	});
 });
-*/
+

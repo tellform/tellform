@@ -76,7 +76,8 @@ describe('List Forms E2E Tests', function() {
 
 		it('should be able to duplicate a form', function (done) {
 			browser.findElement(By.css('.fa.fa-files-o')).click().then(function(){
-				expect(browser.findElement(By.css('h4.list-group-item-heading')).getText()).toEqual('Form Title');
+				browser
+				expect(element.all(By.css('h4.list-group-item-heading')).count()).toEqual(2);
 				done();
 			});
 		});
