@@ -21,15 +21,15 @@ var minBowerFiles = function(type){
  * Load app configurations
  */
  var exports = _.extend(
-		require('./env/all'),
-		require('./env/' + process.env.NODE_ENV) || {}
+		require(__dirname+'/env/all'),
+		require(__dirname+'/env/' + process.env.NODE_ENV) || {}
 	);
 
 //Load keys from api_keys.js if file exists
-if( fs.existsSync('./config/env/api_keys.js') ){
+if( fs.existsSync(__dirname+'/config/env/api_keys.js') ){
 	module.exports = _.extend(
 		exports,
-		require('./env/api_keys')
+		require(__dirname+'/env/api_keys')
 	);
 } else {
 	module.exports = exports;

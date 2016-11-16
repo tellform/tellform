@@ -6,12 +6,11 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	crypto = require('crypto'),
-	config = require('../../config/config'),
+	config = require(__dirname+'/../../config/config'),
 	fs = require('fs-extra'),
 	mUtilities = require('mongoose-utilities'),
 	path = require('path'),
 	querystring = require('querystring'),
-	config = require('../../config/config'),
 	nodemailer = require('nodemailer');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);

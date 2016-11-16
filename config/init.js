@@ -14,7 +14,7 @@ module.exports = function() {
 	 * Before we begin, lets set the environment variable
 	 * We'll Look for a valid NODE_ENV variable and if one cannot be found load the development NODE_ENV
 	 */
-	var environmentFiles = glob.sync('./config/env/' + process.env.NODE_ENV + '.js');
+	var environmentFiles = glob.sync(__dirname+'/env/' + process.env.NODE_ENV + '.js');
 
 	if (!environmentFiles.length) {
 		if (process.env.NODE_ENV) {

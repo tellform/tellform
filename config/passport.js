@@ -6,7 +6,7 @@
 var passport = require('passport'),
 	User = require('mongoose').model('User'),
 	path = require('path'),
-	config = require('./config');
+	config = require(__dirname+'/config');
 
 /**
  * Module init function.
@@ -27,7 +27,7 @@ module.exports = function() {
 	});
 
 	// Initialize strategies
-	config.getGlobbedFiles('./config/strategies/**/*.js').forEach(function(strategy) {
+	config.getGlobbedFiles(__dirname+'/strategies/**/*.js').forEach(function(strategy) {
 		require(path.resolve(strategy))();
 	});
 };

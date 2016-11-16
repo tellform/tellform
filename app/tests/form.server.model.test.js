@@ -9,7 +9,7 @@ var should = require('should'),
 	Form = mongoose.model('Form'),
 	Field = mongoose.model('Field'),
 	_ = require('lodash'),
-	config = require('../../config/config'),
+	config = require(__dirname+'/../../config/config'),
 	FormSubmission = mongoose.model('FormSubmission');
 
 /**

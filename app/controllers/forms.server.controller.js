@@ -4,10 +4,10 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	errorHandler = require('./errors.server.controller'),
+	errorHandler = require(__dirname+'/errors.server.controller'),
 	Form = mongoose.model('Form'),
 	FormSubmission = mongoose.model('FormSubmission'),
-	config = require('../../config/config'),
+	config = require(__dirname+'/../../config/config'),
 	diff = require('deep-diff'),
 	_ = require('lodash');
 
@@ -152,7 +152,6 @@ exports.read = function(req, res) {
 
 
 		var newForm = req.form.toJSON();
-		console.log(newForm.analytics);
 		newForm.submissions = _submissions;
 
 		if (req.userId) {

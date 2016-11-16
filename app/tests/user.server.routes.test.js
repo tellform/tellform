@@ -2,12 +2,12 @@
 
 var should = require('should'),
 	_ = require('lodash'),
-	app = require('../../server'),
+	app = require(__dirname+'/../../server'),
 	request = require('supertest'),
 	Session = require('supertest-session'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
-	config = require('../../config/config'),
+	config = require(__dirname+'/../../config/config'),
 	tmpUser = mongoose.model(config.tempUserCollection),
 	url = require('url');
 
@@ -42,9 +42,9 @@ describe('User CRUD tests', function() {
 			password: credentials.password,
 			provider: 'local'
 		};
-        
+
         //Initialize Session
-        userSession = Session(app);        
+        userSession = Session(app);
 	});
 
 	describe(' > Create, Verify and Activate a User > ', function() {
@@ -57,7 +57,7 @@ describe('User CRUD tests', function() {
 				.end(function(FormSaveErr, FormSaveRes) {
 					// Handle error
 					should.not.exist(FormSaveErr);
-                    
+
                     tmpUser.findOne({username: _User.username}, function (err, user) {
                         should.not.exist(err);
                         should.exist(user);
@@ -67,15 +67,15 @@ describe('User CRUD tests', function() {
                         _User.firstName.should.equal(user.firstName);
                         _User.lastName.should.equal(user.lastName);
                         activateToken = user.GENERATED_VERIFYING_URL;
-                        console.log('activateToken: '+activateToken);
-                        
+                        //console.log('activateToken: '+activateToken);
+
                         userSession.get('/auth/verify/'+activateToken)
                             .expect(200)
                             .end(function(VerifyErr, VerifyRes) {
                                 // Handle error
                                 if (VerifyErr) return done(VerifyErr);
                                 (VerifyRes.text).should.equal('User successfully verified');
-                                
+
                                 userSession.post('/auth/signin')
                                     .send(credentials)
                                     .expect('Content-Type', /json/)

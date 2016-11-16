@@ -4,12 +4,12 @@
  * Module dependencies.
  */
 var passport = require('passport'),
-	config = require('../../config/config'),
-	auth = require('../../config/passport_helpers');
+	config = require(__dirname+'/../../config/config'),
+	auth = require(__dirname+'/../../config/passport_helpers');
 
 module.exports = function(app) {
 	// User Routes
-	var users = require('../../app/controllers/users.server.controller');
+	var users = require(__dirname+'/../../app/controllers/users.server.controller');
 
 	// Setting up the users profile api
 	app.route('/users/me').get(auth.isAuthenticatedOrApiKey, users.getUser);

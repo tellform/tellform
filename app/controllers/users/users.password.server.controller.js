@@ -4,11 +4,11 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
-	errorHandler = require('../errors.server.controller'),
+	errorHandler = require(__dirname+'/../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
 	User = mongoose.model('User'),
-	config = require('../../../config/config'),
+	config = require(__dirname+'/../../../config/config'),
 	nodemailer = require('nodemailer'),
 	async = require('async'),
 	crypto = require('crypto');

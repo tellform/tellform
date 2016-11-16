@@ -2,7 +2,7 @@
 
 var should = require('should'),
 	lodash = require('lodash'),
-	app = require('../../server'),
+	app = require(__dirname+'/../../server'),
 	request = require('supertest'),
 	Session = require('supertest-session'),
 	mongoose = require('mongoose'),
@@ -90,7 +90,7 @@ describe('Form Routes Unit tests', function() {
 							.expect('Content-Type', /json/)
 							.expect(200)
 							.end(function(FormsGetErr, FormsGetRes) {
-								console.log('get forms');
+								//console.log('get forms');
                                 // Handle Form save error
 								if (FormsGetErr) return done(FormsGetErr);
 

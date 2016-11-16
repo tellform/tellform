@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../../config/config');
+var config = require(__dirname+'/../../config/config');
 
 /**cd
  * Module dependencies.

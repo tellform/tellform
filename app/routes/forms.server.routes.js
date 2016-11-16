@@ -3,11 +3,11 @@
 /**
  * Module dependencies.
  */
-var users = require('../../app/controllers/users.server.controller'),
-	forms = require('../../app/controllers/forms.server.controller'),
+var users = require(__dirname+'/../../app/controllers/users.server.controller'),
+	forms = require(__dirname+'/../../app/controllers/forms.server.controller'),
 	multer = require('multer'),
-	config = require('../../config/config'),
-	auth = require('../../config/passport_helpers');
+	config = require(__dirname+'/../../config/config'),
+	auth = require(__dirname+'/../../config/passport_helpers');
 
 // Setting the pdf upload route and folder
 var storage = multer.diskStorage({

@@ -3,8 +3,8 @@
 /**
  * Module dependencies.
  */
-var forms = require('../../app/controllers/forms.server.controller'),
-	core = require('../../app/controllers/core.server.controller');
+var forms = require(__dirname+'/../../app/controllers/forms.server.controller'),
+	core = require(__dirname+'/../../app/controllers/core.server.controller');
 
 module.exports = function(app) {
 	// Core routing

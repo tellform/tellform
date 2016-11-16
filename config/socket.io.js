@@ -1,7 +1,7 @@
 'use strict';
 
 // Load the module dependencies
-var config = require('./config'),
+var config = require(__dirname+'/config'),
 	path = require('path'),
 	http = require('http'),
 	socketio = require('socket.io');
@@ -16,7 +16,7 @@ module.exports = function (app, db) {
 
 	// Add an event listener to the 'connection' event
 	io.on('connection', function (socket) {
-		config.getGlobbedFiles('./app/sockets/**.js').forEach(function (socketConfiguration) {
+		config.getGlobbedFiles(__dirname+'/../app/sockets/**.js').forEach(function (socketConfiguration) {
 			require(path.resolve(socketConfiguration))(io, socket);
 		});
 	});

@@ -5,8 +5,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	config = require('../../config/config'),
-	errorHandler = require('../controllers/errors.server.controller'),
+	config = require(__dirname+'/../../config/config'),
+	errorHandler = require(__dirname+'/../controllers/errors.server.controller'),
 	Form = mongoose.model('Form');
 
 // Create the chat configuration
@@ -39,8 +39,8 @@ module.exports = function (io, socket) {
 					console.log(err);
 					throw new Error(errorHandler.getErrorMessage(err));
 				}
-				console.log('\n\nVisitor data successfully added!');
-				console.log(newVisitor);
+				//console.log('\n\nVisitor data successfully added!');
+				//console.log(newVisitor);
 
 				delete visitorsData[socket.id];
 
@@ -61,7 +61,7 @@ module.exports = function (io, socket) {
 
 				if (data.isSubmitted) {
 					saveVisitorData(data, function () {
-						console.log('\n\n user submitted form');
+						//console.log('\n\n user submitted form');
 
 						socket.disconnect(0);
 					});

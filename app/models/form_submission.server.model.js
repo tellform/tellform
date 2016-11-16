@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	freegeoip = require('node-freegeoip'),
 	_ = require('lodash'),
-	config = require('../../config/config'),
+	config = require(__dirname+'/../../config/config'),
 	path = require('path'),
 	fs = require('fs-extra'),
 	mUtilities = require('mongoose-utilities'),
@@ -21,7 +21,6 @@ function formFieldsSetter(form_fields) {
 		form_fields[i].submissionId = form_fields[i]._id;
 		form_fields[i]._id = new mongoose.mongo.ObjectID();
 	}
-	console.log(form_fields)
 	return form_fields;
 }
 
@@ -103,7 +102,6 @@ FormSubmissionSchema.path('form_fields', {
 			form_fields[i].submissionId = form_fields[i]._id;
 			form_fields[i]._id = new mongoose.mongo.ObjectID();
 		}
-		console.log(form_fields);
 		return form_fields;
 	}
 });

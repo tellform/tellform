@@ -10,7 +10,7 @@ var should = require('should'),
 	Field = mongoose.model('Field'),
 	_ = require('lodash'),
 	async = require('async'),
-	config = require('../../config/config'),
+	config = require(__dirname+'/../../config/config'),
 	FormSubmission = mongoose.model('FormSubmission');
 
 var exampleDemo = {

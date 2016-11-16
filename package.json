@@ -19,9 +19,9 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test && grunt coveralls",
-    "test:pree2e": "rm -r ./tmp/*; cp -R app ./tmp/app; cp -R public ./tmp/public; cp server.js ./tmp/server.js;  cp bower.json ./tmp/bower.json; cp .bowerrc ./tmp/.bowerrc; cp .env ./tmp/.env; cp -R node_modules ./tmp/node_modules; cp -R config ./tmp/config; cp protractor.conf.js ./tmp/protractor.conf.js; nyc instrument public/modules/ tmp/public/modules/;  nyc instrument public/form_modules/ tmp/public/form_modules/; nyc instrument public/application.js tmp/public/; nyc instrument public/config.js tmp/public/;",
+    "test:pree2e": "rm -r ./tmp/*; mkdir ./tmp/coverage; cp -R app ./tmp/app; cp -R public ./tmp/public; cp server.js ./tmp/server.js;  cp bower.json ./tmp/bower.json; cp .bowerrc ./tmp/.bowerrc; cp .env ./tmp/.env; cp -R node_modules ./tmp/node_modules; cp -R config ./tmp/config; cp protractor.conf.js ./tmp/protractor.conf.js; nyc instrument public/modules/ tmp/public/modules/;  nyc instrument public/form_modules/ tmp/public/form_modules/; nyc instrument public/application.js > tmp/public/application.js; nyc instrument public/config.js > tmp/public/config.js;",
     "test:e2e": "cd tmp; protractor protractor.conf.js; cd ..; cp -R ./tmp/coverage ./e2e_coverage; nyc report;",
-	"postinstall": "bower install --config.interactive=false; grunt build;",
+    "postinstall": "bower install --config.interactive=false; grunt build;",
     "init": "node scripts/setup.js"
   },
   "dependencies": {
@@ -106,7 +106,13 @@
     "cross-spawn": "^5.0.0",
     "del": "^2.2.2",
     "glob": "^7.0.3",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-istanbul": "^0.7.1",
     "grunt-mocha-test": "~0.12.1",
+    "grunt-protractor-coverage": "^0.2.17",
+    "grunt-protractor-runner": "^4.0.0",
+    "grunt-timer": "^0.6.0",
     "istanbul": "^0.4.0",
     "jasmine-core": "^2.4.1",
     "karma": "~0.13.14",
