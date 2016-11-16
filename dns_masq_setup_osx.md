@@ -7,7 +7,7 @@ $ cp /usr/local/opt/dnsmasq/dnsmasq.conf.example /usr/local/etc/dnsmasq.conf
 ```
 - edit `/usr/local/etc/dnsmasq.conf`
 ```
-address=/local/127.0.0.1
+address=/dev/127.0.0.1
 ```
 - start **dnsmasq**
 ```
@@ -18,12 +18,12 @@ $ sudo brew services start dnsmasq
 $ sudo launchctl stop homebrew.mxcl.dnsmasq
 $ sudo launchctl start homebrew.mxcl.dnsmasq
 ```
-- For OS X to _resolve_ requests from `*.local` to **localhost** we need to add a _resolver_:
+- For OS X to _resolve_ requests from `*.dev` to **localhost** we need to add a _resolver_:
 ```
 $ sudo mkdir /etc/resolver
-$ sudo touch /etc/resolver/local
+$ sudo touch /etc/resolver/dev
 ```
-- edit `/etc/resolver/local`
+- edit `/etc/resolver/dev`
 ```
 nameserver 127.0.0.1
 ```
