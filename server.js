@@ -10,8 +10,8 @@ if ((process.env.NODE_ENV || 'development') === 'development') {
 
 require('events').EventEmitter.prototype._maxListeners = 0;
 
-var init = require('./config/init')(),
-	config = require('./config/config'),
+var init = require(__dirname+'/config/init')(),
+	config = require(__dirname+'/config/config'),
 	mongoose = require('mongoose'),
 	chalk = require('chalk');
 

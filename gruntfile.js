@@ -5,6 +5,12 @@ var spawn = require('child_process').spawn;
 module.exports = function(grunt) {
 	require('jit-grunt')(grunt);
 
+	grunt.loadNpmTasks('grunt-istanbul');
+	grunt.loadNpmTasks('grunt-protractor-runner');
+
+	//Time Grunt Tasks
+	var timer = require("grunt-timer");
+
 	// Unified Watch Object
 	var watchFiles = {
 
@@ -12,7 +18,7 @@ module.exports = function(grunt) {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 
 		clientViews: ['public/modules/**/views/**/*.html', '!public/modules/**/demo/**/*.html', '!public/modules/**/dist/**/*.html', '!public/modules/**/node_modules/**/*.html'],
-		clientJS: ['public/js/*.js', 'public/form_modules/**/*.js', 'public/modules/**/*.js', '!public/modules/**/gruntfile.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js'],
+		clientJS: ['public/*.js', 'public/form_modules/**/*.js', 'public/modules/**/*.js', '!public/modules/**/gruntfile.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css', 'public/form_modules/**/*.css', '!public/modules/**/demo/**/*.css', '!public/modules/**/dist/**/*.css', '!public/modules/**/node_modules/**/*.css'],
 
 		serverTests: ['app/tests/**/*.js'],
@@ -23,6 +29,62 @@ module.exports = function(grunt) {
 
 	// Project Configuration
 	grunt.initConfig({
+
+		clean: {
+			e2e: ['tmp']
+		},
+		copy: {
+			e2e: {
+				files: [
+					// includes files within path
+					{expand: true, src: ['app/**'], dest: 'tmp/'},
+
+					{expand: true, src: ['*.js', '.bowerrc', '*.json', '.env'], dest: 'tmp/'},
+
+					// includes files within path and its sub-directories
+					{expand: true, src: ['public/**'], dest: 'tmp/'},
+
+					{expand: true, src: ['config/**'], dest: 'tmp/'},
+
+					{expand: true, src: ['node_modules/**'], dest: 'tmp/'}
+				]
+			}
+		},
+		instrument: {
+			files: watchFiles.clientJS,
+			options: {
+				basePath: 'tmp/'
+			}
+		},
+		protractor: {
+			options: {
+				configFile: "protractor.conf.js", // Default config file
+				keepAlive: true, // If false, the grunt process stops when the test fails.
+				noColor: false // If true, protractor will not use colors in its output.
+			},
+			coverage: {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
+				options: {
+					configFile: "./tmp/protractor.conf.js", // Target-specific config file
+					args: {
+						cwd: './tmp'
+					} // Target-specific arguments
+				}
+			},
+			nocoverage: {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
+				options: {
+					configFile: "protractor.conf.js" // Target-specific config file
+				}
+			}
+		},
+		makeReport: {
+			src: 'e2e_coverage/*.json',
+			options: {
+				type: 'lcov',
+				dir: 'e2e_coverage/reports',
+				print: 'detail'
+			}
+		},
+
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
 			serverViews: {
@@ -181,18 +243,6 @@ module.exports = function(grunt) {
 			    singleRun: true
              }
 		},
-		/*protractor: {
-			options: {
-				configFile: 'protractor.conf.js',
-				keepAlive: true,
-				noColor: false
-			},
-			e2e: {
-				options: {
-					args: {}
-				}
-			}
-	    },*/
 	    mocha_istanbul: {
             coverage: {
                 src: watchFiles.allTests, // a folder works nicely
@@ -227,39 +277,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        istanbul_check_coverage: {
-          default: {
-            options: {
-              coverageFolder: 'coverage*', // will check both coverage folders and merge the coverage results
-              check: {
-                lines: 80,
-                statements: 80
-              }
-            }
-          }
-        },
-		protractor_coverage: {
-			options: {
-				keepAlive: true,
-				noColor: false,
-				coverageDir: 'e2e_coverage',
-				args: {
-					baseUrl: 'http://tellform.dev:3001'
-				}
-			},
-			local: {
-				options: {
-					configFile: 'protractor.conf.js'
-				}
-			}
-		},
-		instrument: {
-			files: 'app/e2e_tests/**.js',
-			options: {
-				lazy: true,
-				basePath: "instrumented"
-			}
-		},
 		html2js: {
 			options: {
 				base: 'public',
@@ -340,6 +357,9 @@ module.exports = function(grunt) {
 
 	//Setup task(s).
 	grunt.registerTask('setup', ['execute']);
+
+	grunt.registerTask('test:e2e', ['protractor:nocoverage']);
+	grunt.registerTask('coverage:e2e', ['clean:e2e', 'copy:e2e', 'instrument', 'protractor:coverage', 'makeReport']);
 
 	// Test task(s).
 	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);

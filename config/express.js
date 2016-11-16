@@ -8,7 +8,7 @@ var fs = require('fs-extra'),
 	https = require('https'),
 	express = require('express'),
 	morgan = require('morgan'),
-	logger = require('./logger'),
+	logger = require(__dirname+'/logger'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
 	compression = require('compression'),
@@ -20,7 +20,7 @@ var fs = require('fs-extra'),
 	raven = require('raven'),
 	MongoStore = require('connect-mongo')(session),
 	flash = require('connect-flash'),
-	config = require('./config'),
+	config = require(__dirname+'/config'),
 	consolidate = require('consolidate'),
 	path = require('path'),
 	device = require('express-device'),
@@ -34,7 +34,7 @@ var mongoose = require('mongoose');
  */
 var configureSocketIO = function (app, db) {
 	// Load the Socket.io configuration
-	var server = require('./socket.io')(app, db);
+	var server = require(__dirname+'/socket.io')(app, db);
 
 	// Return server object
 	return server;
@@ -46,7 +46,7 @@ module.exports = function(db) {
 	var url = require('url');
 
 	// Globbing model files
-	config.getGlobbedFiles('app/models/**/*.js').forEach(function(modelPath) {
+	config.getGlobbedFiles(__dirname+'/../app/models/**/*.js').forEach(function(modelPath) {
 		require(path.resolve(modelPath));
 	});
 
@@ -175,7 +175,7 @@ module.exports = function(db) {
 
 	// Set views path and view engine
 	app.set('view engine', 'server.view.html');
-	app.set('views', './app/views');
+	app.set('views', __dirname+'/../app/views');
 
 	// Enable logger (morgan)
 	app.use(morgan(logger.getLogFormat(), logger.getLogOptions()));
@@ -204,8 +204,7 @@ module.exports = function(db) {
 
 
 	// Setting the app router and static folder
-	app.use('/static', express.static(path.resolve('./public')));
-	app.use('/uploads', express.static(path.resolve('./uploads')));
+	app.use('/static', express.static(path.resolve(__dirname+'/../public')));
 
 	// CookieParser should be above session
 	app.use(cookieParser());
@@ -235,7 +234,7 @@ module.exports = function(db) {
 	app.use(flash());
 
 	// Globbing routing files
-	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+	config.getGlobbedFiles(__dirname+'/../app/routes/**/*.js').forEach(function(routePath) {
 		require(path.resolve(routePath))(app);
 	});
 
@@ -293,8 +292,8 @@ module.exports = function(db) {
 
 	if (process.env.NODE_ENV === 'secure') {
 		// Load SSL key and certificate
-		var privateKey = fs.readFileSync('./config/sslcerts/key.pem', 'utf8');
-		var certificate = fs.readFileSync('./config/sslcerts/cert.pem', 'utf8');
+		var privateKey = fs.readFileSync(__dirname+'/sslcerts/key.pem', 'utf8');
+		var certificate = fs.readFileSync(__dirname+'/sslcerts/cert.pem', 'utf8');
 
 		// Create HTTPS Server
 		var httpsServer = https.createServer({
@@ -305,7 +304,6 @@ module.exports = function(db) {
 		// Return HTTPS server instance
 		return httpsServer;
 	}
-
 
 	app = configureSocketIO(app, db);
 

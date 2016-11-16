@@ -2,7 +2,7 @@
 
 var should = require('should'),
 	_ = require('lodash'),
-	app = require('../../server'),
+	app = require(__dirname+'/../../server'),
 	request = require('supertest'),
 	Session = require('supertest-session'),
 	mongoose = require('mongoose'),

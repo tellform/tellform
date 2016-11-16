@@ -5,8 +5,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	config = require('../../config/config'),
-	errorHandler = require('../controllers/errors.server.controller'),
+	config = require(__dirname+'/../../config/config'),
+	errorHandler = require(__dirname+'/../controllers/errors.server.controller'),
 	Form = mongoose.model('Form');
 
 // Create the chat configuration

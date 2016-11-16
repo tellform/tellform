@@ -3,16 +3,18 @@
 /**
  * Module dependencies.
  */
+var dirname = __dirname;
+
 var _ = require('lodash'),
-	errorHandler = require('../errors.server.controller'),
+	errorHandler = require(__dirname+'/../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
 	async = require('async'),
-	config = require('../../../config/config'),
+	config = require(__dirname+'/../../../config/config'),
 	nodemailer = require('nodemailer'),
 	crypto = require('crypto'),
 	User = mongoose.model('User'),
-	tokgen = require("../../libs/tokenGenerator");
+	tokgen = require(__dirname+"/../../libs/tokenGenerator");
 
 
 var nev = require('email-verification')(mongoose);
@@ -20,7 +22,7 @@ var nev = require('email-verification')(mongoose);
 // NEV setup and configuration ================
 var config_nev = function () {
 
-	var User = require('../../models/user.server.model');
+	var User = require(__dirname+'/../../models/user.server.model');
 
 
 	nev.configure({

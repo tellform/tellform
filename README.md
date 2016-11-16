@@ -107,12 +107,9 @@ $ grunt test
 
 This will run both the server-side tests (located in the app/tests/ directory) and the client-side tests (located in the public/modules/*/tests/).
 
-####To run the e2e tests:
-
-
-1. Make sure NYC and protractor are installed globally
+####To run the e2e tests **with coverage**:
+1. Make sure protractor is installed globally
 '''
-$ npm install -g nyc
 $ npm instal -g protractor
 '''
 
@@ -122,19 +119,31 @@ $ npm instal -g protractor
 $ webdriver-manager start
 '''
 
-3. Then run protractor (in a seperate console window)
+3. Then run  (in a seperate console window)
 
 '''
-$ npm run test:e2e
+$ grunt coverage:e2e
 '''
 
-To execute only the server tests, run the test:server task:
+####To run the e2e tests **without coverage**:
+1. Make sure protractor is installed globally
+'''
+$ npm install -g protractor
+'''
+
+2. Then run  (in a separate console window)
+
+'''
+$ grunt test:e2e
+'''
+
+####To execute only the server tests, run the test:server task:
 
 ```
 $ grunt test:server
 ```
 
-And to run only the client tests, run the test:client task:
+####And to run only the client tests, run the test:client task:
 
 ```
 $ grunt test:client

@@ -2,12 +2,12 @@
 
 var should = require('should'),
 	_ = require('lodash'),
-	app = require('../../server'),
+	app = require(__dirname+'/../../server'),
 	request = require('supertest'),
 	Session = require('supertest-session'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
-	config = require('../../config/config'),
+	config = require(__dirname+'/../../config/config'),
 	tmpUser = mongoose.model(config.tempUserCollection),
 	url = require('url');
 
