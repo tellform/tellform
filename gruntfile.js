@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-protractor-runner');
 
 	//Time Grunt Tasks
-	var timer = require("grunt-timer");
+	require('time-grunt')(grunt);
 
 	// Unified Watch Object
 	var watchFiles = {
