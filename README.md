@@ -107,19 +107,11 @@ $ grunt test
 
 This will run both the server-side tests (located in the app/tests/ directory) and the client-side tests (located in the public/modules/*/tests/).
 
-<<<<<<< HEAD
-####To run the e2e tests:
 
-
-1. Make sure NYC and protractor are installed globally
-```
-$ npm install -g nyc
-=======
 ####To run the e2e tests **with coverage**:
 1. Make sure protractor is installed globally
 '''
->>>>>>> c2ea4024d0467a9408c90e23b4113247fa4f83af
-$ npm instal -g protractor
+$ npm install -g protractor
 ```
 
 2. Start the selenium server
@@ -142,15 +134,9 @@ $ npm install -g protractor
 
 2. Then run  (in a separate console window)
 
-<<<<<<< HEAD
-```
-$ npm run test:e2e
-```
-=======
 '''
 $ grunt test:e2e
 '''
->>>>>>> c2ea4024d0467a9408c90e23b4113247fa4f83af
 
 ####To execute only the server tests, run the test:server task:
 
