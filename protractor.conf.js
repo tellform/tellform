@@ -12,7 +12,7 @@ exports.config = {
 	}],
 	framework: 'jasmine',
 	seleniumAddress: 'http://localhost:4444/wd/hub',
-	specs: ['./app/e2e_tests/create-form.e2e.test.js'],
+	specs: ['./app/e2e_tests/*.js'],
 	beforeLaunch: './server.js',
 
 	jasmineNodeOpts: {
