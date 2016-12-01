@@ -97,6 +97,18 @@ Set ```NODE_ENV=production``` in .env file
 
 Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
 
+##Deploying with Docker
+
+To deploy with docker, first install docker [https://docs.docker.com/engine/installation/](here). 
+
+Then run these commands
+
+```
+$ docker build -t tellform .
+$ docker run -p 27017:27017 -d --name some-mongo mongo
+$ docker run -p 6379:6379 -d --name some-redis redis
+$ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db tellform 
+```
 
 ## Testing Your Application
 You can run the full test suite included with MEAN.JS with the test task:

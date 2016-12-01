@@ -7,68 +7,65 @@
 # Compose:
 # docker-compose up -d
 
-FROM       ubuntu:latest
+FROM ubuntu:latest
 MAINTAINER David Baldwynn <team@tellform.com>
 
-WORKDIR ~/Documents/tellform
+# 80 = HTTP, 443 = HTTPS, 3000 = TellForm server, 35729 =livereload, 8080 = node-inspector, 6379 = redis, 27017 = mongo
+EXPOSE 80 443 3000 35729 8080
+
+# Set development environment as default
+ENV NODE_ENV development
 
 # Install Utilities
-RUN apt-get update -q
-RUN apt-get install -yqq python wget aptitude htop vim git traceroute dnsutils curl ssh sudo tree tcpdump nano psmisc gcc make build-essential libfreetype6 libfontconfig libkrb5-dev
+RUN apt-get update -q  \
+ && apt-get install -yqq \
+ curl \
+ git \
+ gcc \
+ make \
+ build-essential \
+ libkrb5-dev \
+ python \
+ sudo \
+ apt-utils \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV python /usr/bin/python
-
-# Install gem sass for grunt-contrib-sass
-RUN apt-get install -y ruby
-RUN gem install sass
-
-# Install NodeJS
-RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-RUN sudo apt-get install -yq nodejs
+# Install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+RUN sudo apt-get install -yq nodejs \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install MEAN.JS Prerequisites
-RUN npm install --quiet -g grunt-cli gulp bower mocha karma-cli pm2
+RUN npm install --quiet -g grunt bower mocha karma-cli pm2 && npm cache clean
 
-RUN mkdir /opt/mean.js
-RUN mkdir -p /opt/mean.js/public/lib
-WORKDIR /opt/mean.js
+RUN mkdir -p /opt/tellform/public/lib
+WORKDIR /opt/tellform
 
 # Copies the local package.json file to the container
 # and utilities docker container cache to not needing to rebuild
 # and install node_modules/ everytime we build the docker, but only
 # when the local package.json file changes.
-# Install npm packages
-ADD package.json /opt/mean.js/package.json
-RUN npm install --quiet
+# Add npm package.json
+COPY package.json /opt/tellform/package.json
+#RUN npm install --quiet && npm cache clean
+RUN npm install --production
+RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
 
-# Install bower packages
-ADD bower.json /opt/mean.js/bower.json
-ADD .bowerrc /opt/mean.js/.bowerrc
-RUN bower install --quiet --allow-root --config.interactive=false
+# Add bower.json
+COPY bower.json /opt/tellform/bower.json
+COPY .bowerrc /opt/tellform/.bowerrc
+#RUN bower install --quiet --allow-root --config.interactive=false
 
-# Share local directory on the docker container
-ADD . /opt/mean.js
+COPY ./app /opt/tellform/app
+COPY ./public /opt/tellform/public
+COPY ./config /opt/tellform/config
+COPY ./gruntfile.js /opt/tellform/gruntfile.js
+COPY ./server.js /opt/tellform/server.js
+COPY ./.env /opt/tellform/.env
 
-# Machine cleanup
-RUN npm cache clean
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Set development environment as default
-ENV NODE_ENV development
 
-# Ports generic
-EXPOSE 80:80
-EXPOSE 443:443
-
-# Port 3000 for MEAN.JS server
-EXPOSE 3000:3000
-
-# Port 5858 for node debug
-EXPOSE 5858:5858
-
-# Port 35729 for livereload
-EXPOSE 35729:35729
-
-# Run MEAN.JS server
-CMD ["npm", "start"]
-
+# Run TellForm server
+CMD npm start

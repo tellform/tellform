@@ -1,9 +1,0 @@
-
-version: '2'
-services:
-  web:
-    environment:
-      - MAILER_SERVICE_PROVIDER=Gmail
-      - MAILER_EMAIL_ID=test@example.com
-      - MAILER_PASSWORD=password
-      - HOST=http://localhost:3000
