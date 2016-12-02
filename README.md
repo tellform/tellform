@@ -104,10 +104,9 @@ To deploy with docker, first install docker [https://docs.docker.com/engine/inst
 Then run these commands
 
 ```
-$ docker build -t tellform .
 $ docker run -p 27017:27017 -d --name some-mongo mongo
 $ docker run -p 6379:6379 -d --name some-redis redis
-$ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db tellform 
+$ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db tellform/development
 ```
 
 ## Testing Your Application

@@ -30,18 +30,5 @@
             "NODE_ENV": "production",
             "BASE_URL": "admin.tellform.com"
         }
-    },
-    "kmc" : {
-      "user" : "polydaic",
-      "host" : "159.203.2.71",
-      "ref"  : "origin/master",
-      "repo" : "git@github.com:whitef0x0/tellform.git",
-      "path" : "/opt/deploy",
-      "post-deploy" : "npm install && bower install && pm2 startOrRestart ecosystem.json --env production",
-        "env" : {
-                "NODE_ENV": "production",
-                "BASE_URL": "kmc.tellform.com"
-            }
-        }
     }
 }
