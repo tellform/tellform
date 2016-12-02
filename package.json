@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "grunt",
-    "test": "grunt test && grunt coveralls",
+    "test": "grunt test",
     "postinstall": "bower install --config.interactive=false; grunt build;",
     "init": "node scripts/setup.js"
   },
