@@ -81,6 +81,8 @@ BASE_URL=yourdomain.com
 DSN_KEY=yourPrivateRavenKey
 ```
 
+##___Important Note___: Make sure your BASE_URL matches the domain of your server or TellForm won't work!
+
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
 Edit the `env` config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
@@ -176,6 +178,8 @@ $ grunt coverage:client
 [Reddit Posts](https://www.reddit.com/domain/tellform.com/)
 
 [Betapage](https://betapage.co/startup/tellform)
+
+[Opensource.com](http://opensource.com/article/17/2/tools-online-surveys-polls)
 
 ## Credits
 Inspired/built off the great work of the [MeanJS team](https://github.com/meanjs/) and [Typeform](http://typeform.com)
