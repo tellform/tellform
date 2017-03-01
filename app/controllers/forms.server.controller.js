@@ -180,8 +180,9 @@ exports.update = function(req, res) {
 		});
 	} else {
 		//Unless we have 'admin' privileges, updating form admin is disabled
-		if(req.user.roles.indexOf('admin') === -1) delete req.body.form.admin;
-
+		if(req.body.form && req.user.roles.indexOf('admin') === -1) {
+			req.body.form.admin = null;
+		}
 		//Do this so we can create duplicate fields
 		var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
 		for(var i=0; i<req.body.form.form_fields.length; i++){

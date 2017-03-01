@@ -205,10 +205,11 @@ FormSchema.virtual('analytics.fields').get(function () {
 	var visitors = this.analytics.visitors;
 	var that = this;
 
+	if(this.form_fields.length == 0) return null;
 	for(var i=0; i<this.form_fields.length; i++){
 		var field = this.form_fields[i];
 
-		if(!field.deletePreserved){
+		if(field && !field.deletePreserved){
 
 			var dropoffViews =  _.reduce(visitors, function(sum, visitorObj){
 
@@ -231,7 +232,7 @@ FormSchema.virtual('analytics.fields').get(function () {
 					}
 					return sum;
 				}, 0);
-			}else {
+			} else {
 				continueViews =  _.reduce(visitors, function(sum, visitorObj){
 					if(visitorObj.lastActiveField+'' === field._id+'' && visitorObj.isSubmitted){
 						return sum + 1;
@@ -293,116 +294,112 @@ FormSchema.pre('save', function (next) {
 				return cb(err);
 			} else {
 				_original = original;
-				//console.log('_original');
-				//console.log(_original);
 				return cb(null);
 			}
 		});
-	}, function(cb) {
-		return cb(null);
 	},
-		function(cb) {
-			var hasIds = true;
-			for(var i=0; i<that.form_fields.length; i++){
-				if(!that.form_fields.hasOwnProperty('_id')){
-					hasIds = false;
-					break;
-				}
+	function(cb) {
+		var hasIds = true;
+		for(var i=0; i<that.form_fields.length; i++){
+			if(!that.form_fields.hasOwnProperty('_id')){
+				hasIds = false;
+				break;
 			}
-			if(that.isModified('form_fields') && that.form_fields && _original && hasIds){
+		}
+		if(that.isModified('form_fields') && that.form_fields && _original && hasIds){
 
-				var old_form_fields = _original.form_fields,
-					new_ids = _.map(_.pluck(that.form_fields, 'id'), function(id){ return ''+id;}),
-					old_ids = _.map(_.pluck(old_form_fields, 'id'), function(id){ return ''+id;}),
-					deletedIds = getDeletedIndexes(old_ids, new_ids);
+			var old_form_fields = _original.form_fields,
+				new_ids = _.map(_.pluck(that.form_fields, 'id'), function(id){ return ''+id;}),
+				old_ids = _.map(_.pluck(old_form_fields, 'id'), function(id){ return ''+id;}),
+				deletedIds = getDeletedIndexes(old_ids, new_ids);
 
-				//Preserve fields that have at least one submission
-				if( deletedIds.length > 0 ){
+			//Preserve fields that have at least one submission
+			if( deletedIds.length > 0 ){
 
-					var modifiedSubmissions = [];
+				var modifiedSubmissions = [];
 
-					async.forEachOfSeries(deletedIds,
-						function (deletedIdIndex, key, cb_id) {
+				async.forEachOfSeries(deletedIds,
+					function (deletedIdIndex, key, cb_id) {
 
-							var deleted_id = old_ids[deletedIdIndex];
+						var deleted_id = old_ids[deletedIdIndex];
 
-							//Find FormSubmissions that contain field with _id equal to 'deleted_id'
-							FormSubmission.
-							find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {submissionId: deleted_id} }  }).
-							exec(function(err, submissions){
-								if(err) {
-									console.error(err);
-									return cb_id(err);
-								} else {
-									//Delete field if there are no submission(s) found
-									if (submissions.length) {
-										//Add submissions
-										modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
-									}
-
-									return cb_id(null);
-								}
-							});
-						},
-						function (err) {
-							if(err){
-								console.error(err.message);
-								return cb(err);
+						//Find FormSubmissions that contain field with _id equal to 'deleted_id'
+						FormSubmission.
+						find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {submissionId: deleted_id} }  }).
+						exec(function(err, submissions){
+							if(err) {
+								console.error(err);
+								return cb_id(err);
 							} else {
+								//Delete field if there are no submission(s) found
+								if (submissions.length) {
+									//Add submissions
+									modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
+								}
 
-								//Iterate through all submissions with modified form_fields
-								async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
-
-									//Iterate through ids of deleted fields
-									for (var i = 0; i < deletedIds.length; i++) {
-
-										var index = _.findIndex(submission.form_fields, function (field) {
-											var tmp_id = field._id + '';
-											return tmp_id === old_ids[deletedIds[i]];
-										});
-
-										var deletedField = submission.form_fields[index];
-
-										//Hide field if it exists
-										if (deletedField) {
-											// console.log('deletedField\n-------\n\n');
-											// console.log(deletedField);
-											//Delete old form_field
-											submission.form_fields.splice(index, 1);
-
-											deletedField.deletePreserved = true;
-
-											//Move deleted form_field to start
-											submission.form_fields.unshift(deletedField);
-											that.form_fields.unshift(deletedField);
-											// console.log('form.form_fields\n--------\n\n');
-											// console.log(that.form_fields);
-										}
-									}
-
-									submission.save(function (err) {
-										if (err) return callback(err);
-										else return callback(null);
-									});
-								}, function (err) {
-									if (err) {
-										console.error(err.message);
-										return cb(err);
-									}
-									else return cb();
-								});
+								return cb_id(null);
 							}
+						});
+					},
+					function (err) {
+						if(err){
+							console.error(err.message);
+							return cb(err);
+						} else {
+
+							//Iterate through all submissions with modified form_fields
+							async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
+
+								//Iterate through ids of deleted fields
+								for (var i = 0; i < deletedIds.length; i++) {
+
+									var index = _.findIndex(submission.form_fields, function (field) {
+										var tmp_id = field._id + '';
+										return tmp_id === old_ids[deletedIds[i]];
+									});
+
+									var deletedField = submission.form_fields[index];
+
+									//Hide field if it exists
+									if (deletedField) {
+										// console.log('deletedField\n-------\n\n');
+										// console.log(deletedField);
+										//Delete old form_field
+										submission.form_fields.splice(index, 1);
+
+										deletedField.deletePreserved = true;
+
+										//Move deleted form_field to start
+										submission.form_fields.unshift(deletedField);
+										that.form_fields.unshift(deletedField);
+										// console.log('form.form_fields\n--------\n\n');
+										// console.log(that.form_fields);
+									}
+								}
+
+								submission.save(function (err) {
+									if (err) return callback(err);
+									else return callback(null);
+								});
+							}, function (err) {
+								if (err) {
+									console.error(err.message);
+									return cb(err);
+								}
+								else return cb();
+							});
 						}
-					);
-				}
-				else return cb(null);
+					}
+				);
 			}
 			else return cb(null);
-		}],
-		function(err, results){
-			if (err) return next(err);
-			return next();
-		});
+		}
+		else return cb(null);
+	}],
+	function(err, results){
+		if (err) return next(err);
+		return next();
+	});
 });
 
 mongoose.model('Form', FormSchema);
