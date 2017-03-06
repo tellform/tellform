@@ -190,9 +190,10 @@ module.exports = function(db) {
 
 	// Request body parsing middleware should be above methodOverride
 	app.use(bodyParser.urlencoded({
-		extended: true
+		extended: true,
+		limit: '100mb'
 	}));
-	app.use(bodyParser.json());
+	app.use(bodyParser.json({ limit: '100mb' }));
 	app.use(methodOverride());
 
 	// Use helmet to secure Express headers

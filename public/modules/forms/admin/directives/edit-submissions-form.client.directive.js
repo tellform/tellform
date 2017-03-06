@@ -44,14 +44,11 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						/*
 						 ** Analytics Functions
 						 */
-						
+
 						$scope.AverageTimeElapsed = (function(){
 							var totalTime = 0;
 							var numSubmissions = $scope.table.rows.length;
-
-							console.log("AverageTimeElapsed");
-							console.log($scope.table.rows);
-
+							
 							for(var i=0; i<$scope.table.rows.length; i++){
 								totalTime += $scope.table.rows[i].timeElapsed;
 							}

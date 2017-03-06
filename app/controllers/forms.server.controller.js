@@ -47,16 +47,21 @@ exports.deleteSubmissions = function(req, res) {
  */
 exports.createSubmission = function(req, res) {
 	var form = req.form;
+	
+	var timeElapsed = 0;
 
+	if(typeof req.body.timeElapsed == "number"){
+		timeElapsed = req.body.timeElapsed;
+	}
 	var submission = new FormSubmission({
 		admin: req.form.admin._id,
 		form: req.form._id,
 		title: req.form.title,
 		form_fields: req.body.form_fields,
-		timeElapsed: req.body.timeElapsed,
+		timeElapsed: timeElapsed,
 		percentageComplete: req.body.percentageComplete
 	});
-
+	
 	//Save submitter's IP Address
 	if(req.headers['x-forwarded-for'] || req.connection.remoteAddress){
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -116,7 +121,6 @@ exports.listSubmissions = function(req, res) {
 exports.create = function(req, res) {
 
 	if(!req.body.form){
-		console.log(err);
 		return res.status(400).send({
 			message: "Invalid Input"
 		});

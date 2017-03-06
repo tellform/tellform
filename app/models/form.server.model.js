@@ -182,7 +182,7 @@ var FormSchema = new Schema({
             }
 		},
 		font: String
-	}
+	},
 }, formSchemaOptions);
 
 /*
@@ -282,6 +282,29 @@ function getDeletedIndexes(needle, haystack){
 	}
 	return deletedIndexes;
 }
+
+
+FormSchema.pre('save', function (next) {
+	var that = this;
+	switch(this.language){
+		case 'spanish':
+			this.language = 'es';
+			break;
+		case 'french':
+			this.language = 'fr';
+			break;
+		case 'italian':
+			this.language = 'it';
+			break;
+		case 'german':
+			this.language = 'de';
+			break;
+		default:
+			this.language = 'en';
+			break;
+	}
+	next();
+});
 
 FormSchema.pre('save', function (next) {
 	var that = this;

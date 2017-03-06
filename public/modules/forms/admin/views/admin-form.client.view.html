@@ -3,7 +3,7 @@
 <div class="container" cg-busy="{promise:updatePromise,templateUrl:'modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}"></div>
 
 <section class="admin-form">
-
+	
 	<!-- Modal Delete Dialog Template -->
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
@@ -15,14 +15,12 @@
 				{{ 'READ_WARNING' | translate }}
 			</div>
        		<p class="hidden-xs hidden-sm">
-       		 	{{ 'DELETE_WARNING1' | translate }}<strong>{{myform.title}}</strong> {{ 'DELETE_WARNING2' | translate }}
+       		 	{{ 'DELETE_WARNING1' | translate }} <strong>{{myform.title}}</strong> {{ 'DELETE_WARNING2' | translate }}
        		</p>
             <p>{{ 'DELETE_CONFIRM' | translate }}</p>
         </div>
         <div class="modal-footer">
-	        <p>
-				<input type="text" data-ng-model="deleteConfirm" class="input-block" autofocus required aria-label="Type in the name of the form to confirm that you want to delete this form.">
-			</p>
+			<input type="text" style="width:100%" data-ng-model="deleteConfirm" class="input-block" autofocus required aria-label="Type in the name of the form to confirm that you want to delete this form.">
             <button type="submit" ng-click="removeCurrentForm()" class="btn btn-block btn-danger" ng-disabled="myform.title != deleteConfirm">
             	{{ 'I_UNDERSTAND' | translate }}
             </button>
@@ -53,11 +51,6 @@
 						</span>
 						<span ng-hide="myform.isLive">{{ 'PREVIEW' | translate }}</span>
 					</span>
-					<!--<span class="hidden-xs hidden-md hidden-lg">-->
-						<!--View-->
-						<!--<span ng-if="myform.isLive">{{ 'LIVE' | translate }}</span>-->
-						<!--<span ng-if="!myform.isLive">{{ 'PREVIEW' | translate }}</span>-->
-					<!--</span>-->
 					<i class="status-light status-light-on fa fa-dot-circle-o" ng-if="myform.isLive"></i>
 					<i class="status-light status-light-off fa fa-dot-circle-o" ng-if="!myform.isLive"></i>
 				</a>

@@ -1,8 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal) {
 
         $scope = $rootScope;
         $scope.forms = {};
@@ -12,6 +12,41 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 			regExp: /[@!#$%^&*()\-+={}\[\]|\\/'";:`.,~№?<>]+/i,
 			test: function(val) {
 				return !this.regExp.test(val);
+			}
+		};
+
+		/*
+		 ** DeleteModal Functions
+		 */
+		$scope.openDeleteModal = function(index){
+			$scope.deleteModal = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'deleteModalListForms.html',
+				controller:  function($uibModalInstance, items, $scope) {
+					$scope.content = items;
+
+					$scope.cancel = $scope.cancelDeleteModal;
+
+					$scope.deleteForm = function() {
+						$scope.removeForm(items.formIndex);
+
+					}
+				},
+				resolve: {
+					items: function() {
+						return {
+							currFormTitle: $scope.myforms[index].title,
+							formIndex: index
+						};
+					}
+				}
+			});
+		};
+
+
+		$scope.cancelDeleteModal = function(){
+			if($scope.deleteModal){
+				$scope.deleteModal.dismiss('cancel');
 			}
 		};
 
@@ -86,6 +121,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 .success(function(data, status, headers){
                     //console.log('form deleted successfully');
                     $scope.myforms.splice(form_index, 1);
+					$scope.cancelDeleteModal();
                 }).error(function(error){
                     //console.log('ERROR: Form could not be deleted.');
                     console.error(error);

@@ -1,8 +1,10 @@
+.vagrant
 npm-debug.*
 docs/Oscar_Credentials.md
 scripts/test_oscarhost.js
 scripts/oscarhost/private/
 coverage/
+e2e_coverage/
 uploads/
 app/e2e_tests/screeshots/*
 tmp

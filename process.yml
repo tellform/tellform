@@ -1,0 +1,5 @@
+apps:
+  - script   : 'server.js'
+    name     : 'TellForm'
+    exec_mode: 'cluster'
+    instances: 4

@@ -219,10 +219,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		//Admin Form View
 		ARE_YOU_SURE: 'Are you ABSOLUTELY sure?',
 		READ_WARNING: 'Unexpected bad things will happen if you don’t read this!',
-		DELETE_WARNING1: 'This action CANNOT be undone.This will permanently delete the',
-		DELETE_WARNING2: 'form, form submissions and remove all associated pdfs.',
-		DELETE_CONFIRM: 'Please type in the name of the form to confirm',
-		I_UNDERSTAND: 'I understand the consequences, delete this form',
+		DELETE_WARNING1: 'This action CANNOT be undone. This will permanently delete the "',
+		DELETE_WARNING2: '" form and remove all associated form submissions.',
+		DELETE_CONFIRM: 'Please type in the name of the form to confirm.',
+		I_UNDERSTAND: 'I understand the consequences, delete this form.',
 		DELETE_FORM_SM: 'Delete',
 		DELETE_FORM_MD: 'Delete Form',
 		DELETE: 'Delete',
@@ -1862,8 +1862,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http) {
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal) {
 
         $scope = $rootScope;
         $scope.forms = {};
@@ -1873,6 +1873,41 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 			regExp: /[@!#$%^&*()\-+={}\[\]|\\/'";:`.,~№?<>]+/i,
 			test: function(val) {
 				return !this.regExp.test(val);
+			}
+		};
+
+		/*
+		 ** DeleteModal Functions
+		 */
+		$scope.openDeleteModal = function(index){
+			$scope.deleteModal = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'deleteModalListForms.html',
+				controller:  ["$uibModalInstance", "items", "$scope", function($uibModalInstance, items, $scope) {
+					$scope.content = items;
+
+					$scope.cancel = $scope.cancelDeleteModal;
+
+					$scope.deleteForm = function() {
+						$scope.removeForm(items.formIndex);
+
+					}
+				}],
+				resolve: {
+					items: function() {
+						return {
+							currFormTitle: $scope.myforms[index].title,
+							formIndex: index
+						};
+					}
+				}
+			});
+		};
+
+
+		$scope.cancelDeleteModal = function(){
+			if($scope.deleteModal){
+				$scope.deleteModal.dismiss('cancel');
 			}
 		};
 
@@ -1947,6 +1982,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 .success(function(data, status, headers){
                     //console.log('form deleted successfully');
                     $scope.myforms.splice(form_index, 1);
+					$scope.cancelDeleteModal();
                 }).error(function(error){
                     //console.log('ERROR: Form could not be deleted.');
                     console.error(error);
@@ -2479,14 +2515,11 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						/*
 						 ** Analytics Functions
 						 */
-						
+
 						$scope.AverageTimeElapsed = (function(){
 							var totalTime = 0;
 							var numSubmissions = $scope.table.rows.length;
-
-							console.log("AverageTimeElapsed");
-							console.log($scope.table.rows);
-
+							
 							for(var i=0; i<$scope.table.rows.length; i++){
 								totalTime += $scope.table.rows[i].timeElapsed;
 							}

@@ -81,6 +81,8 @@ BASE_URL=yourdomain.com
 DSN_KEY=yourPrivateRavenKey
 ```
 
+##___Important Note___: Make sure your BASE_URL matches the domain of your server or TellForm won't work!
+
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
 Edit the `env` config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
@@ -97,6 +99,17 @@ Set ```NODE_ENV=production``` in .env file
 
 Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
 
+##Deploying with Docker
+
+To deploy with docker, first install docker [https://docs.docker.com/engine/installation/](here). 
+
+Then run these commands
+
+```
+$ docker run -p 27017:27017 -d --name some-mongo mongo
+$ docker run -p 6379:6379 -d --name some-redis redis
+$ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db tellform/development
+```
 
 ## Testing Your Application
 You can run the full test suite included with MEAN.JS with the test task:
@@ -165,6 +178,8 @@ $ grunt coverage:client
 [Reddit Posts](https://www.reddit.com/domain/tellform.com/)
 
 [Betapage](https://betapage.co/startup/tellform)
+
+[Opensource.com](http://opensource.com/article/17/2/tools-online-surveys-polls)
 
 ## Credits
 Inspired/built off the great work of the [MeanJS team](https://github.com/meanjs/) and [Typeform](http://typeform.com)
