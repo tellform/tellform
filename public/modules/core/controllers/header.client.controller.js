@@ -7,7 +7,6 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-		console.log(Auth.ensureHasCurrentUser(User));
 	    $scope.authentication = $rootScope.authentication = Auth;
 
 		$rootScope.languages = $scope.languages = ['en', 'fr', 'es', 'it', 'de'];

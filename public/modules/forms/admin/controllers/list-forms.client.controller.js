@@ -28,8 +28,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 					$scope.cancel = $scope.cancelDeleteModal;
 
 					$scope.deleteForm = function() {
-						$scope.removeForm(items.formIndex);
-
+						$scope.$parent.removeForm(items.formIndex);
 					}
 				},
 				resolve: {
