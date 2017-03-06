@@ -53,6 +53,8 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 								totalTime += $scope.table.rows[i].timeElapsed;
 							}
 
+							if(numSubmissions == 0) return 0;
+
 							return totalTime/numSubmissions;
 						})();
 
@@ -83,14 +85,18 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 									stats[deviceType].visits++;
 
 									stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
-									stats[deviceType].average_time = stats[deviceType].total_time / stats[deviceType].visits || 0;
+
+									stats[deviceType].average_time = stats[deviceType].total_time / stats[deviceType].visits;
+									if(!stats[deviceType].average_time) stats[deviceType].average_time = 0;
 
 									if (visitor.isSubmitted) stats[deviceType].responses++;
 
-									stats[deviceType].completion = stats[deviceType].response / stats[deviceType].visits || 0;
+									stats[deviceType].completion = stats[deviceType].responses / stats[deviceType].visits;
+									if(!stats[deviceType].completion) stats[deviceType].completion = 0;
 								}
 								console.log("stats");
-								console.log(stats);
+
+
 							}
 
 							return stats;
@@ -133,9 +139,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 /*
                 * Form Submission Methods
                 */
-
-                //Fetch and display submissions of Form
-
+				
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
 

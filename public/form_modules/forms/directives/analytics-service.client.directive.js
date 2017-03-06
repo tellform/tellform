@@ -24,7 +24,7 @@
 				deviceType = 'tablet';
 			} else if (md.mobile()) {
 			 	deviceType = 'mobile';
-			} else if (window.screenX != 0) {
+			} else if (!md.is('bot')) {
 				deviceType = 'desktop';
 			}
 
