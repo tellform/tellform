@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	freegeoip = require('node-freegeoip'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
@@ -53,9 +52,6 @@ var FormSubmissionSchema = new Schema({
 		Country: {
 			type: String
 		},
-		Region: {
-			type: String
-		},
 		City: {
 			type: String
 		}
@@ -69,29 +65,11 @@ var FormSubmissionSchema = new Schema({
 		}
 	},
 
-	pdfFilePath: {
-		type: Schema.Types.Mixed
-	},
-	pdf: {
-		type: Schema.Types.Mixed
-	},
-	fdfData: {
-		type: Schema.Types.Mixed
-	},
-
 	timeElapsed: {
 		type: Number
 	},
 	percentageComplete: {
 		type: Number
-	},
-
-
-	hasPlugins: {
-		oscarhost: {
-			type: Boolean,
-			default: false
-		}
 	}
 });
 
@@ -110,21 +88,6 @@ FormSubmissionSchema.plugin(mUtilities.timestamp, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
 	useVirtual: false
-});
-
-//Check for IP Address of submitting person
-FormSubmissionSchema.pre('save', function (next) {
-	var self = this;
-	if (this.ipAddr) {
-		if (this.isModified('ipAddr') || !this.geoLocation) {
-			freegeoip.getLocation(this.ipAddr, function (err, location) {
-				if (err) return next(err);
-				self.geoLocation = location;
-				return next();
-			});
-		}
-	}
-	return next();
 });
 
 module.exports = FormSubmissionSchema;

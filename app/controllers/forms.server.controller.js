@@ -54,26 +54,19 @@ exports.createSubmission = function(req, res) {
 		timeElapsed = req.body.timeElapsed;
 	}
 	var submission = new FormSubmission({
-		admin: req.form.admin._id,
-		form: req.form._id,
-		title: req.form.title,
+		admin: form.admin._id,
+		form: form._id,
+		title: form.title,
 		form_fields: req.body.form_fields,
 		timeElapsed: timeElapsed,
-		percentageComplete: req.body.percentageComplete
+		percentageComplete: req.body.percentageComplete,
+		ipAddr: req.body.ipAddr,
+		geoLocation: req.body.geoLocation,
+		device: req.body.device
 	});
 
-	//Save submitter's IP Address
-	if(req.headers['x-forwarded-for'] || req.connection.remoteAddress){
-		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-		if(ip && process.env.NODE_ENV !== 'development') submission.ipAddr = ip;
-	}
-
-	if (req.device) {
-		submission.device = req.device;
-	}
 
 	submission.save(function(err, submission){
-
 		if (err) {
 			console.error(err.message);
 			return res.status(500).send({
@@ -185,6 +178,7 @@ exports.readForRender = function(req, res) {
 	delete newForm.submissions;
 	delete newForm.analytics;
 	delete newForm.isLive;
+	delete newForm.admin;
 
 	return res.json(newForm);
 };
@@ -234,7 +228,6 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 	var form = req.form;
-	// console.log('deleting form');
 	Form.remove({_id: form._id}, function(err) {
 		if (err) {
 			res.status(400).send({

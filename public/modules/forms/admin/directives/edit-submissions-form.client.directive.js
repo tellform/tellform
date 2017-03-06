@@ -39,7 +39,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						}
 
 						$scope.table.rows = submissions;
-
+						console.log(submissions);
 
 						/*
 						 ** Analytics Functions
@@ -55,7 +55,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 							if(numSubmissions == 0) return 0;
 
-							return totalTime/numSubmissions;
+							return (totalTime/numSubmissions).toFixed(0);
 						})();
 
 						$scope.DeviceStatistics = (function(){
@@ -86,12 +86,12 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 									stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
 
-									stats[deviceType].average_time = stats[deviceType].total_time / stats[deviceType].visits;
+									stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].visits).toFixed(0);
 									if(!stats[deviceType].average_time) stats[deviceType].average_time = 0;
 
 									if (visitor.isSubmitted) stats[deviceType].responses++;
 
-									stats[deviceType].completion = stats[deviceType].responses / stats[deviceType].visits;
+									stats[deviceType].completion = (stats[deviceType].responses / stats[deviceType].visits).toFixed(0);
 									if(!stats[deviceType].completion) stats[deviceType].completion = 0;
 								}
 								console.log("stats");
@@ -139,7 +139,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 /*
                 * Form Submission Methods
                 */
-				
+
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
 

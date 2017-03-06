@@ -260,8 +260,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						});
 					}
 
-					console.log("time elapsed: ");
-					console.log(TimeCounter.getTimeElapsed());
 					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
                 };
 
@@ -310,6 +308,39 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
 				};
 
+				var getDeviceData = function(){
+					var md = new MobileDetect(window.navigator.userAgent);
+					var deviceType = 'other';
+
+					if (md.tablet()){
+						deviceType = 'tablet';
+					} else if (md.mobile()) {
+						deviceType = 'mobile';
+					} else if (!md.is('bot')) {
+						deviceType = 'desktop';
+					}
+
+					return {
+						type: deviceType,
+						name: window.navigator.platform
+					}
+				};
+
+				var getIpAndGeo = function(){
+					//Get Ip Address and GeoLocation Data
+					$.ajaxSetup( { "async": false } );
+					var geoData = $.getJSON('//freegeoip.net/json/').responseJSON;
+					$.ajaxSetup( { "async": true } );
+
+					return {
+						ipAddr: geoData.ip,
+						geoLocation: {
+							City: geoData.city,
+							Country: geoData.country_name
+						}
+					}
+				};
+
 				$rootScope.submitForm = $scope.submitForm = function() {
 
 					var _timeElapsed = TimeCounter.stopClock();
@@ -317,8 +348,15 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 					var form = _.cloneDeep($scope.myform);
 
-					form.timeElapsed = _timeElapsed;
+					var deviceData = getDeviceData();
+					form.device = deviceData;
 
+					var geoData = getIpAndGeo();
+					form.ipAddr = geoData.ipAddr;
+					form.geoLocation = geoData.geoLocation;
+					console.log(geoData);
+
+					form.timeElapsed = _timeElapsed;
 					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
 					delete form.visible_form_fields;
 
@@ -331,7 +369,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
 							.success(function (data, status, headers) {
-								console.log($scope.myform.form_fields[0]);
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);

@@ -41,7 +41,11 @@
 				timeElapsed: timeElapsed,
 				language: lang,
 				deviceType: deviceType,
-				ipAddr: geoData.ip
+				ipAddr: geoData.ip,
+				geoLocation: {
+					city: geoData.city,
+					country: geoData.country_name
+				}
 			};
 			Socket.emit('form-visitor-data', visitorData);
 		}

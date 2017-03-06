@@ -56,15 +56,5 @@ module.exports = {
 				pass: process.env.MAILER_PASSWORD || ''
 			}
 		}
-	},
-	oscarhost: {
-		baseUrl: process.env.OSCARHOST_BASEURL || 'OSCARHOST_BASEURL',
-		settings: {
-			updateType: process.env.OSCARHOST_UPDATETYPE || 'OSCARHOST_UPDATETYPE',
-		},
-		auth:{
-			user: process.env.OSCARHOST_USER || 'process.env.OSCARHOST_USER',
-			pass: process.env.OSCARHOST_PASS || 'process.env.OSCARHOST_PASS',
-		}
 	}
 };

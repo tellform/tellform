@@ -134,7 +134,7 @@
 					{{ 'COMPLETION_RATE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.desktop.completion}}
+					{{DeviceStatistics.desktop.completion}}%
 				</div>
 			</div>
 
@@ -143,7 +143,7 @@
 					{{ 'COMPLETION_RATE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.tablet.completion}}
+					{{DeviceStatistics.tablet.completion}}%
 				</div>
 			</div>
 
@@ -152,7 +152,7 @@
 					{{ 'COMPLETION_RATE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.phone.completion}}
+					{{DeviceStatistics.phone.completion}}%
 				</div>
 			</div>
 
@@ -161,7 +161,7 @@
 					{{ 'COMPLETION_RATE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.other.completion}}
+					{{DeviceStatistics.other.completion}}%
 				</div>
 			</div>
 		</div>
@@ -245,17 +245,17 @@
 			</button>
 		</div>
 		<div class="col-xs-2 col-xs-offset-4 text-right">	
-			<button class="btn btn-default" ng-click="exportSubmissions('xml')">
+			<button class="btn btn-gray" ng-click="exportSubmissions('xml')">
 				<small>{{ 'EXPORT_TO_EXCEL' | translate }}</small>
 			</button>
 		</div>
 		<div class="col-md-2 text-right">	
-			<button class="btn btn-default" ng-click="exportSubmissions('csv')">
+			<button class="btn btn-gray" ng-click="exportSubmissions('csv')">
 				<small>{{ 'EXPORT_TO_CSV' | translate }}</small>
 			</button>
 		</div>
 		<div class="col-md-2 text-right">	
-			<button class="btn btn-default" ng-click="exportSubmissions('json')">
+			<button class="btn btn-gray" ng-click="exportSubmissions('json')">
 				<small>{{ 'EXPORT_TO_JSON' | translate }}</small>
 			</button>
 		</div>
@@ -290,9 +290,6 @@
 					<th>
 						{{ 'DATE_SUBMITTED' | translate }} (UTC)
 					</th>
-					<th ng-if="myform.autofillPDFs">
-						{{ 'GENERATED_PDF' | translate }}
-					</th>
 				</tr>
 			</thead>
 
@@ -318,16 +315,13 @@
 						{{row.device.name}}, {{row.device.type}}
 					</td>
 					<td>
-						{{row.geoLocation.city}}, {{row.geoLocation.country_name}}
+						{{row.geoLocation.City}}, {{row.geoLocation.Country}}
 					</td>
 					<td>
 						{{row.ipAddr}}
 					</td>
 					<td>
 						{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}
-					</td>
-					<td ng-if="row.pdf">
-						<a href="{{row.pdfFilePath}}" download="{{row.pdf.name}}" target="_self">{{ 'GENERATED_PDF' | translate }}</a>
 					</td>
 				</tr>
 			</tbody>
