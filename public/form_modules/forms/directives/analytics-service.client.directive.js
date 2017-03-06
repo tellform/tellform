@@ -31,7 +31,7 @@
 			$.ajaxSetup( { "async": false } );
 			var geoData = $.getJSON('//freegeoip.net/json/').responseJSON;
 			$.ajaxSetup( { "async": true } );
-			
+
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,
@@ -43,7 +43,6 @@
 				deviceType: deviceType,
 				ipAddr: geoData.ip
 			};
-			console.log('sent form-visitor-data');
 			Socket.emit('form-visitor-data', visitorData);
 		}
 

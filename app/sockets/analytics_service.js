@@ -29,7 +29,6 @@ module.exports = function (io, socket) {
 				ipAddr: data.ipAddr,
 				deviceType: data.deviceType
 			};
-			console.log(newVisitor);
 
 			form.analytics.visitors.push(newVisitor);
 
@@ -55,16 +54,15 @@ module.exports = function (io, socket) {
 
 		// a user has visited our page - add them to the visitorsData object
 		socket.on('form-visitor-data', function(data) {
-
 				visitorsData[socket.id] = data;
 
-				if (data.isSubmitted) {
-					saveVisitorData(data, function () {
-						console.log('\n\n user submitted form');
-
+				saveVisitorData(data, function () {
+					console.log('\n\n user submitted form');
+					if (data.isSubmitted) {
 						socket.disconnect(0);
-					});
-				}
+					}
+				});
+
 		});
 
 		socket.on('disconnect', function() {
