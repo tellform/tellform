@@ -48,7 +48,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						$scope.AverageTimeElapsed = (function(){
 							var totalTime = 0;
 							var numSubmissions = $scope.table.rows.length;
-							
+
 							for(var i=0; i<$scope.table.rows.length; i++){
 								totalTime += $scope.table.rows[i].timeElapsed;
 							}
@@ -89,6 +89,8 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 									stats[deviceType].completion = stats[deviceType].response / stats[deviceType].visits || 0;
 								}
+								console.log("stats");
+								console.log(stats);
 							}
 
 							return stats;

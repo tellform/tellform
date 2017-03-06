@@ -1,6 +1,5 @@
 'use strict';
 
-
 /**
  * Module dependencies.
  */
@@ -30,7 +29,7 @@ module.exports = function (io, socket) {
 				ipAddr: data.ipAddr,
 				deviceType: data.deviceType
 			};
-
+			console.log(newVisitor);
 
 			form.analytics.visitors.push(newVisitor);
 

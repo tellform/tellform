@@ -145,7 +145,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 								});
                             });
                         });
-                    }else {
+                    } else {
 						setTimeout(function() {
 							if (document.querySelectorAll('.activeField .focusOn')[0]) {
 								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
@@ -155,6 +155,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 							}
 						});
 					}
+
 
 					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
                 };
@@ -219,7 +220,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
 							.success(function (data, status, headers) {
-								console.log($scope.myform.form_fields[0]);
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);

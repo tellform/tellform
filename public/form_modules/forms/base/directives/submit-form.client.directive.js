@@ -47,6 +47,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
             controller: function($document, $window, $scope){
 		        $scope.noscroll = false;
                 $scope.forms = {};
+				TimeCounter.restartClock();
 
 				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
                     if(field.fieldType === 'statement' || field.fieldType === 'rating'){
@@ -79,7 +80,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     };
                     $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
 
-                    //console.log($scope.selected);
                     //Reset Timer
                     TimeCounter.restartClock();
                 };
@@ -260,6 +260,8 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						});
 					}
 
+					console.log("time elapsed: ");
+					console.log(TimeCounter.getTimeElapsed());
 					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
                 };
 
