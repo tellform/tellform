@@ -54,22 +54,26 @@ module.exports = function (io, socket) {
 
 		// a user has visited our page - add them to the visitorsData object
 		socket.on('form-visitor-data', function(data) {
+				socket.id = data.formId;
 				visitorsData[socket.id] = data;
+				visitorsData[socket.id].isSaved = false;
 
-				saveVisitorData(data, function () {
-					console.log('\n\n user submitted form');
-					if (data.isSubmitted) {
-						socket.disconnect(0);
-					}
-				});
-
+				if (data.isSubmitted) {
+					saveVisitorData(data, function () {
+						console.log('\n\n user submitted form');
+					});
+					visitorsData[socket.id].isSaved = true;
+					socket.disconnect(0);
+				}
 		});
 
 		socket.on('disconnect', function() {
+			console.log('\n\n\n\n\n DISCONNECTED SOCKET');
 			var data = visitorsData[socket.id];
 
 			if(data){
-				if(!data.isSubmitted) {
+				if(!data.isSubmitted && !data.isSaved) {
+					data.isSaved = true;
 					saveVisitorData(data);
 				}
 			}
