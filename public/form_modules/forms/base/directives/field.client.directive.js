@@ -49,7 +49,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 				forms: '='
 			},
 			link: function(scope, element) {
-
+				
 				$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
 					if(type === 'yes_no'){
 						scope.field.fieldValue = 'true';

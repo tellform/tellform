@@ -8,10 +8,18 @@ var forms = require('../../app/controllers/forms.server.controller'),
 
 module.exports = function(app) {
 	// Core routing
-	app.route('/').get(core.index);
+	app.route('/')
+		.get(core.index);
 
-	app.route('/subdomain/api/').get(core.redoc);
-	app.route('/subdomain/:userSlug((?!api$)[A-Za-z0-9]+)/').get(core.form);
-	app.route('/subdomain/:userSlug((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)').get(forms.read)
+	app.route('/subdomain/api/')
+		.get(core.redoc);
+
+	app.route('/subdomain/:userSlug((?!api$)[A-Za-z0-9]+)/')
+		.get(core.form);
+
+	app.route('/subdomain/:userSlug((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)')
 		.post(forms.createSubmission);
+
+	app.route('/subdomain/:userSlug((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)/render')
+		.get(forms.readForRender);
 };

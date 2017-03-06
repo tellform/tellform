@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	pdfFiller = require('pdffiller'),
 	_ = require('lodash'),
 	config = require('../../config/config'),
 	path = require('path'),
@@ -83,7 +82,6 @@ var formSchemaOptions = {
 	}
 };
 
-
 /**
  * Form Schema
  */
@@ -117,14 +115,6 @@ var FormSchema = new Schema({
 		ref: 'User',
 		required: 'Form must have an Admin'
 	},
-
-	pdf: {
-		type: Schema.Types.Mixed
-	},
-	pdfFieldMap: {
-		type: Schema.Types.Mixed
-	},
-
 	startPage: {
 		showStart:{
 			type: Boolean,
@@ -182,7 +172,7 @@ var FormSchema = new Schema({
             }
 		},
 		font: String
-	},
+	}
 }, formSchemaOptions);
 
 /*

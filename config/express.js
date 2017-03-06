@@ -136,9 +136,7 @@ module.exports = function(db) {
 			req.url = path;
 
 			req.userId = user._id;
-
-			console.log('\n\n\ngot subdomain: '+ req.subdomains.reverse()[0]);
-
+			
 			// Q.E.D.
 			next();
 		});

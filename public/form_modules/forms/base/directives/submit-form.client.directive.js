@@ -35,7 +35,6 @@ function hashFnv32a(str, asString, seed) {
 	}
 	return hval >>> 0;
 }
-;
 
 angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {

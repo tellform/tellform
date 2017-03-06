@@ -32,7 +32,7 @@ module.exports = function(app) {
 		.post(auth.isAuthenticatedOrApiKey, forms.create);
 
 	app.route('/forms/:formId([a-zA-Z0-9]+)')
-		.get(forms.read)
+		.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.read)
 		.post(forms.createSubmission)
 		.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.update)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.delete);

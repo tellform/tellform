@@ -3,7 +3,6 @@
 //Forms service used for communicating with the forms REST endpoints
 angular.module('view-form').service('CurrentForm',
 	function(){
-
 		//Private variables
 		var _form = {};
 

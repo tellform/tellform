@@ -2,7 +2,6 @@
 
 // Setting up route
 angular.module('view-form').config(['$stateProvider',
-
 	function($stateProvider) {
 		// Forms state routing
 		$stateProvider.

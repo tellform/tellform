@@ -47,7 +47,7 @@ exports.deleteSubmissions = function(req, res) {
  */
 exports.createSubmission = function(req, res) {
 	var form = req.form;
-	
+
 	var timeElapsed = 0;
 
 	if(typeof req.body.timeElapsed == "number"){
@@ -61,7 +61,7 @@ exports.createSubmission = function(req, res) {
 		timeElapsed: timeElapsed,
 		percentageComplete: req.body.percentageComplete
 	});
-	
+
 	//Save submitter's IP Address
 	if(req.headers['x-forwarded-for'] || req.connection.remoteAddress){
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -145,7 +145,6 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-
 	FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
 		if (err) {
 			console.log(err);
@@ -168,6 +167,26 @@ exports.read = function(req, res) {
 		}
 		return res.json(newForm);
 	});
+};
+
+/**
+ * Show the current form for rendering form live
+ */
+exports.readForRender = function(req, res) {
+	var newForm = req.form.toJSON();
+
+	if (!newForm.isLive) {
+		return res.status(404).send({
+			message: 'Form Does Not Exist'
+		});
+	}
+
+	//Remove extraneous fields from form object
+	delete newForm.submissions;
+	delete newForm.analytics;
+	delete newForm.isLive;
+
+	return res.json(newForm);
 };
 
 /**
