@@ -122,7 +122,7 @@ var questions = [
 		type: 'input',
 		name: 'BASE_URL',
 		message: 'What is the url your TellForm will be hosted at?',
-		default: '127.0.0.1'
+		default: 'localhost'
 	},
 	{
 		type: 'input',
@@ -189,7 +189,7 @@ if(!fs.existsSync('./\.env')) {
 				var pass = answers['password'];
 				delete answers['email'];
 				delete answers['password'];
-
+				
 				envfile.stringify(answers, function (err, str) {
 					fs.outputFile('./\.env', str, function (err) {
 						if (err) return console.error(chalk.red(err));
