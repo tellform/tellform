@@ -245,7 +245,7 @@ form .row.field {
         }
 
     form .row.field.dropdown > .field-input input {
-        height: 34px;
+        min-height: 34px;
 		border-width: 0 0 2px 0;
 		border-radius: 5px;
     }

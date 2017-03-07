@@ -189,7 +189,9 @@ exports.readForRender = function(req, res) {
 exports.update = function(req, res) {
 	var form = req.form;
 
+
 	if (req.body.changes) {
+		console.log(req.body.changes);
 		var formChanges = req.body.changes;
 
 		formChanges.forEach(function (change) {

@@ -91,10 +91,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 */
                 // Add a new field
                 $scope.addNewField = function(modifyForm, fieldType){
+					console.log('fieldType:'+fieldType);
 
                     // increment lastAddedID counter
                     $scope.addField.lastAddedID++;
-                    var fieldTitle;
+                    var fieldTitle = fieldType;
 
                     for(var i = 0; i < $scope.addField.types.length; i++){
                         if($scope.addField.types[i].name === fieldType){
@@ -106,12 +107,21 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     var newField = {
                         title: fieldTitle + ' ' + $scope.myform.form_fields.length+1,
                         fieldType: fieldType,
-                        fieldValue: '',
+                        fieldValue: '0',
                         required: true,
                         disabled: false,
                         deletePreserved: false,
 						logicJump: {}
                     };
+
+					if(fieldType === 'rating'){
+						newField.ratingOptions = {
+							steps: 1,
+							shape: 'Heart'
+						}
+					}
+
+					console.log(newField.title);
 
 					if($scope.showAddOptions(newField)){
 						newField.fieldOptions = [];

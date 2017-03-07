@@ -80,11 +80,7 @@ function BaseFieldSchema(){
 
 		logicJump: LogicJumpSchema,
 
-		ratingOptions: {
-			type: RatingFieldSchema,
-			required: false,
-			default: {}
-		},
+		ratingOptions: RatingFieldSchema,
 		fieldOptions: [FieldOptionSchema],
 		required: {
 			type: Boolean,
