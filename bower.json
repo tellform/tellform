@@ -10,7 +10,7 @@
   "private": true,
   "appPath": "public/modules",
   "dependencies": {
-    "bootstrap": "~3",
+    "bootstrap": "^3.3.7",
     "angular": "~1.4.7",
     "angular-resource": "~1.4.7",
     "angular-mocks": "~1.4.7",
