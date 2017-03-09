@@ -91,8 +91,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 */
                 // Add a new field
                 $scope.addNewField = function(modifyForm, fieldType){
-					console.log('fieldType:'+fieldType);
-
                     // increment lastAddedID counter
                     $scope.addField.lastAddedID++;
                     var fieldTitle = fieldType;
@@ -120,9 +118,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							shape: 'Heart'
 						}
 					}
-
-					console.log(newField.title);
-
+					
 					if($scope.showAddOptions(newField)){
 						newField.fieldOptions = [];
 						newField.fieldOptions.push({
@@ -141,7 +137,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index) {
-					console.log($scope.myform.form_fields);
                     $scope.myform.form_fields.splice(field_index, 1);
                 };
 
@@ -177,7 +172,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
 
                         currID = $scope.myform.startPage.buttons[i]._id;
-                        console.log(currID);
 
                         if(currID === button._id){
                             $scope.myform.startPage.buttons.splice(i, 1);
@@ -194,9 +188,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // add new option to the field
                 $scope.addOption = function(field_index){
                     var currField = $scope.myform.form_fields[field_index];
-					//console.log(field_index);
-					//console.log(currField);
-
 					if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
                         if(!currField.fieldOptions){
 							$scope.myform.form_fields[field_index].fieldOptions = [];

@@ -1,6 +1,5 @@
 'use strict';
 
-
 function removeDateFieldsFunc(o) {
     var clone = _.clone(o);
     function eachObject(v,k){
@@ -80,9 +79,10 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 					delete oldValue.visible_form_fields;
 					newValue.form_fields = _.removeDateFields(newValue.form_fields);
 					oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
-
+					
 					var changedFields = !!DeepDiff.diff(oldValue, newValue) && DeepDiff.diff(oldValue, newValue).length > 0;
 
+					console.log(DeepDiff.diff(oldValue, newValue));
 					//If our form is undefined, don't save form
 					if(!changedFields){
 						$rootScope.finishedRender = true;

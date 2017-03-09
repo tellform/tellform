@@ -39,7 +39,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 						}
 
 						$scope.table.rows = submissions;
-						console.log(submissions);
 
 						/*
 						 ** Analytics Functions
@@ -94,9 +93,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 									stats[deviceType].completion = (stats[deviceType].responses / stats[deviceType].visits).toFixed(0);
 									if(!stats[deviceType].completion) stats[deviceType].completion = 0;
 								}
-								console.log("stats");
-
-
 							}
 
 							return stats;
