@@ -163,6 +163,14 @@ exports.read = function(req, res) {
 };
 
 /**
+ * Upload temp file for submissions
+ */
+exports.uploadTemp = function(req, res) {
+	//Send uploaded file data back to form
+	res.json(req.file);
+};
+
+/**
  * Show the current form for rendering form live
  */
 exports.readForRender = function(req, res) {
@@ -188,7 +196,6 @@ exports.readForRender = function(req, res) {
  */
 exports.update = function(req, res) {
 	var form = req.form;
-
 
 	if (req.body.changes) {
 		console.log(req.body.changes);

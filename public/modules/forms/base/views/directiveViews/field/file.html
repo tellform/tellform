@@ -1,4 +1,4 @@
-<div class="field row" ng-if="form.autofillPDFs" ng-click="setActiveField(field._id, index, true)">
+<div class="field row" ng-click="setActiveField(field._id, index, true)">
 	<div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 		<h3>
 			<small class="field-number">
@@ -12,8 +12,8 @@
     <div class="col-sm-8 field-input">
         <div class="input-group ">
             <div tabindex="-1" class="form-control file-caption">
-                <span class="file-caption-ellipsis" ng-if="!form.pdf">…</span>
-                <div class="file-caption-name" ng-if="form.pdf">
+                <span class="file-caption-ellipsis" ng-if="!field.file">…</span>
+                <div class="file-caption-name" ng-if="field.file">
                     {{field.file.originalname}}
                 </div>
             </div>

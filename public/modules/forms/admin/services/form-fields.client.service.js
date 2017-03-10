@@ -40,10 +40,10 @@ angular.module('forms').service('FormFields', [
 		    //     name : 'sig',
 		    //     value : 'Signature'
 		    // },
-		    // {
-		    //     name : 'file',
-		    //     value : 'File Upload'
-		    // },
+			{
+		         name : 'file',
+		         value : 'File Upload'
+		    },
 		    {
 		        name : 'rating',
 		        value : 'Rating'
@@ -62,13 +62,13 @@ angular.module('forms').service('FormFields', [
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : 'Payment' 
+		    //     value : 'Payment'
 		    // },
 		    {
 		        name : 'statement',
-		        value : 'Statement' 
+		        value : 'Statement'
 		    }
 		];
 	}
-		
+
 ]);

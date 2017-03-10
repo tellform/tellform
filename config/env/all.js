@@ -14,6 +14,11 @@ module.exports = {
 			pass: ''
 		}
 	},
+	aws: {
+		"accessKeyId": process.env.AWS_ACCESS_ID,
+		"secretAccessKey": process.env.AWS_SECRET_KEY,
+		"region": process.env.AWS_REGION
+	},
 
 	port: process.env.PORT || 3000,
 	socketPort: process.env.SOCKET_PORT || 20523,

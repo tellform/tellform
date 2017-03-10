@@ -79,12 +79,12 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 					delete oldValue.visible_form_fields;
 					newValue.form_fields = _.removeDateFields(newValue.form_fields);
 					oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
-					
-					var changedFields = !!DeepDiff.diff(oldValue, newValue) && DeepDiff.diff(oldValue, newValue).length > 0;
 
-					console.log(DeepDiff.diff(oldValue, newValue));
-					//If our form is undefined, don't save form
-					if(!changedFields){
+					var changedStartPage = !!DeepDiff.diff(oldValue.startPage, newValue.startPage) && DeepDiff.diff(oldValue.startPage, newValue.startPage).length > 0;
+					var changedFields = !!DeepDiff.diff(oldValue.form_fields, newValue.form_fields) && DeepDiff.diff(oldValue.form_fields, newValue.form_fields).length > 0;
+
+					//If our form's startPage or form fields have not changed, don't autosave form
+					if(!changedFields && !changedStartPage){
 						$rootScope.finishedRender = true;
 						return;
 					}
@@ -106,7 +106,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     // console.log(newValue.form_fields);
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && (changedFields) && !$rootScope.saveInProgress) {
+                    if( $rootScope.finishedRender && (changedFields || changedStartPage) && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
@@ -116,8 +116,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         savePromise = $timeout(function() {
 							$rootScope.saveInProgress = true;
 
-							delete newValue.visible_form_fields;
-							delete newValue.visible_form_fields;
 							var _diff = DeepDiff.diff(oldValue, newValue);
                             debounceSave(_diff);
                         });
