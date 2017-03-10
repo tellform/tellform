@@ -157,7 +157,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					}
 
 
-					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){

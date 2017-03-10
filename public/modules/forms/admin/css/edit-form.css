@@ -27,3 +27,10 @@
 .edit-field-modal-window .preview-field {
 	resize: vertical;
 }
+
+.admin-form .ui-sortable-placeholder {
+	visibility: visible !important;
+	border: none;
+	padding:1px;
+	background:rgba(0, 0, 0, 0.5) !important;
+}

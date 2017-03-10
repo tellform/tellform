@@ -2432,7 +2432,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				$scope.sortableOptions = {
 					appendTo: '.dropzone',
 					update: function(e, ui) {
-						console.log('updated element');
 						$scope.update(false, $scope.myform, false, true, null);
 					}
 				};

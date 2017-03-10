@@ -329,6 +329,7 @@ div.config-form .row.field {
 
 .admin-form .panel-heading {
     background-color: #f1f1f1;
+	position: relative!important;
 }
     .admin-form .panel-heading:hover {
         background-color: #fff;
