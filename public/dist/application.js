@@ -2431,8 +2431,15 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
 					appendTo: '.dropzone',
+					helper: 'clone',
+					forceHelperSize: true,
+					forcePlaceholderSize: true,
 					update: function(e, ui) {
-						$scope.update(false, $scope.myform, false, true, null);
+						$scope.update(false, $scope.myform, false, false, null);
+					},
+					start: function(e, ui) {
+						console.log(ui.item);
+						console.log(ui.placeholder);
 					}
 				};
 
@@ -3405,7 +3412,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					}
 
 
-					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){

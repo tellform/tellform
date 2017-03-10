@@ -40,10 +40,10 @@ angular.module('forms').service('FormFields', [
 		    //     name : 'sig',
 		    //     value : 'Signature'
 		    // },
-			{
-		         name : 'file',
-		         value : 'File Upload'
-		    },
+			// {
+		    //     name : 'file',
+		    //     value : 'File Upload'
+		    // },
 		    {
 		        name : 'rating',
 		        value : 'Rating'

@@ -25,7 +25,6 @@
   "dependencies": {
     "async": "^1.4.2",
     "async-boolean-expression-evaluator": "^1.1.1",
-    "aws-sdk": "^2.26.0",
     "bcrypt": "^0.8.7",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.14.1",
@@ -73,8 +72,6 @@
     "mongoose": "~4.4.19",
     "mongoose-utilities": "~0.1.1",
     "morgan": "~1.6.1",
-    "multer": "~1.1.0",
-    "multer-s3": "^2.5.0",
     "nodemailer": "~1.10.0",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemailer-sparkpost-transport": "^1.0.0",
