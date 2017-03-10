@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields',
-    function ($rootScope, FormFields) {
+angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', '$uibModal',
+    function ($rootScope, FormFields, $uibModal) {
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
@@ -19,6 +19,39 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					appendTo: '.dropzone',
 					forceHelperSize: true,
 					forcePlaceholderSize: true
+				};
+
+				/*
+				 ** EditModal Functions
+				 */
+				$scope.openEditModal = function(curr_field){
+					$scope.editFieldModal = $uibModal.open({
+						animation: true,
+						templateUrl: 'editFieldModal.html',
+						windowClass: 'edit-field-modal-window',
+						controller:  function($uibModalInstance, $scope) {
+							$scope.field = curr_field;
+							$scope.showLogicJump = false;
+
+							$scope.$watch(function(oldValue, newValue){
+								console.log(newValue);
+							});
+
+							$scope.cancel = function(){
+							};
+						}
+					});
+					$scope.editFieldModal.result.then(function (selectedItem) {
+						$scope.selected = selectedItem;
+					}, function () {
+						console.log('Edit Modal dismissed at: ' + new Date());
+					});
+				};
+
+				$scope.cancelEditModal = function(){
+					if($scope.editModal){
+						$scope.editFieldModal.dismiss('cancel');
+					}
 				};
 
 				/*
@@ -118,7 +151,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							shape: 'Heart'
 						}
 					}
-					
+
 					if($scope.showAddOptions(newField)){
 						newField.fieldOptions = [];
 						newField.fieldOptions.push({

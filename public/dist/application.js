@@ -66,7 +66,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/core/views/header.client.view.html",
     "<section class=\"navbar navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span>{{ 'MENU_BTN' | translate }}</span></button> <a href=\"/#!/\" class=navbar-brand><img src=/static/modules/core/img/logo_white.svg height=100%></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ng-hide=$root.signupDisabled ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>{{ 'SIGNUP_TAB' | translate }}</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>{{ 'SIGNIN_TAB' | translate }}</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>{{ 'MY_SETTINGS' | translate }}</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>{{ 'EDIT_PROFILE' | translate }}</a></li><li class=divider></li><li><a href=/#!/settings/password>{{ 'CHANGE_PASSWORD' | translate }}</a></li></ul></li><li><a href=\"/\" ng-click=signout()>{{ 'SIGNOUT_TAB' | translate }}</a></li></ul></nav></div></section>");
   $templateCache.put("modules/forms/admin/views/admin-form.client.view.html",
-    "<header data-ng-include=\"'/static/modules/core/views/header.client.view.html'\"></header><div class=container cg-busy=\"{promise:updatePromise,templateUrl:'modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}\"></div><section class=admin-form><script type=text/ng-template id=myModalContent.html><div class=\"modal-header\">\n" +
+    "<header data-ng-include=\"'/static/modules/core/views/header.client.view.html'\"></header><div class=container cg-busy=\"{promise:updatePromise,templateUrl:'modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html',message:'Updating form...', backdrop:false, wrapperClass:'.busy-updating-wrapper'}\"></div><section class=admin-form><script type=text/ng-template id=formDeleteModal.html><div class=\"modal-header\">\n" +
     "            <h2 class=\"modal-title hidden-md hidden-lg\">{{ 'ARE_YOU_SURE' | translate }}</h2>\n" +
     "            <h3 class=\"modal-title hidden-xs hidden-sm\">{{ 'ARE_YOU_SURE' | translate }}</h3>\n" +
     "        </div>\n" +
@@ -130,9 +130,242 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html",
     "<div><div style=\"text-align: center; font-size: 20px;position: fixed; bottom: 0; right: 55px; background-color: gray; color: white; padding: 5px 15px 5px 10px; z-index: 10\">{{$message}}</div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/configure-form.client.view.html",
-    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'No' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
+    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-form.client.view.html",
-    "<form class=\"row container\" name=editForm auto-save-form auto-save-watch=myform.form_fields auto-save-callback=update><div class=\"col-xs-2 col-sm-4 add-field\"><div class=\"row add-field-title\"><h3 class=\"col-md-12 hidden-sm hidden-xs\">{{ 'ADD_FIELD_LG' | translate }}</h3><h4 class=\"col-sm-12 hidden-xs hidden-md hidden-lg\">{{ 'ADD_FIELD_MD' | translate }}</h4><h5 class=\"col-xs-12 hidden-sm hidden-md hidden-lg\">{{ 'ADD_FIELD_SM' | translate }}</h5></div><div class=\"panel-group row\" class=draggable ng-model=addField.types><div class=\"col-xs-12 col-sm-12 col-md-6\" ng-repeat=\"type in addField.types\" style=padding-top:7.5px><div class=\"panel panel-default\" style=background-color:#f5f5f5><div class=panel-heading ng-click=\"addNewField(true, type.name)\" style=\"cursor: pointer; font-size:12px; padding-left: 10px; padding-right: 10px\"><span><field-icon-directive type-name={{type.name}}></field-icon-directive></span> <span class=hidden-xs style=padding-left:0.3em>{{type.value}}</span></div></div></div></div></div><div class=\"col-xs-10 col-sm-8 current-fields container\"><div class=row><div class=col-sm-12><div class=\"panel panel-default startPage\"><div class=\"panel-heading accordion-toggle collapsed\" data-toggle=collapse data-target=#collapseStart><h4 class=text-center>{{ 'WELCOME_SCREEN' | translate }} <span class=pull-right><i class=\"fa fa-chevron-right\" ng-hide=startPage.isOpen></i> <i class=\"fa fa-chevron-down\" ng-show=startPage.isOpen></i></span></h4></div><div id=collapseStart class=\"panel-collapse collapse\"><div class=panel-body><div class=\"row hidden-sm hidden-xs\"><div class=col-md-12><h4>{{ 'PREVIEW_START_PAGE' | translate }}</h4></div><ul class=\"col-md-12 container\" style=\"list-style:none; border:2px lightgray solid; padding-bottom: 2em\"><div class=\"field row\"><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1>{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\" style=\"overflow-wrap: break-word\"><p style=color:#ddd>{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><button class=\"btn btn-info btn btn-info col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3\" type=button><span style=\"color:white; font-size: 1.6em; text-decoration: none\">{{myform.startPage.introButtonText}}</span></button></div></ul></div><div class=row><div class=col-xs-12><h4>{{ 'EDIT_START_PAGE' | translate }}</h4><br></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_TITLE' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introTitle name=introTitleStartPage value={{myform.startPage.introTitle}} required></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_PARAGRAPH' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><textarea type=text ng-model=myform.startPage.introParagraph name=introParagraphStartPage></textarea></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_BTN' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introButtonText name=introButtonText value={{myform.startPage.introButtonText}} required></div></div><div class=row><br><br></div><div class=\"row options buttons\"><div class=\"col-md-3 col-xs-12\">Buttons:</div><div class=\"col-md-9 col-xs-12\"><div ng-repeat=\"button in myform.startPage.buttons track by button._id\" class=row style=padding-bottom:1em><div class=col-xs-5><span>{{ 'BUTTON_TEXT' | translate }}</span> <input name={{button.text}}_buttonText_startPage ng-model=button.text value={{button.text}} placeholder=\"Button Text\"></div><div class=col-xs-5><span>{{ 'BUTTON_LINK' | translate }}</span> <input name={{button.url}}_url_startPage ng-model=button.url value={{button.url}} placeholder=http://aeouaou.com/aoeuoa></div><div class=col-xs-2><a class=\"btn btn-danger btn-mini right\" type=button ng-click=deleteButton(button)><i class=\"fa fa-trash-o\"></i></a></div></div><div class=row><br></div><div class=row><button class=\"btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8\" type=button ng-click=addButton()><i class=\"icon-plus icon-white\"></i> {{ 'ADD_BUTTON' | translate }}</button></div></div></div></div></div></div></div></div><div class=row><div class=col-sm-12><hr></div></div><div class=row><div class=\"col-sm-12 col-md-10 dropzoneContainer\"><accordion close-others=accordion.oneAtATime ui-sortable=sortableOptions ng-model=myform.form_fields class=dropzone><accordion-group ng-repeat=\"field in myform.form_fields track by field._id\" is-open=accordion[$index].isOpen on-finish-render=editFormFields ng-if=!field.deletePreserved><accordion-heading><div class=handle><span class=col-xs-1 ng-switch=field.fieldType><field-icon-directive type-name={{field.fieldType}}></field-icon-directive></span> <span class=col-xs-10>{{field.title}} <span ng-show=field.required>*</span></span> <span class=pull-right><i class=\"fa fa-chevron-right\" ng-hide=accordion[$index].isOpen></i> <i class=\"fa fa-chevron-down\" ng-show=accordion[$index].isOpen></i></span></div></accordion-heading><div class=\"accordion-edit container\"><div class=\"row hidden-sm hidden-xs\"><div class=col-md-12><h4>{{ 'PREVIEW_FIELD' | translate }}</h4></div><ul class=\"col-md-12 container\" style=\"list-style:none;border:2px lightgray solid\"><field-directive field=field validate=false></field-directive></ul><hr></div><div class=row><div class=col-xs-12><h4>{{ 'EDIT_FIELD' | translate }}</h4><br></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'QUESTION_TITLE' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=field.title name=title{{field._id}} value={{field.title}} required></div></div><div class=row><br></div><div class=\"row description\" ng-hide=showRatingOptions(field)><div class=\"col-md-4 col-sm-12\">{{ 'QUESTION_DESCRIPTION' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><textarea type=text ng-model=field.description name=description{{field._id}} value={{field.description}}></textarea></div></div><div class=row ng-show=showAddOptions(field)><br></div><div class=\"row options\" ng-if=showAddOptions(field)><div class=\"col-md-4 col-xs-12\">{{ 'OPTIONS' | translate }}:</div><div class=\"col-md-8 col-xs-12\"><div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=row><input name={{option.option_value}}{{field._id}} ng-model=option.option_value class=col-xs-5> <a class=\"btn btn-danger btn-mini right\" type=button ng-click=\"deleteOption($index, option)\" class=col-xs-3><i class=\"fa fa-trash-o\"></i></a></div><div class=row><button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=button ng-click=addOption($index)><i class=\"icon-plus icon-white\"></i> {{ 'ADD_OPTION' | translate }}</button></div></div></div><div class=row ng-show=showRatingOptions(field)><br></div><div class=row ng-if=showRatingOptions(field)><div class=\"col-md-9 col-sm-9\">{{ 'NUM_OF_STEPS' | translate }}</div><div class=\"col-md-3 col-sm-3\"><input style=width:100% type=number min=1 max=10 ng-model=field.ratingOptions.steps name=ratingOptions_steps{{field._id}} ng-value={{field.ratingOptions.steps}} required></div><br><div class=\"col-md-5 col-sm-9\">Shape:</div><div class=\"col-md-7 col-sm-3\"><select style=width:100% ng-model=field.ratingOptions.shape value={{field.ratingOptions.steps}} name=ratingOptions_shape{{field._id}} required><option ng-repeat=\"shapeType in field.ratingOptions.validShapes\" value={{shapeType}}>{{select2FA[shapeType]}}</option></select></div></div><div class=row><br></div><div class=row><div class=\"col-md-4 col-xs-12 field-title\">Required:</div><div class=\"col-md-8 col-xs-12 field-input\"><label class=\"btn col-xs-5\"><input type=radio ng-value=true ng-model=field.required name=\"required{{field._id}}\"> <span>&nbsp; {{ 'YES' | translate }}</span></label><label class=\"btn col-xs-5 col-xs-offset-1\"><input type=radio ng-value=false ng-model=field.required name=\"required{{field._id}}\"> <span>&nbsp; {{ 'NO' | translate }}</span></label></div></div><div class=row><div class=\"col-md-4 col-xs-12 field-input\">{{ 'DISABLED' | translate }}</div><div class=\"col-md-8 col-xs-12 field-input\"><label class=\"btn col-xs-5\"><input type=radio ng-value=true ng-model=field.disabled name=\"disabled{{field._id}}\"> <span>&nbsp; {{ 'YES' | translate }}</span></label><label class=\"btn col-xs-5 col-xs-offset-1\"><input type=radio ng-value=false ng-model=field.disabled name=\"disabled{{field._id}}\"> <span>&nbsp; {{ 'NO' | translate }}</span></label></div></div><div class=row ng-if=\"myform.form_fields.length > 1\"><h4>Logic Jump</h4></div><div class=row ng-if=\"myform.form_fields.length > 1\"><div class=\"col-md-4 col-xs-12 field-input\">{{ 'ADD_LOGIC_JUMP' | translate }}</div><div class=\"col-md-8 col-xs-12 field-input\"><label class=\"btn col-xs-5\"><input type=radio ng-checked=!!myform.form_fields[$index].logicJump.valueB name=logicJumpYes{{field._id}} ng-click=\"addNewLogicJump($index)\"> <span>&nbsp; {{ 'YES' | translate }}</span></label><label class=\"btn col-xs-5 col-xs-offset-1\"><input type=radio ng-checked=!myform.form_fields[$index].logicJump.valueB name=logicJumpNo{{field._id}} ng-click=\"removeLogicJump($index)\"> <span>&nbsp; {{ 'NO' | translate }}</span></label></div></div><div class=\"row question\" ng-if=\"myform.form_fields.length > 1 && myform.form_fields[$index].logicJump.fieldA\"><div class=\"col-md-4 col-sm-12\"><b>If this field</b></div><div class=\"col-md-4 col-sm-12\"><select style=width:100% ng-model=field.logicJump.expressionString value={{field.logicJump.expressionString}} name=logicjump_expressionString{{field._id}}><option value=\"field == static\">is equal to</option><option value=\"field != static\">is not equal to</option><option value=\"field > static\" ng-if-start=\"field.fieldType === 'number' || field.fieldType === 'rating' || field.fieldType === 'number'\">is greater than</option><option value=\"field >= static\">is greater or equal than</option><option value=\"field < static\">is smaller than</option><option value=\"field <= static\" ng-if-end>is smaller or equal than</option><option value=\"field contains static\" ng-if-start=\"field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'\">contains</option><option value=\"field !contains static\">does not contain</option><option value=\"field ends static\">ends with</option><option value=\"field !ends static\">does not end with</option><option value=\"field starts static\">starts with</option><option value=\"field !starts static\" ng-if-end>does not start with</option></select></div><div class=\"col-md-4 col-sm-12\"><input ng-model=\"field.logicJump.valueB\"></div><div class=col-md-2><b>Jumps to</b></div><div class=col-md-10><select style=width:100% ng-model=field.logicJump.jumpTo value={{field.logicJump.jumpTo}} name=logicjump_jumpTo{{field._id}}><option ng-repeat=\"jump_field in myform.form_fields\" value={{jump_field._id}}>{{jump_field.title}}</option></select></div></div></div></accordion-group><div class=\"panel panel-default\" style=\"border-style: dashed; border-color: #a9a9a9\"><div class=panel-heading><h4 class=\"panel-title text-center\" style=\"color: #a9a9a9\">{{ 'CLICK_FIELDS_FOOTER' | translate }}</h4></div></div><hr></accordion></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=deleteField($index)><span class=text-center><a href=\"\" class=\"fa fa-trash-o\"></a></span></div></div></div></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=duplicateField($index)><span class=text-center><a href=\"\" class=\"fa fa-files-o\"></a></span></div></div></div></div></div></div></form>");
+    "<form class=\"row container\" name=editForm><script type=text/ng-template id=editFieldModal.html class=edit-field-modal><div class=\"modal-body\">\n" +
+    "			<div class=\"row\">\n" +
+    "				<div class=\"edit-field-panel col-md-6 col-xs-12 col-sm-12 container\">\n" +
+    "					<div class=\"row modal-header\">\n" +
+    "						<h2 class=\"modal-title hidden-md hidden-lg\">{{ 'EDIT_FIELD' | translate }}</h2>\n" +
+    "						<h3 class=\"modal-title hidden-xs hidden-sm\">{{ 'EDIT_FIELD' | translate }}</h3>\n" +
+    "					</div>\n" +
+    "					<div class=\"row question\">\n" +
+    "						<div class=\"col-md-12 bold\">{{ 'QUESTION_TITLE' | translate }}</div>\n" +
+    "						<div class=\"col-md-12\">\n" +
+    "							<input type=\"text\" class=\"form-control\" ng-model=\"field.title\" name=\"title{{field._id}}\" value=\"{{field.title}}\" required></div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\"><br></div>\n" +
+    "\n" +
+    "					<div class=\"row description\" ng-hide=\"showRatingOptions(field)\">\n" +
+    "						<div class=\"col-md-12 bold\">{{ 'QUESTION_DESCRIPTION' | translate }}</div>\n" +
+    "						<div class=\"col-md-12\">\n" +
+    "							<textarea type=\"text\" class=\"form-control\" ng-model=\"field.description\" name=\"description{{field._id}}\"value=\"{{field.description}}\"></textarea>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\" ng-show=\"showAddOptions(field)\"><br></div>\n" +
+    "					<div class=\"row options\" ng-if=\"showAddOptions(field)\">\n" +
+    "						<div class=\"col-md-4 col-xs-12\">{{ 'OPTIONS' | translate }}</div>\n" +
+    "						<div class=\"col-md-8 col-xs-12\">\n" +
+    "							<div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=\"row\">\n" +
+    "								<input type=\"text\" name=\"{{option.option_value}}{{field._id}}\" ng-model=\"option.option_value\" class=\"col-xs-5\">\n" +
+    "\n" +
+    "								<a class=\"btn btn-danger btn-mini right\" type=\"button\" ng-click=\"deleteOption($index, option)\" class=\"col-xs-3\">\n" +
+    "									<i class=\"fa fa-trash-o\"></i>\n" +
+    "								</a>\n" +
+    "							</div>\n" +
+    "							<div class=\"row\">\n" +
+    "								<button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=\"button\" ng-click=\"addOption($index)\">\n" +
+    "									<i class=\"icon-plus icon-white\"></i> {{ 'ADD_OPTION' | translate }}\n" +
+    "								</button>\n" +
+    "							</div>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\" ng-show=\"showRatingOptions(field)\"><br></div>\n" +
+    "					<div class=\"row\" ng-if=\"showRatingOptions(field)\">\n" +
+    "						<div class=\"col-md-9 col-sm-9\">{{ 'NUM_OF_STEPS' | translate }}</div>\n" +
+    "						<div class=\"col-md-3 col-sm-3\">\n" +
+    "							<input style=\"width:100%\" type=\"number\"\n" +
+    "								   min=\"1\" max=\"10\"\n" +
+    "								   ng-model=\"field.ratingOptions.steps\"\n" +
+    "								   name=\"ratingOptions_steps{{field._id}}\"\n" +
+    "								   ng-value=\"{{field.ratingOptions.steps}}\"\n" +
+    "								   required>\n" +
+    "						</div>\n" +
+    "						<br>\n" +
+    "						<div class=\"col-md-5 col-sm-9\">Shape:</div>\n" +
+    "						<div class=\"col-md-7 col-sm-3\">\n" +
+    "							<select style=\"width:100%\" ng-model=\"field.ratingOptions.shape\"\n" +
+    "									value=\"{{field.ratingOptions.steps}}\"\n" +
+    "									name=\"ratingOptions_shape{{field._id}}\" required>\n" +
+    "								<option ng-repeat=\"shapeType in field.ratingOptions.validShapes\"\n" +
+    "										value=\"{{shapeType}}\">\n" +
+    "									{{select2FA[shapeType]}}\n" +
+    "								</option>\n" +
+    "							</select>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\"><br></div>\n" +
+    "\n" +
+    "					<div class=\"row\">\n" +
+    "						<div class=\"col-md-4 col-xs-12 field-title\">{{ 'REQUIRED_FIELD' | translate }}</div>\n" +
+    "						<div class=\"col-md-8 col-xs-12 field-input\">\n" +
+    "							<label class=\"switch-light switch-holo\" onclick=\"\">\n" +
+    "								<input type=\"checkbox\" ng-model=\"field.required\">\n" +
+    "								<span class=\"large-3 columns float-left\">\n" +
+    "									<span> {{ 'OFF' | translate }}</span>\n" +
+    "									<span> {{ 'ON' | translate }}</span>\n" +
+    "									<a></a>\n" +
+    "								</span>\n" +
+    "							</label>\n" +
+    "							<!--\n" +
+    "							<label class=\"btn col-xs-5\">\n" +
+    "								<input type=\"radio\" ng-value=\"true\" ng-model=\"field.required\" name=\"required{{field._id}}\"/>\n" +
+    "								<span> &nbsp; {{ 'YES' | translate }}</span>\n" +
+    "							</label>\n" +
+    "\n" +
+    "							<label class=\"btn col-xs-5 col-xs-offset-1\">\n" +
+    "								<input type=\"radio\" ng-value=\"false\" ng-model=\"field.required\" name=\"required{{field._id}}\"/>\n" +
+    "								<span> &nbsp; {{ 'NO' | translate }}</span>\n" +
+    "							</label>\n" +
+    "							-->\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\">\n" +
+    "						<div class=\"col-md-4 col-xs-12 field-input\">{{ 'DISABLED' | translate }}</div>\n" +
+    "						<div class=\"col-md-8 col-xs-12 field-input\">\n" +
+    "							<label class=\"switch-light switch-holo\" ng-click=\"console.log('clicked switch')\">\n" +
+    "								<input type=\"checkbox\" ng-model=\"field.disabled\">\n" +
+    "								<span>\n" +
+    "									<span> {{ 'OFF' | translate }}</span>\n" +
+    "									<span> {{ 'ON' | translate }}</span>\n" +
+    "									<a></a>\n" +
+    "								</span>\n" +
+    "							</label>\n" +
+    "							<!--\n" +
+    "							<label class=\"btn col-xs-5\">\n" +
+    "								<input type=\"radio\" ng-value=\"true\"\n" +
+    "									   ng-model=\"field.disabled\" name=\"disabled{{field._id}}\"/>\n" +
+    "								<span> &nbsp; {{ 'YES' | translate }}</span>\n" +
+    "							</label>\n" +
+    "\n" +
+    "							<label class=\"btn col-xs-5 col-xs-offset-1\">\n" +
+    "								<input type=\"radio\" ng-value=\"false\"\n" +
+    "									   ng-model=\"field.disabled\" name=\"disabled{{field._id}}\"/>\n" +
+    "								<span> &nbsp; {{ 'NO' | translate }}</span>\n" +
+    "							</label>\n" +
+    "							-->\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\">\n" +
+    "						<div class=\"col-md-4 col-xs-12 field-input\">{{ 'LOGIC_JUMP' | translate }}</div>\n" +
+    "						<div class=\"col-md-8 col-xs-12 field-input\">\n" +
+    "							<label class=\"switch-light switch-holo\" onclick=\"\">\n" +
+    "								<button ng-click=\"showLogicJump = !showLogicJump\">Click</button>\n" +
+    "								<input type=\"checkbox\" ng-model=\"showLogicJump\">\n" +
+    "								<span>\n" +
+    "									<span> {{ 'OFF' | translate }}</span>\n" +
+    "									<span> {{ 'ON' | translate }}</span>\n" +
+    "									<a></a>\n" +
+    "								</span>\n" +
+    "							</label>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "					<span>\n" +
+    "						showLogicJump: {{showLogicJump}}\n" +
+    "					</span>\n" +
+    "					<div class=\"row question\" ng-if=\"!!showLogicJump\">\n" +
+    "						<div class=\"col-md-4 col-sm-12\">\n" +
+    "\n" +
+    "							<b> If this field </b>\n" +
+    "						</div>\n" +
+    "						<div class=\"col-md-4 col-sm-12\">\n" +
+    "							<select style=\"width:100%\" ng-model=\"field.logicJump.expressionString\"\n" +
+    "									value=\"{{field.logicJump.expressionString}}\"\n" +
+    "									name=\"logicjump_expressionString{{field._id}}\">\n" +
+    "								<option value=\"field == static\">\n" +
+    "\n" +
+    "									is equal to\n" +
+    "								</option>\n" +
+    "								<option value=\"field != static\">\n" +
+    "\n" +
+    "									is not equal to\n" +
+    "								</option>\n" +
+    "\n" +
+    "								<option value=\"field > static\" ng-if-start=\"field.fieldType === 'number' || field.fieldType === 'rating' || field.fieldType === 'number'\">\n" +
+    "\n" +
+    "									is greater than\n" +
+    "								</option>\n" +
+    "								<option value=\"field >= static\">\n" +
+    "\n" +
+    "									is greater or equal than\n" +
+    "								</option>\n" +
+    "								<option value=\"field < static\">\n" +
+    "\n" +
+    "									is smaller than\n" +
+    "								</option>\n" +
+    "								<option value=\"field <= static\" ng-if-end>\n" +
+    "\n" +
+    "									is smaller or equal than\n" +
+    "								</option>\n" +
+    "\n" +
+    "								<option value=\"field contains static\" ng-if-start=\"field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'\">\n" +
+    "\n" +
+    "									contains\n" +
+    "								</option>\n" +
+    "								<option value=\"field !contains static\">\n" +
+    "\n" +
+    "									does not contain\n" +
+    "								</option>\n" +
+    "								<option value=\"field ends static\">\n" +
+    "\n" +
+    "									ends with\n" +
+    "								</option>\n" +
+    "								<option value=\"field !ends static\">\n" +
+    "\n" +
+    "									does not end with\n" +
+    "								</option>\n" +
+    "								<option value=\"field starts static\">\n" +
+    "\n" +
+    "									starts with\n" +
+    "								</option>\n" +
+    "								<option value=\"field !starts static\" ng-if-end>\n" +
+    "\n" +
+    "									does not start with\n" +
+    "								</option>\n" +
+    "							</select>\n" +
+    "						</div>\n" +
+    "						<div class=\"col-md-4 col-sm-12\">\n" +
+    "							<input type=\"text\" ng-model=\"field.logicJump.valueB\"/>\n" +
+    "						</div>\n" +
+    "						<div class=\"col-md-2\">\n" +
+    "\n" +
+    "							<b>Jumps to </b>\n" +
+    "						</div>\n" +
+    "						<div class=\"col-md-10\">\n" +
+    "							<select style=\"width:100%\" ng-model=\"field.logicJump.jumpTo\"\n" +
+    "									value=\"{{field.logicJump.jumpTo}}\"\n" +
+    "									name=\"logicjump_jumpTo{{field._id}}\">\n" +
+    "								<option ng-repeat=\"jump_field in myform.form_fields\"\n" +
+    "										value=\"{{jump_field._id}}\">\n" +
+    "									{{jump_field.title}}\n" +
+    "								</option>\n" +
+    "							</select>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "					<div class=\"modal-footer row\">\n" +
+    "						<button type=\"submit\" ng-click=\"update(false, null)\" class=\"btn btn-signup btn-rounded\">\n" +
+    "							{{ 'SAVE_FIELD' | translate }}\n" +
+    "						</button>\n" +
+    "\n" +
+    "						<button ng-click=\"cancel()\" class=\"btn btn-secondary btn-rounded\">\n" +
+    "							{{ 'CANCEL' | translate }}\n" +
+    "						</button>\n" +
+    "					</div>\n" +
+    "				</div>\n" +
+    "\n" +
+    "				<div class=\"preview-field-panel col-md-6 hidden-sm hidden-xs container\">\n" +
+    "					<field-directive field=\"field\" validate=\"false\" class=\"preview-field\">\n" +
+    "					</field-directive>\n" +
+    "				</div>\n" +
+    "			</div>\n" +
+    "\n" +
+    "		</div></script><div class=\"col-xs-2 col-sm-4 add-field\"><div class=\"row add-field-title\"><h3 class=\"col-md-12 hidden-sm hidden-xs\">{{ 'ADD_FIELD_LG' | translate }}</h3><h4 class=\"col-sm-12 hidden-xs hidden-md hidden-lg\">{{ 'ADD_FIELD_MD' | translate }}</h4><h5 class=\"col-xs-12 hidden-sm hidden-md hidden-lg\">{{ 'ADD_FIELD_SM' | translate }}</h5></div><div class=\"panel-group row\" class=draggable ng-model=addField.types><div class=\"col-xs-12 col-sm-12 col-md-6\" ng-repeat=\"type in addField.types\" style=padding-top:7.5px><div class=\"panel panel-default\" style=background-color:#f5f5f5><div class=panel-heading ng-click=\"addNewField(true, type.name)\" style=\"cursor: pointer; font-size:12px; padding-left: 10px; padding-right: 10px\"><span><field-icon-directive type-name={{type.name}}></field-icon-directive></span> <span class=hidden-xs style=padding-left:0.3em>{{type.value}}</span></div></div></div></div></div><div class=\"col-xs-10 col-sm-8 current-fields container\"><div class=row><div class=col-sm-12><div class=\"panel panel-default startPage\"><div class=\"panel-heading accordion-toggle collapsed\" data-toggle=collapse data-target=#collapseStart><h4 class=text-center>{{ 'WELCOME_SCREEN' | translate }} <span class=pull-right><i class=\"fa fa-chevron-right\" ng-hide=startPage.isOpen></i> <i class=\"fa fa-chevron-down\" ng-show=startPage.isOpen></i></span></h4></div><div id=collapseStart class=\"panel-collapse collapse\"><div class=panel-body><div class=\"row hidden-sm hidden-xs\"><div class=col-md-12><h4>{{ 'PREVIEW_START_PAGE' | translate }}</h4></div><ul class=\"col-md-12 container\" style=\"list-style:none; border:2px lightgray solid; padding-bottom: 2em\"><div class=\"field row\"><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1>{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\" style=\"overflow-wrap: break-word\"><p style=color:#ddd>{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><button class=\"btn btn-info btn btn-info col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3\" type=button><span style=\"color:white; font-size: 1.6em; text-decoration: none\">{{myform.startPage.introButtonText}}</span></button></div></ul></div><div class=row><div class=col-xs-12><h4>{{ 'EDIT_START_PAGE' | translate }}</h4><br></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_TITLE' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introTitle name=introTitleStartPage value={{myform.startPage.introTitle}} required></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_PARAGRAPH' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><textarea type=text ng-model=myform.startPage.introParagraph name=introParagraphStartPage></textarea></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_BTN' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introButtonText name=introButtonText value={{myform.startPage.introButtonText}} required></div></div><div class=row><br><br></div><div class=\"row options buttons\"><div class=\"col-md-3 col-xs-12\">Buttons:</div><div class=\"col-md-9 col-xs-12\"><div ng-repeat=\"button in myform.startPage.buttons track by button._id\" class=row style=padding-bottom:1em><div class=col-xs-5><span>{{ 'BUTTON_TEXT' | translate }}</span> <input name={{button.text}}_buttonText_startPage ng-model=button.text value={{button.text}} placeholder=\"Button Text\"></div><div class=col-xs-5><span>{{ 'BUTTON_LINK' | translate }}</span> <input name={{button.url}}_url_startPage ng-model=button.url value={{button.url}} placeholder=http://aeouaou.com/aoeuoa></div><div class=col-xs-2><a class=\"btn btn-danger btn-mini right\" type=button ng-click=deleteButton(button)><i class=\"fa fa-trash-o\"></i></a></div></div><div class=row><br></div><div class=row><button class=\"btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8\" type=button ng-click=addButton()><i class=\"icon-plus icon-white\"></i> {{ 'ADD_BUTTON' | translate }}</button></div></div></div></div></div></div></div></div><div class=row><div class=col-sm-12><hr></div></div><div class=row><div class=\"col-sm-12 col-md-10 dropzoneContainer\"><accordion close-others=accordion.oneAtATime ui-sortable=sortableOptions ng-model=myform.form_fields class=dropzone><accordion-group ng-repeat=\"field in myform.form_fields track by field._id\" is-open=false on-finish-render=editFormFields ng-if=!field.deletePreserved ng-click=openEditModal(field)><accordion-heading><div class=handle><span class=col-xs-1 ng-switch=field.fieldType><field-icon-directive type-name={{field.fieldType}}></field-icon-directive></span> <span class=col-xs-10>{{field.title}} <span ng-show=field.required>*</span></span> <span class=pull-right><i class=\"fa fa-chevron-right\" ng-hide=accordion[$index].isOpen></i> <i class=\"fa fa-chevron-down\" ng-show=accordion[$index].isOpen></i></span></div></accordion-heading></accordion-group><div class=\"panel panel-default\" style=\"border-style: dashed; border-color: #a9a9a9\"><div class=panel-heading><h4 class=\"panel-title text-center\" style=\"color: #a9a9a9\">{{ 'CLICK_FIELDS_FOOTER' | translate }}</h4></div></div><hr></accordion></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=deleteField($index)><span class=text-center><a href=\"\" class=\"fa fa-trash-o\"></a></span></div></div></div></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=duplicateField($index)><span class=text-center><a href=\"\" class=\"fa fa-files-o\"></a></span></div></div></div></div></div></div></form>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-submissions-form.client.view.html",
     "<div class=\"submissions-table container\"><div class=\"row text-center analytics\"><div class=\"col-xs-12 header-title\"><div class=col-xs-3>{{ 'TOTAL_VIEWS' | translate }}</div><div class=col-xs-3>{{ 'RESPONSES' | translate }}</div><div class=col-xs-3>{{ 'COMPLETION_RATE' | translate }}</div><div class=col-xs-3>{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div></div><div class=\"col-xs-12 header-numbers\"><div class=col-xs-3>{{myform.analytics.views}}</div><div class=col-xs-3>{{myform.analytics.submissions}}</div><div class=col-xs-3>{{myform.analytics.conversionRate | number:0}}%</div><div class=col-xs-3>{{ AverageTimeElapsed | secondsToDateTime | date:'mm:ss'}}</div></div><div class=\"col-xs-12 detailed-title\"><div class=col-xs-3>{{ 'DESKTOP_AND_LAPTOP' | translate }}</div><div class=col-xs-3>{{ 'TABLETS' | translate }}</div><div class=col-xs-3>{{ 'PHONES' | translate }}</div><div class=col-xs-3>{{ 'OTHER' | translate }}</div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.desktop.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.tablet.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.tablet.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.other.visits}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.desktop.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.tablet.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.phone.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.other.responses}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.desktop.completion}}%</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.tablet.completion}}%</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.phone.completion}}%</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.other.completion}}%</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.desktop.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.tablet.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.phone.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.other.average_time | secondsToDateTime | date:'mm:ss'}}</div></div></div><div class=\"col-xs-12 field-title-row\"><div class=col-xs-3><strong>{{ 'FIELD_TITLE' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_VIEWS' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_RESPONSES' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_DROPOFF' | translate }}</strong></div></div><div class=\"col-xs-12 field-detailed-row\" ng-repeat=\"fieldStats in myform.analytics.fields\"><div class=col-xs-3>{{fieldStats.field.title}}</div><div class=col-xs-3>{{fieldStats.totalViews}}</div><div class=col-xs-3>{{fieldStats.responses}}</div><div class=col-xs-3>{{fieldStats.continueRate}}%</div></div></div><br><div class=\"row table-tools\"><div class=col-xs-2><button class=\"btn btn-danger\" ng-click=deleteSelectedSubmissions() ng-disabled=!isAtLeastOneChecked();><i class=\"fa fa-trash-o\"></i> {{ 'DELETE_SELECTED' | translate }}</button></div><div class=\"col-xs-2 col-xs-offset-4 text-right\"><button class=\"btn btn-gray\" ng-click=\"exportSubmissions('xml')\"><small>{{ 'EXPORT_TO_EXCEL' | translate }}</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-gray\" ng-click=\"exportSubmissions('csv')\"><small>{{ 'EXPORT_TO_CSV' | translate }}</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-gray\" ng-click=\"exportSubmissions('json')\"><small>{{ 'EXPORT_TO_JSON' | translate }}</small></button></div></div><div class=\"row table-outer\"><div class=col-xs-12><table id=table-submission-data class=\"table table-striped table-hover table-condensed\"><thead><tr><th><input ng-model=table.masterChecker ng-change=toggleAllCheckers() type=\"checkbox\"></th><th>#</th><th data-ng-repeat=\"(key, value) in myform.form_fields\">{{value.title}}</th><th>{{ 'PERCENTAGE_COMPLETE' | translate }}</th><th>{{ 'TIME_ELAPSED' | translate }}</th><th>{{ 'DEVICE' | translate }}</th><th>{{ 'LOCATION' | translate }}</th><th>{{ 'IP_ADDRESS' | translate }}</th><th>{{ 'DATE_SUBMITTED' | translate }} (UTC)</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.rows\" ng-click=rowClicked($index) ng-class=\"{selected: row.selected === true}\"><td><input ng-model=row.selected type=\"checkbox\"></td><th class=scope>{{$index+1}}</th><td data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue}}</td><td>{{row.percentageComplete}}%</td><td>{{row.timeElapsed | secondsToDateTime | date:'mm:ss'}}</td><td>{{row.device.name}}, {{row.device.type}}</td><td>{{row.geoLocation.City}}, {{row.geoLocation.Country}}</td><td>{{row.ipAddr}}</td><td>{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}</td></tr></tbody></table></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/entryPage/startPage.html",
@@ -214,9 +447,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	$translateProvider.translations('en', {
 
 		//Configure Form Tab View
-		PDF_GENERATION_EMR: 'PDF Generation/EMR',
-		SAVE_PDF_SUBMISSIONS: 'Save Submissions as PDFs?',
-		UPLOAD_YOUR_PDF: 'Upload Your PDF Template',
 		ADVANCED_SETTINGS: 'Advanced Settings',
 		FORM_NAME: 'Form Name',
 		FORM_STATUS: 'Form Status',
@@ -231,6 +461,13 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CREATE_A_NEW_FORM: 'Create a new form',
 		CREATE_FORM: 'Create form',
 		CREATED_ON: 'Created on',
+
+		//Edit Field Modal
+		EDIT_FIELD: 'Edit this Field',
+		SAVE_FIELD: 'Save',
+		ON: 'ON',
+		OFF: 'OFF',
+		REQUIRED_FIELD: 'Required',
 
 		//Admin Form View
 		ARE_YOU_SURE: 'Are you ABSOLUTELY sure?',
@@ -248,7 +485,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		PREVIEW: 'Preview',
 
 		//Edit Form View
-		DISABLED: 'Disabled:',
+		DISABLED: 'Disabled',
 		YES: 'YES',
 		NO: 'NO',
 		ADD_LOGIC_JUMP: 'Add Logic Jump',
@@ -265,10 +502,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		BUTTON_TEXT: 'Text',
 		BUTTON_LINK: 'Link',
 		ADD_BUTTON: 'Add Button',
-		PREVIEW_FIELD: 'Preview Field',
-		EDIT_FIELD: 'Edit Field',
-		QUESTION_TITLE: 'Question Title',
-		QUESTION_DESCRIPTION: 'Question Description',
+		PREVIEW_FIELD: 'Preview Question',
+		EDIT_FIELD: 'Edit Question',
+		QUESTION_TITLE: 'Title',
+		QUESTION_DESCRIPTION: 'Description',
 		OPTIONS: 'Options',
 		ADD_OPTION: 'Add Option',
 		NUM_OF_STEPS: 'Number of Steps',
@@ -1779,7 +2016,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.setForm = function(form){
             $scope.myform = form;
         };
-		
+
         $rootScope.resetForm = function(){
             $scope.myform = Forms.get({
                 formId: $stateParams.formId
@@ -1792,7 +2029,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.openDeleteModal = function(){
             $scope.deleteModal = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'myModalContent.html',
+				templateUrl: 'formDeleteModal.html',
 				controller: 'AdminFormController',
 				resolve: {
 					myForm: function(){
@@ -1806,7 +2043,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             	console.log('Modal dismissed at: ' + new Date());
             });
         };
-
 
         $scope.cancelDeleteModal = function(){
             if($scope.deleteModal){
@@ -1837,7 +2073,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, refreshAfterUpdate, cb){
 			refreshFrame();
 
             var continueUpdate = true;
@@ -1853,7 +2089,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
                 $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
                     .then(function(response){
-                        $rootScope.myform = $scope.myform = response.data;
+
+						if(refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
                         // console.log(response.data);
                     }).catch(function(response){
                         console.log('Error occured during form UPDATE.\n');
@@ -2022,6 +2259,14 @@ function removeDateFieldsFunc(o) {
     return clone;
 }
 
+function wait(ms){
+	var start = new Date().getTime();
+	var end = start;
+	while(end < start + ms) {
+		end = new Date().getTime();
+	}
+}
+
 _.mixin({ removeDateFields : removeDateFieldsFunc });
 
 angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', function($rootScope, $timeout) {
@@ -2058,8 +2303,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                 };
 
                 var debounceSave = function (diffChanges) {
-
-                    $rootScope[$attrs.autoSaveCallback](true, diffChanges,
+                    $rootScope[$attrs.autoSaveCallback](true, diffChanges, true,
                         function(err){
                         if(!err){
                             $formCtrl.$setPristine();
@@ -2071,9 +2315,10 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     });
                 };
 
+                //Autosave Form when model (specified in $attrs.autoSaveWatch) changes
                 $scope.$watch($attrs.autoSaveWatch, function(newValue, oldValue) {
 
-					if( !newValue.length || !oldValue.length ) {
+					if( !newValue || !oldValue ) {
 						$rootScope.finishedRender = true;
 						return;
 					}
@@ -2083,14 +2328,13 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 
 					delete newValue.visible_form_fields;
 					delete oldValue.visible_form_fields;
-
 					newValue.form_fields = _.removeDateFields(newValue.form_fields);
 					oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
-					var changedFields = !!DeepDiff.diff(oldValue.form_fields, newValue.form_fields) && DeepDiff.diff(oldValue.form_fields, newValue.form_fields).length > 0;
 					var changedStartPage = !!DeepDiff.diff(oldValue.startPage, newValue.startPage) && DeepDiff.diff(oldValue.startPage, newValue.startPage).length > 0;
+					var changedFields = !!DeepDiff.diff(oldValue.form_fields, newValue.form_fields) && DeepDiff.diff(oldValue.form_fields, newValue.form_fields).length > 0;
 
-					//If our form's startPage or fields have not changed, don't save form
+					//If our form's startPage or form fields have not changed, don't autosave form
 					if(!changedFields && !changedStartPage){
 						$rootScope.finishedRender = true;
 						return;
@@ -2100,20 +2344,20 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 						$rootScope.finishedRender = true;
 					}
 
-					//console.log('Autosaving');
-					//console.log('\n\n----------');
-                    //console.log('!$dirty: '+ !$formCtrl.$dirty );
+					console.log('Autosaving');
+					console.log('\n\n----------');
+                    console.log('$dirty: '+ $formCtrl.$dirty );
 
                     // console.log('changedFieldMap: '+changedFieldMap);
-					//console.log('finishedRender: '+$rootScope.finishedRender);
-                    //console.log('!saveInProgress: '+!$rootScope.saveInProgress);
+					// console.log('finishedRender: '+$rootScope.finishedRender);
+                    // console.log('!saveInProgress: '+!$rootScope.saveInProgress);
                     // console.log('newValue: '+newValue);
                     // console.log('oldValue: '+oldValue);
                     // console.log(oldValue.form_fields);
                     // console.log(newValue.form_fields);
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && (changedFields || changedStartPage) && !$rootScope.saveInProgress) {
+                    if($rootScope.finishedRender && (changedFields || changedStartPage) && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
@@ -2123,8 +2367,6 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                         savePromise = $timeout(function() {
 							$rootScope.saveInProgress = true;
 
-							delete newValue.visible_form_fields;
-							delete newValue.visible_form_fields;
 							var _diff = DeepDiff.diff(oldValue, newValue);
                             debounceSave(_diff);
                         });
@@ -2168,8 +2410,8 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
 
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields',
-    function ($rootScope, FormFields) {
+angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', '$uibModal',
+    function ($rootScope, FormFields, $uibModal) {
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
@@ -2187,6 +2429,39 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					appendTo: '.dropzone',
 					forceHelperSize: true,
 					forcePlaceholderSize: true
+				};
+
+				/*
+				 ** EditModal Functions
+				 */
+				$scope.openEditModal = function(curr_field){
+					$scope.editFieldModal = $uibModal.open({
+						animation: true,
+						templateUrl: 'editFieldModal.html',
+						windowClass: 'edit-field-modal-window',
+						controller:  ["$uibModalInstance", "$scope", function($uibModalInstance, $scope) {
+							$scope.field = curr_field;
+							$scope.showLogicJump = false;
+
+							$scope.$watch(function(oldValue, newValue){
+								console.log(newValue);
+							});
+
+							$scope.cancel = function(){
+							};
+						}]
+					});
+					$scope.editFieldModal.result.then(function (selectedItem) {
+						$scope.selected = selectedItem;
+					}, function () {
+						console.log('Edit Modal dismissed at: ' + new Date());
+					});
+				};
+
+				$scope.cancelEditModal = function(){
+					if($scope.editModal){
+						$scope.editFieldModal.dismiss('cancel');
+					}
 				};
 
 				/*
@@ -2286,7 +2561,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							shape: 'Heart'
 						}
 					}
-					
+
 					if($scope.showAddOptions(newField)){
 						newField.fieldOptions = [];
 						newField.fieldOptions.push({
@@ -2843,6 +3118,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 
             scope.setActiveField = $rootScope.setActiveField;
 
+			console.log(scope);
             //Set format only if field is a date
             if(scope.field.fieldType === 'date'){
                 scope.dateOptions = {

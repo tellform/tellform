@@ -1,0 +1,24 @@
+/*
+** Edit Field Modal
+*/
+.edit-field-modal-window .modal-dialog {
+	width: 90%;
+}
+
+.edit-field-modal-window .modal-body {
+	padding: 0;
+}
+
+.edit-field-modal-window .edit-field-panel {
+	background-color: #F1F1F1;
+	padding: 0 35px 0 35px;
+}
+
+.edit-field-modal-window .preview-field-panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.edit-field-modal-window .preview-field {
+	resize: vertical;
+}

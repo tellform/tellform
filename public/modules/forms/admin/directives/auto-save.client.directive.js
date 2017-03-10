@@ -15,6 +15,14 @@ function removeDateFieldsFunc(o) {
     return clone;
 }
 
+function wait(ms){
+	var start = new Date().getTime();
+	var end = start;
+	while(end < start + ms) {
+		end = new Date().getTime();
+	}
+}
+
 _.mixin({ removeDateFields : removeDateFieldsFunc });
 
 angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', function($rootScope, $timeout) {
@@ -51,8 +59,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                 };
 
                 var debounceSave = function (diffChanges) {
-
-                    $rootScope[$attrs.autoSaveCallback](true, diffChanges,
+                    $rootScope[$attrs.autoSaveCallback](true, diffChanges, true,
                         function(err){
                         if(!err){
                             $formCtrl.$setPristine();
@@ -93,20 +100,20 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 						$rootScope.finishedRender = true;
 					}
 
-					//console.log('Autosaving');
-					//console.log('\n\n----------');
-                    //console.log('!$dirty: '+ !$formCtrl.$dirty );
+					console.log('Autosaving');
+					console.log('\n\n----------');
+                    console.log('$dirty: '+ $formCtrl.$dirty );
 
                     // console.log('changedFieldMap: '+changedFieldMap);
-					//console.log('finishedRender: '+$rootScope.finishedRender);
-                    //console.log('!saveInProgress: '+!$rootScope.saveInProgress);
+					// console.log('finishedRender: '+$rootScope.finishedRender);
+                    // console.log('!saveInProgress: '+!$rootScope.saveInProgress);
                     // console.log('newValue: '+newValue);
                     // console.log('oldValue: '+oldValue);
                     // console.log(oldValue.form_fields);
                     // console.log(newValue.form_fields);
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if( $rootScope.finishedRender && (changedFields || changedStartPage) && !$rootScope.saveInProgress) {
+                    if($rootScope.finishedRender && (changedFields || changedStartPage) && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);

@@ -104,12 +104,12 @@ section.auth {
 }
 
 section.auth input.form-control {
+	min-height: 30px!important;
 	border: none;
 }
 
 input.form-control {
-	min-height: 30px!important;
-	height: 100% !important;
+	height: 30px;
 	border-radius: 4px;
 	box-shadow: none;
 	font-size: 18px;

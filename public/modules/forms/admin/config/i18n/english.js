@@ -5,9 +5,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	$translateProvider.translations('en', {
 
 		//Configure Form Tab View
-		PDF_GENERATION_EMR: 'PDF Generation/EMR',
-		SAVE_PDF_SUBMISSIONS: 'Save Submissions as PDFs?',
-		UPLOAD_YOUR_PDF: 'Upload Your PDF Template',
 		ADVANCED_SETTINGS: 'Advanced Settings',
 		FORM_NAME: 'Form Name',
 		FORM_STATUS: 'Form Status',
@@ -22,6 +19,14 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CREATE_A_NEW_FORM: 'Create a new form',
 		CREATE_FORM: 'Create form',
 		CREATED_ON: 'Created on',
+
+		//Edit Field Modal
+		EDIT_FIELD: 'Edit this Field',
+		SAVE_FIELD: 'Save',
+		ON: 'ON',
+		OFF: 'OFF',
+		REQUIRED_FIELD: 'Required',
+		LOGIC_JUMP: 'Logic Jump',
 
 		//Admin Form View
 		ARE_YOU_SURE: 'Are you ABSOLUTELY sure?',
@@ -39,7 +44,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		PREVIEW: 'Preview',
 
 		//Edit Form View
-		DISABLED: 'Disabled:',
+		DISABLED: 'Disabled',
 		YES: 'YES',
 		NO: 'NO',
 		ADD_LOGIC_JUMP: 'Add Logic Jump',
@@ -56,10 +61,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		BUTTON_TEXT: 'Text',
 		BUTTON_LINK: 'Link',
 		ADD_BUTTON: 'Add Button',
-		PREVIEW_FIELD: 'Preview Field',
-		EDIT_FIELD: 'Edit Field',
-		QUESTION_TITLE: 'Question Title',
-		QUESTION_DESCRIPTION: 'Question Description',
+		PREVIEW_FIELD: 'Preview Question',
+		EDIT_FIELD: 'Edit Question',
+		QUESTION_TITLE: 'Title',
+		QUESTION_DESCRIPTION: 'Description',
 		OPTIONS: 'Options',
 		ADD_OPTION: 'Add Option',
 		NUM_OF_STEPS: 'Number of Steps',

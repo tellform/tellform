@@ -51,7 +51,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.setForm = function(form){
             $scope.myform = form;
         };
-		
+
         $rootScope.resetForm = function(){
             $scope.myform = Forms.get({
                 formId: $stateParams.formId
@@ -64,7 +64,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         $scope.openDeleteModal = function(){
             $scope.deleteModal = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'myModalContent.html',
+				templateUrl: 'formDeleteModal.html',
 				controller: 'AdminFormController',
 				resolve: {
 					myForm: function(){
@@ -78,7 +78,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             	console.log('Modal dismissed at: ' + new Date());
             });
         };
-
 
         $scope.cancelDeleteModal = function(){
             if($scope.deleteModal){
@@ -109,7 +108,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, refreshAfterUpdate, cb){
 			refreshFrame();
 
             var continueUpdate = true;
@@ -125,7 +124,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
                 $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
                     .then(function(response){
-                        $rootScope.myform = $scope.myform = response.data;
+
+						if(refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
                         // console.log(response.data);
                     }).catch(function(response){
                         console.log('Error occured during form UPDATE.\n');
