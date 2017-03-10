@@ -29,7 +29,7 @@
 			}
 
 			$.ajaxSetup( { "async": false } );
-			var geoData = $.getJSON('//freegeoip.net/json/').responseJSON;
+			var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
 			$.ajaxSetup( { "async": true } );
 
 			// Create a new message object

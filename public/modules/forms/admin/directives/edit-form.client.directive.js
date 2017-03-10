@@ -33,32 +33,25 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
 
-							$scope.$watch(function(oldValue, newValue){
-								console.log(newValue);
-							});
+							$scope.saveField = function(){
+								curr_field = $scope.field;
 
+								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+									$uibModalInstance.close();
+								});
+							};
 							$scope.cancel = function(){
+								$uibModalInstance.close();
 							};
 						}
 					});
-					$scope.editFieldModal.result.then(function (selectedItem) {
-						$scope.selected = selectedItem;
-					}, function () {
-						console.log('Edit Modal dismissed at: ' + new Date());
-					});
-				};
-
-				$scope.cancelEditModal = function(){
-					if($scope.editModal){
-						$scope.editFieldModal.dismiss('cancel');
-					}
 				};
 
 				/*
 				**  Setup Angular-Input-Star Shape Dropdown
 				 */
 				//Populate Name to Font-awesomeName Conversion Map
-				 $scope.select2FA = {
+				$scope.select2FA = {
 					'Heart': 'Heart',
 					'Star': 'Star',
 					'thumbs-up': 'Thumbs Up',
@@ -91,24 +84,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
-
-				// LOGIC JUMP METHODS
-				$scope.removeLogicJump = function (field_index) {
-					$scope.myform.form_fields[field_index].logicJump.fieldA = null;
-					$scope.myform.form_fields[field_index].logicJump.valueB = null;
-				};
-
-				$scope.addNewLogicJump = function (field_index) {
-					var form_fields = $scope.myform.form_fields;
-					var currField = form_fields[field_index];
-					if (form_fields.length > 1 && currField._id) {
-
-						var newLogicJump = {
-							fieldA: currField._id
-						};
-						currField.logicJump = newLogicJump;
-					}
-				};
 
                 /*
                 ** FormFields (ui-sortable) drag-and-drop configuration
@@ -165,7 +140,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						//Add newField to form_fields array
                         $scope.myform.form_fields.push(newField);
                     }
-                    return newField;
+
+					$scope.openEditModal(newField);
                 };
 
                 // Delete particular field on button click

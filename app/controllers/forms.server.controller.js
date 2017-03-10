@@ -198,7 +198,6 @@ exports.update = function(req, res) {
 	var form = req.form;
 
 	if (req.body.changes) {
-		console.log(req.body.changes);
 		var formChanges = req.body.changes;
 
 		formChanges.forEach(function (change) {
@@ -207,8 +206,14 @@ exports.update = function(req, res) {
 	} else {
 		//Unless we have 'admin' privileges, updating form admin is disabled
 		if(req.body.form && req.user.roles.indexOf('admin') === -1) {
-			req.body.form.admin = null;
+			delete req.body.form.admin;
 		}
+
+		if(form.analytics == null){
+			form.analytics.visitors = [];
+			form.analytics.gaCode = '';
+		}
+
 		//Do this so we can create duplicate fields
 		var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
 		for(var i=0; i<req.body.form.form_fields.length; i++){
@@ -218,6 +223,7 @@ exports.update = function(req, res) {
 			}
 		}
 		form = _.extend(form, req.body.form);
+		console.log(form);
 	}
 
 	form.save(function(err, form) {

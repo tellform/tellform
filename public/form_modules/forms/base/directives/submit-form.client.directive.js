@@ -329,7 +329,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 				var getIpAndGeo = function(){
 					//Get Ip Address and GeoLocation Data
 					$.ajaxSetup( { "async": false } );
-					var geoData = $.getJSON('//freegeoip.net/json/').responseJSON;
+					var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
 					$.ajaxSetup( { "async": true } );
 
 					return {

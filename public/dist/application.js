@@ -130,7 +130,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html",
     "<div><div style=\"text-align: center; font-size: 20px;position: fixed; bottom: 0; right: 55px; background-color: gray; color: white; padding: 5px 15px 5px 10px; z-index: 10\">{{$message}}</div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/configure-form.client.view.html",
-    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
+    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-form.client.view.html",
     "<form class=\"row container\" name=editForm><script type=text/ng-template id=editFieldModal.html class=edit-field-modal><div class=\"modal-body\">\n" +
     "			<div class=\"row\">\n" +
@@ -211,17 +211,6 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "									<a></a>\n" +
     "								</span>\n" +
     "							</label>\n" +
-    "							<!--\n" +
-    "							<label class=\"btn col-xs-5\">\n" +
-    "								<input type=\"radio\" ng-value=\"true\" ng-model=\"field.required\" name=\"required{{field._id}}\"/>\n" +
-    "								<span> &nbsp; {{ 'YES' | translate }}</span>\n" +
-    "							</label>\n" +
-    "\n" +
-    "							<label class=\"btn col-xs-5 col-xs-offset-1\">\n" +
-    "								<input type=\"radio\" ng-value=\"false\" ng-model=\"field.required\" name=\"required{{field._id}}\"/>\n" +
-    "								<span> &nbsp; {{ 'NO' | translate }}</span>\n" +
-    "							</label>\n" +
-    "							-->\n" +
     "						</div>\n" +
     "					</div>\n" +
     "\n" +
@@ -236,19 +225,6 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "									<a></a>\n" +
     "								</span>\n" +
     "							</label>\n" +
-    "							<!--\n" +
-    "							<label class=\"btn col-xs-5\">\n" +
-    "								<input type=\"radio\" ng-value=\"true\"\n" +
-    "									   ng-model=\"field.disabled\" name=\"disabled{{field._id}}\"/>\n" +
-    "								<span> &nbsp; {{ 'YES' | translate }}</span>\n" +
-    "							</label>\n" +
-    "\n" +
-    "							<label class=\"btn col-xs-5 col-xs-offset-1\">\n" +
-    "								<input type=\"radio\" ng-value=\"false\"\n" +
-    "									   ng-model=\"field.disabled\" name=\"disabled{{field._id}}\"/>\n" +
-    "								<span> &nbsp; {{ 'NO' | translate }}</span>\n" +
-    "							</label>\n" +
-    "							-->\n" +
     "						</div>\n" +
     "					</div>\n" +
     "\n" +
@@ -256,7 +232,6 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						<div class=\"col-md-4 col-xs-12 field-input\">{{ 'LOGIC_JUMP' | translate }}</div>\n" +
     "						<div class=\"col-md-8 col-xs-12 field-input\">\n" +
     "							<label class=\"switch-light switch-holo\" onclick=\"\">\n" +
-    "								<button ng-click=\"showLogicJump = !showLogicJump\">Click</button>\n" +
     "								<input type=\"checkbox\" ng-model=\"showLogicJump\">\n" +
     "								<span>\n" +
     "									<span> {{ 'OFF' | translate }}</span>\n" +
@@ -266,9 +241,6 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "							</label>\n" +
     "						</div>\n" +
     "					</div>\n" +
-    "					<span>\n" +
-    "						showLogicJump: {{showLogicJump}}\n" +
-    "					</span>\n" +
     "					<div class=\"row question\" ng-if=\"!!showLogicJump\">\n" +
     "						<div class=\"col-md-4 col-sm-12\">\n" +
     "\n" +
@@ -335,7 +307,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						</div>\n" +
     "						<div class=\"col-md-2\">\n" +
     "\n" +
-    "							<b>Jumps to </b>\n" +
+    "							<b>then jump to </b>\n" +
     "						</div>\n" +
     "						<div class=\"col-md-10\">\n" +
     "							<select style=\"width:100%\" ng-model=\"field.logicJump.jumpTo\"\n" +
@@ -349,7 +321,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						</div>\n" +
     "					</div>\n" +
     "					<div class=\"modal-footer row\">\n" +
-    "						<button type=\"submit\" ng-click=\"update(false, null)\" class=\"btn btn-signup btn-rounded\">\n" +
+    "						<button type=\"submit\" ng-click=\"saveField(false, $parent.myform, false, true)\" class=\"btn btn-signup btn-rounded\">\n" +
     "							{{ 'SAVE_FIELD' | translate }}\n" +
     "						</button>\n" +
     "\n" +
@@ -360,8 +332,10 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "				</div>\n" +
     "\n" +
     "				<div class=\"preview-field-panel col-md-6 hidden-sm hidden-xs container\">\n" +
-    "					<field-directive field=\"field\" validate=\"false\" class=\"preview-field\">\n" +
-    "					</field-directive>\n" +
+    "					<form>\n" +
+    "						<field-directive field=\"field\" validate=\"false\" class=\"preview-field\">\n" +
+    "						</field-directive>\n" +
+    "					</form>\n" +
     "				</div>\n" +
     "			</div>\n" +
     "\n" +
@@ -468,6 +442,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		ON: 'ON',
 		OFF: 'OFF',
 		REQUIRED_FIELD: 'Required',
+		LOGIC_JUMP: 'Logic Jump',
 
 		//Admin Form View
 		ARE_YOU_SURE: 'Are you ABSOLUTELY sure?',
@@ -2073,7 +2048,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, refreshAfterUpdate, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
 			refreshFrame();
 
             var continueUpdate = true;
@@ -2082,28 +2057,58 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             }
 
             //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
-            if(continueUpdate){
-                var err = null;
+            if(continueUpdate) {
+				var err = null;
 
-                if(!updateImmediately){ $rootScope.saveInProgress = true; }
+				if (!updateImmediately) {
+					$rootScope.saveInProgress = true;
+				}
 
-                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
-                    .then(function(response){
+				if (isDiffed) {
+					$scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
+						.then(function (response) {
 
-						if(refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
-                        // console.log(response.data);
-                    }).catch(function(response){
-                        console.log('Error occured during form UPDATE.\n');
-                        // console.log(response.data);
-                        err = response.data;
-                    }).finally(function() {
-                        // console.log('finished updating');
-                        if(!updateImmediately){$rootScope.saveInProgress = false; }
+							if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+							// console.log(response.data);
+						}).catch(function (response) {
+							console.log('Error occured during form UPDATE.\n');
+							// console.log(response.data);
+							err = response.data;
+						}).finally(function () {
+							// console.log('finished updating');
+							if (!updateImmediately) {
+								$rootScope.saveInProgress = false;
+							}
 
-                        if( (typeof cb) === 'function'){
-                            return cb(err);
-                        }
-                    });
+							if ((typeof cb) === 'function') {
+								return cb(err);
+							}
+						});
+				} else {
+					var dataToSend = data;
+					delete dataToSend.analytics.visitors;
+					delete dataToSend.submissions;
+
+					$scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
+						.then(function (response) {
+
+							if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+
+						}).catch(function (response) {
+							console.log('Error occured during form UPDATE.\n');
+							// console.log(response.data);
+							err = response.data;
+						}).finally(function () {
+							// console.log('finished updating');
+							if (!updateImmediately) {
+								$rootScope.saveInProgress = false;
+							}
+
+							if ((typeof cb) === 'function') {
+								return cb(err);
+							}
+						});
+				}
             }
         };
 
@@ -2443,32 +2448,25 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
 
-							$scope.$watch(function(oldValue, newValue){
-								console.log(newValue);
-							});
+							$scope.saveField = function(){
+								curr_field = $scope.field;
 
+								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+									$uibModalInstance.close();
+								});
+							};
 							$scope.cancel = function(){
+								$uibModalInstance.close();
 							};
 						}]
 					});
-					$scope.editFieldModal.result.then(function (selectedItem) {
-						$scope.selected = selectedItem;
-					}, function () {
-						console.log('Edit Modal dismissed at: ' + new Date());
-					});
-				};
-
-				$scope.cancelEditModal = function(){
-					if($scope.editModal){
-						$scope.editFieldModal.dismiss('cancel');
-					}
 				};
 
 				/*
 				**  Setup Angular-Input-Star Shape Dropdown
 				 */
 				//Populate Name to Font-awesomeName Conversion Map
-				 $scope.select2FA = {
+				$scope.select2FA = {
 					'Heart': 'Heart',
 					'Star': 'Star',
 					'thumbs-up': 'Thumbs Up',
@@ -2501,24 +2499,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
-
-				// LOGIC JUMP METHODS
-				$scope.removeLogicJump = function (field_index) {
-					$scope.myform.form_fields[field_index].logicJump.fieldA = null;
-					$scope.myform.form_fields[field_index].logicJump.valueB = null;
-				};
-
-				$scope.addNewLogicJump = function (field_index) {
-					var form_fields = $scope.myform.form_fields;
-					var currField = form_fields[field_index];
-					if (form_fields.length > 1 && currField._id) {
-
-						var newLogicJump = {
-							fieldA: currField._id
-						};
-						currField.logicJump = newLogicJump;
-					}
-				};
 
                 /*
                 ** FormFields (ui-sortable) drag-and-drop configuration
@@ -2575,7 +2555,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						//Add newField to form_fields array
                         $scope.myform.form_fields.push(newField);
                     }
-                    return newField;
+
+					$scope.openEditModal(newField);
                 };
 
                 // Delete particular field on button click

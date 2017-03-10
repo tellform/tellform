@@ -130,7 +130,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html",
     "<div><div style=\"text-align: center; font-size: 20px;position: fixed; bottom: 0; right: 55px; background-color: gray; color: white; padding: 5px 15px 5px 10px; z-index: 10\">{{$message}}</div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/configure-form.client.view.html",
-    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
+    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-form.client.view.html",
     "<form class=\"row container\" name=editForm><script type=text/ng-template id=editFieldModal.html class=edit-field-modal><div class=\"modal-body\">\n" +
     "			<div class=\"row\">\n" +
@@ -211,17 +211,6 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "									<a></a>\n" +
     "								</span>\n" +
     "							</label>\n" +
-    "							<!--\n" +
-    "							<label class=\"btn col-xs-5\">\n" +
-    "								<input type=\"radio\" ng-value=\"true\" ng-model=\"field.required\" name=\"required{{field._id}}\"/>\n" +
-    "								<span> &nbsp; {{ 'YES' | translate }}</span>\n" +
-    "							</label>\n" +
-    "\n" +
-    "							<label class=\"btn col-xs-5 col-xs-offset-1\">\n" +
-    "								<input type=\"radio\" ng-value=\"false\" ng-model=\"field.required\" name=\"required{{field._id}}\"/>\n" +
-    "								<span> &nbsp; {{ 'NO' | translate }}</span>\n" +
-    "							</label>\n" +
-    "							-->\n" +
     "						</div>\n" +
     "					</div>\n" +
     "\n" +
@@ -236,19 +225,6 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "									<a></a>\n" +
     "								</span>\n" +
     "							</label>\n" +
-    "							<!--\n" +
-    "							<label class=\"btn col-xs-5\">\n" +
-    "								<input type=\"radio\" ng-value=\"true\"\n" +
-    "									   ng-model=\"field.disabled\" name=\"disabled{{field._id}}\"/>\n" +
-    "								<span> &nbsp; {{ 'YES' | translate }}</span>\n" +
-    "							</label>\n" +
-    "\n" +
-    "							<label class=\"btn col-xs-5 col-xs-offset-1\">\n" +
-    "								<input type=\"radio\" ng-value=\"false\"\n" +
-    "									   ng-model=\"field.disabled\" name=\"disabled{{field._id}}\"/>\n" +
-    "								<span> &nbsp; {{ 'NO' | translate }}</span>\n" +
-    "							</label>\n" +
-    "							-->\n" +
     "						</div>\n" +
     "					</div>\n" +
     "\n" +
@@ -256,7 +232,6 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						<div class=\"col-md-4 col-xs-12 field-input\">{{ 'LOGIC_JUMP' | translate }}</div>\n" +
     "						<div class=\"col-md-8 col-xs-12 field-input\">\n" +
     "							<label class=\"switch-light switch-holo\" onclick=\"\">\n" +
-    "								<button ng-click=\"showLogicJump = !showLogicJump\">Click</button>\n" +
     "								<input type=\"checkbox\" ng-model=\"showLogicJump\">\n" +
     "								<span>\n" +
     "									<span> {{ 'OFF' | translate }}</span>\n" +
@@ -266,9 +241,6 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "							</label>\n" +
     "						</div>\n" +
     "					</div>\n" +
-    "					<span>\n" +
-    "						showLogicJump: {{showLogicJump}}\n" +
-    "					</span>\n" +
     "					<div class=\"row question\" ng-if=\"!!showLogicJump\">\n" +
     "						<div class=\"col-md-4 col-sm-12\">\n" +
     "\n" +
@@ -335,7 +307,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						</div>\n" +
     "						<div class=\"col-md-2\">\n" +
     "\n" +
-    "							<b>Jumps to </b>\n" +
+    "							<b>then jump to </b>\n" +
     "						</div>\n" +
     "						<div class=\"col-md-10\">\n" +
     "							<select style=\"width:100%\" ng-model=\"field.logicJump.jumpTo\"\n" +
@@ -349,7 +321,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						</div>\n" +
     "					</div>\n" +
     "					<div class=\"modal-footer row\">\n" +
-    "						<button type=\"submit\" ng-click=\"update(false, null)\" class=\"btn btn-signup btn-rounded\">\n" +
+    "						<button type=\"submit\" ng-click=\"saveField(false, $parent.myform, false, true)\" class=\"btn btn-signup btn-rounded\">\n" +
     "							{{ 'SAVE_FIELD' | translate }}\n" +
     "						</button>\n" +
     "\n" +
@@ -360,8 +332,10 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "				</div>\n" +
     "\n" +
     "				<div class=\"preview-field-panel col-md-6 hidden-sm hidden-xs container\">\n" +
-    "					<field-directive field=\"field\" validate=\"false\" class=\"preview-field\">\n" +
-    "					</field-directive>\n" +
+    "					<form>\n" +
+    "						<field-directive field=\"field\" validate=\"false\" class=\"preview-field\">\n" +
+    "						</field-directive>\n" +
+    "					</form>\n" +
     "				</div>\n" +
     "			</div>\n" +
     "\n" +
@@ -666,7 +640,7 @@ angular.module('view-form').config(['$stateProvider',
 			}
 
 			$.ajaxSetup( { "async": false } );
-			var geoData = $.getJSON('//freegeoip.net/json/').responseJSON;
+			var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
 			$.ajaxSetup( { "async": true } );
 
 			// Create a new message object
@@ -1403,7 +1377,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 				var getIpAndGeo = function(){
 					//Get Ip Address and GeoLocation Data
 					$.ajaxSetup( { "async": false } );
-					var geoData = $.getJSON('//freegeoip.net/json/').responseJSON;
+					var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
 					$.ajaxSetup( { "async": true } );
 
 					return {

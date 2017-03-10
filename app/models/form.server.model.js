@@ -179,7 +179,11 @@ var FormSchema = new Schema({
 ** In-Form Analytics Virtual Attributes
  */
 FormSchema.virtual('analytics.views').get(function () {
-	return this.analytics.visitors.length;
+	if(this.analytics && this.analytics.visitors && this.analytics.visitors.length > 0){
+		return this.analytics.visitors.length;
+	} else {
+		return 0;
+	}
 });
 
 FormSchema.virtual('analytics.submissions').get(function () {
@@ -187,7 +191,11 @@ FormSchema.virtual('analytics.submissions').get(function () {
 });
 
 FormSchema.virtual('analytics.conversionRate').get(function () {
-	return this.submissions.length/this.analytics.visitors.length*100;
+	if(this.analytics && this.analytics.visitors && this.analytics.visitors.length > 0){
+		return this.submissions.length/this.analytics.visitors.length*100;
+	} else {
+		return 0;
+	}
 });
 
 FormSchema.virtual('analytics.fields').get(function () {

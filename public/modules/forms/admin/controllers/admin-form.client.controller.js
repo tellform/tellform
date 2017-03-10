@@ -108,7 +108,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, diffChanges, refreshAfterUpdate, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
 			refreshFrame();
 
             var continueUpdate = true;
@@ -117,28 +117,58 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
             }
 
             //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
-            if(continueUpdate){
-                var err = null;
+            if(continueUpdate) {
+				var err = null;
 
-                if(!updateImmediately){ $rootScope.saveInProgress = true; }
+				if (!updateImmediately) {
+					$rootScope.saveInProgress = true;
+				}
 
-                $scope.updatePromise = $http.put('/forms/'+$scope.myform._id, { changes: diffChanges })
-                    .then(function(response){
+				if (isDiffed) {
+					$scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
+						.then(function (response) {
 
-						if(refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
-                        // console.log(response.data);
-                    }).catch(function(response){
-                        console.log('Error occured during form UPDATE.\n');
-                        // console.log(response.data);
-                        err = response.data;
-                    }).finally(function() {
-                        // console.log('finished updating');
-                        if(!updateImmediately){$rootScope.saveInProgress = false; }
+							if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+							// console.log(response.data);
+						}).catch(function (response) {
+							console.log('Error occured during form UPDATE.\n');
+							// console.log(response.data);
+							err = response.data;
+						}).finally(function () {
+							// console.log('finished updating');
+							if (!updateImmediately) {
+								$rootScope.saveInProgress = false;
+							}
 
-                        if( (typeof cb) === 'function'){
-                            return cb(err);
-                        }
-                    });
+							if ((typeof cb) === 'function') {
+								return cb(err);
+							}
+						});
+				} else {
+					var dataToSend = data;
+					delete dataToSend.analytics.visitors;
+					delete dataToSend.submissions;
+
+					$scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
+						.then(function (response) {
+
+							if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+
+						}).catch(function (response) {
+							console.log('Error occured during form UPDATE.\n');
+							// console.log(response.data);
+							err = response.data;
+						}).finally(function () {
+							// console.log('finished updating');
+							if (!updateImmediately) {
+								$rootScope.saveInProgress = false;
+							}
+
+							if ((typeof cb) === 'function') {
+								return cb(err);
+							}
+						});
+				}
             }
         };
 

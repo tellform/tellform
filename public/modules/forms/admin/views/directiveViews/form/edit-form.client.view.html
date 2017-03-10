@@ -81,17 +81,6 @@
 									<a></a>
 								</span>
 							</label>
-							<!--
-							<label class="btn col-xs-5">
-								<input type="radio" ng-value="true" ng-model="field.required" name="required{{field._id}}"/>
-								<span> &nbsp; {{ 'YES' | translate }}</span>
-							</label>
-
-							<label class="btn col-xs-5 col-xs-offset-1">
-								<input type="radio" ng-value="false" ng-model="field.required" name="required{{field._id}}"/>
-								<span> &nbsp; {{ 'NO' | translate }}</span>
-							</label>
-							-->
 						</div>
 					</div>
 
@@ -106,19 +95,6 @@
 									<a></a>
 								</span>
 							</label>
-							<!--
-							<label class="btn col-xs-5">
-								<input type="radio" ng-value="true"
-									   ng-model="field.disabled" name="disabled{{field._id}}"/>
-								<span> &nbsp; {{ 'YES' | translate }}</span>
-							</label>
-
-							<label class="btn col-xs-5 col-xs-offset-1">
-								<input type="radio" ng-value="false"
-									   ng-model="field.disabled" name="disabled{{field._id}}"/>
-								<span> &nbsp; {{ 'NO' | translate }}</span>
-							</label>
-							-->
 						</div>
 					</div>
 
@@ -201,7 +177,7 @@
 						</div>
 						<div class="col-md-2">
 
-							<b>Jumps to </b>
+							<b>then jump to </b>
 						</div>
 						<div class="col-md-10">
 							<select style="width:100%" ng-model="field.logicJump.jumpTo"
@@ -215,7 +191,7 @@
 						</div>
 					</div>
 					<div class="modal-footer row">
-						<button type="submit" ng-click="update(false, null)" class="btn btn-signup btn-rounded">
+						<button type="submit" ng-click="saveField(false, $parent.myform, false, true)" class="btn btn-signup btn-rounded">
 							{{ 'SAVE_FIELD' | translate }}
 						</button>
 
@@ -226,8 +202,10 @@
 				</div>
 
 				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
-					<field-directive field="field" validate="false" class="preview-field">
-					</field-directive>
+					<form class="public-form"ss>
+						<field-directive field="field" validate="false" class="preview-field">
+						</field-directive>
+					</form>
 				</div>
 			</div>
 
@@ -566,7 +544,7 @@
 
 							<div class="row question" ng-if="myform.form_fields.length > 1 && myform.form_fields[$index].logicJump.fieldA">
 								<div class="col-md-4 col-sm-12">
-							
+
 									<b> If this field </b>
 								</div>
 								<div class="col-md-4 col-sm-12">
@@ -574,7 +552,7 @@
 											value="{{field.logicJump.expressionString}}"
 											name="logicjump_expressionString{{field._id}}">
 										<option value="field == static">
-							
+
 											is equal to
 										</option>
 										<option value="field != static">
@@ -591,32 +569,32 @@
 											is smaller than
 										</option>
 										<option value="field <= static" ng-if-end>
-											
+
 											is smaller or equal than
 										</option>
 
 										<option value="field contains static" ng-if-start="field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'">
-											
+
 											contains
 										</option>
 										<option value="field !contains static">
-											
+
 											does not contain
 										</option>
 										<option value="field ends static">
-											
+
 											ends with
 										</option>
 										<option value="field !ends static">
-											
+
 											does not end with
 										</option>
 										<option value="field starts static">
-											
+
 											starts with
 										</option>
 										<option value="field !starts static" ng-if-end>
-											
+
 											does not start with
 										</option>
 									</select>
@@ -625,7 +603,7 @@
 									<input type="text" ng-model="field.logicJump.valueB"/>
 								</div>
 								<div class="col-md-2">
-									
+
 									<b>Jumps to </b>
 								</div>
 								<div class="col-md-10">
