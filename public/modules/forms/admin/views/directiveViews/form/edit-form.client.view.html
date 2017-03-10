@@ -1,4 +1,4 @@
-<form class="row container" name="editForm"> <!--auto-save-form auto-save-watch="myform" auto-save-callback="update">-->
+<form class="row container" name="editForm" ><!--auto-save-form auto-save-watch="myform" auto-save-callback="update">-->
 
 	<!-- Edit Field Modal Dialog Template -->
 	<script type="text/ng-template" id="editFieldModal.html" class="edit-field-modal">
@@ -191,7 +191,7 @@
 						</div>
 					</div>
 					<div class="modal-footer row">
-						<button type="submit" ng-click="saveField(false, $parent.myform, false, true)" class="btn btn-signup btn-rounded">
+						<button type="submit" ng-click="saveField()" class="btn btn-signup btn-rounded">
 							{{ 'SAVE_FIELD' | translate }}
 						</button>
 
@@ -383,244 +383,23 @@
         <div class="row">
             <div class="col-sm-12 col-md-10 dropzoneContainer">
 
-                <accordion close-others="accordion.oneAtATime"
-						   ui-sortable="sortableOptions"
-						   ng-model="myform.form_fields"
-						   class="dropzone">
+                <div class="panel-group dropzone" ui-sortable="sortableOptions">
 
-                    <accordion-group ng-repeat="field in myform.form_fields track by field._id"
-									 is-open="false"
-									 on-finish-render="editFormFields"
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields"
 									 ng-if="!field.deletePreserved"
 									 ng-click="openEditModal(field)">
-                        <accordion-heading>
-                            <div class="handle">
-                                <span class="col-xs-1" ng-switch="field.fieldType">
-                                    <field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
-                                </span>
-                                <span class="col-xs-10">
-                                    {{field.title}} 
-                                    <span ng-show="field.required">*</span>
-                                </span>
-                                <span class="pull-right">
-                                    <i class="fa fa-chevron-right" ng-hide="accordion[$index].isOpen">
-                                    </i>
-                                    <i class="fa fa-chevron-down" ng-show="accordion[$index].isOpen">
-                                    </i>
-                                </span>
-                            </div>
-                        </accordion-heading>
-                        <!--
-						<div class="accordion-edit container">
-
-                            <div class="row hidden-sm hidden-xs">
-                                <div class="col-md-12">
-                                    <h4>{{ 'PREVIEW_FIELD' | translate }}</h4>
-                                </div>
-                                <ul class="col-md-12 container" style="list-style:none;border:2px lightgray solid;">
-                                    <field-directive field="field" validate="false">
-                                    </field-directive>
-                                </ul>
-                                <hr>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <h4>{{ 'EDIT_FIELD' | translate }}</h4>
-                                    <br>
-                                </div>
-                            </div>
-
-                            <div class="row question">
-                                <div class="col-md-4 col-sm-12">{{ 'QUESTION_TITLE' | translate }}:</div>
-                                <div class="col-md-8 col-sm-12">
-                                <input type="text" ng-model="field.title" name="title{{field._id}}" value="{{field.title}}" required></div>
-                            </div>
-
-                            <div class="row"><br></div>
-
-                            <div class="row description" ng-hide="showRatingOptions(field)">
-                                <div class="col-md-4 col-sm-12">{{ 'QUESTION_DESCRIPTION' | translate }}:</div>
-                                <div class="col-md-8 col-sm-12"><textarea type="text" ng-model="field.description" name="description{{field._id}}"value="{{field.description}}"></textarea> </div>
-                            </div>
-
-                            <div class="row" ng-show="showAddOptions(field)"><br></div>
-                            <div class="row options" ng-if="showAddOptions(field)">
-                                <div class="col-md-4 col-xs-12">{{ 'OPTIONS' | translate }}:</div>
-                                <div class="col-md-8 col-xs-12">
-                                    <div ng-repeat="option in field.fieldOptions track by option.option_id" class="row">
-                                        <input type="text" name="{{option.option_value}}{{field._id}}" ng-model="option.option_value" class="col-xs-5">
-
-                                        <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption($index, option)" class="col-xs-3">
-                                            <i class="fa fa-trash-o"></i>
-                                        </a>
-                                    </div>
-                                    <div class="row">
-                                        <button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption($index)">
-                                            <i class="icon-plus icon-white"></i> {{ 'ADD_OPTION' | translate }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-							<div class="row" ng-show="showRatingOptions(field)"><br></div>
-							<div class="row" ng-if="showRatingOptions(field)">
-								<div class="col-md-9 col-sm-9">{{ 'NUM_OF_STEPS' | translate }}</div>
-								<div class="col-md-3 col-sm-3">
-									<input style="width:100%" type="number"
-										   min="1" max="10"
-										   ng-model="field.ratingOptions.steps"
-										   name="ratingOptions_steps{{field._id}}"
-										   ng-value="{{field.ratingOptions.steps}}"
-										   required>
-								</div>
-								<br>
-								<div class="col-md-5 col-sm-9">Shape:</div>
-								<div class="col-md-7 col-sm-3">
-									<select style="width:100%" ng-model="field.ratingOptions.shape"
-											value="{{field.ratingOptions.steps}}"
-											name="ratingOptions_shape{{field._id}}" required>
-										<option ng-repeat="shapeType in field.ratingOptions.validShapes"
-												value="{{shapeType}}">
-											{{select2FA[shapeType]}}
-										</option>
-									</select>
-								</div>
+                        <div class="panel-heading">
+							<div class="row">
+								<span class="col-xs-1" ng-switch="field.fieldType">
+									<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
+								</span>
+								<span class="col-xs-11">
+									{{field.title}}
+									<span ng-show="field.required">*</span>
+								</span>
 							</div>
-
-                            <div class="row"><br></div>
-
-                            <div class="row">
-                                <div class="col-md-4 col-xs-12 field-title">Required:</div>
-                                <div class="col-md-8 col-xs-12 field-input">
-                                    <label class="btn col-xs-5">
-                                        <input type="radio" ng-value="true" ng-model="field.required" name="required{{field._id}}"/>
-                                        <span> &nbsp; {{ 'YES' | translate }}</span>
-                                    </label>
-
-                                    <label class="btn col-xs-5 col-xs-offset-1">
-                                        <input type="radio" ng-value="false" ng-model="field.required" name="required{{field._id}}"/>
-                                        <span> &nbsp; {{ 'NO' | translate }}</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4 col-xs-12 field-input">{{ 'DISABLED' | translate }}</div>
-                                <div class="col-md-8 col-xs-12 field-input">
-                                    <label class="btn col-xs-5">
-                                        <input type="radio" ng-value="true"
-                                        ng-model="field.disabled" name="disabled{{field._id}}"/>
-                                        <span> &nbsp; {{ 'YES' | translate }}</span>
-                                    </label>
-
-                                    <label class="btn col-xs-5 col-xs-offset-1">
-                                        <input type="radio" ng-value="false"
-                                        ng-model="field.disabled" name="disabled{{field._id}}"/>
-                                        <span> &nbsp; {{ 'NO' | translate }}</span>
-                                    </label>
-                                </div>
-                            </div>
-
-							<div class="row" ng-if="myform.form_fields.length > 1">
-								<h4> Logic Jump </h4>
-							</div>
-							<div class="row" ng-if="myform.form_fields.length > 1">
-								<div class="col-md-4 col-xs-12 field-input">{{ 'ADD_LOGIC_JUMP' | translate }}</div>
-								<div class="col-md-8 col-xs-12 field-input">
-									<label class="btn col-xs-5">
-										<input type="radio" ng-checked="!!myform.form_fields[$index].logicJump.valueB"
-											   name="logicJumpYes{{field._id}}" ng-click="addNewLogicJump($index)"/>
-										<span> &nbsp; {{ 'YES' | translate }}</span>
-									</label>
-
-									<label class="btn col-xs-5 col-xs-offset-1">
-										<input type="radio" ng-checked="!myform.form_fields[$index].logicJump.valueB"
-											   name="logicJumpNo{{field._id}}" ng-click="removeLogicJump($index)"/>
-										<span> &nbsp; {{ 'NO' | translate }}</span>
-									</label>
-								</div>
-							</div>
-
-							<div class="row question" ng-if="myform.form_fields.length > 1 && myform.form_fields[$index].logicJump.fieldA">
-								<div class="col-md-4 col-sm-12">
-
-									<b> If this field </b>
-								</div>
-								<div class="col-md-4 col-sm-12">
-									<select style="width:100%" ng-model="field.logicJump.expressionString"
-											value="{{field.logicJump.expressionString}}"
-											name="logicjump_expressionString{{field._id}}">
-										<option value="field == static">
-
-											is equal to
-										</option>
-										<option value="field != static">
-											is not equal to
-										</option>
-
-										<option value="field > static" ng-if-start="field.fieldType === 'number' || field.fieldType === 'rating' || field.fieldType === 'number'">
-											is greater than
-										</option>
-										<option value="field >= static">
-											is greater or equal than
-										</option>
-										<option value="field < static">
-											is smaller than
-										</option>
-										<option value="field <= static" ng-if-end>
-
-											is smaller or equal than
-										</option>
-
-										<option value="field contains static" ng-if-start="field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'">
-
-											contains
-										</option>
-										<option value="field !contains static">
-
-											does not contain
-										</option>
-										<option value="field ends static">
-
-											ends with
-										</option>
-										<option value="field !ends static">
-
-											does not end with
-										</option>
-										<option value="field starts static">
-
-											starts with
-										</option>
-										<option value="field !starts static" ng-if-end>
-
-											does not start with
-										</option>
-									</select>
-								</div>
-								<div class="col-md-4 col-sm-12">
-									<input type="text" ng-model="field.logicJump.valueB"/>
-								</div>
-								<div class="col-md-2">
-
-									<b>Jumps to </b>
-								</div>
-								<div class="col-md-10">
-									<select style="width:100%" ng-model="field.logicJump.jumpTo"
-											value="{{field.logicJump.jumpTo}}"
-											name="logicjump_jumpTo{{field._id}}">
-										<option ng-repeat="jump_field in myform.form_fields"
-												value="{{jump_field._id}}">
-											{{jump_field.title}}
-										</option>
-									</select>
-								</div>
-							</div>
-
                         </div>
-						-->
-                    </accordion-group>
+                    </div>
 
                     <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
                         <div class="panel-heading">
@@ -631,7 +410,7 @@
                     </div>
 
                     <hr>
-                </accordion>
+                </div>
             </div>
             <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">

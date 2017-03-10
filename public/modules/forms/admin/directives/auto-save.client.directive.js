@@ -59,7 +59,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                 };
 
                 var debounceSave = function (diffChanges) {
-                    $rootScope[$attrs.autoSaveCallback](true, diffChanges, true,
+                    $rootScope[$attrs.autoSaveCallback](true, diffChanges, true, true,
                         function(err){
                         if(!err){
                             $formCtrl.$setPristine();
@@ -87,11 +87,10 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
 					newValue.form_fields = _.removeDateFields(newValue.form_fields);
 					oldValue.form_fields = _.removeDateFields(oldValue.form_fields);
 
-					var changedStartPage = !!DeepDiff.diff(oldValue.startPage, newValue.startPage) && DeepDiff.diff(oldValue.startPage, newValue.startPage).length > 0;
 					var changedFields = !!DeepDiff.diff(oldValue.form_fields, newValue.form_fields) && DeepDiff.diff(oldValue.form_fields, newValue.form_fields).length > 0;
 
 					//If our form's startPage or form fields have not changed, don't autosave form
-					if(!changedFields && !changedStartPage){
+					if(!changedFields){
 						$rootScope.finishedRender = true;
 						return;
 					}
@@ -113,7 +112,7 @@ angular.module('forms').directive('autoSaveForm', ['$rootScope', '$timeout', fun
                     // console.log(newValue.form_fields);
 
                     //Save form ONLY IF rendering is finished, form_fields have been changed AND currently not save in progress
-                    if($rootScope.finishedRender && (changedFields || changedStartPage) && !$rootScope.saveInProgress) {
+                    if($rootScope.finishedRender && (changedFields) && !$rootScope.saveInProgress) {
 
                         if(savePromise) {
                             $timeout.cancel(savePromise);
