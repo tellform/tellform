@@ -188,6 +188,10 @@ exports.readForRender = function(req, res) {
 	delete newForm.isLive;
 	delete newForm.admin;
 
+	if(!newForm.startPage.showStart){
+		delete newForm.startPage;
+	}
+
 	return res.json(newForm);
 };
 
