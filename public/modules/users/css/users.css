@@ -109,7 +109,7 @@ section.auth input.form-control {
 }
 
 input.form-control {
-	height: 30px;
+	height: auto;
 	border-radius: 4px;
 	box-shadow: none;
 	font-size: 18px;
