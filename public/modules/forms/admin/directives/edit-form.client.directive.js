@@ -44,8 +44,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.showLogicJump = false;
 
 							$scope.saveField = function(){
-								curr_field = $scope.field;
 
+								$scope.myform.form_fields.push(curr_field);
 								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
 									$uibModalInstance.close();
 								});

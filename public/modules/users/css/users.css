@@ -9,7 +9,6 @@ section.auth {
 	background-color: #50B5C1; /* Old browsers */
 	background: -moz-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%);
 	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#50B5C1', endColorstr='#6450A0', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 }
