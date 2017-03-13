@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate', 'ng.deviceDetector'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -1176,15 +1176,11 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 ** Field Controls
                 */
 				var evaluateLogicJump = function(field){
-					console.log('evaluateLogicJump');
-					console.log(field.fieldValue);
 					var logicJump = field.logicJump;
 
 					if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
 						var parse_tree = jsep(logicJump.expressionString);
 						var left, right;
-
-						console.log(parse_tree);
 
 						if(parse_tree.left.name === 'field'){
 							left = field.fieldValue;
@@ -1502,7 +1498,7 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			socket: null
 		};
 
-		connect(window.location.protocol+'//'+window.location.hostname+':'+$window.socketPort);
+		connect(window.location.protocol+'//'+window.location.hostname + ':' + $window.socketPort);
 
 		return service;
 

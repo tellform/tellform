@@ -36,15 +36,14 @@
     "js-yaml": "^3.6.1",
     "angular-ui-select": "https://github.com/whitef0x0/ui-select.git#compiled",
     "angular-translate": "~2.11.0",
-    "ng-device-detector": "^3.0.1",
     "ng-translate": "*",
     "deep-diff": "^0.3.4",
-    "mathjs": "^3.4.1",
     "jsep": "^0.3.1",
     "ngclipboard": "^1.1.1",
     "mobile-detect": "^1.3.3",
     "socket.io-client": "^1.7.2",
-    "css-toggle-switch": "^4.0.2"
+    "css-toggle-switch": "^4.0.2",
+    "angular-strap": "^2.3.12"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",

@@ -6,9 +6,9 @@
 		.module('forms')
 		.factory('SendVisitorData', SendVisitorData);
 
-	SendVisitorData.$inject = ['Socket', '$state', '$http', 'deviceDetector'];
+	SendVisitorData.$inject = ['Socket', '$state', '$http'];
 
-	function SendVisitorData(Socket, $state, $http, deviceDetector) {
+	function SendVisitorData(Socket, $state, $http) {
 
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {

@@ -65,8 +65,6 @@
     "jit-grunt": "^0.9.1",
     "lodash": "^2.4.1",
     "main-bower-files": "~2.9.0",
-    "math": "0.0.3",
-    "mathjs": "^3.4.1",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
     "mongoose": "~4.4.19",
@@ -103,6 +101,7 @@
     "grunt-execute": "^0.2.2",
     "grunt-mocha-istanbul": "^3.0.1",
     "grunt-mocha-test": "~0.12.1",
+    "grunt-wiredep": "^3.0.1",
     "istanbul": "^0.4.0",
     "jasmine-core": "^2.4.1",
     "karma": "~0.13.14",
@@ -123,6 +122,7 @@
     "selenium-server": "^3.0.1",
     "should": "~7.1.1",
     "supertest": "~1.2.0",
-    "supertest-session": "~2.0.1"
+    "supertest-session": "~2.0.1",
+    "wiredep": "^4.0.0"
   }
 }

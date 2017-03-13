@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate', 'ng.deviceDetector'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -1028,7 +1028,7 @@ angular.module('core').service('Menus', [
 			socket: null
 		};
 
-		connect(window.location.protocol+'//'+window.location.hostname+':'+$window.socketPort);
+		connect(window.location.protocol+'//'+window.location.hostname);
 
 		return service;
 
@@ -1181,9 +1181,9 @@ angular.module('forms').config(['$stateProvider',
 		.module('forms')
 		.factory('SendVisitorData', SendVisitorData);
 
-	SendVisitorData.$inject = ['Socket', '$state', '$http', 'deviceDetector'];
+	SendVisitorData.$inject = ['Socket', '$state', '$http'];
 
-	function SendVisitorData(Socket, $state, $http, deviceDetector) {
+	function SendVisitorData(Socket, $state, $http) {
 
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {
@@ -2457,6 +2457,24 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
 
+							// decides whether field options block will be shown (true for dropdown and radio fields)
+							$scope.showAddOptions = function (field){
+								if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
+									return true;
+								} else {
+									return false;
+								}
+							};
+
+							// decides whether field options block will be shown (true for dropdown and radio fields)
+							$scope.showRatingOptions = function (field){
+								if(field.fieldType === 'rating'){
+									return true;
+								} else {
+									return false;
+								}
+							};
+
 							$scope.saveField = function(){
 
 								$scope.myform.form_fields.push(curr_field);
@@ -2568,6 +2586,24 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					$scope.openEditModal(newField);
                 };
 
+				// decides whether field options block will be shown (true for dropdown and radio fields)
+				$scope.showAddOptions = function (field){
+					if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
+						return true;
+					} else {
+						return false;
+					}
+				};
+
+				// decides whether field options block will be shown (true for dropdown and radio fields)
+				$scope.showRatingOptions = function (field){
+					if(field.fieldType === 'rating'){
+						return true;
+					} else {
+						return false;
+					}
+				};
+
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index) {
                     $scope.myform.form_fields.splice(field_index, 1);
@@ -2657,23 +2693,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     }
                 };
 
-                // decides whether field options block will be shown (true for dropdown and radio fields)
-                $scope.showAddOptions = function (field){
-                    if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
-                        return true;
-                    } else {
-                        return false;
-                    }
-                };
 
-				// decides whether field options block will be shown (true for dropdown and radio fields)
-				$scope.showRatingOptions = function (field){
-					if(field.fieldType === 'rating'){
-						return true;
-					} else {
-						return false;
-					}
-				};
 			}]
         };
     }

@@ -17,7 +17,7 @@
 			socket: null
 		};
 
-		connect(window.location.protocol+'//'+window.location.hostname+':'+$window.socketPort);
+		connect(window.location.protocol+'//'+window.location.hostname);
 
 		return service;
 
