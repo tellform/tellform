@@ -38,22 +38,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					$scope.editFieldModal = $uibModal.open({
 						animation: true,
 						templateUrl: 'editFieldModal.html',
-						windowClass: 'edit-field-modal-window',
+						windowClass: 'edit-modal-window',
 						controller:  function($uibModalInstance, $scope) {
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
-
-
-							//Populate AddField with all available form field types
-							$scope.addField = {};
-							$scope.addField.types = FormFields.types;
-
-							$scope.addField.types.forEach(function(type){
-								type.lastAddedID = 1;
-								return type;
-							});
-
-							$scope.lastButtonID = 0;
 
 							// decides whether field options block will be shown (true for dropdown and radio fields)
 							$scope.showAddOptions = function (field){
@@ -156,15 +144,115 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				};
 
 				/*
-				**  Setup Angular-Input-Star Shape Dropdown
+				 ** EditStartPageModal Functions
 				 */
+				$scope.openEditStartPageModal = function(){
+					$scope.editStartPageModal = $uibModal.open({
+						animation: true,
+						templateUrl: 'editStartPageModal.html',
+						windowClass: 'edit-modal-window',
+						controller:  function($uibModalInstance, $scope) {
 
+							/*
+							 **  startPage Button Methods
+							 */
 
+							$scope.showButtons = false;
+							$scope.lastButtonID = 0;
 
+							// add new Button to the startPage
+							$scope.addButton = function(){
 
-                // Accordion settings
-                $scope.accordion = {};
-                $scope.accordion.oneAtATime = true;
+								var newButton = {};
+								newButton.bgColor = '#ddd';
+								newButton.color = '#ffffff';
+								newButton.text = 'Button';
+								newButton._id = Math.floor(100000*Math.random());
+
+								$scope.myform.startPage.buttons.push(newButton);
+							};
+
+							// delete particular Button from startPage
+							$scope.deleteButton = function(button){
+								var currID;
+								for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
+
+									currID = $scope.myform.startPage.buttons[i]._id;
+
+									if(currID === button._id){
+										$scope.myform.startPage.buttons.splice(i, 1);
+										break;
+									}
+								}
+							};
+
+							$scope.saveStartPage = function(){
+								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+									$uibModalInstance.close();
+								});
+							};
+							$scope.cancel = function(){
+								$uibModalInstance.close();
+							};
+						}
+					});
+				};
+
+				/*
+				 ** EditStartPageModal Functions
+				 */
+				$scope.openEditEndPageModal = function(){
+					$scope.editEndPageModal = $uibModal.open({
+						animation: true,
+						templateUrl: 'editEndPageModal.html',
+						windowClass: 'edit-modal-window',
+						controller:  function($uibModalInstance, $scope) {
+
+							/*
+							 **  startPage Button Methods
+							 */
+
+							$scope.showButtons = false;
+							$scope.lastButtonID = 0;
+
+							// add new Button to the startPage
+							$scope.addButton = function(){
+
+								var newButton = {};
+								newButton.bgColor = '#ddd';
+								newButton.color = '#ffffff';
+								newButton.text = 'Button';
+								newButton._id = Math.floor(100000*Math.random());
+
+								$scope.myform.endPage.buttons.push(newButton);
+							};
+
+							// delete particular Button from startPage
+							$scope.deleteButton = function(button){
+								var currID;
+								for(var i = 0; i < $scope.myform.endPage.buttons.length; i++){
+
+									currID = $scope.myform.endPage.buttons[i]._id;
+
+									if(currID === button._id){
+										$scope.myform.endPage.buttons.splice(i, 1);
+										break;
+									}
+								}
+							};
+
+							$scope.saveEndPage = function(){
+								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+									$uibModalInstance.close();
+								});
+							};
+							$scope.cancel = function(){
+								$uibModalInstance.close();
+							};
+						}
+					});
+				};
+
 
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
@@ -249,6 +337,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index) {
                     $scope.myform.form_fields.splice(field_index, 1);
+					$scope.update(false, $scope.myform, false, true, null);
                 };
 
                 $scope.duplicateField = function (field_index){
@@ -258,38 +347,17 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                     //Insert field at selected index
                     $scope.myform.form_fields.splice(field_index+1, 0, currField);
+					$scope.update(false, $scope.myform, false, true, null);
                 };
 
+				//Populate AddField with all available form field types
+				$scope.addField = {};
+				$scope.addField.types = FormFields.types;
 
-                /*
-                **  startPage Button Methods
-                */
-
-                // add new Button to the startPage
-                $scope.addButton = function(){
-
-                    var newButton = {};
-                    newButton.bgColor = '#ddd';
-                    newButton.color = '#ffffff';
-                    newButton.text = 'Button';
-                    newButton._id = Math.floor(100000*Math.random());
-
-                    $scope.myform.startPage.buttons.push(newButton);
-                };
-
-                // delete particular Button from startPage
-                $scope.deleteButton = function(button){
-                    var currID;
-                    for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
-
-                        currID = $scope.myform.startPage.buttons[i]._id;
-
-                        if(currID === button._id){
-                            $scope.myform.startPage.buttons.splice(i, 1);
-                            break;
-                        }
-                    }
-                };
+				$scope.addField.types.forEach(function(type){
+					type.lastAddedID = 1;
+					return type;
+				});
 
 			}
         };

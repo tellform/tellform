@@ -130,11 +130,292 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html",
     "<div><div style=\"text-align: center; font-size: 20px;position: fixed; bottom: 0; right: 55px; background-color: gray; color: white; padding: 5px 15px 5px 10px; z-index: 10\">{{$message}}</div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/configure-form.client.view.html",
-    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
+    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Custom Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.endPage.showEnd ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.endPage.showEnd ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-form.client.view.html",
-    "<form class=\"row container\" name=editForm><script type=text/ng-template id=editFieldModal.html class=edit-field-modal><div class=\"modal-body\">\n" +
+    "<form class=\"row container\" name=editForm><script type=text/ng-template id=editEndPageModal.html class=edit-endpage-modal><div class=\"modal-body\">\n" +
     "			<div class=\"row\">\n" +
-    "				<div class=\"edit-field-panel col-md-6 col-xs-12 col-sm-12 container\">\n" +
+    "				<div class=\"edit-panel col-md-6 col-xs-12 col-sm-12 container\">\n" +
+    "					<div class=\"row modal-header\">\n" +
+    "						<h2 class=\"modal-title hidden-md hidden-lg\">{{ 'EDIT_END_PAGE' | translate }}</h2>\n" +
+    "						<h3 class=\"modal-title hidden-xs hidden-sm\">{{ 'EDIT_END_PAGE' | translate }}</h3>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row question\">\n" +
+    "						<div class=\"col-md-4 col-sm-12\">{{ 'TITLE' | translate }}:</div>\n" +
+    "						<div class=\"col-md-8 col-sm-12\">\n" +
+    "							<input class=\"form-control\" type=\"text\"\n" +
+    "								   ng-model=\"myform.endPage.title\" required>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\"><br></div>\n" +
+    "\n" +
+    "					<div class=\"row question\">\n" +
+    "						<div class=\"col-md-4 col-sm-12\">{{ 'PARAGRAPH' | translate }}:</div>\n" +
+    "						<div class=\"col-md-8 col-sm-12\">\n" +
+    "                                    <textarea class=\"form-control\" type=\"text\"\n" +
+    "											  ng-model=\"myform.endPage.paragraph\"></textarea>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\"><br></div>\n" +
+    "\n" +
+    "					<div class=\"row question\">\n" +
+    "						<div class=\"col-md-4 col-sm-12\">{{ 'BTN_TEXT' | translate }}:</div>\n" +
+    "						<div class=\"col-md-8 col-sm-12\">\n" +
+    "							<input class=\"form-control\" type=\"text\"\n" +
+    "								   ng-model=\"myform.endPage.buttonText\" required>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\"><br></div>\n" +
+    "\n" +
+    "					<div class=\"row\">\n" +
+    "						<div class=\"col-md-4 col-xs-12 field-input\">{{ 'SHOW_BUTTONS' | translate }}</div>\n" +
+    "						<div class=\"col-md-8 col-xs-12 field-input\">\n" +
+    "							<label class=\"switch-light switch-holo\" onclick=\"\">\n" +
+    "								<input type=\"checkbox\" ng-model=\"showButtons\">\n" +
+    "								<span>\n" +
+    "									<span> {{ 'OFF' | translate }}</span>\n" +
+    "									<span> {{ 'ON' | translate }}</span>\n" +
+    "									<a></a>\n" +
+    "								</span>\n" +
+    "							</label>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row options buttons\" ng-if=\"showButtons\">\n" +
+    "						<div class=\"col-md-3 col-xs-12\">Buttons:</div>\n" +
+    "						<div class=\"col-md-9 col-xs-12\">\n" +
+    "							<div ng-repeat=\"button in myform.endPage.buttons track by button._id\" class=\"row\" style=\"padding-bottom:1em;\">\n" +
+    "\n" +
+    "								<div class=\"col-xs-5\">\n" +
+    "									<span>{{ 'BUTTON_TEXT' | translate }}</span>\n" +
+    "									<input type=\"text\"\n" +
+    "										   name=\"{{button.text}}_buttonText_startPage\"\n" +
+    "										   ng-model=\"button.text\"\n" +
+    "										   value=\"{{button.text}}\"\n" +
+    "										   placeholder=\"Button Text\">\n" +
+    "								</div>\n" +
+    "\n" +
+    "\n" +
+    "								<div class=\"col-xs-5\">\n" +
+    "									<span>{{ 'BUTTON_LINK' | translate }}</span>\n" +
+    "									<input type=\"text\"\n" +
+    "										   name=\"{{button.url}}_url_startPage\"\n" +
+    "										   ng-model=\"button.url\"\n" +
+    "										   value=\"{{button.url}}\"\n" +
+    "										   placeholder=\"http://aeouaou.com/aoeuoa\">\n" +
+    "								</div>\n" +
+    "\n" +
+    "								<div class=\"col-xs-2\">\n" +
+    "									<a class=\"btn btn-danger btn-mini right\" type=\"button\" ng-click=\"deleteButton(button)\">\n" +
+    "										<i class=\"fa fa-trash-o\"></i>\n" +
+    "									</a>\n" +
+    "								</div>\n" +
+    "							</div>\n" +
+    "\n" +
+    "							<div class=\"row\"><br></div>\n" +
+    "							<div class=\"row\">\n" +
+    "								<button class=\"btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8\" type=\"button\" ng-click=\"addButton()\">\n" +
+    "									<i class=\"icon-plus icon-white\"></i> {{ 'ADD_BUTTON' | translate }}\n" +
+    "								</button>\n" +
+    "							</div>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"modal-footer row\">\n" +
+    "						<button type=\"submit\" ng-click=\"saveEndPage()\" class=\"btn btn-signup btn-rounded\">\n" +
+    "							{{ 'SAVE_START_PAGE' | translate }}\n" +
+    "						</button>\n" +
+    "\n" +
+    "						<button ng-click=\"cancel()\" class=\"btn btn-secondary btn-rounded\">\n" +
+    "							{{ 'CANCEL' | translate }}\n" +
+    "						</button>\n" +
+    "					</div>\n" +
+    "				</div>\n" +
+    "\n" +
+    "				<div class=\"preview-field-panel col-md-6 hidden-sm hidden-xs container\">\n" +
+    "					<form class=\"public-form\">\n" +
+    "\n" +
+    "						<div class=\"row\">\n" +
+    "							<div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word;\">\n" +
+    "								<h1 style=\"font-weight: 400; font-size: 25px;\">\n" +
+    "									{{myform.endPage.title}}\n" +
+    "								</h1>\n" +
+    "							</div>\n" +
+    "							<div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word;\">\n" +
+    "								<p style=\"color: grey; font-weight: 100; font-size: 16px;\">\n" +
+    "									{{myform.endPage.paragraph}}\n" +
+    "								</p>\n" +
+    "							</div>\n" +
+    "						</div>\n" +
+    "\n" +
+    "						<div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px;\">\n" +
+    "							<button ng-click=\"reloadForm()\" class=\"btn\" type=\"button\"\n" +
+    "									ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">\n" +
+    "			<span style=\"font-size: 1.6em;\">\n" +
+    "			{{myform.endPage.buttonText}}\n" +
+    "			</span>\n" +
+    "							</button>\n" +
+    "						</div>\n" +
+    "						<div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em;\">\n" +
+    "							<p ng-repeat=\"button in myform.endPage.buttons\" class=\"text-center\" style=\"display:inline;\">\n" +
+    "								<button class=\"btn\" style=\"background-color:rgb(156, 226, 235)\" type=\"button\" ng-style=\"{'background-color':button.bgColor, 'color':button.color}\">\n" +
+    "									<a href=\"{{button.url}}\"\n" +
+    "									   style=\"font-size: 1.6em; text-decoration: none;\"\n" +
+    "									   ng-style=\"{'color':button.color}\">\n" +
+    "										{{button.text}}\n" +
+    "									</a>\n" +
+    "								</button>\n" +
+    "							</p>\n" +
+    "						</div>\n" +
+    "\n" +
+    "					</form>\n" +
+    "				</div>\n" +
+    "			</div>\n" +
+    "\n" +
+    "		</div></script><script type=text/ng-template id=editStartPageModal.html class=edit-startpage-modal><div class=\"modal-body\">\n" +
+    "			<div class=\"row\">\n" +
+    "				<div class=\"edit-panel col-md-6 col-xs-12 col-sm-12 container\">\n" +
+    "					<div class=\"row modal-header\">\n" +
+    "						<h2 class=\"modal-title hidden-md hidden-lg\">{{ 'EDIT_START_PAGE' | translate }}</h2>\n" +
+    "						<h3 class=\"modal-title hidden-xs hidden-sm\">{{ 'EDIT_START_PAGE' | translate }}</h3>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row question\">\n" +
+    "						<div class=\"col-md-4 col-sm-12\">{{ 'INTRO_TITLE' | translate }}:</div>\n" +
+    "						<div class=\"col-md-8 col-sm-12\">\n" +
+    "							<input class=\"form-control\" type=\"text\"\n" +
+    "								   ng-model=\"myform.startPage.introTitle\"\n" +
+    "								   name=\"introTitleStartPage\" required>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\"><br></div>\n" +
+    "\n" +
+    "					<div class=\"row question\">\n" +
+    "						<div class=\"col-md-4 col-sm-12\">{{ 'INTRO_PARAGRAPH' | translate }}:</div>\n" +
+    "						<div class=\"col-md-8 col-sm-12\">\n" +
+    "                                    <textarea class=\"form-control\" type=\"text\"\n" +
+    "											  ng-model=\"myform.startPage.introParagraph\"\n" +
+    "											  name=\"introParagraphStartPage\"></textarea>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\"><br></div>\n" +
+    "\n" +
+    "					<div class=\"row question\">\n" +
+    "						<div class=\"col-md-4 col-sm-12\">{{ 'INTRO_BTN' | translate }}:</div>\n" +
+    "						<div class=\"col-md-8 col-sm-12\">\n" +
+    "							<input class=\"form-control\" type=\"text\"\n" +
+    "								   ng-model=\"myform.startPage.introButtonText\"\n" +
+    "								   name=\"introButtonText\" required>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row\"><br></div>\n" +
+    "\n" +
+    "					<div class=\"row\">\n" +
+    "						<div class=\"col-md-4 col-xs-12 field-input\">{{ 'SHOW_BUTTONS' | translate }}</div>\n" +
+    "						<div class=\"col-md-8 col-xs-12 field-input\">\n" +
+    "							<label class=\"switch-light switch-holo\" onclick=\"\">\n" +
+    "								<input type=\"checkbox\" ng-model=\"showButtons\">\n" +
+    "								<span>\n" +
+    "									<span> {{ 'OFF' | translate }}</span>\n" +
+    "									<span> {{ 'ON' | translate }}</span>\n" +
+    "									<a></a>\n" +
+    "								</span>\n" +
+    "							</label>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"row options buttons\" ng-if=\"showButtons\">\n" +
+    "						<div class=\"col-md-3 col-xs-12\">Buttons:</div>\n" +
+    "						<div class=\"col-md-9 col-xs-12\">\n" +
+    "							<div ng-repeat=\"button in myform.startPage.buttons track by button._id\" class=\"row\" style=\"padding-bottom:1em;\">\n" +
+    "\n" +
+    "								<div class=\"col-xs-5\">\n" +
+    "									<span>{{ 'BUTTON_TEXT' | translate }}</span>\n" +
+    "									<input type=\"text\"\n" +
+    "										   name=\"{{button.text}}_buttonText_startPage\"\n" +
+    "										   ng-model=\"button.text\"\n" +
+    "										   value=\"{{button.text}}\"\n" +
+    "										   placeholder=\"Button Text\">\n" +
+    "								</div>\n" +
+    "\n" +
+    "\n" +
+    "								<div class=\"col-xs-5\">\n" +
+    "									<span>{{ 'BUTTON_LINK' | translate }}</span>\n" +
+    "									<input type=\"text\"\n" +
+    "										   name=\"{{button.url}}_url_startPage\"\n" +
+    "										   ng-model=\"button.url\"\n" +
+    "										   value=\"{{button.url}}\"\n" +
+    "										   placeholder=\"http://aeouaou.com/aoeuoa\">\n" +
+    "								</div>\n" +
+    "\n" +
+    "								<div class=\"col-xs-2\">\n" +
+    "									<a class=\"btn btn-danger btn-mini right\" type=\"button\" ng-click=\"deleteButton(button)\">\n" +
+    "										<i class=\"fa fa-trash-o\"></i>\n" +
+    "									</a>\n" +
+    "								</div>\n" +
+    "							</div>\n" +
+    "\n" +
+    "							<div class=\"row\"><br></div>\n" +
+    "							<div class=\"row\">\n" +
+    "								<button class=\"btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8\" type=\"button\" ng-click=\"addButton()\">\n" +
+    "									<i class=\"icon-plus icon-white\"></i> {{ 'ADD_BUTTON' | translate }}\n" +
+    "								</button>\n" +
+    "							</div>\n" +
+    "						</div>\n" +
+    "					</div>\n" +
+    "\n" +
+    "					<div class=\"modal-footer row\">\n" +
+    "						<button type=\"submit\" ng-click=\"saveStartPage()\" class=\"btn btn-signup btn-rounded\">\n" +
+    "							{{ 'SAVE_START_PAGE' | translate }}\n" +
+    "						</button>\n" +
+    "\n" +
+    "						<button ng-click=\"cancel()\" class=\"btn btn-secondary btn-rounded\">\n" +
+    "							{{ 'CANCEL' | translate }}\n" +
+    "						</button>\n" +
+    "					</div>\n" +
+    "				</div>\n" +
+    "\n" +
+    "				<div class=\"preview-field-panel col-md-6 hidden-sm hidden-xs container\">\n" +
+    "					<form class=\"public-form\">\n" +
+    "\n" +
+    "						<div class=\"field row\">\n" +
+    "							<div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word;\">\n" +
+    "								<h1>{{myform.startPage.introTitle}}</h1>\n" +
+    "							</div>\n" +
+    "							<div class=\"col-xs-10 col-xs-offset-1 text-left\" style=\"overflow-wrap: break-word;\">\n" +
+    "								<p style=\"color:#ddd;\">{{myform.startPage.introParagraph}}</p>\n" +
+    "							</div>\n" +
+    "						</div>\n" +
+    "						<div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em;\">\n" +
+    "							<p ng-repeat=\"button in myform.startPage.buttons\" class=\"text-center\" style=\"display:inline;\">\n" +
+    "								<button class=\"btn btn-info\" type=\"button\" ng-style=\"{'background-color':button.bgColor, 'color':button.color}\">\n" +
+    "									<a href=\"{{button.url}}\" style=\"font-size: 1.6em; text-decoration: none; color: inherit;\" >\n" +
+    "										{{button.text}}\n" +
+    "									</a>\n" +
+    "								</button>\n" +
+    "							</p>\n" +
+    "						</div>\n" +
+    "						<div class=\"row form-actions\">\n" +
+    "							<button class=\"btn btn-info btn btn-info col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3\" type=\"button\">\n" +
+    "										<span style=\"color:white; font-size: 1.6em; text-decoration: none;\">\n" +
+    "											{{myform.startPage.introButtonText}}\n" +
+    "										</span>\n" +
+    "							</button>\n" +
+    "						</div>\n" +
+    "\n" +
+    "					</form>\n" +
+    "				</div>\n" +
+    "			</div>\n" +
+    "\n" +
+    "		</div></script><script type=text/ng-template id=editFieldModal.html class=edit-field-modal><div class=\"modal-body\">\n" +
+    "			<div class=\"row\">\n" +
+    "				<div class=\"edit-panel col-md-6 col-xs-12 col-sm-12 container\">\n" +
     "					<div class=\"row modal-header\">\n" +
     "						<h2 class=\"modal-title hidden-md hidden-lg\">{{ 'EDIT_FIELD' | translate }}</h2>\n" +
     "						<h3 class=\"modal-title hidden-xs hidden-sm\">{{ 'EDIT_FIELD' | translate }}</h3>\n" +
@@ -339,7 +620,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "				</div>\n" +
     "			</div>\n" +
     "\n" +
-    "		</div></script><div class=\"col-xs-2 col-sm-4 add-field\"><div class=\"row add-field-title\"><h3 class=\"col-md-12 hidden-sm hidden-xs\">{{ 'ADD_FIELD_LG' | translate }}</h3><h4 class=\"col-sm-12 hidden-xs hidden-md hidden-lg\">{{ 'ADD_FIELD_MD' | translate }}</h4><h5 class=\"col-xs-12 hidden-sm hidden-md hidden-lg\">{{ 'ADD_FIELD_SM' | translate }}</h5></div><div class=\"panel-group row\" class=draggable ng-model=addField.types><div class=\"col-xs-12 col-sm-12 col-md-6\" ng-repeat=\"type in addField.types\" style=padding-top:7.5px><div class=\"panel panel-default\" style=background-color:#f5f5f5><div class=panel-heading ng-click=\"addNewField(false, type.name)\" style=\"cursor: pointer; font-size:12px; padding-left: 10px; padding-right: 10px\"><span><field-icon-directive type-name={{type.name}}></field-icon-directive></span> <span class=hidden-xs style=padding-left:0.3em>{{type.value}}</span></div></div></div></div></div><div class=\"col-xs-10 col-sm-8 current-fields container\"><div class=row><div class=col-sm-12><div class=\"panel panel-default startPage\"><div class=\"panel-heading accordion-toggle collapsed\" data-toggle=collapse data-target=#collapseStart><h4 class=text-center>{{ 'WELCOME_SCREEN' | translate }} <span class=pull-right><i class=\"fa fa-chevron-right\" ng-hide=startPage.isOpen></i> <i class=\"fa fa-chevron-down\" ng-show=startPage.isOpen></i></span></h4></div><div id=collapseStart class=\"panel-collapse collapse\"><div class=panel-body><div class=\"row hidden-sm hidden-xs\"><div class=col-md-12><h4>{{ 'PREVIEW_START_PAGE' | translate }}</h4></div><ul class=\"col-md-12 container\" style=\"list-style:none; border:2px lightgray solid; padding-bottom: 2em\"><div class=\"field row\"><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1>{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\" style=\"overflow-wrap: break-word\"><p style=color:#ddd>{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><button class=\"btn btn-info btn btn-info col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3\" type=button><span style=\"color:white; font-size: 1.6em; text-decoration: none\">{{myform.startPage.introButtonText}}</span></button></div></ul></div><div class=row><div class=col-xs-12><h4>{{ 'EDIT_START_PAGE' | translate }}</h4><br></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_TITLE' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introTitle name=introTitleStartPage value={{myform.startPage.introTitle}} required></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_PARAGRAPH' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><textarea type=text ng-model=myform.startPage.introParagraph name=introParagraphStartPage></textarea></div></div><div class=\"row question\"><div class=\"col-md-4 col-sm-12\">{{ 'INTRO_BTN' | translate }}:</div><div class=\"col-md-8 col-sm-12\"><input ng-model=myform.startPage.introButtonText name=introButtonText value={{myform.startPage.introButtonText}} required></div></div><div class=row><br><br></div><div class=\"row options buttons\"><div class=\"col-md-3 col-xs-12\">Buttons:</div><div class=\"col-md-9 col-xs-12\"><div ng-repeat=\"button in myform.startPage.buttons track by button._id\" class=row style=padding-bottom:1em><div class=col-xs-5><span>{{ 'BUTTON_TEXT' | translate }}</span> <input name={{button.text}}_buttonText_startPage ng-model=button.text value={{button.text}} placeholder=\"Button Text\"></div><div class=col-xs-5><span>{{ 'BUTTON_LINK' | translate }}</span> <input name={{button.url}}_url_startPage ng-model=button.url value={{button.url}} placeholder=http://aeouaou.com/aoeuoa></div><div class=col-xs-2><a class=\"btn btn-danger btn-mini right\" type=button ng-click=deleteButton(button)><i class=\"fa fa-trash-o\"></i></a></div></div><div class=row><br></div><div class=row><button class=\"btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8\" type=button ng-click=addButton()><i class=\"icon-plus icon-white\"></i> {{ 'ADD_BUTTON' | translate }}</button></div></div></div></div></div></div></div></div><div class=row><div class=col-sm-12><hr></div></div><div class=row><div class=\"col-sm-12 col-md-10 dropzoneContainer\"><div class=\"panel-group dropzone\" ui-sortable=sortableOptions><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved ng-click=openEditModal(field)><div class=panel-heading><div class=row><span class=col-xs-1 ng-switch=field.fieldType><field-icon-directive type-name={{field.fieldType}}></field-icon-directive></span> <span class=col-xs-11>{{field.title}} <span ng-show=field.required>*</span></span></div></div></div><div class=\"panel panel-default\" style=\"border-style: dashed; border-color: #a9a9a9\"><div class=panel-heading><h4 class=\"panel-title text-center\" style=\"color: #a9a9a9\">{{ 'CLICK_FIELDS_FOOTER' | translate }}</h4></div></div><hr></div></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=deleteField($index)><span class=text-center><a href=\"\" class=\"fa fa-trash-o\"></a></span></div></div></div></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=duplicateField($index)><span class=text-center><a href=\"\" class=\"fa fa-files-o\"></a></span></div></div></div></div></div></div></form>");
+    "		</div></script><div class=\"col-xs-2 col-sm-4 add-field\"><div class=\"row add-field-title\"><h3 class=\"col-md-12 hidden-sm hidden-xs\">{{ 'ADD_FIELD_LG' | translate }}</h3><h4 class=\"col-sm-12 hidden-xs hidden-md hidden-lg\">{{ 'ADD_FIELD_MD' | translate }}</h4><h5 class=\"col-xs-12 hidden-sm hidden-md hidden-lg\">{{ 'ADD_FIELD_SM' | translate }}</h5></div><div class=\"panel-group row\" class=draggable ng-model=addField.types><div class=\"col-xs-12 col-sm-12 col-md-6\" ng-repeat=\"type in addField.types\" style=padding-top:7.5px><div class=\"panel panel-default\" style=background-color:#f5f5f5><div class=panel-heading ng-click=\"addNewField(false, type.name)\" style=\"cursor: pointer; font-size:12px; padding-left: 10px; padding-right: 10px\"><span><field-icon-directive type-name={{type.name}}></field-icon-directive></span> <span class=hidden-xs style=padding-left:0.3em>{{type.value}}</span></div></div></div></div></div><div class=\"col-xs-10 col-sm-8 current-fields container\"><div class=row ng-if=myform.startPage.showStart><div class=col-sm-12><div class=\"panel panel-default startPage\" ng-click=openEditStartPageModal()><div class=panel-heading><h4 class=text-center>{{ 'WELCOME_SCREEN' | translate }}</h4></div></div></div></div><div class=row><div class=col-sm-12><hr></div></div><div class=row><div class=\"col-sm-12 col-md-10 dropzoneContainer\"><div class=\"panel-group dropzone\" ui-sortable=sortableOptions><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved ng-click=openEditModal(field)><div class=panel-heading><div class=row><span class=col-xs-1 ng-switch=field.fieldType><field-icon-directive type-name={{field.fieldType}}></field-icon-directive></span> <span class=col-xs-11>{{field.title}} <span ng-show=field.required>*</span></span></div></div></div><div class=\"panel panel-default\" style=\"border-style: dashed; border-color: #a9a9a9\"><div class=panel-heading><h4 class=\"panel-title text-center\" style=\"color: #a9a9a9\">{{ 'CLICK_FIELDS_FOOTER' | translate }}</h4></div></div><hr></div></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=deleteField($index)><span class=text-center><a href=\"\" class=\"fa fa-trash-o\"></a></span></div></div></div></div><div class=\"col-md-1 hidden-xs hidden-sm\" style=\"padding:0 5px\"><div class=\"panel-group tool-panel text-center\"><div class=\"panel panel-default\" ng-repeat=\"field in myform.form_fields track by field._id\" ng-if=!field.deletePreserved><div class=panel-heading style=\"padding: 10px 10px; height: 37px\" ng-click=duplicateField($index)><span class=text-center><a href=\"\" class=\"fa fa-files-o\"></a></span></div></div></div></div></div><div class=row ng-if=myform.endPage.showEnd><div class=col-sm-12><div class=\"panel panel-default startPage\" ng-click=openEditEndPageModal()><div class=panel-heading><h4 class=text-center>{{ 'END_SCREEN' | translate }}</h4></div></div></div></div></div></form>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-submissions-form.client.view.html",
     "<div class=\"submissions-table container\"><div class=\"row text-center analytics\"><div class=\"col-xs-12 header-title\"><div class=col-xs-3>{{ 'TOTAL_VIEWS' | translate }}</div><div class=col-xs-3>{{ 'RESPONSES' | translate }}</div><div class=col-xs-3>{{ 'COMPLETION_RATE' | translate }}</div><div class=col-xs-3>{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div></div><div class=\"col-xs-12 header-numbers\"><div class=col-xs-3>{{myform.analytics.views}}</div><div class=col-xs-3>{{myform.analytics.submissions}}</div><div class=col-xs-3>{{myform.analytics.conversionRate | number:0}}%</div><div class=col-xs-3>{{ AverageTimeElapsed | secondsToDateTime | date:'mm:ss'}}</div></div><div class=\"col-xs-12 detailed-title\"><div class=col-xs-3>{{ 'DESKTOP_AND_LAPTOP' | translate }}</div><div class=col-xs-3>{{ 'TABLETS' | translate }}</div><div class=col-xs-3>{{ 'PHONES' | translate }}</div><div class=col-xs-3>{{ 'OTHER' | translate }}</div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.desktop.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.tablet.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.tablet.visits}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'UNIQUE_VISITS' | translate }}</div><div class=row>{{DeviceStatistics.other.visits}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.desktop.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.tablet.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.phone.responses}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'RESPONSES' | translate }}</div><div class=row>{{DeviceStatistics.other.responses}}</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.desktop.completion}}%</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.tablet.completion}}%</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.phone.completion}}%</div></div><div class=col-xs-3><div class=\"row header\">{{ 'COMPLETION_RATE' | translate }}</div><div class=row>{{DeviceStatistics.other.completion}}%</div></div></div><div class=\"col-xs-12 detailed-row\"><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.desktop.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.tablet.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.phone.average_time | secondsToDateTime | date:'mm:ss'}}</div></div><div class=col-xs-3><div class=\"row header\">{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}</div><div class=row>{{DeviceStatistics.other.average_time | secondsToDateTime | date:'mm:ss'}}</div></div></div><div class=\"col-xs-12 field-title-row\"><div class=col-xs-3><strong>{{ 'FIELD_TITLE' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_VIEWS' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_RESPONSES' | translate }}</strong></div><div class=col-xs-3><strong>{{ 'FIELD_DROPOFF' | translate }}</strong></div></div><div class=\"col-xs-12 field-detailed-row\" ng-repeat=\"fieldStats in myform.analytics.fields\"><div class=col-xs-3>{{fieldStats.field.title}}</div><div class=col-xs-3>{{fieldStats.totalViews}}</div><div class=col-xs-3>{{fieldStats.responses}}</div><div class=col-xs-3>{{fieldStats.continueRate}}%</div></div></div><br><div class=\"row table-tools\"><div class=col-xs-2><button class=\"btn btn-danger\" ng-click=deleteSelectedSubmissions() ng-disabled=!isAtLeastOneChecked();><i class=\"fa fa-trash-o\"></i> {{ 'DELETE_SELECTED' | translate }}</button></div><div class=\"col-xs-2 col-xs-offset-4 text-right\"><button class=\"btn btn-gray\" ng-click=\"exportSubmissions('xml')\"><small>{{ 'EXPORT_TO_EXCEL' | translate }}</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-gray\" ng-click=\"exportSubmissions('csv')\"><small>{{ 'EXPORT_TO_CSV' | translate }}</small></button></div><div class=\"col-md-2 text-right\"><button class=\"btn btn-gray\" ng-click=\"exportSubmissions('json')\"><small>{{ 'EXPORT_TO_JSON' | translate }}</small></button></div></div><div class=\"row table-outer\"><div class=col-xs-12><table id=table-submission-data class=\"table table-striped table-hover table-condensed\"><thead><tr><th><input ng-model=table.masterChecker ng-change=toggleAllCheckers() type=\"checkbox\"></th><th>#</th><th data-ng-repeat=\"(key, value) in myform.form_fields\">{{value.title}}</th><th>{{ 'PERCENTAGE_COMPLETE' | translate }}</th><th>{{ 'TIME_ELAPSED' | translate }}</th><th>{{ 'DEVICE' | translate }}</th><th>{{ 'LOCATION' | translate }}</th><th>{{ 'IP_ADDRESS' | translate }}</th><th>{{ 'DATE_SUBMITTED' | translate }} (UTC)</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.rows\" ng-click=rowClicked($index) ng-class=\"{selected: row.selected === true}\"><td><input ng-model=row.selected type=\"checkbox\"></td><th class=scope>{{$index+1}}</th><td data-ng-repeat=\"field in row.form_fields\">{{field.fieldValue}}</td><td>{{row.percentageComplete}}%</td><td>{{row.timeElapsed | secondsToDateTime | date:'mm:ss'}}</td><td>{{row.device.name}}, {{row.device.type}}</td><td>{{row.geoLocation.City}}, {{row.geoLocation.Country}}</td><td>{{row.ipAddr}}</td><td>{{row.created | date:'yyyy-MM-dd HH:mm:ss'}}</td></tr></tbody></table></div></div></div>");
   $templateCache.put("modules/forms/base/views/directiveViews/entryPage/startPage.html",
@@ -368,7 +649,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/forms/base/views/directiveViews/field/yes_no.html",
     "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" on-tab-and-shift-key=prevField() key-to-truthy key-char-truthy=y key-char-falsey=n field=field><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=\"row col-xs-12\"><label class=\"btn btn-default\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-model=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'Y' | translate }}</div><span>{{ 'YES' | translate }}</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=\"row col-xs-12\" style=\"margin-top: 10px\"><label class=\"btn btn-default\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'N' | translate }}</div><span>{{ 'NO' | translate }}</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
   $templateCache.put("modules/forms/base/views/directiveViews/form/submit-form.client.view.html",
-    "<section class=\"overlay submitform\" ng-if=\"loading || (!myform.submitted && !myform.startPage.showStart)\"></section><div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted style=\"padding-top: 35vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; nont-size: 25px\">{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"color: grey; font-weight: 100; font-size: 16px\">{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=exitStartPage() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{myform.startPage.introButtonText}}</span></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div><div class=form-fields ng-show=\"!myform.submitted && !myform.startPage.showStart\" ng-style=\"{ 'border-color': myform.design.colors.buttonTextColor }\"><div class=row><form name=forms.myForm novalidate class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\"><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved data-index={{$index}} data-id={{field._id}} ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index forms=forms></field-directive></div></form></div><div class=\"row form-actions\" id=submit_field ng-class=\"{activeField: selected._id == 'submit_field' }\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor}\" style=\"border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; margin-top: 30vh; height: 100vh\"><div class=\"col-xs-12 text-left\" style=\"background-color:#990000; color:white\" ng-if=forms.myForm.$invalid>{{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}</div><button ng-if=!forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" v-busy=loading v-busy-label=\"Please wait\" v-pressable ng-disabled=\"loading || forms.myForm.$invalid\" ng-click=submitForm() on-enter-key=submitForm() on-enter-key-disabled=\"loading || forms.myForm.$invalid\" ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em\">{{ 'SUBMIT' | translate }}</button> <button ng-if=forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" ng-click=goToInvalid() on-enter-key=goToInvalid() on-enter-key-disabled=!forms.myForm.$invalid style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white\">{{ 'REVIEW' | translate }}</button><div class=\"col-sm-2 hidden-xs\" style=\"font-size: 75%; margin-top:3.25em\"><small>{{ 'ENTER' | translate }}</small></div></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}\"><div class=container-fluid><div class=row><div class=\"col-sm-5 col-md-6 col-xs-5\" ng-show=!myform.submitted><p class=lead>{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p></div><div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 col-xs-offset-1 col-xs-6 row\"><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=!authentication.isAuthenticated()><a href=/#!/forms class=btn ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">{{ 'CREATE_FORM' | translate }}</a></div><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=authentication.isAuthenticated()><a href=/#!/forms/{{myform._id}}/admin/create ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" class=btn>{{ 'EDIT_FORM' | translate }}</a></div><div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12 row\"><button class=\"btn btn-lg col-xs-6\" id=focusDownButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=nextField() ng-disabled=\"selected.index > myform.form_fields.length-1\"><i class=\"fa fa-chevron-down\"></i></button> <button class=\"btn btn-lg col-xs-6\" id=focusUpButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=prevField() ng-disabled=\"selected.index == 0\"><i class=\"fa fa-chevron-up\"></i></button></div></div></div></div></section></div><div ng-if=\"myform.submitted && !loading\" class=form-submitted ng-style=\"{'color':myform.design.colors.buttonTextColor}\" style=\"padding-top: 5vh\"><div class=\"field row text-center\"><div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center\">{{ 'FORM_SUCCESS' | translate }}</div></div><div class=\"row form-actions\"><p class=text-center><button ng-click=reloadForm() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{ 'BACK_TO_FORM' | translate }}</span></button></p></div></div>");
+    "<section class=\"overlay submitform\" ng-if=\"loading || (!myform.submitted && !myform.startPage.showStart)\"></section><div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted style=\"padding-top: 35vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; nont-size: 25px\">{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"color: grey; font-weight: 100; font-size: 16px\">{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=exitStartPage() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{myform.startPage.introButtonText}}</span></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div><div class=form-fields ng-show=\"!myform.submitted && !myform.startPage.showStart\" ng-style=\"{ 'border-color': myform.design.colors.buttonTextColor }\"><div class=row><form name=forms.myForm novalidate class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\"><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved data-index={{$index}} data-id={{field._id}} ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index forms=forms></field-directive></div></form></div><div class=\"row form-actions\" id=submit_field ng-class=\"{activeField: selected._id == 'submit_field' }\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor}\" style=\"border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; margin-top: 30vh; height: 100vh\"><div class=\"col-xs-12 text-left\" style=\"background-color:#990000; color:white\" ng-if=forms.myForm.$invalid>{{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}</div><button ng-if=!forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" v-busy=loading v-busy-label=\"Please wait\" v-pressable ng-disabled=\"loading || forms.myForm.$invalid\" ng-click=submitForm() on-enter-key=submitForm() on-enter-key-disabled=\"loading || forms.myForm.$invalid\" ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em\">{{ 'SUBMIT' | translate }}</button> <button ng-if=forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" ng-click=goToInvalid() on-enter-key=goToInvalid() on-enter-key-disabled=!forms.myForm.$invalid style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white\">{{ 'REVIEW' | translate }}</button><div class=\"col-sm-2 hidden-xs\" style=\"font-size: 75%; margin-top:3.25em\"><small>{{ 'ENTER' | translate }}</small></div></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}\"><div class=container-fluid><div class=row><div class=\"col-sm-5 col-md-6 col-xs-5\" ng-show=!myform.submitted><p class=lead>{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p></div><div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 col-xs-offset-1 col-xs-6 row\"><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=!authentication.isAuthenticated()><a href=/#!/forms class=btn ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">{{ 'CREATE_FORM' | translate }}</a></div><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\" ng-if=authentication.isAuthenticated()><a href=/#!/forms/{{myform._id}}/admin/create ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" class=btn>{{ 'EDIT_FORM' | translate }}</a></div><div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12 row\"><button class=\"btn btn-lg col-xs-6\" id=focusDownButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=nextField() ng-disabled=\"selected.index > myform.form_fields.length-1\"><i class=\"fa fa-chevron-down\"></i></button> <button class=\"btn btn-lg col-xs-6\" id=focusUpButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=prevField() ng-disabled=\"selected.index == 0\"><i class=\"fa fa-chevron-up\"></i></button></div></div></div></div></section></div><div ng-if=\"myform.submitted && !loading && !myform.endPage.showEnd\" class=form-submitted ng-style=\"{'color':myform.design.colors.buttonTextColor}\" style=\"padding-top: 5vh\"><div class=\"field row text-center\"><div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center\">{{ 'FORM_SUCCESS' | translate }}</div></div><div class=\"row form-actions\"><p class=text-center><button ng-click=reloadForm() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{ 'BACK_TO_FORM' | translate }}</span></button></p></div></div><div ng-if=\"myform.submitted && !loading && myform.endPage.showEnd\" class=form-submitted ng-style=\"{'color':myform.design.colors.buttonTextColor}\" style=\"padding-top: 5vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; nont-size: 25px\">{{myform.endPage.title}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"color: grey; font-weight: 100; font-size: 16px\">{{myform.endPage.paragraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=reloadForm() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{myform.endPage.buttonText}}</span></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.endPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div>");
   $templateCache.put("modules/users/views/authentication/access-denied.client.view.html",
     "<section class=\"text-center auth\"><h3 class=col-md-12>{{ 'ACCESS_DENIED_TEXT' | translate }}</h3><a href=/#!/sigin class=col-md-12>{{ 'SIGNIN_BTN' | translate }}</a></section>");
   $templateCache.put("modules/users/views/authentication/signin.client.view.html",
@@ -430,6 +711,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DISPLAY_FOOTER: 'Display Form Footer?',
 		SAVE_CHANGES: 'Save Changes',
 		CANCEL: 'Cancel',
+		DISPLAY_START_PAGE: 'Display Start Page?',
+		DISPLAY_END_PAGE: 'Display Custom End Page?',
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Create a new form',
@@ -443,6 +726,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		OFF: 'OFF',
 		REQUIRED_FIELD: 'Required',
 		LOGIC_JUMP: 'Logic Jump',
+		SHOW_BUTTONS: 'Additional Buttons',
+		SAVE_START_PAGE: 'Save',
 
 		//Admin Form View
 		ARE_YOU_SURE: 'Are you ABSOLUTELY sure?',
@@ -467,18 +752,21 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		ADD_FIELD_LG: 'Click to Add New Field',
 		ADD_FIELD_MD: 'Add New Field',
 		ADD_FIELD_SM: 'Add Field',
-		PREVIEW_START_PAGE: 'Preview Welcome Screen',
-		EDIT_START_PAGE: 'Edit Welcome Screen',
-		WELCOME_SCREEN: 'Welcome Screen',
-		INTRO_TITLE: 'Intro Title',
-		INTRO_PARAGRAPH: 'Intro Paragraph',
-		INTRO_BTN: 'Intro Button',
+		EDIT_START_PAGE: 'Edit Start Page',
+		EDIT_END_PAGE: 'Edit End Page',
+		WELCOME_SCREEN: 'Start Page',
+		END_SCREEN: 'End Page',
+		INTRO_TITLE: 'Title',
+		INTRO_PARAGRAPH: 'Paragraph',
+		INTRO_BTN: 'Start Button',
+		TITLE: 'Title',
+		PARAGRAPH: 'Paragraph',
+		BTN_TEXT: 'Go Back Button',
 		BUTTONS: 'Buttons',
 		BUTTON_TEXT: 'Text',
 		BUTTON_LINK: 'Link',
 		ADD_BUTTON: 'Add Button',
 		PREVIEW_FIELD: 'Preview Question',
-		EDIT_FIELD: 'Edit Question',
 		QUESTION_TITLE: 'Title',
 		QUESTION_DESCRIPTION: 'Description',
 		OPTIONS: 'Options',
@@ -2452,22 +2740,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					$scope.editFieldModal = $uibModal.open({
 						animation: true,
 						templateUrl: 'editFieldModal.html',
-						windowClass: 'edit-field-modal-window',
+						windowClass: 'edit-modal-window',
 						controller:  ["$uibModalInstance", "$scope", function($uibModalInstance, $scope) {
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
-
-
-							//Populate AddField with all available form field types
-							$scope.addField = {};
-							$scope.addField.types = FormFields.types;
-
-							$scope.addField.types.forEach(function(type){
-								type.lastAddedID = 1;
-								return type;
-							});
-
-							$scope.lastButtonID = 0;
 
 							// decides whether field options block will be shown (true for dropdown and radio fields)
 							$scope.showAddOptions = function (field){
@@ -2570,15 +2846,115 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				};
 
 				/*
-				**  Setup Angular-Input-Star Shape Dropdown
+				 ** EditStartPageModal Functions
 				 */
+				$scope.openEditStartPageModal = function(){
+					$scope.editStartPageModal = $uibModal.open({
+						animation: true,
+						templateUrl: 'editStartPageModal.html',
+						windowClass: 'edit-modal-window',
+						controller:  ["$uibModalInstance", "$scope", function($uibModalInstance, $scope) {
 
+							/*
+							 **  startPage Button Methods
+							 */
 
+							$scope.showButtons = false;
+							$scope.lastButtonID = 0;
 
+							// add new Button to the startPage
+							$scope.addButton = function(){
 
-                // Accordion settings
-                $scope.accordion = {};
-                $scope.accordion.oneAtATime = true;
+								var newButton = {};
+								newButton.bgColor = '#ddd';
+								newButton.color = '#ffffff';
+								newButton.text = 'Button';
+								newButton._id = Math.floor(100000*Math.random());
+
+								$scope.myform.startPage.buttons.push(newButton);
+							};
+
+							// delete particular Button from startPage
+							$scope.deleteButton = function(button){
+								var currID;
+								for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
+
+									currID = $scope.myform.startPage.buttons[i]._id;
+
+									if(currID === button._id){
+										$scope.myform.startPage.buttons.splice(i, 1);
+										break;
+									}
+								}
+							};
+
+							$scope.saveStartPage = function(){
+								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+									$uibModalInstance.close();
+								});
+							};
+							$scope.cancel = function(){
+								$uibModalInstance.close();
+							};
+						}]
+					});
+				};
+
+				/*
+				 ** EditStartPageModal Functions
+				 */
+				$scope.openEditEndPageModal = function(){
+					$scope.editEndPageModal = $uibModal.open({
+						animation: true,
+						templateUrl: 'editEndPageModal.html',
+						windowClass: 'edit-modal-window',
+						controller:  ["$uibModalInstance", "$scope", function($uibModalInstance, $scope) {
+
+							/*
+							 **  startPage Button Methods
+							 */
+
+							$scope.showButtons = false;
+							$scope.lastButtonID = 0;
+
+							// add new Button to the startPage
+							$scope.addButton = function(){
+
+								var newButton = {};
+								newButton.bgColor = '#ddd';
+								newButton.color = '#ffffff';
+								newButton.text = 'Button';
+								newButton._id = Math.floor(100000*Math.random());
+
+								$scope.myform.endPage.buttons.push(newButton);
+							};
+
+							// delete particular Button from startPage
+							$scope.deleteButton = function(button){
+								var currID;
+								for(var i = 0; i < $scope.myform.endPage.buttons.length; i++){
+
+									currID = $scope.myform.endPage.buttons[i]._id;
+
+									if(currID === button._id){
+										$scope.myform.endPage.buttons.splice(i, 1);
+										break;
+									}
+								}
+							};
+
+							$scope.saveEndPage = function(){
+								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+									$uibModalInstance.close();
+								});
+							};
+							$scope.cancel = function(){
+								$uibModalInstance.close();
+							};
+						}]
+					});
+				};
+
 
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
@@ -2663,6 +3039,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index) {
                     $scope.myform.form_fields.splice(field_index, 1);
+					$scope.update(false, $scope.myform, false, true, null);
                 };
 
                 $scope.duplicateField = function (field_index){
@@ -2672,38 +3049,17 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                     //Insert field at selected index
                     $scope.myform.form_fields.splice(field_index+1, 0, currField);
+					$scope.update(false, $scope.myform, false, true, null);
                 };
 
+				//Populate AddField with all available form field types
+				$scope.addField = {};
+				$scope.addField.types = FormFields.types;
 
-                /*
-                **  startPage Button Methods
-                */
-
-                // add new Button to the startPage
-                $scope.addButton = function(){
-
-                    var newButton = {};
-                    newButton.bgColor = '#ddd';
-                    newButton.color = '#ffffff';
-                    newButton.text = 'Button';
-                    newButton._id = Math.floor(100000*Math.random());
-
-                    $scope.myform.startPage.buttons.push(newButton);
-                };
-
-                // delete particular Button from startPage
-                $scope.deleteButton = function(button){
-                    var currID;
-                    for(var i = 0; i < $scope.myform.startPage.buttons.length; i++){
-
-                        currID = $scope.myform.startPage.buttons[i]._id;
-
-                        if(currID === button._id){
-                            $scope.myform.startPage.buttons.splice(i, 1);
-                            break;
-                        }
-                    }
-                };
+				$scope.addField.types.forEach(function(type){
+					type.lastAddedID = 1;
+					return type;
+				});
 
 			}]
         };

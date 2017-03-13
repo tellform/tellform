@@ -1,10 +1,4 @@
 <div class="config-form container">
-	<!--<div class="row">
-		<div class="col-sm-offset-2 col-sm-10">
-			<h2 class="hidden-sm hidden-xs">{{ 'ADVANCED_SETTINGS' | translate }}</h2>
-			<h3 class="hidden-lg hidden-md">{{ 'ADVANCED_SETTINGS' | translate }}</h3>
-		</div>
-	</div>-->
 	<!-- Settings -->
 	<div class="row">
         <div class="col-sm-offset-2 col-sm-4">
@@ -95,7 +89,7 @@
 
 			<div class="row field">
 				<div class="field-title col-sm-12">
-					<h5>Display Start Page?</h5>
+					<h5>{{ 'DISPLAY_START_PAGE' | translate }}</h5>
 				</div>
 
 				<div class="field-input col-sm-12">
@@ -107,6 +101,26 @@
 
 					<label style="display: inline-block;">
 						<input type="radio" data-ng-value="false" ng-model="myform.startPage.showStart"  ng-required="true" />
+						&nbsp;<span>{{ 'NO' | translate }}</span>
+					</label>
+
+				</div>
+			</div>
+
+			<div class="row field">
+				<div class="field-title col-sm-12">
+					<h5>{{ 'DISPLAY_END_PAGE' | translate }}</h5>
+				</div>
+
+				<div class="field-input col-sm-12">
+
+					<label style="display: inline-block;">
+						<input type="radio" data-ng-value="true" ng-model="myform.endPage.showEnd"  ng-required="true" style="background-color:#33CC00;"/>
+						&nbsp;<span>{{ 'YES' | translate }}</span>
+					</label>
+
+					<label style="display: inline-block;">
+						<input type="radio" data-ng-value="false" ng-model="myform.endPage.showEnd"  ng-required="true" />
 						&nbsp;<span>{{ 'NO' | translate }}</span>
 					</label>
 

@@ -1,10 +1,305 @@
 <form class="row container" name="editForm" ><!--auto-save-form auto-save-watch="myform" auto-save-callback="update">-->
 
+	<!-- Edit EndPage Modal Dialog Template -->
+	<script type="text/ng-template" id="editEndPageModal.html" class="edit-endpage-modal">
+		<div class="modal-body">
+			<div class="row">
+				<div class="edit-panel col-md-6 col-xs-12 col-sm-12 container">
+					<div class="row modal-header">
+						<h2 class="modal-title hidden-md hidden-lg">{{ 'EDIT_END_PAGE' | translate }}</h2>
+						<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_END_PAGE' | translate }}</h3>
+					</div>
+
+					<div class="row question">
+						<div class="col-md-4 col-sm-12">{{ 'TITLE' | translate }}:</div>
+						<div class="col-md-8 col-sm-12">
+							<input class="form-control" type="text"
+								   ng-model="myform.endPage.title" required>
+						</div>
+					</div>
+
+					<div class="row"><br></div>
+
+					<div class="row question">
+						<div class="col-md-4 col-sm-12">{{ 'PARAGRAPH' | translate }}:</div>
+						<div class="col-md-8 col-sm-12">
+                                    <textarea class="form-control" type="text"
+											  ng-model="myform.endPage.paragraph"></textarea>
+						</div>
+					</div>
+
+					<div class="row"><br></div>
+
+					<div class="row question">
+						<div class="col-md-4 col-sm-12">{{ 'BTN_TEXT' | translate }}:</div>
+						<div class="col-md-8 col-sm-12">
+							<input class="form-control" type="text"
+								   ng-model="myform.endPage.buttonText" required>
+						</div>
+					</div>
+
+					<div class="row"><br></div>
+
+					<div class="row">
+						<div class="col-md-4 col-xs-12 field-input">{{ 'SHOW_BUTTONS' | translate }}</div>
+						<div class="col-md-8 col-xs-12 field-input">
+							<label class="switch-light switch-holo" onclick="">
+								<input type="checkbox" ng-model="showButtons">
+								<span>
+									<span> {{ 'OFF' | translate }}</span>
+									<span> {{ 'ON' | translate }}</span>
+									<a></a>
+								</span>
+							</label>
+						</div>
+					</div>
+
+					<div class="row options buttons" ng-if="showButtons">
+						<div class="col-md-3 col-xs-12">Buttons:</div>
+						<div class="col-md-9 col-xs-12">
+							<div ng-repeat="button in myform.endPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
+
+								<div class="col-xs-5">
+									<span>{{ 'BUTTON_TEXT' | translate }}</span>
+									<input type="text"
+										   name="{{button.text}}_buttonText_startPage"
+										   ng-model="button.text"
+										   value="{{button.text}}"
+										   placeholder="Button Text">
+								</div>
+
+
+								<div class="col-xs-5">
+									<span>{{ 'BUTTON_LINK' | translate }}</span>
+									<input type="text"
+										   name="{{button.url}}_url_startPage"
+										   ng-model="button.url"
+										   value="{{button.url}}"
+										   placeholder="http://aeouaou.com/aoeuoa">
+								</div>
+
+								<div class="col-xs-2">
+									<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteButton(button)">
+										<i class="fa fa-trash-o"></i>
+									</a>
+								</div>
+							</div>
+
+							<div class="row"><br></div>
+							<div class="row">
+								<button class="btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8" type="button" ng-click="addButton()">
+									<i class="icon-plus icon-white"></i> {{ 'ADD_BUTTON' | translate }}
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer row">
+						<button type="submit" ng-click="saveEndPage()" class="btn btn-signup btn-rounded">
+							{{ 'SAVE_START_PAGE' | translate }}
+						</button>
+
+						<button ng-click="cancel()" class="btn btn-secondary btn-rounded">
+							{{ 'CANCEL' | translate }}
+						</button>
+					</div>
+				</div>
+
+				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
+					<form class="public-form">
+
+						<div class="row">
+							<div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
+								<h1 style="font-weight: 400; font-size: 25px;">
+									{{myform.endPage.title}}
+								</h1>
+							</div>
+							<div class="col-xs-10 col-xs-offset-1 text-center" style="overflow-wrap: break-word;">
+								<p style="color: grey; font-weight: 100; font-size: 16px;">
+									{{myform.endPage.paragraph}}
+								</p>
+							</div>
+						</div>
+
+						<div class="row form-actions text-center" style="padding: 5px 25px 5px 25px;">
+							<button ng-click="reloadForm()" class="btn" type="button"
+									ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}">
+			<span style="font-size: 1.6em;">
+			{{myform.endPage.buttonText}}
+			</span>
+							</button>
+						</div>
+						<div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
+							<p ng-repeat="button in myform.endPage.buttons" class="text-center" style="display:inline;">
+								<button class="btn" style="background-color:rgb(156, 226, 235)" type="button" ng-style="{'background-color':button.bgColor, 'color':button.color}">
+									<a href="{{button.url}}"
+									   style="font-size: 1.6em; text-decoration: none;"
+									   ng-style="{'color':button.color}">
+										{{button.text}}
+									</a>
+								</button>
+							</p>
+						</div>
+
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+
+	</script>
+
+	<!-- Edit StartPage Modal Dialog Template -->
+	<script type="text/ng-template" id="editStartPageModal.html" class="edit-startpage-modal">
+		<div class="modal-body">
+			<div class="row">
+				<div class="edit-panel col-md-6 col-xs-12 col-sm-12 container">
+					<div class="row modal-header">
+						<h2 class="modal-title hidden-md hidden-lg">{{ 'EDIT_START_PAGE' | translate }}</h2>
+						<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_START_PAGE' | translate }}</h3>
+					</div>
+
+					<div class="row question">
+						<div class="col-md-4 col-sm-12">{{ 'INTRO_TITLE' | translate }}:</div>
+						<div class="col-md-8 col-sm-12">
+							<input class="form-control" type="text"
+								   ng-model="myform.startPage.introTitle"
+								   name="introTitleStartPage" required>
+						</div>
+					</div>
+
+					<div class="row"><br></div>
+
+					<div class="row question">
+						<div class="col-md-4 col-sm-12">{{ 'INTRO_PARAGRAPH' | translate }}:</div>
+						<div class="col-md-8 col-sm-12">
+                                    <textarea class="form-control" type="text"
+											  ng-model="myform.startPage.introParagraph"
+											  name="introParagraphStartPage"></textarea>
+						</div>
+					</div>
+
+					<div class="row"><br></div>
+
+					<div class="row question">
+						<div class="col-md-4 col-sm-12">{{ 'INTRO_BTN' | translate }}:</div>
+						<div class="col-md-8 col-sm-12">
+							<input class="form-control" type="text"
+								   ng-model="myform.startPage.introButtonText"
+								   name="introButtonText" required>
+						</div>
+					</div>
+
+					<div class="row"><br></div>
+
+					<div class="row">
+						<div class="col-md-4 col-xs-12 field-input">{{ 'SHOW_BUTTONS' | translate }}</div>
+						<div class="col-md-8 col-xs-12 field-input">
+							<label class="switch-light switch-holo" onclick="">
+								<input type="checkbox" ng-model="showButtons">
+								<span>
+									<span> {{ 'OFF' | translate }}</span>
+									<span> {{ 'ON' | translate }}</span>
+									<a></a>
+								</span>
+							</label>
+						</div>
+					</div>
+
+					<div class="row options buttons" ng-if="showButtons">
+						<div class="col-md-3 col-xs-12">Buttons:</div>
+						<div class="col-md-9 col-xs-12">
+							<div ng-repeat="button in myform.startPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
+
+								<div class="col-xs-5">
+									<span>{{ 'BUTTON_TEXT' | translate }}</span>
+									<input type="text"
+										   name="{{button.text}}_buttonText_startPage"
+										   ng-model="button.text"
+										   value="{{button.text}}"
+										   placeholder="Button Text">
+								</div>
+
+
+								<div class="col-xs-5">
+									<span>{{ 'BUTTON_LINK' | translate }}</span>
+									<input type="text"
+										   name="{{button.url}}_url_startPage"
+										   ng-model="button.url"
+										   value="{{button.url}}"
+										   placeholder="http://aeouaou.com/aoeuoa">
+								</div>
+
+								<div class="col-xs-2">
+									<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteButton(button)">
+										<i class="fa fa-trash-o"></i>
+									</a>
+								</div>
+							</div>
+
+							<div class="row"><br></div>
+							<div class="row">
+								<button class="btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8" type="button" ng-click="addButton()">
+									<i class="icon-plus icon-white"></i> {{ 'ADD_BUTTON' | translate }}
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer row">
+						<button type="submit" ng-click="saveStartPage()" class="btn btn-signup btn-rounded">
+							{{ 'SAVE_START_PAGE' | translate }}
+						</button>
+
+						<button ng-click="cancel()" class="btn btn-secondary btn-rounded">
+							{{ 'CANCEL' | translate }}
+						</button>
+					</div>
+				</div>
+
+				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
+					<form class="public-form">
+
+						<div class="field row">
+							<div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
+								<h1>{{myform.startPage.introTitle}}</h1>
+							</div>
+							<div class="col-xs-10 col-xs-offset-1 text-left" style="overflow-wrap: break-word;">
+								<p style="color:#ddd;">{{myform.startPage.introParagraph}}</p>
+							</div>
+						</div>
+						<div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
+							<p ng-repeat="button in myform.startPage.buttons" class="text-center" style="display:inline;">
+								<button class="btn btn-info" type="button" ng-style="{'background-color':button.bgColor, 'color':button.color}">
+									<a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none; color: inherit;" >
+										{{button.text}}
+									</a>
+								</button>
+							</p>
+						</div>
+						<div class="row form-actions">
+							<button class="btn btn-info btn btn-info col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3" type="button">
+										<span style="color:white; font-size: 1.6em; text-decoration: none;">
+											{{myform.startPage.introButtonText}}
+										</span>
+							</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+
+	</script>
+
 	<!-- Edit Field Modal Dialog Template -->
 	<script type="text/ng-template" id="editFieldModal.html" class="edit-field-modal">
 		<div class="modal-body">
 			<div class="row">
-				<div class="edit-field-panel col-md-6 col-xs-12 col-sm-12 container">
+				<div class="edit-panel col-md-6 col-xs-12 col-sm-12 container">
 					<div class="row modal-header">
 						<h2 class="modal-title hidden-md hidden-lg">{{ 'EDIT_FIELD' | translate }}</h2>
 						<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_FIELD' | translate }}</h3>
@@ -242,137 +537,15 @@
 	<!-- Current Fields Element -->
 	<div class="col-xs-10 col-sm-8 current-fields container">
 		<!-- Start Page -->
-        <div class="row">
+        <div class="row" ng-if="myform.startPage.showStart">
             <div class="col-sm-12">
-                <div class="panel panel-default startPage">
-                    <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-target="#collapseStart">
+                <div class="panel panel-default startPage" ng-click="openEditStartPageModal()">
+                    <div class="panel-heading">
                         <h4 class="text-center">
                             {{ 'WELCOME_SCREEN' | translate }}
-                            <span class="pull-right">
-                                <i class="fa fa-chevron-right" ng-hide="startPage.isOpen">
-                                </i>
-                                <i class="fa fa-chevron-down" ng-show="startPage.isOpen">
-                                </i>
-                            </span>
                         </h4>
                     </div>
-
-                    <div id="collapseStart" class="panel-collapse collapse">
-                        <div class="panel-body">                      
-
-                            <div class="row hidden-sm hidden-xs">
-                                <div class="col-md-12">
-                                    <h4>{{ 'PREVIEW_START_PAGE' | translate }}</h4>
-                                </div>
-                                <ul class="col-md-12 container" style="list-style:none; border:2px lightgray solid; padding-bottom: 2em;">
-   
-                                    <div class="field row">
-                                        <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
-                                            <h1>{{myform.startPage.introTitle}}</h1>
-                                        </div>
-                                        <div class="col-xs-10 col-xs-offset-1 text-left" style="overflow-wrap: break-word;">
-                                            <p style="color:#ddd;">{{myform.startPage.introParagraph}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
-                                        <p ng-repeat="button in myform.startPage.buttons" class="text-center" style="display:inline;">
-                                            <button class="btn btn-info" type="button" ng-style="{'background-color':button.bgColor, 'color':button.color}">
-                                                <a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none; color: inherit;" > 
-                                                    {{button.text}}
-                                                </a>
-                                            </button>
-                                        </p>
-                                    </div>
-                                    <div class="row form-actions">
-                                        <button class="btn btn-info btn btn-info col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3" type="button">
-                                            <span style="color:white; font-size: 1.6em; text-decoration: none;">
-                                                {{myform.startPage.introButtonText}}
-                                            </span>
-                                        </button>
-                                    </div>
-								</ul>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <h4>{{ 'EDIT_START_PAGE' | translate }}</h4>
-                                    <br>
-                                </div>
-                            </div> 
-
-                            <div class="row question">
-                                <div class="col-md-4 col-sm-12">{{ 'INTRO_TITLE' | translate }}:</div>
-                                <div class="col-md-8 col-sm-12">
-                                    <input type="text" 
-                                    ng-model="myform.startPage.introTitle" 
-                                    name="introTitleStartPage" 
-                                    value="{{myform.startPage.introTitle}}" required>
-                                </div>
-                            </div>
-
-                            <div class="row question">
-                                <div class="col-md-4 col-sm-12">{{ 'INTRO_PARAGRAPH' | translate }}:</div>
-                                <div class="col-md-8 col-sm-12">
-                                    <textarea type="text"
-                                    ng-model="myform.startPage.introParagraph" 
-                                    name="introParagraphStartPage"></textarea>
-                                </div>
-                            </div>
-            
-                            <div class="row question">
-                                <div class="col-md-4 col-sm-12">{{ 'INTRO_BTN' | translate }}:</div>
-                                <div class="col-md-8 col-sm-12">
-                                    <input type="text"
-                                    ng-model="myform.startPage.introButtonText"
-                                    name="introButtonText"
-                                    value="{{myform.startPage.introButtonText}}" required>
-                                </div>
-                            </div>
-
-                            <div class="row"><br><br></div>
-
-                            <div class="row options buttons">
-                                <div class="col-md-3 col-xs-12">Buttons:</div>
-                                <div class="col-md-9 col-xs-12">
-                                    <div ng-repeat="button in myform.startPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
-
-                                        <div class="col-xs-5">
-                                            <span>{{ 'BUTTON_TEXT' | translate }}</span>
-                                            <input type="text" 
-                                            name="{{button.text}}_buttonText_startPage" 
-                                            ng-model="button.text" 
-                                            value="{{button.text}}" 
-                                            placeholder="Button Text">
-                                        </div>
-
-
-                                        <div class="col-xs-5">
-                                            <span>{{ 'BUTTON_LINK' | translate }}</span>
-                                            <input type="text" 
-                                            name="{{button.url}}_url_startPage" 
-                                            ng-model="button.url" 
-                                            value="{{button.url}}" 
-                                            placeholder="http://aeouaou.com/aoeuoa">
-                                        </div>
-
-                                        <div class="col-xs-2">  
-                                            <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteButton(button)">
-                                                <i class="fa fa-trash-o"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="row"><br></div> 
-                                    <div class="row">                                   
-                                        <button class="btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8" type="button" ng-click="addButton()">
-                                            <i class="icon-plus icon-white"></i> {{ 'ADD_BUTTON' | translate }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
+				</div>
             </div>
         </div>
         <div class="row">
@@ -434,6 +607,19 @@
                     </div>
                 </div>
             </div>
+		</div>
+
+		<!-- End Page -->
+		<div class="row" ng-if="myform.endPage.showEnd">
+			<div class="col-sm-12">
+				<div class="panel panel-default startPage" ng-click="openEditEndPageModal()">
+					<div class="panel-heading">
+						<h4 class="text-center">
+							{{ 'END_SCREEN' | translate }}
+						</h4>
+					</div>
+				</div>
+			</div>
 		</div>
     </div>
 

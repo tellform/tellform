@@ -133,6 +133,24 @@ var FormSchema = new Schema({
         },
 		buttons:[ButtonSchema]
 	},
+	endPage: {
+		showEnd:{
+			type: Boolean,
+			default: false
+		},
+		title:{
+			type: String,
+			default: 'Thank you for filling out the form'
+		},
+		paragraph:{
+			type: String
+		},
+		buttonText:{
+			type: String,
+			default: 'Go back to Form'
+		},
+		buttons:[ButtonSchema]
+	},
 
 	hideFooter: {
 		type: Boolean,
