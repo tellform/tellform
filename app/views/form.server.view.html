@@ -32,19 +32,14 @@
 
 	<!-- Fav Icon -->
 	<link href="/static/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/static/lib/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css">
 	<!--Bower CSS dependencies-->
 	{% for bowerCssFile in bowerCssFiles %}
 	<link rel="stylesheet" href="{{bowerCssFile}}">
 	{% endfor %}
 	<link rel="stylesheet" href="/static/lib/angular-input-stars/angular-input-stars.css">
-	<link rel="stylesheet" href="/static/lib/jquery-ui/themes/flick/jquery-ui.css"/>
-	<link rel="stylesheet" href="/static/modules/core/css/github-fork-ribbon.css"/>
-
-	<!--[if lt IE 9]>
-	<link rel="stylesheet" href="gh-fork-ribbon.ie.css">
-	<![endif]-->
+	<link rel="stylesheet" href="/static/lib/jquery-ui/themes/flick/jquery-ui.min.css"/>
 	<!-- end Bower CSS dependencies-->
 
 	<!--Application CSS Files-->
@@ -61,11 +56,7 @@
 </head>
 
 <body ng-cloak>
-<!--<div class="github-fork-ribbon-wrapper right-bottom hidden-xs">
-	<div class="github-fork-ribbon">
-		<a href="https://github.com/whitef0x0/tellform">Fork me on GitHub</a>
-	</div>
-</div>-->
+
 <section class="content">
 	<section ui-view></section>
 </section>
@@ -83,7 +74,7 @@
 </script>
 
 <!--Socket.io Client Dependency-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.js"></script>
+<script src="/static/lib/socket.io-client/dist/socket.io.min.js"></script>
 
 <!--Bower JS dependencies-->
 {% for bowerJSFile in bowerJSFiles %}

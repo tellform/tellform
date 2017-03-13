@@ -5,8 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	_ = require('lodash'),
-	math = require('mathjs');
+	_ = require('lodash');
 
 var schemaOptions = {
 	toObject: {

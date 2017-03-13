@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate', 'ng.deviceDetector'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -154,8 +154,8 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						</div>\n" +
     "					</div>\n" +
     "\n" +
-    "					<div class=\"row\" ng-show=\"showAddOptions(field)\"><br></div>\n" +
-    "					<div class=\"row options\" ng-if=\"showAddOptions(field)\">\n" +
+    "					<div class=\"row\" ng-show=\"showMultiChoiceOptions(field)\"><br></div>\n" +
+    "					<div class=\"row options\" ng-if=\"showMultiChoiceOptions(field)\">\n" +
     "						<div class=\"col-md-4 col-xs-12\">{{ 'OPTIONS' | translate }}</div>\n" +
     "						<div class=\"col-md-8 col-xs-12\">\n" +
     "							<div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=\"row\">\n" +
@@ -173,8 +173,8 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						</div>\n" +
     "					</div>\n" +
     "\n" +
-    "					<div class=\"row\" ng-show=\"showRatingOptions(field)\"><br></div>\n" +
-    "					<div class=\"row\" ng-if=\"showRatingOptions(field)\">\n" +
+    "					<div class=\"row\" ng-show=\"showRatingSettings(field)\"><br></div>\n" +
+    "					<div class=\"row\" ng-if=\"showRatingSettings(field)\">\n" +
     "						<div class=\"col-md-9 col-sm-9\">{{ 'NUM_OF_STEPS' | translate }}</div>\n" +
     "						<div class=\"col-md-3 col-sm-3\">\n" +
     "							<input style=\"width:100%\" type=\"number\"\n" +
@@ -1028,7 +1028,7 @@ angular.module('core').service('Menus', [
 			socket: null
 		};
 
-		connect(window.location.protocol+'//'+window.location.hostname+':'+$window.socketPort);
+		connect(window.location.protocol+'//'+window.location.hostname);
 
 		return service;
 
@@ -1181,9 +1181,9 @@ angular.module('forms').config(['$stateProvider',
 		.module('forms')
 		.factory('SendVisitorData', SendVisitorData);
 
-	SendVisitorData.$inject = ['Socket', '$state', '$http', 'deviceDetector'];
+	SendVisitorData.$inject = ['Socket', '$state', '$http'];
 
-	function SendVisitorData(Socket, $state, $http, deviceDetector) {
+	function SendVisitorData(Socket, $state, $http) {
 
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex, timeElapsed) {
@@ -2457,6 +2457,24 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
 
+							// decides whether field options block will be shown (true for dropdown and radio fields)
+							$scope.showAddOptions = function (field){
+								if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
+									return true;
+								} else {
+									return false;
+								}
+							};
+
+							// decides whether field options block will be shown (true for dropdown and radio fields)
+							$scope.showRatingOptions = function (field){
+								if(field.fieldType === 'rating'){
+									return true;
+								} else {
+									return false;
+								}
+							};
+
 							$scope.saveField = function(){
 
 								$scope.myform.form_fields.push(curr_field);
@@ -2657,23 +2675,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     }
                 };
 
-                // decides whether field options block will be shown (true for dropdown and radio fields)
-                $scope.showAddOptions = function (field){
-                    if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
-                        return true;
-                    } else {
-                        return false;
-                    }
-                };
 
-				// decides whether field options block will be shown (true for dropdown and radio fields)
-				$scope.showRatingOptions = function (field){
-					if(field.fieldType === 'rating'){
-						return true;
-					} else {
-						return false;
-					}
-				};
 			}]
         };
     }

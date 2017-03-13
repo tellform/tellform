@@ -128,15 +128,11 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 ** Field Controls
                 */
 				var evaluateLogicJump = function(field){
-					console.log('evaluateLogicJump');
-					console.log(field.fieldValue);
 					var logicJump = field.logicJump;
 
 					if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
 						var parse_tree = jsep(logicJump.expressionString);
 						var left, right;
-
-						console.log(parse_tree);
 
 						if(parse_tree.left.name === 'field'){
 							left = field.fieldValue;

@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate', 'ng.deviceDetector'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -154,8 +154,8 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						</div>\n" +
     "					</div>\n" +
     "\n" +
-    "					<div class=\"row\" ng-show=\"showAddOptions(field)\"><br></div>\n" +
-    "					<div class=\"row options\" ng-if=\"showAddOptions(field)\">\n" +
+    "					<div class=\"row\" ng-show=\"showMultiChoiceOptions(field)\"><br></div>\n" +
+    "					<div class=\"row options\" ng-if=\"showMultiChoiceOptions(field)\">\n" +
     "						<div class=\"col-md-4 col-xs-12\">{{ 'OPTIONS' | translate }}</div>\n" +
     "						<div class=\"col-md-8 col-xs-12\">\n" +
     "							<div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=\"row\">\n" +
@@ -173,8 +173,8 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "						</div>\n" +
     "					</div>\n" +
     "\n" +
-    "					<div class=\"row\" ng-show=\"showRatingOptions(field)\"><br></div>\n" +
-    "					<div class=\"row\" ng-if=\"showRatingOptions(field)\">\n" +
+    "					<div class=\"row\" ng-show=\"showRatingSettings(field)\"><br></div>\n" +
+    "					<div class=\"row\" ng-if=\"showRatingSettings(field)\">\n" +
     "						<div class=\"col-md-9 col-sm-9\">{{ 'NUM_OF_STEPS' | translate }}</div>\n" +
     "						<div class=\"col-md-3 col-sm-3\">\n" +
     "							<input style=\"width:100%\" type=\"number\"\n" +
@@ -1176,15 +1176,11 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 ** Field Controls
                 */
 				var evaluateLogicJump = function(field){
-					console.log('evaluateLogicJump');
-					console.log(field.fieldValue);
 					var logicJump = field.logicJump;
 
 					if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
 						var parse_tree = jsep(logicJump.expressionString);
 						var left, right;
-
-						console.log(parse_tree);
 
 						if(parse_tree.left.name === 'field'){
 							left = field.fieldValue;
@@ -1502,7 +1498,7 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			socket: null
 		};
 
-		connect(window.location.protocol+'//'+window.location.hostname+':'+$window.socketPort);
+		connect(window.location.protocol+'//'+window.location.hostname + ':' + $window.socketPort);
 
 		return service;
 

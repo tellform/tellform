@@ -43,6 +43,24 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
 
+							// decides whether field options block will be shown (true for dropdown and radio fields)
+							$scope.showAddOptions = function (field){
+								if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
+									return true;
+								} else {
+									return false;
+								}
+							};
+
+							// decides whether field options block will be shown (true for dropdown and radio fields)
+							$scope.showRatingOptions = function (field){
+								if(field.fieldType === 'rating'){
+									return true;
+								} else {
+									return false;
+								}
+							};
+
 							$scope.saveField = function(){
 
 								$scope.myform.form_fields.push(curr_field);
@@ -154,6 +172,24 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					$scope.openEditModal(newField);
                 };
 
+				// decides whether field options block will be shown (true for dropdown and radio fields)
+				$scope.showAddOptions = function (field){
+					if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
+						return true;
+					} else {
+						return false;
+					}
+				};
+
+				// decides whether field options block will be shown (true for dropdown and radio fields)
+				$scope.showRatingOptions = function (field){
+					if(field.fieldType === 'rating'){
+						return true;
+					} else {
+						return false;
+					}
+				};
+
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index) {
                     $scope.myform.form_fields.splice(field_index, 1);
@@ -243,23 +279,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                     }
                 };
 
-                // decides whether field options block will be shown (true for dropdown and radio fields)
-                $scope.showAddOptions = function (field){
-                    if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
-                        return true;
-                    } else {
-                        return false;
-                    }
-                };
 
-				// decides whether field options block will be shown (true for dropdown and radio fields)
-				$scope.showRatingOptions = function (field){
-					if(field.fieldType === 'rating'){
-						return true;
-					} else {
-						return false;
-					}
-				};
 			}
         };
     }
