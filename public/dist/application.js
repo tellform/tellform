@@ -161,12 +161,12 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "							<div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=\"row\">\n" +
     "								<input type=\"text\" name=\"{{option.option_value}}{{field._id}}\" ng-model=\"option.option_value\" class=\"col-xs-5\">\n" +
     "\n" +
-    "								<a class=\"btn btn-danger btn-mini right\" type=\"button\" ng-click=\"deleteOption($index, option)\" class=\"col-xs-3\">\n" +
+    "								<a class=\"btn btn-danger btn-mini right\" type=\"button\" ng-click=\"deleteOption(field, option)\" class=\"col-xs-3\">\n" +
     "									<i class=\"fa fa-trash-o\"></i>\n" +
     "								</a>\n" +
     "							</div>\n" +
     "							<div class=\"row\">\n" +
-    "								<button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=\"button\" ng-click=\"addOption($index)\">\n" +
+    "								<button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=\"button\" ng-click=\"addOption(field)\">\n" +
     "									<i class=\"icon-plus icon-white\"></i> {{ 'ADD_OPTION' | translate }}\n" +
     "								</button>\n" +
     "							</div>\n" +
@@ -190,7 +190,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "							<select style=\"width:100%\" ng-model=\"field.ratingOptions.shape\"\n" +
     "									value=\"{{field.ratingOptions.steps}}\"\n" +
     "									name=\"ratingOptions_shape{{field._id}}\" required>\n" +
-    "								<option ng-repeat=\"shapeType in field.ratingOptions.validShapes\"\n" +
+    "								<option ng-repeat=\"shapeType in validShapes\"\n" +
     "										value=\"{{shapeType}}\">\n" +
     "									{{select2FA[shapeType]}}\n" +
     "								</option>\n" +
@@ -2457,6 +2457,18 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
 
+
+							//Populate AddField with all available form field types
+							$scope.addField = {};
+							$scope.addField.types = FormFields.types;
+
+							$scope.addField.types.forEach(function(type){
+								type.lastAddedID = 1;
+								return type;
+							});
+
+							$scope.lastButtonID = 0;
+
 							// decides whether field options block will be shown (true for dropdown and radio fields)
 							$scope.showAddOptions = function (field){
 								if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
@@ -2464,6 +2476,74 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								} else {
 									return false;
 								}
+							};
+
+							$scope.validShapes =  [
+								'Heart',
+								'Star',
+								'thumbs-up',
+								'thumbs-down',
+								'Circle',
+								'Square',
+								'Check Circle',
+								'Smile Outlined',
+								'Hourglass',
+								'bell',
+								'Paper Plane',
+								'Comment',
+								'Trash'
+							];
+
+							// add new option to the field
+							$scope.addOption = function(currField){
+								if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+									if(!currField.fieldOptions){
+										currField.fieldOptions = [];
+									}
+
+									var lastOptionID = currField.fieldOptions.length+1;
+
+									// new option's id
+
+									var newOption = {
+										'option_id' : Math.floor(100000*Math.random()),
+										'option_title' : 'Option '+lastOptionID,
+										'option_value' : 'Option ' +lastOptionID
+									};
+
+									// put new option into fieldOptions array
+									currField.fieldOptions.push(newOption);
+								}
+							};
+
+							// delete particular option
+							$scope.deleteOption = function (currField, option){
+								if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+									for(var i = 0; i < currField.fieldOptions.length; i++){
+										if(currField.fieldOptions[i].option_id === option.option_id){
+
+											currField.fieldOptions.splice(i, 1);
+											break;
+										}
+									}
+								}
+							};
+
+							//Populate Name to Font-awesomeName Conversion Map
+							$scope.select2FA = {
+								'Heart': 'Heart',
+								'Star': 'Star',
+								'thumbs-up': 'Thumbs Up',
+								'thumbs-down':'Thumbs Down',
+								'Circle': 'Circle',
+								'Square':'Square',
+								'Check Circle': 'Checkmark',
+								'Smile Outlined': 'Smile',
+								'Hourglass': 'Hourglass',
+								'bell': 'Bell',
+								'Paper Plane': 'Paper Plane',
+								'Comment': 'Chat Bubble',
+								'Trash': 'Trash Can'
 							};
 
 							// decides whether field options block will be shown (true for dropdown and radio fields)
@@ -2492,33 +2572,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				/*
 				**  Setup Angular-Input-Star Shape Dropdown
 				 */
-				//Populate Name to Font-awesomeName Conversion Map
-				$scope.select2FA = {
-					'Heart': 'Heart',
-					'Star': 'Star',
-					'thumbs-up': 'Thumbs Up',
-					'thumbs-down':'Thumbs Down',
-					'Circle': 'Circle',
-					'Square':'Square',
-					'Check Circle': 'Checkmark',
-					'Smile Outlined': 'Smile',
-					'Hourglass': 'Hourglass',
-					'bell': 'Bell',
-					'Paper Plane': 'Paper Plane',
-					'Comment': 'Chat Bubble',
-					'Trash': 'Trash Can'
-				};
 
-                //Populate AddField with all available form field types
-                $scope.addField = {};
-                $scope.addField.types = FormFields.types;
 
-                $scope.addField.types.forEach(function(type){
-                    type.lastAddedID = 1;
-                    return type;
-                });
 
-                $scope.lastButtonID = 0;
 
                 // Accordion settings
                 $scope.accordion = {};
@@ -2648,51 +2704,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         }
                     }
                 };
-
-
-                /*
-                **  Field Option Methods
-                */
-
-                // add new option to the field
-                $scope.addOption = function(field_index){
-                    var currField = $scope.myform.form_fields[field_index];
-					if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
-                        if(!currField.fieldOptions){
-							$scope.myform.form_fields[field_index].fieldOptions = [];
-						}
-
-						var lastOptionID = $scope.myform.form_fields[field_index].fieldOptions.length+1;
-
-                        // new option's id
-
-                        var newOption = {
-                            'option_id' : Math.floor(100000*Math.random()),
-                            'option_title' : 'Option '+lastOptionID,
-                            'option_value' : 'Option ' +lastOptionID
-                        };
-
-                        // put new option into fieldOptions array
-                        $scope.myform.form_fields[field_index].fieldOptions.push(newOption);
-                    }
-                };
-
-                // delete particular option
-                $scope.deleteOption = function (field_index, option){
-                    var currField = $scope.myform.form_fields[field_index];
-
-                    if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
-                        for(var i = 0; i < currField.fieldOptions.length; i++){
-                            if(currField.fieldOptions[i].option_id === option.option_id){
-
-                                $scope.myform.form_fields[field_index].fieldOptions.splice(i, 1);
-                                break;
-
-                            }
-                        }
-                    }
-                };
-
 
 			}]
         };

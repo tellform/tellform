@@ -161,12 +161,12 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "							<div ng-repeat=\"option in field.fieldOptions track by option.option_id\" class=\"row\">\n" +
     "								<input type=\"text\" name=\"{{option.option_value}}{{field._id}}\" ng-model=\"option.option_value\" class=\"col-xs-5\">\n" +
     "\n" +
-    "								<a class=\"btn btn-danger btn-mini right\" type=\"button\" ng-click=\"deleteOption($index, option)\" class=\"col-xs-3\">\n" +
+    "								<a class=\"btn btn-danger btn-mini right\" type=\"button\" ng-click=\"deleteOption(field, option)\" class=\"col-xs-3\">\n" +
     "									<i class=\"fa fa-trash-o\"></i>\n" +
     "								</a>\n" +
     "							</div>\n" +
     "							<div class=\"row\">\n" +
-    "								<button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=\"button\" ng-click=\"addOption($index)\">\n" +
+    "								<button class=\"btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6\" type=\"button\" ng-click=\"addOption(field)\">\n" +
     "									<i class=\"icon-plus icon-white\"></i> {{ 'ADD_OPTION' | translate }}\n" +
     "								</button>\n" +
     "							</div>\n" +
@@ -190,7 +190,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
     "							<select style=\"width:100%\" ng-model=\"field.ratingOptions.shape\"\n" +
     "									value=\"{{field.ratingOptions.steps}}\"\n" +
     "									name=\"ratingOptions_shape{{field._id}}\" required>\n" +
-    "								<option ng-repeat=\"shapeType in field.ratingOptions.validShapes\"\n" +
+    "								<option ng-repeat=\"shapeType in validShapes\"\n" +
     "										value=\"{{shapeType}}\">\n" +
     "									{{select2FA[shapeType]}}\n" +
     "								</option>\n" +

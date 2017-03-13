@@ -31,12 +31,12 @@
 							<div ng-repeat="option in field.fieldOptions track by option.option_id" class="row">
 								<input type="text" name="{{option.option_value}}{{field._id}}" ng-model="option.option_value" class="col-xs-5">
 
-								<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption($index, option)" class="col-xs-3">
+								<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
 									<i class="fa fa-trash-o"></i>
 								</a>
 							</div>
 							<div class="row">
-								<button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption($index)">
+								<button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption(field)">
 									<i class="icon-plus icon-white"></i> {{ 'ADD_OPTION' | translate }}
 								</button>
 							</div>
@@ -60,7 +60,7 @@
 							<select style="width:100%" ng-model="field.ratingOptions.shape"
 									value="{{field.ratingOptions.steps}}"
 									name="ratingOptions_shape{{field._id}}" required>
-								<option ng-repeat="shapeType in field.ratingOptions.validShapes"
+								<option ng-repeat="shapeType in validShapes"
 										value="{{shapeType}}">
 									{{select2FA[shapeType]}}
 								</option>
