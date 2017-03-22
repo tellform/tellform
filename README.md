@@ -21,28 +21,29 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 [<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="250px">](https://sparkpost.com/)
 [<img src="https://cdn.shopify.com/s/files/1/0192/8184/t/11/assets/logo.png?2608345842081938086" width="250px">](https://therooststand.com/)
 
-##Screenshots
+## Screenshots
 <img src="design/screenshots/tellform_screenshot1.png" width="500px">
 <img src="design/screenshots/analytics.png" width="500px">
 
-##Features	
+## Features	
 
-###Currently following features are implemented:
-	-Multi-Language Support
-	-11 possible types of form fields
-	-Editable startpage
-	-Export Submissions to XLS, JSON or CSV
-	-Native Analytics and Google Analytics Support
-	-Custom subdomains
-	-Embeddable Forms
-	-Form API
+### Currently following features are implemented:
 
-###TODO:
-	-Implement encryption for all form data
-	-Integrate AWS for PDF saving
-	-Add Typeform API integration
-	-Add plugin/3rd party integration support (ala Slack)
-	-Create wiki for easy installation and setup
+- Multi-Language Support
+- 11 possible types of form fields
+- Editable startpage
+- Export Submissions to XLS, JSON or CSV
+- Native Analytics and Google Analytics Support
+- Custom subdomains
+- Embeddable Forms
+- Form API
+
+### TODO:
+- Implement encryption for all form data
+- Integrate AWS for PDF saving
+- Add Typeform API integration
+- Add plugin/3rd party integration support (ala Slack)
+- Create wiki for easy installation and setup
 
 ## Quickstart
 
