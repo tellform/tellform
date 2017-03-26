@@ -13,7 +13,7 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 
 [See examples here](https://tellform.com/examples) 
 
-####Sponsored by
+#### Sponsored by
 [<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
 [<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png" width="250px">](https://getsentry.com/)
 [<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
