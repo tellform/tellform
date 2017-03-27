@@ -63,6 +63,7 @@ module.exports.removeRootDir = function(files, removeRoot, addRoot) {
  * Get the app's bower dependencies
  */
 module.exports.getBowerJSAssets = function() {
+
 	return this.removeRootDir(minBowerFiles('**/**.js'), 'public/', 'static/');
 };
 module.exports.getBowerCSSAssets = function() {

@@ -283,9 +283,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         }
                     }
                     var newField = {
-                        title: fieldTitle + ' ' + $scope.myform.form_fields.length+1,
+                        title: fieldTitle,
                         fieldType: fieldType,
-                        fieldValue: '0',
+                        fieldValue: '',
                         required: true,
                         disabled: false,
                         deletePreserved: false,
@@ -296,7 +296,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						newField.ratingOptions = {
 							steps: 1,
 							shape: 'Heart'
-						}
+						};
+						newField.fieldValue = '0';
 					}
 
 					if($scope.showAddOptions(newField)){
@@ -340,7 +341,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					$scope.update(false, $scope.myform, false, true, null);
                 };
 
-                $scope.duplicateField = function (field_index){
+                $scope.duplicateField = function(field_index){
                     var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
                     currField.title += ' copy';

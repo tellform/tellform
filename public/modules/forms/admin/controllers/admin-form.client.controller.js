@@ -95,12 +95,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                 if(!form_id) throw new Error('Error - removeCurrentForm(): $scope.myform._id does not exist');
 
                 $http.delete('/forms/'+form_id)
-                    .success(function(data, status, headers){
+                    .then(function(response){
                         console.log('form deleted successfully');
 
                         $state.go('listForms', {}, {reload: true});
 
-                    }).error(function(error){
+                    }, function(error){
                         console.log('ERROR: Form could not be deleted.');
                         console.error(error);
                     });
@@ -146,8 +146,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 						});
 				} else {
 					var dataToSend = data;
-					delete dataToSend.analytics.visitors;
-					delete dataToSend.submissions;
+					if(dataToSend.analytics && dataToSend.analytics.visitors){
+						delete dataToSend.analytics.visitors;
+					}
+					if(dataToSend.submissions){
+						delete dataToSend.submissions;
+					}
 
 					$scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
 						.then(function (response) {

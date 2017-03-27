@@ -10,24 +10,24 @@ var bowerDep = bowerFiles('**/**.js');
 
 // Karma configuration
 module.exports = function(config) {
-	var shouldBeSingleRun = false
-	if(process.env.NODE_ENV === 'travis') shouldBeSingleRun = true
+	var shouldBeSingleRun = false;
+	if(process.env.NODE_ENV === 'travis') shouldBeSingleRun = true;
 
 	config.set({
 		// Frameworks to use
 		frameworks: ['jasmine'],
 
 		// List of files / patterns to load in the browser
-		files: bowerDep.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.unit_tests, applicationConfiguration.assets.views),
+		files: bowerDep.concat(['public/lib/socket.io-client/dist/socket.io.js'], applicationConfiguration.assets.js, applicationConfiguration.assets.unit_tests, applicationConfiguration.assets.views),
 
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-		reporters: ['mocha', 'html', 'progress'], 
+		reporters: ['mocha', 'html', 'progress', 'coverage'],
 
-		
+
 		preprocessors: {
 		    'public/modules/*/views/**/**.html': ['ng-html2js'],
-		    'public/modules/*/views/*.html': ['ng-html2js'],
+		    'public/modules/*/views/*.html': ['ng-html2js']
 		    //'public/modules/*/*.js': ['coverage'],
 			//'public/modules/*/*[!tests]*/*.js': ['coverage'],
 		},

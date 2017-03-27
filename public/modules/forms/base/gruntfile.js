@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         html2js: {
 		  options: {
 		  	base: '',
-			module: 'NodeForm.templates',
+			module: 'TellForm.templates',
 		    singleModule: true,
 			rename: function (moduleName) {
 				return 'modules/forms/base/' + moduleName;

@@ -32,7 +32,12 @@
                 {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
                 {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false, _id:'56e90745f5934fc9e22028a6'}
 			],
-			_id: '525a8422f6d0f87f0e407a33'
+			analytics: {
+				visitors: []
+			},
+			submissions: [],
+			_id: '525a8422f6d0f87f0e407a33',
+			id:  '525a8422f6d0f87f0e407a33'
 		};
 
 		var expectedForm = {
@@ -75,7 +80,7 @@
 			};
 			return result;
 		};
-		
+
 		//Mock Users Service
         beforeEach(module(function($provide) {
             $provide.service('myForm', function($q) {
@@ -207,7 +212,7 @@
 		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', function() {
 			var controller = createAdminFormController();
 
-			//Set $state transition 
+			//Set $state transition
 			$state.expectTransitionTo('listForms');
 
 			// Set DELETE response
@@ -216,7 +221,7 @@
 			//Run controller functionality
 			scope.openDeleteModal();
 			scope.removeCurrentForm();
-	
+
 			$httpBackend.flush();
 			$state.ensureAllTransitionsHappened();
 		});
@@ -228,7 +233,7 @@
 			$httpBackend.expect('PUT', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
 
 			//Run controller functionality
-			scope.update(false, null);
+			scope.update(false, sampleForm, false, false);
 
 			$httpBackend.flush();
 		});

@@ -147,10 +147,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                         });
                     } else {
 						setTimeout(function() {
-							if (document.querySelectorAll('.activeField .focusOn')[0]) {
+							if (document.querySelectorAll('.activeField .focusOn')[0] !== undefined) {
 								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
 								document.querySelectorAll('.activeField .focusOn')[0].focus();
-							} else {
+							} else if(document.querySelectorAll('.activeField input')[0] !== undefined) {
 								document.querySelectorAll('.activeField input')[0].focus();
 							}
 						});
@@ -198,7 +198,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
 				};
 
-				$rootScope.submitForm = $scope.submitForm = function() {
+				$rootScope.submitForm = $scope.submitForm = function(cb) {
 
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
@@ -219,14 +219,22 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
 							.success(function (data, status, headers) {
+								console.log('\n\n\n\n\nSUBMITTING PROMISE');
+								console.log(data);
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);
+								if(cb){
+									cb();
+								}
 							})
 							.error(function (error) {
 								$scope.loading = false;
 								console.error(error);
 								$scope.error = error.message;
+								if(cb){
+									cb(error);
+								}
 							});
 					}, 500);
                 };

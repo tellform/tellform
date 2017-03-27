@@ -18,7 +18,7 @@
             password: 'password',
             provider: 'local',
             roles: ['user'],
-            _id: 'ed873933b1f1dea0ce12fab9',
+            _id: 'ed873933b1f1dea0ce12fab9'
         };
 
         var sampleFields = [
@@ -62,12 +62,16 @@
         beforeEach(module(ApplicationConfiguration.applicationModuleName));
         beforeEach(module('stateMock'));
         beforeEach(module('module-templates'));
-        
+
         beforeEach(module('ngSanitize', 'ui.select'));
 
-        beforeEach(inject(function($rootScope, _FormFields_, _$compile_) {
+        beforeEach(inject(function($rootScope, _FormFields_, _$compile_, _$httpBackend_) {
             scope = $rootScope.$new();
             FormFields = _FormFields_;
+
+			// Point global variables to injected services
+			$httpBackend = _$httpBackend_;
+			$httpBackend.whenGET(/.+\.yml/).respond('');
 
             $compile = _$compile_;
         }));
@@ -75,21 +79,15 @@
         it('should be able to render all field types in html', inject(function($rootScope) {
             scope.fields = sampleFields;
 
-            for(var i=0; i<sampleFields.length; i++){ 
-                var field = sampleFields[i]; 
-                if(!field.title) field.title = ''; 
-                
+            for(var i=0; i<sampleFields.length; i++){
+                var field = sampleFields[i];
+                if(!field.title) field.title = '';
+
                 scope.myfield = field;
                 var element = angular.element('<field-directive field="myfield"></field-directive>');
                 $compile(element)(scope);
                 scope.$digest();
 
-                console.log('Actual: ');
-                console.log(element.html());
-
-                console.log('\nExpected: ');
-
-                console.log('<div class="ng-binding ng-scope>'+field.title+'</div>');
                 expect(element.html()).not.toEqual('<div class="ng-binding ng-scope>'+field.title+'</div>');
             }
         }));

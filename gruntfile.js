@@ -1,7 +1,6 @@
 'use strict';
 var spawn = require('child_process').spawn;
 
-
 module.exports = function(grunt) {
 	require('jit-grunt')(grunt);
 
@@ -242,7 +241,6 @@ module.exports = function(grunt) {
 			options: {
 				base: 'public',
 				watch: true,
-				module: 'NodeForm.templates',
 				singleModule: true,
 				useStrict: true,
 				htmlmin: {
@@ -254,7 +252,17 @@ module.exports = function(grunt) {
 					removeRedundantAttributes: true
 				}
 			},
+			forms: {
+				options: {
+					module: 'TellForm.form_templates'
+				},
+				src: ['public/form_modules/**/views/**.html', 'public/form_modules/**/views/**/*.html'],
+				dest: 'public/dist/form_populate_template_cache.js'
+			},
 			main: {
+				options: {
+					module: 'TellForm.templates'
+				},
 				src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html'],
 				dest: 'public/dist/populate_template_cache.js'
 			}
@@ -265,11 +273,10 @@ module.exports = function(grunt) {
 			}
 		}
 	});
-
+	
 	grunt.event.on('coverage', function(lcov, done){
 	    var coveralls = require('coveralls');
-	    console.log(lcov);
-        coveralls.handleInput(lcov, function(err){
+           coveralls.handleInput(lcov, function(err){
 	        if (err) {
 	        	grunt.log.error('Failed to submit lcov file to coveralls: ' + err);
 	            return done(err);
@@ -304,7 +311,6 @@ module.exports = function(grunt) {
 
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
-
 
 	// Secure task(s).
 	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'concurrent:default']);

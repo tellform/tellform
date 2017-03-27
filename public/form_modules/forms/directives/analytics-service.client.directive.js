@@ -32,6 +32,14 @@
 			var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
 			$.ajaxSetup( { "async": true } );
 
+			if(!geoData){
+				geoData = {
+					ip: '',
+					city: '',
+					country_name: ''
+				}
+			}
+
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,

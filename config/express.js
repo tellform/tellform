@@ -56,8 +56,11 @@ module.exports = function(db) {
 	app.locals.signupDisabled = config.signupDisabled;
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
-	app.locals.socketPort = config.socketPort;
 
+	app.locals.socketPort = config.socketPort;
+	if(config.socketUrl){
+		app.locals.socketUrl = config.socketUrl;
+	}
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();
 	app.locals.bowerOtherFiles = config.getBowerOtherAssets();
@@ -136,7 +139,7 @@ module.exports = function(db) {
 			req.url = path;
 
 			req.userId = user._id;
-			
+
 			// Q.E.D.
 			next();
 		});

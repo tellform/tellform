@@ -67,10 +67,11 @@
 	var user = {{ user | json | safe }};
 </script>
 
-<!--Embedding The signupDisabled Boolean-->
+<!--Embedding signupDisabled, socketPort and socketUrl Boolean-->
 <script type="text/javascript">
 	var signupDisabled = {{signupDisabled | safe}};
 	var socketPort = {{socketPort | safe}};
+	var socketUrl = {{socketUrl | safe}} || null;
 </script>
 
 <!--Socket.io Client Dependency-->

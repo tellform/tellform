@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'NodeForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'NodeForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'cgBusy', 'ngSanitize', 'vButton', 'ngResource', 'TellForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -61,7 +61,7 @@ angular.element(document).ready(function() {
 	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
 
-angular.module('NodeForm.templates', []).run(['$templateCache', function($templateCache) {
+angular.module('TellForm.templates', []).run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("modules/core/views/header.client.view.html",
     "<section class=\"navbar navbar-inverse\" data-ng-controller=HeaderController ng-hide=hideNav><div class=container><div class=navbar-header><button class=navbar-toggle type=button data-ng-click=toggleCollapsibleMenu()><span class=sr-only>Toggle navigation</span> <span>{{ 'MENU_BTN' | translate }}</span></button> <a href=\"/#!/\" class=navbar-brand><img src=/static/modules/core/img/logo_white.svg height=100%></a></div><nav class=\"collapse navbar-collapse\" collapse=!isCollapsed role=navigation><ul class=\"nav navbar-nav navbar-right\" data-ng-hide=authentication.isAuthenticated()><li ng-hide=$root.signupDisabled ui-route=/signup ng-class=\"{active: $uiRoute}\"><a href=/#!/signup>{{ 'SIGNUP_TAB' | translate }}</a></li><li class=divider-vertical></li><li ui-route=/signin ng-class=\"{active: $uiRoute}\"><a href=/#!/signin>{{ 'SIGNIN_TAB' | translate }}</a></li></ul><ul class=\"nav navbar-nav navbar-right\" data-ng-show=authentication.isAuthenticated()><li class=dropdown uib-dropdown><a href=# class=dropdown-toggle data-toggle=dropdown dropdown-toggle><span>{{ 'MY_SETTINGS' | translate }}</span> <b class=caret></b></a><ul class=dropdown-menu><li><a href=/#!/settings/profile>{{ 'EDIT_PROFILE' | translate }}</a></li><li class=divider></li><li><a href=/#!/settings/password>{{ 'CHANGE_PASSWORD' | translate }}</a></li></ul></li><li><a href=\"/\" ng-click=signout()>{{ 'SIGNOUT_TAB' | translate }}</a></li></ul></nav></div></section>");
@@ -130,7 +130,7 @@ angular.module('NodeForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/forms/admin/views/directiveViews/cgBusy/update-form-message-TypeB.html",
     "<div><div style=\"text-align: center; font-size: 20px;position: fixed; bottom: 0; right: 55px; background-color: gray; color: white; padding: 5px 15px 5px 10px; z-index: 10\">{{$message}}</div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/configure-form.client.view.html",
-    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>Display Custom Start Page?</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.endPage.showEnd ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.endPage.showEnd ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
+    "<div class=\"config-form container\"><div class=row><div class=\"col-sm-offset-2 col-sm-4\"><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_NAME' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.title value={{myform.title}} style=\"width: 100%\" ng-minlength=4 ng-pattern=\"/^[a-zA-Z0-9 \\-.]*$/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'FORM_STATUS' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.isLive ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'PUBLIC' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.isLive ng-required=\"true\"> &nbsp;<span>{{ 'PRIVATE' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"col-sm-12 field-title\">Language</div><div class=\"col-sm-12 field-input\"><select ng-model=myform.language><option ng-repeat=\"language in languages\" ng-selected=\"language == myform.language\" value={{language}}>{{language}}</option></select><span class=required-error ng-show=\"field.required && !field.fieldValue\">* required</span></div></div></div><div class=col-sm-4><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'GA_TRACKING_CODE' | translate }}</h5></div><div class=col-sm-12><input class=form-control ng-model=myform.analytics.gaCode value={{myform.analytics.gaCode}} style=\"width: 100%\" ng-minlength=4 placeholder=UA-XXXXX-Y ng-pattern=\"/\\bUA-\\d{4,10}-\\d{1,4}\\b/\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_FOOTER' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.hideFooter ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_START_PAGE' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.startPage.showStart ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.startPage.showStart ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div><div class=\"row field\"><div class=\"field-title col-sm-12\"><h5>{{ 'DISPLAY_END_PAGE' | translate }}</h5></div><div class=\"field-input col-sm-12\"><label style=\"display: inline-block\"><input type=radio data-ng-value=true ng-model=myform.endPage.showEnd ng-required=true style=\"background-color:#33CC00\"> &nbsp;<span>{{ 'YES' | translate }}</span></label><label style=\"display: inline-block\"><input type=radio data-ng-value=false ng-model=myform.endPage.showEnd ng-required=\"true\"> &nbsp;<span>{{ 'NO' | translate }}</span></label></div></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div>");
   $templateCache.put("modules/forms/admin/views/directiveViews/form/edit-form.client.view.html",
     "<form class=\"row container\" name=editForm><script type=text/ng-template id=editEndPageModal.html class=edit-endpage-modal><div class=\"modal-body\">\n" +
     "			<div class=\"row\">\n" +
@@ -2082,10 +2082,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       login: function(credentials) {
 
         var deferred = $q.defer();
-        $http.post('/auth/signin', credentials).success(function(response) {
-            deferred.resolve(response);
-          }).error(function(error) {
-            deferred.reject(error.message || error);
+        $http.post('/auth/signin', credentials).then(function(response) {
+            deferred.resolve(response.data);
+          }, function(error) {
+            deferred.reject(error.data.message || error.data);
           });
 
         return deferred.promise;
@@ -2093,10 +2093,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       logout: function() {
 
         var deferred = $q.defer();
-        $http.get('/auth/signout').success(function(response) {
+        $http.get('/auth/signout').then(function(response) {
           deferred.resolve(null);
-        }).error(function(error) {
-          deferred.reject(error.message || error);
+        }, function(error) {
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -2104,11 +2104,11 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       signup: function(credentials) {
 
         var deferred = $q.defer();
-        $http.post('/auth/signup', credentials).success(function(response) {
+        $http.post('/auth/signup', credentials).then(function(response) {
           // If successful we assign the response to the global user model
-          deferred.resolve(response);
-        }).error(function(error) {
-          deferred.reject(error.message || error);
+          deferred.resolve(response.data);
+        }, function(error) {
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -2117,10 +2117,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       resendVerifyEmail: function(_email) {
 
         var deferred = $q.defer();
-        $http.post('/auth/verify', {email: _email}).success(function(response) {
-          deferred.resolve(response);
-        }).error(function(error) {
-          deferred.reject(error.message || error);
+        $http.post('/auth/verify', {email: _email}).then(function(response) {
+          deferred.resolve(response.data);
+        }, function(error) {
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -2134,10 +2134,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         if( !validTokenRe.test(token) ) throw new Error('Error token: '+token+' is not a valid verification token');
 
         var deferred = $q.defer();
-        $http.get('/auth/verify/'+token).success(function(response) {
-          deferred.resolve(response);
-        }).error(function(error) {
-          deferred.reject(error);
+        $http.get('/auth/verify/'+token).then(function(response) {
+          deferred.resolve(response.data);
+        }, function(error) {
+          deferred.reject(error.data);
         });
 
         return deferred.promise;
@@ -2146,10 +2146,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       resetPassword: function(passwordDetails, token) {
 
         var deferred = $q.defer();
-        $http.get('/auth/password/'+token, passwordDetails).success(function(response) {
+        $http.get('/auth/password/'+token, passwordDetails).then(function(response) {
           deferred.resolve();
-        }).error(function(error) {
-          deferred.reject(error.message || error);
+        }, function(error) {
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -2159,12 +2159,12 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       askForPasswordReset: function(credentials) {
 
         var deferred = $q.defer();
-        $http.post('/auth/forgot', credentials).success(function(response) {
+        $http.post('/auth/forgot', credentials).then(function(response) {
           // Show user success message and clear form
-          deferred.resolve(response);
-        }).error(function(error) {
+          deferred.resolve(response.data);
+        }, function(error) {
           // Show user error message
-          deferred.reject(error.message || error);
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -2323,12 +2323,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
                 if(!form_id) throw new Error('Error - removeCurrentForm(): $scope.myform._id does not exist');
 
                 $http.delete('/forms/'+form_id)
-                    .success(function(data, status, headers){
+                    .then(function(response){
                         console.log('form deleted successfully');
 
                         $state.go('listForms', {}, {reload: true});
 
-                    }).error(function(error){
+                    }, function(error){
                         console.log('ERROR: Form could not be deleted.');
                         console.error(error);
                     });
@@ -2374,8 +2374,12 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 						});
 				} else {
 					var dataToSend = data;
-					delete dataToSend.analytics.visitors;
-					delete dataToSend.submissions;
+					if(dataToSend.analytics && dataToSend.analytics.visitors){
+						delete dataToSend.analytics.visitors;
+					}
+					if(dataToSend.submissions){
+						delete dataToSend.submissions;
+					}
 
 					$scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
 						.then(function (response) {
@@ -2985,9 +2989,9 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         }
                     }
                     var newField = {
-                        title: fieldTitle + ' ' + $scope.myform.form_fields.length+1,
+                        title: fieldTitle,
                         fieldType: fieldType,
-                        fieldValue: '0',
+                        fieldValue: '',
                         required: true,
                         disabled: false,
                         deletePreserved: false,
@@ -2998,7 +3002,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						newField.ratingOptions = {
 							steps: 1,
 							shape: 'Heart'
-						}
+						};
+						newField.fieldValue = '0';
 					}
 
 					if($scope.showAddOptions(newField)){
@@ -3042,7 +3047,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					$scope.update(false, $scope.myform, false, true, null);
                 };
 
-                $scope.duplicateField = function (field_index){
+                $scope.duplicateField = function(field_index){
                     var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
                     currField.title += ' copy';
@@ -3791,10 +3796,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                         });
                     } else {
 						setTimeout(function() {
-							if (document.querySelectorAll('.activeField .focusOn')[0]) {
+							if (document.querySelectorAll('.activeField .focusOn')[0] !== undefined) {
 								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
 								document.querySelectorAll('.activeField .focusOn')[0].focus();
-							} else {
+							} else if(document.querySelectorAll('.activeField input')[0] !== undefined) {
 								document.querySelectorAll('.activeField input')[0].focus();
 							}
 						});
@@ -3842,7 +3847,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
 				};
 
-				$rootScope.submitForm = $scope.submitForm = function() {
+				$rootScope.submitForm = $scope.submitForm = function(cb) {
 
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
@@ -3863,14 +3868,22 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
 							.success(function (data, status, headers) {
+								console.log('\n\n\n\n\nSUBMITTING PROMISE');
+								console.log(data);
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);
+								if(cb){
+									cb();
+								}
 							})
 							.error(function (error) {
 								$scope.loading = false;
 								console.error(error);
 								$scope.error = error.message;
+								if(cb){
+									cb(error);
+								}
 							});
 					}, 500);
                 };

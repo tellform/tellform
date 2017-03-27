@@ -17,7 +17,17 @@
 			socket: null
 		};
 
-		connect(window.location.protocol+'//'+window.location.hostname + ':' + $window.socketPort);
+		var url = '';
+		if($window.socketPort && $window.socketUrl){
+			url = $window.socketUrl + ':' + $window.socketPort;
+		} else if ($window.socketUrl && !$window.socketUrl){
+			url = $window.socketUrl;
+		} else if ($window.socketPort){
+			url = window.location.protocol+'//'+window.location.hostname + ':' + $window.socketPort;
+		} else {
+			url = window.location.protocol+'//'+window.location.hostname;
+		}
+		connect(url);
 
 		return service;
 

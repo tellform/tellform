@@ -17,19 +17,6 @@
             _id: 'ed873933b1f1dea0ce12fab9'
         };
 
-        var pdfObj = {
-            fieldname:'file',
-            originalname:'test.pdf',
-            name:'1440112660375.pdf',
-            encoding:'7bit',
-            mimetype:'application/pdf',
-            path:'uploads/tmp/test@test.com/1440112660375.pdf',
-            extension:'pdf',
-            size:56223,
-            truncated:false,
-            buffer:null
-        };
-
         var sampleForm = {
             title: 'Form Title',
             admin: 'ed873933b1f1dea0ce12fab9',
@@ -142,9 +129,7 @@
             //Grab scope. Depends on type of scope.
             //See angular.element documentation.
             scope = el.isolateScope() || el.scope();
-
-            console.log(scope);
-        }));
+		}));
 
         var Validator = (function() {
             return {
@@ -179,14 +164,12 @@
             $httpBackend.expect('POST',/^(\/forms\/)([0-9a-fA-F]{24})$/, data).respond(200);
 
             //Run Controller Logic to Test
-            scope.submitForm();
-
-            $httpBackend.flush();
-
-            setTimeout(function(){
-                expect(scope.myform.submitted).toBe(true);
-                expect(scope.error).toEqual('');
-            }, 25);
+            scope.submitForm(function(error){
+				expect(error).toBe(null);
+				expect(scope.myform.submitted).toBe(true);
+				expect(scope.error).toEqual('');
+			});
+			
         });
 
         it('$scope.reloadForm() should reset and reload form', function(){

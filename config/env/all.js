@@ -104,9 +104,9 @@ module.exports = {
 			'!public/modules/**/tests/**/*.js'
 		],
 		form_js: [
-			'public/config.js',
-			'public/application.js',
-			'public/dist/populate_template_cache.js',
+			'public/form-config.js',
+			'public/form-application.js',
+			'public/dist/form_populate_template_cache.js',
 			'public/form_modules/forms/*.js',
 			'public/form_modules/forms/*/*/*/*.js',
 			'public/form_modules/forms/*/*.js',

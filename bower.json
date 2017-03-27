@@ -11,7 +11,6 @@
   "appPath": "public/modules",
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "angular": "~1.4.7",
     "angular-resource": "~1.4.7",
     "angular-mocks": "~1.4.7",
     "angular-bootstrap": "~0.14.3",
@@ -47,7 +46,7 @@
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
-    "angular": "~1.4.7",
+    "angular": "1.4.12",
     "angular-ui-select": "compiled"
   },
   "overrides": {

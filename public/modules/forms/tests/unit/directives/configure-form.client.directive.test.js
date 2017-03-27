@@ -17,19 +17,6 @@
             _id: 'ed873933b1f1dea0ce12fab9'
         };
 
-        var pdfObj = {
-            fieldname:'file',
-            originalname:'test.pdf',
-            name:'1440112660375.pdf',
-            encoding:'7bit',
-            mimetype:'application/pdf',
-            path:'uploads/tmp/test@test.com/1440112660375.pdf',
-            extension:'pdf',
-            size:56223,
-            truncated:false,
-            buffer:null
-        };
-
         var sampleForm = {
             title: 'Form Title',
             admin: 'ed873933b1f1dea0ce12fab9',
@@ -100,36 +87,5 @@
             scope = el.isolateScope() || el.scope();
 
         }));
-
-        it('$scope.uploadPDF() should upload a pdf file', function() {
-            // expect(scope.isInitialized).toBeDefined()
-            // expect(scope.log).toEqual('');
-
-            expect(scope.pdfLoading).toBe(false);
-
-            //Set POST response
-            $httpBackend.when('POST', '/upload/pdf').respond(pdfObj);
-
-            var files = [{}];
-            scope.uploadPDF(files);
-
-            $httpBackend.flush();
-            expect(scope.myform.pdf).toEqualData(pdfObj);
-        });
-
-        it('$scope.removePDF() should removed uploaded pdf file', function() {
-            // expect(scope.isInitialized).toBeDefined()
-            // expect(scope.log).toEqual('');
-
-            scope.myform.pdf = pdfObj;
-            scope.myform.isGenerated = true;
-            scope.myform.autofillPDFs = true;
-
-            scope.removePDF();
-
-            expect(scope.myform.pdf).toEqual(null);
-            expect(scope.myform.isGenerated).toBe(false);
-            expect(scope.myform.autofillPDFs).toBe(false);
-        });
     });
 }());

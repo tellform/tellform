@@ -17,19 +17,6 @@
             _id: 'ed873933b1f1dea0ce12fab9'
         };
 
-        var pdfObj = {
-            fieldname:'file',
-            originalname:'test.pdf',
-            name:'1440112660375.pdf',
-            encoding:'7bit',
-            mimetype:'application/pdf',
-            path:'uploads/tmp/test@test.com/1440112660375.pdf',
-            extension:'pdf',
-            size:56223,
-            truncated:false,
-            buffer:null
-        };
-
         var sampleForm = {
             title: 'Form Title',
             admin: 'ed873933b1f1dea0ce12fab9',
@@ -39,15 +26,19 @@
                 {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
                 {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
-            pdf: {},
-            pdfFieldMap: {},
+            analytics: {
+				visitors: []
+			},
+			submissions: [],
             startPage: {
                 showStart: false
             },
+			endPage: {
+				showEnd: false
+			},
             hideFooter: false,
             isGenerated: false,
             isLive: false,
-            autofillPDFs: false,
             _id: '525a8422f6d0f87f0e407a33'
         };
 
@@ -122,12 +113,15 @@
             // Point global variables to injected services
             $httpBackend = _$httpBackend_;
 
+			sampleForm.submissions = sampleSubmissions;
             $httpBackend.whenGET('/users/me/').respond('');
-            $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200, sampleSubmissions);
-
-            //Instantiate directive.
+            $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
+			$httpBackend.whenGET('/forms').respond(200, sampleForm);
+			$httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
+			//Instantiate directive.
             var tmp_scope = $rootScope.$new();
             tmp_scope.myform = sampleForm;
+			tmp_scope.myform.submissions = sampleSubmissions;
             tmp_scope.user = sampleUser;
 
             //gotacha: Controller and link functions will execute.
@@ -143,17 +137,9 @@
             scope = el.isolateScope() || el.scope();
         }));
 
-        it('$scope.initFormSubmissions() should fetch all relevant form submissions', function() {
-            $httpBackend.expectGET(/^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200, sampleSubmissions);
-            scope.initFormSubmissions();
-            $httpBackend.flush();
-            scope.$digest();
-        });
-
         describe('Form Table Methods', function(){
 
             it('$scope.toggleAllCheckers should toggle all checkboxes in table', function(){
-                scope.initFormSubmissions();
                 $httpBackend.flush();
 
                 //Run Controller Logic to Test
@@ -167,7 +153,6 @@
             });
 
             it('$scope.isAtLeastOneChecked should return true when at least one checkbox is selected', function(){
-                scope.initFormSubmissions();
                 $httpBackend.flush();
 
                 scope.table.masterChecker = true;
@@ -180,7 +165,6 @@
             });
 
             it('$scope.deleteSelectedSubmissions should delete all submissions that are selected', function(){
-                scope.initFormSubmissions();
                 $httpBackend.flush();
 
                 scope.table.masterChecker = true;

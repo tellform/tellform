@@ -20,10 +20,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       login: function(credentials) {
 
         var deferred = $q.defer();
-        $http.post('/auth/signin', credentials).success(function(response) {
-            deferred.resolve(response);
-          }).error(function(error) {
-            deferred.reject(error.message || error);
+        $http.post('/auth/signin', credentials).then(function(response) {
+            deferred.resolve(response.data);
+          }, function(error) {
+            deferred.reject(error.data.message || error.data);
           });
 
         return deferred.promise;
@@ -31,10 +31,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       logout: function() {
 
         var deferred = $q.defer();
-        $http.get('/auth/signout').success(function(response) {
+        $http.get('/auth/signout').then(function(response) {
           deferred.resolve(null);
-        }).error(function(error) {
-          deferred.reject(error.message || error);
+        }, function(error) {
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -42,11 +42,11 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       signup: function(credentials) {
 
         var deferred = $q.defer();
-        $http.post('/auth/signup', credentials).success(function(response) {
+        $http.post('/auth/signup', credentials).then(function(response) {
           // If successful we assign the response to the global user model
-          deferred.resolve(response);
-        }).error(function(error) {
-          deferred.reject(error.message || error);
+          deferred.resolve(response.data);
+        }, function(error) {
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -55,10 +55,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       resendVerifyEmail: function(_email) {
 
         var deferred = $q.defer();
-        $http.post('/auth/verify', {email: _email}).success(function(response) {
-          deferred.resolve(response);
-        }).error(function(error) {
-          deferred.reject(error.message || error);
+        $http.post('/auth/verify', {email: _email}).then(function(response) {
+          deferred.resolve(response.data);
+        }, function(error) {
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -72,10 +72,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         if( !validTokenRe.test(token) ) throw new Error('Error token: '+token+' is not a valid verification token');
 
         var deferred = $q.defer();
-        $http.get('/auth/verify/'+token).success(function(response) {
-          deferred.resolve(response);
-        }).error(function(error) {
-          deferred.reject(error);
+        $http.get('/auth/verify/'+token).then(function(response) {
+          deferred.resolve(response.data);
+        }, function(error) {
+          deferred.reject(error.data);
         });
 
         return deferred.promise;
@@ -84,10 +84,10 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       resetPassword: function(passwordDetails, token) {
 
         var deferred = $q.defer();
-        $http.get('/auth/password/'+token, passwordDetails).success(function(response) {
+        $http.get('/auth/password/'+token, passwordDetails).then(function(response) {
           deferred.resolve();
-        }).error(function(error) {
-          deferred.reject(error.message || error);
+        }, function(error) {
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
@@ -97,12 +97,12 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       askForPasswordReset: function(credentials) {
 
         var deferred = $q.defer();
-        $http.post('/auth/forgot', credentials).success(function(response) {
+        $http.post('/auth/forgot', credentials).then(function(response) {
           // Show user success message and clear form
-          deferred.resolve(response);
-        }).error(function(error) {
+          deferred.resolve(response.data);
+        }, function(error) {
           // Show user error message
-          deferred.reject(error.message || error);
+          deferred.reject(error.data.message || error.data);
         });
 
         return deferred.promise;
