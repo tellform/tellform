@@ -39,7 +39,7 @@ function hashFnv32a(str, asString, seed) {
 angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
         return {
-            templateUrl: 'modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
+            templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
             scope: {
                 myform:'='

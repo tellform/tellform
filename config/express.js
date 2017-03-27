@@ -57,9 +57,16 @@ module.exports = function(db) {
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
 
-	app.locals.socketPort = config.socketPort;
+	if(config.socketPort){
+		app.locals.socketPort = config.socketPort;
+	} else {
+		app.locals.socketPort = false;
+	}
+
 	if(config.socketUrl){
 		app.locals.socketUrl = config.socketUrl;
+	} else {
+		app.locals.socketUrl = false;
 	}
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();

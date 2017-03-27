@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 			},
 			mochaTests: {
 				files: watchFiles.serverTests,
-				tasks: ['test:server'],
+				tasks: ['test:server']
 			}
 		},
 		jshint: {
@@ -254,7 +254,7 @@ module.exports = function(grunt) {
 			},
 			forms: {
 				options: {
-					module: 'TellForm.form_templates'
+					module: 'TellForm-Form.form_templates'
 				},
 				src: ['public/form_modules/**/views/**.html', 'public/form_modules/**/views/**/*.html'],
 				dest: 'public/dist/form_populate_template_cache.js'
@@ -273,7 +273,7 @@ module.exports = function(grunt) {
 			}
 		}
 	});
-	
+
 	grunt.event.on('coverage', function(lcov, done){
 	    var coveralls = require('coveralls');
            coveralls.handleInput(lcov, function(err){
@@ -306,21 +306,21 @@ module.exports = function(grunt) {
     grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
-	grunt.registerTask('default', ['lint', 'html2js:main', 'env', 'concurrent:default']);
-	grunt.registerTask('dev', ['lint', 'html2js:main', 'env:dev', 'concurrent:default']);
+	grunt.registerTask('default', ['lint', 'html2js:main', 'html2js:forms', 'env', 'concurrent:default']);
+	grunt.registerTask('dev', ['lint', 'html2js:main',  'html2js:forms', 'env:dev', 'concurrent:default']);
 
 	// Debug task.
-	grunt.registerTask('debug', ['lint', 'html2js:main', 'concurrent:debug']);
+	grunt.registerTask('debug', ['lint', 'html2js:main', 'html2js:forms', 'concurrent:debug']);
 
 	// Secure task(s).
-	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'concurrent:default']);
+	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'html2js:forms', 'concurrent:default']);
 
 	// Lint task(s).
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'cssmin', 'ngAnnotate', 'uglify', 'html2js:main']);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'cssmin', 'ngAnnotate', 'uglify', 'html2js:main', 'html2js:forms']);
 
 	//Setup task(s).
 	grunt.registerTask('setup', ['execute']);
@@ -328,5 +328,5 @@ module.exports = function(grunt) {
 	// Test task(s).
 	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);
 	grunt.registerTask('test:server', ['lint:tests', 'env:test', 'mochaTest']);
-	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'env:test', 'karma:unit']);
+	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit']);
 };

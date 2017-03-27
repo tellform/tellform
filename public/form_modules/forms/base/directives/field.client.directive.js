@@ -30,7 +30,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 				'natural'
 			];
 
-			var templateUrl = 'modules/forms/base/views/directiveViews/field/';
+			var templateUrl = 'form_modules/forms/base/views/directiveViews/field/';
 
 			if (__indexOf.call(supportedFields, type) >= 0) {
 				templateUrl = templateUrl+type+'.html';
@@ -49,7 +49,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 				forms: '='
 			},
 			link: function(scope, element) {
-				
+
 				$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
 					if(type === 'yes_no'){
 						scope.field.fieldValue = 'true';
