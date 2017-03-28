@@ -57,6 +57,8 @@ module.exports = function(db) {
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
 
+	app.locals.subdomainsDisabled = config.subdomainsDisabled;
+
 	if(config.socketPort){
 		app.locals.socketPort = config.socketPort;
 	} else {
@@ -77,80 +79,91 @@ module.exports = function(db) {
 	app.locals.cssFiles = config.getCSSAssets();
 
 	app.use(function (req, res, next) {
-		var User = mongoose.model('User');
-		var path = '/' + 'subdomain' + '/';
-		var subdomains = req.subdomains;
-		var host = req.hostname;
 
-		if(subdomains.slice(0, 4).join('.')+'' === '1.0.0.127'){
-			subdomains = subdomains.slice(4);
-		}
+		if(!config.subdomainsDisabled) {
+			var User = mongoose.model('User');
+			var path = '/' + 'subdomain' + '/';
+			var subdomains = req.subdomains;
+			var host = req.hostname;
 
-		// continue if no subdomains
-		if (!subdomains.length) return next();
-
-		var urlPath = url.parse(req.url).path.split('/');
-		if(urlPath.indexOf('static') > -1){
-			//console.log("STATIC FILE\n\n\n\n");
-			urlPath.splice(1,1);
-			req.root = 'https://' + config.baseUrl + urlPath.join('/');
-			console.log(req.root);
-			return next();
-		}
-
-		if(urlPath.indexOf('users') > -1 && urlPath.indexOf('me') > -1){
-			return next();
-		}
-
-		if(subdomains.indexOf('stage') > -1 || subdomains.indexOf('admin') > -1){
-			return next();
-		}
-
-		console.log(req.subdomains.reverse()[0]);
-		//console.log("is api subdomain: "+ (subdomains.indexOf("api") > -1));
-		//console.log(req.url);
-		if(subdomains.indexOf('api') > -1){
-			// rebuild url
-			path += 'api' + req.url;
-			console.log(req.url);
-			// TODO: check path and query strings are preserved
-			// reassign url
-			req.url = path;
-			console.log(req.url);
-			return next();
-		}
-
-		User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
-
-			if (err) {
-				console.log(err);
-				req.subdomains = null;
-				// Error page
-				return res.status(404).render('404', {
-					error: 'Page Does Not Exist'
-				});
-			}
-			if (user === null){
-				// Error page
-				return res.status(404).render('404', {
-					error: 'Page Does Not Exist'
-				});
+			if (subdomains.slice(0, 4).join('.') + '' === '1.0.0.127') {
+				subdomains = subdomains.slice(4);
 			}
 
-			// rebuild url
-			path += subdomains.join('/') + req.url;
+			// continue if no subdomains
+			if (!subdomains.length) return next();
 
-			// TODO: check path and query strings are preserved
-			// reassign url
-			console.log("path: "+path);
-			req.url = path;
+			var urlPath = url.parse(req.url).path.split('/');
+			if (urlPath.indexOf('static') > -1) {
+				urlPath.splice(1, 1);
+				if(process.env.NODE_ENV == 'development'){
+					req.root = req.protocol + '://' + config.baseUrl + ':' + config.port + urlPath.join('/');
+				} else {
+					req.root = req.protocol + '://' + config.baseUrl + urlPath.join('/');
+				}
+				return next();
+			}
 
-			req.userId = user._id;
+			if (urlPath.indexOf('users') > -1 && urlPath.indexOf('me') > -1) {
+				return next();
+			}
 
-			// Q.E.D.
-			next();
-		});
+			if (subdomains.indexOf('stage') > -1 || subdomains.indexOf('admin') > -1) {
+				return next();
+			}
 
+			if (subdomains.indexOf('api') > -1) {
+				// rebuild url
+				path += 'api' + req.url;
+				// TODO: check path and query strings are preserved
+				// reassign url
+				req.url = path;
+				return next();
+			}
+
+			User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
+
+				if (err) {
+					console.log(err);
+					req.subdomains = null;
+					// Error page
+					return res.status(404).render('404', {
+						error: 'Page Does Not Exist'
+					});
+				}
+				if (user === null) {
+					// Error page
+					return res.status(404).render('404', {
+						error: 'Page Does Not Exist'
+					});
+				}
+
+				// rebuild url
+				path += subdomains.join('/') + req.url;
+
+				// TODO: check path and query strings are preserved
+				// reassign url
+				console.log("path: " + path);
+				req.url = path;
+
+				req.userId = user._id;
+
+				// Q.E.D.
+				next();
+			});
+		} else {
+
+			var urlPath = url.parse(req.url).path.split('/');
+			if (urlPath.indexOf('static') > -1 && urlPath.indexOf('view') === urlPath.indexOf('static')-1) {
+				urlPath.splice(1, 1);
+				req.url = urlPath.join('/');
+
+				console.log('\n\n\nreq.url: ' + req.url);
+				return next();
+			}
+
+			return next();
+		}
 	});
 
     //Setup Prerender.io

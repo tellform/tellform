@@ -1,8 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
+	function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
 
 		$scope.trustSrc = function(src) {
 			return $sce.trustAsResourceUrl(src);
@@ -25,10 +25,14 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$scope
 
 		$scope.formURL = "/#!/forms/" + $scope.myform._id;
 
-		if(window.location.host.split('.').length < 3){
-			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + $scope.formURL;
+		if($window.subdomainsDisabled == true){
+			$scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
 		} else {
-			$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') +  $scope.formURL;
+			if(window.location.host.split('.').length < 3){
+				$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + $scope.formURL;
+			} else {
+				$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') +  $scope.formURL;
+			}
 		}
 
 		var refreshFrame = $scope.refreshFrame = function(){
