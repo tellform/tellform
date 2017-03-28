@@ -9,7 +9,6 @@ module.exports = {
 			pass: ''
 		}
 	},
-	socketPort: process.env.SOCKET_PORT || 20523,
 
 	log: {
 		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'

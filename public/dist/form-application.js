@@ -1210,14 +1210,16 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 		};
 
 		var url = '';
+		console.log("$window.socketPort: "+$window.socketPort);
+		console.log("$window.socketUrl: "+$window.socketUrl);
 		if($window.socketPort && $window.socketUrl){
-			url = $window.socketUrl + ':' + $window.socketPort;
+			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
 		} else if ($window.socketUrl && !$window.socketUrl){
-			url = $window.socketUrl;
+			url = window.location.protocol + '//' + $window.socketUrl;
 		} else if ($window.socketPort){
-			url = window.location.protocol+'//'+window.location.hostname + ':' + $window.socketPort;
+			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
 		} else {
-			url = window.location.protocol+'//'+window.location.hostname;
+			url = window.location.protocol + '//' + window.location.hostname;
 		}
 		connect(url);
 
