@@ -35,6 +35,8 @@ module.exports = {
 		mailbox_id: process.env.MAILOSAUR_MAILBOX || ''
 	},
 
+	subdomainsDisabled: (process.env.SUBDOMAINS_DISABLED == "TRUE"),
+
 	//Sentry DSN Client Key
 	DSN: process.env.RAVEN_DSN || '',
 
