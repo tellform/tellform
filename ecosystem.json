@@ -16,7 +16,9 @@
 	  "post-deploy": "npm install && pm2 startOrGracefulReload ecosystem.json --env production",
 	  "env": {
 		"NODE_ENV": "production",
-		"BASE_URL": "stage.tellform.com"
+		"BASE_URL": "stage.tellform.com",
+		"SOCKET_URL": "wsstage.tellform.com",
+		"SUBDOMAINS_DISABLED": "TRUE"
 	  }
 	},
 	"prod": {
