@@ -13,7 +13,7 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 
 [See examples here](https://tellform.com/examples) 
 
-####Sponsored by
+#### Sponsored by
 [<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://digitalocean.com/)
 [<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png" width="250px">](https://getsentry.com/)
 [<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
@@ -21,28 +21,29 @@ TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that c
 [<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="250px">](https://sparkpost.com/)
 [<img src="https://cdn.shopify.com/s/files/1/0192/8184/t/11/assets/logo.png?2608345842081938086" width="250px">](https://therooststand.com/)
 
-##Screenshots
+## Screenshots
 <img src="design/screenshots/tellform_screenshot1.png" width="500px">
 <img src="design/screenshots/analytics.png" width="500px">
 
-##Features	
+## Features	
 
-###Currently following features are implemented:
-	-Multi-Language Support
-	-11 possible types of form fields
-	-Editable startpage
-	-Export Submissions to XLS, JSON or CSV
-	-Native Analytics and Google Analytics Support
-	-Custom subdomains
-	-Embeddable Forms
-	-Form API
+### Currently following features are implemented:
 
-###TODO:
-	-Implement encryption for all form data
-	-Integrate AWS for PDF saving
-	-Add Typeform API integration
-	-Add plugin/3rd party integration support (ala Slack)
-	-Create wiki for easy installation and setup
+- Multi-Language Support
+- 11 possible types of form fields
+- Editable startpage
+- Export Submissions to XLS, JSON or CSV
+- Native Analytics and Google Analytics Support
+- Custom subdomains
+- Embeddable Forms
+- Form API
+
+### TODO:
+- Implement encryption for all form data
+- Integrate AWS for PDF saving
+- Add Typeform API integration
+- Add plugin/3rd party integration support (ala Slack)
+- Create wiki for easy installation and setup
 
 ## Quickstart
 
