@@ -1,31 +1,28 @@
 {
-  "name": "TellForm",
-  "description": "Beautiful, opensource web forms",
-  "repository": "https://github.com/whitef0x0/tellform",
-  "logo": "https://node-js-sample.herokuapp.com/node.svg",
-  "addons": ["mongolab", "sparkpost"],
-  "keywords": ["node", "express", "static", "mean"],
+	"name": "TellForm",
+	"description": "Beautiful, opensource web forms",
+	"repository": "https://github.com/whitef0x0/tellform",
+	"logo": "https://node-js-sample.herokuapp.com/node.svg",
+	"keywords": ["node", "express", "static", "mean"],
+	"addons": ["mongolab", "sparkpost"],
 	"env": {
-		"IS_HEROKU_INSTALLATION": {
-      			"value": "TRUE"
+		"DISABLE_CLUSTER_MODE": {
+			"description": "Disable support for running in cluster mode on pm2",
+			"value": "TRUE"
 		},
-		"SUBDOMAINS_DISABLED": {
-      			"description": "Disable subdomains for user forms",
-      			"value": "TRUE"
+		"NODE_ENV": {
+			"description": "Choose whether to run app in development or production mode",
+			"value": "production"
 		},
 		"BASE_URL": {
- 			"description": "Set this to your heroku app's URL",
- 			"required": true
- 		},
-		"NODE_ENV": {
-			"description": "Specify whether to run development or production version of the app",
-			"value": "production",
-			"required": true
+			"description": "The url of your heroku app."
+		},
+		"SOCKET_URL": {
+			"description": "Where you websockets will connect to (i.e. your heroku app url)"
 		},
 		"MAILER_SERVICE_PROVIDER": {
-			"description": "Which mailer provider are you using? (i.e. SparkPost, Mandrill, etc)",
-			"value": "Sparkpost",
-			"required": true
+			"description": "Which mail service/API you will be using (i.e. SparkPost, Mandrill, etc)",
+			"value": "Sparkpost"
 		}
 	}
 }

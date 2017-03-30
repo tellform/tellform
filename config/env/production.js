@@ -7,6 +7,7 @@ module.exports = {
 	},
 	port: process.env.PORT || 5000,
 	socketUrl: process.env.SOCKET_URL || 'ws.tellform.com',
+	socketPort: process.env.SOCKET_PORT || null,
 	log: {
 		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
 		format: 'combined',
@@ -51,6 +52,7 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
+<<<<<<< HEAD
 		from: process.env.MAILER_FROM || 'testing@' + process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
@@ -61,6 +63,14 @@ module.exports = {
 			auth: {
 				user: process.env.SPARKPOST_SMTP_USERNAME || process.env.MAILER_EMAIL_ID || '',
 				pass: process.env.SPARKPOST_SMTP_PASSWORD || process.env.MAILER_PASSWORD || ''
+=======
+		from: process.env.MAILER_FROM || 'testing@'+process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
+		options: {
+			service: process.env.MAILER_SERVICE_PROVIDER || '',
+			auth: {
+				user: process.env.MAILER_EMAIL_ID || process.env.SPARKPOST_SMTP_USERNAME || '',
+				pass: process.env.MAILER_PASSWORD || process.env.SPARKPOST_SMTP_PASSWORD || ''
+>>>>>>> c08daea2ccfe85231755dc239fa1aff0ee8f5029
 			}
 		}
 	}
