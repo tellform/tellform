@@ -23,6 +23,7 @@
     "init": "node scripts/setup.js"
   },
   "dependencies": {
+		"glob": "^7.0.3",
     "async": "^1.4.2",
     "async-boolean-expression-evaluator": "^1.1.1",
     "bcrypt": "^0.8.7",
@@ -97,7 +98,6 @@
     "coveralls": "^2.11.4",
     "cross-spawn": "^5.0.0",
     "del": "^2.2.2",
-    "glob": "^7.0.3",
     "grunt-execute": "^0.2.2",
     "grunt-mocha-istanbul": "^3.0.1",
     "grunt-mocha-test": "~0.12.1",
