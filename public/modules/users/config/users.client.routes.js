@@ -6,9 +6,7 @@ angular.module('users').config(['$stateProvider',
 
 	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
       var deferred = $q.defer();
-
-      //console.log(Auth.ensureHasCurrentUser(User));
-
+		
       if (Auth.currentUser && Auth.currentUser.email) {
         $timeout(deferred.resolve);
       }

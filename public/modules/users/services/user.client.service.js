@@ -84,8 +84,8 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       resetPassword: function(passwordDetails, token) {
 
         var deferred = $q.defer();
-        $http.get('/auth/password/'+token, passwordDetails).then(function(response) {
-          deferred.resolve();
+        $http.post('/auth/reset/'+token, passwordDetails).then(function(response) {
+          deferred.resolve(response);
         }, function(error) {
           deferred.reject(error.data.message || error.data);
         });

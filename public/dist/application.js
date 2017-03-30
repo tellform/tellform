@@ -1621,9 +1621,7 @@ angular.module('users').config(['$stateProvider',
 
 	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
       var deferred = $q.defer();
-
-      //console.log(Auth.ensureHasCurrentUser(User));
-
+		
       if (Auth.currentUser && Auth.currentUser.email) {
         $timeout(deferred.resolve);
       }
@@ -1791,7 +1789,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
 	function($scope, $stateParams, $state, User) {
-		
+
 		$scope.error = '';
 
 		// Submit forgotten password account id
@@ -1814,6 +1812,7 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 			User.resetPassword($scope.passwordDetails, $stateParams.token).then(
 				function(response){
 					// If successful show success message and clear form
+					console.log(response);
 					$scope.success = response.message;
 					$scope.passwordDetails = null;
 
@@ -2146,8 +2145,8 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       resetPassword: function(passwordDetails, token) {
 
         var deferred = $q.defer();
-        $http.get('/auth/password/'+token, passwordDetails).then(function(response) {
-          deferred.resolve();
+        $http.post('/auth/reset/'+token, passwordDetails).then(function(response) {
+          deferred.resolve(response);
         }, function(error) {
           deferred.reject(error.data.message || error.data);
         });

@@ -129,7 +129,6 @@ exports.validateResetToken = function(req, res) {
 exports.reset = function(req, res, next) {
 	// Init Variables
 	var passwordDetails = req.body;
-
 	async.waterfall([
 
 		function(done) {
@@ -147,31 +146,15 @@ exports.reset = function(req, res, next) {
 
 						user.save(function(err) {
 							if (err) {
-								return res.status(400).send({
-									message: errorHandler.getErrorMessage(err)
-								});
-							} else {
-								req.login(user, function(err) {
-									if (err) {
-										res.status(400).send(err);
-									} else {
-										// Return authenticated user
-										res.json(user);
-
-										done(err, user);
-									}
-								});
+								done(err, null)
 							}
+							done(null, user);
 						});
 					} else {
-						return res.status(400).send({
-							message: 'Passwords do not match'
-						});
+						done('Passwords do not match', null);
 					}
 				} else {
-					return res.status(400).send({
-						message: 'Password reset token is invalid or has expired.'
-					});
+					done('Password reset token is invalid or has expired.', null)
 				}
 			});
 		},
@@ -193,11 +176,20 @@ exports.reset = function(req, res, next) {
 			};
 
 			smtpTransport.sendMail(mailOptions, function(err) {
-				done(err, 'done');
+				done(err);
 			});
 		}
 	], function(err) {
-		if (err) return next(err);
+		debugger;
+		if (err) {
+			res.status(500).send({
+				message: err.message || err
+			});
+		}
+
+		return res.json({
+			message: "Successfully changed your password!"
+		});
 	});
 };
 
