@@ -5,7 +5,7 @@
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["node", "express", "static", "mean"],
 	"addons": ["mongolab", "sparkpost"],
-	"env:{
+	"env":{
 		"DISABLE_CLUSTER_MODE": {
 			"description": "Disable support for running in cluster mode on pm2",
 			"value": "TRUE"
