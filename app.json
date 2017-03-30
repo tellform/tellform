@@ -6,6 +6,10 @@
 	"keywords": ["node", "express", "static", "mean"],
 	"addons": ["mongolab", "sparkpost"],
 	"env": {
+		"DISABLE_SUBDOMAINS": {
+			"description": "Disable support for running subdomains. (This should be true if you are not using your own custom domain.",
+			"value": "TRUE"
+		},
 		"DISABLE_CLUSTER_MODE": {
 			"description": "Disable support for running in cluster mode on pm2",
 			"value": "TRUE"
