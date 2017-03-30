@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	baseUrl: process.env.BASE_URL || 'tellform.com',
+	baseUrl: process.env.BASE_URL || process.env.HEROKU_APP_NAME + '.herokuapp.com' || 'tellform.com',
 	db: {
 		uri: process.env.MONGODB_URI || process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean',
 	},
@@ -52,12 +52,25 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
+<<<<<<< HEAD
+		from: process.env.MAILER_FROM || 'testing@' + process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
+		options: {
+			service: process.env.MAILER_SERVICE_PROVIDER || '',
+			/*ssl: false,
+			host: 'smtp.sparkpostmail.com',
+			port: 587,
+			secure: false,*/
+			auth: {
+				user: process.env.SPARKPOST_SMTP_USERNAME || process.env.MAILER_EMAIL_ID || '',
+				pass: process.env.SPARKPOST_SMTP_PASSWORD || process.env.MAILER_PASSWORD || ''
+=======
 		from: process.env.MAILER_FROM || 'testing@'+process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			auth: {
 				user: process.env.MAILER_EMAIL_ID || process.env.SPARKPOST_SMTP_USERNAME || '',
 				pass: process.env.MAILER_PASSWORD || process.env.SPARKPOST_SMTP_PASSWORD || ''
+>>>>>>> c08daea2ccfe85231755dc239fa1aff0ee8f5029
 			}
 		}
 	}

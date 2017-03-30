@@ -3,8 +3,8 @@
 // Init the application configuration module for AngularJS application
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
-	var applicationModuleName = 'TellFormForm';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'ngSanitize', 'vButton', 'ngResource', 'TellForm.form_templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
+	var applicationModuleName = 'TellForm-Form';
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'ngSanitize', 'vButton', 'ngResource', 'TellForm-Form.form_templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -61,7 +61,7 @@ angular.element(document).ready(function() {
 	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
 
-angular.module('TellForm.form_templates', []).run(['$templateCache', function($templateCache) {
+angular.module('TellForm-Form.form_templates', []).run(['$templateCache', function($templateCache) {
   "use strict";
   $templateCache.put("form_modules/forms/base/views/submit-form.client.view.html",
     "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n" +
@@ -574,7 +574,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 				'natural'
 			];
 
-			var templateUrl = 'modules/forms/base/views/directiveViews/field/';
+			var templateUrl = 'form_modules/forms/base/views/directiveViews/field/';
 
 			if (__indexOf.call(supportedFields, type) >= 0) {
 				templateUrl = templateUrl+type+'.html';
@@ -593,7 +593,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 				forms: '='
 			},
 			link: function(scope, element) {
-				
+
 				$rootScope.chooseDefaultOption = scope.chooseDefaultOption = function(type) {
 					if(type === 'yes_no'){
 						scope.field.fieldValue = 'true';
@@ -798,7 +798,7 @@ function hashFnv32a(str, asString, seed) {
 angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
         return {
-            templateUrl: 'modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
+            templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
             scope: {
                 myform:'='
@@ -1210,14 +1210,16 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 		};
 
 		var url = '';
+		console.log("$window.socketPort: "+$window.socketPort);
+		console.log("$window.socketUrl: "+$window.socketUrl);
 		if($window.socketPort && $window.socketUrl){
-			url = $window.socketUrl + ':' + $window.socketPort;
+			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
 		} else if ($window.socketUrl && !$window.socketUrl){
-			url = $window.socketUrl;
+			url = window.location.protocol + '//' + $window.socketUrl;
 		} else if ($window.socketPort){
-			url = window.location.protocol+'//'+window.location.hostname + ':' + $window.socketPort;
+			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
 		} else {
-			url = window.location.protocol+'//'+window.location.hostname;
+			url = window.location.protocol + '//' + window.location.hostname;
 		}
 		connect(url);
 

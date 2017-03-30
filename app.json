@@ -24,6 +24,5 @@
 			"description": "Which mail service/API you will be using (i.e. SparkPost, Mandrill, etc)",
 			"value": "Sparkpost"
 		}
-
 	}
 }
