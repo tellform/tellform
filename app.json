@@ -3,13 +3,11 @@
   "description": "Beautiful, opensource web forms",
   "repository": "https://github.com/whitef0x0/tellform",
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
-  "addons": ["mongolab", "sparkpost", "runtime-dyno-metadata "],
+  "addons": ["mongolab", "sparkpost"],
   "keywords": ["node", "express", "static", "mean"],
 	"env": {
 		"IS_HEROKU_INSTALLATION": {
-			"description": "Disables redis if it is a heroku installation (i.e. if it doesn't need to run in cluster mode)",
       			"value": "TRUE",
-			"required": true
 		},
 		"SUBDOMAINS_DISABLED": {
       			"description": "Disable subdomains for user forms",
@@ -40,7 +38,10 @@
 		"ADMIN_PASSWORD": {
 			"description": "Password of the default admin account",
 			"required": true
-		}
+		},
+		"HEROKU_APP_NAME": {
+		      "required": true
+		},
 	},
 	"scripts": {
     "predeploy": "grunt build",
