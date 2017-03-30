@@ -10,7 +10,7 @@ var config = require('./config'),
 module.exports = function (app, db) {
 	var server = http.createServer(app);
 
-	var io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
+	var io = socketio({ transports: ['websocket', 'polling'] });
 
 	if(process.env.DISABLE_CLUSTER_MODE === "TRUE"){
 		var redis = require('socket.io-redis');
