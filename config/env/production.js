@@ -59,8 +59,8 @@ module.exports = {
 			port: 587,
 			secure: false,*/
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || '',
-				pass: process.env.MAILER_PASSWORD || ''
+				user: process.env.SPARKPOST_SMTP_USERNAME || process.env.MAILER_EMAIL_ID || '',
+				pass: process.env.SPARKPOST_SMTP_PASSWORD || process.env.MAILER_PASSWORD || ''
 			}
 		}
 	}
