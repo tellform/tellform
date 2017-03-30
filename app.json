@@ -27,8 +27,5 @@
 			"value": "Sparkpost",
 			"required": true
 		}
-	},
-	"scripts": {
-    "predeploy": "grunt build"
 	}
 }
