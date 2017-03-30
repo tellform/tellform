@@ -40,7 +40,7 @@
 		"ADMIN_USERNAME": {
 			"description": "Password of the default admin account",
 			"required": true
-		},
+		}
 	},
 	"scripts": {
     "predeploy": "grunt build; node scripts/create-admin.js",
