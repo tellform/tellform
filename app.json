@@ -17,6 +17,18 @@
 		"BASE_URL": {
 			"description": "Set this to your heroku app's URL",
 			"required": true
+		},
+		"MAILER_SERVICE_PROVIDER": {
+			"description": "Which mailer provider are you using? (i.e. SparkPost, Mandrill, etc)",
+			"required": false
+		},
+		"MAILER_EMAIL_ID": {
+			"description": "Your mail provider account login",
+			"required": false
+		},
+		"MAILER_PASSWORD": {
+			"description": "Your mail provider account password or API key",
+			"required": false
 		}
 	},
 	"scripts": {
