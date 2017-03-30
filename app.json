@@ -41,7 +41,7 @@
 		},
 		"HEROKU_APP_NAME": {
 		      "required": true
-		},
+		}
 	},
 	"scripts": {
     "predeploy": "grunt build",
