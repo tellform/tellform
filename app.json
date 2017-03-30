@@ -43,6 +43,7 @@
 		}
 	},
 	"scripts": {
-    "predeploy": "grunt build; node scripts/create-admin.js"
+    "predeploy": "grunt build",
+    "postdeploy": "node /app/scripts/create-admin.js"
   }
 }
