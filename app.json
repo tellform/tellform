@@ -18,10 +18,6 @@
 			"value": "production",
 			"required": true
 		},
-		"BASE_URL": {
-			"description": "Set this to your heroku app's URL",
-			"required": true
-		},
 		"MAILER_SERVICE_PROVIDER": {
 			"description": "Which mailer provider are you using? (i.e. SparkPost, Mandrill, etc)",
 			"value": "Sparkpost",
