@@ -5,6 +5,11 @@
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["node", "express", "static", "mean"],
 	"env": {
+		"IS_HEROKU_INSTALLATION": {
+			"description": "Disables redis if it is a heroku installation (i.e. if it doesn't need to run in cluster mode)",
+      			"value": "TRUE",
+			"required": true
+		},
 		"SUBDOMAINS_DISABLED": {
       			"description": "Disable subdomains for user forms",
       			"value": "TRUE"
