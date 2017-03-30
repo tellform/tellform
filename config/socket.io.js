@@ -12,7 +12,7 @@ module.exports = function (app, db) {
 
 	var io = socketio({ transports: ['websocket', 'polling'] });
 
-	if(process.env.DISABLE_CLUSTER_MODE === "TRUE"){
+	if(process.env.DISABLE_CLUSTER_MODE !== "TRUE"){
 		var redis = require('socket.io-redis');
 		io.adapter(redis( process.env.REDIS_URL || { host: process.env.REDIS_DB_PORT_6379_TCP_ADDR || '127.0.0.1' , port: process.env.REDIS_DB_PORT_6379_TCP_PORT || 6379 }));
 	}
