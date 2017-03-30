@@ -3,6 +3,7 @@
   "description": "Beautiful, opensource web forms",
   "repository": "https://github.com/whitef0x0/tellform",
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
+  "addons": ["mongolab", "sparkpost"],
   "keywords": ["node", "express", "static", "mean"],
 	"env": {
 		"IS_HEROKU_INSTALLATION": {
@@ -25,15 +26,8 @@
 		},
 		"MAILER_SERVICE_PROVIDER": {
 			"description": "Which mailer provider are you using? (i.e. SparkPost, Mandrill, etc)",
-			"required": false
-		},
-		"MAILER_EMAIL_ID": {
-			"description": "Your mail provider account login",
-			"required": false
-		},
-		"MAILER_PASSWORD": {
-			"description": "Your mail provider account password or API key",
-			"required": false
+			"value": "SparkPost",
+			"required": true
 		}
 	},
 	"scripts": {
