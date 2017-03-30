@@ -7,7 +7,7 @@
   "keywords": ["node", "express", "static", "mean"],
 	"env": {
 		"IS_HEROKU_INSTALLATION": {
-      			"value": "TRUE",
+      			"value": "TRUE"
 		},
 		"SUBDOMAINS_DISABLED": {
       			"description": "Disable subdomains for user forms",
