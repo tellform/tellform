@@ -7,6 +7,7 @@ module.exports = {
 	},
 	port: process.env.PORT || 5000,
 	socketUrl: process.env.SOCKET_URL || 'ws.tellform.com',
+	socketPort: process.env.SOCKET_PORT || null,
 	log: {
 		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
 		format: 'combined',
