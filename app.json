@@ -3,5 +3,19 @@
   "description": "Beautiful, opensource web forms",
   "repository": "https://github.com/whitef0x0/tellform",
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "static", "mean"]
+  "keywords": ["node", "express", "static", "mean"],
+	"env": {
+		"SUBDOMAINS_DISABLED": {
+      "description": "Disable subdomains for user forms",
+      "value": "TRUE"
+		},
+		"NODE_ENV": {
+			"description": "Specify whether to run development or production version of the app",
+			"value": "production",
+			"required": true
+		}
+	},
+	"scripts": {
+    "predeploy": "grunt build"
+  }
 }
