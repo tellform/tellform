@@ -11,6 +11,9 @@ TellForm 2.0.0
 
 TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/whitef0x0/tellform/tree/master)
+
+
 [See examples here](https://tellform.com/examples) 
 
 #### Sponsored by
@@ -82,7 +85,7 @@ BASE_URL=yourdomain.com
 DSN_KEY=yourPrivateRavenKey
 ```
 
-##___Important Note___: Make sure your BASE_URL matches the domain of your server or TellForm won't work!
+## ___Important Note___: Make sure your BASE_URL matches the domain of your server or TellForm won't work!
 
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
