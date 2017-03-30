@@ -26,18 +26,6 @@
 			"description": "Which mailer provider are you using? (i.e. SparkPost, Mandrill, etc)",
 			"value": "Sparkpost",
 			"required": true
-		},
-		"ADMIN_EMAIL": {
-			"description": "Email of the default admin account",
-			"required": true
-		},
-		"ADMIN_USERNAME": {
-			"description": "Username of the default admin account",
-			"required": true
-		},
-		"ADMIN_PASSWORD": {
-			"description": "Password of the default admin account",
-			"required": true
 		}
 	},
 	"scripts": {
