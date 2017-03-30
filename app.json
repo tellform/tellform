@@ -26,7 +26,7 @@
 		},
 		"MAILER_SERVICE_PROVIDER": {
 			"description": "Which mailer provider are you using? (i.e. SparkPost, Mandrill, etc)",
-			"value": "SparkPost",
+			"value": "Sparkpost",
 			"required": true
 		}
 	},
