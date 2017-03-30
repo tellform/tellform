@@ -6,12 +6,16 @@
   "keywords": ["node", "express", "static", "mean"],
 	"env": {
 		"SUBDOMAINS_DISABLED": {
-      "description": "Disable subdomains for user forms",
-      "value": "TRUE"
+      			"description": "Disable subdomains for user forms",
+      			"value": "TRUE"
 		},
 		"NODE_ENV": {
 			"description": "Specify whether to run development or production version of the app",
 			"value": "production",
+			"required": true
+		},
+		"BASE_URL": {
+			"description": "Set this to your heroku app's URL",
 			"required": true
 		}
 	},
