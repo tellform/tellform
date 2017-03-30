@@ -11,7 +11,7 @@ module.exports = function (app, db) {
 	var server = http.createServer(app);
 
 	var io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
-	if(process.env.IS_HEROKU_INSTALLATION == "TRUE"){
+	if(process.env.IS_HEROKU_INSTALLATION !== "TRUE"){
 		var redis = require('socket.io-redis');
 		io.adapter(redis( process.env.REDIS_URL || { host: process.env.REDIS_DB_PORT_6379_TCP_ADDR || '127.0.0.1' , port: process.env.REDIS_DB_PORT_6379_TCP_PORT || 6379 }));
 	}
