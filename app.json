@@ -13,6 +13,10 @@
       			"description": "Disable subdomains for user forms",
       			"value": "TRUE"
 		},
+		"BASE_URL": {
+ 			"description": "Set this to your heroku app's URL",
+ 			"required": true
+ 		},
 		"NODE_ENV": {
 			"description": "Specify whether to run development or production version of the app",
 			"value": "production",
@@ -34,9 +38,6 @@
 		"ADMIN_PASSWORD": {
 			"description": "Password of the default admin account",
 			"required": true
-		},
-		"HEROKU_APP_NAME": {
-		      "required": true
 		}
 	},
 	"scripts": {
