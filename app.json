@@ -3,7 +3,7 @@
   "description": "Beautiful, opensource web forms",
   "repository": "https://github.com/whitef0x0/tellform",
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
-  "addons": ["mongolab", "sparkpost"],
+  "addons": ["mongolab", "sparkpost", "runtime-dyno-metadata "],
   "keywords": ["node", "express", "static", "mean"],
 	"env": {
 		"IS_HEROKU_INSTALLATION": {
