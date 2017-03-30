@@ -3,5 +3,45 @@
   "description": "Beautiful, opensource web forms",
   "repository": "https://github.com/whitef0x0/tellform",
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "static", "mean"]
+  "addons": ["mongolab", "sparkpost"],
+  "keywords": ["node", "express", "static", "mean"],
+	"env": {
+		"IS_HEROKU_INSTALLATION": {
+      			"value": "TRUE"
+		},
+		"SUBDOMAINS_DISABLED": {
+      			"description": "Disable subdomains for user forms",
+      			"value": "TRUE"
+		},
+		"BASE_URL": {
+ 			"description": "Set this to your heroku app's URL",
+ 			"required": true
+ 		},
+		"NODE_ENV": {
+			"description": "Specify whether to run development or production version of the app",
+			"value": "production",
+			"required": true
+		},
+		"MAILER_SERVICE_PROVIDER": {
+			"description": "Which mailer provider are you using? (i.e. SparkPost, Mandrill, etc)",
+			"value": "Sparkpost",
+			"required": true
+		},
+		"ADMIN_EMAIL": {
+			"description": "Email of the default admin account",
+			"required": true
+		},
+		"ADMIN_USERNAME": {
+			"description": "Username of the default admin account",
+			"required": true
+		},
+		"ADMIN_PASSWORD": {
+			"description": "Password of the default admin account",
+			"required": true
+		}
+	},
+	"scripts": {
+    "predeploy": "grunt build",
+    "postdeploy": "node scripts/create_admin.js"
+  }
 }
