@@ -6,7 +6,7 @@
 	"keywords": ["node", "express", "static", "mean"],
 	"addons": ["mongolab", "sparkpost"],
 	"env": {
-		"DISABLE_SUBDOMAINS": {
+		"SUBDOMAINS_DISABLED": {
 			"description": "Disable support for running subdomains. (This should be true if you are not using your own custom domain.",
 			"value": "TRUE"
 		},
