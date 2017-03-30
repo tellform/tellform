@@ -70,6 +70,11 @@ var nodemailer_providers = [
 	'Zoho'
 ];
 
+var bool_options = [
+	"TRUE",
+	"FALSE"
+]
+
 var questions = [
 	{
 		type: 'confirm',
@@ -96,6 +101,12 @@ var questions = [
 		name: 'SIGNUP_DISABLED',
 		message: 'Do you want to disable signups?',
 		default: false
+	},
+	{
+		type: 'list',
+		name: 'SUBDOMAINS_DISABLED',
+		message: 'Do you want to have subdomains? (i.e. are you using a custom domain)',
+		choices: bool_options
 	},
 	{
 		type: 'list',
