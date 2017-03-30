@@ -51,7 +51,7 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'no-reply@tellform.com',
+		from: process.env.MAILER_FROM || 'testing@' + process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			/*ssl: false,
