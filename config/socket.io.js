@@ -12,6 +12,7 @@ module.exports = function (app, db) {
 	var io = socketio({ transports: ['websocket', 'polling'] });
 
 	if(config.socketPort){
+		console.log("creating websocket server on port: "+config.socketPort);
 		io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
 	}
 
