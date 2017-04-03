@@ -35,6 +35,18 @@ mongoose.connection.on('error', function (err) {
 // Init the express application
 var app = require('./config/express')(db);
 
+//Create admin account
+if (process.env.CREATE_ADMIN_ACCOUNT === 'TRUE') {
+	var create_admin = require('./scripts/create_admin');
+
+	create_admin.run(app, db, function(err){
+		if(err){
+			console.error(chalk.red('Could not create Admin Account: ' + err));
+		}
+	});
+}
+
+
 // Bootstrap passport config
 require('./config/passport')();
 

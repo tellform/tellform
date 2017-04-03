@@ -1,50 +1,45 @@
-var init = require('../config/init')(),
-	config = require('../config/config'),
+var config = require('../config/config'),
 	mongoose = require('mongoose'),
   	chalk = require('chalk'),
 	fs = require('fs-extra');
 
-// Bootstrap db connection
-var db = mongoose.connect(config.db.uri, config.db.options, function(err) {
-	if (err) {
-		console.error(chalk.red('Could not connect to MongoDB!'));
-		console.log(chalk.red(err));
-	}
-});
-mongoose.connection.on('error', function(err) {
-	console.error(chalk.red('MongoDB connection error: ' + err));
-	process.exit(-1);
-});
+exports.run = function(app, db, cb) {
 
-// Init the express application
-var app = require('../config/express')(db);
+	var User = mongoose.model('User');
 
-// Bootstrap passport config
-require('../config/passport')();
+	var email = config.ADMIN_EMAIL || 'admin@admin.com';
+	var username = config.ADMIN_USERNAME || 'admin';
+	var password = config.ADMIN_PASSWORD || 'admin';
 
-var User = mongoose.model('User');
-require('../app/models/user.server.model.js');
+	var newUser = new User({
+		firstName: 'Admin',
+		lastName: 'Account',
+		email: email,
+		username: username,
+		password: password,
+		provider: 'local',
+		roles: ['admin', 'user']
+	});
 
-var email = process.env.ADMIN_EMAIL;
-var username = process.env.ADMIN_USERNAME;
-var password = process.env.ADMIN_PASSWORD;
+	User.findOne({email: email}, function (err, user) {
+		if (err) {
+			cb(err);
+		}
 
-user = new User({
-  firstName: 'Admin',
-  lastName: 'Account',
-  email: email,
-  username: username,
-  password: password,
-  provider: 'local',
-  roles: ['admin', 'user']
-});
+		if(!user){
+			newUser.save(function (err) {
+				if (err) {
+					cb(err);
+				}
+				console.log(chalk.green('Successfully created Admin Account'));
+				delete email;
+				delete password;
+				delete username;
 
-user.save(function (err) {
-  if (err) return console.error(chalk.red(err));
-  console.log(chalk.green('Successfully created user'));
-  delete email;
-  delete password;
-  delete username;
-
-  process.exit(1);
-});
+				cb(err);
+			});
+		} else {
+			cb('User already exists!');
+		}
+	})
+}
