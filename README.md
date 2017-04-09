@@ -1,51 +1,38 @@
 TellForm 2.0.0
 ========
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UY555MCBZM722)
-[![Stories in Ready](https://badge.waffle.io/whitef0x0/tellform.svg?label=ready&title=Ready)](http://waffle.io/whitef0x0/tellform)
 [![Build Status](https://travis-ci.org/whitef0x0/tellform.svg?branch=master)](https://travis-ci.org/whitef0x0/tellform)
 ![Project Status](https://img.shields.io/badge/status-2.0.0-green.svg)
 [![Code Climate](https://codeclimate.com/github/whitef0x0/tellform/badges/gpa.svg)](https://codeclimate.com/github/whitef0x0/tellform)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=whitef0x0/tellform&amp;utm_campaign=Badge_Grade)
 [![Gitter](https://badges.gitter.im/whitef0x0/tellform.svg)](https://gitter.im/whitef0x0/tellform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-TellForm is an *opensource alternative to TypeForm* built ontop of nodejs that can create stunning forms from PDFs or from scratch
+TellForm is an *opensource alternative to TypeForm* built ontop of NodeJS that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/whitef0x0/tellform/tree/master)
-
-[See examples here](https://tellform.com/examples) 
-
-#### Sponsored by
-[<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="250px">](https://m.do.co/c/a86fd8843e09)
-[<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png" width="250px">](https://getsentry.com/)
-[<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="250px">](https://statuspage.io/)
-[<img src="http://bcsrq.com/wp-content/uploads/2014/04/StickerMuleLogo300.png" width="250px">](https://www.stickermule.com/unlock?ref_id=0939360701)
-[<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="250px">](https://sparkpost.com/)
-[<img src="https://cdn.shopify.com/s/files/1/0192/8184/t/11/assets/logo.png?2608345842081938086" width="250px">](https://therooststand.com/)
-
-## Screenshots
-<img src="design/screenshots/tellform_screenshot1.png" width="500px">
-<img src="design/screenshots/analytics.png" width="500px">
 
 ## Features	
 
 ### Currently following features are implemented:
 
 - Multi-Language Support
-- 11 possible types of form fields
-- Editable startpage
+- 11 possible question types
+- Editable start and end pages
 - Export Submissions to XLS, JSON or CSV
 - Native Analytics and Google Analytics Support
-- Custom subdomains
+- Custom Subdomains for each User
 - Embeddable Forms
-- Form API
+- Forms as a Service API
+- Deployable with Heroku and DockerHub
 
-### TODO:
+### On the Roadmap for v3.0.0
 - Implement encryption for all form data
-- Integrate AWS for PDF saving
 - Add Typeform API integration
 - Add plugin/3rd party integration support (ala Slack)
 - Create wiki for easy installation and setup
+- Add Stripe/Payment Form field
+- Add Custom Background and Dropdown Field Images
+- Add File Upload Form Field
 
 ## Quickstart
 
@@ -66,9 +53,6 @@ Setup environment.
 $ grunt build
 ```
 
-## ___Important Note___: Make sure your **BASE_URL matches the domain of your server or TellForm won't work!**
-
-
 Create your user account
 ```bash
 $ node ./scripts/setup.js
@@ -87,24 +71,23 @@ BASE_URL=yourdomain.com
 DSN_KEY=yourPrivateRavenKey
 ```
 
-
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
 Edit the `env` config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
 
-To run development version:
+To run the development version:
 
 Set ```NODE_ENV=development``` in .env file
 ```$ grunt```
 
-To run production version:
+To run the production version:
 
 Set ```NODE_ENV=production``` in .env file
 ```$ grunt```
 
 Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
 
-##Deploying with Docker
+## Deploying with Docker
 
 To deploy with docker, first install docker [https://docs.docker.com/engine/installation/](here). 
 
@@ -121,6 +104,38 @@ $ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db t
                                                                                                    -e SITE_URL='staging.mysite.com' \
                                                                                                    -p 80:80 \
 ```
+
+## Sponsors
+
+Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
+
+<a href="https://m.do.co/c/a86fd8843e09">
+	<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="50px">
+</a>
+<a href="https://getsentry.com/">
+	<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png"
+	width="50px">
+</a>
+<a href="https://statuspage.io/">
+	<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="50px">
+</a>
+
+<a href="https://www.stickermule.com/unlock?ref_id=0939360701">
+	<img src="http://bcsrq.com/wp-content/uploads/2014/04/StickerMuleLogo300.png" width="50px">
+</a>
+<a href="https://sparkpost.com/">
+	<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="50px">
+</a>
+
+<a href="https://therooststand.com/">
+	<img src="https://cdn.shopify.com/s/files/1/0192/8184/t/11/assets/logo.png?2608345842081938086" width="50px">
+</a>
+
+## Backers
+
+Love our work and community? [Become a backer](https://opencollective.com/apex).
+
+<a href="https://opencollective.com/tellform/backers/0/website" target="_blank"><img src="https://opencollective.com/apex/backers/0/avatar"></a>
 
 ## Testing Your Application
 You can run the full test suite included with MEAN.JS with the test task:
