@@ -66,6 +66,9 @@ Setup environment.
 $ grunt build
 ```
 
+## ___Important Note___: Make sure your **BASE_URL matches the domain of your server or TellForm won't work!**
+
+
 Create your user account
 ```bash
 $ node ./scripts/setup.js
@@ -84,7 +87,6 @@ BASE_URL=yourdomain.com
 DSN_KEY=yourPrivateRavenKey
 ```
 
-## ___Important Note___: Make sure your BASE_URL matches the domain of your server or TellForm won't work!
 
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
