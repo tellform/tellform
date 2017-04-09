@@ -73,14 +73,12 @@ DSN_KEY=yourPrivateRavenKey
 
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
 
-Edit the `env` config in gruntfile.js to make sure your .env file is being used. If you don't include this your app won't run
-
-To run the development version:
+#### To run the development version:
 
 Set ```NODE_ENV=development``` in .env file
 ```$ grunt```
 
-To run the production version:
+#### To run the production version:
 
 Set ```NODE_ENV=production``` in .env file
 ```$ grunt```
