@@ -20,7 +20,7 @@ module.exports = {
 		}
 	},
 	sessionCookie: {
-		#domain: process.env.BASE_URL || 'http://localhost:3000'
+		//domain: process.env.BASE_URL || 'http://localhost:3000'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

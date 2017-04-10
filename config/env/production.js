@@ -18,7 +18,7 @@ module.exports = {
 		}
 	},
 	sessionCookie: {
-		#domain: process.env.BASE_URL || 'tellform.com'
+		//domain: process.env.BASE_URL || 'tellform.com'
 	},
 	assets: {
 		bower_js: 'public/dist/vendor.min.js',

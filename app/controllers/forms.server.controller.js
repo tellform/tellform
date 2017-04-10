@@ -146,7 +146,6 @@ exports.read = function(req, res) {
 			});
 		}
 
-
 		var newForm = req.form.toJSON();
 		newForm.submissions = _submissions;
 
