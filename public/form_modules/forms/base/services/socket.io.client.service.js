@@ -22,7 +22,7 @@
 		console.log("$window.socketUrl: "+$window.socketUrl);
 		if($window.socketPort && $window.socketUrl){
 			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl && !$window.socketUrl){
+		} else if ($window.socketUrl && !$window.socketPort){
 			url = window.location.protocol + '//' + $window.socketUrl;
 		} else if ($window.socketPort){
 			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
