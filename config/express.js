@@ -143,7 +143,6 @@ module.exports = function(db) {
 
 				// TODO: check path and query strings are preserved
 				// reassign url
-				console.log("path: " + path);
 				req.url = path;
 
 				req.userId = user._id;
@@ -169,6 +168,7 @@ module.exports = function(db) {
     //Setup Prerender.io
     app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
 
+
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {
 		if(config.baseUrl === ''){
@@ -185,7 +185,7 @@ module.exports = function(db) {
 			return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
 		},
 		// zlib option for compression level
-		level: 3
+		level: 9
 	}));
 
 	// Showing stack errors

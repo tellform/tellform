@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'TellForm-Form';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'ngSanitize', 'vButton', 'ngResource', 'TellForm-Form.form_templates', 'ui.router', 'ui.bootstrap', 'ui.utils', 'pascalprecht.translate'];
+	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'ngSanitize', 'vButton', 'ngResource', 'TellForm-Form.form_templates', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -104,8 +104,7 @@ angular.module('TellForm-Form.form_templates', []).run(['$templateCache', functi
 
 // Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('view-form', [
-	'ngFileUpload', 'ui.router.tabs', 'ui.date', 'ui.sortable',
-	'angular-input-stars', 'pascalprecht.translate'
+	'ngFileUpload', 'ui.date', 'angular-input-stars'
 ]);
 
 'use strict';
@@ -1212,9 +1211,9 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 		var url = '';
 		console.log("$window.socketPort: "+$window.socketPort);
 		console.log("$window.socketUrl: "+$window.socketUrl);
-		if($window.socketPort && $window.socketUrl){
+		if($window.socketUrl && $window.socketPort){
 			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl && !$window.socketUrl){
+		} else if ($window.socketUrl && !$window.socketPort){
 			url = window.location.protocol + '//' + $window.socketUrl;
 		} else if ($window.socketPort){
 			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
