@@ -50,7 +50,6 @@ var bowerAllArray = ['public/lib/angular/angular.js',
 	'public/lib/angular-ui-router-tabs/src/ui-router-tabs.js',
 	'public/lib/angular-scroll/angular-scroll.js',
 	'public/lib/angular-animate/angular-animate.js',
-	'public/lib/js-yaml/dist/js-yaml.js',
 	'public/lib/file-saver/FileSaver.js',
 	'public/lib/html2canvas/build/html2canvas.js',
 	'public/lib/jspdf/dist/jspdf.min.js',
@@ -84,6 +83,7 @@ var bowerArray = ['public/lib/angular/angular.min.js',
 	'public/lib/raven-js/dist/raven.min.js',
 	'public/lib/lodash/lodash.min.js',
 	'public/lib/mobile-detect/mobile-detect.js',
+	'public/lib/js-yaml/dist/js-yaml.js',
 	'public/lib/angular-sanitize/angular-sanitize.min.js'];
 /*
 
