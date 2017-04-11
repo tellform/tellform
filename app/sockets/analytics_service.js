@@ -51,7 +51,7 @@ module.exports = function (io, socket) {
 
 	io.on('connection', function(socket) {
 
-
+		console.log('\n\n\n\n\n CONNECTED SOCKET');
 		// a user has visited our page - add them to the visitorsData object
 		socket.on('form-visitor-data', function(data) {
 				socket.id = data.formId;
