@@ -174,7 +174,7 @@ exports.uploadTemp = function(req, res) {
  */
 exports.readForRender = function(req, res) {
 	var newForm = req.form.toJSON();
-
+	console.log(req.user);
 	if (!newForm.isLive && !req.user) {
 		return res.status(404).send({
 			message: 'Form Does Not Exist'

@@ -19,9 +19,7 @@ module.exports = {
 			// stream: 'access.log'
 		}
 	},
-	sessionCookie: {
-		//domain: process.env.BASE_URL || 'http://localhost:3000'
-	},
+
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
 		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',

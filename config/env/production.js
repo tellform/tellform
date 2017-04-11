@@ -18,7 +18,9 @@ module.exports = {
 		}
 	},
 	sessionCookie: {
-		//domain: process.env.BASE_URL || 'tellform.com'
+		secure: false,
+		maxAge:  24 * 60 * 60 * 1000, // 24 hours
+		domain: process.env.BASE_URL || '.tellform.com'
 	},
 	assets: {
 		bower_js: 'public/dist/vendor.min.js',

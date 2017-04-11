@@ -28,6 +28,7 @@ module.exports = {
 	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
 
     signupDisabled: (process.env.SIGNUP_DISABLED === "TRUE"),
+	disableClusterMode: (process.env.DISABLE_CLUSTER_MODE === "TRUE"),
 	baseUrl: '',
 	tempUserCollection: 'temporary_users',
 
@@ -57,10 +58,10 @@ module.exports = {
 		secure: false,
 		// Only set the maxAge to null if the cookie shouldn't be expired
 		// at all. The cookie will expunge when the browser is closed.
-		maxAge: null
+		maxAge:  24 * 60 * 60 * 1000, // 24 hours
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
-		// domain: 'tellform.com'
+		//domain: process.env.COOKIE_SESSION_URL || process.env.BASE_URL || '.tellform.com'
 	},
 
 	/*

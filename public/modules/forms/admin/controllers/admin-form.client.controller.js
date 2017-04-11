@@ -4,7 +4,7 @@
 angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
 	function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
 
-		$scope.trustSrc = function(src) {
+		$scope.trustSrc = function (src) {
 			return $sce.trustAsResourceUrl(src);
 		};
 
@@ -12,28 +12,33 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 		$scope.activePill = 0;
 
 		$scope.copied = false;
-		$scope.onCopySuccess = function(e) {
+		$scope.onCopySuccess = function (e) {
 			$scope.copied = true;
 		};
 
-        $scope = $rootScope;
-        $scope.animationsEnabled = true;
-        $scope.myform = myForm;
-        $rootScope.saveInProgress = false;
+		$scope = $rootScope;
+		$scope.animationsEnabled = true;
+		$scope.myform = myForm;
+		$rootScope.saveInProgress = false;
 
-        CurrentForm.setForm($scope.myform);
+		CurrentForm.setForm($scope.myform);
 
 		$scope.formURL = "/#!/forms/" + $scope.myform._id;
 
-		if($window.subdomainsDisabled == true){
-			$scope.actualFormURL = window.location.protocol + '//' + window.location.host + '/view' + $scope.formURL;
-		} else {
-			if(window.location.host.split('.').length < 3){
-				$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + $scope.formURL;
+		if ($scope.myform.isLive) {
+			if ($window.subdomainsDisabled == true) {
+				$scope.actualFormURL = window.location.protocol + '//' + window.location.host + '/view' + $scope.formURL;
 			} else {
-				$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1,3).join('.') +  $scope.formURL;
+				if (window.location.host.split('.').length < 3) {
+					$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + $scope.formURL;
+				} else {
+					$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1, 3).join('.') + $scope.formURL;
+				}
 			}
+		} else {
+			$scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
 		}
+
 
 		var refreshFrame = $scope.refreshFrame = function(){
 			if(document.getElementById('iframe')) {
