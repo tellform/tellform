@@ -29,10 +29,10 @@ exports.deleteSubmissions = function(req, res) {
 		}
 
 		form.analytics.visitors = [];
-		form.save(function(err){
-			if(err){
+		form.save(function(formSaveErr){
+			if(formSaveErr){
 				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
+					message: errorHandler.getErrorMessage(formSaveErr)
 				});
 				return;
 			}
@@ -93,7 +93,6 @@ exports.createSubmission = function(req, res) {
  */
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
-	var _user = req.user;
 
 	FormSubmission.find({ form: _form._id }).exec(function(err, _submissions) {
 		if (err) {
@@ -124,7 +123,6 @@ exports.create = function(req, res) {
 
 	form.save(function(err) {
 		if (err) {
-			console.log(err);
 			return res.status(405).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -140,7 +138,6 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
 	FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
 		if (err) {
-			console.log(err);
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -226,17 +223,15 @@ exports.update = function(req, res) {
 			}
 		}
 		form = _.extend(form, req.body.form);
-		console.log(form);
 	}
 
-	form.save(function(err, form) {
+	form.save(function(err, savedForm) {
 		if (err) {
-			console.log(err);
 			res.status(405).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(form);
+			res.json(savedForm);
 		}
 	});
 };
@@ -252,8 +247,6 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			// console.log('Form successfully deleted');
-			// res.status(200).send('Form successfully deleted');
 			res.json(form);
 		}
 	});
@@ -286,27 +279,26 @@ exports.formByID = function(req, res, next, id) {
 		return res.status(400).send({
 			message: 'Form is invalid'
 		});
-	} else {
-		Form.findById(id).populate('admin').populate('submissions').exec(function(err, form) {
-			if (err) {
-				return next(err);
-			} else if (form === undefined || form === null) {
-				res.status(404).send({
-					message: 'Form not found'
-				});
-			}
-			else {
-				//Remove sensitive information from User object
-				var _form = form;
-				_form.admin.password = undefined;
-				_form.admin.salt = undefined;
-				_form.provider = undefined;
-
-				req.form = _form;
-				return next();
-			}
-		});
 	}
+	Form.findById(id).populate('admin').populate('submissions').exec(function(err, form) {
+		if (err) {
+			return next(err);
+		} else if (!form || form === null) {
+			res.status(404).send({
+				message: 'Form not found'
+			});
+		}
+		else {
+			//Remove sensitive information from User object
+			var _form = form;
+			_form.admin.password = null;
+			_form.admin.salt = null;
+			_form.provider = null;
+
+			req.form = _form;
+			return next();
+		}
+	});
 };
 
 /**
