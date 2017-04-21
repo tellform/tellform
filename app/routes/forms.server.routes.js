@@ -3,9 +3,7 @@
 /**
  * Module dependencies.
  */
-var users = require('../../app/controllers/users.server.controller'),
-	forms = require('../../app/controllers/forms.server.controller'),
-	config = require('../../config/config'),
+var forms = require('../../app/controllers/forms.server.controller'),
 	auth = require('../../config/passport_helpers');
 
 module.exports = function(app) {
