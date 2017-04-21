@@ -44,8 +44,6 @@ angular.module('core').service('Menus', [
 			} else {
 				throw new Error('MenuId was not provided');
 			}
-
-			return false;
 		};
 
 		// Get the menu object by menu id
