@@ -50,8 +50,6 @@
 		};
 
 		var url = '';
-		console.log("$window.socketPort: "+$window.socketPort);
-		console.log("$window.socketUrl: "+$window.socketUrl);
 		if($window.socketUrl && $window.socketPort){
 			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
 		} else if ($window.socketUrl && !$window.socketPort){
