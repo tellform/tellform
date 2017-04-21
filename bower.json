@@ -6,6 +6,10 @@
   "authors": [
     "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
   ],
+ "homepage": "https://github.com/whitef0x0/tellform",
+  "authors": [
+    "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
+  ],
   "license": "MIT",
   "private": true,
   "appPath": "public/modules",
