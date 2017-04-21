@@ -125,7 +125,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         $scope.table.rows[i].selected = $scope.table.masterChecker;
                     }
                 };
-                $scope.toggleObjSelection = function($event, description) {
+                $scope.toggleObjSelection = function($event) {
                     $event.stopPropagation();
                 };
                 $scope.rowClicked = function(row_index) {
@@ -147,7 +147,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
-                        }).success(function(data, status, headers){
+                        }).success(function(data, status){
                             //Remove deleted ids from table
                             var tmpArray = [];
                             for(var i=0; i<$scope.table.rows.length; i++){
@@ -166,11 +166,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
                 //Export selected submissions of Form
                 $scope.exportSubmissions = function(type){
-                    var fileMIMETypeMap = {
-                        'xls': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                        'json': 'json',
-                        'csv': 'csv'
-                    };
 
 					angular.element('#table-submission-data').tableExport({type: type, escape:false});
                 };
