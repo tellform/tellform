@@ -1,10 +1,10 @@
 (function () {
 	"use strict";
 
-	function SendVisitorData(Socket, $state, $http) {
+	function SendVisitorData(Socket, $state) {
 
 		// Create a controller method for sending visitor data
-		function send(form, lastActiveIndex, timeElapsed) {
+		function send(form, lastActiveIndex) {
 			// Create a new message object
 			/*var visitorData = {
 				referrer: document.referrer,
