@@ -11,7 +11,6 @@ var mongoose = require('mongoose'),
 	mUtilities = require('mongoose-utilities'),
 	path = require('path'),
 	querystring = require('querystring'),
-	config = require('../../config/config'),
 	nodemailer = require('nodemailer');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
