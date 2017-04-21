@@ -2,12 +2,6 @@
 	'use strict';
 
 	// Create the Socket.io wrapper service
-	angular
-		.module('view-form')
-		.factory('Socket', Socket);
-
-	Socket.$inject = ['$timeout', '$window'];
-
 	function Socket($timeout, $window) {
 		
 
@@ -63,4 +57,12 @@
 
 		return service;
 	}
+	
+	angular
+		.module('view-form')
+		.factory('Socket', Socket);
+
+	Socket.$inject = ['$timeout', '$window'];
+
+	
 }());
