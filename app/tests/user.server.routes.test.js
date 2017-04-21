@@ -8,8 +8,7 @@ var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	config = require('../../config/config'),
-	tmpUser = mongoose.model(config.tempUserCollection),
-	url = require('url');
+	tmpUser = mongoose.model(config.tempUserCollection);
 
 /**
  * Globals
