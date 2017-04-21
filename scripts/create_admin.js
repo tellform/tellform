@@ -1,7 +1,6 @@
 var config = require('../config/config'),
 	mongoose = require('mongoose'),
-  	chalk = require('chalk'),
-	fs = require('fs-extra');
+  	chalk = require('chalk');
 
 exports.run = function(app, db, cb) {
 
@@ -27,19 +26,16 @@ exports.run = function(app, db, cb) {
 		}
 
 		if(!user){
-			newUser.save(function (err) {
-				if (err) {
-					cb(err);
+			newUser.save(function (userErr) {
+				if (userErr) {
+					return cb(userErr);
 				}
 				console.log(chalk.green('Successfully created Admin Account'));
-				delete email;
-				delete password;
-				delete username;
 
-				cb(err);
+				cb();
 			});
 		} else {
 			cb('User already exists!');
 		}
-	})
+	});
 }
