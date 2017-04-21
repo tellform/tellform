@@ -13,7 +13,7 @@
     "url": "https://github.com/whitef0x0/tellform.git"
   },
   "engines": {
-    "node": "6.4.0",
+    "node": "6.4.0"
   },
   "scripts": {
     "start": "grunt",
