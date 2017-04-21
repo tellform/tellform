@@ -9,18 +9,6 @@
 	Socket.$inject = ['$timeout', '$window'];
 
 	function Socket($timeout, $window) {
-		var service = {
-			connect: connect,
-			emit: emit,
-			on: on,
-			removeListener: removeListener,
-			socket: null
-		};
-
-		connect(window.location.protocol+'//'+window.location.hostname);
-
-		return service;
-
 		// Connect to Socket.io server
 		function connect(url) {
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
@@ -50,5 +38,18 @@
 				service.socket.removeListener(eventName);
 			}
 		}
+		
+		var service = {
+			connect: connect,
+			emit: emit,
+			on: on,
+			removeListener: removeListener,
+			socket: null
+		};
+
+		connect(window.location.protocol+'//'+window.location.hostname);
+
+		return service;
+
 	}
 }());
