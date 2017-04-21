@@ -141,8 +141,8 @@ exports.reset = function(req, res, next) {
 				if (!err && user) {
 					if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
 						user.password = passwordDetails.newPassword;
-						user.resetPasswordToken = undefined;
-						user.resetPasswordExpires = undefined;
+						user.resetPasswordToken = null;
+						user.resetPasswordExpires = null;
 
 						user.save(function(err) {
 							if (err) {
