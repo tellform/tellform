@@ -56,8 +56,8 @@ describe('Form Submission Routes Unit tests', function() {
 				]
 			});
 
-			FormObj.save(function(err, form) {
-				if (err) done(err);
+			FormObj.save(function(formSaveErr, form) {
+				if (formSaveErr) done(formSaveErr);
 
 				_Submission = {
 					form_fields: [
@@ -116,10 +116,10 @@ describe('Form Submission Routes Unit tests', function() {
 						submissionSession.get('/forms/' + FormObj._id + '/submissions')
 							.expect('Content-Type', /json/)
 							.expect(200)
-							.end(function(err, res) {
+							.end(function(submissionErr, res) {
 
 								// Set assertion
-								should.not.exist(err);
+								should.not.exist(submissionErr);
 
 								// Call the assertion callback
 								done();
@@ -150,10 +150,10 @@ describe('Form Submission Routes Unit tests', function() {
 					submissionSession.delete('/forms/' + FormObj._id + '/submissions')
 						.send({deleted_submissions: submission_ids})
 						.expect(200)
-						.end(function(err, res) {
+						.end(function(submissionErr, res) {
 
 							// Set assertions
-							should.not.exist(err);
+							should.not.exist(submissionErr);
 							(res.text).should.equal('Form submissions successfully deleted');
 
 							// Call the assertion callback
@@ -188,10 +188,10 @@ describe('Form Submission Routes Unit tests', function() {
 			submissionSession.delete('/forms/' + FormObj._id + '/submissions')
 				.send({deleted_submissions: submission_ids})
 				.expect(401)
-				.end(function (err, res) {
+				.end(function (submissionErr, res) {
 
 					// Set assertions
-					should.not.exist(err);
+					should.not.exist(submissionErr);
 
 					// Call the assertion callback
 					done();
