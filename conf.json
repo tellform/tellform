@@ -6,7 +6,7 @@
     "source": {
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_",
-        "exclude": [ "test/*", "examples/*", "node_modules/*" ],
+        "exclude": [ "test/*", "examples/*", "node_modules/*" ]
     },
     "plugins": ["plugins/markdown"],
     "templates": {
