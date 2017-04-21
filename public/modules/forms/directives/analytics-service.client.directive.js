@@ -1,12 +1,5 @@
 (function () {
-	'use strict';
-
-	// Create the SendVisitorData service
-	angular
-		.module('forms')
-		.factory('SendVisitorData', SendVisitorData);
-
-	SendVisitorData.$inject = ['Socket', '$state', '$http'];
+	"use strict";
 
 	function SendVisitorData(Socket, $state, $http) {
 
@@ -61,5 +54,14 @@
 		return service;
 
 	}
+	
+	// Create the SendVisitorData service
+	angular
+		.module('forms')
+		.factory('SendVisitorData', SendVisitorData);
+
+	SendVisitorData.$inject = ['Socket', '$state', '$http'];
+
+	
 }());
 
