@@ -17,6 +17,8 @@
     "npm": "~2.11.2"
   },
   "scripts": {
+    "addcontrib": "all-contributors add",
+    "generate": "all-contributors generate",
     "start": "grunt",
     "test": "grunt test",
     "postinstall": "bower install --config.interactive=false; grunt build;",
@@ -62,7 +64,7 @@
     "grunt-ng-annotate": "~1.0.1",
     "grunt-node-inspector": "~0.4.1",
     "grunt-nodemon": "~0.4.0",
-    "helmet": "~0.14.0",
+    "helmet": "3.5.0",
     "inquirer": "^1.0.2",
     "jit-grunt": "^0.9.1",
     "lodash": "^2.4.1",
@@ -95,6 +97,7 @@
     "wildcard-subdomains": "github:whitef0x0/wildcard-subdomains"
   },
   "devDependencies": {
+    "all-contributors-cli": "^4.3.0",
     "chromedriver": "^2.25.1",
     "coveralls": "^2.11.4",
     "cross-spawn": "^5.0.0",

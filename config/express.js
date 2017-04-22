@@ -218,11 +218,12 @@ module.exports = function(db) {
 	app.use(methodOverride());
 
 	// Use helmet to secure Express headers
-	app.use(helmet.xframe());
+	app.use(helmet.frameguard());
 	app.use(helmet.xssFilter());
-	app.use(helmet.nosniff());
-	app.use(helmet.ienoopen());
-	app.disable('x-powered-by');
+	app.use(helmet.noSniff());
+	app.use(helmet.ieNoOpen());
+	app.use(helmet.dnsPrefetchControl());
+	app.use(helmet.hidePoweredBy());
 
 
 	// Setting the app router and static folder

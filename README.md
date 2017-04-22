@@ -203,6 +203,7 @@ Love our work and community? [Become a backer](https://opencollective.com/tellfo
 
 ## Contributors 
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section --><!-- ALL-CONTRIBUTORS-LIST:END -->
 [David Baldwynn](https://github.com/whitef0x0/)
 
 [Samuel Laulhau](https://github.com/lalop)
