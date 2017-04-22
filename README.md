@@ -34,6 +34,10 @@ TellForm is an *opensource alternative to TypeForm* built ontop of NodeJS that c
 - Add Custom Background and Dropdown Field Images
 - Add File Upload Form Field
 
+### Contributing
+
+All contributors are eligible to get a free [TellForm Sticker](https://www.stickermule.com/marketplace/15987-tellform-round-sticker). All you have to do is submit a PR, get it accepted, email your address to polydaic [at] gmail.com and we'll send you a sticker that you can proudly put on your laptop.
+
 ## Quickstart
 
 Before you start, make sure you have 
