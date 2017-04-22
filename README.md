@@ -7,9 +7,22 @@ TellForm 2.0.0
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=whitef0x0/tellform&amp;utm_campaign=Badge_Grade)
 [![Gitter](https://badges.gitter.im/whitef0x0/tellform.svg)](https://gitter.im/whitef0x0/tellform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-TellForm is an *opensource alternative to TypeForm* built ontop of NodeJS that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
+> An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/whitef0x0/tellform/tree/master)
+
+## Table of Contents  
+
+- [Features](#features)
+- [How to Contribute](#how-to-contribute)
+- [Quickstart](#quickstart)
+- [Deploying with Docker](#deploying-with-docker)
+- [Testing your Application](#testing-your-application)
+- [Where to Get Help](#where-to-get-help)
+- [Sponsors](#sponsors)
+- [Backers](#backers)
+- [Contributors](#contributors)
+- [Mentions on the Web](#mentions-on-the-web)
 
 ## Features	
 
@@ -34,7 +47,9 @@ TellForm is an *opensource alternative to TypeForm* built ontop of NodeJS that c
 - Add Custom Background and Dropdown Field Images
 - Add File Upload Form Field
 
-### Contributing
+### How to Contribute
+
+Please checkout our CONTRIBUTING.md on ways to contribute to TellForm.
 
 All contributors are eligible to get a free [TellForm Sticker](https://www.stickermule.com/marketplace/15987-tellform-round-sticker). All you have to do is submit a PR, get it accepted, email your address to polydaic [at] gmail.com and we'll send you a sticker that you can proudly put on your laptop.
 
@@ -107,40 +122,9 @@ $ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db t
                                                                                                    -p 80:80 \
 ```
 
-## Sponsors
-
-Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
-
-<a href="https://m.do.co/c/a86fd8843e09">
-	<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="70px">
-</a>
-<a href="https://getsentry.com/">
-	<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png"
-	width="70px">
-</a>
-<a href="https://statuspage.io/">
-	<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="70px">
-</a>
-
-<a href="https://www.stickermule.com/unlock?ref_id=0939360701">
-	<img src="http://bcsrq.com/wp-content/uploads/2014/04/StickerMuleLogo300.png" width="70px">
-</a>
-<a href="https://sparkpost.com/">
-	<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="70px">
-</a>
-
-<a href="https://therooststand.com/">
-	<img src="https://cdn.shopify.com/s/files/1/0192/8184/t/11/assets/logo.png?2608345842081938086" width="70px">
-</a>
-
-## Backers
-
-Love our work and community? [Become a backer](https://opencollective.com/tellform).
-
-<a href="https://opencollective.com/tellform/backers/0/website" target="_blank"><img src="https://opencollective.com/apex/backers/0/avatar"></a>
 
 ## Testing Your Application
-You can run the full test suite included with MEAN.JS with the test task:
+You can run the full test suite included with TellForm with the test task:
 
 ```
 $ grunt test
@@ -177,13 +161,47 @@ To calculate your client-side test coverage with Istanbul, run the coverage task
 $ grunt coverage:client
 ```
 
+
 ## Where to get help
 
 [Gitter Chat](https://gitter.im/whitef0x0/tellform)
 
 [Official Twitter](https://twitter.com/tellform_real)
 
-## Contributor list 
+
+## Sponsors
+
+Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
+
+<a href="https://m.do.co/c/a86fd8843e09">
+	<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="70px">
+</a>
+<a href="https://getsentry.com/">
+	<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png"
+	width="70px">
+</a>
+<a href="https://statuspage.io/">
+	<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="70px">
+</a>
+
+<a href="https://www.stickermule.com/unlock?ref_id=0939360701">
+	<img src="http://bcsrq.com/wp-content/uploads/2014/04/StickerMuleLogo300.png" width="70px">
+</a>
+<a href="https://sparkpost.com/">
+	<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="70px">
+</a>
+
+<a href="https://therooststand.com/">
+	<img src="https://cdn.shopify.com/s/files/1/0192/8184/t/11/assets/logo.png?2608345842081938086" width="70px">
+</a>
+
+## Backers
+
+Love our work and community? [Become a backer](https://opencollective.com/tellform).
+
+<a href="https://opencollective.com/tellform/backers/0/website" target="_blank"><img src="https://opencollective.com/apex/backers/0/avatar"></a>
+
+## Contributors 
 
 [David Baldwynn](https://github.com/whitef0x0/)
 
@@ -208,6 +226,3 @@ $ grunt coverage:client
 [Betapage](https://betapage.co/startup/tellform)
 
 [Opensource.com](http://opensource.com/article/17/2/tools-online-surveys-polls)
-
-## Credits
-Inspired/built off the great work of the [MeanJS team](https://github.com/meanjs/) and [Typeform](http://typeform.com)
