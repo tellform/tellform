@@ -5,8 +5,7 @@
  */
 process.env.NODE_ENV = 'production';
 
-var init = require('../config/init')(),
-	config = require('../config/config'),
+var  config = require('../config/config'),
 	mongoose = require('mongoose'),
 	inquirer = require('inquirer'),
 	envfile = require('envfile'),
@@ -26,7 +25,7 @@ mongoose.connection.on('error', function(err) {
 });
 
 // Init the express application
-var app = require('../config/express')(db);
+require('../config/express')(db);
 
 // Bootstrap passport config
 require('../config/passport')();
@@ -73,7 +72,7 @@ var nodemailer_providers = [
 var bool_options = [
 	"TRUE",
 	"FALSE"
-]
+];
 
 var questions = [
 	{
@@ -193,7 +192,6 @@ if(!fs.existsSync('./\.env')) {
 
 			inquirer.prompt(questions.slice(1)).then(function (answers) {
 				answers['NODE_ENV'] = 'production';
-				answers['SIGNUP_DISABLED'] = false ? answers['SIGNUP_DISABLED'] === false : true;
 
 				var email = answers['email'];
 				var username = answers['username'];
@@ -202,8 +200,10 @@ if(!fs.existsSync('./\.env')) {
 				delete answers['password'];
 				
 				envfile.stringify(answers, function (err, str) {
-					fs.outputFile('./\.env', str, function (err) {
-						if (err) return console.error(chalk.red(err));
+					fs.outputFile('./\.env', str, function (fileErr) {
+						if (fileErr) {
+							return console.error(chalk.red(fileErr));
+						}
 						console.log(chalk.green('Successfully created .env file'));
 					});
 					user = new User({
@@ -216,12 +216,13 @@ if(!fs.existsSync('./\.env')) {
 						roles: ['admin', 'user']
 					});
 
-					user.save(function (err) {
-						if (err) return console.error(chalk.red(err));
+					user.save(function (userSaveErr) {
+						if (err) {
+							return console.error(chalk.red(userSaveErr));
+						}
+						
 						console.log(chalk.green('Successfully created user'));
-						delete email;
-						delete pass;
-
+		
 						console.log(chalk.green('Have fun using TellForm!'));
 						process.exit(1);
 					});
@@ -231,7 +232,7 @@ if(!fs.existsSync('./\.env')) {
 			console.log(chalk.green('Have fun using TellForm!'));
 		}
 	});
-}else{
+} else {
 	console.log(chalk.red('You already have a .env file'));
 	process.exit(1);
 }
