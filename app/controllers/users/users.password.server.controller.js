@@ -180,7 +180,6 @@ exports.reset = function(req, res, next) {
 			});
 		}
 	], function(err) {
-		debugger;
 		if (err) {
 			res.status(500).send({
 				message: err.message || err
