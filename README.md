@@ -173,33 +173,34 @@ $ grunt coverage:client
 
 Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
 
-<a href="https://m.do.co/c/a86fd8843e09">
-	<img src="https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Horizontal_Blue-3db19536.png" width="70px">
+<a href="https://m.do.co/c/a86fd8843e09" style="padding: 30px 0">
+	<img src="/docs/readme_logos/do_logo.png" height="30px">
 </a>
-<a href="https://getsentry.com/">
-	<img src="https://raw.githubusercontent.com/docker-library/docs/831b07a52f9ff6577c915afc41af8158725829f4/sentry/logo.png"
-	width="70px">
+<a href="https://getsentry.com/" style="padding: 30px 0">
+	<img src="/docs/readme_logos/sentry_logo.png" height="30px">
 </a>
-<a href="https://statuspage.io/">
-	<img src="https://dka575ofm4ao0.cloudfront.net/assets/base/logos/common-aececb0b4319b8fb61ac5b47a6983f96.png" width="70px">
+<a href="https://statuspage.io/" style="padding: 30px 0">
+	<img src="/docs/readme_logos/statuspage_logo.png" height="30px">
+</a>
+<br><br>
+<a href="https://www.stickermule.com/unlock?ref_id=0939360701" style="padding: 30px 0">
+	<img src="/docs/readme_logos/stickermule_logo.png" height="30px">
+</a>
+<a href="https://sparkpost.com/" style="padding: 30px 0">
+	<img src="/docs/readme_logos/sparkpost_logo.png" height="30px">
 </a>
 
-<a href="https://www.stickermule.com/unlock?ref_id=0939360701">
-	<img src="http://bcsrq.com/wp-content/uploads/2014/04/StickerMuleLogo300.png" width="70px">
-</a>
-<a href="https://sparkpost.com/">
-	<img src="https://app.sparkpost.com/assets/images/sparkpost-logo-color.svg" width="70px">
-</a>
-
-<a href="https://therooststand.com/">
-	<img src="https://cdn.shopify.com/s/files/1/0192/8184/t/11/assets/logo.png?2608345842081938086" width="70px">
+<a href="https://therooststand.com/" style="padding: 30px 0">
+	<img src="/docs/readme_logos/roost_logo.png" height="30px">
 </a>
 
 ## Backers
 
 Love our work and community? [Become a backer](https://opencollective.com/tellform).
 
-<a href="https://opencollective.com/tellform/backers/0/website" target="_blank"><img src="https://opencollective.com/apex/backers/0/avatar"></a>
+<a href="https://opencollective.com/tellform#contributors" target="_blank"><img src="https://opencollective.com/elliot"></a>
+
+<a href="https://opencollective.com/tellform#contributors" target="_blank"><img src="https://opencollective.com/aldrnv"></a>
 
 ## Contributors 
 
