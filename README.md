@@ -198,9 +198,13 @@ Does your company use TellForm? Help keep the project bug-free and feature rich 
 
 Love our work and community? [Become a backer](https://opencollective.com/tellform).
 
-<a href="https://opencollective.com/elliot" target="_blank"><img src="https://opencollective.com/proxy/images/?src=https%3A%2F%2Fd1ts43dypk8bqh.cloudfront.net%2Fv1%2Favatars%2F6fd61b2c-62b6-438a-9168-bab7ef1489b8"></a>
+<a href="https://opencollective.com/elliot" target="_blank">
+	<img src="https://opencollective.com/proxy/images/?src=https%3A%2F%2Fd1ts43dypk8bqh.cloudfront.net%2Fv1%2Favatars%2F6fd61b2c-62b6-438a-9168-bab7ef1489b8" height= "64">
+</a>
 
-<a href="https://opencollective.com/aldrnv" target="_blank"><img src="https://opencollective.com/public/images/users/avatar-01.svg"></a>
+<a href="https://opencollective.com/aldrnv" target="_blank">
+	<img src="https://opencollective.com/public/images/users/avatar-01.svg" height="64">
+</a>
 
 ## Contributors 
 
