@@ -9,33 +9,6 @@ jsep.addBinaryOp("!begins", 10);
 jsep.addBinaryOp("ends", 10);
 jsep.addBinaryOp("!ends", 10);
 
-/**
- * Calculate a 32 bit FNV-1a hash
- * Found here: https://gist.github.com/vaiorabbit/5657561
- * Ref.: http://isthe.com/chongo/tech/comp/fnv/
- *
- * @param {string} str the input value
- * @param {boolean} [asString=false] set to true to return the hash value as
- *     8-digit hex string instead of an integer
- * @param {integer} [seed] optionally pass the hash of the previous chunk
- * @returns {integer | string}
- */
-function hashFnv32a(str, asString, seed) {
-	/*jshint bitwise:false */
-	var i, l,
-		hval = (seed === undefined) ? 0x811c9dc5 : seed;
-
-	for (i = 0, l = str.length; i < l; i++) {
-		hval ^= str.charCodeAt(i);
-		hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
-	}
-	if( asString ){
-		// Convert to 8 digit hex string
-		return ("0000000" + (hval >>> 0).toString(16)).substr(-8);
-	}
-	return hval >>> 0;
-}
-
 angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
         return {
@@ -136,7 +109,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 						if(parse_tree.left.name === 'field'){
 							left = field.fieldValue;
-							right = logicJump.valueB
+							right = logicJump.valueB;
 						} else {
 							left = logicJump.valueB;
 							right = field.fieldValue;
@@ -192,9 +165,9 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 					if($scope.selected._id === 'submit_field') {
 						return $scope.myform.form_fields.length - 1;
-					} else {
-						return $scope.selected.index;
 					}
+					return $scope.selected.index;
+
 				};
 
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index, animateScroll) {
@@ -212,7 +185,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					if(!field_index){
 						for(var i=0; i<$scope.myform.visible_form_fields.length; i++){
 							var currField = $scope.myform.visible_form_fields[i];
-							if(field_id == currField._id){
+							if(field_id === currField._id){
 								$scope.selected.index = i;
 								break;
 							}
@@ -319,7 +292,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					return {
 						type: deviceType,
 						name: window.navigator.platform
-					}
+					};
 				};
 
 				var getIpAndGeo = function(){
@@ -364,7 +337,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
-							.success(function (data, status, headers) {
+							.success(function (data, status) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);
@@ -378,7 +351,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 };
 
                 //Reload our form
-				$scope.reloadForm();
+		$scope.reloadForm();
             }
         };
     }
