@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var fs = require('fs-extra'),
-	http = require('http'),
 	https = require('https'),
 	express = require('express'),
 	morgan = require('morgan'),
@@ -15,7 +14,6 @@ var fs = require('fs-extra'),
 	methodOverride = require('method-override'),
 	cookieParser = require('cookie-parser'),
 	helmet = require('helmet'),
-	multer = require('multer'),
 	passport = require('passport'),
 	raven = require('raven'),
 	MongoStore = require('connect-mongo')(session),
@@ -24,8 +22,7 @@ var fs = require('fs-extra'),
 	consolidate = require('consolidate'),
 	path = require('path'),
 	device = require('express-device'),
-	client = new raven.Client(config.DSN),
-	connect = require('connect');
+	client = new raven.Client(config.DSN);
 
 var mongoose = require('mongoose');
 
@@ -79,21 +76,22 @@ module.exports = function(db) {
 	app.locals.cssFiles = config.getCSSAssets();
 
 	app.use(function (req, res, next) {
-
+		var urlPath;
 		if(!config.subdomainsDisabled) {
 			var User = mongoose.model('User');
-			var path = '/' + 'subdomain' + '/';
+			var subdomainPath = '/subdomain/';
 			var subdomains = req.subdomains;
-			var host = req.hostname;
 
 			if (subdomains.slice(0, 4).join('.') + '' === '1.0.0.127') {
 				subdomains = subdomains.slice(4);
 			}
 
 			// continue if no subdomains
-			if (!subdomains.length) return next();
-
-			var urlPath = url.parse(req.url).path.split('/');
+			if (!subdomains.length) {
+				return next();
+			}
+			
+			urlPath = url.parse(req.url).path.split('/');
 			if (urlPath.indexOf('static') > -1) {
 				urlPath.splice(1, 1);
 				if(process.env.NODE_ENV == 'development'){
@@ -114,17 +112,16 @@ module.exports = function(db) {
 
 			if (subdomains.indexOf('api') > -1) {
 				// rebuild url
-				path += 'api' + req.url;
+				subdomainPath += 'api' + req.url;
 				// TODO: check path and query strings are preserved
 				// reassign url
-				req.url = path;
+				req.url = subdomainPath;
 				return next();
 			}
 
 			User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
 
 				if (err) {
-					console.log(err);
 					req.subdomains = null;
 					// Error page
 					return res.status(404).render('404', {
@@ -139,26 +136,23 @@ module.exports = function(db) {
 				}
 
 				// rebuild url
-				path += subdomains.join('/') + req.url;
+				subdomainPath += subdomains.join('/') + req.url;
 
 				// TODO: check path and query strings are preserved
 				// reassign url
-				req.url = path;
+				req.url = subdomainPath;
 
 				req.userId = user._id;
 
 				// Q.E.D.
-				next();
+				return next();
 			});
 		} else {
 
-			var urlPath = url.parse(req.url).path.split('/');
+			urlPath = url.parse(req.url).path.split('/');
 			if (urlPath.indexOf('static') > -1 && urlPath.indexOf('view') === urlPath.indexOf('static')-1) {
 				urlPath.splice(1, 1);
 				req.url = urlPath.join('/');
-
-				console.log('\n\n\nreq.url: ' + req.url);
-				return next();
 			}
 
 			return next();
@@ -293,10 +287,11 @@ module.exports = function(db) {
 	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
 	app.use(function(err, req, res, next) {
 		// If the error object doesn't exists
-		if (!err) return next();
-
+		if (!err) {
+			return next();
+		}
+		
 		// Log it
-		console.error(err.stack);
 		client.captureError(err);
 
 		// Error page
