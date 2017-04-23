@@ -6,5 +6,23 @@
   ],
   "imageSize": 100,
   "commit": true,
-  "contributors": []
+  "contributors": [
+    {
+      "login": "whitef0x0",
+      "name": "David Baldwynn",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1160417?v=3",
+      "profile": "http://baldwynn.me",
+      "contributions": [
+        "code",
+        "tool",
+        "infra",
+        "doc",
+        "example",
+        "design",
+        "fundingFinding",
+        "review",
+        "test"
+      ]
+    }
+  ]
 }
