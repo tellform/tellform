@@ -40,7 +40,7 @@ module.exports = function (io, socket) {
 				delete visitorsData[socket.id];
 
 				if(cb){
-					cb();
+					return cb();
 				}
 			});
 		});
