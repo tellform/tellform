@@ -50,7 +50,7 @@ exports.createSubmission = function(req, res) {
 
 	var timeElapsed = 0;
 
-	if(typeof req.body.timeElapsed == "number"){
+	if(typeof req.body.timeElapsed === "number"){
 		timeElapsed = req.body.timeElapsed;
 	}
 	var submission = new FormSubmission({
@@ -209,7 +209,7 @@ exports.update = function(req, res) {
 			delete req.body.form.admin;
 		}
 
-		if(form.analytics == null){
+		if(form.analytics === null){
 			form.analytics.visitors = [];
 			form.analytics.gaCode = '';
 		}
