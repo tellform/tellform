@@ -16,13 +16,13 @@ module.exports = function(app) {
 		.get(core.redoc);
 
 	if(!config.subdomainsDisabled) {
-		app.route('/subdomain/:userSlug((?!api$)[A-Za-z0-9]+)/')
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/')
 		 .get(core.form);
 
-		app.route('/subdomain/:userSlug((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)')
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)')
 		 .post(forms.createSubmission);
 
-		app.route('/subdomain/:userSlug((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)/render')
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)/render')
 		 .get(forms.readForRender);
 	} else {
 		app.route('/view/')

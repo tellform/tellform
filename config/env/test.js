@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	baseUrl: 'http://localhost:3000',
+	baseUrl: '127.0.0.1:3001',
 	db: {
 		uri: 'mongodb://localhost/mean-test',
 		options: {
@@ -21,6 +21,9 @@ module.exports = {
 	},
 	app: {
 		title: 'TellForm Test'
+	},
+	sessionCookie: {
+		maxAge:  24 * 60 * 60 * 1000 // 24 hours
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

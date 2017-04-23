@@ -136,7 +136,7 @@ var UserSchema = new Schema({
 		unique: true,
 		index: true,
 		sparse: true
-	},
+	}
 });
 
 UserSchema.virtual('displayName').get(function () {

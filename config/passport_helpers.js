@@ -5,7 +5,7 @@ var passport = require("passport");
 module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
-	} 
+	}
 	// Try authenticate with API KEY
 	if (req.headers.apikey || req.query.apikey || req.body.apikey) {
 		passport.authenticate("localapikey", function (err, user, info) {
@@ -23,8 +23,9 @@ module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next
 			});
 
 		})(req, res, next);
-	} 
-	return res.sendStatus(401);
+	} else {
+		return res.sendStatus(401);
+	}
 };
 
 
@@ -32,7 +33,7 @@ module.exports.hasRole = function hasRole(roleRequired) {
 	if (!roleRequired) {
 		throw new Error("Required role needs to be set");
 	}
-	
+
 	return function(req, res, next) {
 		return module.exports.isAuthenticated(req, res, function() {
 			if (req.user && req.user.roles && req.user.roles.indexOf(roleRequired) !== -1){

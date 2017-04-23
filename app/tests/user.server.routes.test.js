@@ -37,7 +37,7 @@ describe('User CRUD tests', function() {
 		_User = {
 			email: credentials.email,
 			username: credentials.username,
-			password: credentials.password,
+			password: credentials.password
 		};
 
         //Initialize Session
@@ -101,9 +101,7 @@ describe('User CRUD tests', function() {
 		});
 
 	});
-
-	it(' > should be able to reset a User\'s password');
-
+	
 	afterEach(function(done) {
 		User.remove().exec(function () {
 			tmpUser.remove().exec(function(){
