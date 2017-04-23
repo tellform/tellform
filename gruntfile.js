@@ -1,8 +1,5 @@
 'use strict';
 
-var bowerFiles = require('main-bower-files');
-var path = require('path');
-
 var bowerArray = ['public/lib/angular/angular.min.js',
 	'public/lib/angular-scroll/angular-scroll.min.js',
 	'public/lib/angular-ui-select/dist/select.min.js',
