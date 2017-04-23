@@ -1,9 +1,7 @@
 'use strict';
 
 var should = require('should'),
-	_ = require('lodash'),
 	app = require('../../server'),
-	request = require('supertest'),
 	Session = require('supertest-session'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
@@ -13,11 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, _User;
-var _tmpUser, activateToken;
-var username, userSession;
-
-username = 'testActiveAccount1.be1e58fb@mailosaur.in';
+var credentials, _User, activateToken, userSession;
 
 /**
  * Form routes tests
@@ -50,7 +44,7 @@ describe('User CRUD tests', function() {
 			userSession.post('/auth/signup')
 				.send(_User)
 				.expect(200)
-				.end(function(FormSaveErr, FormSaveRes) {
+				.end(function(FormSaveErr) {
 					console.log('CREATING USER');
 					// Handle error
 					should.not.exist(FormSaveErr);
@@ -69,7 +63,10 @@ describe('User CRUD tests', function() {
                             .expect(200)
                             .end(function(VerifyErr, VerifyRes) {
                                 // Handle error
-                                if (VerifyErr) return done(VerifyErr);
+                                if (VerifyErr) {
+					return done(VerifyErr);
+				}
+				
                                 (VerifyRes.text).should.equal('User successfully verified');
 
                                 userSession.post('/auth/signin')
@@ -78,7 +75,9 @@ describe('User CRUD tests', function() {
                                     .expect(200)
                                     .end(function(signinErr, signinRes) {
                                         // Handle signin error
-                                        if (signinErr) return done(signinErr);
+                                        if (signinErr) {
+						return done(signinErr);
+					}
 
                                         var user = signinRes.body;
                                         (user.username).should.equal(credentials.username);
@@ -88,7 +87,9 @@ describe('User CRUD tests', function() {
                                             .end(function(signoutErr, signoutRes) {
 
                                                 // Handle signout error
-                                                if (signoutErr) return done(signoutErr);
+                                                if (signoutErr) {
+							return done(signoutErr);
+						}
 
                                                 (signoutRes.text).should.equal('You have successfully logged out.');
 
@@ -107,8 +108,8 @@ describe('User CRUD tests', function() {
 	afterEach(function(done) {
 		User.remove().exec(function () {
 			tmpUser.remove().exec(function(){
-                userSession.destroy();
-                done();
+				userSession.destroy();
+				done();
 			});
 		});
 	});
