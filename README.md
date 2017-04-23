@@ -198,7 +198,9 @@ Does your company use TellForm? Help keep the project bug-free and feature rich 
 
 Love our work and community? [Become a backer](https://opencollective.com/tellform).
 
-<a href="https://opencollective.com/tellform/backers/0/website" target="_blank"><img src="https://opencollective.com/apex/backers/0/avatar"></a>
+<a href="https://opencollective.com/tellform#contributors" target="_blank"><img src="https://opencollective.com/elliot"></a>
+
+<a href="https://opencollective.com/tellform#contributors" target="_blank"><img src="https://opencollective.com/aldrnv"></a>
 
 ## Contributors 
 
