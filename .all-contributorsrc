@@ -42,6 +42,17 @@
       "contributions": [
         "design"
       ]
+    },
+    {
+      "login": "toanalien",
+      "name": "Thiên Toán",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5405744?v=3",
+      "profile": "https://toanalien.com",
+      "contributions": [
+        "bug",
+        "code",
+        "doc"
+      ]
     }
   ]
 }
