@@ -1,7 +1,7 @@
 (function () {
 	"use strict";
 
-	function SendVisitorData(Socket, $state) {
+	function SendVisitorData() {
 
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex) {
@@ -60,7 +60,7 @@
 		.module('forms')
 		.factory('SendVisitorData', SendVisitorData);
 
-	SendVisitorData.$inject = ['Socket', '$state', '$http'];
+	SendVisitorData.$inject = [];
 
 	
 }());

@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	config = require('../../config/config'),
 	errorHandler = require('../controllers/errors.server.controller'),
 	Form = mongoose.model('Form');
 
@@ -32,50 +31,45 @@ module.exports = function (io, socket) {
 
 			form.analytics.visitors.push(newVisitor);
 
-			form.save(function (err) {
+			form.save(function (formSaveErr) {
 				if (err) {
-					console.log(err);
-					throw new Error(errorHandler.getErrorMessage(err));
+					console.error(err);
+					throw new Error(errorHandler.getErrorMessage(formSaveErr));
 				}
-				console.log('\n\nVisitor data successfully added!');
-				console.log(newVisitor);
 
 				delete visitorsData[socket.id];
 
-				if(cb) cb();
+				if(cb){
+					return cb();
+				}
 			});
 		});
 
 		socket.disconnect(0);
 	};
 
-	io.on('connection', function(socket) {
+	io.on('connection', function(current_socket) {
 
-		console.log('\n\n\n\n\n CONNECTED SOCKET');
 		// a user has visited our page - add them to the visitorsData object
-		socket.on('form-visitor-data', function(data) {
-				socket.id = data.formId;
-				visitorsData[socket.id] = data;
-				visitorsData[socket.id].isSaved = false;
+		current_socket.on('form-visitor-data', function(data) {
+				current_socket.id = data.formId;
+				visitorsData[current_socket.id] = data;
+				visitorsData[current_socket.id].isSaved = false;
 
 				if (data.isSubmitted) {
 					saveVisitorData(data, function () {
-						console.log('\n\n user submitted form');
+						visitorsData[current_socket.id].isSaved = true;
+						current_socket.disconnect(0);
 					});
-					visitorsData[socket.id].isSaved = true;
-					socket.disconnect(0);
 				}
 		});
 
-		socket.on('disconnect', function() {
-			console.log('\n\n\n\n\n DISCONNECTED SOCKET');
-			var data = visitorsData[socket.id];
+		current_socket.on('disconnect', function() {
+			var data = visitorsData[current_socket.id];
 
-			if(data){
-				if(!data.isSubmitted && !data.isSaved) {
-					data.isSaved = true;
-					saveVisitorData(data);
-				}
+			if(data && !data.isSubmitted && !data.isSaved) {
+				data.isSaved = true;
+				saveVisitorData(data);
 			}
 		});
 	});

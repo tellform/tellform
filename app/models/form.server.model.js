@@ -6,21 +6,15 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	_ = require('lodash'),
-	config = require('../../config/config'),
-	path = require('path'),
 	mUtilities = require('mongoose-utilities'),
-	fs = require('fs-extra'),
 	async = require('async'),
-	mkdirp = require('mkdirp'),
 	Random = require('random-js'),
-	mt = Random.engines.mt19937(),
-	util = require('util');
+	mt = Random.engines.mt19937();
 
 mt.autoSeed();
 
 //Mongoose Models
 var FieldSchema = require('./form_field.server.model.js');
-var Field = mongoose.model('Field');
 
 var FormSubmissionSchema = require('./form_submission.server.model.js'),
 	FormSubmission = mongoose.model('FormSubmission', FormSubmissionSchema);
@@ -221,7 +215,10 @@ FormSchema.virtual('analytics.fields').get(function () {
 	var visitors = this.analytics.visitors;
 	var that = this;
 
-	if(this.form_fields.length == 0) return null;
+	if(this.form_fields.length == 0) {
+		return null;
+	}
+	
 	for(var i=0; i<this.form_fields.length; i++){
 		var field = this.form_fields[i];
 
@@ -259,7 +256,6 @@ FormSchema.virtual('analytics.fields').get(function () {
 			}
 
 			var totalViews = dropoffViews+continueViews;
-			var responses = continueViews;
 			var continueRate = (continueViews/totalViews*100).toFixed(0);
 			var dropoffRate = (dropoffViews/totalViews*100).toFixed(0);
 
@@ -301,7 +297,6 @@ function getDeletedIndexes(needle, haystack){
 
 
 FormSchema.pre('save', function (next) {
-	var that = this;
 	switch(this.language){
 		case 'spanish':
 			this.language = 'es';
@@ -329,7 +324,6 @@ FormSchema.pre('save', function (next) {
 		that.constructor
 			.findOne({_id: that._id}).exec(function (err, original) {
 			if (err) {
-				console.log(err);
 				return cb(err);
 			} else {
 				_original = original;
@@ -367,77 +361,68 @@ FormSchema.pre('save', function (next) {
 						find({ form: that._id, admin: that.admin, form_fields: {$elemMatch: {submissionId: deleted_id} }  }).
 						exec(function(err, submissions){
 							if(err) {
-								console.error(err);
 								return cb_id(err);
-							} else {
-								//Delete field if there are no submission(s) found
-								if (submissions.length) {
-									//Add submissions
-									modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
-								}
-
-								return cb_id(null);
+							} 
+							
+							//Delete field if there are no submission(s) found
+							if (submissions.length) {
+								//Add submissions
+								modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
 							}
+
+							return cb_id(null);
+	
 						});
 					},
 					function (err) {
 						if(err){
 							console.error(err.message);
 							return cb(err);
-						} else {
-
-							//Iterate through all submissions with modified form_fields
-							async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
-
-								//Iterate through ids of deleted fields
-								for (var i = 0; i < deletedIds.length; i++) {
-
-									var index = _.findIndex(submission.form_fields, function (field) {
-										var tmp_id = field._id + '';
-										return tmp_id === old_ids[deletedIds[i]];
-									});
-
-									var deletedField = submission.form_fields[index];
-
-									//Hide field if it exists
-									if (deletedField) {
-										// console.log('deletedField\n-------\n\n');
-										// console.log(deletedField);
-										//Delete old form_field
-										submission.form_fields.splice(index, 1);
-
-										deletedField.deletePreserved = true;
-
-										//Move deleted form_field to start
-										submission.form_fields.unshift(deletedField);
-										that.form_fields.unshift(deletedField);
-										// console.log('form.form_fields\n--------\n\n');
-										// console.log(that.form_fields);
-									}
-								}
-
-								submission.save(function (err) {
-									if (err) return callback(err);
-									else return callback(null);
-								});
-							}, function (err) {
-								if (err) {
-									console.error(err.message);
-									return cb(err);
-								}
-								else return cb();
-							});
 						}
+
+						//Iterate through all submissions with modified form_fields
+						async.forEachOfSeries(modifiedSubmissions, function (submission, key, callback) {
+
+							//Iterate through ids of deleted fields
+							for (i = 0; i < deletedIds.length; i++) {
+
+								var index = _.findIndex(submission.form_fields, function (field) {
+									var tmp_id = field._id + '';
+									return tmp_id === old_ids[deletedIds[i]];
+								});
+
+								var deletedField = submission.form_fields[index];
+
+								//Hide field if it exists
+								if (deletedField) {
+
+									//Delete old form_field
+									submission.form_fields.splice(index, 1);
+
+									deletedField.deletePreserved = true;
+
+									//Move deleted form_field to start
+									submission.form_fields.unshift(deletedField);
+									that.form_fields.unshift(deletedField);
+								}
+							}
+
+							submission.save(function (saveErr) {
+								return callback(saveErr);
+							});
+						}, function (err) {
+							return cb(err);
+						});
+						
 					}
 				);
 			}
-			else return cb(null);
+			return cb(null);
 		}
-		else return cb(null);
+		return cb(null);
 	}],
 	function(err, results){
-		if (err) return next(err);
-		return next();
+		next(err);
 	});
 });
 

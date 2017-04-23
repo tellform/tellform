@@ -2,7 +2,7 @@
 
 angular.module('view-form').service('TimeCounter', [
 	function(){
-		var _startTime, _endTime = null, that=this;
+		var _startTime, _endTime = null;
 
 		this.timeSpent = 0;
 
@@ -25,9 +25,8 @@ angular.module('view-form').service('TimeCounter', [
 				this._startTime = this._endTime = null;
 
 				return this.timeSpent;
-			}else{
-				return new Error('Clock has not been started');
 			}
+			return new Error('Clock has not been started');
 		};
 
 		this.clockStarted = function(){

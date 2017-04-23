@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('forms').directive('onFinishRender', function ($rootScope, $timeout) {
+angular.module('forms').directive('onFinishRender', function ($rootScope) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
@@ -16,9 +16,8 @@ angular.module('forms').directive('onFinishRender', function ($rootScope, $timeo
                 scope.$evalAsync(function () {
                     $rootScope.$broadcast(broadcastMessage+' Started');
                 });
-            }else if(scope.$last) {
+            } else if(scope.$last) {
             	scope.$evalAsync(function () {
-                    // console.log(broadcastMessage+'Finished');
             	    $rootScope.$broadcast(broadcastMessage+' Finished');
                 });
             }

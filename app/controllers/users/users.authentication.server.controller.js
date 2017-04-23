@@ -3,14 +3,10 @@
 /**
  * Module dependencies.
  */
-var _ = require('lodash'),
-	errorHandler = require('../errors.server.controller'),
+var errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	async = require('async'),
 	config = require('../../../config/config'),
-	nodemailer = require('nodemailer'),
-	crypto = require('crypto'),
 	User = mongoose.model('User'),
 	tokgen = require("../../libs/tokenGenerator");
 
@@ -19,9 +15,6 @@ var nev = require('email-verification')(mongoose);
 
 // NEV setup and configuration ================
 var config_nev = function () {
-
-	var User = require('../../models/user.server.model');
-
 
 	nev.configure({
 	    persistentUserModel: User,
@@ -47,37 +40,35 @@ var config_nev = function () {
 	    verifySendMailCallback: function(err, info) {
 	      if (err) {
 	        throw err;
-	      } else {
-	        console.log(info);
 	      }
 	    }
 
 	}, function(err, options){
-		if(err) throw err;
+		if(err) {
+			throw err;
+		}
 	});
 
 	nev.generateTempUserModel(User, function(err){
-		if(err) throw err;
+		if(err) {
+			throw err;
+		}
 	});
 
 };
 
 config_nev();
 
-var smtpTransport = nodemailer.createTransport(config.mailer.options);
-
 exports.validateVerificationToken = function(req, res){
 	nev.confirmTempUser(req.params.token, function(err, user) {
 	    if(err) {
-			console.log(errorHandler.getErrorMessage(err));
 			return res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
 	    }
 	    else if (user){
 	        return res.status(200).send('User successfully verified');
-	    }else {
-	        // redirect to resend verification email
-	        return res.status(400).send( {message: 'Verification token is invalid or has expired'} );
 	    }
+	    // redirect to resend verification email
+	    return res.status(400).send( {message: 'Verification token is invalid or has expired'} );
 	});
 };
 
@@ -114,8 +105,6 @@ exports.signup = function(req, res) {
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
 		if (err) {
-			console.log('Error: ');
-			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -124,20 +113,17 @@ exports.signup = function(req, res) {
 		// new user created
 		if (newTempUser) {
 			var URL = newTempUser[nev.options.URLFieldName];
-			nev.sendVerificationEmail(user.email, URL, function (err, info) {
-				if (err) {
+			nev.sendVerificationEmail(user.email, URL, function (sendEmailErr, info) {
+				if (sendEmailErr) {
 
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
-				} else {
-					return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 				}
+				return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 			});
-		} else {
-			console.log('Error: User already exists!');
-			return res.status(400).send({message: 'Error: User already exists!'});
-		}
+		} 
+		return res.status(400).send({message: 'Error: User already exists!'});
 	});
 };
 
@@ -150,18 +136,17 @@ exports.signin = function(req, res, next) {
 			res.status(400).send(info);
 		} else {
 			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
-			user.provider = undefined;
+			user.password = null;
+			user.salt = null;
+			user.provider = null;
 
-			req.login(user, function(err) {
-				if (err) {
+			req.login(user, function(loginErr) {
+				if (loginErr) {
 					return res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
+						message: errorHandler.getErrorMessage(loginErr)
 					});
-				} else {
-					return res.json(user);
 				}
+				return res.json(user);
 			});
 		}
 	})(req, res, next);
@@ -227,7 +212,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 					var possibleUsername = providerUserProfile.username || ((providerUserProfile.email) ? providerUserProfile.email.split('@')[0] : '');
 
 					User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
-						user = new User({
+						var newUser = new User({
 							firstName: providerUserProfile.firstName,
 							lastName: providerUserProfile.lastName,
 							username: availableUsername,
@@ -238,13 +223,12 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 						});
 
 						// And save the user
-						user.save(function(err) {
-							return done(err, user);
+						newUser.save(function(userSaveErr) {
+							return done(userSaveErr, user);
 						});
 					});
-				} else {
-					return done(err, user);
 				}
+				return done(err, user);
 			}
 		});
 	} else {
@@ -254,7 +238,9 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 		// Check if user exists, is not signed in using this provider, and doesn't have that provider data already configured
 		if (user.provider !== providerUserProfile.provider && (!user.additionalProvidersData || !user.additionalProvidersData[providerUserProfile.provider])) {
 			// Add the provider data to the additional provider data field
-			if (!user.additionalProvidersData) user.additionalProvidersData = {};
+			if (!user.additionalProvidersData) { 
+				user.additionalProvidersData = {};
+			}
 			user.additionalProvidersData[providerUserProfile.provider] = providerUserProfile.providerData;
 
 			// Then tell mongoose that we've updated the additionalProvidersData field
@@ -314,8 +300,10 @@ exports.generateAPIKey = function(req, res) {
 
 	User.findById(req.user.id)
 		.exec( function(err, user) {
-			if (err) return res.status(400).send(err);
-
+			if (err) {
+				return res.status(400).send(err);
+			}
+				
 			if (!user) {
 				return res.status(400).send({
 					message: 'User does not Exist'
@@ -324,10 +312,10 @@ exports.generateAPIKey = function(req, res) {
 
 			user.apiKey = tokgen();
 
-			user.save(function(err, _user) {
-				if (err) {
+			user.save(function(userSaveErr, _user) {
+				if (userSaveErr) {
 					return res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
+						message: errorHandler.getErrorMessage(userSaveErr)
 					});
 				}
 
@@ -337,7 +325,6 @@ exports.generateAPIKey = function(req, res) {
 				delete newUser.passwordHash;
 				delete newUser.provider;
 
-				console.log(newUser);
 				return res.json(newUser);
 			});
 

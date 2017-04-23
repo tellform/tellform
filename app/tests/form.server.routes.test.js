@@ -17,7 +17,7 @@ var should = require('should'),
  */
 var user, myForm, userSession;
 
- // Create user credentials
+// Create user credentials
 var credentials = {
 	username: 'test1234',
 	email: 'test1234@test.com',
@@ -57,14 +57,14 @@ describe('Form Routes Unit tests', function() {
 				isLive: true
 			};
 
-            //Initialize Session
-            userSession = Session(app);
+			//Initialize Session
+			userSession = Session(app);
 
 			done();
 		});
 	});
 
-    it(' > should not be able to create a Form if not logged in', function(done) {
+	it(' > should not be able to create a Form if not logged in', function(done) {
 		userSession.post('/forms')
 			.send({form: myForm})
 			.expect(401)
@@ -285,10 +285,10 @@ describe('Form Routes Unit tests', function() {
 
 	afterEach(function(done) {
 		Form.remove({}).exec(function() {
-            User.remove({}).exec(function() {
-                userSession.destroy();
-                done();
-            });
+			User.remove({}).exec(function() {
+				userSession.destroy();
+				done();
+			});
 		});
 	});
 });

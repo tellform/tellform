@@ -5,9 +5,7 @@
  */
 var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller.js'),
-	mongoose = require('mongoose'),
-	passport = require('passport'),
-	User = mongoose.model('User');
+	mongoose = require('mongoose');
 
 /**
  * Update user details
@@ -15,7 +13,6 @@ var _ = require('lodash'),
 exports.update = function(req, res) {
 	// Init Variables
 	var user = req.user;
-	var message = null;
 
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
@@ -30,15 +27,15 @@ exports.update = function(req, res) {
 				return res.status(500).send({
 					message: errorHandler.getErrorMessage(err)
 				});
-			} else {
-				req.login(user, function(err) {
-					if (err) {
-						res.status(500).send(err);
-					} else {
-						res.json(user);
-					}
-				});
-			}
+			} 
+			req.login(user, function(loginErr) {
+				if (err) {
+					res.status(500).send(loginErr);
+				} else {
+					res.json(user);
+				}
+			});
+			
 		});
 	} else {
 		res.status(401).send({

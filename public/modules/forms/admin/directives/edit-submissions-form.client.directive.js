@@ -7,7 +7,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
             restrict: 'E',
             scope: {
                 user:'=',
-				myform: '='
+		myform: '='
             },
             controller: function($scope){
 
@@ -48,11 +48,13 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 							var totalTime = 0;
 							var numSubmissions = $scope.table.rows.length;
 
-							for(var i=0; i<$scope.table.rows.length; i++){
+							for(i=0; i<$scope.table.rows.length; i++){
 								totalTime += $scope.table.rows[i].timeElapsed;
 							}
 
-							if(numSubmissions == 0) return 0;
+							if(numSubmissions === 0) {
+								return 0;
+							}
 
 							return (totalTime/numSubmissions).toFixed(0);
 						})();
@@ -77,7 +79,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 							if($scope.myform.analytics && $scope.myform.analytics.visitors) {
 								var visitors = $scope.myform.analytics.visitors;
-								for (var i = 0; i < visitors.length; i++) {
+								for (i = 0; i < visitors.length; i++) {
 									var visitor = visitors[i];
 									var deviceType = visitor.deviceType;
 
@@ -86,12 +88,18 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 									stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
 
 									stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].visits).toFixed(0);
-									if(!stats[deviceType].average_time) stats[deviceType].average_time = 0;
-
-									if (visitor.isSubmitted) stats[deviceType].responses++;
+									if(!stats[deviceType].average_time) {
+										stats[deviceType].average_time = 0;
+									}
+									
+									if (visitor.isSubmitted) { 
+										stats[deviceType].responses++;
+									}
 
 									stats[deviceType].completion = (stats[deviceType].responses / stats[deviceType].visits).toFixed(0);
-									if(!stats[deviceType].completion) stats[deviceType].completion = 0;
+									if(!stats[deviceType].completion) {
+										stats[deviceType].completion = 0;
+									}
 								}
 							}
 

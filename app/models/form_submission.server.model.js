@@ -5,23 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	_ = require('lodash'),
-	config = require('../../config/config'),
-	path = require('path'),
-	fs = require('fs-extra'),
 	mUtilities = require('mongoose-utilities'),
-	async = require('async'),
 	FieldSchema = require('./form_field.server.model.js');
-
-// Setter function for form_fields
-function formFieldsSetter(form_fields) {
-	for (var i = 0; i < form_fields.length; i++) {
-		form_fields[i].isSubmission = true;
-		form_fields[i].submissionId = form_fields[i]._id;
-		form_fields[i]._id = new mongoose.mongo.ObjectID();
-	}
-	return form_fields;
-}
 
 /**
  * Form Submission Schema
