@@ -1,15 +1,12 @@
 'use strict';
 
 var should = require('should'),
-	lodash = require('lodash'),
 	app = require('../../server'),
-	request = require('supertest'),
 	Session = require('supertest-session'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Form = mongoose.model('Form'),
-	Field = mongoose.model('Field'),
-	FormSubmission = mongoose.model('FormSubmission');
+	Field = mongoose.model('Field');
 
 /**
  * Globals
@@ -70,8 +67,10 @@ describe('Form Routes Unit tests', function() {
 			.end(function(signinErr, signinRes) {
 
 				// Handle signin error
-				if (signinErr) return done(signinErr);
-
+				if (signinErr) {
+					return done(signinErr);
+				}
+			
 				var user = signinRes.body;
 				var userId = user._id;
 
@@ -82,16 +81,20 @@ describe('Form Routes Unit tests', function() {
 					.expect(200)
 					.end(function(FormSaveErr, FormSaveRes) {
 						// Handle Form save error
-						if (FormSaveErr) return done(FormSaveErr);
-
+						if (FormSaveErr) {
+							return done(FormSaveErr);
+						}
+					
 						// Get a list of Forms
 						userSession.get('/forms')
 							.expect('Content-Type', /json/)
 							.expect(200)
 							.end(function(FormsGetErr, FormsGetRes) {
-                                // Handle Form save error
-								if (FormsGetErr) return done(FormsGetErr);
-
+                                				// Handle Form save error
+								if (FormsGetErr) {
+									return done(FormsGetErr);
+								}
+							
 								// Get Forms list
 								var Forms = FormsGetRes.body;
 
@@ -158,8 +161,10 @@ describe('Form Routes Unit tests', function() {
 			.expect(200)
 			.end(function(signinErr, signinRes) {
 				// Handle signin error
-				if (signinErr) return done(signinErr);
-
+				if (signinErr) {
+					return done(signinErr);
+				}
+			
 				// Save a new Form
 				userSession.post('/forms')
 					.send({form: myForm})
@@ -179,8 +184,10 @@ describe('Form Routes Unit tests', function() {
 							.expect(200)
 							.end(function(FormUpdateErr, FormUpdateRes) {
 								// Handle Form update error
-								if (FormUpdateErr) done(FormUpdateErr);
-
+								if (FormUpdateErr) {
+									done(FormUpdateErr);
+								}
+							
 								// Set assertions
 								(FormUpdateRes.body._id).should.equal(FormSaveRes.body._id);
 								(FormUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
@@ -204,8 +211,10 @@ describe('Form Routes Unit tests', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if(err) return done(err)
-
+					if(err) {
+						return done(err)
+					}
+				
 					// Set assertion
 					(res.body).should.be.an.Object.with.property('title', myForm.title);
 
@@ -223,8 +232,10 @@ describe('Form Routes Unit tests', function() {
 			.expect(200)
 			.end(function(signinErr, signinRes) {
 				// Handle signin error
-				if (signinErr) return done(signinErr);
-
+				if (signinErr) {
+					return done(signinErr);
+				}
+			
 				// Save a new Form
 				userSession.post('/forms')
 					.send({form: myForm})
@@ -232,8 +243,10 @@ describe('Form Routes Unit tests', function() {
 					.expect(200)
 					.end(function(FormSaveErr, FormSaveRes) {
 						// Handle Form save error
-						if (FormSaveErr) return done(FormSaveErr);
-
+						if (FormSaveErr) {
+							return done(FormSaveErr);
+						}
+					
 						// Delete an existing Form
 						userSession.delete('/forms/' + FormSaveRes.body._id)
 							.send(myForm)
@@ -268,7 +281,6 @@ describe('Form Routes Unit tests', function() {
 			userSession.delete('/forms/' + FormObj._id)
 				.expect(401)
 				.end(function(FormDeleteErr, FormDeleteRes) {
-
 					// Handle Form error error
 					done(FormDeleteErr);
 				});
@@ -287,7 +299,9 @@ describe('Form Routes Unit tests', function() {
 				.end(function(signinErr, signinRes) {
 
 					// Handle signin error
-					if (signinErr) return done(signinErr);
+					if (signinErr) { 
+						return done(signinErr);
+					}
 
 					_user = signinRes.body;
                     // Save a new Form
@@ -297,7 +311,10 @@ describe('Form Routes Unit tests', function() {
                         .expect(200)
                         .end(function(FormSaveErr, FormSaveRes) {
                             // Handle Form save error
-                            if (FormSaveErr) return done(FormSaveErr);
+                            if (FormSaveErr) {
+				    return done(FormSaveErr);
+			    }
+			    
                             _form = FormSaveRes.body;
 
                             // Get a list of Forms
@@ -306,7 +323,9 @@ describe('Form Routes Unit tests', function() {
                                 .expect(200)
                                 .end(function(FormsGetErr, FormsGetRes) {
                                     // Handle Form save error
-                                    if (FormsGetErr) return done(FormsGetErr);
+                                    if (FormsGetErr) {
+					    return done(FormsGetErr);
+				    }
 
                                     var fetchedForm = FormsGetRes.body;
                                     // Set assertions
@@ -323,20 +342,22 @@ describe('Form Routes Unit tests', function() {
         userSession.get('/auth/signout')
             .end(function(signoutErr, signoutRes) {
 
-					// Handle signout error
-					if (signoutErr) return done(signoutErr);
+			// Handle signout error
+			if (signoutErr) {
+				return done(signoutErr);
+			}
                     _userSession.destroy();
                     done();
-				});
+		});
 		});
 	});
 
 	afterEach(function(done) {
 		Form.remove({}).exec(function() {
-            User.remove({}).exec(function() {
-                userSession.destroy();
-                done();
-            });
+		    User.remove({}).exec(function() {
+			userSession.destroy();
+			done();
+		    });
 		});
 	});
 });
