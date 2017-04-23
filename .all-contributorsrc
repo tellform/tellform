@@ -63,6 +63,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "spekulatius",
+      "name": "Peter Thaleikis",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8433587?v=3",
+      "profile": "https://github.com/spekulatius",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
