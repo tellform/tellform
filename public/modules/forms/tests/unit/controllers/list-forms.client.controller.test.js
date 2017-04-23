@@ -4,12 +4,9 @@
     // Forms Controller Spec
     describe('ListForms Controller Tests', function() {
         // Initialize global variables
-        var ListFormsController,
-            createListFormsController,
+        var createListFormsController,
             scope,
             $httpBackend,
-            $stateParams,
-            $location,
             $state;
 
         var sampleForm = {
@@ -93,7 +90,7 @@
         // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
         // This allows us to inject a service but then attach it to a variable
         // with the same name as the service.
-        beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms) {
+        beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm) {
             // Set a new global scope
             scope = $rootScope.$new();
 
@@ -115,7 +112,7 @@
             };
         }));
 
-        it('$scope.findAll() should query all User\'s Forms', inject(function(Forms) {
+        it('$scope.findAll() should query all User\'s Forms', inject(function() {
 
             var controller = createListFormsController();
 
@@ -130,7 +127,7 @@
             expect( scope.myforms ).toEqualData(sampleFormList);
         }));
 
-        it('$scope.duplicateForm() should duplicate a Form', inject(function(Forms) {
+        it('$scope.duplicateForm() should duplicate a Form', inject(function() {
 
             var dupSampleForm = sampleFormList[2],
                 dupSampleForm_index = 3,
@@ -160,7 +157,7 @@
             expect( scope.myforms[dupSampleForm_index] ).toEqualData(dupSampleForm);
         }));
 
-        it('$scope.removeForm() should remove a Form', inject(function(Forms) {
+        it('$scope.removeForm() should remove a Form', inject(function() {
 
             var delIndex = 0,
                 delSampleForm = sampleFormList[delIndex],
@@ -191,7 +188,7 @@
             expect( scope.myforms[0] ).not.toEqualData(delSampleForm);
         }));
 
-        it('$scope.createNewForm() should create a new Form', inject(function(Forms) {
+        it('$scope.createNewForm() should create a new Form', inject(function() {
             var newForm = _.clone(sampleForm);
             newForm.name = 'Test Form5';
 
