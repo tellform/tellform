@@ -21,7 +21,7 @@
         
             scope.myfields = FormFields.types;
 
-            var e = $compile('<div><div ng-repeat="item in myfields" on-finish-render="editFormFields">{{item.name}}</div></div>')(scope);
+            $compile('<div><div ng-repeat="item in myfields" on-finish-render="editFormFields">{{item.name}}</div></div>')(scope);
             scope.$digest();
 
             //run code to test
@@ -34,7 +34,7 @@
             // console.log(FormFields.types);
             scope.myfields = FormFields.types;
 
-            var e = $compile('<div><div ng-repeat="item in myfields" on-finish-render>{{item.name}}</div></div>')(scope);
+            $compile('<div><div ng-repeat="item in myfields" on-finish-render>{{item.name}}</div></div>')(scope);
             scope.$digest();
 
             //run code to test
