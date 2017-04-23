@@ -51,7 +51,7 @@ TellForm 2.0.0
 
 Please checkout our CONTRIBUTING.md on ways to contribute to TellForm.
 
-All contributors are eligible to get a free [TellForm Sticker](https://www.stickermule.com/marketplace/15987-tellform-round-sticker). All you have to do is submit a PR, get it accepted, email your address to polydaic [at] gmail.com and we'll send you a sticker that you can proudly put on your laptop.
+All contributors are eligible to get a free [TellForm Sticker](https://www.stickermule.com/marketplace/15987-tellform-round-sticker). All you have to do is submit a PR, get it accepted, email your address to team [at] tellform.com and we'll send you a sticker that you can proudly put on your laptop.
 
 ## Quickstart
 
