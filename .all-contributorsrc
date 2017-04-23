@@ -23,6 +23,16 @@
         "review",
         "test"
       ]
+    },
+    {
+      "login": "lalop",
+      "name": "Samuel Laulhau",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/313117?v=3",
+      "profile": "https://samuellaulhau.fr",
+      "contributions": [
+        "code",
+        "translation"
+      ]
     }
   ]
 }
