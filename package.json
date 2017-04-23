@@ -94,7 +94,7 @@
     "socket.io-redis": "^1.0.0",
     "swig": "~1.4.1",
     "uuid-token-generator": "^0.5.0",
-    "wildcard-subdomains": "github:whitef0x0/wildcard-subdomains"
+    "wildcard-subdomains": "github:tellform/wildcard-subdomains"
   },
   "devDependencies": {
     "all-contributors-cli": "^4.3.0",

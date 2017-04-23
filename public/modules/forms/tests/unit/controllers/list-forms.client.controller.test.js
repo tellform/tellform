@@ -90,7 +90,7 @@
         // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
         // This allows us to inject a service but then attach it to a variable
         // with the same name as the service.
-        beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm) {
+        beforeEach(inject(function($controller, $rootScope, _$state_, _$httpBackend_, CurrentForm) {
             // Set a new global scope
             scope = $rootScope.$new();
 
@@ -98,9 +98,7 @@
             CurrentForm.setForm(sampleForm);
 
             // Point global variables to injected services
-            $stateParams = _$stateParams_;
             $httpBackend = _$httpBackend_;
-            $location = _$location_;
             $state = _$state_;
 
             $httpBackend.whenGET(/\.html$/).respond('');

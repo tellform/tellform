@@ -329,7 +329,7 @@ module.exports = function(grunt) {
 	grunt.option('force', true);
 
 	// A Task for loading the configuration object
-	/*grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function() {
+	grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function() {
 		require('./config/init')();
 		var config = require('./config/config');
 		console.log(config);
@@ -337,7 +337,7 @@ module.exports = function(grunt) {
 		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
 		grunt.config.set('formApplicationJavaScriptFiles', config.assets.form_js);
 		grunt.config.set('applicationCSSFiles', config.assets.css);
-	});*/
+	});
 
 	// Code coverage tasks.
 	grunt.registerTask('coveralls', ['env:test','mocha_istanbul:coveralls']);

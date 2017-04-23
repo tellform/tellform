@@ -2,11 +2,11 @@
   "name": "tellform",
   "description": "Opensource alternative to TypeForm",
   "version": "2.0.0",
- "homepage": "https://github.com/whitef0x0/tellform",
+  "homepage": "https://github.com/whitef0x0/tellform",
   "authors": [
     "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
   ],
- "license": "MIT",
+  "license": "MIT",
   "private": true,
   "appPath": "public/modules",
   "dependencies": {
@@ -26,14 +26,13 @@
     "angular-bootstrap-colorpicker": "~3.0.19",
     "angular-ui-router-tabs": "~1.7.0",
     "angular-scroll": "^1.0.0",
-    "angular-sanitize": "^1.5.3",
+    "angular-sanitize": "1.4.14",
     "v-button": "^1.1.1",
-    "angular-busy": "^4.1.3",
-    "angular-input-stars": "https://github.com/whitef0x0/angular-input-stars.git#master",
+    "angular-input-stars": "https://github.com/tellform/angular-input-stars.git#master",
     "raven-js": "^3.0.4",
     "tableExport.jquery.plugin": "^1.5.1",
     "js-yaml": "^3.6.1",
-    "angular-ui-select": "https://github.com/whitef0x0/ui-select.git#compiled",
+    "angular-ui-select": "https://github.com/tellform/ui-select.git#compiled",
     "angular-translate": "~2.11.0",
     "ng-translate": "*",
     "deep-diff": "^0.3.4",
@@ -48,7 +47,8 @@
     "angular-bootstrap": "^0.14.0",
     "angular": "1.4.14",
     "angular-ui-select": "compiled",
-    "jspdf": "~1.0.178"
+    "jspdf": "~1.0.178",
+    "angular-sanitize": "1.4.14"
   },
   "overrides": {
     "BOWER-PACKAGE": {

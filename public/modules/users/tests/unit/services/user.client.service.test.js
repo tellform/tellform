@@ -22,12 +22,12 @@
 		var sampleForgotToken = 'c2e8f74455cdccc454dfef941ff315fa4f7b1f0a';
 		var sampleCredentials = {
 			username: sampleUser.username,
-			password: sampleUser.password,
+			password: sampleUser.password
 		};
 
 		var samplePasswordDetails = {
 			newPassword: sampleUser.password,
-			verifyPassword: sampleUser.password,
+			verifyPassword: sampleUser.password
 		};
 
 		// The $resource service augments the response object with methods for updating and deleting the resource.
@@ -65,7 +65,7 @@
  		}));
 
 		it('User.login() should send a POST request to /auth/signin', function() {
-			
+
 			//Set POST response
 			$httpBackend.expect('POST', '/auth/signin', sampleCredentials).respond(200, sampleUser);
 
@@ -76,7 +76,7 @@
 		});
 
 		it('User.logout() should logout user with /auth/signout', function() {
-			
+
 			//Set POST response
 			$httpBackend.expect('GET', '/auth/signout').respond(200);
 
@@ -87,7 +87,7 @@
 		});
 
 		it('User.getCurrent() should fetch user from /users/me', function() {
-			
+
 			//Set POST response
 			$httpBackend.expect('GET', '/users/me').respond(200, sampleUser);
 
@@ -99,7 +99,7 @@
 
 
 		it('User.signup() should signup user with /auth/signup', function() {
-			
+
 			//Set POST response
 			$httpBackend.expect('POST', '/auth/signup', sampleCredentials).respond(200);
 
@@ -110,7 +110,7 @@
 		});
 
 		it('User.resendVerifyEmail() should send POST request to /auth/verify', function() {
-			
+
 			//Set POST response
 			$httpBackend.expect('POST', '/auth/verify', {email: sampleUser.email}).respond(200);
 
@@ -121,7 +121,7 @@
 		});
 
 		it('User.validateVerifyToken() should send GET request to /auth/verify/:token', function() {
-			
+
 			//Set POST response
 			$httpBackend.expect('GET', '/auth/verify/'+sampleVerifyToken).respond(200);
 
@@ -132,9 +132,9 @@
 		});
 
 		it('User.resetPassword() should send GET request to /auth/forgot/:token', function() {
-			
+
 			//Set POST response
-			$httpBackend.expect('GET', '/auth/password/'+sampleForgotToken).respond(200);
+			$httpBackend.expect('POST', '/auth/reset/'+sampleForgotToken).respond(200);
 
 			//Run Service Logic to Test
 			User.resetPassword(samplePasswordDetails, sampleForgotToken);
@@ -143,7 +143,7 @@
 		});
 
 		it('User.askForPasswordReset() should send POST request to /auth/forgot', function() {
-			
+
 			//Set POST response
 			$httpBackend.expect('POST', '/auth/forgot', sampleCredentials).respond(200, sampleUser);
 
