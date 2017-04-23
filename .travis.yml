@@ -1,4 +1,5 @@
 language: node_js
+dist: trusty
 sudo: false
 node_js:
   - "5.0.0"
@@ -11,11 +12,5 @@ services:
 addons:
   code_climate:
     repo_token: 6c3a1b81a09b2338d6f30913c1bcad115026689752cbb499a0a25061cda6fbcf
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.8
-    - g++-4.8
 after_script:
   - grunt coverage
