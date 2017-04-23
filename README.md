@@ -173,26 +173,25 @@ $ grunt coverage:client
 
 Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
 
-<a href="https://m.do.co/c/a86fd8843e09">
-	<img src="/docs/readme_logos/do_logo.png" width="70px">
+<a href="https://m.do.co/c/a86fd8843e09" style="padding: 30px 0">
+	<img src="/docs/readme_logos/do_logo.png" height="30px">
 </a>
-<a href="https://getsentry.com/">
-	<img src="/docs/readme_logos/sentry_logo.png"
-	width="70px">
+<a href="https://getsentry.com/" style="padding: 30px 0">
+	<img src="/docs/readme_logos/sentry_logo.png" height="30px">
 </a>
-<a href="https://statuspage.io/">
-	<img src="/docs/readme_logos/statuspage_logo.png" width="70px">
+<a href="https://statuspage.io/" style="padding: 30px 0">
+	<img src="/docs/readme_logos/statuspage_logo.png" height="30px">
+</a>
+<br><br>
+<a href="https://www.stickermule.com/unlock?ref_id=0939360701" style="padding: 30px 0">
+	<img src="/docs/readme_logos/stickermule_logo.png" height="30px">
+</a>
+<a href="https://sparkpost.com/" style="padding: 30px 0">
+	<img src="/docs/readme_logos/sparkpost_logo.png" height="30px">
 </a>
 
-<a href="https://www.stickermule.com/unlock?ref_id=0939360701">
-	<img src="/docs/readme_logos/stickermule_logo.png" width="70px">
-</a>
-<a href="https://sparkpost.com/">
-	<img src="/docs/readme_logos/sparkpost_logo.png" width="70px">
-</a>
-
-<a href="https://therooststand.com/">
-	<img src="/docs/readme_logos/roost_logo.png" width="70px">
+<a href="https://therooststand.com/" style="padding: 30px 0">
+	<img src="/docs/readme_logos/roost_logo.png" height="30px">
 </a>
 
 ## Backers
