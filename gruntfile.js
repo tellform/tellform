@@ -1,73 +1,8 @@
 'use strict';
-var spawn = require('child_process').spawn;
+
 var bowerFiles = require('main-bower-files');
 var path = require('path');
 
-var minBowerFiles = function(type){
-	return bowerFiles(type).map( function(path, index, arr) {
-		var newPath = path.replace(/.([^.]+)$/g, '.min.$1');
-		return exists( newPath ) ? newPath : path;
-	});
-};
-
-var removeRootDir = function(files, removeRoot, addRoot) {
-	return files.map(function(file) {
-		if (addRoot) return file.replace(path.join(process.cwd(), removeRoot), addRoot);
-		return file.replace(path.join(process.cwd(), removeRoot), '');
-	});
-};
-
-var allBowerFiles = bowerFiles({
-	filter: function(filePath){
-		return (filePath.indexOf('js') > 0 && filePath.indexOf('angular-ui-utils') === -1);
-	}
-});
-
-var bowerAllArray = ['public/lib/angular/angular.js',
-	'public/lib/angular-ui-select/dist/select.js',
-	'public/lib/v-button/dist/v-button.js',
-	'public/lib/angular-ui-scroll/dist/ui-scroll.js',
-	'public/lib/angular-resource/angular-resource.js',
-	'public/lib/angular-ui-router/release/angular-ui-router.js',
-	'public/lib/angular-sanitize/angular-sanitize.js',
-	'public/lib/angular-input-stars/angular-input-stars.js',
-	'public/lib/ng-file-upload/ng-file-upload.js',
-	'public/lib/angular-mocks/angular-mocks.js',
-	'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-	'public/lib/angular-ui-scrollpoint/dist/scrollpoint.js',
-	'public/lib/angular-ui-event/dist/event.js',
-	'public/lib/angular-ui-mask/dist/mask.js',
-	'public/lib/angular-ui-validate/dist/validate.js',
-	'public/lib/angular-ui-indeterminate/dist/indeterminate.js',
-	'public/lib/angular-ui-uploader/dist/uploader.js',
-	'public/lib/raven-js/dist/raven.js',
-	'public/lib/jquery-ui/jquery-ui.js',
-	'public/lib/lodash/lodash.js',
-	'public/lib/angular-ui-sortable/sortable.js',
-	'public/lib/angular-permission/dist/angular-permission.js',
-	'public/lib/file-saver.js/FileSaver.js',
-	'public/lib/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js',
-	'public/lib/angular-ui-router-tabs/src/ui-router-tabs.js',
-	'public/lib/angular-scroll/angular-scroll.js',
-	'public/lib/angular-animate/angular-animate.js',
-	'public/lib/file-saver/FileSaver.js',
-	'public/lib/html2canvas/build/html2canvas.js',
-	'public/lib/jspdf/dist/jspdf.min.js',
-	'public/lib/jspdf-autotable/dist/jspdf.plugin.autotable.js',
-	'public/lib/angular-translate/angular-translate.js',
-	'public/lib/deep-diff/index.js',
-	'public/lib/jsep/build/jsep.js',
-	'public/lib/clipboard/dist/clipboard.js',
-	'public/lib/mobile-detect/mobile-detect.js',
-	'public/lib/angular-strap/dist/angular-strap.js',
-	'public/lib/angular-strap/dist/angular-strap.tpl.js',
-	'public/lib/bootstrap/dist/js/bootstrap.js',
-	'public/lib/angular-ui-utils/index.js',
-	'public/lib/angular-raven/angular-raven.js',
-	'public/lib/angular-ui-date/src/date.js',
-	'public/lib/angular-busy/dist/angular-busy.js',
-	'public/lib/tableExport.jquery.plugin/tableExport.min.js',
-	'public/lib/ngclipboard/dist/ngclipboard.js' ];
 var bowerArray = ['public/lib/angular/angular.min.js',
 	'public/lib/angular-scroll/angular-scroll.min.js',
 	'public/lib/angular-ui-select/dist/select.min.js',
@@ -85,16 +20,6 @@ var bowerArray = ['public/lib/angular/angular.min.js',
 	'public/lib/mobile-detect/mobile-detect.js',
 	'public/lib/js-yaml/dist/js-yaml.js',
 	'public/lib/angular-sanitize/angular-sanitize.min.js'];
-/*
-
-
-
-
-
-	'public/lib/bootstrap/dist/js/bootstrap.js',
-	'public/lib/angular-raven/angular-raven.js',
-	'public/lib/angular-busy/dist/angular-busy.js'];
-*/
 
 module.exports = function(grunt) {
 	require('jit-grunt')(grunt);
@@ -408,7 +333,7 @@ module.exports = function(grunt) {
 
 	// A Task for loading the configuration object
 	grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function() {
-		var init = require('./config/init')();
+		require('./config/init')();
 		var config = require('./config/config');
 
 		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
@@ -418,9 +343,9 @@ module.exports = function(grunt) {
 
 	// Code coverage tasks.
 	grunt.registerTask('coveralls', ['env:test','mocha_istanbul:coveralls']);
-    grunt.registerTask('coverage', ['env:test', 'mocha_istanbul:coverage']);
-    grunt.registerTask('coverage:client', ['env:test', 'mocha_istanbul:coverageClient']);
-    grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
+    	grunt.registerTask('coverage', ['env:test', 'mocha_istanbul:coverage']);
+    	grunt.registerTask('coverage:client', ['env:test', 'mocha_istanbul:coverageClient']);
+    	grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'html2js:main', 'html2js:forms', 'env', 'concurrent:default']);
