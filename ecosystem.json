@@ -11,7 +11,7 @@
 	  "user": "polydaic",
 	  "host": "159.203.42.158",
 	  "ref": "origin/stage",
-	  "repo": "git@github.com:whitef0x0/tellform.git",
+	  "repo": "git@github.com:tellform/tellform.git",
 	  "path": "/opt/deploy",
 	  "post-deploy": "npm install && pm2 startOrGracefulReload ecosystem.json --env production",
 	  "env": {
@@ -23,7 +23,7 @@
 	  "user": "polydaic",
 	  "host": "159.203.33.182",
 	  "ref": "origin/master",
-	  "repo": "git@github.com:whitef0x0/tellform.git",
+	  "repo": "git@github.com:tellform/tellform.git",
 	  "path": "/opt/deploy",
 	  "post-deploy": "npm install && pm2 startOrGracefulReload ecosystem.json --env production",
 	  "env": {
