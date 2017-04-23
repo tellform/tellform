@@ -6,16 +6,12 @@
 var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
-	Form = mongoose.model('Form'),
-	Field = mongoose.model('Field'),
-	_ = require('lodash'),
-	config = require('../../config/config'),
-	FormSubmission = mongoose.model('FormSubmission');
+	Form = mongoose.model('Form');
 
 /**
  * Globals
  */
-var user, myForm, mySubmission;
+var user, myForm;
 
 /**
  * Unit tests
@@ -34,8 +30,7 @@ describe('Form Model Unit Tests:', function() {
 
 		user.save(function(err) {
 			if(err) {
-				done(err);
-				return;
+				return done(err);
 			}
 			myForm = new Form({
 				title: 'Form Title',
@@ -75,12 +70,11 @@ describe('Form Model Unit Tests:', function() {
 	describe('Method Find', function(){
 		beforeEach(function(done){
 			myForm.save(function(err) {
-				if(err) return done(err);
-				done();
+				return done(err);
 			});
 		});
 		it('should be able to findOne my form without problems', function(done) {
-			 Form.findOne({title: myForm.title}).exec(function(err,form) {
+			 Form.findOne({title: myForm.title}).exec(function(err, form) {
 				should.not.exist(err);
 				should.exist(form);
 
