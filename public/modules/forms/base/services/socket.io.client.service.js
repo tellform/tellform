@@ -1,14 +1,11 @@
 (function () {
 	'use strict';
 
-	// Create the Socket.io wrapper service
-	angular
-		.module('forms')
-		.factory('Socket', Socket);
-
-	Socket.$inject = ['$timeout', '$window'];
 
 	function Socket($timeout, $window) {
+		
+		var service;
+		
 		// Connect to Socket.io server
 		function connect(url) {
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
@@ -39,7 +36,7 @@
 			}
 		}
 		
-			var service = {
+		service = {
 			connect: connect,
 			emit: emit,
 			on: on,
@@ -61,4 +58,11 @@
 
 		return service;
 	}
+	
+	// Create the Socket.io wrapper service
+	angular.module('forms')
+		.factory('Socket', Socket);
+
+	Socket.$inject = ['$timeout', '$window'];
+
 }());
