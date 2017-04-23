@@ -7,7 +7,6 @@ var errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
 	config = require('../../../config/config'),
-	nodemailer = require('nodemailer'),
 	User = mongoose.model('User'),
 	tokgen = require("../../libs/tokenGenerator");
 
@@ -45,11 +44,15 @@ var config_nev = function () {
 	    }
 
 	}, function(err, options){
-		if(err) throw err;
+		if(err) {
+			throw err;
+		}
 	});
 
 	nev.generateTempUserModel(User, function(err){
-		if(err) throw err;
+		if(err) {
+			throw err;
+		}
 	});
 
 };
@@ -119,9 +122,8 @@ exports.signup = function(req, res) {
 				}
 				return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 			});
-		} else {
-			return res.status(400).send({message: 'Error: User already exists!'});
-		}
+		} 
+		return res.status(400).send({message: 'Error: User already exists!'});
 	});
 };
 
@@ -138,14 +140,13 @@ exports.signin = function(req, res, next) {
 			user.salt = null;
 			user.provider = null;
 
-			req.login(user, function(err) {
-				if (err) {
+			req.login(user, function(loginErr) {
+				if (loginErr) {
 					return res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
+						message: errorHandler.getErrorMessage(loginErr)
 					});
-				} else {
-					return res.json(user);
 				}
+				return res.json(user);
 			});
 		}
 	})(req, res, next);
