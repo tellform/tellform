@@ -15,22 +15,18 @@ angular.module('core').service('Menus', [
 			if (user) {
 				if (~this.roles.indexOf('*')) {
 					return true;
-				} else {
-					for (var userRoleIndex in user.roles) {
-						for (var roleIndex in this.roles) {
-							console.log(this.roles[roleIndex]);
-							console.log( this.roles[roleIndex] === user.roles[userRoleIndex]);
-							if (this.roles[roleIndex] === user.roles[userRoleIndex]) {
-								return true;
-							}
+				} 
+				for (var userRoleIndex in user.roles) {
+					for (var roleIndex in this.roles) {
+						if (this.roles[roleIndex] === user.roles[userRoleIndex]) {
+							return true;
 						}
 					}
 				}
-			} else {
-				return this.isPublic;
-			}
+				return false;
 
-			return false;
+			} 
+			return this.isPublic;
 		};
 
 		// Validate menu existance
