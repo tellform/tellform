@@ -47,7 +47,7 @@ TellForm 2.0.0
 - Add Custom Background and Dropdown Field Images
 - Add File Upload Form Field
 
-### How to Contribute
+## How to Contribute
 
 Please checkout our CONTRIBUTING.md on ways to contribute to TellForm.
 
