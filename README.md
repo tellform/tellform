@@ -208,12 +208,6 @@ Love our work and community? [Become a backer](https://opencollective.com/tellfo
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [<img src="https://avatars1.githubusercontent.com/u/1522464?v=3" width="100px;"/><br /><sub>Ahmad Luqman</sub>](https://github.com/ahmad-luqman)<br />[📖](https://github.com/tellform/TellForm/commits?author=ahmad-luqman "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/3691490?v=3" width="100px;"/><br /><sub>Peter Dave Hello</sub>](https://www.peterdavehello.org/)<br />[📖](https://github.com/tellform/TellForm/commits?author=PeterDaveHello "Documentation") |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-[David Baldwynn](https://github.com/whitef0x0/)
-
-[Samuel Laulhau](https://github.com/lalop)
-
-[Arun Pattnaik](https://github.com/arunpattnaik)
-
 ## Mentions on the Web
 
 [Mister Ad](http://start.mister-ad.biz/newsticker/open-source-alternative-zu-typeform-tellform-in-der-kurzvorstellung/)
