@@ -52,20 +52,12 @@ var UserSchema = new Schema({
 	firstName: {
 		type: String,
 		trim: true,
-		default: '',
-		/*validate: {
-			validator: validateLocalStrategyProperty,
-			message: 'Please fill in your first name'
-		}*/
+		default: ''
 	},
 	lastName: {
 		type: String,
 		trim: true,
-		default: '',
-		/*validate: {
-			validator: validateLocalStrategyProperty,
-			message: 'Please fill in your last name'
-		}*/
+		default: ''
 	},
 	email: {
 		type: String,
@@ -136,7 +128,7 @@ var UserSchema = new Schema({
 		unique: true,
 		index: true,
 		sparse: true
-	},
+	}
 });
 
 UserSchema.virtual('displayName').get(function () {
@@ -147,28 +139,6 @@ UserSchema.plugin(mUtilities.timestamp, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
 	useVirtual: false
-});
-
-UserSchema.pre('save', function (next) {
-
-	//Create folder for user's pdfs
-	if(process.env.NODE_ENV === 'local-development'){
-		var newDestination = path.join(config.pdfUploadPath, this.username.replace(/ /g,'')),
-			stat = null;
-
-		try {
-	        stat = fs.statSync(newDestination);
-	    } catch (err) {
-	        fs.mkdirSync(newDestination);
-	    }
-	    if (stat && !stat.isDirectory()) {
-	    	// console.log('Directory cannot be created');
-	        next( new Error('Directory cannot be created because an inode of a different type exists at "' + newDestination + '"') );
-	    }else{
-	    	next();
-	    }
-	}
-    next();
 });
 
 /**
@@ -217,13 +187,12 @@ UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
 	}, function(err, user) {
 		if (!err) {
 			if (!user) {
-				callback(possibleUsername);
+				return callback(possibleUsername);
 			} else {
 				return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
 			}
-		} else {
-			callback(null);
 		}
+		return callback(null);
 	});
 };
 
