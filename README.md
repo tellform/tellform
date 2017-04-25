@@ -113,13 +113,7 @@ Then run these commands
 ```
 $ docker run -p 27017:27017 -d --name some-mongo mongo
 $ docker run -p 127.0.0.1:6379:6379 -d --name some-redis redis
-$ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db tellform/development -e MAILER_EMAIL_ID='mailer_username' \ 
-                                                                                                   -e POSTGRES_ENV_POSTGRES_PASSWORD='foo' \
-                                                                                                   -e POSTGRES_ENV_POSTGRES_USER='bar' \
-                                                                                                   -e POSTGRES_ENV_DB_NAME='mysite_staging' \
-                                                                                                   -e POSTGRES_PORT_5432_TCP_ADDR='docker-db-1.hidden.us-east-1.rds.amazonaws.com' \
-                                                                                                   -e SITE_URL='staging.mysite.com' \
-                                                                                                   -p 80:80 \
+$ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db tellform/development -e MAILER_EMAIL_ID='mailer_username'  -p 80:80
 ```
 
 
