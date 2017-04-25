@@ -56,10 +56,10 @@ All contributors are eligible to get a free [TellForm Sticker](https://www.stick
 ## Quickstart
 
 Before you start, make sure you have 
-1. Redis installed and running at 127.0.0.1:6379
-2. MongoDB installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
+1. [Redis](https://redis.io/) installed and running at 127.0.0.1:6379
+2. [MongoDB](https://www.mongodb.com/) installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
 
-Also make sure to install DNS Masq or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
+Also make sure to install [DNS Masq](http://www.thekelleys.org.uk/dnsmasq/doc.html) or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
 
 Install dependencies first.
 ```bash
