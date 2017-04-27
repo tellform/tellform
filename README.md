@@ -106,7 +106,7 @@ Your application should run on port 3000 or the port you specified in your .env 
 
 ## Deploying with Docker
 
-To deploy with docker, first install docker [https://docs.docker.com/engine/installation/](here). 
+To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/). 
 
 Then run these commands
 
