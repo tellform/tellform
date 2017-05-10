@@ -1,0 +1,22 @@
+version: "3"
+services:
+  tellform:
+    image: tellform/production:no_subdomains
+    ports:
+      - 3000:3000
+      - 8080:80
+    links:
+      - redis:redis-db
+      - mongo:db
+    environment:
+      - BASE_URL=localhost
+      - DB_1_PORT_27017_TCP_ADDR=mongo
+      - REDIS_DB_PORT_6379_TCP_ADDR=redis
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017
