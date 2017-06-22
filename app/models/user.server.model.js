@@ -156,13 +156,19 @@ UserSchema.virtual('password').get(function () {
  * Create instance method for hashing a password
  */
 UserSchema.methods.hashPassword = function(password) {
+  var encoding = 'base64';
+  var iterations = 10000;
+  var keylen = 128;
+  var size = 64;
+  var digest = 'SHA1';
+
 	//Generate salt if it doesn't exist yet
 	if(!this.salt){
-		this.salt = crypto.randomBytes(64).toString('base64');
+		this.salt = crypto.randomBytes(size).toString(encoding);
 	}
 
 	if (password) {
-		return crypto.pbkdf2Sync(password, new Buffer(this.salt, 'base64'), 10000, 128).toString('base64');
+		return crypto.pbkdf2Sync(password, new Buffer(this.salt, encoding), iterations, keylen, digest).toString(encoding);
 	} else {
 		return password;
 	}
