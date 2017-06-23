@@ -200,12 +200,14 @@ if(!fs.existsSync('./\.env')) {
 				delete answers['password'];
 
 				envfile.stringify(answers, function (err, str) {
-					fs.outputFile('./\.env', str, function (fileErr) {
-						if (fileErr) {
-							return console.error(chalk.red(fileErr));
-						}
-						console.log(chalk.green('Successfully created .env file'));
-					});
+          try {
+					  fs.outputFileSync('./\.env', str);
+          } catch (fileErr) {
+				    return console.error(chalk.red(fileErr));
+				  }
+
+			    console.log(chalk.green('Successfully created .env file'));
+
 					user = new User({
 						firstName: 'Admin',
 						lastName: 'Account',
