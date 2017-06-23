@@ -230,6 +230,7 @@ if(!fs.existsSync('./\.env')) {
 			});
 		} else {
 			console.log(chalk.green('Have fun using TellForm!'));
+      process.exit(1);
 		}
 	});
 } else {
