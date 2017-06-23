@@ -198,7 +198,7 @@ if(!fs.existsSync('./\.env')) {
 				var pass = answers['password'];
 				delete answers['email'];
 				delete answers['password'];
-				
+
 				envfile.stringify(answers, function (err, str) {
 					fs.outputFile('./\.env', str, function (fileErr) {
 						if (fileErr) {
@@ -220,9 +220,9 @@ if(!fs.existsSync('./\.env')) {
 						if (err) {
 							return console.error(chalk.red(userSaveErr));
 						}
-						
+
 						console.log(chalk.green('Successfully created user'));
-		
+
 						console.log(chalk.green('Have fun using TellForm!'));
 						process.exit(1);
 					});
