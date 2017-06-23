@@ -24,7 +24,12 @@
 		"_": true,
 		"saveAs": true, 
 		"ApplicationConfiguration": true,
-		"Session": true
+		"Session": true,
+        "$": true,
+        "$window": true,
+        "io": true,
+        "jsep": true,
+        "MobileDetect": true
 	},
 	"predef": [ // Extra globals.
 		"define",

@@ -2,12 +2,12 @@
 
 //FIXME: Should find an appropriate place for this
 //Setting up jsep
-jsep.addBinaryOp("contains", 10);
-jsep.addBinaryOp("!contains", 10);
-jsep.addBinaryOp("begins", 10);
-jsep.addBinaryOp("!begins", 10);
-jsep.addBinaryOp("ends", 10);
-jsep.addBinaryOp("!ends", 10);
+jsep.addBinaryOp('contains', 10);
+jsep.addBinaryOp('!contains', 10);
+jsep.addBinaryOp('begins', 10);
+jsep.addBinaryOp('!begins', 10);
+jsep.addBinaryOp('ends', 10);
+jsep.addBinaryOp('!ends', 10);
 
 angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
@@ -141,6 +141,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								case 'contains':
 									return (left.indexOf(right) > -1);
 								case '!contains':
+                  /* jshint -W018 */
 									return !(left.indexOf(right) > -1);
 								case 'begins':
 									return left.startsWith(right);
@@ -297,9 +298,9 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 				var getIpAndGeo = function(){
 					//Get Ip Address and GeoLocation Data
-					$.ajaxSetup( { "async": false } );
+					$.ajaxSetup( { 'async': false } );
 					var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
-					$.ajaxSetup( { "async": true } );
+					$.ajaxSetup( { 'async': true } );
 
 					return {
 						ipAddr: geoData.ip,
@@ -307,7 +308,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 							City: geoData.city,
 							Country: geoData.country_name
 						}
-					}
+					};
 				};
 
 				$rootScope.submitForm = $scope.submitForm = function() {

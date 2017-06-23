@@ -66,7 +66,7 @@ exports.forgot = function(req, res, next) {
 		},
 		function(token, user, done) {
 			res.render('templates/reset-password-email', {
-				name: user.displayName || "TellForm User",
+				name: user.displayName || 'TellForm User',
 				appName: config.app.title,
 				url: 'http://' + req.headers.host + '/auth/reset/' + token
 			}, function(err, emailHTML) {
@@ -146,7 +146,7 @@ exports.reset = function(req, res, next) {
 
 						user.save(function(err) {
 							if (err) {
-								done(err, null)
+								done(err, null);
 							}
 							done(null, user);
 						});
@@ -154,7 +154,7 @@ exports.reset = function(req, res, next) {
 						done('Passwords do not match', null);
 					}
 				} else {
-					done('Password reset token is invalid or has expired.', null)
+					done('Password reset token is invalid or has expired.', null);
 				}
 			});
 		},
@@ -187,7 +187,7 @@ exports.reset = function(req, res, next) {
 		}
 
 		return res.json({
-			message: "Successfully changed your password!"
+			message: 'Successfully changed your password!'
 		});
 	});
 };

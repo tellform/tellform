@@ -15,9 +15,9 @@ module.exports = {
 		}
 	},
 	aws: {
-		"accessKeyId": process.env.AWS_ACCESS_ID,
-		"secretAccessKey": process.env.AWS_SECRET_KEY,
-		"region": process.env.AWS_REGION
+		'accessKeyId': process.env.AWS_ACCESS_ID,
+		'secretAccessKey': process.env.AWS_SECRET_KEY,
+		'region': process.env.AWS_REGION
 	},
 
 	port: process.env.PORT || 3000,
@@ -27,8 +27,8 @@ module.exports = {
 
 	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
 
-    signupDisabled: (process.env.SIGNUP_DISABLED === "TRUE"),
-	disableClusterMode: (process.env.DISABLE_CLUSTER_MODE === "TRUE"),
+    signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
+	disableClusterMode: (process.env.DISABLE_CLUSTER_MODE === 'TRUE'),
 	baseUrl: '',
 	tempUserCollection: 'temporary_users',
 
@@ -37,7 +37,7 @@ module.exports = {
 		mailbox_id: process.env.MAILOSAUR_MAILBOX || ''
 	},
 
-	subdomainsDisabled: (process.env.SUBDOMAINS_DISABLED == "TRUE"),
+	subdomainsDisabled: (process.env.SUBDOMAINS_DISABLED === 'TRUE'),
 
 	//Sentry DSN Client Key
 	DSN: process.env.RAVEN_DSN || '',

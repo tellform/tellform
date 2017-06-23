@@ -28,16 +28,16 @@
 				deviceType = 'desktop';
 			}
 
-			$.ajaxSetup( { "async": false } );
+			$.ajaxSetup( { 'async': false } );
 			var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
-			$.ajaxSetup( { "async": true } );
+			$.ajaxSetup( { 'async': true } );
 
 			if(!geoData){
 				geoData = {
 					ip: '',
 					city: '',
 					country_name: ''
-				}
+				};
 			}
 
 			// Create a new message object

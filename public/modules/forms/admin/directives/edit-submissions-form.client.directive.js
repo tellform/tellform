@@ -113,7 +113,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 				var updateFields = $interval(initController, 2000);
 
-				$scope.$on("$destroy", function() {
+				$scope.$on('$destroy', function() {
 					if (updateFields) {
 						$interval.cancel($scope.updateFields);
 					}

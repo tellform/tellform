@@ -94,7 +94,7 @@ module.exports._getAssets = function(includeTests, isFormJS){
 	}
 
 	return output;
-}
+};
 
 /**
  * Get the modules JavaScript files
