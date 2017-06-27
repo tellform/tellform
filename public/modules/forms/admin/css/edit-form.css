@@ -32,5 +32,6 @@
 	visibility: visible !important;
 	border: none;
 	padding:1px;
+  background: #000;
 	background:rgba(0, 0, 0, 0.5) !important;
 }
