@@ -1,10 +1,10 @@
 {
 	"name": "TellForm",
 	"description": "Beautiful, opensource web forms",
-	"repository": "https://github.com/whitef0x0/tellform",
-	"logo": "https://node-js-sample.herokuapp.com/node.svg",
+	"repository": "https://github.com/tellform/tellform",
+	"logo": "https://tellform.com/public/img/tellform_logo_black.png",
 	"keywords": ["node", "express", "static", "mean"],
-	"addons": ["mongolab", "sparkpost"],
+	"addons": ["mongolab", "sendgrid", "heroku-redis"],
 	"env": {
 		"SUBDOMAINS_DISABLED": {
 			"description": "Disable support for running subdomains. (This should be true if you are not using your own custom domain.",
@@ -26,7 +26,7 @@
 		},
 		"MAILER_SERVICE_PROVIDER": {
 			"description": "Which mail service/API you will be using (i.e. SparkPost, Mandrill, etc)",
-			"value": "Sparkpost"
+			"value": "SendGrid"
 		}
 	}
 }
