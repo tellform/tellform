@@ -50,7 +50,7 @@ exports.createSubmission = function(req, res) {
 
 	var timeElapsed = 0;
 
-	if(typeof req.body.timeElapsed === "number"){
+	if(typeof req.body.timeElapsed === 'number'){
 		timeElapsed = req.body.timeElapsed;
 	}
 	var submission = new FormSubmission({
@@ -114,7 +114,7 @@ exports.create = function(req, res) {
 
 	if(!req.body.form){
 		return res.status(400).send({
-			message: "Invalid Input"
+			message: 'Invalid Input'
 		});
 	}
 	var form = new Form(req.body.form);

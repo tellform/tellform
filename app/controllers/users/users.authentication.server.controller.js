@@ -8,7 +8,7 @@ var errorHandler = require('../errors.server.controller'),
 	passport = require('passport'),
 	config = require('../../../config/config'),
 	User = mongoose.model('User'),
-	tokgen = require("../../libs/tokenGenerator");
+	tokgen = require('../../libs/tokenGenerator');
 
 
 var nev = require('email-verification')(mongoose);
@@ -122,7 +122,7 @@ exports.signup = function(req, res) {
 				}
 				return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 			});
-		} 
+		}
 		return res.status(400).send({message: 'Error: User already exists!'});
 	});
 };
@@ -238,7 +238,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 		// Check if user exists, is not signed in using this provider, and doesn't have that provider data already configured
 		if (user.provider !== providerUserProfile.provider && (!user.additionalProvidersData || !user.additionalProvidersData[providerUserProfile.provider])) {
 			// Add the provider data to the additional provider data field
-			if (!user.additionalProvidersData) { 
+			if (!user.additionalProvidersData) {
 				user.additionalProvidersData = {};
 			}
 			user.additionalProvidersData[providerUserProfile.provider] = providerUserProfile.providerData;
@@ -303,7 +303,7 @@ exports.generateAPIKey = function(req, res) {
 			if (err) {
 				return res.status(400).send(err);
 			}
-				
+
 			if (!user) {
 				return res.status(400).send({
 					message: 'User does not Exist'

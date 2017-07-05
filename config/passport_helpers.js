@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-var passport = require("passport");
+var passport = require('passport');
 
 module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next) {
 	if (req.isAuthenticated()) {
@@ -8,12 +8,12 @@ module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next
 	}
 	// Try authenticate with API KEY
 	if (req.headers.apikey || req.query.apikey || req.body.apikey) {
-		passport.authenticate("localapikey", function (err, user, info) {
+		passport.authenticate('localapikey', function (err, user, info) {
 			if (err)
 				return res.sendStatus(500);
 
 			if (!user)
-				return res.status(401).send(info.message || "");
+				return res.status(401).send(info.message || '');
 
 			req.login(user, function(loginErr) {
 				if (loginErr) return res.sendStatus(500);
@@ -31,7 +31,7 @@ module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next
 
 module.exports.hasRole = function hasRole(roleRequired) {
 	if (!roleRequired) {
-		throw new Error("Required role needs to be set");
+		throw new Error('Required role needs to be set');
 	}
 
 	return function(req, res, next) {
@@ -45,6 +45,6 @@ module.exports.hasRole = function hasRole(roleRequired) {
 };
 
 module.exports.hasAdminRole = function hasAdminRole() {
-	return module.exports.hasRole("admin");
+	return module.exports.hasRole('admin');
 };
 

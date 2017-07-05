@@ -14,6 +14,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 /*
                 **  Initialize scope with variables
                 */
+        var newField;
+
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
 					appendTo: '.dropzone',
@@ -282,7 +284,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                             break;
                         }
                     }
-                    var newField = {
+                    newField = {
                         title: fieldTitle,
                         fieldType: fieldType,
                         fieldValue: '',

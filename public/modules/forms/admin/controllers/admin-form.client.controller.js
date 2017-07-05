@@ -23,10 +23,10 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
 		CurrentForm.setForm($scope.myform);
 
-		$scope.formURL = "/#!/forms/" + $scope.myform._id;
+		$scope.formURL = '/#!/forms/' + $scope.myform._id;
 
 		if ($scope.myform.isLive) {
-			if ($window.subdomainsDisabled == true) {
+			if ($window.subdomainsDisabled === true) {
 				$scope.actualFormURL = window.location.protocol + '//' + window.location.host + '/view' + $scope.formURL;
 			} else {
 				if (window.location.host.split('.').length < 3) {

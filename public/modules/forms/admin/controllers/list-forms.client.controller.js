@@ -29,7 +29,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
 					$scope.deleteForm = function() {
 						$scope.$parent.removeForm(items.formIndex);
-					}
+					};
 				},
 				resolve: {
 					items: function() {

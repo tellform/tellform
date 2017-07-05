@@ -215,7 +215,7 @@ FormSchema.virtual('analytics.fields').get(function () {
 	var visitors = this.analytics.visitors;
 	var that = this;
 
-	if(this.form_fields.length == 0) {
+	if(this.form_fields.length === 0) {
 		return null;
 	}
 	
