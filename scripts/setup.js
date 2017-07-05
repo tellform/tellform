@@ -198,14 +198,16 @@ if(!fs.existsSync('./\.env')) {
 				var pass = answers['password'];
 				delete answers['email'];
 				delete answers['password'];
-				
+
 				envfile.stringify(answers, function (err, str) {
-					fs.outputFile('./\.env', str, function (fileErr) {
-						if (fileErr) {
-							return console.error(chalk.red(fileErr));
-						}
-						console.log(chalk.green('Successfully created .env file'));
-					});
+          try {
+					  fs.outputFileSync('./\.env', str);
+          } catch (fileErr) {
+				    return console.error(chalk.red(fileErr));
+				  }
+
+			    console.log(chalk.green('Successfully created .env file'));
+
 					user = new User({
 						firstName: 'Admin',
 						lastName: 'Account',
@@ -220,9 +222,9 @@ if(!fs.existsSync('./\.env')) {
 						if (err) {
 							return console.error(chalk.red(userSaveErr));
 						}
-						
+
 						console.log(chalk.green('Successfully created user'));
-		
+
 						console.log(chalk.green('Have fun using TellForm!'));
 						process.exit(1);
 					});
@@ -230,6 +232,7 @@ if(!fs.existsSync('./\.env')) {
 			});
 		} else {
 			console.log(chalk.green('Have fun using TellForm!'));
+      process.exit(1);
 		}
 	});
 } else {
