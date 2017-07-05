@@ -38,7 +38,7 @@
 
 .public-form input:focus, .public-form textarea:focus {
     border: 2px dashed #ddd!important;
-    outline: none;
+    outline: 0;
 }
 
 /*.public-form input.no-border.ng-invalid, .public-form textarea.no-border {
@@ -98,9 +98,6 @@ section.content > section > section.container {
     border: 1px solid #ccc;
     border-radius: 3px;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
-}
-.modal-footer input[type='text']:focus {
-    outline: 0;
 }
 .modal-body > .modal-body-alert {
     color: #796620;

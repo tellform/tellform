@@ -6,11 +6,12 @@ section.auth {
 	left: 0;
 	width: 100%;
 	color: white;
-	background-color: #50B5C1; /* Old browsers */
-	background: -moz-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(137deg, #50B5C1 0%, #6450A0 85%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#50B5C1', endColorstr='#6450A0', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+	background-color: #50B5C1;
+  background: -moz-linear-gradient(137deg,  #50B5C1 0%, #6450A0 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#50B5C1), color-stop(100%,#6450A0));
+  background: -webkit-linear-gradient(137deg,  #50B5C1 0%,#6450A0 100%);
+  background: -o-linear-gradient(137deg,  #50B5C1 0%,#6450A0 100%);
+  background: -ms-linear-gradient(137deg,  #50B5C1 0%,#6450A0 100%);
 }
 	section.auth > h3{
 		font-size: 2em;
