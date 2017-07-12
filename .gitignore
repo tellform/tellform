@@ -1,3 +1,4 @@
+dist
 .vagrant
 npm-debug.*
 docs/Oscar_Credentials.md
