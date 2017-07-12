@@ -29,7 +29,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	SUBMIT: 'Registrar',
 	UPLOAD_FILE: 'Cargar el archivo',
 	Y: 'S',
-	N: 'N'
+	N: 'N',
+  TYPE_OR_SELECT_OPTION: 'Escriba o seleccione una opción',
+  ABORT_UPLOAD: 'Cancelar la subida en curso',
+  CLEAR_SELECTED_FILES: 'Borrar los archivos seleccionados'
   });
 
 }]);

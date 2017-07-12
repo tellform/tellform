@@ -10,7 +10,7 @@
                 <div class="col-sm-12">
                     <input class="form-control"
 					    type="text"
-                        ng-model="myform.title" 
+                        ng-model="myform.title"
                         value="{{myform.title}}"
                         style="width: 100%;"
                         ng-minlength="4"
@@ -37,18 +37,18 @@
 
                 </div>
             </div>
-            
+
             <div class="row field">
-                <div class="col-sm-12 field-title">Language</div>
+                <div class="col-sm-12 field-title">{{ 'LANGUAGE' | translate }}</div>
                 <div class="col-sm-12 field-input">
                     <select ng-model="myform.language">
-                        <option ng-repeat="language in languages" 
+                        <option ng-repeat="language in languages"
                                 ng-selected="language == myform.language"
                                 value="{{language}}">
                             {{language}}
                         </option>
-                    </select>    
-                    <span class="required-error" ng-show="field.required && !field.fieldValue">* required</span>
+                    </select>
+                    <span class="required-error" ng-show="field.required && !field.fieldValue">* {{ 'REQUIRED_FIELD' | translate }}</span>
                 </div>
             </div>
         </div>

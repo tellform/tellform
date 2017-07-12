@@ -21,6 +21,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CREATE_A_NEW_FORM: 'Create a new form',
 		CREATE_FORM: 'Create form',
 		CREATED_ON: 'Created on',
+		MY_FORMS: 'My forms',
+		NAME: 'Name',
+		LANGUAGE: 'Language',
+		FORM_PAUSED: 'Form paused',
 
 		//Edit Field Modal
 		EDIT_FIELD: 'Edit this Field',
@@ -46,6 +50,11 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		VIEW: 'View',
 		LIVE: 'Live',
 		PREVIEW: 'Preview',
+		COPY: 'Copy',
+		COPY_AND_PASTE: 'Copy and Paste this to add your TellForm to your website',
+		CHANGE_WIDTH_AND_HEIGHT: 'Change the width and height values to suit you best',
+		POWERED_BY: 'Powered by',
+		TELLFORM_URL: 'Your TellForm is permanently at this URL',
 
 		//Edit Form View
 		DISABLED: 'Disabled',
@@ -76,6 +85,21 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		ADD_OPTION: 'Add Option',
 		NUM_OF_STEPS: 'Number of Steps',
 		CLICK_FIELDS_FOOTER: 'Click on fields to add them here',
+		SHAPE: 'Shape',
+		IF_THIS_FIELD: 'If this field',
+		IS_EQUAL_TO: 'is equal to',
+		IS_NOT_EQUAL_TO: 'is not equal to',
+		IS_GREATER_THAN: 'is greater than',
+		IS_GREATER_OR_EQUAL_THAN: 'is greater or equal than',
+		IS_SMALLER_THAN: 'is_smaller_than',
+		IS_SMALLER_OR_EQUAL_THAN: 'is smaller or equal than',
+		CONTAINS: 'contains',
+		DOES_NOT_CONTAINS: 'does not contain',
+		ENDS_WITH: 'ends with',
+		DOES_NOT_END_WITH: 'does not end with',
+		STARTS_WITH: 'starts with',
+		DOES_NOT_START_WITH: 'does not start with',
+		THEN_JUMP_TO: 'then jump to',
 
 		//Edit Submissions View
 		TOTAL_VIEWS: 'total unique visits',

@@ -27,7 +27,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	DELETE: 'Delete',
 	CANCEL: 'Cancel',
 	SUBMIT: 'Submit',
-	UPLOAD_FILE: 'Upload your File'
+	UPLOAD_FILE: 'Upload your File',
+  TYPE_OR_SELECT_OPTION: 'Type or select an option',
+  ABORT_UPLOAD: 'Abort ongoing upload',
+  CLEAR_SELECTED_FILES: 'Clear selected files'
   });
-	
+
 }]);

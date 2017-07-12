@@ -30,7 +30,7 @@
 	<div class="row">
 		<div class="col-xs-4 col-xs-offset-4">
 			<h3 class="text-center forms-list-title">
-				My Forms
+				{{ 'MY_FORMS' | translate }}
 			</h3>
 		</div>
 	</div>
@@ -40,48 +40,48 @@
 				<h4 class="fa fa-plus fa-6"></h4>
 			</div>
 			<div class="col-xs-12 details-row">
-				
+
 				<small class="list-group-item-text">
 					{{ 'CREATE_A_NEW_FORM' | translate }}
 				</small>
 
-			</div>	
+			</div>
 		</div>
 
 		<form name="forms.createForm" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form" ng-if="showCreateModal">
 			<div class="title-row row">
-				    <div class="col-xs-5 field-title text-left"> Name </div>
+				    <div class="col-xs-5 field-title text-left"> {{ 'NAME' | translate }} </div>
 				    <div class="col-xs-12 field-input">
 						<input type="text" name="title" required ng-model="formTitle" ng-pattern="languageRegExp" ng-minlength="4" style="color:black;"/>
 				    </div>
 			</div>
-			<div class="details-row row">			
-			    <div class="col-xs-5 field-title text-left"> Language </div>
+			<div class="details-row row">
+			    <div class="col-xs-5 field-title text-left"> {{ 'LANGUAGE' | translate }} </div>
 			    <div class="col-xs-12 field-input">
 				    <div class="button custom-select">
 						<select style="color:black;" name="language" required ng-model="formLanguage" ng-init="formLanguage = user.language">
 							<option ng-repeat="language in languages" value="{{language}}">
 								{{language}}
 							</option>
-				        </select>      
+				        </select>
 				    </div>
 			    </div>
 			</div>
-			<div class="details-row submit row">			
+			<div class="details-row submit row">
 			    <div class="col-xs-12 field-title text-center">
 			    	<button class="btn btn-primary" ng-disabled="forms.createForm.$invalid" ng-click="createNewForm()">
 						{{ 'CREATE_FORM' | translate }}
 			    	</button>
 			    </div>
-			</div>		
+			</div>
 		</form>
 
-		<div data-ng-repeat="form in myforms" 
+		<div data-ng-repeat="form in myforms"
             class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container"
 			 ng-class="{'paused': !form.isLive}">
 
 			<div class="row">
-				<span class="pull-right"> 
+				<span class="pull-right">
 					<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="openDeleteModal($index)"></i>
 					<i style="cursor:pointer;" class="fa fa-files-o" ng-click="duplicateForm($index)"></i>
 				</span>
@@ -94,12 +94,12 @@
 				</a>
 				<div class="col-xs-12 responses-row">
 					<small class="list-group-item-text">
-						<span> {{ form.submissions.length }} responses </span>
+						<span> {{ form.submissions.length }} {{ 'RESPONSES' | translate }} </span>
 					</small>
 					<br>
 					<br>
 					<small ng-if="!form.isLive" class="list-group-item-text">
-						<span> Form Paused </span>
+						<span> {{ 'FORM_PAUSED' | translate }} </span>
 					</small>
 				</div>
 			</div>
