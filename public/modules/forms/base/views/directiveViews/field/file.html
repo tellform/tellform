@@ -18,12 +18,12 @@
                 </div>
             </div>
             <div class="input-group-btn">
-                <button type="button"  ng-if="field.file" ng-click="removeFile(field);" title="Clear selected files" class="btn btn-danger fileinput-remove fileinput-remove-button">
+                <button type="button"  ng-if="field.file" ng-click="removeFile(field);" title="{{ 'CLEAR_SELECTED_FILES' | translate }}" class="btn btn-danger fileinput-remove fileinput-remove-button">
                     <i class="glyphicon glyphicon-trash"  ></i>
                     {{ 'DELETE' | translate }}
                 </button>
 
-                <button type="button" ng-if="field.fileLoading" title="Abort ongoing upload" class="btn btn-default" ng-click="cancelFileUpload(field)">
+                <button type="button" ng-if="field.fileLoading" title="{{ 'ABORT_UPLOAD' | translate }}" class="btn btn-default" ng-click="cancelFileUpload(field)">
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     {{ 'CANCEL' | translate }}
                 </button>

@@ -24,7 +24,7 @@
 			    on-tab-and-shift-key="prevField()"
 			    on-tab-key="nextField()"
 				ng-change="$root.nextField()">
-			<ui-select-match placeholder="Type or select an option">
+			<ui-select-match placeholder="{{ 'TYPE_OR_SELECT_OPTION' | translate }}">
 			</ui-select-match>
 			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"
 							   ng-class="{'active': option.option_value === field.fieldValue }">

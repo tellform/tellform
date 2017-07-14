@@ -55,7 +55,7 @@
 					</div>
 
 					<div class="row options buttons" ng-if="showButtons">
-						<div class="col-md-3 col-xs-12">Buttons:</div>
+						<div class="col-md-3 col-xs-12">{{ 'BUTTONS' | translate }}:</div>
 						<div class="col-md-9 col-xs-12">
 							<div ng-repeat="button in myform.endPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
 
@@ -65,7 +65,7 @@
 										   name="{{button.text}}_buttonText_startPage"
 										   ng-model="button.text"
 										   value="{{button.text}}"
-										   placeholder="Button Text">
+										   placeholder="{{ 'BUTTON_TEXT' | translate }}">
 								</div>
 
 
@@ -208,7 +208,7 @@
 					</div>
 
 					<div class="row options buttons" ng-if="showButtons">
-						<div class="col-md-3 col-xs-12">Buttons:</div>
+						<div class="col-md-3 col-xs-12">{{ 'BUTTONS' | translate }}:</div>
 						<div class="col-md-9 col-xs-12">
 							<div ng-repeat="button in myform.startPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
 
@@ -218,7 +218,7 @@
 										   name="{{button.text}}_buttonText_startPage"
 										   ng-model="button.text"
 										   value="{{button.text}}"
-										   placeholder="Button Text">
+										   placeholder="{{ 'BUTTON_TEXT' | translate }}">
 								</div>
 
 
@@ -350,7 +350,7 @@
 								   required>
 						</div>
 						<br>
-						<div class="col-md-5 col-sm-9">Shape:</div>
+						<div class="col-md-5 col-sm-9">{{ 'SHAPE' | translate }}:</div>
 						<div class="col-md-7 col-sm-3">
 							<select style="width:100%" ng-model="field.ratingOptions.shape"
 									value="{{field.ratingOptions.steps}}"
@@ -409,7 +409,7 @@
 					<div class="row question" ng-if="!!showLogicJump">
 						<div class="col-md-4 col-sm-12">
 
-							<b> If this field </b>
+							<b> {{ 'IF_THIS_FIELD' | translate }} </b>
 						</div>
 						<div class="col-md-4 col-sm-12">
 							<select style="width:100%" ng-model="field.logicJump.expressionString"
@@ -417,53 +417,53 @@
 									name="logicjump_expressionString{{field._id}}">
 								<option value="field == static">
 
-									is equal to
+									{{ 'IS_EQUAL_TO' | translate }}
 								</option>
 								<option value="field != static">
 
-									is not equal to
+									{{ 'IS_NOT_EQUAL_TO' | translate }}
 								</option>
 
 								<option value="field > static" ng-if-start="field.fieldType === 'number' || field.fieldType === 'rating' || field.fieldType === 'number'">
 
-									is greater than
+									{{ 'IS_GREATER_THAN' | translate }}
 								</option>
 								<option value="field >= static">
 
-									is greater or equal than
+									{{ 'IS_GREATER_OR_EQUAL_THAN' | translate }}
 								</option>
 								<option value="field < static">
 
-									is smaller than
+									{{ 'IS_SMALLER_THAN' | translate }}
 								</option>
 								<option value="field <= static" ng-if-end>
 
-									is smaller or equal than
+									{{ 'IS_SMALLER_OR_EQUAL_THAN' | translate }}
 								</option>
 
 								<option value="field contains static" ng-if-start="field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'">
 
-									contains
+									{{ 'CONTAINS' | translate }}
 								</option>
 								<option value="field !contains static">
 
-									does not contain
+									{{ 'DOES_NOT_CONTAINS' | translate }}
 								</option>
 								<option value="field ends static">
 
-									ends with
+									{{ 'ENDS_WITH' | translate }}
 								</option>
 								<option value="field !ends static">
 
-									does not end with
+									{{ 'DOES_NOT_END_WITH' | translate }}
 								</option>
 								<option value="field starts static">
 
-									starts with
+									{{ 'STARTS_WITH' | translate }}
 								</option>
 								<option value="field !starts static" ng-if-end>
 
-									does not start with
+									{{ 'DOES_NOT_START_WITH' | translate }}
 								</option>
 							</select>
 						</div>
@@ -472,7 +472,7 @@
 						</div>
 						<div class="col-md-2">
 
-							<b>then jump to </b>
+							<b>{{ 'THEN_JUMP_TO' | translate }}</b>
 						</div>
 						<div class="col-md-10">
 							<select style="width:100%" ng-model="field.logicJump.jumpTo"
@@ -526,7 +526,7 @@
                             <field-icon-directive type-name="{{type.name}}">
                             </field-icon-directive>
                         </span>
-                        
+
                         <span class="hidden-xs" style="padding-left:0.3em;">{{type.value}}</span>
                     </div>
                 </div>
