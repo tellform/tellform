@@ -9,15 +9,19 @@ module.exports = {
 	socketUrl: process.env.SOCKET_URL || 'ws.tellform.com',
 	socketPort: process.env.SOCKET_PORT || null,
 	log: {
-		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
-		format: 'combined',
-		// Stream defaults to process.stdout
-		// Uncomment to enable logging to a log on the file system
-		options: {
-			stream: 'access.log'
-		}
-	},
-	sessionCookie: {
+        // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
+        format: 'combined',
+        // Stream defaults to process.stdout
+        // Uncomment to enable logging to a log on the file system
+        fileLogger: {
+            directoryPath: process.cwd(),
+            fileName: 'app.log',
+            maxsize: 10485760,
+            maxFiles: 2,
+            json: false
+        }
+    },
+    sessionCookie: {
 		secure: false,
 		maxAge:  24 * 60 * 60 * 1000, // 24 hours
 		domain: process.env.BASE_URL || '.tellform.com'

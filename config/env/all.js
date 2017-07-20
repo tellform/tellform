@@ -81,10 +81,14 @@ module.exports = {
 		format: 'combined',
 		// Stream defaults to process.stdout
 		// Uncomment to enable logging to a log on the file system
-		options: {
-			stream: 'access.log'
-		}
-	},
+	    fileLogger: {
+            directoryPath: process.cwd(),
+            fileName: 'app.log',
+            maxsize: 10485760,
+            maxFiles: 2,
+            json: false
+        }
+    },
 	assets: {
 		css: [
 			'public/modules/**/css/*.css',

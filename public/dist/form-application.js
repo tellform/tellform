@@ -93,7 +93,7 @@ angular.module('TellForm-Form.form_templates', []).run(['$templateCache', functi
     "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><small>{{ 'NEWLINE' | translate }}</small><p><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><small style=font-size:0.6em>Press SHIFT+ENTER to add a newline</small><textarea class=\"textarea focusOn\" type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-class=\"{ 'no-border': !!field.fieldValue }\" value={{field.fieldValue}} ng-required=field.required ng-disabled=field.disabled ng-focus=\"setActiveField(field._id, index, true)\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() style=\"border: none; border-left: lightgrey dashed 2px\">\n" +
     "		</textarea></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-sm-3 col-xs-6\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/textfield.html",
-    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title row-fluid\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=col-xs-12><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>({{ 'OPTIONAL' | translate }})</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" name={{field.fieldType}}{{index}} type={{input_type}} ng-pattern=validateRegex placeholder={{placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-required=field.required ng-disabled=field.disabled aria-describedby=inputError2Status></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">{{ 'ERROR_EMAIL_INVALID' | translate }}</span> <span ng-if=field.validateRegex>{{ 'ERROR_NOT_A_NUMBER' | translate }}</span> <span ng-if=\"field.fieldType == 'link'\">{{ 'ERROR_URL_INVALID' | translate }}</span></div></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-xs-6 col-sm-3\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
+    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title row-fluid\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=col-xs-12><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>({{ 'OPTIONAL' | translate }})</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" name={{field.fieldType}}{{index}} type={{input_type}} ng-pattern=validateRegex placeholder={{placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-required=field.required ng-disabled=field.disabled aria-describedby=\"inputError2Status\"></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">{{ 'ERROR_EMAIL_INVALID' | translate }}</span> <span ng-if=field.validateRegex>{{ 'ERROR_NOT_A_NUMBER' | translate }}</span> <span ng-if=\"field.fieldType == 'link'\">{{ 'ERROR_URL_INVALID' | translate }}</span></div></div></div><div><div class=\"btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-xs-6 col-sm-3\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/yes_no.html",
     "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" on-tab-and-shift-key=prevField() key-to-truthy key-char-truthy=y key-char-falsey=n field=field><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-model=field.fieldValue ng-focus=\"setActiveField(field._id, index, true)\" ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'Y' | translate }}</div><span>{{ 'YES' | translate }}</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=$root.nextField() ng-disabled=\"field.disabled\"><div class=letter>{{ 'N' | translate }}</div><span>{{ 'NO' | translate }}</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html",
@@ -277,8 +277,8 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	NO: 'No',
 	NEWLINE: 'presione SHIFT+INTRO para crear una nueva línea',
 	CONTINUE: 'Continuar',
-	LEGAL_ACCEPT: 'I accept',
-	LEGAL_NO_ACCEPT: 'I don’t accept',
+	LEGAL_ACCEPT: 'Yo acepto',
+	LEGAL_NO_ACCEPT: 'Yo no acepto',
 	DELETE: 'Eliminar',
 	CANCEL: 'Cancelar',
 	SUBMIT: 'Registrar',
@@ -341,16 +341,16 @@ angular.module('view-form').config(['$stateProvider',
 				deviceType = 'desktop';
 			}
 
-			$.ajaxSetup( { "async": false } );
+			$.ajaxSetup( { 'async': false } );
 			var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
-			$.ajaxSetup( { "async": true } );
+			$.ajaxSetup( { 'async': true } );
 
 			if(!geoData){
 				geoData = {
 					ip: '',
 					city: '',
 					country_name: ''
-				}
+				};
 			}
 
 			// Create a new message object
@@ -760,39 +760,12 @@ angular.module('view-form').directive('onFinishRender', ["$rootScope", "$timeout
 
 //FIXME: Should find an appropriate place for this
 //Setting up jsep
-jsep.addBinaryOp("contains", 10);
-jsep.addBinaryOp("!contains", 10);
-jsep.addBinaryOp("begins", 10);
-jsep.addBinaryOp("!begins", 10);
-jsep.addBinaryOp("ends", 10);
-jsep.addBinaryOp("!ends", 10);
-
-/**
- * Calculate a 32 bit FNV-1a hash
- * Found here: https://gist.github.com/vaiorabbit/5657561
- * Ref.: http://isthe.com/chongo/tech/comp/fnv/
- *
- * @param {string} str the input value
- * @param {boolean} [asString=false] set to true to return the hash value as
- *     8-digit hex string instead of an integer
- * @param {integer} [seed] optionally pass the hash of the previous chunk
- * @returns {integer | string}
- */
-function hashFnv32a(str, asString, seed) {
-	/*jshint bitwise:false */
-	var i, l,
-		hval = (seed === undefined) ? 0x811c9dc5 : seed;
-
-	for (i = 0, l = str.length; i < l; i++) {
-		hval ^= str.charCodeAt(i);
-		hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
-	}
-	if( asString ){
-		// Convert to 8 digit hex string
-		return ("0000000" + (hval >>> 0).toString(16)).substr(-8);
-	}
-	return hval >>> 0;
-}
+jsep.addBinaryOp('contains', 10);
+jsep.addBinaryOp('!contains', 10);
+jsep.addBinaryOp('begins', 10);
+jsep.addBinaryOp('!begins', 10);
+jsep.addBinaryOp('ends', 10);
+jsep.addBinaryOp('!ends', 10);
 
 angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
@@ -894,7 +867,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 						if(parse_tree.left.name === 'field'){
 							left = field.fieldValue;
-							right = logicJump.valueB
+							right = logicJump.valueB;
 						} else {
 							left = logicJump.valueB;
 							right = field.fieldValue;
@@ -926,6 +899,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								case 'contains':
 									return (left.indexOf(right) > -1);
 								case '!contains':
+                  /* jshint -W018 */
 									return !(left.indexOf(right) > -1);
 								case 'begins':
 									return left.startsWith(right);
@@ -950,9 +924,9 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 					if($scope.selected._id === 'submit_field') {
 						return $scope.myform.form_fields.length - 1;
-					} else {
-						return $scope.selected.index;
 					}
+					return $scope.selected.index;
+
 				};
 
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index, animateScroll) {
@@ -970,7 +944,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					if(!field_index){
 						for(var i=0; i<$scope.myform.visible_form_fields.length; i++){
 							var currField = $scope.myform.visible_form_fields[i];
-							if(field_id == currField._id){
+							if(field_id === currField._id){
 								$scope.selected.index = i;
 								break;
 							}
@@ -1077,14 +1051,14 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					return {
 						type: deviceType,
 						name: window.navigator.platform
-					}
+					};
 				};
 
 				var getIpAndGeo = function(){
 					//Get Ip Address and GeoLocation Data
-					$.ajaxSetup( { "async": false } );
+					$.ajaxSetup( { 'async': false } );
 					var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
-					$.ajaxSetup( { "async": true } );
+					$.ajaxSetup( { 'async': true } );
 
 					return {
 						ipAddr: geoData.ip,
@@ -1092,7 +1066,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 							City: geoData.city,
 							Country: geoData.country_name
 						}
-					}
+					};
 				};
 
 				$rootScope.submitForm = $scope.submitForm = function() {
@@ -1122,7 +1096,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
-							.success(function (data, status, headers) {
+							.success(function (data, status) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);
@@ -1136,7 +1110,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 };
 
                 //Reload our form
-				$scope.reloadForm();
+		$scope.reloadForm();
             }]
         };
     }
@@ -1193,37 +1167,10 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 	'use strict';
 
 	// Create the Socket.io wrapper service
-	angular
-		.module('view-form')
-		.factory('Socket', Socket);
-
-	Socket.$inject = ['$timeout', '$window'];
-
 	function Socket($timeout, $window) {
-		var service = {
-			connect: connect,
-			emit: emit,
-			on: on,
-			removeListener: removeListener,
-			socket: null
-		};
-
-		var url = '';
-		console.log("$window.socketPort: "+$window.socketPort);
-		console.log("$window.socketUrl: "+$window.socketUrl);
-		if($window.socketUrl && $window.socketPort){
-			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl && !$window.socketPort){
-			url = window.location.protocol + '//' + $window.socketUrl;
-		} else if ($window.socketPort){
-			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
-		} else {
-			url = window.location.protocol + '//' + window.location.hostname;
-		}
-		connect(url);
-
-		return service;
-
+		
+		var service; 
+		
 		// Connect to Socket.io server
 		function connect(url) {
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
@@ -1253,14 +1200,44 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 				service.socket.removeListener(eventName);
 			}
 		}
+		
+		service = {
+			connect: connect,
+			emit: emit,
+			on: on,
+			removeListener: removeListener,
+			socket: null
+		};
+
+		var url = '';
+		if($window.socketUrl && $window.socketPort){
+			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
+		} else if ($window.socketUrl && !$window.socketPort){
+			url = window.location.protocol + '//' + $window.socketUrl;
+		} else if ($window.socketPort){
+			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
+		} else {
+			url = window.location.protocol + '//' + window.location.hostname;
+		}
+		connect(url);
+
+		return service;
 	}
+	
+	angular
+		.module('view-form')
+		.factory('Socket', Socket);
+
+	Socket.$inject = ['$timeout', '$window'];
+
+	
 }());
 
 'use strict';
 
 angular.module('view-form').service('TimeCounter', [
 	function(){
-		var _startTime, _endTime = null, that=this;
+		var _startTime, _endTime = null;
 
 		this.timeSpent = 0;
 
@@ -1283,9 +1260,8 @@ angular.module('view-form').service('TimeCounter', [
 				this._startTime = this._endTime = null;
 
 				return this.timeSpent;
-			}else{
-				return new Error('Clock has not been started');
 			}
+			return new Error('Clock has not been started');
 		};
 
 		this.clockStarted = function(){
