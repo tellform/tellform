@@ -12,6 +12,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "angular-resource": "~1.4.7",
+		"angular-cache-buster": "~0.4.3",
     "angular-mocks": "~1.4.7",
     "angular-bootstrap": "~0.14.3",
     "angular-ui-utils": "~3.0.0",
