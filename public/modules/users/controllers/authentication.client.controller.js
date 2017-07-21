@@ -24,7 +24,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 					$scope.user = $rootScope.user;
 
 					$scope.error = error;
-					console.log('loginError: '+error);
+					console.error('loginError: '+error);
 				}
 			);
 	    };
