@@ -30,20 +30,17 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    };
 
 	    $scope.signup = function() {
-			console.log($scope.credentials);
 	        User.signup($scope.credentials).then(
 		        function(response) {
-		        	console.log('signup-success');
 		        	$state.go('signup-success');
 		        },
 		        function(error) {
-		        	console.log('Error: ');
-		        	console.log(error);
+		        	console.error(error);
 					if(error) {
 						$scope.error = error;
-						console.log(error);
-					}else {
-						console.log('No response received');
+						console.error(error);
+					} else {
+						console.error('No response received');
 					}
 		        }
 		    );
