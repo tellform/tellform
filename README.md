@@ -84,9 +84,9 @@ PRERENDER_TOKEN=yourPrerender.ioToken
 COVERALLS_REPO_TOKEN=yourCoveralls.ioToken
 MAILER_EMAIL_ID=SMTP_Injection
 MAILER_FROM=noreply@yourdomain.com
-MAILER_PASSWORD=your_sparkpost_apikey
-MAILER_SERVICE_PROVIDER=SparkPost
-BASE_URL=yourdomain.com
+MAILER_PASSWORD=your_sendgrid_apikey
+MAILER_SERVICE_PROVIDER=SendGrid
+BASE_URL=localhost
 DSN_KEY=yourPrivateRavenKey
 ```
 
