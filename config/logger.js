@@ -76,7 +76,7 @@ logger.getLogOptions = function getLogOptions() {
   var _config = _.clone(config, true);
   var configFileLogger = _config.log.fileLogger;
   
-  if (!_config.log.fileLogger.hasOwnProperty('directoryPath') || !_config.log.fileLogger.hasOwnProperty('fileName')) {
+  if (!_.has(_config, 'log.fileLogger.directoryPath') || !_.has(_config, 'log.fileLogger.fileName')) {
     console.log('unable to find logging file configuration');
     return false;
   }

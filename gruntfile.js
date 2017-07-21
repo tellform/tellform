@@ -332,8 +332,6 @@ module.exports = function(grunt) {
 	grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function() {
 		require('./config/init')();
 		var config = require('./config/config');
-		console.log(config);
-
 		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
 		grunt.config.set('formApplicationJavaScriptFiles', config.assets.form_js);
 		grunt.config.set('applicationCSSFiles', config.assets.css);
