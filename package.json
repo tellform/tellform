@@ -13,8 +13,8 @@
     "url": "https://github.com/whitef0x0/tellform.git"
   },
   "engines": {
-    "node": ">=5.0.0",
-    "npm": ">=2.11.2"
+    "node": "5.0.0",
+    "npm": "2.11.2"
   },
   "scripts": {
     "addcontrib": "all-contributors add",
