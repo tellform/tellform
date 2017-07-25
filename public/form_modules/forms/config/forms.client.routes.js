@@ -10,12 +10,26 @@ angular.module('view-form').config(['$stateProvider',
 			templateUrl: '/static/form_modules/forms/base/views/submit-form.client.view.html',
 			resolve: {
 				Forms: 'Forms',
-				myForm: function (Forms, $stateParams) {
-					return Forms.get({formId: $stateParams.formId}).$promise;
+				myForm: function (Forms, $q, $state, $stateParams) {
+                    var deferred = $q.defer();
+					console.log(Forms.get({formId: $stateParams.formId}).$promise);
+                    return Forms.get({formId: $stateParams.formId}).$promise.then(function(data) {
+                        console.log(data);
+                        return data;
+                    },  function(reason) {
+                        console.log(reason);
+                        $state.go('unauthorizedFormAccess');
+                        return deferred.reject({redirectTo: 'unauthorizedFormAccess'});
+                    });
+                    //return Forms.get({formId: $stateParams.formId}).$promise;
 				}
 			},
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
-		});
-	}
+		}).
+        state('unauthorizedFormAccess', {
+            url: '/forms/unauthorized',
+            templateUrl: '/static/form_modules/forms/base/views/form-unauthorized.client.view.html',
+	    });
+    }
 ]);
