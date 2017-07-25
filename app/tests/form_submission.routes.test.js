@@ -144,7 +144,7 @@ describe('Form Submission Routes Unit tests', function() {
 					// Handle signin error
 					should.not.exist(signinErr);
 
-					var submission_ids = _.pluck([submission], '_id');
+					var submission_ids = _.map([submission], '_id');
 
 					//Delete form submissions
 					submissionSession.delete('/forms/' + FormObj._id + '/submissions')
@@ -182,7 +182,7 @@ describe('Form Submission Routes Unit tests', function() {
 		SubmissionObj.save(function (err, submission) {
 			should.not.exist(err);
 
-			var submission_ids = _.pluck([submission], '_id');
+			var submission_ids = _.map([submission], '_id');
 
 			// Attempt to delete form submissions
 			submissionSession.delete('/forms/' + FormObj._id + '/submissions')

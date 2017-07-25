@@ -3,7 +3,7 @@ dist: trusty
 sudo: false
 node_js:
   - "5.0.0"
-  - "6.0.0"
+  - "6.11.1"
 env:
   - NODE_ENV=travis TRAVIS=travis CXX=g++-4.8
 services:
