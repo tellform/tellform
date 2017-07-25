@@ -18,13 +18,13 @@
         if (null == a || B(a)) return !1;
         if (ed(a) || w(a) || Qc && a instanceof Qc) return !0;
         var b = "length" in Object(a) && a.length;
-        return x(b) && (b >= 0 && (b - 1 in a || a instanceof Array) || "function" == typeof a.item);
+        return x(b) && (0 <= b && (b - 1 in a || a instanceof Array) || "function" == typeof a.item);
     }
     function f(a, b, c) {
         var d, g;
         if (a) if (z(a)) for (d in a) "prototype" == d || "length" == d || "name" == d || a.hasOwnProperty && !a.hasOwnProperty(d) || b.call(c, a[d], d, a); else if (ed(a) || e(a)) {
             var h = "object" != typeof a;
-            for (d = 0, g = a.length; g > d; d++) (h || d in a) && b.call(c, a[d], d, a);
+            for (d = 0, g = a.length; d < g; d++) (h || d in a) && b.call(c, a[d], d, a);
         } else if (a.forEach && a.forEach !== f) a.forEach(b, c, a); else if (v(a)) for (d in a) b.call(c, a[d], d, a); else if ("function" == typeof a.hasOwnProperty) for (d in a) a.hasOwnProperty(d) && b.call(c, a[d], d, a); else for (d in a) Vc.call(a, d) && b.call(c, a[d], d, a);
         return a;
     }
@@ -41,9 +41,9 @@
         return ++cd;
     }
     function j(a, b, c) {
-        for (var d = a.$$hashKey, e = 0, f = b.length; f > e; ++e) {
+        for (var d = a.$$hashKey, e = 0, f = b.length; e < f; ++e) {
             var g = b[e];
-            if (u(g) || z(g)) for (var h = Object.keys(g), i = 0, k = h.length; k > i; i++) {
+            if (u(g) || z(g)) for (var h = Object.keys(g), i = 0, k = h.length; i < k; i++) {
                 var l = h[i], m = g[l];
                 c && u(m) ? y(m) ? a[l] = new Date(m.valueOf()) : A(m) ? a[l] = new RegExp(m) : m.nodeName ? a[l] = m.cloneNode(!0) : F(m) ? a[l] = m.clone() : (u(a[l]) || (a[l] = ed(m) ? [] : {}), 
                 j(a[l], [ m ], !0)) : a[l] = m;
@@ -129,14 +129,14 @@
     }
     function I(a, b) {
         var c = a.indexOf(b);
-        return c >= 0 && a.splice(c, 1), c;
+        return 0 <= c && a.splice(c, 1), c;
     }
     function J(a, b) {
         function c(a, b) {
             var c, e = b.$$hashKey;
             if (ed(a)) {
                 c = 0;
-                for (var f = a.length; f > c; c++) b.push(d(a[c]));
+                for (var f = a.length; c < f; c++) b.push(d(a[c]));
             } else if (v(a)) for (c in a) b[c] = d(a[c]); else if (a && "function" == typeof a.hasOwnProperty) for (c in a) a.hasOwnProperty(c) && (b[c] = d(a[c])); else for (c in a) Vc.call(a, c) && (b[c] = d(a[c]));
             return e ? b.$$hashKey = e : delete b.$$hashKey, b;
         }
@@ -165,7 +165,7 @@
     function K(a, b) {
         if (ed(a)) {
             b = b || [];
-            for (var c = 0, d = a.length; d > c; c++) b[c] = a[c];
+            for (var c = 0, d = a.length; c < d; c++) b[c] = a[c];
         } else if (u(a)) for (c in b = b || {}, a) "$" === c.charAt(0) && "$" === c.charAt(1) || (b[c] = a[c]);
         return b || a;
     }
@@ -176,8 +176,8 @@
         var c, d = typeof a;
         if (d == typeof b && "object" == d) {
             if (!ed(a)) {
-                if (y(a)) return y(b) ? L(a.getTime(), b.getTime()) : !1;
-                if (A(a)) return A(b) ? a.toString() == b.toString() : !1;
+                if (y(a)) return !!y(b) && L(a.getTime(), b.getTime());
+                if (A(a)) return !!A(b) && a.toString() == b.toString();
                 if (C(a) || C(b) || B(a) || B(b) || ed(b) || y(b) || A(b)) return !1;
                 d = ja();
                 for (c in a) if ("$" !== c.charAt(0) && !z(a[c])) {
@@ -189,7 +189,7 @@
             }
             if (!ed(b)) return !1;
             if ((d = a.length) == b.length) {
-                for (c = 0; d > c; c++) if (!L(a[c], b[c])) return !1;
+                for (c = 0; c < d; c++) if (!L(a[c], b[c])) return !1;
                 return !0;
             }
         }
@@ -252,7 +252,7 @@
         return f((a || "").split("&"), function(a) {
             var c, d, e;
             a && (d = a = a.replace(/\+/g, "%20"), c = a.indexOf("="), -1 !== c && (d = a.substring(0, c), 
-            e = a.substring(c + 1)), d = U(d), t(d) && (e = t(e) ? U(e) : !0, Vc.call(b, d) ? ed(b[d]) ? b[d].push(e) : b[d] = [ b[d], e ] : b[d] = e));
+            e = a.substring(c + 1)), d = U(d), t(d) && (e = !t(e) || U(e), Vc.call(b, d) ? ed(b[d]) ? b[d].push(e) : b[d] = [ b[d], e ] : b[d] = e));
         }), b;
     }
     function W(a) {
@@ -271,7 +271,7 @@
     }
     function Z(a, b) {
         var c, d, e = ld.length;
-        for (d = 0; e > d; ++d) if (c = ld[d] + b, w(c = a.getAttribute(c))) return c;
+        for (d = 0; d < e; ++d) if (c = ld[d] + b, w(c = a.getAttribute(c))) return c;
         return null;
     }
     function $(a, b) {
@@ -353,7 +353,7 @@
     function ha(a, b, c) {
         if (!b) return a;
         b = b.split(".");
-        for (var d, e = a, f = b.length, g = 0; f > g; g++) d = b[g], a && (a = (e = a)[d]);
+        for (var d, e = a, f = b.length, g = 0; g < f; g++) d = b[g], a && (a = (e = a)[d]);
         return !c && z(a) ? N(e, a) : a;
     }
     function ia(a) {
@@ -580,7 +580,7 @@
         return a.cloneNode(!0);
     }
     function sa(a, b) {
-        if (b || ua(a), a.querySelectorAll) for (var c = a.querySelectorAll("*"), d = 0, e = c.length; e > d; d++) ua(c[d]);
+        if (b || ua(a), a.querySelectorAll) for (var c = a.querySelectorAll("*"), d = 0, e = c.length; d < e; d++) ua(c[d]);
     }
     function ta(a, b, c, d) {
         if (t(d)) throw vd("offargs");
@@ -620,7 +620,7 @@
         }
     }
     function xa(a, b) {
-        return a.getAttribute ? -1 < (" " + (a.getAttribute("class") || "") + " ").replace(/[\n\t]/g, " ").indexOf(" " + b + " ") : !1;
+        return !!a.getAttribute && -1 < (" " + (a.getAttribute("class") || "") + " ").replace(/[\n\t]/g, " ").indexOf(" " + b + " ");
     }
     function ya(a, b) {
         b && a.setAttribute && f(b.split(" "), function(b) {
@@ -639,7 +639,7 @@
         if (b) if (b.nodeType) a[a.length++] = b; else {
             var c = b.length;
             if ("number" == typeof c && b.window !== b) {
-                if (c) for (var d = 0; c > d; d++) a[a.length++] = b[d];
+                if (c) for (var d = 0; d < c; d++) a[a.length++] = b[d];
             } else a[a.length++] = b;
         }
     }
@@ -648,7 +648,7 @@
     }
     function Ca(a, b, c) {
         for (9 == a.nodeType && (a = a.documentElement), b = ed(b) ? b : [ b ]; a; ) {
-            for (var d = 0, e = b.length; e > d; d++) if (t(c = Qc.data(a, b[d]))) return c;
+            for (var d = 0, e = b.length; d < e; d++) if (t(c = Qc.data(a, b[d]))) return c;
             a = a.parentNode || 11 === a.nodeType && a.host;
         }
     }
@@ -684,8 +684,8 @@
                     return !0 === c.immediatePropagationStopped;
                 };
                 var h = e.specialHandlerWrapper || Ia;
-                f > 1 && (e = K(e));
-                for (var i = 0; f > i; i++) c.isImmediatePropagationStopped() || h(a, c, e[i]);
+                1 < f && (e = K(e));
+                for (var i = 0; i < f; i++) c.isImmediatePropagationStopped() || h(a, c, e[i]);
             }
         };
         return c.elem = a, c;
@@ -756,7 +756,7 @@
             return f(a, function(a) {
                 function d(a) {
                     var b, c;
-                    for (b = 0, c = a.length; c > b; b++) {
+                    for (b = 0, c = a.length; b < c; b++) {
                         var d = a[b], e = p.get(d[0]);
                         e[d[1]].apply(e, d[2]);
                     }
@@ -790,7 +790,7 @@
             function e(a, c, e, f) {
                 "string" == typeof e && (f = e, e = null);
                 var g, h, i, j = [], k = Oa.$$annotate(a, b, f);
-                for (h = 0, g = k.length; g > h; h++) {
+                for (h = 0, g = k.length; h < g; h++) {
                     if (i = k[h], "string" != typeof i) throw Ld("itkn", i);
                     j.push(e && e.hasOwnProperty(i) ? e[i] : d(i, f));
                 }
@@ -810,7 +810,7 @@
             };
         }
         b = !0 === b;
-        var l = {}, m = [], n = new Ma([], !0), o = {
+        var l = {}, m = [], n = new Ma([], (!0)), o = {
             $provide: {
                 provider: d(e),
                 factory: d(i),
@@ -853,7 +853,7 @@
             function e(a) {
                 var b = null;
                 return Array.prototype.some.call(a, function(a) {
-                    return "a" === H(a) ? (b = a, !0) : void 0;
+                    if ("a" === H(a)) return b = a, !0;
                 }), b;
             }
             function f(a) {
@@ -961,7 +961,7 @@
                 delete p[c], e(a);
             }, b || 0), p[c] = !0, c;
         }, j.defer.cancel = function(a) {
-            return p[a] ? (delete p[a], n(a), e(o), !0) : !1;
+            return !!p[a] && (delete p[a], n(a), e(o), !0);
         };
     }
     function Ua() {
@@ -1094,7 +1094,7 @@
             }
             function J(a, c, d, e, f) {
                 a instanceof Qc || (a = Qc(a));
-                for (var g = /\S+/, h = 0, i = a.length; i > h; h++) {
+                for (var g = /\S+/, h = 0, i = a.length; h < i; h++) {
                     var j = a[h];
                     j.nodeType === od && j.nodeValue.match(g) && pa(j, a[h] = b.createElement("span"));
                 }
@@ -1115,7 +1115,7 @@
                 function h(a, d, e, f) {
                     var g, h, i, j, k, l, o;
                     if (m) for (o = Array(d.length), j = 0; j < n.length; j += 3) g = n[j], o[g] = d[g]; else o = d;
-                    for (j = 0, k = n.length; k > j; ) h = o[n[j++]], d = n[j++], g = n[j++], d ? (d.scope ? (i = a.$new(), 
+                    for (j = 0, k = n.length; j < k; ) h = o[n[j++]], d = n[j++], g = n[j++], d ? (d.scope ? (i = a.$new(), 
                     J.$$addScopeInfo(Qc(h), i)) : i = a, l = d.transcludeOnThisElement ? M(a, d.transclude, f) : !d.templateOnThisElement && f ? f : !f && b ? M(a, b) : null, 
                     d(g, i, h, e, l)) : g && g(a, h.childNodes, c, f);
                 }
@@ -1139,7 +1139,7 @@
                 switch (a.nodeType) {
                   case 1:
                     f = H(a), S(b, Ya(f), "E", d, e);
-                    for (var h, i, k, m, n = a.attributes, o = 0, p = n && n.length; p > o; o++) {
+                    for (var h, i, k, m, n = a.attributes, o = 0, p = n && n.length; o < p; o++) {
                         var q = !1, r = !1;
                         h = n[o], i = h.name, k = gd(h.value), h = Ya(i), (m = ma.test(h)) && (i = i.replace(Ud, "").substr(8).replace(/_(.)/g, function(a, b) {
                             return b.toUpperCase();
@@ -1172,7 +1172,7 @@
                         if (!a) throw Td("uterdir", b, c);
                         1 == a.nodeType && (a.hasAttribute(b) && e++, a.hasAttribute(c) && e--), d.push(a), 
                         a = a.nextSibling;
-                    } while (e > 0);
+                    } while (0 < e);
                 } else d.push(a);
                 return Qc(d);
             }
@@ -1198,7 +1198,7 @@
                         var g = f[1] || f[3], f = "?" === f[2];
                         if ("^^" === g ? c = c.parent() : e = (e = d && d[b]) && e.instance, e || (d = "$" + b + "Controller", 
                         e = g ? c.inheritedData(d) : c.data(d)), !e && !f) throw Td("ctreq", b, a);
-                    } else if (ed(b)) for (e = [], g = 0, f = b.length; f > g; g++) e[g] = n(a, b[g], c, d);
+                    } else if (ed(b)) for (e = [], g = 0, f = b.length; g < f; g++) e[g] = n(a, b[g], c, d);
                     return e || null;
                 }
                 function o(a, b, c, d, e, f) {
@@ -1232,13 +1232,13 @@
                         x !== v.instance && (v.instance = x, s.data("$" + t.name + "Controller", x), l && l(), 
                         l = ga(p, g, v.instance, w, t));
                     }
-                    for (M = 0, Q = j.length; Q > M; M++) l = j[M], fa(l, l.isolateScope ? m : b, s, g, l.require && n(l.directiveName, l.require, s, q), r);
+                    for (M = 0, Q = j.length; M < Q; M++) l = j[M], fa(l, l.isolateScope ? m : b, s, g, l.require && n(l.directiveName, l.require, s, q), r);
                     var y = b;
                     for (D && (D.template || null === D.templateUrl) && (y = m), a && a(y, f.childNodes, c, h), 
-                    M = k.length - 1; M >= 0; M--) l = k[M], fa(l, l.isolateScope ? m : b, s, g, l.require && n(l.directiveName, l.require, s, q), r);
+                    M = k.length - 1; 0 <= M; M--) l = k[M], fa(l, l.isolateScope ? m : b, s, g, l.require && n(l.directiveName, l.require, s, q), r);
                 }
                 l = l || {};
-                for (var q, s, t, v, y = -Number.MAX_VALUE, A = l.newScopeDirective, B = l.controllerDirectives, D = l.newIsolateScopeDirective, E = l.templateDirective, F = l.nonTlbTranscludeDirective, G = !1, H = !1, I = l.hasElementTranscludeDirective, K = e.$$element = Qc(d), L = f, M = 0, Q = a.length; Q > M; M++) {
+                for (var q, s, t, v, y = -Number.MAX_VALUE, A = l.newScopeDirective, B = l.controllerDirectives, D = l.newIsolateScopeDirective, E = l.templateDirective, F = l.nonTlbTranscludeDirective, G = !1, H = !1, I = l.hasElementTranscludeDirective, K = e.$$element = Qc(d), L = f, M = 0, Q = a.length; M < Q; M++) {
                     q = a[M];
                     var S = q.$$start, U = q.$$end;
                     if (S && (K = O(d, S, U)), t = c, y > q.priority) break;
@@ -1278,7 +1278,7 @@
                 p.transclude = L, l.hasElementTranscludeDirective = I, p;
             }
             function R(a, b, c) {
-                for (var d = 0, e = a.length; e > d; d++) a[d] = n(a[d], {
+                for (var d = 0, e = a.length; d < e; d++) a[d] = n(a[d], {
                     $$isolateScope: b,
                     $$newScope: c
                 });
@@ -1288,7 +1288,7 @@
                 if (h = null, i.hasOwnProperty(c)) {
                     var l;
                     c = a.get(c + "Directive");
-                    for (var m = 0, o = c.length; o > m; m++) try {
+                    for (var m = 0, o = c.length; m < o; m++) try {
                         if (l = c[m], (s(f) || f > l.priority) && -1 != l.restrict.indexOf(d)) {
                             if (j && (l = n(l, {
                                 $$start: j,
@@ -1331,7 +1331,7 @@
                 return h;
             }
             function U(b) {
-                if (i.hasOwnProperty(b)) for (var c = a.get(b + "Directive"), d = 0, e = c.length; e > d; d++) if (b = c[d], 
+                if (i.hasOwnProperty(b)) for (var c = a.get(b + "Directive"), d = 0, e = c.length; d < e; d++) if (b = c[d], 
                 b.multiElement) return !0;
                 return !1;
             }
@@ -1449,15 +1449,15 @@
             }
             function ba(a, c, d) {
                 var e, f, g = c[0], h = c.length, i = g.parentNode;
-                if (a) for (e = 0, f = a.length; f > e; e++) if (a[e] == g) {
+                if (a) for (e = 0, f = a.length; e < f; e++) if (a[e] == g) {
                     a[e++] = d, f = e + h - 1;
-                    for (var j = a.length; j > e; e++, f++) j > f ? a[e] = a[f] : delete a[e];
+                    for (var j = a.length; e < j; e++, f++) f < j ? a[e] = a[f] : delete a[e];
                     a.length -= h - 1, a.context === g && (a.context = d);
                     break;
                 }
                 for (i && i.replaceChild(d, g), a = b.createDocumentFragment(), a.appendChild(g), 
                 Qc.hasData(g) && (Qc.data(d, Qc.data(g)), Rc ? (dd = !0, Rc.cleanData([ g ])) : delete Qc.cache[g[Qc.expando]]), 
-                g = 1, h = c.length; h > g; g++) i = c[g], Qc(i).remove(), a.appendChild(i), delete c[g];
+                g = 1, h = c.length; g < h; g++) i = c[g], Qc(i).remove(), a.appendChild(i), delete c[g];
                 c[0] = d, c.length = 1;
             }
             function da(a, b) {
@@ -1506,13 +1506,13 @@
                         };
                     }
                 }), h.length && function() {
-                    for (var a = 0, b = h.length; b > a; ++a) h[a]();
+                    for (var a = 0, b = h.length; a < b; ++a) h[a]();
                 };
             }
             var ha = function(a, b) {
                 if (b) {
                     var c, d, e, f = Object.keys(b);
-                    for (c = 0, d = f.length; d > c; c++) e = f[c], this[e] = b[e];
+                    for (c = 0, d = f.length; c < d; c++) e = f[c], this[e] = b[e];
                 } else this.$attr = {};
                 this.$$element = a;
             };
@@ -1533,7 +1533,7 @@
                     if (e ? (this.$$element.prop(a, b), d = e) : h && (this[h] = b, i = h), this[a] = b, 
                     d ? this.$attr[a] = d : (d = this.$attr[a]) || (this.$attr[a] = d = ca(a, "-")), 
                     e = H(this.$$element), "a" === e && "href" === a || "img" === e && "src" === a) this[a] = b = F(b, "src" === a); else if ("img" === e && "srcset" === a && t(b)) {
-                        for (var e = "", h = gd(b), j = /(\s+\d+x\s*,|\s+\d+w\s*,|\s+,|,\s+)/, j = /\s/.test(h) ? j : /(,)/, h = h.split(j), j = Math.floor(h.length / 2), k = 0; j > k; k++) var l = 2 * k, e = e + F(gd(h[l]), !0), e = e + (" " + gd(h[l + 1]));
+                        for (var e = "", h = gd(b), j = /(\s+\d+x\s*,|\s+\d+w\s*,|\s+,|,\s+)/, j = /\s/.test(h) ? j : /(,)/, h = h.split(j), j = Math.floor(h.length / 2), k = 0; k < j; k++) var l = 2 * k, e = e + F(gd(h[l]), !0), e = e + (" " + gd(h[l + 1]));
                         h = gd(h[2 * k]).split(/\s/), e += F(gd(h[0]), !0), 2 === h.length && (e += " " + gd(h[1])), 
                         this[a] = b = e;
                     }
@@ -1724,7 +1724,7 @@
                 function g(a) {
                     var b = k({}, a);
                     return b.data = ib(a.data, a.headers, a.status, i.transformResponse), a = a.status, 
-                    a >= 200 && 300 > a ? b : m.reject(b);
+                    200 <= a && 300 > a ? b : m.reject(b);
                 }
                 function h(a, b) {
                     var c, d = {};
@@ -1777,11 +1777,11 @@
                     function f() {
                         g(c, a, d, e);
                     }
-                    n && (a >= 200 && 300 > a ? n.put(y, [ a, c, gb(d), e ]) : n.remove(y)), b ? l.$applyAsync(f) : (f(), 
+                    n && (200 <= a && 300 > a ? n.put(y, [ a, c, gb(d), e ]) : n.remove(y)), b ? l.$applyAsync(f) : (f(), 
                     l.$$phase || l.$apply());
                 }
                 function g(a, b, c, e) {
-                    b = b >= -1 ? b : 0, (b >= 200 && 300 > b ? v.resolve : v.reject)({
+                    b = -1 <= b ? b : 0, (200 <= b && 300 > b ? v.resolve : v.reject)({
                         data: a,
                         status: b,
                         headers: hb(c),
@@ -1888,7 +1888,7 @@
                 }
                 v.send(s(i) ? null : i);
             }
-            if (l > 0) var x = c(p, l); else l && z(l.then) && l.then(p);
+            if (0 < l) var x = c(p, l); else l && z(l.then) && l.then(p);
         };
     }
     function nb() {
@@ -1930,7 +1930,7 @@
                     }
                 }
                 m = !!m;
-                for (var o, p, q = 0, r = [], u = [], v = f.length, w = [], x = []; v > q; ) {
+                for (var o, p, q = 0, r = [], u = [], v = f.length, w = [], x = []; q < v; ) {
                     if (-1 == (o = f.indexOf(a, q)) || -1 == (p = f.indexOf(b, o + i))) {
                         q !== v && w.push(g(f.substring(q)));
                         break;
@@ -1940,7 +1940,7 @@
                 }
                 if (l && 1 < w.length && de.throwNoconcat(f), !h || r.length) {
                     var y = function(a) {
-                        for (var b = 0, c = r.length; c > b; b++) {
+                        for (var b = 0, c = r.length; b < c; b++) {
                             if (m && s(a[b])) return;
                             w[x[b]] = a[b];
                         }
@@ -1949,7 +1949,7 @@
                     return k(function(a) {
                         var b = 0, c = r.length, e = Array(c);
                         try {
-                            for (;c > b; b++) e[b] = u[b](a);
+                            for (;b < c; b++) e[b] = u[b](a);
                             return y(e);
                         } catch (g) {
                             d(de.interr(f, g));
@@ -1982,14 +1982,14 @@
                 return h = t(h) ? h : 0, q.then(null, null, j ? function() {
                     e.apply(null, k);
                 } : e), q.$$intervalId = l(function() {
-                    p.notify(n++), h > 0 && n >= h && (p.resolve(n), m(q.$$intervalId), delete f[q.$$intervalId]), 
+                    p.notify(n++), 0 < h && n >= h && (p.resolve(n), m(q.$$intervalId), delete f[q.$$intervalId]), 
                     o || a.$apply();
                 }, g), f[q.$$intervalId] = p, q;
             }
             var f = {};
             return e.cancel = function(a) {
-                return a && a.$$intervalId in f ? (f[a.$$intervalId].reject("canceled"), b.clearInterval(a.$$intervalId), 
-                delete f[a.$$intervalId], !0) : !1;
+                return !!(a && a.$$intervalId in f) && (f[a.$$intervalId].reject("canceled"), b.clearInterval(a.$$intervalId), 
+                delete f[a.$$intervalId], !0);
             }, e;
         } ];
     }
@@ -2010,7 +2010,7 @@
         b.$$search = V(d.search), b.$$hash = decodeURIComponent(d.hash), b.$$path && "/" != b.$$path.charAt(0) && (b.$$path = "/" + b.$$path);
     }
     function sb(a, b) {
-        return 0 === b.indexOf(a) ? b.substr(a.length) : void 0;
+        if (0 === b.indexOf(a)) return b.substr(a.length);
     }
     function tb(a) {
         var b = a.indexOf("#");
@@ -2046,7 +2046,7 @@
             var b = W(this.$$search), d = this.$$hash ? "#" + X(this.$$hash) : "";
             this.$$url = pb(this.$$path) + (b ? "?" + b : "") + d, this.$$absUrl = a + (this.$$url ? c + this.$$url : "");
         }, this.$$parseLinkUrl = function(b, c) {
-            return tb(a) == tb(b) ? (this.$$parse(b), !0) : !1;
+            return tb(a) == tb(b) && (this.$$parse(b), !0);
         };
     }
     function xb(a, b, c) {
@@ -2192,7 +2192,7 @@
         }
     }
     function Gb(a, b) {
-        if (a && (a === 0..constructor || a === (!1).constructor || a === "".constructor || a === {}.constructor || a === [].constructor || a === Function.constructor)) throw ie("isecaf", b);
+        if (a && (a === (0).constructor || a === (!1).constructor || a === "".constructor || a === {}.constructor || a === [].constructor || a === Function.constructor)) throw ie("isecaf", b);
     }
     function Hb(a, b) {
         return "undefined" != typeof a ? a : b;
@@ -2242,7 +2242,7 @@
             break;
 
           case pe.CallExpression:
-            c = a.filter ? !b(a.callee.name).$stateful : !1, d = [], f(a.arguments, function(a) {
+            c = !!a.filter && !b(a.callee.name).$stateful, d = [], f(a.arguments, function(a) {
                 Jb(a, b), c = c && a.constant, a.constant || d.push.apply(d, a.toWatch);
             }), a.constant = c, a.toWatch = a.filter && !b(a.callee.name).$stateful ? d : [ a ];
             break;
@@ -2279,14 +2279,14 @@
         return a.type === pe.Identifier || a.type === pe.MemberExpression;
     }
     function Mb(a) {
-        return 1 === a.body.length && Lb(a.body[0].expression) ? {
+        if (1 === a.body.length && Lb(a.body[0].expression)) return {
             type: pe.AssignmentExpression,
             left: a.body[0].expression,
             right: {
                 type: pe.NGValueParameter
             },
             operator: "="
-        } : void 0;
+        };
     }
     function Nb(a) {
         return 0 === a.body.length || 1 === a.body.length && (a.body[0].expression.type === pe.Literal || a.body[0].expression.type === pe.ArrayExpression || a.body[0].expression.type === pe.ObjectExpression);
@@ -2344,7 +2344,7 @@
                 return b.inputs = a.inputs, b;
             }
             function h(a, b) {
-                return null == a || null == b ? a === b : "object" == typeof a && (a = Rb(a), "object" == typeof a) ? !1 : a === b || a !== a && b !== b;
+                return null == a || null == b ? a === b : ("object" != typeof a || (a = Rb(a), "object" != typeof a)) && (a === b || a !== a && b !== b);
             }
             function i(a, b, d, e, f) {
                 var g, i = e.inputs;
@@ -2355,9 +2355,9 @@
                         return h(b, j) || (g = e(a, c, c, [ b ]), j = b && Rb(b)), g;
                     }, b, d, f);
                 }
-                for (var k = [], l = [], m = 0, n = i.length; n > m; m++) k[m] = h, l[m] = null;
+                for (var k = [], l = [], m = 0, n = i.length; m < n; m++) k[m] = h, l[m] = null;
                 return a.$watch(function(a) {
-                    for (var b = !1, d = 0, f = i.length; f > d; d++) {
+                    for (var b = !1, d = 0, f = i.length; d < f; d++) {
                         var j = i[d](a);
                         (b || (b = !h(j, k[d]))) && (l[d] = j, k[d] = j && Rb(j));
                     }
@@ -2458,7 +2458,7 @@
             !d.processScheduled && d.pending && (d.processScheduled = !0, a(function() {
                 var a, e, f;
                 f = d.pending, d.processScheduled = !1, d.pending = c;
-                for (var g = 0, h = f.length; h > g; ++g) {
+                for (var g = 0, h = f.length; g < h; ++g) {
                     e = f[g][0], a = f[g][d.status];
                     try {
                         z(a) ? e.resolve(a(d.value)) : 1 === d.status ? e.resolve(d.value) : e.reject(d.value);
@@ -2513,7 +2513,7 @@
             notify: function(c) {
                 var d = this.promise.$$state.pending;
                 0 >= this.promise.$$state.status && d && d.length && a(function() {
-                    for (var a, e, f = 0, g = d.length; g > f; f++) {
+                    for (var a, e, f = 0, g = d.length; f < g; f++) {
                         e = d[f][0], a = d[f][3];
                         try {
                             e.notify(z(a) ? a(c) : c);
@@ -2687,7 +2687,7 @@
                         var b, c, g, h;
                         if (!s(d)) {
                             if (u(d)) if (e(d)) for (f !== m && (f = m, p = f.length = 0, k++), a = d.length, 
-                            p !== a && (k++, f.length = p = a), b = 0; a > b; b++) h = f[b], g = d[b], c = h !== h && g !== g, 
+                            p !== a && (k++, f.length = p = a), b = 0; b < a; b++) h = f[b], g = d[b], c = h !== h && g !== g, 
                             c || h === g || (k++, f[b] = g); else {
                                 f !== n && (f = n = {}, p = 0, k++), a = 0;
                                 for (b in d) Vc.call(d, b) && (a++, g = d[b], h = f[b], b in f ? (c = h !== h && g !== g, 
@@ -2823,7 +2823,7 @@
                         defaultPrevented: !1
                     }, k = M([ j ], arguments, 1);
                     do {
-                        for (c = g.$$listeners[a] || f, j.currentScope = g, d = 0, e = c.length; e > d; d++) if (c[d]) try {
+                        for (c = g.$$listeners[a] || f, j.currentScope = g, d = 0, e = c.length; d < e; d++) if (c[d]) try {
                             c[d].apply(null, k);
                         } catch (l) {
                             i(l);
@@ -2844,7 +2844,7 @@
                     };
                     if (!this.$$listenerCount[a]) return e;
                     for (var f, g, h = M([ e ], arguments, 1); c = d; ) {
-                        for (e.currentScope = c, d = c.$$listeners[a] || [], f = 0, g = d.length; g > f; f++) if (d[f]) try {
+                        for (e.currentScope = c, d = c.$$listeners[a] || [], f = 0, g = d.length; f < g; f++) if (d[f]) try {
                             d[f].apply(null, h);
                         } catch (j) {
                             i(j);
@@ -2929,11 +2929,11 @@
                     if (g && e instanceof g) return e.$$unwrapTrustedValue();
                     if (c === te.RESOURCE_URL) {
                         var i, j, g = fc(e.toString()), k = !1;
-                        for (i = 0, j = a.length; j > i; i++) if (d(a[i], g)) {
+                        for (i = 0, j = a.length; i < j; i++) if (d(a[i], g)) {
                             k = !0;
                             break;
                         }
-                        if (k) for (i = 0, j = b.length; j > i; i++) if (d(b[i], g)) {
+                        if (k) for (i = 0, j = b.length; i < j; i++) if (d(b[i], g)) {
                             k = !1;
                             break;
                         }
@@ -3080,8 +3080,8 @@
             }
             var g = {};
             return f.cancel = function(a) {
-                return a && a.$$timeoutId in g ? (g[a.$$timeoutId].reject("canceled"), delete g[a.$$timeoutId], 
-                b.defer.cancel(a.$$timeoutId)) : !1;
+                return !!(a && a.$$timeoutId in g) && (g[a.$$timeoutId].reject("canceled"), delete g[a.$$timeoutId], 
+                b.defer.cancel(a.$$timeoutId));
             }, f;
         } ];
     }
@@ -3116,7 +3116,7 @@
         return function() {
             var a, f, g, h, i;
             if (a = c.cookie || "", a !== e) for (e = a, a = e.split("; "), d = {}, g = 0; g < a.length; g++) f = a[g], 
-            h = f.indexOf("="), h > 0 && (i = b(f.substring(0, h)), s(d[i]) && (d[i] = b(f.substring(h + 1))));
+            h = f.indexOf("="), 0 < h && (i = b(f.substring(0, h)), s(d[i]) && (d[i] = b(f.substring(h + 1))));
             return d;
         };
     }
@@ -3170,8 +3170,8 @@
     function mc(a, b, c) {
         var d = u(a) && "$" in a;
         return !0 === b ? b = L : z(b) || (b = function(a, b) {
-            return s(a) ? !1 : null === a || null === b ? a === b : u(b) || u(a) && !r(a) ? !1 : (a = Uc("" + a), 
-            b = Uc("" + b), -1 !== a.indexOf(b));
+            return !s(a) && (null === a || null === b ? a === b : !(u(b) || u(a) && !r(a)) && (a = Uc("" + a), 
+            b = Uc("" + b), -1 !== a.indexOf(b)));
         }), function(e) {
             return d && !u(e) ? nc(e, a.$, b, !1) : nc(e, a, b, c);
         };
@@ -3187,7 +3187,7 @@
             var h;
             if (d) {
                 for (h in a) if ("$" !== h.charAt(0) && nc(a[h], b, c, !0)) return !0;
-                return e ? !1 : nc(a, b, c, !1);
+                return !e && nc(a, b, c, !1);
             }
             if ("object" === g) {
                 for (h in b) if (e = b[h], !z(e) && !s(e) && (f = "$" === h, !nc(f ? a : a[h], e, c, f, f))) return !1;
@@ -3223,7 +3223,7 @@
         c += +a.slice(d + 1), a = a.substring(0, d)) : 0 > c && (c = a.length), d = 0; a.charAt(d) == ye; d++) ;
         if (d == (f = a.length)) b = [ 0 ], c = 1; else {
             for (f--; a.charAt(f) == ye; ) f--;
-            for (c -= d, b = [], e = 0; f >= d; d++, e++) b[e] = +a.charAt(d);
+            for (c -= d, b = [], e = 0; d <= f; d++, e++) b[e] = +a.charAt(d);
         }
         return c > we && (b = b.splice(0, we - 1), g = c - 1, c = 1), {
             d: b,
@@ -3233,11 +3233,11 @@
     }
     function sc(a, b, c, d) {
         var e = a.d, f = e.length - a.i;
-        if (b = s(b) ? Math.min(Math.max(c, f), d) : +b, c = b + a.i, d = e[c], c > 0) e.splice(c); else {
+        if (b = s(b) ? Math.min(Math.max(c, f), d) : +b, c = b + a.i, d = e[c], 0 < c) e.splice(c); else {
             a.i = 1, e.length = c = b + 1;
-            for (var g = 0; c > g; g++) e[g] = 0;
+            for (var g = 0; g < c; g++) e[g] = 0;
         }
-        for (d >= 5 && e[c - 1]++; b > f; f++) e.push(0);
+        for (5 <= d && e[c - 1]++; f < b; f++) e.push(0);
         (b = e.reduceRight(function(a, b, c, d) {
             return b += a, d[c] = b % 10, Math.floor(b / 10);
         }, 0)) && (e.unshift(b), a.i++);
@@ -3250,7 +3250,7 @@
             g = i.reduce(function(a, b) {
                 return a && !b;
             }, !0); 0 > h; ) i.unshift(0), h++;
-            for (h > 0 ? f = i.splice(h, i.length) : (f = i, i = [ 0 ]), h = [], i.length >= b.lgSize && h.unshift(i.splice(-b.lgSize, i.length).join("")); i.length > b.gSize; ) h.unshift(i.splice(-b.gSize, i.length).join(""));
+            for (0 < h ? f = i.splice(h, i.length) : (f = i, i = [ 0 ]), h = [], i.length >= b.lgSize && h.unshift(i.splice(-b.lgSize, i.length).join("")); i.length > b.gSize; ) h.unshift(i.splice(-b.gSize, i.length).join(""));
             i.length && h.unshift(i.join("")), i = h.join(c), f.length && (i += d + f.join("")), 
             e && (i += "e+" + e);
         }
@@ -3263,7 +3263,7 @@
     }
     function vc(a, b, c, d) {
         return c = c || 0, function(e) {
-            return e = e["get" + a](), (c > 0 || e > -c) && (e += c), 0 === e && -12 == c && (e = 12), 
+            return e = e["get" + a](), (0 < c || e > -c) && (e += c), 0 === e && -12 == c && (e = 12), 
             uc(e, b, d);
         };
     }
@@ -3320,7 +3320,7 @@
         return function(a, b, c) {
             return b = 1 / 0 === Math.abs(Number(b)) ? Number(b) : m(b), isNaN(b) ? a : (x(a) && (a = a.toString()), 
             ed(a) || w(a) ? (c = !c || isNaN(c) ? 0 : m(c), c = 0 > c ? Math.max(0, a.length + c) : c, 
-            b >= 0 ? a.slice(c, c + b) : 0 === c ? a.slice(b, a.length) : a.slice(Math.max(0, c + b), c)) : a);
+            0 <= b ? a.slice(c, c + b) : 0 === c ? a.slice(b, a.length) : a.slice(Math.max(0, c + b), c)) : a);
         };
     }
     function Dc(a) {
@@ -3370,7 +3370,7 @@
                     })
                 };
             }), a.sort(function(a, b) {
-                for (var c = 0, d = 0, e = g.length; e > d; ++d) {
+                for (var c = 0, d = 0, e = g.length; d < e; ++d) {
                     var c = a.predicateValues[d], f = b.predicateValues[d], h = 0;
                     if (c.type === f.type ? c.value !== f.value && (h = c.value < f.value ? -1 : 1) : h = c.type < f.type ? -1 : 1, 
                     c = h * g[d].descending) break;
@@ -3468,7 +3468,7 @@
             };
             b.on("keydown", function(a) {
                 var b = a.keyCode;
-                91 === b || b > 15 && 19 > b || b >= 37 && 40 >= b || k(a, this, this.value);
+                91 === b || 15 < b && 19 > b || 37 <= b && 40 >= b || k(a, this, this.value);
             }), e.hasEvent("paste") && b.on("paste cut", k);
         }
         b.on("change", j), Te[g] && d.$$hasNativeValidators && g === c.type && b.on("keydown wheel mousedown", function(a) {
@@ -3587,7 +3587,7 @@
                     function k(a, b) {
                         var c = h.data("$classCounts") || ja(), d = [];
                         return f(a, function(a) {
-                            (b > 0 || c[a]) && (c[a] = (c[a] || 0) + b, c[a] === +(b > 0) && d.push(a));
+                            (0 < b || c[a]) && (c[a] = (c[a] || 0) + b, c[a] === +(0 < b) && d.push(a));
                         }), h.data("$classCounts", c), d.join(" ");
                     }
                     function l(a, b) {
@@ -3636,7 +3636,7 @@
             Oc(e.$pending) && (e.$pending = c)), D(f) ? f ? (i(e.$error, a, g), h(e.$$success, a, g)) : (h(e.$error, a, g), 
             i(e.$$success, a, g)) : (i(e.$error, a, g), i(e.$$success, a, g)), e.$pending ? (b(rf, !0), 
             e.$valid = e.$invalid = c, d("", null)) : (b(rf, !1), e.$valid = Oc(e.$error), e.$invalid = !e.$valid, 
-            d("", e.$valid)), f = e.$pending && e.$pending[a] ? c : e.$error[a] ? !1 : e.$$success[a] ? !0 : null, 
+            d("", e.$valid)), f = e.$pending && e.$pending[a] ? c : !e.$error[a] && (!!e.$$success[a] || null), 
             d(a, f), e.$$parentForm.$setValidity(a, f, e);
         };
     }
@@ -3680,7 +3680,7 @@
     }, jd = function() {
         if (t(jd.name_)) return jd.name_;
         var a, c, d, e, f = ld.length;
-        for (c = 0; f > c; ++c) if (d = ld[c], a = b.querySelector("[" + d.replace(":", "\\:") + "jq]")) {
+        for (c = 0; c < f; ++c) if (d = ld[c], a = b.querySelector("[" + d.replace(":", "\\:") + "jq]")) {
             e = a.getAttribute(d + "jq");
             break;
         }
@@ -3727,7 +3727,7 @@
             }), "[" + a.join(", ") + "]";
         },
         eq: function(a) {
-            return Qc(a >= 0 ? this[a] : this[this.length + a]);
+            return Qc(0 <= a ? this[a] : this[this.length + a]);
         },
         length: 0,
         push: Zc,
@@ -3819,16 +3819,16 @@
             var d, e, f = this.length;
             if (a !== Da && s(2 == a.length && a !== xa && a !== Ba ? b : c)) {
                 if (u(b)) {
-                    for (d = 0; f > d; d++) if (a === wa) a(this[d], b); else for (e in b) a(this[d], e, b[e]);
+                    for (d = 0; d < f; d++) if (a === wa) a(this[d], b); else for (e in b) a(this[d], e, b[e]);
                     return this;
                 }
-                for (d = a.$dv, f = s(d) ? Math.min(f, 1) : f, e = 0; f > e; e++) {
+                for (d = a.$dv, f = s(d) ? Math.min(f, 1) : f, e = 0; e < f; e++) {
                     var g = a(this[e], b, c);
                     d = d ? d + g : g;
                 }
                 return d;
             }
-            for (d = 0; f > d; d++) a(this[d], b, c);
+            for (d = 0; d < f; d++) a(this[d], b, c);
             return this;
         };
     }), f({
@@ -3871,7 +3871,7 @@
             var c = a.nodeType;
             if (1 === c || 11 === c) {
                 b = new qa(b);
-                for (var c = 0, d = b.length; d > c; c++) a.appendChild(b[c]);
+                for (var c = 0, d = b.length; c < d; c++) a.appendChild(b[c]);
             }
         },
         prepend: function(a, b) {
@@ -3892,7 +3892,7 @@
         after: function(a, b) {
             var c = a, d = a.parentNode;
             b = new qa(b);
-            for (var e = 0, f = b.length; f > e; e++) {
+            for (var e = 0, f = b.length; e < f; e++) {
                 var g = b[e];
                 d.insertBefore(g, c.nextSibling), c = g;
             }
@@ -3939,7 +3939,7 @@
         }
     }, function(a, b) {
         qa.prototype[b] = function(b, c, d) {
-            for (var e, f = 0, g = this.length; g > f; f++) s(e) ? (e = a(this[f], b, c, d), 
+            for (var e, f = 0, g = this.length; f < g; f++) s(e) ? (e = a(this[f], b, c, d), 
             t(e) && (e = Qc(e))) : Aa(e, a(this[f], b, c, d));
             return t(e) ? e : this;
         }, qa.prototype.bind = qa.prototype.on, qa.prototype.unbind = qa.prototype.off;
@@ -4275,7 +4275,7 @@
         n: "\n",
         f: "\f",
         r: "\r",
-        t: "	",
+        t: "\t",
         v: "\x0B",
         "'": "'",
         '"': '"'
@@ -4303,16 +4303,16 @@
             return -1 !== b.indexOf(a);
         },
         peek: function(a) {
-            return a = a || 1, this.index + a < this.text.length ? this.text.charAt(this.index + a) : !1;
+            return a = a || 1, this.index + a < this.text.length && this.text.charAt(this.index + a);
         },
         isNumber: function(a) {
-            return a >= "0" && "9" >= a && "string" == typeof a;
+            return "0" <= a && "9" >= a && "string" == typeof a;
         },
         isWhitespace: function(a) {
-            return " " === a || "\r" === a || "	" === a || "\n" === a || "\x0B" === a || " " === a;
+            return " " === a || "\r" === a || "\t" === a || "\n" === a || "\x0B" === a || " " === a;
         },
         isIdent: function(a) {
-            return a >= "a" && "z" >= a || a >= "A" && "Z" >= a || "_" === a || "$" === a;
+            return "a" <= a && "z" >= a || "A" <= a && "Z" >= a || "_" === a || "$" === a;
         },
         isExpOperator: function(a) {
             return "-" === a || "+" === a || this.isNumber(a);
@@ -4587,7 +4587,7 @@
             return !1;
         },
         expect: function(a, b, c, d) {
-            return (a = this.peek(a, b, c, d)) ? (this.tokens.shift(), a) : !1;
+            return !!(a = this.peek(a, b, c, d)) && (this.tokens.shift(), a);
         },
         constants: {
             "true": {
@@ -4794,7 +4794,7 @@
             d[c];
         },
         assign: function(a, b) {
-            return a ? (this.current().body.push(a, "=", b, ";"), a) : void 0;
+            if (a) return this.current().body.push(a, "=", b, ";"), a;
         },
         filter: function(a) {
             return this.state.filters.hasOwnProperty(a) || (this.state.filters[a] = this.nextId(!0)), 
@@ -5234,7 +5234,7 @@
             return 12 > a.getHours() ? b.AMPMS[0] : b.AMPMS[1];
         },
         Z: function(a, b, c) {
-            return a = -1 * c, a = (a >= 0 ? "+" : "") + (uc(Math[a > 0 ? "floor" : "ceil"](a / 60), 2) + uc(Math.abs(a % 60), 2));
+            return a = -1 * c, a = (0 <= a ? "+" : "") + (uc(Math[0 < a ? "floor" : "ceil"](a / 60), 2) + uc(Math.abs(a % 60), 2));
         },
         ww: yc(2),
         w: yc(1),
@@ -5251,7 +5251,7 @@
     var Ee = q({
         restrict: "E",
         compile: function(a, b) {
-            return b.href || b.xlinkHref ? void 0 : function(a, b) {
+            if (!b.href && !b.xlinkHref) return function(a, b) {
                 if ("a" === b[0].nodeName.toLowerCase()) {
                     var c = "[object SVGAnimatedString]" === $c.call(b.prop("href")) ? "xlink:href" : "href";
                     b.on("click", function(a) {
@@ -5329,7 +5329,7 @@
                 controller: Fc,
                 compile: function(d, f) {
                     d.addClass(pf).addClass(nf);
-                    var g = f.name ? "name" : a && f.ngForm ? "ngForm" : !1;
+                    var g = f.name ? "name" : !(!a || !f.ngForm) && "ngForm";
                     return {
                         pre: function(a, d, f, h) {
                             var i = h[0];
@@ -5357,7 +5357,7 @@
                 }
             };
         } ];
-    }, Ie = He(), Je = He(!0), Ke = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/, Le = /^[a-z][a-z\d.+-]*:\/*(?:[^:@]+(?::[^@]+)?@)?(?:[^\s:/?#]+|\[[a-f\d:]+\])(?::\d+)?(?:\/[^?#]*)?(?:\?[^#]*)?(?:#.*)?$/i, Me = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i, Ne = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/, Oe = /^(\d{4})-(\d{2})-(\d{2})$/, Pe = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/, Qe = /^(\d{4})-W(\d\d)$/, Re = /^(\d{4})-(\d\d)$/, Se = /^(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/, Te = ja();
+    }, Ie = He(), Je = He(!0), Ke = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/, Le = /^[a-z][a-z\d.+-]*:\/*(?:[^:@]+(?::[^@]+)?@)?(?:[^\s:\/?#]+|\[[a-f\d:]+\])(?::\d+)?(?:\/[^?#]*)?(?:\?[^#]*)?(?:#.*)?$/i, Me = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i, Ne = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/, Oe = /^(\d{4})-(\d{2})-(\d{2})$/, Pe = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/, Qe = /^(\d{4})-W(\d\d)$/, Re = /^(\d{4})-(\d\d)$/, Se = /^(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/, Te = ja();
     f([ "date", "datetime-local", "month", "time", "week" ], function(a) {
         Te[a] = !0;
     });
@@ -5402,7 +5402,7 @@
             if (t(d.max) || d.ngMax) {
                 var i;
                 e.$validators.max = function(a) {
-                    return e.$isEmpty(a) || s(i) || i >= a;
+                    return e.$isEmpty(a) || s(i) || a <= i;
                 }, d.$observe("max", function(a) {
                     t(a) && !x(a) && (a = parseFloat(a, 10)), i = x(a) && !isNaN(a) ? a : c, e.$validate();
                 });
@@ -5705,7 +5705,7 @@
                 return f(v.$validators, function(d, e) {
                     var f = d(a, b);
                     c = c && f, h(e, f);
-                }), c ? !0 : (f(v.$asyncValidators, function(a, b) {
+                }), !!c || (f(v.$asyncValidators, function(a, b) {
                     h(b, null);
                 }), !1);
             }
@@ -5745,7 +5745,7 @@
             v.$pristine && this.$setDirty(), this.$$parseAndValidate());
         }, this.$$parseAndValidate = function() {
             var b = v.$$lastCommittedViewValue;
-            if (m = s(b) ? c : !0) for (var d = 0; d < v.$parsers.length; d++) if (b = v.$parsers[d](b), 
+            if (m = !s(b) || c) for (var d = 0; d < v.$parsers.length; d++) if (b = v.$parsers[d](b), 
             s(b)) {
                 m = !1;
                 break;
@@ -5862,14 +5862,14 @@
                 getWatchables: c(s, function(a) {
                     var b = [];
                     a = a || [];
-                    for (var c = g(a), e = c.length, f = 0; e > f; f++) {
+                    for (var c = g(a), e = c.length, f = 0; f < e; f++) {
                         var i = a === c ? f : c[f], j = u(a[i], i), i = n(a[i], j);
                         b.push(i), (h[2] || h[1]) && (i = p(d, j), b.push(i)), h[4] && (j = r(d, j), b.push(j));
                     }
                     return b;
                 }),
                 getOptions: function() {
-                    for (var a = [], b = {}, c = s(d) || [], e = g(c), h = e.length, i = 0; h > i; i++) {
+                    for (var a = [], b = {}, c = s(d) || [], e = g(c), h = e.length, i = 0; i < h; i++) {
                         var j = c === e ? i : e[i], m = u(c[j], j), t = l(d, m), j = n(t, m), v = p(d, m), w = q(d, m), m = r(d, m), t = new f(j, t, v, w, m);
                         a.push(t), b[j] = t;
                     }
@@ -5935,7 +5935,7 @@
                     if (o) {
                         var p, q = i[0], r = e.multiple;
                         i = 0;
-                        for (var s = c.children(), t = s.length; t > i; i++) if ("" === s[i].value) {
+                        for (var s = c.children(), t = s.length; i < t; i++) if ("" === s[i].value) {
                             p = s.eq(i);
                             break;
                         }
@@ -5956,9 +5956,9 @@
                                 (a = w.selectValueMap[a]) && !a.disabled && b.push(w.getViewValueFromOption(a));
                             }), b;
                         }, x.trackBy && b.$watchCollection(function() {
-                            return ed(o.$viewValue) ? o.$viewValue.map(function(a) {
+                            if (ed(o.$viewValue)) return o.$viewValue.map(function(a) {
                                 return x.getTrackByValue(a);
-                            }) : void 0;
+                            });
                         }, function() {
                             o.$render();
                         })) : (q.writeValue = function(a) {
@@ -6036,7 +6036,7 @@
                         var j, o, q, t, x, y, z, A, B, C, D = b[0], E = ja();
                         if (p && (a[p] = d), e(d)) A = d, o = u || v; else for (C in o = u || w, A = [], 
                         d) Vc.call(d, C) && "$" !== C.charAt(0) && A.push(C);
-                        for (t = A.length, C = Array(t), j = 0; t > j; j++) if (x = d === A ? j : A[j], 
+                        for (t = A.length, C = Array(t), j = 0; j < t; j++) if (x = d === A ? j : A[j], 
                         y = d[x], z = o(x, y, j), n[z]) B = n[z], delete n[z], E[z] = B, C[j] = B; else {
                             if (E[z]) throw f(C, function(a) {
                                 a && a.scope && (n[a.id] = a);
@@ -6048,10 +6048,10 @@
                             }, E[z] = !0;
                         }
                         for (q in n) {
-                            if (B = n[q], z = ia(B.clone), g.leave(z), z[0].parentNode) for (j = 0, o = z.length; o > j; j++) z[j].$$NG_REMOVED = !0;
+                            if (B = n[q], z = ia(B.clone), g.leave(z), z[0].parentNode) for (j = 0, o = z.length; j < o; j++) z[j].$$NG_REMOVED = !0;
                             B.scope.$destroy();
                         }
-                        for (j = 0; t > j; j++) if (x = d === A ? j : A[j], y = d[x], B = C[j], B.scope) {
+                        for (j = 0; j < t; j++) if (x = d === A ? j : A[j], y = d[x], B = C[j], B.scope) {
                             q = D;
                             do q = q.nextSibling; while (q && q.$$NG_REMOVED);
                             B.clone[0] != q && g.move(ia(B.clone), null, D), D = B.clone[B.clone.length - 1], 
@@ -6110,8 +6110,8 @@
                 };
                 c.$watch(e.ngSwitch || e.on, function(c) {
                     var d, e;
-                    for (d = 0, e = j.length; e > d; ++d) a.cancel(j[d]);
-                    for (d = j.length = 0, e = k.length; e > d; ++d) {
+                    for (d = 0, e = j.length; d < e; ++d) a.cancel(j[d]);
+                    for (d = j.length = 0, e = k.length; d < e; ++d) {
                         var m = ia(i[d].clone);
                         k[d].$destroy(), (j[d] = a.leave(m)).then(l(j, d));
                     }
@@ -6619,7 +6619,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
             if (j && -1 !== j.indexOf("#") ? i = j.replace(/.*(?=#[^\s]+$)/, "").substring(1) : h.duScrollspy ? i = h.duScrollspy : h.duSmoothScroll && (i = h.duSmoothScroll), 
             i) {
                 var k = c(function() {
-                    var c = new e(i, f, g, -(h.offset ? parseInt(h.offset, 10) : b));
+                    var c = new e(i, f, g, (-(h.offset ? parseInt(h.offset, 10) : b)));
                     a.addSpy(c), f.$on("$locationChangeSuccess", c.flushTargetCache.bind(c));
                     var j = d.$on("$stateChangeSuccess", c.flushTargetCache.bind(c));
                     f.$on("$destroy", function() {
@@ -6778,7 +6778,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
         toSeparator: function(b) {
             var c = {
                 ENTER: "\n",
-                TAB: "	",
+                TAB: "\t",
                 SPACE: " "
             }[b];
             return c ? c : a[b] ? void 0 : b;
@@ -7045,7 +7045,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
         }, s.isActive = function(a) {
             if (!s.open) return !1;
             var b = s.items.indexOf(a[s.itemProperty]), c = b == s.activeIndex;
-            return !c || 0 > b ? !1 : (c && !angular.isUndefined(s.onHighlightCallback) && a.$eval(s.onHighlightCallback), 
+            return !(!c || 0 > b) && (c && !angular.isUndefined(s.onHighlightCallback) && a.$eval(s.onHighlightCallback), 
             c);
         };
         var v = function(a) {
@@ -7232,13 +7232,13 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                         var a = e.$eval(i.removeSelected);
                         o.removeSelected = void 0 !== a ? a : b.removeSelected;
                     }), i.$observe("disabled", function() {
-                        o.disabled = void 0 !== i.disabled ? i.disabled : !1;
+                        o.disabled = void 0 !== i.disabled && i.disabled;
                     }), i.$observe("resetSearchInput", function() {
                         var a = e.$eval(i.resetSearchInput);
-                        o.resetSearchInput = void 0 !== a ? a : !0;
+                        o.resetSearchInput = void 0 === a || a;
                     }), i.$observe("setSearchToAnswer", function() {
                         var a = e.$eval(i.setSearchToAnswer);
-                        o.setSearchToAnswer = void 0 !== a ? a : !0;
+                        o.setSearchToAnswer = void 0 === a || a;
                     }), i.$observe("searchBy", function() {
                         o.searchBy = i.searchBy;
                     }), i.$observe("paste", function() {
@@ -7340,7 +7340,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
             },
             link: function(b, c, d, e) {
                 function f(a) {
-                    e.allowClear = angular.isDefined(a) ? "" === a ? !0 : "true" === a.toLowerCase() : !1;
+                    e.allowClear = !!angular.isDefined(a) && ("" === a || "true" === a.toLowerCase());
                 }
                 e.lockChoiceExpression = d.uiLockChoice, d.$observe("placeholder", function(b) {
                     e.placeholder = void 0 !== b ? b : a.placeholder;
@@ -7393,17 +7393,17 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                             return ~n.activeMatchIndex ? (n.removeChoice(i), k) : g;
 
                           case a.DELETE:
-                            return ~n.activeMatchIndex ? (n.removeChoice(n.activeMatchIndex), i) : !1;
+                            return !!~n.activeMatchIndex && (n.removeChoice(n.activeMatchIndex), i);
                         }
                     }
                     var d = h(l.searchInput[0]), e = l.selected.length, f = 0, g = e - 1, i = n.activeMatchIndex, j = n.activeMatchIndex + 1, k = n.activeMatchIndex - 1, m = i;
-                    return d > 0 || l.search.length && b == a.RIGHT ? !1 : (l.close(), m = c(), l.selected.length && m !== !1 ? n.activeMatchIndex = Math.min(g, Math.max(f, m)) : n.activeMatchIndex = -1, 
+                    return !(d > 0 || l.search.length && b == a.RIGHT) && (l.close(), m = c(), l.selected.length && m !== !1 ? n.activeMatchIndex = Math.min(g, Math.max(f, m)) : n.activeMatchIndex = -1, 
                     !0);
                 }
                 function j(a) {
                     if (void 0 === a || void 0 === l.search) return !1;
                     var b = a.filter(function(a) {
-                        return void 0 === l.search.toUpperCase() || void 0 === a ? !1 : a.toUpperCase() === l.search.toUpperCase();
+                        return void 0 !== l.search.toUpperCase() && void 0 !== a && a.toUpperCase() === l.search.toUpperCase();
                     }).length > 0;
                     return b;
                 }
@@ -7790,7 +7790,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                             i = a;
                             var j = d.substr(1);
                             if (null == j || "" === j || "hasOwnProperty" === j || !f.test("." + j)) throw e("badmember", j);
-                            for (var j = j.split("."), k = 0, l = j.length; l > k && b.isDefined(i); k++) {
+                            for (var j = j.split("."), k = 0, l = j.length; k < l && b.isDefined(i); k++) {
                                 var m = j[k];
                                 i = null !== i ? i[m] : c;
                             }
@@ -8272,7 +8272,7 @@ function(a, b, c) {
             }
             function m() {
                 var b = {
-                    array: "search" === f ? "auto" : !1
+                    array: "search" === f && "auto"
                 }, c = a.match(/\[\]$/) ? {
                     array: !0
                 } : {};
@@ -8396,7 +8396,7 @@ function(a, b, c) {
             var d = a.invoke(b, b, {
                 $match: c
             });
-            return L(d) ? d : !0;
+            return !L(d) || d;
         }
         function h(d, e, f, g, h) {
             function m(a, b, c) {
@@ -8405,7 +8405,7 @@ function(a, b, c) {
             function n(a) {
                 function b(a) {
                     var b = a(f, d);
-                    return b ? (N(b) && d.replace().url(b), !0) : !1;
+                    return !!b && (N(b) && d.replace().url(b), !0);
                 }
                 if (!a || !a.defaultPrevented) {
                     p && d.url() === p, p = c;
@@ -8543,7 +8543,7 @@ function(a, b, c) {
         function s(a) {
             for (var b = a.split("."), c = y.$current.name.split("."), d = 0, e = b.length; e > d; d++) "*" === b[d] && (c[d] = "*");
             return "**" === b[0] && (c = c.slice(h(c, b[1])), c.unshift("**")), "**" === b[b.length - 1] && (c.splice(h(c, b[b.length - 2]) + 1, Number.MAX_VALUE), 
-            c.push("**")), b.length != c.length ? !1 : c.join("") === b.join("");
+            c.push("**")), b.length == c.length && c.join("") === b.join("");
         }
         function t(a, b) {
             return N(a) && !L(b) ? C[a] : M(b) && N(a) ? (C[a] && !C.$delegates[a] && (C.$delegates[a] = C[a]), 
@@ -8686,7 +8686,7 @@ function(a, b, c) {
                     relative: y.$current
                 }, d || {});
                 var e = m(a, d.relative);
-                return L(e) ? y.$current !== e ? !1 : b ? j(e.params.$$values(b), n) : !0 : c;
+                return L(e) ? y.$current === e && (!b || j(e.params.$$values(b), n)) : c;
             }, y.includes = function(a, b, d) {
                 if (d = R({
                     relative: y.$current
@@ -8695,7 +8695,7 @@ function(a, b, c) {
                     a = y.$current.name;
                 }
                 var e = m(a, d.relative);
-                return L(e) ? L(y.$current.includes[e.name]) ? b ? j(e.params.$$values(b), n, g(b)) : !0 : !1 : c;
+                return L(e) ? !!L(y.$current.includes[e.name]) && (!b || j(e.params.$$values(b), n, g(b))) : c;
             }, y.href = function(a, b, d) {
                 d = R({
                     lossy: !0,
@@ -8726,7 +8726,7 @@ function(a, b, c) {
                 var e = a.params.$$keys().filter(d), f = l.apply({}, [ a.params ].concat(e)), g = new U.ParamSet(f);
                 return g.$$equals(b, c);
             }
-            return !f.reload && a === c && (e === c.locals || a.self.reloadOnSearch === !1 && g(c, d, b)) ? !0 : void 0;
+            return !(f.reload || a !== c || !(e === c.locals || a.self.reloadOnSearch === !1 && g(c, d, b))) || void 0;
         }
         var x, y, z = {}, A = {}, B = "abstract", C = {
             parent: function(a) {
@@ -9137,7 +9137,7 @@ function(a, b, c) {
         if (!this.validates(a)) return null;
         var f, g = !1, h = c.length - 1, i = d.length, j = c[0];
         for (f = 0; i > f; f++) {
-            var k = h > f, l = d[f], m = e[l], n = m.value(a[l]), p = m.isOptional && m.type.equals(m.value(), n), q = p ? m.squash : !1, r = m.type.encode(n);
+            var k = h > f, l = d[f], m = e[l], n = m.value(a[l]), p = m.isOptional && m.type.equals(m.value(), n), q = !!p && m.squash, r = m.type.encode(n);
             if (k) {
                 var s = c[f + 1], t = f + 1 === h;
                 if (q === !1) null != r && (j += P(r) ? o(r, b).join("-") : encodeURIComponent(r)), 
@@ -9336,7 +9336,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         });
     }, this.removeGroup = function(a) {
         var b = this.groups.indexOf(a);
-        -1 !== b && this.groups.splice(b, 1);
+        b !== -1 && this.groups.splice(b, 1);
     };
 } ]).directive("uibAccordion", function() {
     return {
@@ -9824,7 +9824,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
             var f = a.indexOf(e);
             if (f > -1) {
                 a = a.split(""), d[f] = "(" + c.regex + ")", a[f] = "$";
-                for (var g = f + 1, h = f + e.length; h > g; g++) d[g] = "", a[g] = "$";
+                for (var g = f + 1, h = f + e.length; g < h; g++) d[g] = "", a[g] = "$";
                 a = a.join(""), b.push({
                     index: f,
                     apply: c.apply
@@ -9836,7 +9836,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         };
     }
     function e(a, b, c) {
-        return 1 > c ? !1 : 1 === b && c > 28 ? 29 === c && (a % 4 === 0 && a % 100 !== 0 || a % 400 === 0) : 3 === b || 5 === b || 8 === b || 10 === b ? 31 > c : !0;
+        return !(c < 1) && (1 === b && c > 28 ? 29 === c && (a % 4 === 0 && a % 100 !== 0 || a % 400 === 0) : 3 !== b && 5 !== b && 8 !== b && 10 !== b || c < 31);
     }
     var f, g, h = /[\\\^\$\*\+\?\|\[\]\(\)\.\{\}]/g;
     this.init = function() {
@@ -9986,7 +9986,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                 seconds: 0,
                 milliseconds: 0
             });
-            for (var p = 1, q = m.length; q > p; p++) {
+            for (var p = 1, q = m.length; p < q; p++) {
                 var r = l[p - 1];
                 r.apply && r.apply.call(n, m[p]);
             }
@@ -10111,7 +10111,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         $setViewValue: angular.noop
     };
     this.modes = [ "day", "month", "year" ], angular.forEach([ "formatDay", "formatMonth", "formatYear", "formatDayHeader", "formatDayTitle", "formatMonthTitle", "showWeeks", "startingDay", "yearRange", "shortcutPropagation" ], function(c, e) {
-        i[c] = angular.isDefined(b[c]) ? 6 > e ? d(b[c])(a.$parent) : a.$parent.$eval(b[c]) : g[c];
+        i[c] = angular.isDefined(b[c]) ? e < 6 ? d(b[c])(a.$parent) : a.$parent.$eval(b[c]) : g[c];
     }), angular.forEach([ "minDate", "maxDate" ], function(d) {
         b[d] ? a.$parent.$watch(c(b[d]), function(a) {
             i[d] = a ? new Date(a) : null, i.refreshView();
@@ -10125,7 +10125,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
     a.$parent.$watch(b.initDate, function(a) {
         a && (j.$isEmpty(j.$modelValue) || j.$invalid) && (i.activeDate = a, i.refreshView());
     })) : this.activeDate = new Date(), a.isActive = function(b) {
-        return 0 === i.compare(b.date, i.activeDate) ? (a.activeDateId = b.uid, !0) : !1;
+        return 0 === i.compare(b.date, i.activeDate) && (a.activeDateId = b.uid, !0);
     }, this.init = function(a) {
         j = a, j.$render = function() {
             i.render();
@@ -10174,7 +10174,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         var b = i.activeDate.getFullYear() + a * (i.step.years || 0), c = i.activeDate.getMonth() + a * (i.step.months || 0);
         i.activeDate.setFullYear(b, c, 1), i.refreshView();
     }, a.toggleMode = function(b) {
-        b = b || 1, a.datepickerMode === i.maxMode && 1 === b || a.datepickerMode === i.minMode && -1 === b || (a.datepickerMode = i.modes[i.modes.indexOf(a.datepickerMode) + b]);
+        b = b || 1, a.datepickerMode === i.maxMode && 1 === b || a.datepickerMode === i.minMode && b === -1 || (a.datepickerMode = i.modes[i.modes.indexOf(a.datepickerMode) + b]);
     }, a.keys = {
         13: "enter",
         32: "space",
@@ -10214,7 +10214,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
     }, this.element = b, this.init = function(b) {
         angular.extend(b, this), a.showWeeks = b.showWeeks, b.refreshView();
     }, this.getDates = function(a, b) {
-        for (var c, d = new Array(b), e = new Date(a), f = 0; b > f; ) c = new Date(e), 
+        for (var c, d = new Array(b), e = new Date(a), f = 0; f < b; ) c = new Date(e), 
         d[f++] = c, e.setDate(e.getDate() + 1);
         return d;
     }, this._refreshView = function() {
@@ -10222,19 +10222,19 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         f.setFullYear(b, d, 1);
         var g = this.startingDay - f.getDay(), h = g > 0 ? 7 - g : -g, i = new Date(f);
         h > 0 && i.setDate(-h + 1);
-        for (var j = this.getDates(i, 42), k = 0; 42 > k; k++) j[k] = angular.extend(this.createDateObject(j[k], this.formatDay), {
+        for (var j = this.getDates(i, 42), k = 0; k < 42; k++) j[k] = angular.extend(this.createDateObject(j[k], this.formatDay), {
             secondary: j[k].getMonth() !== d,
             uid: a.uniqueId + "-" + k
         });
         a.labels = new Array(7);
-        for (var l = 0; 7 > l; l++) a.labels[l] = {
+        for (var l = 0; l < 7; l++) a.labels[l] = {
             abbr: c(j[l].date, this.formatDayHeader),
             full: c(j[l].date, "EEEE")
         };
         if (a.title = c(this.activeDate, this.formatDayTitle), a.rows = this.split(j, 7), 
         a.showWeeks) {
             a.weekNumbers = [];
-            for (var m = (11 - this.startingDay) % 7, n = a.rows.length, o = 0; n > o; o++) a.weekNumbers.push(e(a.rows[o][m].date));
+            for (var m = (11 - this.startingDay) % 7, n = a.rows.length, o = 0; o < n; o++) a.weekNumbers.push(e(a.rows[o][m].date));
         }
     }, this.compare = function(a, b) {
         return new Date(a.getFullYear(), a.getMonth(), a.getDate()) - new Date(b.getFullYear(), b.getMonth(), b.getDate());
@@ -10252,7 +10252,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
     }, this.element = b, this.init = function(a) {
         angular.extend(a, this), a.refreshView();
     }, this._refreshView = function() {
-        for (var b, d = new Array(12), e = this.activeDate.getFullYear(), f = 0; 12 > f; f++) b = new Date(this.activeDate), 
+        for (var b, d = new Array(12), e = this.activeDate.getFullYear(), f = 0; f < 12; f++) b = new Date(this.activeDate), 
         b.setFullYear(e, f, 1), d[f] = angular.extend(this.createDateObject(b, this.formatMonth), {
             uid: a.uniqueId + "-" + f
         });
@@ -10277,7 +10277,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
             years: e
         };
     }, this._refreshView = function() {
-        for (var b, c = new Array(e), f = 0, g = d(this.activeDate.getFullYear()); e > f; f++) b = new Date(this.activeDate), 
+        for (var b, c = new Array(e), f = 0, g = d(this.activeDate.getFullYear()); f < e; f++) b = new Date(this.activeDate), 
         b.setFullYear(g + f, 0, 1), c[f] = angular.extend(this.createDateObject(b, this.formatYear), {
             uid: a.uniqueId + "-" + f
         });
@@ -10518,7 +10518,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         $setViewValue: angular.noop
     };
     this.modes = [ "day", "month", "year" ], angular.forEach([ "formatDay", "formatMonth", "formatYear", "formatDayHeader", "formatDayTitle", "formatMonthTitle", "showWeeks", "startingDay", "yearRange", "shortcutPropagation" ], function(c, e) {
-        j[c] = angular.isDefined(b[c]) ? 6 > e ? d(b[c])(a.$parent) : a.$parent.$eval(b[c]) : g[c];
+        j[c] = angular.isDefined(b[c]) ? e < 6 ? d(b[c])(a.$parent) : a.$parent.$eval(b[c]) : g[c];
     }), angular.forEach([ "minDate", "maxDate" ], function(d) {
         b[d] ? a.$parent.$watch(c(b[d]), function(a) {
             j[d] = a ? new Date(a) : null, j.refreshView();
@@ -10532,7 +10532,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
     a.$parent.$watch(b.initDate, function(a) {
         a && (k.$isEmpty(k.$modelValue) || k.$invalid) && (j.activeDate = a, j.refreshView());
     })) : this.activeDate = new Date(), a.isActive = function(b) {
-        return 0 === j.compare(b.date, j.activeDate) ? (a.activeDateId = b.uid, !0) : !1;
+        return 0 === j.compare(b.date, j.activeDate) && (a.activeDateId = b.uid, !0);
     }, this.init = function(a) {
         k = a, k.$render = function() {
             j.render();
@@ -10584,7 +10584,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         var b = j.activeDate.getFullYear() + a * (j.step.years || 0), c = j.activeDate.getMonth() + a * (j.step.months || 0);
         j.activeDate.setFullYear(b, c, 1), j.refreshView();
     }, a.toggleMode = function(b) {
-        b = b || 1, a.datepickerMode === j.maxMode && 1 === b || a.datepickerMode === j.minMode && -1 === b || (a.datepickerMode = j.modes[j.modes.indexOf(a.datepickerMode) + b]);
+        b = b || 1, a.datepickerMode === j.maxMode && 1 === b || a.datepickerMode === j.minMode && b === -1 || (a.datepickerMode = j.modes[j.modes.indexOf(a.datepickerMode) + b]);
     }, a.keys = {
         13: "enter",
         32: "space",
@@ -10812,7 +10812,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         require: "?^uibDropdown",
         link: function(a, b, c, d) {
             b.bind("keydown", function(a) {
-                if (-1 !== [ 38, 40 ].indexOf(a.which)) {
+                if ([ 38, 40 ].indexOf(a.which) !== -1) {
                     a.preventDefault(), a.stopPropagation();
                     var b = d.dropdownMenu.find("a");
                     switch (a.which) {
@@ -10950,7 +10950,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         require: "?^dropdown",
         link: function(c, d, e, f) {
             b || a.warn("keyboard-nav is now deprecated. Use uib-keyboard-nav instead."), d.bind("keydown", function(a) {
-                if (-1 !== [ 38, 40 ].indexOf(a.which)) {
+                if ([ 38, 40 ].indexOf(a.which) !== -1) {
                     a.preventDefault(), a.stopPropagation();
                     var b = f.dropdownMenu.find("a");
                     switch (a.which) {
@@ -11055,7 +11055,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                     var d = a[b];
                     if (d) {
                         var e = d.indexOf(c);
-                        -1 !== e && d.splice(e, 1), d.length || delete a[b];
+                        e !== -1 && d.splice(e, 1), d.length || delete a[b];
                     }
                 }
             };
@@ -11150,7 +11150,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         u.length() > 0 && (b = u.top().value, b.modalDomEl.toggleClass(b.windowTopClass || "", a));
     }
     function m() {
-        if (q && -1 == j()) {
+        if (q && j() == -1) {
             var a = r;
             n(q, r, function() {
                 a = null;
@@ -11244,13 +11244,13 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         var b = u.get(a);
         b && b.value.renderDeferred.resolve();
     }, w.focusFirstFocusableElement = function() {
-        return s.length > 0 ? (s[0].focus(), !0) : !1;
+        return s.length > 0 && (s[0].focus(), !0);
     }, w.focusLastFocusableElement = function() {
-        return s.length > 0 ? (s[s.length - 1].focus(), !0) : !1;
+        return s.length > 0 && (s[s.length - 1].focus(), !0);
     }, w.isFocusInFirstItem = function(a) {
-        return s.length > 0 ? (a.target || a.srcElement) == s[0] : !1;
+        return s.length > 0 && (a.target || a.srcElement) == s[0];
     }, w.isFocusInLastItem = function(a) {
-        return s.length > 0 ? (a.target || a.srcElement) == s[s.length - 1] : !1;
+        return s.length > 0 && (a.target || a.srcElement) == s[s.length - 1];
     }, w.clearFocusListCache = function() {
         s = [], x = 0;
     }, w.loadFocusElementList = function(a) {
@@ -11482,10 +11482,10 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                 };
             }
             function h(a, b) {
-                var c = [], d = 1, e = b, f = angular.isDefined(k) && b > k;
+                var c = [], d = 1, e = b, f = angular.isDefined(k) && k < b;
                 f && (l ? (d = Math.max(a - Math.floor(k / 2), 1), e = d + k - 1, e > b && (e = b, 
                 d = e - k + 1)) : (d = (Math.ceil(a / k) - 1) * k + 1, e = Math.min(d + k - 1, b)));
-                for (var h = d; e >= h; h++) {
+                for (var h = d; h <= e; h++) {
                     var i = g(h, h, h === a);
                     c.push(i);
                 }
@@ -11494,7 +11494,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                         var j = g(d - 1, "...", !1);
                         c.unshift(j);
                     }
-                    if (b > e) {
+                    if (e < b) {
                         var m = g(e + 1, "...", !1);
                         c.push(m);
                     }
@@ -11602,10 +11602,10 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                 };
             }
             function j(a, b) {
-                var c = [], d = 1, e = b, f = angular.isDefined(m) && b > m;
+                var c = [], d = 1, e = b, f = angular.isDefined(m) && m < b;
                 f && (n ? (d = Math.max(a - Math.floor(m / 2), 1), e = d + m - 1, e > b && (e = b, 
                 d = e - m + 1)) : (d = (Math.ceil(a / m) - 1) * m + 1, e = Math.min(d + m - 1, b)));
-                for (var g = d; e >= g; g++) {
+                for (var g = d; g <= e; g++) {
                     var h = i(g, g, g === a);
                     c.push(h);
                 }
@@ -11614,7 +11614,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                         var j = i(d - 1, "...", !1);
                         c.unshift(j);
                     }
-                    if (b > e) {
+                    if (e < b) {
                         var k = i(e + 1, "...", !1);
                         c.push(k);
                     }
@@ -11779,7 +11779,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                                 });
                             });
                         }
-                        var C, D, E, F, G, H, I = angular.isDefined(o.appendToBody) ? o.appendToBody : !1, J = p(void 0), K = angular.isDefined(d[k + "Enable"]), L = a.$new(!0), M = !1, N = angular.isDefined(d[k + "IsOpen"]) ? l(d[k + "IsOpen"]) : !1, O = o.useContentExp ? l(d[e]) : !1, P = [], Q = function() {
+                        var C, D, E, F, G, H, I = !!angular.isDefined(o.appendToBody) && o.appendToBody, J = p(void 0), K = angular.isDefined(d[k + "Enable"]), L = a.$new(!0), M = !1, N = !!angular.isDefined(d[k + "IsOpen"]) && l(d[k + "IsOpen"]), O = !!o.useContentExp && l(d[e]), P = [], Q = function() {
                             C && C.html() && (H || (H = g(function() {
                                 C.css({
                                     top: 0,
@@ -12285,7 +12285,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         var g = angular.isDefined(b.ratingStates) ? a.$parent.$eval(b.ratingStates) : new Array(angular.isDefined(b.max) ? a.$parent.$eval(b.max) : c.max);
         a.range = this.buildTemplateObjects(g);
     }, this.buildTemplateObjects = function(a) {
-        for (var b = 0, c = a.length; c > b; b++) a[b] = angular.extend({
+        for (var b = 0, c = a.length; b < c; b++) a[b] = angular.extend({
             index: b
         }, {
             stateOn: this.stateOn,
@@ -12379,7 +12379,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         controller: "UibTabsetController",
         templateUrl: "template/tabs/tabset.html",
         link: function(a, b, c) {
-            a.vertical = angular.isDefined(c.vertical) ? a.$parent.$eval(c.vertical) : !1, a.justified = angular.isDefined(c.justified) ? a.$parent.$eval(c.justified) : !1;
+            a.vertical = !!angular.isDefined(c.vertical) && a.$parent.$eval(c.vertical), a.justified = !!angular.isDefined(c.justified) && a.$parent.$eval(c.justified);
         }
     };
 }).directive("uibTab", [ "$parse", function(a) {
@@ -12450,8 +12450,8 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         controller: "TabsetController",
         templateUrl: "template/tabs/tabset.html",
         link: function(c, d, e) {
-            b || a.warn("tabset is now deprecated. Use uib-tabset instead."), c.vertical = angular.isDefined(e.vertical) ? c.$parent.$eval(e.vertical) : !1, 
-            c.justified = angular.isDefined(e.justified) ? c.$parent.$eval(e.justified) : !1;
+            b || a.warn("tabset is now deprecated. Use uib-tabset instead."), c.vertical = !!angular.isDefined(e.vertical) && c.$parent.$eval(e.vertical), 
+            c.justified = !!angular.isDefined(e.justified) && c.$parent.$eval(e.justified);
         }
     };
 } ]).directive("tab", [ "$parse", "$log", "$tabsSuppressWarning", function(a, b, c) {
@@ -12519,13 +12519,13 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
     showSpinners: !0
 }).controller("UibTimepickerController", [ "$scope", "$element", "$attrs", "$parse", "$log", "$locale", "uibTimepickerConfig", function(a, b, c, d, e, f, g) {
     function h() {
-        var b = parseInt(a.hours, 10), c = a.showMeridian ? b > 0 && 13 > b : b >= 0 && 24 > b;
-        return c ? (a.showMeridian && (12 === b && (b = 0), a.meridian === r[1] && (b += 12)), 
-        b) : void 0;
+        var b = parseInt(a.hours, 10), c = a.showMeridian ? b > 0 && b < 13 : b >= 0 && b < 24;
+        if (c) return a.showMeridian && (12 === b && (b = 0), a.meridian === r[1] && (b += 12)), 
+        b;
     }
     function i() {
         var b = parseInt(a.minutes, 10);
-        return b >= 0 && 60 > b ? b : void 0;
+        return b >= 0 && b < 60 ? b : void 0;
     }
     function j(a) {
         return angular.isDefined(a) && a.toString().length < 2 ? "0" + a : a.toString();
@@ -12581,16 +12581,16 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         v = isNaN(b) ? void 0 : b;
     }), a.noIncrementHours = function() {
         var a = n(p, 60 * s);
-        return a > v || p > a && u > a;
+        return a > v || a < p && a < u;
     }, a.noDecrementHours = function() {
         var a = n(p, 60 * -s);
-        return u > a || a > p && a > v;
+        return a < u || a > p && a > v;
     }, a.noIncrementMinutes = function() {
         var a = n(p, t);
-        return a > v || p > a && u > a;
+        return a > v || a < p && a < u;
     }, a.noDecrementMinutes = function() {
         var a = n(p, -t);
-        return u > a || a > p && a > v;
+        return a < u || a > p && a > v;
     }, a.noToggleMeridian = function() {
         return p.getHours() < 13 ? n(p, 720) > v : n(p, -720) < u;
     }, a.showMeridian = g.showMeridian, c.showMeridian && a.$parent.$watch(d(c.showMeridian), function(b) {
@@ -12625,14 +12625,14 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         };
         a.updateHours = function() {
             var a = h(), b = i();
-            angular.isDefined(a) && angular.isDefined(b) ? (p.setHours(a), u > p || p > v ? d(!0) : k("h")) : d(!0);
+            angular.isDefined(a) && angular.isDefined(b) ? (p.setHours(a), p < u || p > v ? d(!0) : k("h")) : d(!0);
         }, b.bind("blur", function(b) {
             !a.invalidHours && a.hours < 10 && a.$apply(function() {
                 a.hours = j(a.hours);
             });
         }), a.updateMinutes = function() {
             var a = i(), b = h();
-            angular.isDefined(a) && angular.isDefined(b) ? (p.setMinutes(a), u > p || p > v ? d(void 0, !0) : k("m")) : d(void 0, !0);
+            angular.isDefined(a) && angular.isDefined(b) ? (p.setMinutes(a), p < u || p > v ? d(void 0, !0) : k("m")) : d(void 0, !0);
         }, c.bind("blur", function(b) {
             !a.invalidMinutes && a.minutes < 10 && a.$apply(function() {
                 a.minutes = j(a.minutes);
@@ -12641,7 +12641,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
     }, this.render = function() {
         var b = q.$viewValue;
         isNaN(b) ? (q.$setValidity("time", !1), e.error('Timepicker directive: "ng-model" value must be a Date object, a number of milliseconds since 01.01.1970 or a string representing an RFC2822 or ISO 8601 date.')) : (b && (p = b), 
-        u > p || p > v ? (q.$setValidity("time", !1), a.invalidHours = !0, a.invalidMinutes = !0) : l(), 
+        p < u || p > v ? (q.$setValidity("time", !1), a.invalidHours = !0, a.invalidMinutes = !0) : l(), 
         m());
     }, a.showSpinners = angular.isDefined(c.showSpinners) ? a.$parent.$eval(c.showSpinners) : g.showSpinners, 
     a.incrementHours = function() {
@@ -12720,7 +12720,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
     }
     var o, p, q = [ 9, 13, 27, 38, 40 ], r = 200, s = a.$eval(c.typeaheadMinLength);
     s || 0 === s || (s = 1);
-    var t, u, v = a.$eval(c.typeaheadWaitMs) || 0, w = a.$eval(c.typeaheadEditable) !== !1, x = e(c.typeaheadLoading).assign || angular.noop, y = e(c.typeaheadOnSelect), z = angular.isDefined(c.typeaheadSelectOnBlur) ? a.$eval(c.typeaheadSelectOnBlur) : !1, A = e(c.typeaheadNoResults).assign || angular.noop, B = c.typeaheadInputFormatter ? e(c.typeaheadInputFormatter) : void 0, C = c.typeaheadAppendToBody ? a.$eval(c.typeaheadAppendToBody) : !1, D = c.typeaheadAppendToElementId || !1, E = a.$eval(c.typeaheadFocusFirst) !== !1, F = c.typeaheadSelectOnExact ? a.$eval(c.typeaheadSelectOnExact) : !1, G = e(c.ngModel), H = e(c.ngModel + "($$$p)"), I = function(b, c) {
+    var t, u, v = a.$eval(c.typeaheadWaitMs) || 0, w = a.$eval(c.typeaheadEditable) !== !1, x = e(c.typeaheadLoading).assign || angular.noop, y = e(c.typeaheadOnSelect), z = !!angular.isDefined(c.typeaheadSelectOnBlur) && a.$eval(c.typeaheadSelectOnBlur), A = e(c.typeaheadNoResults).assign || angular.noop, B = c.typeaheadInputFormatter ? e(c.typeaheadInputFormatter) : void 0, C = !!c.typeaheadAppendToBody && a.$eval(c.typeaheadAppendToBody), D = c.typeaheadAppendToElementId || !1, E = a.$eval(c.typeaheadFocusFirst) !== !1, F = !!c.typeaheadSelectOnExact && a.$eval(c.typeaheadSelectOnExact), G = e(c.ngModel), H = e(c.ngModel + "($$$p)"), I = function(b, c) {
         return angular.isFunction(G(a)) && p && p.$options && p.$options.getterSetter ? H(b, {
             $$$p: c
         }) : G.assign(b, c);
@@ -12751,10 +12751,10 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         return M + "-option-" + a;
     };
     K.$watch("activeIdx", function(a) {
-        0 > a ? b.removeAttr("aria-activedescendant") : b.attr("aria-activedescendant", P(a));
+        a < 0 ? b.removeAttr("aria-activedescendant") : b.attr("aria-activedescendant", P(a));
     });
     var Q = function(a, b) {
-        return K.matches.length > b && a ? a.toUpperCase() === K.matches[b].label.toUpperCase() : !1;
+        return !!(K.matches.length > b && a) && a.toUpperCase() === K.matches[b].label.toUpperCase();
     }, R = function(c) {
         var d = {
             $viewValue: c
@@ -12796,8 +12796,8 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
             b[0].focus();
         }, 0, !1);
     }, b.bind("keydown", function(a) {
-        if (0 !== K.matches.length && -1 !== q.indexOf(a.which)) {
-            if (-1 === K.activeIdx && (9 === a.which || 13 === a.which)) return O(), void K.$digest();
+        if (0 !== K.matches.length && q.indexOf(a.which) !== -1) {
+            if (K.activeIdx === -1 && (9 === a.which || 13 === a.which)) return O(), void K.$digest();
             a.preventDefault(), 40 === a.which ? (K.activeIdx = (K.activeIdx + 1) % K.matches.length, 
             K.$digest()) : 38 === a.which ? (K.activeIdx = (K.activeIdx > 0 ? K.activeIdx : K.matches.length) - 1, 
             K.$digest()) : 13 === a.which || 9 === a.which ? K.$apply(function() {
@@ -12805,7 +12805,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
             }) : 27 === a.which && (a.stopPropagation(), O(), K.$digest());
         }
     }), b.bind("blur", function() {
-        z && K.matches.length && -1 !== K.activeIdx && !u && (u = !0, K.$apply(function() {
+        z && K.matches.length && K.activeIdx !== -1 && !u && (u = !0, K.$apply(function() {
             K.select(K.activeIdx);
         })), t = !1, u = !1;
     });
@@ -12912,7 +12912,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
             k || j.warn("typeahead is now deprecated. Use uib-typeahead instead.");
             var t = q[0], u = q[1], v = n.$eval(p.typeaheadMinLength);
             v || 0 === v || (v = 1);
-            var w, x, y = n.$eval(p.typeaheadWaitMs) || 0, z = n.$eval(p.typeaheadEditable) !== !1, A = b(p.typeaheadLoading).assign || angular.noop, B = b(p.typeaheadOnSelect), C = angular.isDefined(p.typeaheadSelectOnBlur) ? n.$eval(p.typeaheadSelectOnBlur) : !1, D = b(p.typeaheadNoResults).assign || angular.noop, E = p.typeaheadInputFormatter ? b(p.typeaheadInputFormatter) : void 0, F = p.typeaheadAppendToBody ? n.$eval(p.typeaheadAppendToBody) : !1, G = p.typeaheadAppendToElementId || !1, H = n.$eval(p.typeaheadFocusFirst) !== !1, I = p.typeaheadSelectOnExact ? n.$eval(p.typeaheadSelectOnExact) : !1, J = b(p.ngModel), K = b(p.ngModel + "($$$p)"), L = function(a, b) {
+            var w, x, y = n.$eval(p.typeaheadWaitMs) || 0, z = n.$eval(p.typeaheadEditable) !== !1, A = b(p.typeaheadLoading).assign || angular.noop, B = b(p.typeaheadOnSelect), C = !!angular.isDefined(p.typeaheadSelectOnBlur) && n.$eval(p.typeaheadSelectOnBlur), D = b(p.typeaheadNoResults).assign || angular.noop, E = p.typeaheadInputFormatter ? b(p.typeaheadInputFormatter) : void 0, F = !!p.typeaheadAppendToBody && n.$eval(p.typeaheadAppendToBody), G = p.typeaheadAppendToElementId || !1, H = n.$eval(p.typeaheadFocusFirst) !== !1, I = !!p.typeaheadSelectOnExact && n.$eval(p.typeaheadSelectOnExact), J = b(p.ngModel), K = b(p.ngModel + "($$$p)"), L = function(a, b) {
                 return angular.isFunction(J(n)) && u && u.$options && u.$options.getterSetter ? K(a, {
                     $$$p: b
                 }) : J.assign(a, b);
@@ -12943,10 +12943,10 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                 return P + "-option-" + a;
             };
             N.$watch("activeIdx", function(a) {
-                0 > a ? o.removeAttr("aria-activedescendant") : o.attr("aria-activedescendant", S(a));
+                a < 0 ? o.removeAttr("aria-activedescendant") : o.attr("aria-activedescendant", S(a));
             });
             var T = function(a, b) {
-                return N.matches.length > b && a ? a.toUpperCase() === N.matches[b].label.toUpperCase() : !1;
+                return !!(N.matches.length > b && a) && a.toUpperCase() === N.matches[b].label.toUpperCase();
             }, U = function(a) {
                 var b = {
                     $viewValue: a
@@ -12996,8 +12996,8 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                     o[0].focus();
                 }, 0, !1);
             }, o.bind("keydown", function(a) {
-                if (0 !== N.matches.length && -1 !== l.indexOf(a.which)) {
-                    if (-1 === N.activeIdx && (9 === a.which || 13 === a.which)) return R(), void N.$digest();
+                if (0 !== N.matches.length && l.indexOf(a.which) !== -1) {
+                    if (N.activeIdx === -1 && (9 === a.which || 13 === a.which)) return R(), void N.$digest();
                     a.preventDefault(), 40 === a.which ? (N.activeIdx = (N.activeIdx + 1) % N.matches.length, 
                     N.$digest()) : 38 === a.which ? (N.activeIdx = (N.activeIdx > 0 ? N.activeIdx : N.matches.length) - 1, 
                     N.$digest()) : 13 === a.which || 9 === a.which ? N.$apply(function() {
@@ -13005,7 +13005,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
                     }) : 27 === a.which && (a.stopPropagation(), R(), N.$digest());
                 }
             }), o.bind("blur", function() {
-                C && N.matches.length && -1 !== N.activeIdx && !x && (x = !0, N.$apply(function() {
+                C && N.matches.length && N.activeIdx !== -1 && !x && (x = !0, N.$apply(function() {
                     N.select(N.activeIdx);
                 })), w = !1, x = !1;
             });
@@ -13081,7 +13081,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
         g || (b = a.trustAsHtml(b)), b;
     };
 } ]), angular.module("template/accordion/accordion-group.html", []).run([ "$templateCache", function(a) {
-    a.put("template/accordion/accordion-group.html", '<div class="panel {{panelClass || \'panel-default\'}}">\n  <div class="panel-heading" ng-keypress="toggleOpen($event)">\n    <h4 class="panel-title">\n      <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span ng-class="{\'text-muted\': isDisabled}">{{heading}}</span></a>\n    </h4>\n  </div>\n  <div class="panel-collapse collapse" uib-collapse="!isOpen">\n	  <div class="panel-body" ng-transclude></div>\n  </div>\n</div>\n');
+    a.put("template/accordion/accordion-group.html", '<div class="panel {{panelClass || \'panel-default\'}}">\n  <div class="panel-heading" ng-keypress="toggleOpen($event)">\n    <h4 class="panel-title">\n      <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span ng-class="{\'text-muted\': isDisabled}">{{heading}}</span></a>\n    </h4>\n  </div>\n  <div class="panel-collapse collapse" uib-collapse="!isOpen">\n\t  <div class="panel-body" ng-transclude></div>\n  </div>\n</div>\n');
 } ]), angular.module("template/accordion/accordion.html", []).run([ "$templateCache", function(a) {
     a.put("template/accordion/accordion.html", '<div class="panel-group" ng-transclude></div>');
 } ]), angular.module("template/alert/alert.html", []).run([ "$templateCache", function(a) {
@@ -13097,7 +13097,7 @@ angular.module("ui.bootstrap.collapse", []).directive("uibCollapse", [ "$animate
 } ]), angular.module("template/datepicker/month.html", []).run([ "$templateCache", function(a) {
     a.put("template/datepicker/month.html", '<table role="grid" aria-labelledby="{{::uniqueId}}-title" aria-activedescendant="{{activeDateId}}">\n  <thead>\n    <tr>\n      <th><button type="button" class="btn btn-default btn-sm pull-left" ng-click="move(-1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-left"></i></button></th>\n      <th><button id="{{::uniqueId}}-title" role="heading" aria-live="assertive" aria-atomic="true" type="button" class="btn btn-default btn-sm" ng-click="toggleMode()" ng-disabled="datepickerMode === maxMode" tabindex="-1" style="width:100%;"><strong>{{title}}</strong></button></th>\n      <th><button type="button" class="btn btn-default btn-sm pull-right" ng-click="move(1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-right"></i></button></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat="row in rows track by $index">\n      <td ng-repeat="dt in row track by dt.date" class="text-center" role="gridcell" id="{{::dt.uid}}" ng-class="::dt.customClass">\n        <button type="button" style="min-width:100%;" class="btn btn-default" ng-class="{\'btn-info\': dt.selected, active: isActive(dt)}" ng-click="select(dt.date)" ng-disabled="dt.disabled" tabindex="-1"><span ng-class="::{\'text-info\': dt.current}">{{::dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n');
 } ]), angular.module("template/datepicker/popup.html", []).run([ "$templateCache", function(a) {
-    a.put("template/datepicker/popup.html", '<ul class="dropdown-menu" dropdown-nested ng-if="isOpen" style="display: block" ng-style="{top: position.top+\'px\', left: position.left+\'px\'}" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">\n	<li ng-transclude></li>\n	<li ng-if="showButtonBar" style="padding:10px 9px 2px">\n		<span class="btn-group pull-left">\n			<button type="button" class="btn btn-sm btn-info" ng-click="select(\'today\')" ng-disabled="isDisabled(\'today\')">{{ getText(\'current\') }}</button>\n			<button type="button" class="btn btn-sm btn-danger" ng-click="select(null)">{{ getText(\'clear\') }}</button>\n		</span>\n		<button type="button" class="btn btn-sm btn-success pull-right" ng-click="close()">{{ getText(\'close\') }}</button>\n	</li>\n</ul>\n');
+    a.put("template/datepicker/popup.html", '<ul class="dropdown-menu" dropdown-nested ng-if="isOpen" style="display: block" ng-style="{top: position.top+\'px\', left: position.left+\'px\'}" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">\n\t<li ng-transclude></li>\n\t<li ng-if="showButtonBar" style="padding:10px 9px 2px">\n\t\t<span class="btn-group pull-left">\n\t\t\t<button type="button" class="btn btn-sm btn-info" ng-click="select(\'today\')" ng-disabled="isDisabled(\'today\')">{{ getText(\'current\') }}</button>\n\t\t\t<button type="button" class="btn btn-sm btn-danger" ng-click="select(null)">{{ getText(\'clear\') }}</button>\n\t\t</span>\n\t\t<button type="button" class="btn btn-sm btn-success pull-right" ng-click="close()">{{ getText(\'close\') }}</button>\n\t</li>\n</ul>\n');
 } ]), angular.module("template/datepicker/year.html", []).run([ "$templateCache", function(a) {
     a.put("template/datepicker/year.html", '<table role="grid" aria-labelledby="{{::uniqueId}}-title" aria-activedescendant="{{activeDateId}}">\n  <thead>\n    <tr>\n      <th><button type="button" class="btn btn-default btn-sm pull-left" ng-click="move(-1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-left"></i></button></th>\n      <th colspan="3"><button id="{{::uniqueId}}-title" role="heading" aria-live="assertive" aria-atomic="true" type="button" class="btn btn-default btn-sm" ng-click="toggleMode()" ng-disabled="datepickerMode === maxMode" tabindex="-1" style="width:100%;"><strong>{{title}}</strong></button></th>\n      <th><button type="button" class="btn btn-default btn-sm pull-right" ng-click="move(1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-right"></i></button></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat="row in rows track by $index">\n      <td ng-repeat="dt in row track by dt.date" class="text-center" role="gridcell" id="{{::dt.uid}}" ng-class="::dt.customClass">\n        <button type="button" style="min-width:100%;" class="btn btn-default" ng-class="{\'btn-info\': dt.selected, active: isActive(dt)}" ng-click="select(dt.date)" ng-disabled="dt.disabled" tabindex="-1"><span ng-class="::{\'text-info\': dt.current}">{{::dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n');
 } ]), angular.module("template/modal/backdrop.html", []).run([ "$templateCache", function(a) {
@@ -14366,7 +14366,7 @@ ngFileUpload.version = "12.0.4", ngFileUpload.service("UploadBase", [ "$http", "
         }
     }, i.shouldUpdateOn = function(a, b, c) {
         var d = i.attrGetter("ngModelOptions", b, c);
-        return d && d.updateOn ? d.updateOn.split(" ").indexOf(a) > -1 : !0;
+        return !d || !d.updateOn || d.updateOn.split(" ").indexOf(a) > -1;
     }, i.emptyPromise = function() {
         var a = d.defer(), c = arguments;
         return b(function() {
@@ -14853,7 +14853,7 @@ ngFileUpload.version = "12.0.4", ngFileUpload.service("UploadBase", [ "$http", "
         });
         var k = 0;
         if (h("maxTotalSize", null, function(b, c) {
-            return k += b.size, k > f.translateScalars(c) ? (a.splice(0, a.length), !1) : !0;
+            return k += b.size, !(k > f.translateScalars(c)) || (a.splice(0, a.length), !1);
         }), h("validateFn", null, function(a, b) {
             return b === !0 || null === b || "" === b;
         }), !a.length) return f.emptyPromise(d, d.$ngfValidations);
@@ -15502,12 +15502,12 @@ function(a) {
             }), a.promise;
         })().then(function(c) {
             !function() {
-                a.items = new Array(+f.max), h.emptyIcon = b("toFaIcon")(f.iconEmpty, !0, c) || f.iconEmpty || "fa-stars-o", 
+                a.items = new Array((+f.max)), h.emptyIcon = b("toFaIcon")(f.iconEmpty, !0, c) || f.iconEmpty || "fa-stars-o", 
                 h.iconHover = f.iconHover || "angular-input-stars-hover", h.fullIcon = b("toFaIcon")(f.iconFull, !1, c) || f.iconEmpty || "fa-stars", 
                 h.iconBase = f.iconBase || "fa fa-fw", a.listClass = f.listClass || "angular-input-stars", 
                 a.readonly = !(void 0 === f.readonly);
             }(), f.$observe("max", function(b) {
-                a.items = new Array(+b);
+                a.items = new Array((+b));
             }), f.$observe("iconEmpty", function(a) {
                 h.emptyIcon = b("toFaIcon")(a, !0, c) || a || "fa-stars-o";
             }), f.$observe("iconFull", function(a) {
@@ -15598,11 +15598,11 @@ function(a) {
             right: c
         };
     }, I = function(a) {
-        return a >= 48 && 57 >= a;
+        return a >= 48 && a <= 57;
     }, J = function(a) {
-        return 36 === a || 95 === a || a >= 65 && 90 >= a || a >= 97 && 122 >= a || a >= 128 && !A[String.fromCharCode(a)];
+        return 36 === a || 95 === a || a >= 65 && a <= 90 || a >= 97 && a <= 122 || a >= 128 && !A[String.fromCharCode(a)];
     }, K = function(a) {
-        return 36 === a || 95 === a || a >= 65 && 90 >= a || a >= 97 && 122 >= a || a >= 48 && 57 >= a || a >= 128 && !A[String.fromCharCode(a)];
+        return 36 === a || 95 === a || a >= 65 && a <= 90 || a >= 97 && a <= 122 || a >= 48 && a <= 57 || a >= 128 && !A[String.fromCharCode(a)];
     }, L = function(a) {
         for (var i, j, y = 0, B = a.charAt, L = a.charCodeAt, M = function(b) {
             return B.call(a, b);
@@ -15673,7 +15673,7 @@ function(a) {
                 raw: c
             };
         }, V = function() {
-            for (var a, b = "", c = M(y++), d = !1; O > y; ) {
+            for (var a, b = "", c = M(y++), d = !1; y < O; ) {
                 if (a = M(y++), a === c) {
                     d = !0;
                     break;
@@ -15688,7 +15688,7 @@ function(a) {
                     break;
 
                   case "t":
-                    b += "	";
+                    b += "\t";
                     break;
 
                   case "b":
@@ -15714,7 +15714,7 @@ function(a) {
             };
         }, W = function() {
             var b, d = N(y), g = y;
-            for (J(d) ? y++ : x("Unexpected " + M(y), y); O > y && (d = N(y), K(d)); ) y++;
+            for (J(d) ? y++ : x("Unexpected " + M(y), y); y < O && (d = N(y), K(d)); ) y++;
             return b = a.slice(g, y), E.hasOwnProperty(b) ? {
                 type: e,
                 value: E[b],
@@ -15726,7 +15726,7 @@ function(a) {
                 name: b
             };
         }, X = function(a) {
-            for (var c, d, e = [], f = !1; O > y; ) {
+            for (var c, d, e = [], f = !1; y < O; ) {
                 if (P(), c = N(y), c === a) {
                     f = !0, y++;
                     break;
@@ -15762,7 +15762,7 @@ function(a) {
                 type: l,
                 elements: X(t)
             };
-        }, _ = []; O > y; ) i = N(y), i === v || i === n ? y++ : (j = Q()) ? _.push(j) : O > y && x('Unexpected "' + M(y) + '"', y);
+        }, _ = []; y < O; ) i = N(y), i === v || i === n ? y++ : (j = Q()) ? _.push(j) : y < O && x('Unexpected "' + M(y) + '"', y);
         return 1 === _.length ? _[0] : {
             type: b,
             body: _
@@ -15860,8 +15860,8 @@ function(a) {
                     });
                     var d = this.s(a), e = d.path.lastIndexOf("/"), g = d.path.substr(1, e);
                     return this.t = a, this.i.ignoreErrors.push(/^Script error\.?$/), this.i.ignoreErrors.push(/^Javascript error: Script error\.? on line 0$/), 
-                    this.i.ignoreErrors = n(this.i.ignoreErrors), this.i.ignoreUrls = this.i.ignoreUrls.length ? n(this.i.ignoreUrls) : !1, 
-                    this.i.whitelistUrls = this.i.whitelistUrls.length ? n(this.i.whitelistUrls) : !1, 
+                    this.i.ignoreErrors = n(this.i.ignoreErrors), this.i.ignoreUrls = !!this.i.ignoreUrls.length && n(this.i.ignoreUrls), 
+                    this.i.whitelistUrls = !!this.i.whitelistUrls.length && n(this.i.whitelistUrls), 
                     this.i.includePaths = n(this.i.includePaths), this.f = d.user, this.u = d.pass && d.pass.substr(1), 
                     this.g = d.path.substr(e + 1), this.e = this.v(d), this.w = this.e + "/" + g + "api/" + this.g + "/store/", 
                     this.i.fetchContext && (f.remoteFetching = !0), this.i.linesOfContext && (f.linesOfContext = this.i.linesOfContext), 
@@ -15956,8 +15956,8 @@ function(a) {
                     return this.d;
                 },
                 isSetup: function() {
-                    return this.a ? this.e ? !0 : (this.ravenNotConfiguredError || (this.ravenNotConfiguredError = !0, 
-                    this.r("error", "Error: Raven has not been configured.")), !1) : !1;
+                    return !!this.a && (!!this.e || (this.ravenNotConfiguredError || (this.ravenNotConfiguredError = !0, 
+                    this.r("error", "Error: Raven has not been configured.")), !1));
                 },
                 afterLoad: function() {
                     var a = window.RavenConfig;
@@ -16372,7 +16372,7 @@ function(a) {
                             stack: [ k ]
                         }, e(j, !0);
                     }
-                    return p ? p.apply(this, arguments) : !1;
+                    return !!p && p.apply(this, arguments);
                 }
                 function k() {
                     q || (p = window.onerror, window.onerror = h, q = !0);
@@ -16692,7 +16692,7 @@ function(a) {
         if (a !== b) {
             var c = null === a, d = a === u, e = a === a, f = null === b, g = b === u, h = b === b;
             if (a > b && !f || !e || c && !g && h || d && h) return 1;
-            if (b > a && !c || !h || f && !d && e || g && e) return -1;
+            if (a < b && !c || !h || f && !d && e || g && e) return -1;
         }
         return 0;
     }
@@ -16747,7 +16747,7 @@ function(a) {
         return !!a && "object" == typeof a;
     }
     function o(a) {
-        return 160 >= a && a >= 9 && 13 >= a || 32 == a || 160 == a || 5760 == a || 6158 == a || a >= 8192 && (8202 >= a || 8232 == a || 8233 == a || 8239 == a || 8287 == a || 12288 == a || 65279 == a);
+        return 160 >= a && 9 <= a && 13 >= a || 32 == a || 160 == a || 5760 == a || 6158 == a || 8192 <= a && (8202 >= a || 8232 == a || 8233 == a || 8239 == a || 8287 == a || 12288 == a || 65279 == a);
     }
     function p(a, b) {
         for (var c = -1, d = a.length, e = -1, f = []; ++c < d; ) a[c] === b && (a[c] = N, 
@@ -16948,7 +16948,7 @@ function(a) {
         function qb(a, b, c) {
             if (null != a) {
                 c !== u && c in Nc(a) && (b = [ c ]), c = 0;
-                for (var d = b.length; null != a && d > c; ) a = a[b[c++]];
+                for (var d = b.length; null != a && c < d; ) a = a[b[c++]];
                 return c && c == d ? a : u;
             }
         }
@@ -17001,7 +17001,7 @@ function(a) {
             if (1 == b.length && b[0][2]) {
                 var c = b[0][0], d = b[0][1];
                 return function(a) {
-                    return null == a ? !1 : a[c] === d && (d !== u || c in Nc(a));
+                    return null != a && (a[c] === d && (d !== u || c in Nc(a)));
                 };
             }
             return function(a) {
@@ -17115,7 +17115,7 @@ function(a) {
             }), c;
         }
         function Hb(a, b) {
-            var d = -1, e = vc(), f = a.length, g = e === c, h = g && f >= J, i = h && pe && je ? new Oa(void 0) : null, j = [];
+            var d = -1, e = vc(), f = a.length, g = e === c, h = g && f >= J, i = h && pe && je ? new Oa((void 0)) : null, j = [];
             i ? (e = Pa, g = !1) : (h = !1, i = b ? [] : j);
             a: for (;++d < f; ) {
                 var k = a[d], l = b ? b(k, d, a) : k;
@@ -17142,10 +17142,10 @@ function(a) {
         }
         function Lb(a, b, c) {
             var d = 0, e = a ? a.length : d;
-            if ("number" == typeof b && b === b && Ce >= e) {
-                for (;e > d; ) {
+            if ("number" == typeof b && b === b && e <= Ce) {
+                for (;d < e; ) {
                     var f = d + e >>> 1, g = a[f];
-                    (c ? b >= g : b > g) && null !== g ? d = f + 1 : e = f;
+                    (c ? g <= b : g < b) && null !== g ? d = f + 1 : e = f;
                 }
                 return e;
             }
@@ -17153,9 +17153,9 @@ function(a) {
         }
         function Mb(a, b, c, d) {
             b = c(b);
-            for (var e = 0, f = a ? a.length : 0, g = b !== b, h = null === b, i = b === u; f > e; ) {
+            for (var e = 0, f = a ? a.length : 0, g = b !== b, h = null === b, i = b === u; e < f; ) {
                 var j = qe((e + f) / 2), k = c(a[j]), l = k !== u, m = k === k;
-                (g ? m || d : h ? m && l && (d || null != k) : i ? m && (d || l) : null == k ? 0 : d ? b >= k : b > k) ? e = j + 1 : f = j;
+                (g ? m || d : h ? m && l && (d || null != k) : i ? m && (d || l) : null == k ? 0 : d ? k <= b : k < b) ? e = j + 1 : f = j;
             }
             return ve(f, Be);
         }
@@ -17220,7 +17220,7 @@ function(a) {
         }
         function Sb(a) {
             return jd(function(b, c) {
-                var d = -1, e = null == b ? 0 : c.length, f = e > 2 ? c[e - 2] : u, g = e > 2 ? c[2] : u, h = e > 1 ? c[e - 1] : u;
+                var d = -1, e = null == b ? 0 : c.length, f = 2 < e ? c[e - 2] : u, g = 2 < e ? c[2] : u, h = 1 < e ? c[e - 1] : u;
                 for ("function" == typeof f ? (f = Nb(f, h, 5), e -= 2) : (f = "function" == typeof h ? h : u, 
                 e -= f ? 1 : 0), g && Ec(c[0], c[1], g) && (f = 3 > e ? u : f, e = 1); ++d < e; ) (g = c[d]) && a(b, g, f);
                 return b;
@@ -17320,7 +17320,7 @@ function(a) {
         }
         function _b(a, c) {
             return function(d, e, f) {
-                return e = tc(e, f, 3), Bf(d) ? (e = b(d, e, c), e > -1 ? d[e] : u) : kb(d, e, a);
+                return e = tc(e, f, 3), Bf(d) ? (e = b(d, e, c), -1 < e ? d[e] : u) : kb(d, e, a);
             };
         }
         function ac(a) {
@@ -17338,7 +17338,7 @@ function(a) {
                 for (var b, c = arguments.length, d = a ? c : -1, e = 0, f = Nd(c); a ? d-- : ++d < c; ) {
                     var g = f[e++] = arguments[d];
                     if ("function" != typeof g) throw new Wd(M);
-                    !b && La.prototype.thru && "wrapper" == uc(g) && (b = new La([], !0));
+                    !b && La.prototype.thru && "wrapper" == uc(g) && (b = new La([], (!0)));
                 }
                 for (d = b ? -1 : c; ++d < c; ) {
                     var g = f[d], e = uc(g), h = "wrapper" == e ? Me(g) : u;
@@ -17398,7 +17398,7 @@ function(a) {
                 for (var t = arguments.length, v = t, y = Nd(t); v--; ) y[v] = arguments[v];
                 if (d && (y = Pb(y, d, e)), f && (y = Qb(y, f, g)), o || r) {
                     var v = k.placeholder, z = p(y, v), t = t - z.length;
-                    if (j > t) {
+                    if (t < j) {
                         var A = h ? Qa(h) : u, t = ue(j - t, 0), D = o ? z : u, z = o ? u : z, E = o ? y : u, y = o ? u : y;
                         return b |= o ? B : C, b &= ~(o ? C : B), q || (b &= ~(w | x)), y = [ a, b, c, E, D, y, z, A, i, t ], 
                         A = kc.apply(u, y), Gc(a) && Oe(A, y), A.placeholder = v, A;
@@ -17413,7 +17413,7 @@ function(a) {
             return k;
         }
         function lc(a, b, c) {
-            return a = a.length, b = +b, b > a && se(b) ? (b -= a, c = null == c ? " " : c + "", 
+            return a = a.length, b = +b, a < b && se(b) ? (b -= a, c = null == c ? " " : c + "", 
             Ed(c, oe(b / c.length)).slice(0, b)) : "";
         }
         function mc(a, b, c, d) {
@@ -17448,7 +17448,7 @@ function(a) {
             var m = i ? u : Me(a);
             return c = [ a, b, c, d, e, k, l, f, g, h ], m && (d = c[1], b = m[1], h = d | b, 
             e = b == D && d == z || b == D && d == E && c[7].length <= m[8] || b == (D | E) && d == z, 
-            (D > h || e) && (b & w && (c[2] = m[2], h |= d & w ? 0 : y), (d = m[3]) && (e = c[3], 
+            (h < D || e) && (b & w && (c[2] = m[2], h |= d & w ? 0 : y), (d = m[3]) && (e = c[3], 
             c[3] = e ? Pb(e, d, m[4]) : Qa(d), c[4] = e ? p(c[3], N) : Qa(m[4])), (d = m[5]) && (e = c[5], 
             c[5] = e ? Qb(e, d, m[6]) : Qa(d), c[6] = e ? p(c[5], N) : Qa(m[6])), (d = m[7]) && (c[7] = Qa(d)), 
             b & D && (c[8] = null == c[8] ? m[8] : ve(c[8], m[8])), null == c[9] && (c[9] = m[9]), 
@@ -17457,7 +17457,7 @@ function(a) {
         }
         function qc(a, b, c, d, e, f, g) {
             var h = -1, i = a.length, j = b.length;
-            if (i != j && (!e || i >= j)) return !1;
+            if (i != j && (!e || j <= i)) return !1;
             for (;++h < i; ) {
                 var k = a[h], j = b[h], l = d ? d(e ? j : k, e ? k : j, h) : u;
                 if (l !== u) {
@@ -17548,7 +17548,7 @@ function(a) {
 
               case Q:
               case R:
-                return new d(+a);
+                return new d((+a));
 
               case Z:
               case $:
@@ -17580,25 +17580,24 @@ function(a) {
         }
         function Dc(a, b) {
             return a = "number" == typeof a || Ba.test(a) ? +a : -1, b = null == b ? De : b, 
-            a > -1 && 0 == a % 1 && b > a;
+            -1 < a && 0 == a % 1 && a < b;
         }
         function Ec(a, b, c) {
             if (!pd(c)) return !1;
             var d = typeof b;
-            return ("number" == d ? Cc(c) && Dc(b, c.length) : "string" == d && b in c) ? (b = c[b], 
-            a === a ? a === b : b !== b) : !1;
+            return !!("number" == d ? Cc(c) && Dc(b, c.length) : "string" == d && b in c) && (b = c[b], 
+            a === a ? a === b : b !== b);
         }
         function Fc(a, b) {
             var c = typeof a;
-            return "string" == c && ra.test(a) || "number" == c ? !0 : Bf(a) ? !1 : !qa.test(a) || null != b && a in Nc(b);
+            return !!("string" == c && ra.test(a) || "number" == c) || !Bf(a) && (!qa.test(a) || null != b && a in Nc(b));
         }
         function Gc(a) {
             var b = uc(a), c = Ja[b];
-            return "function" == typeof c && b in Ma.prototype ? a === c ? !0 : (b = Me(c), 
-            !!b && a === b[0]) : !1;
+            return "function" == typeof c && b in Ma.prototype && (a === c || (b = Me(c), !!b && a === b[0]));
         }
         function Hc(a) {
-            return "number" == typeof a && a > -1 && 0 == a % 1 && De >= a;
+            return "number" == typeof a && -1 < a && 0 == a % 1 && a <= De;
         }
         function Ic(a, b) {
             return a === u ? b : Cf(a, b, Ic);
@@ -17654,7 +17653,7 @@ function(a) {
             var e = a ? a.length : 0;
             if (!e) return -1;
             if ("number" == typeof d) d = 0 > d ? ue(e + d, 0) : d; else if (d) return d = Lb(a, b), 
-            e > d && (b === b ? b === a[d] : a[d] !== a[d]) ? d : -1;
+            d < e && (b === b ? b === a[d] : a[d] !== a[d]) ? d : -1;
             return c(a, b, d || 0);
         }
         function Uc(a) {
@@ -17720,7 +17719,7 @@ function(a) {
         function cd(a, b, c, d) {
             var e = a ? Ne(a) : 0;
             return Hc(e) || (a = Cd(a), e = a.length), c = "number" != typeof c || d && Ec(b, c, d) ? 0 : 0 > c ? ue(e + c, 0) : c || 0, 
-            "string" == typeof a || !Bf(a) && ud(a) ? e >= c && -1 < a.indexOf(b, c) : !!e && -1 < vc(a, b, c);
+            "string" == typeof a || !Bf(a) && ud(a) ? c <= e && -1 < a.indexOf(b, c) : !!e && -1 < vc(a, b, c);
         }
         function dd(a, b, c) {
             var d = Bf(a) ? Wa : tb;
@@ -17730,7 +17729,7 @@ function(a) {
             if (c ? Ec(a, b, c) : null == b) {
                 a = Mc(a);
                 var d = a.length;
-                return d > 0 ? a[Ab(0, d - 1)] : u;
+                return 0 < d ? a[Ab(0, d - 1)] : u;
             }
             c = -1, a = xd(a);
             var d = a.length, e = d - 1;
@@ -17830,7 +17829,7 @@ function(a) {
             return !!a && ("object" == b || "function" == b);
         }
         function qd(a) {
-            return null == a ? !1 : od(a) ? de.test($d.call(a)) : n(a) && Aa.test(a);
+            return null != a && (od(a) ? de.test($d.call(a)) : n(a) && Aa.test(a));
         }
         function rd(a) {
             return "number" == typeof a || n(a) && be.call(a) == U;
@@ -17854,7 +17853,7 @@ function(a) {
             return n(a) && Hc(a.length) && !!Ha[be.call(a)];
         }
         function wd(a, b) {
-            return b > a;
+            return a < b;
         }
         function xd(a) {
             var b = a ? Ne(a) : 0;
@@ -17869,7 +17868,7 @@ function(a) {
         function Ad(a) {
             if (null == a) return [];
             pd(a) || (a = Td(a));
-            for (var b = a.length, b = b && Hc(b) && (Bf(a) || ld(a)) && b || 0, c = a.constructor, d = -1, c = "function" == typeof c && c.prototype === a, e = Nd(b), f = b > 0; ++d < b; ) e[d] = d + "";
+            for (var b = a.length, b = b && Hc(b) && (Bf(a) || ld(a)) && b || 0, c = a.constructor, d = -1, c = "function" == typeof c && c.prototype === a, e = Nd(b), f = 0 < b; ++d < b; ) e[d] = d + "";
             for (var g in a) f && Dc(g, b) || "constructor" == g && (c || !_d.call(a, g)) || e.push(g);
             return e;
         }
@@ -17971,7 +17970,7 @@ function(a) {
             var a = 0, b = 0;
             return function(c, d) {
                 var e = nf(), f = I - (e - b);
-                if (b = e, f > 0) {
+                if (b = e, 0 < f) {
                     if (++a >= H) return c;
                 } else a = 0;
                 return Le(c, d);
@@ -18001,8 +18000,8 @@ function(a) {
         }), Xe = jd(function(a, b) {
             return Cc(a) ? gb(a, b) : [];
         }), Ye = jd(Xc), Ze = jd(function(a) {
-            var b = a.length, c = b > 2 ? a[b - 2] : u, d = b > 1 ? a[b - 1] : u;
-            return b > 2 && "function" == typeof c ? b -= 2 : (c = b > 1 && "function" == typeof d ? (--b, 
+            var b = a.length, c = 2 < b ? a[b - 2] : u, d = 1 < b ? a[b - 1] : u;
+            return 2 < b && "function" == typeof c ? b -= 2 : (c = 1 < b && "function" == typeof d ? (--b, 
             d) : u, d = u), a.length = b, Yc(a, c, d);
         }), $e = jd(function(a) {
             return a = lb(a), this.thru(function(b) {
@@ -18138,7 +18137,7 @@ function(a) {
         }, Ja.assign = Df, Ja.at = _e, Ja.before = gd, Ja.bind = of, Ja.bindAll = pf, Ja.bindKey = qf, 
         Ja.callback = Hd, Ja.chain = $c, Ja.chunk = function(a, b, c) {
             b = (c ? Ec(a, b, c) : null == b) ? 1 : ue(qe(b) || 1, 1), c = 0;
-            for (var d = a ? a.length : 0, e = -1, f = Nd(oe(d / b)); d > c; ) f[++e] = Cb(a, c, c += b);
+            for (var d = a ? a.length : 0, e = -1, f = Nd(oe(d / b)); c < d; ) f[++e] = Cb(a, c, c += b);
             return f;
         }, Ja.compact = function(a) {
             for (var b = -1, c = a ? a.length : 0, d = -1, e = []; ++b < c; ) {
@@ -18164,7 +18163,7 @@ function(a) {
             if (!e) return [];
             for (c && "number" != typeof c && Ec(a, b, c) && (c = 0, d = e), e = a.length, c = null == c ? 0 : +c || 0, 
             0 > c && (c = -c > e ? 0 : e + c), d = d === u || d > e ? e : +d || 0, 0 > d && (d += e), 
-            e = c > d ? 0 : d >>> 0, c >>>= 0; e > c; ) a[c++] = b;
+            e = c > d ? 0 : d >>> 0, c >>>= 0; c < e; ) a[c++] = b;
             return a;
         }, Ja.filter = bd, Ja.flatten = function(a, b, c) {
             var d = a ? a.length : 0;
@@ -18316,7 +18315,7 @@ function(a) {
         }, Ja.deburr = Dd, Ja.endsWith = function(a, b, c) {
             a = e(a), b += "";
             var d = a.length;
-            return c = c === u ? d : ve(0 > c ? 0 : +c || 0, d), c -= b.length, c >= 0 && a.indexOf(b, c) == c;
+            return c = c === u ? d : ve(0 > c ? 0 : +c || 0, d), c -= b.length, 0 <= c && a.indexOf(b, c) == c;
         }, Ja.escape = function(a) {
             return (a = e(a)) && ma.test(a) ? a.replace(ka, j) : a;
         }, Ja.escapeRegExp = function(a) {
@@ -18345,7 +18344,7 @@ function(a) {
         }, Ja.isElement = function(a) {
             return !!a && 1 === a.nodeType && n(a) && !sd(a);
         }, Ja.isEmpty = function(a) {
-            return null == a ? !0 : Cc(a) && (Bf(a) || ud(a) || ld(a) || n(a) && od(a.splice)) ? !a.length : !Mf(a).length;
+            return null == a || (Cc(a) && (Bf(a) || ud(a) || ld(a) || n(a) && od(a.splice)) ? !a.length : !Mf(a).length);
         }, Ja.isEqual = md, Ja.isError = nd, Ja.isFinite = function(a) {
             return "number" == typeof a && se(a);
         }, Ja.isFunction = od, Ja.isMatch = function(a, b, c, d) {
@@ -18367,13 +18366,13 @@ function(a) {
             for (;e--; ) if (a[e] === b) return e;
             return -1;
         }, Ja.lt = wd, Ja.lte = function(a, b) {
-            return b >= a;
+            return a <= b;
         }, Ja.max = ag, Ja.min = bg, Ja.noConflict = function() {
             return Ua._ = ce, this;
         }, Ja.noop = Ld, Ja.now = nf, Ja.pad = function(a, b, c) {
             a = e(a), b = +b;
             var d = a.length;
-            return b > d && se(b) ? (d = (b - d) / 2, b = qe(d), d = oe(d), c = lc("", d, c), 
+            return d < b && se(b) ? (d = (b - d) / 2, b = qe(d), d = oe(d), c = lc("", d, c), 
             c.slice(0, b) + a + c) : a;
         }, Ja.padLeft = Tf, Ja.padRight = Uf, Ja.parseInt = function(a, b, c) {
             return (c ? Ec(a, b, c) : null == b) ? b = 0 : b && (b = +b), a = Fd(a), xe(a, b || (za.test(a) ? 16 : 10));
@@ -18440,7 +18439,7 @@ function(a) {
                     for (f.global || (f = Ud(f.source, (ya.exec(f) || "") + "g")), f.lastIndex = 0; a = f.exec(h); ) g = a.index;
                     b = b.slice(0, null == g ? d : g);
                 }
-            } else a.indexOf(f, d) != d && (f = b.lastIndexOf(f), f > -1 && (b = b.slice(0, f)));
+            } else a.indexOf(f, d) != d && (f = b.lastIndexOf(f), -1 < f && (b = b.slice(0, f)));
             return b + c;
         }, Ja.unescape = function(a) {
             return (a = e(a)) && la.test(a) ? a.replace(ja, s) : a;
@@ -18505,7 +18504,7 @@ function(a) {
         }, Ma.prototype.slice = function(a, b) {
             a = null == a ? 0 : +a || 0;
             var c = this;
-            return c.__filtered__ && (a > 0 || 0 > b) ? new Ma(c) : (0 > a ? c = c.takeRight(-a) : a && (c = c.drop(a)), 
+            return c.__filtered__ && (0 < a || 0 > b) ? new Ma(c) : (0 > a ? c = c.takeRight(-a) : a && (c = c.drop(a)), 
             b !== u && (b = +b || 0, c = 0 > b ? c.dropRight(-b) : c.take(b - a)), c);
         }, Ma.prototype.takeRightWhile = function(a, b) {
             return this.reverse().takeWhile(a, b).reverse();
@@ -18582,9 +18581,9 @@ function(a) {
                 start: h,
                 end: a
             }, g = a.start, h = a.end, a = h - g, e = e ? h : g - 1, g = this.__iteratees__, 
-            h = g.length, i = 0, j = ve(a, this.__takeCount__), !d || J > f || f == a && j == a) return Kb(b, this.__actions__);
+            h = g.length, i = 0, j = ve(a, this.__takeCount__), !d || f < J || f == a && j == a) return Kb(b, this.__actions__);
             d = [];
-            a: for (;a-- && j > i; ) {
+            a: for (;a-- && i < j; ) {
                 for (e += c, f = -1, k = b[e]; ++f < h; ) {
                     var m = g[f], l = m.type, m = m.iteratee(k);
                     if (l == L) k = m; else if (!m) {
@@ -18760,7 +18759,7 @@ function(a) {
         function c(a, b) {
             var c, d, e = a.length;
             if (!e || !b) return !1;
-            for (c = b.toLowerCase(), d = 0; e > d; ++d) if (c === a[d].toLowerCase()) return !0;
+            for (c = b.toLowerCase(), d = 0; d < e; ++d) if (c === a[d].toLowerCase()) return !0;
             return !1;
         }
         function d(a) {
@@ -18778,7 +18777,7 @@ function(a) {
                 Nexus: "Nexus One|Nexus S|Galaxy.*Nexus|Android.*Nexus.*Mobile|Nexus 4|Nexus 5|Nexus 6",
                 Dell: "Dell.*Streak|Dell.*Aero|Dell.*Venue|DELL.*Venue Pro|Dell Flash|Dell Smoke|Dell Mini 3iX|XCD28|XCD35|\\b001DL\\b|\\b101DL\\b|\\bGS01\\b",
                 Motorola: "Motorola|DROIDX|DROID BIONIC|\\bDroid\\b.*Build|Android.*Xoom|HRI39|MOT-|A1260|A1680|A555|A853|A855|A953|A955|A956|Motorola.*ELECTRIFY|Motorola.*i1|i867|i940|MB200|MB300|MB501|MB502|MB508|MB511|MB520|MB525|MB526|MB611|MB612|MB632|MB810|MB855|MB860|MB861|MB865|MB870|ME501|ME502|ME511|ME525|ME600|ME632|ME722|ME811|ME860|ME863|ME865|MT620|MT710|MT716|MT720|MT810|MT870|MT917|Motorola.*TITANIUM|WX435|WX445|XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|\\bMoto E\\b",
-                Samsung: "\\bSamsung\\b|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|GT-B3210|GT-B3310|GT-B3410|GT-B3730|GT-B3740|GT-B5510|GT-B5512|GT-B5722|GT-B6520|GT-B7300|GT-B7320|GT-B7330|GT-B7350|GT-B7510|GT-B7722|GT-B7800|GT-C3010|GT-C3011|GT-C3060|GT-C3200|GT-C3212|GT-C3212I|GT-C3262|GT-C3222|GT-C3300|GT-C3300K|GT-C3303|GT-C3303K|GT-C3310|GT-C3322|GT-C3330|GT-C3350|GT-C3500|GT-C3510|GT-C3530|GT-C3630|GT-C3780|GT-C5010|GT-C5212|GT-C6620|GT-C6625|GT-C6712|GT-E1050|GT-E1070|GT-E1075|GT-E1080|GT-E1081|GT-E1085|GT-E1087|GT-E1100|GT-E1107|GT-E1110|GT-E1120|GT-E1125|GT-E1130|GT-E1160|GT-E1170|GT-E1175|GT-E1180|GT-E1182|GT-E1200|GT-E1210|GT-E1225|GT-E1230|GT-E1390|GT-E2100|GT-E2120|GT-E2121|GT-E2152|GT-E2220|GT-E2222|GT-E2230|GT-E2232|GT-E2250|GT-E2370|GT-E2550|GT-E2652|GT-E3210|GT-E3213|GT-I5500|GT-I5503|GT-I5700|GT-I5800|GT-I5801|GT-I6410|GT-I6420|GT-I7110|GT-I7410|GT-I7500|GT-I8000|GT-I8150|GT-I8160|GT-I8190|GT-I8320|GT-I8330|GT-I8350|GT-I8530|GT-I8700|GT-I8703|GT-I8910|GT-I9000|GT-I9001|GT-I9003|GT-I9010|GT-I9020|GT-I9023|GT-I9070|GT-I9082|GT-I9100|GT-I9103|GT-I9220|GT-I9250|GT-I9300|GT-I9305|GT-I9500|GT-I9505|GT-M3510|GT-M5650|GT-M7500|GT-M7600|GT-M7603|GT-M8800|GT-M8910|GT-N7000|GT-S3110|GT-S3310|GT-S3350|GT-S3353|GT-S3370|GT-S3650|GT-S3653|GT-S3770|GT-S3850|GT-S5210|GT-S5220|GT-S5229|GT-S5230|GT-S5233|GT-S5250|GT-S5253|GT-S5260|GT-S5263|GT-S5270|GT-S5300|GT-S5330|GT-S5350|GT-S5360|GT-S5363|GT-S5369|GT-S5380|GT-S5380D|GT-S5560|GT-S5570|GT-S5600|GT-S5603|GT-S5610|GT-S5620|GT-S5660|GT-S5670|GT-S5690|GT-S5750|GT-S5780|GT-S5830|GT-S5839|GT-S6102|GT-S6500|GT-S7070|GT-S7200|GT-S7220|GT-S7230|GT-S7233|GT-S7250|GT-S7500|GT-S7530|GT-S7550|GT-S7562|GT-S7710|GT-S8000|GT-S8003|GT-S8500|GT-S8530|GT-S8600|SCH-A310|SCH-A530|SCH-A570|SCH-A610|SCH-A630|SCH-A650|SCH-A790|SCH-A795|SCH-A850|SCH-A870|SCH-A890|SCH-A930|SCH-A950|SCH-A970|SCH-A990|SCH-I100|SCH-I110|SCH-I400|SCH-I405|SCH-I500|SCH-I510|SCH-I515|SCH-I600|SCH-I730|SCH-I760|SCH-I770|SCH-I830|SCH-I910|SCH-I920|SCH-I959|SCH-LC11|SCH-N150|SCH-N300|SCH-R100|SCH-R300|SCH-R351|SCH-R400|SCH-R410|SCH-T300|SCH-U310|SCH-U320|SCH-U350|SCH-U360|SCH-U365|SCH-U370|SCH-U380|SCH-U410|SCH-U430|SCH-U450|SCH-U460|SCH-U470|SCH-U490|SCH-U540|SCH-U550|SCH-U620|SCH-U640|SCH-U650|SCH-U660|SCH-U700|SCH-U740|SCH-U750|SCH-U810|SCH-U820|SCH-U900|SCH-U940|SCH-U960|SCS-26UC|SGH-A107|SGH-A117|SGH-A127|SGH-A137|SGH-A157|SGH-A167|SGH-A177|SGH-A187|SGH-A197|SGH-A227|SGH-A237|SGH-A257|SGH-A437|SGH-A517|SGH-A597|SGH-A637|SGH-A657|SGH-A667|SGH-A687|SGH-A697|SGH-A707|SGH-A717|SGH-A727|SGH-A737|SGH-A747|SGH-A767|SGH-A777|SGH-A797|SGH-A817|SGH-A827|SGH-A837|SGH-A847|SGH-A867|SGH-A877|SGH-A887|SGH-A897|SGH-A927|SGH-B100|SGH-B130|SGH-B200|SGH-B220|SGH-C100|SGH-C110|SGH-C120|SGH-C130|SGH-C140|SGH-C160|SGH-C170|SGH-C180|SGH-C200|SGH-C207|SGH-C210|SGH-C225|SGH-C230|SGH-C417|SGH-C450|SGH-D307|SGH-D347|SGH-D357|SGH-D407|SGH-D415|SGH-D780|SGH-D807|SGH-D980|SGH-E105|SGH-E200|SGH-E315|SGH-E316|SGH-E317|SGH-E335|SGH-E590|SGH-E635|SGH-E715|SGH-E890|SGH-F300|SGH-F480|SGH-I200|SGH-I300|SGH-I320|SGH-I550|SGH-I577|SGH-I600|SGH-I607|SGH-I617|SGH-I627|SGH-I637|SGH-I677|SGH-I700|SGH-I717|SGH-I727|SGH-i747M|SGH-I777|SGH-I780|SGH-I827|SGH-I847|SGH-I857|SGH-I896|SGH-I897|SGH-I900|SGH-I907|SGH-I917|SGH-I927|SGH-I937|SGH-I997|SGH-J150|SGH-J200|SGH-L170|SGH-L700|SGH-M110|SGH-M150|SGH-M200|SGH-N105|SGH-N500|SGH-N600|SGH-N620|SGH-N625|SGH-N700|SGH-N710|SGH-P107|SGH-P207|SGH-P300|SGH-P310|SGH-P520|SGH-P735|SGH-P777|SGH-Q105|SGH-R210|SGH-R220|SGH-R225|SGH-S105|SGH-S307|SGH-T109|SGH-T119|SGH-T139|SGH-T209|SGH-T219|SGH-T229|SGH-T239|SGH-T249|SGH-T259|SGH-T309|SGH-T319|SGH-T329|SGH-T339|SGH-T349|SGH-T359|SGH-T369|SGH-T379|SGH-T409|SGH-T429|SGH-T439|SGH-T459|SGH-T469|SGH-T479|SGH-T499|SGH-T509|SGH-T519|SGH-T539|SGH-T559|SGH-T589|SGH-T609|SGH-T619|SGH-T629|SGH-T639|SGH-T659|SGH-T669|SGH-T679|SGH-T709|SGH-T719|SGH-T729|SGH-T739|SGH-T746|SGH-T749|SGH-T759|SGH-T769|SGH-T809|SGH-T819|SGH-T839|SGH-T919|SGH-T929|SGH-T939|SGH-T959|SGH-T989|SGH-U100|SGH-U200|SGH-U800|SGH-V205|SGH-V206|SGH-X100|SGH-X105|SGH-X120|SGH-X140|SGH-X426|SGH-X427|SGH-X475|SGH-X495|SGH-X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH-Z130|SGH-Z150|SGH-Z170|SGH-ZX10|SGH-ZX20|SHW-M110|SPH-A120|SPH-A400|SPH-A420|SPH-A460|SPH-A500|SPH-A560|SPH-A600|SPH-A620|SPH-A660|SPH-A700|SPH-A740|SPH-A760|SPH-A790|SPH-A800|SPH-A820|SPH-A840|SPH-A880|SPH-A900|SPH-A940|SPH-A960|SPH-D600|SPH-D700|SPH-D710|SPH-D720|SPH-I300|SPH-I325|SPH-I330|SPH-I350|SPH-I500|SPH-I600|SPH-I700|SPH-L700|SPH-M100|SPH-M220|SPH-M240|SPH-M300|SPH-M305|SPH-M320|SPH-M330|SPH-M350|SPH-M360|SPH-M370|SPH-M380|SPH-M510|SPH-M540|SPH-M550|SPH-M560|SPH-M570|SPH-M580|SPH-M610|SPH-M620|SPH-M630|SPH-M800|SPH-M810|SPH-M850|SPH-M900|SPH-M910|SPH-M920|SPH-M930|SPH-N100|SPH-N200|SPH-N240|SPH-N300|SPH-N400|SPH-Z400|SWC-E100|SCH-i909|GT-N7100|GT-N7105|SCH-I535|SM-N900A|SGH-I317|SGH-T999L|GT-S5360B|GT-I8262|GT-S6802|GT-S6312|GT-S6310|GT-S5312|GT-S5310|GT-I9105|GT-I8510|GT-S6790N|SM-G7105|SM-N9005|GT-S5301|GT-I9295|GT-I9195|SM-C101|GT-S7392|GT-S7560|GT-B7610|GT-I5510|GT-S7582|GT-S7530E|GT-I8750|SM-G9006V|SM-G9008V|SM-G9009D|SM-G900A|SM-G900D|SM-G900F|SM-G900H|SM-G900I|SM-G900J|SM-G900K|SM-G900L|SM-G900M|SM-G900P|SM-G900R4|SM-G900S|SM-G900T|SM-G900V|SM-G900W8|SHV-E160K|SCH-P709|SCH-P729|SM-T2558|GT-I9205|SM-G9350|SM-J120F",
+                Samsung: "Samsung|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|GT-B3210|GT-B3310|GT-B3410|GT-B3730|GT-B3740|GT-B5510|GT-B5512|GT-B5722|GT-B6520|GT-B7300|GT-B7320|GT-B7330|GT-B7350|GT-B7510|GT-B7722|GT-B7800|GT-C3010|GT-C3011|GT-C3060|GT-C3200|GT-C3212|GT-C3212I|GT-C3262|GT-C3222|GT-C3300|GT-C3300K|GT-C3303|GT-C3303K|GT-C3310|GT-C3322|GT-C3330|GT-C3350|GT-C3500|GT-C3510|GT-C3530|GT-C3630|GT-C3780|GT-C5010|GT-C5212|GT-C6620|GT-C6625|GT-C6712|GT-E1050|GT-E1070|GT-E1075|GT-E1080|GT-E1081|GT-E1085|GT-E1087|GT-E1100|GT-E1107|GT-E1110|GT-E1120|GT-E1125|GT-E1130|GT-E1160|GT-E1170|GT-E1175|GT-E1180|GT-E1182|GT-E1200|GT-E1210|GT-E1225|GT-E1230|GT-E1390|GT-E2100|GT-E2120|GT-E2121|GT-E2152|GT-E2220|GT-E2222|GT-E2230|GT-E2232|GT-E2250|GT-E2370|GT-E2550|GT-E2652|GT-E3210|GT-E3213|GT-I5500|GT-I5503|GT-I5700|GT-I5800|GT-I5801|GT-I6410|GT-I6420|GT-I7110|GT-I7410|GT-I7500|GT-I8000|GT-I8150|GT-I8160|GT-I8190|GT-I8320|GT-I8330|GT-I8350|GT-I8530|GT-I8700|GT-I8703|GT-I8910|GT-I9000|GT-I9001|GT-I9003|GT-I9010|GT-I9020|GT-I9023|GT-I9070|GT-I9082|GT-I9100|GT-I9103|GT-I9220|GT-I9250|GT-I9300|GT-I9305|GT-I9500|GT-I9505|GT-M3510|GT-M5650|GT-M7500|GT-M7600|GT-M7603|GT-M8800|GT-M8910|GT-N7000|GT-S3110|GT-S3310|GT-S3350|GT-S3353|GT-S3370|GT-S3650|GT-S3653|GT-S3770|GT-S3850|GT-S5210|GT-S5220|GT-S5229|GT-S5230|GT-S5233|GT-S5250|GT-S5253|GT-S5260|GT-S5263|GT-S5270|GT-S5300|GT-S5330|GT-S5350|GT-S5360|GT-S5363|GT-S5369|GT-S5380|GT-S5380D|GT-S5560|GT-S5570|GT-S5600|GT-S5603|GT-S5610|GT-S5620|GT-S5660|GT-S5670|GT-S5690|GT-S5750|GT-S5780|GT-S5830|GT-S5839|GT-S6102|GT-S6500|GT-S7070|GT-S7200|GT-S7220|GT-S7230|GT-S7233|GT-S7250|GT-S7500|GT-S7530|GT-S7550|GT-S7562|GT-S7710|GT-S8000|GT-S8003|GT-S8500|GT-S8530|GT-S8600|SCH-A310|SCH-A530|SCH-A570|SCH-A610|SCH-A630|SCH-A650|SCH-A790|SCH-A795|SCH-A850|SCH-A870|SCH-A890|SCH-A930|SCH-A950|SCH-A970|SCH-A990|SCH-I100|SCH-I110|SCH-I400|SCH-I405|SCH-I500|SCH-I510|SCH-I515|SCH-I600|SCH-I730|SCH-I760|SCH-I770|SCH-I830|SCH-I910|SCH-I920|SCH-I959|SCH-LC11|SCH-N150|SCH-N300|SCH-R100|SCH-R300|SCH-R351|SCH-R400|SCH-R410|SCH-T300|SCH-U310|SCH-U320|SCH-U350|SCH-U360|SCH-U365|SCH-U370|SCH-U380|SCH-U410|SCH-U430|SCH-U450|SCH-U460|SCH-U470|SCH-U490|SCH-U540|SCH-U550|SCH-U620|SCH-U640|SCH-U650|SCH-U660|SCH-U700|SCH-U740|SCH-U750|SCH-U810|SCH-U820|SCH-U900|SCH-U940|SCH-U960|SCS-26UC|SGH-A107|SGH-A117|SGH-A127|SGH-A137|SGH-A157|SGH-A167|SGH-A177|SGH-A187|SGH-A197|SGH-A227|SGH-A237|SGH-A257|SGH-A437|SGH-A517|SGH-A597|SGH-A637|SGH-A657|SGH-A667|SGH-A687|SGH-A697|SGH-A707|SGH-A717|SGH-A727|SGH-A737|SGH-A747|SGH-A767|SGH-A777|SGH-A797|SGH-A817|SGH-A827|SGH-A837|SGH-A847|SGH-A867|SGH-A877|SGH-A887|SGH-A897|SGH-A927|SGH-B100|SGH-B130|SGH-B200|SGH-B220|SGH-C100|SGH-C110|SGH-C120|SGH-C130|SGH-C140|SGH-C160|SGH-C170|SGH-C180|SGH-C200|SGH-C207|SGH-C210|SGH-C225|SGH-C230|SGH-C417|SGH-C450|SGH-D307|SGH-D347|SGH-D357|SGH-D407|SGH-D415|SGH-D780|SGH-D807|SGH-D980|SGH-E105|SGH-E200|SGH-E315|SGH-E316|SGH-E317|SGH-E335|SGH-E590|SGH-E635|SGH-E715|SGH-E890|SGH-F300|SGH-F480|SGH-I200|SGH-I300|SGH-I320|SGH-I550|SGH-I577|SGH-I600|SGH-I607|SGH-I617|SGH-I627|SGH-I637|SGH-I677|SGH-I700|SGH-I717|SGH-I727|SGH-i747M|SGH-I777|SGH-I780|SGH-I827|SGH-I847|SGH-I857|SGH-I896|SGH-I897|SGH-I900|SGH-I907|SGH-I917|SGH-I927|SGH-I937|SGH-I997|SGH-J150|SGH-J200|SGH-L170|SGH-L700|SGH-M110|SGH-M150|SGH-M200|SGH-N105|SGH-N500|SGH-N600|SGH-N620|SGH-N625|SGH-N700|SGH-N710|SGH-P107|SGH-P207|SGH-P300|SGH-P310|SGH-P520|SGH-P735|SGH-P777|SGH-Q105|SGH-R210|SGH-R220|SGH-R225|SGH-S105|SGH-S307|SGH-T109|SGH-T119|SGH-T139|SGH-T209|SGH-T219|SGH-T229|SGH-T239|SGH-T249|SGH-T259|SGH-T309|SGH-T319|SGH-T329|SGH-T339|SGH-T349|SGH-T359|SGH-T369|SGH-T379|SGH-T409|SGH-T429|SGH-T439|SGH-T459|SGH-T469|SGH-T479|SGH-T499|SGH-T509|SGH-T519|SGH-T539|SGH-T559|SGH-T589|SGH-T609|SGH-T619|SGH-T629|SGH-T639|SGH-T659|SGH-T669|SGH-T679|SGH-T709|SGH-T719|SGH-T729|SGH-T739|SGH-T746|SGH-T749|SGH-T759|SGH-T769|SGH-T809|SGH-T819|SGH-T839|SGH-T919|SGH-T929|SGH-T939|SGH-T959|SGH-T989|SGH-U100|SGH-U200|SGH-U800|SGH-V205|SGH-V206|SGH-X100|SGH-X105|SGH-X120|SGH-X140|SGH-X426|SGH-X427|SGH-X475|SGH-X495|SGH-X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH-Z130|SGH-Z150|SGH-Z170|SGH-ZX10|SGH-ZX20|SHW-M110|SPH-A120|SPH-A400|SPH-A420|SPH-A460|SPH-A500|SPH-A560|SPH-A600|SPH-A620|SPH-A660|SPH-A700|SPH-A740|SPH-A760|SPH-A790|SPH-A800|SPH-A820|SPH-A840|SPH-A880|SPH-A900|SPH-A940|SPH-A960|SPH-D600|SPH-D700|SPH-D710|SPH-D720|SPH-I300|SPH-I325|SPH-I330|SPH-I350|SPH-I500|SPH-I600|SPH-I700|SPH-L700|SPH-M100|SPH-M220|SPH-M240|SPH-M300|SPH-M305|SPH-M320|SPH-M330|SPH-M350|SPH-M360|SPH-M370|SPH-M380|SPH-M510|SPH-M540|SPH-M550|SPH-M560|SPH-M570|SPH-M580|SPH-M610|SPH-M620|SPH-M630|SPH-M800|SPH-M810|SPH-M850|SPH-M900|SPH-M910|SPH-M920|SPH-M930|SPH-N100|SPH-N200|SPH-N240|SPH-N300|SPH-N400|SPH-Z400|SWC-E100|SCH-i909|GT-N7100|GT-N7105|SCH-I535|SM-N900A|SGH-I317|SGH-T999L|GT-S5360B|GT-I8262|GT-S6802|GT-S6312|GT-S6310|GT-S5312|GT-S5310|GT-I9105|GT-I8510|GT-S6790N|SM-G7105|SM-N9005|GT-S5301|GT-I9295|GT-I9195|SM-C101|GT-S7392|GT-S7560|GT-B7610|GT-I5510|GT-S7582|GT-S7530E|GT-I8750|SM-G9006V|SM-G9008V|SM-G9009D|SM-G900A|SM-G900D|SM-G900F|SM-G900H|SM-G900I|SM-G900J|SM-G900K|SM-G900L|SM-G900M|SM-G900P|SM-G900R4|SM-G900S|SM-G900T|SM-G900V|SM-G900W8|SHV-E160K|SCH-P709|SCH-P729|SM-T2558|GT-I9205|SM-G9350|SM-J120F",
                 LG: "\\bLG\\b;|LG[- ]?(C800|C900|E400|E610|E900|E-900|F160|F180K|F180L|F180S|730|855|L160|LS740|LS840|LS970|LU6200|MS690|MS695|MS770|MS840|MS870|MS910|P500|P700|P705|VM696|AS680|AS695|AX840|C729|E970|GS505|272|C395|E739BK|E960|L55C|L75C|LS696|LS860|P769BK|P350|P500|P509|P870|UN272|US730|VS840|VS950|LN272|LN510|LS670|LS855|LW690|MN270|MN510|P509|P769|P930|UN200|UN270|UN510|UN610|US670|US740|US760|UX265|UX840|VN271|VN530|VS660|VS700|VS740|VS750|VS910|VS920|VS930|VX9200|VX11000|AX840A|LW770|P506|P925|P999|E612|D955|D802|MS323)",
                 Sony: "SonyST|SonyLT|SonyEricsson|SonyEricssonLT15iv|LT18i|E10i|LT28h|LT26w|SonyEricssonMT27i|C5303|C6902|C6903|C6906|C6943|D2533",
                 Asus: "Asus.*Galaxy|PadFone.*Mobile",
@@ -18801,16 +18800,16 @@ function(a) {
             tablets: {
                 iPad: "iPad|iPad.*Mobile",
                 NexusTablet: "Android.*Nexus[\\s]+(7|9|10)",
-                SamsungTablet: "SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|SCH-I915|GT-N8013|GT-P3113|GT-P5113|GT-P8110|GT-N8010|GT-N8005|GT-N8020|GT-P1013|GT-P6201|GT-P7501|GT-N5100|GT-N5105|GT-N5110|SHV-E140K|SHV-E140L|SHV-E140S|SHV-E150S|SHV-E230K|SHV-E230L|SHV-E230S|SHW-M180K|SHW-M180L|SHW-M180S|SHW-M180W|SHW-M300W|SHW-M305W|SHW-M380K|SHW-M380S|SHW-M380W|SHW-M430W|SHW-M480K|SHW-M480S|SHW-M480W|SHW-M485W|SHW-M486W|SHW-M500W|GT-I9228|SCH-P739|SCH-I925|GT-I9200|GT-P5200|GT-P5210|GT-P5210X|SM-T311|SM-T310|SM-T310X|SM-T210|SM-T210R|SM-T211|SM-P600|SM-P601|SM-P605|SM-P900|SM-P901|SM-T217|SM-T217A|SM-T217S|SM-P6000|SM-T3100|SGH-I467|XE500|SM-T110|GT-P5220|GT-I9200X|GT-N5110X|GT-N5120|SM-P905|SM-T111|SM-T2105|SM-T315|SM-T320|SM-T320X|SM-T321|SM-T520|SM-T525|SM-T530NU|SM-T230NU|SM-T330NU|SM-T900|XE500T1C|SM-P605V|SM-P905V|SM-T337V|SM-T537V|SM-T707V|SM-T807V|SM-P600X|SM-P900X|SM-T210X|SM-T230|SM-T230X|SM-T325|GT-P7503|SM-T531|SM-T330|SM-T530|SM-T705|SM-T705C|SM-T535|SM-T331|SM-T800|SM-T700|SM-T537|SM-T807|SM-P907A|SM-T337A|SM-T537A|SM-T707A|SM-T807A|SM-T237|SM-T807P|SM-P607T|SM-T217T|SM-T337T|SM-T807T|SM-T116NQ|SM-P550|SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T815|SM-T360|SM-T533|SM-T113|SM-T335|SM-T715|SM-T560|SM-T670|SM-T677|SM-T377|SM-T567|SM-T357T|SM-T555|SM-T561|SM-T713|SM-T719|SM-T813|SM-T819|SM-T580|SM-T355Y|SM-T280",
+                SamsungTablet: "SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|SCH-I915|GT-N8013|GT-P3113|GT-P5113|GT-P8110|GT-N8010|GT-N8005|GT-N8020|GT-P1013|GT-P6201|GT-P7501|GT-N5100|GT-N5105|GT-N5110|SHV-E140K|SHV-E140L|SHV-E140S|SHV-E150S|SHV-E230K|SHV-E230L|SHV-E230S|SHW-M180K|SHW-M180L|SHW-M180S|SHW-M180W|SHW-M300W|SHW-M305W|SHW-M380K|SHW-M380S|SHW-M380W|SHW-M430W|SHW-M480K|SHW-M480S|SHW-M480W|SHW-M485W|SHW-M486W|SHW-M500W|GT-I9228|SCH-P739|SCH-I925|GT-I9200|GT-P5200|GT-P5210|GT-P5210X|SM-T311|SM-T310|SM-T310X|SM-T210|SM-T210R|SM-T211|SM-P600|SM-P601|SM-P605|SM-P900|SM-P901|SM-T217|SM-T217A|SM-T217S|SM-P6000|SM-T3100|SGH-I467|XE500|SM-T110|GT-P5220|GT-I9200X|GT-N5110X|GT-N5120|SM-P905|SM-T111|SM-T2105|SM-T315|SM-T320|SM-T320X|SM-T321|SM-T520|SM-T525|SM-T530NU|SM-T230NU|SM-T330NU|SM-T900|XE500T1C|SM-P605V|SM-P905V|SM-T337V|SM-T537V|SM-T707V|SM-T807V|SM-P600X|SM-P900X|SM-T210X|SM-T230|SM-T230X|SM-T325|GT-P7503|SM-T531|SM-T330|SM-T530|SM-T705|SM-T705C|SM-T535|SM-T331|SM-T800|SM-T700|SM-T537|SM-T807|SM-P907A|SM-T337A|SM-T537A|SM-T707A|SM-T807A|SM-T237|SM-T807P|SM-P607T|SM-T217T|SM-T337T|SM-T807T|SM-T116NQ|SM-P550|SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T815|SM-T360|SM-T533|SM-T113|SM-T335|SM-T715|SM-T560|SM-T670|SM-T677|SM-T377|SM-T567|SM-T357T|SM-T555|SM-T561",
                 Kindle: "Kindle|Silk.*Accelerated|Android.*\\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI|KFARWI)\\b",
                 SurfaceTablet: "Windows NT [0-9.]+; ARM;.*(Tablet|ARMBJS)",
                 HPTablet: "HP Slate (7|8|10)|HP ElitePad 900|hp-tablet|EliteBook.*Touch|HP 8|Slate 21|HP SlateBook 10",
-                AsusTablet: "^.*PadFone((?!Mobile).)*$|Transformer|TF101|TF101G|TF300T|TF300TG|TF300TL|TF700T|TF700KL|TF701T|TF810C|ME171|ME301T|ME302C|ME371MG|ME370T|ME372MG|ME172V|ME173X|ME400C|Slider SL101|\\bK00F\\b|\\bK00C\\b|\\bK00E\\b|\\bK00L\\b|TX201LA|ME176C|ME102A|\\bM80TA\\b|ME372CL|ME560CG|ME372CG|ME302KL| K010 | K011 | K017 | K01E |ME572C|ME103K|ME170C|ME171C|\\bME70C\\b|ME581C|ME581CL|ME8510C|ME181C|P01Y|PO1MA|P01Z",
+                AsusTablet: "^.*PadFone((?!Mobile).)*$|Transformer|TF101|TF101G|TF300T|TF300TG|TF300TL|TF700T|TF700KL|TF701T|TF810C|ME171|ME301T|ME302C|ME371MG|ME370T|ME372MG|ME172V|ME173X|ME400C|Slider SL101|\\bK00F\\b|\\bK00C\\b|\\bK00E\\b|\\bK00L\\b|TX201LA|ME176C|ME102A|\\bM80TA\\b|ME372CL|ME560CG|ME372CG|ME302KL| K010 | K017 |ME572C|ME103K|ME170C|ME171C|\\bME70C\\b|ME581C|ME581CL|ME8510C|ME181C|P01Y|PO1MA",
                 BlackBerryTablet: "PlayBook|RIM Tablet",
                 HTCtablet: "HTC_Flyer_P512|HTC Flyer|HTC Jetstream|HTC-P715a|HTC EVO View 4G|PG41200|PG09410",
                 MotorolaTablet: "xoom|sholest|MZ615|MZ605|MZ505|MZ601|MZ602|MZ603|MZ604|MZ606|MZ607|MZ608|MZ609|MZ615|MZ616|MZ617",
                 NookTablet: "Android.*Nook|NookColor|nook browser|BNRV200|BNRV200A|BNTV250|BNTV250A|BNTV400|BNTV600|LogicPD Zoom2",
-                AcerTablet: "Android.*; \\b(A100|A101|A110|A200|A210|A211|A500|A501|A510|A511|A700|A701|W500|W500P|W501|W501P|W510|W511|W700|G100|G100W|B1-A71|B1-710|B1-711|A1-810|A1-811|A1-830)\\b|W3-810|\\bA3-A10\\b|\\bA3-A11\\b|\\bA3-A20\\b|\\bA3-A30",
+                AcerTablet: "Android.*; \\b(A100|A101|A110|A200|A210|A211|A500|A501|A510|A511|A700|A701|W500|W500P|W501|W501P|W510|W511|W700|G100|G100W|B1-A71|B1-710|B1-711|A1-810|A1-811|A1-830)\\b|W3-810|\\bA3-A10\\b|\\bA3-A11\\b|\\bA3-A20",
                 ToshibaTablet: "Android.*(AT100|AT105|AT200|AT205|AT270|AT275|AT300|AT305|AT1S5|AT500|AT570|AT700|AT830)|TOSHIBA.*FOLIO",
                 LGTablet: "\\bL-06C|LG-V909|LG-V900|LG-V700|LG-V510|LG-V500|LG-V410|LG-V400|LG-VK810\\b",
                 FujitsuTablet: "Android.*\\b(F-01D|F-02F|F-05E|F-10D|M532|Q572)\\b",
@@ -18819,7 +18818,7 @@ function(a) {
                 DellTablet: "Venue 11|Venue 8|Venue 7|Dell Streak 10|Dell Streak 7",
                 YarvikTablet: "Android.*\\b(TAB210|TAB211|TAB224|TAB250|TAB260|TAB264|TAB310|TAB360|TAB364|TAB410|TAB411|TAB420|TAB424|TAB450|TAB460|TAB461|TAB464|TAB465|TAB467|TAB468|TAB07-100|TAB07-101|TAB07-150|TAB07-151|TAB07-152|TAB07-200|TAB07-201-3G|TAB07-210|TAB07-211|TAB07-212|TAB07-214|TAB07-220|TAB07-400|TAB07-485|TAB08-150|TAB08-200|TAB08-201-3G|TAB08-201-30|TAB09-100|TAB09-211|TAB09-410|TAB10-150|TAB10-201|TAB10-211|TAB10-400|TAB10-410|TAB13-201|TAB274EUK|TAB275EUK|TAB374EUK|TAB462EUK|TAB474EUK|TAB9-200)\\b",
                 MedionTablet: "Android.*\\bOYO\\b|LIFE.*(P9212|P9514|P9516|S9512)|LIFETAB",
-                ArnovaTablet: "97G4|AN10G2|AN7bG3|AN7fG3|AN8G3|AN8cG3|AN7G3|AN9G3|AN7dG3|AN7dG3ST|AN7dG3ChildPad|AN10bG3|AN10bG3DT|AN9G2",
+                ArnovaTablet: "AN10G2|AN7bG3|AN7fG3|AN8G3|AN8cG3|AN7G3|AN9G3|AN7dG3|AN7dG3ST|AN7dG3ChildPad|AN10bG3|AN10bG3DT|AN9G2",
                 IntensoTablet: "INM8002KP|INM1010FP|INM805ND|Intenso Tab|TAB1004",
                 IRUTablet: "M702pro",
                 MegafonTablet: "MegaFon V9|\\bZTE V9\\b|Android.*\\bMT7A\\b",
@@ -18837,7 +18836,7 @@ function(a) {
                 SMiTTablet: "Android.*(\\bMID\\b|MID-560|MTV-T1200|MTV-PND531|MTV-P1101|MTV-PND530)",
                 RockChipTablet: "Android.*(RK2818|RK2808A|RK2918|RK3066)|RK2738|RK2808A",
                 FlyTablet: "IQ310|Fly Vision",
-                bqTablet: "Android.*(bq)?.*(Elcano|Curie|Edison|Maxwell|Kepler|Pascal|Tesla|Hypatia|Platon|Newton|Livingstone|Cervantes|Avant|Aquaris [E|M]10)|Maxwell.*Lite|Maxwell.*Plus",
+                bqTablet: "Android.*(bq)?.*(Elcano|Curie|Edison|Maxwell|Kepler|Pascal|Tesla|Hypatia|Platon|Newton|Livingstone|Cervantes|Avant|Aquaris E10)|Maxwell.*Lite|Maxwell.*Plus",
                 HuaweiTablet: "MediaPad|MediaPad 7 Youth|IDEOS S7|S7-201c|S7-202u|S7-101|S7-103|S7-104|S7-105|S7-106|S7-201|S7-Slim",
                 NecTablet: "\\bN-06D|\\bN-08D",
                 PantechTablet: "Pantech.*P4100",
@@ -18910,10 +18909,9 @@ function(a) {
                 UbislateTablet: "UbiSlate[\\s]?7C",
                 PocketBookTablet: "Pocketbook",
                 KocasoTablet: "\\b(TB-1207)\\b",
-                HisenseTablet: "\\b(F5281|E2371)\\b",
                 Hudl: "Hudl HT7S3|Hudl 2",
                 TelstraTablet: "T-Hub2",
-                GenericTablet: "Android.*\\b97D\\b|Tablet(?!.*PC)|BNTV250A|MID-WCDMA|LogicPD Zoom2|\\bA7EB\\b|CatNova8|A1_07|CT704|CT1002|\\bM721\\b|rk30sdk|\\bEVOTAB\\b|M758A|ET904|ALUMIUM10|Smartfren Tab|Endeavour 1010|Tablet-PC-4|Tagi Tab|\\bM6pro\\b|CT1020W|arc 10HD|\\bTP750\\b"
+                GenericTablet: "Android.*\\b97D\\b|Tablet(?!.*PC)|BNTV250A|MID-WCDMA|LogicPD Zoom2|\\bA7EB\\b|CatNova8|A1_07|CT704|CT1002|\\bM721\\b|rk30sdk|\\bEVOTAB\\b|M758A|ET904|ALUMIUM10|Smartfren Tab|Endeavour 1010|Tablet-PC-4|Tagi Tab|\\bM6pro\\b|CT1020W|arc 10HD|\\bJolla\\b|\\bTP750\\b"
             },
             oss: {
                 AndroidOS: "Android",
@@ -18931,17 +18929,19 @@ function(a) {
                 BREWOS: "BREW"
             },
             uas: {
+                Vivaldi: "Vivaldi",
                 Chrome: "\\bCrMo\\b|CriOS|Android.*Chrome/[.0-9]* (Mobile)?",
                 Dolfin: "\\bDolfin\\b",
                 Opera: "Opera.*Mini|Opera.*Mobi|Android.*Opera|Mobile.*OPR/[0-9.]+|Coast/[0-9.]+",
                 Skyfire: "Skyfire",
                 Edge: "Mobile Safari/[.0-9]* Edge",
                 IE: "IEMobile|MSIEMobile",
-                Firefox: "fennec|firefox.*maemo|(Mobile|Tablet).*Firefox|Firefox.*Mobile|FxiOS",
+                Firefox: "fennec|firefox.*maemo|(Mobile|Tablet).*Firefox|Firefox.*Mobile",
                 Bolt: "bolt",
                 TeaShark: "teashark",
                 Blazer: "Blazer",
                 Safari: "Version.*Mobile.*Safari|Safari.*Mobile|MobileSafari",
+                Tizen: "Tizen",
                 UCBrowser: "UC.*Browser|UCWEB",
                 baiduboxapp: "baiduboxapp",
                 baidubrowser: "baidubrowser",
@@ -18965,7 +18965,7 @@ function(a) {
                 Chrome: [ "Chrome/[VER]", "CriOS/[VER]", "CrMo/[VER]" ],
                 Coast: [ "Coast/[VER]" ],
                 Dolfin: "Dolfin/[VER]",
-                Firefox: [ "Firefox/[VER]", "FxiOS/[VER]" ],
+                Firefox: "Firefox/[VER]",
                 Fennec: "Fennec/[VER]",
                 Edge: "Edge/[VER]",
                 IE: [ "IEMobile/[VER];", "IEMobile [VER]", "MSIE [VER];", "Trident/[0-9.]+;.*rv:[VER]" ],
@@ -18979,7 +18979,6 @@ function(a) {
                 MicroMessenger: "MicroMessenger/[VER]",
                 baiduboxapp: "baiduboxapp/[VER]",
                 baidubrowser: "baidubrowser/[VER]",
-                SamsungBrowser: "SamsungBrowser/[VER]",
                 Iron: "Iron/[VER]",
                 Safari: [ "Version/[VER]", "Safari/[VER]" ],
                 Skyfire: "Skyfire/[VER]",
@@ -19003,7 +19002,7 @@ function(a) {
                 webOS: [ "webOS/[VER]", "hpwOS/[VER];" ]
             },
             utils: {
-                Bot: "Googlebot|facebookexternalhit|AdsBot-Google|Google Keyword Suggestion|Facebot|YandexBot|YandexMobileBot|bingbot|ia_archiver|AhrefsBot|Ezooms|GSLFbot|WBSearchBot|Twitterbot|TweetmemeBot|Twikle|PaperLiBot|Wotbox|UnwindFetchor|Exabot|MJ12bot|YandexImages|TurnitinBot|Pingdom",
+                Bot: "Googlebot|facebookexternalhit|AdsBot-Google|Google Keyword Suggestion|Facebot|YandexBot|bingbot|ia_archiver|AhrefsBot|Ezooms|GSLFbot|WBSearchBot|Twitterbot|TweetmemeBot|Twikle|PaperLiBot|Wotbox|UnwindFetchor|Exabot|MJ12bot|YandexImages|TurnitinBot|Pingdom",
                 MobileBot: "Googlebot-Mobile|AdsBot-Google-Mobile|YahooSeeker/M1A1-R2D2",
                 DesktopMode: "WPDesktop",
                 TV: "SonyDTV|HbbTV",
@@ -19023,7 +19022,7 @@ function(a) {
         }, function() {
             var a, b, c, e, i, j, k = f.mobileDetectRules;
             for (a in k.props) if (h.call(k.props, a)) {
-                for (b = k.props[a], g(b) || (b = [ b ]), i = b.length, e = 0; i > e; ++e) c = b[e], 
+                for (b = k.props[a], g(b) || (b = [ b ]), i = b.length, e = 0; e < i; ++e) c = b[e], 
                 j = c.indexOf("[VER]"), j >= 0 && (c = c.substring(0, j) + "([\\w._\\+]+)" + c.substring(j + 5)), 
                 b[e] = new RegExp(c, "i");
                 k.props[a] = b;
@@ -19041,7 +19040,7 @@ function(a) {
             return c;
         }, f.getVersionStr = function(a, b) {
             var c, d, e, g, i = f.mobileDetectRules.props;
-            if (h.call(i, a)) for (c = i[a], e = c.length, d = 0; e > d; ++d) if (g = c[d].exec(b), 
+            if (h.call(i, a)) for (c = i[a], e = c.length, d = 0; d < e; ++d) if (g = c[d].exec(b), 
             null !== g) return g[1];
             return null;
         }, f.getVersion = function(a, b) {
@@ -19114,8 +19113,8 @@ function(a) {
                 return this._cache.grade === b && (this._cache.grade = f.mobileGrade(this)), this._cache.grade;
             }
         }, "undefined" != typeof window && window.screen ? e.isPhoneSized = function(a) {
-            return 0 > a ? b : f.getDeviceSmallerSide() <= a;
-        } : e.isPhoneSized = function() {}, e._impl = f, e.version = "1.3.5 2016-11-14", 
+            return a < 0 ? b : f.getDeviceSmallerSide() <= a;
+        } : e.isPhoneSized = function() {}, e._impl = f, e.version = "1.3.3 2016-07-31", 
         e;
     });
 }(function(a) {
@@ -19197,12 +19196,12 @@ function(a) {
             }
             function g(a, b) {
                 var c, d, e, f;
-                if (b) for (f = Object.keys(b), c = 0, d = f.length; d > c; c += 1) e = f[c], a[e] = b[e];
+                if (b) for (f = Object.keys(b), c = 0, d = f.length; c < d; c += 1) e = f[c], a[e] = b[e];
                 return a;
             }
             function h(a, b) {
                 var c, d = "";
-                for (c = 0; b > c; c += 1) d += a;
+                for (c = 0; c < b; c += 1) d += a;
                 return d;
             }
             function i(a) {
@@ -19215,16 +19214,16 @@ function(a) {
             function d(a, b) {
                 var c, d, e, f, g, h, i;
                 if (null === b) return {};
-                for (c = {}, d = Object.keys(b), e = 0, f = d.length; f > e; e += 1) g = d[e], h = String(b[g]), 
+                for (c = {}, d = Object.keys(b), e = 0, f = d.length; e < f; e += 1) g = d[e], h = String(b[g]), 
                 "!!" === g.slice(0, 2) && (g = "tag:yaml.org,2002:" + g.slice(2)), i = a.compiledTypeMap[g], 
                 i && J.call(i.styleAliases, h) && (h = i.styleAliases[h]), c[g] = h;
                 return c;
             }
             function e(a) {
                 var b, c, d;
-                if (b = a.toString(16).toUpperCase(), 255 >= a) c = "x", d = 2; else if (65535 >= a) c = "u", 
+                if (b = a.toString(16).toUpperCase(), a <= 255) c = "x", d = 2; else if (a <= 65535) c = "u", 
                 d = 4; else {
-                    if (!(4294967295 >= a)) throw new F("code point within a string may not be greater than 0xFFFFFFFF");
+                    if (!(a <= 4294967295)) throw new F("code point within a string may not be greater than 0xFFFFFFFF");
                     c = "U", d = 8;
                 }
                 return "\\" + c + E.repeat("0", d - b.length) + b;
@@ -19238,8 +19237,8 @@ function(a) {
                 this.duplicates = [], this.usedDuplicates = null;
             }
             function g(a, b) {
-                for (var c, d = E.repeat(" ", b), e = 0, f = -1, g = "", h = a.length; h > e; ) f = a.indexOf("\n", e), 
-                -1 === f ? (c = a.slice(e), e = h) : (c = a.slice(e, f + 1), e = f + 1), c.length && "\n" !== c && (g += d), 
+                for (var c, d = E.repeat(" ", b), e = 0, f = -1, g = "", h = a.length; e < h; ) f = a.indexOf("\n", e), 
+                f === -1 ? (c = a.slice(e), e = h) : (c = a.slice(e, f + 1), e = f + 1), c.length && "\n" !== c && (g += d), 
                 g += c;
                 return g;
             }
@@ -19248,7 +19247,7 @@ function(a) {
             }
             function i(a, b) {
                 var c, d, e;
-                for (c = 0, d = a.implicitTypes.length; d > c; c += 1) if (e = a.implicitTypes[c], 
+                for (c = 0, d = a.implicitTypes.length; c < d; c += 1) if (e = a.implicitTypes[c], 
                 e.resolve(b)) return !0;
                 return !1;
             }
@@ -19256,7 +19255,7 @@ function(a) {
                 return a === M || a === K;
             }
             function k(a) {
-                return a >= 32 && 126 >= a || a >= 161 && 55295 >= a && 8232 !== a && 8233 !== a || a >= 57344 && 65533 >= a && 65279 !== a || a >= 65536 && 1114111 >= a;
+                return 32 <= a && a <= 126 || 161 <= a && a <= 55295 && 8232 !== a && 8233 !== a || 57344 <= a && a <= 65533 && 65279 !== a || 65536 <= a && a <= 1114111;
             }
             function l(a) {
                 return k(a) && 65279 !== a && a !== U && a !== $ && a !== _ && a !== ba && a !== da && a !== W && a !== P;
@@ -19265,7 +19264,7 @@ function(a) {
                 return k(a) && 65279 !== a && !j(a) && a !== V && a !== Y && a !== W && a !== U && a !== $ && a !== _ && a !== ba && a !== da && a !== P && a !== R && a !== T && a !== N && a !== ca && a !== X && a !== S && a !== O && a !== Q && a !== Z && a !== aa;
             }
             function n(a, b, c, d, e) {
-                var f, g, h = !1, i = !1, n = -1 !== d, o = -1, p = m(a.charCodeAt(0)) && !j(a.charCodeAt(a.length - 1));
+                var f, g, h = !1, i = !1, n = d !== -1, o = -1, p = m(a.charCodeAt(0)) && !j(a.charCodeAt(a.length - 1));
                 if (b) for (f = 0; f < a.length; f++) {
                     if (g = a.charCodeAt(f), !k(g)) return ka;
                     p = p && l(g);
@@ -19285,8 +19284,8 @@ function(a) {
                         return i(a, b);
                     }
                     if (0 === b.length) return "''";
-                    if (!a.noCompatMode && -1 !== fa.indexOf(b)) return "'" + b + "'";
-                    var f = a.indent * Math.max(1, c), h = -1 === a.lineWidth ? -1 : Math.max(Math.min(a.lineWidth, 40), a.lineWidth - f), j = d || a.flowLevel > -1 && c >= a.flowLevel;
+                    if (!a.noCompatMode && fa.indexOf(b) !== -1) return "'" + b + "'";
+                    var f = a.indent * Math.max(1, c), h = a.lineWidth === -1 ? -1 : Math.max(Math.min(a.lineWidth, 40), a.lineWidth - f), j = d || a.flowLevel > -1 && c >= a.flowLevel;
                     switch (n(b, j, a.indent, h, e)) {
                       case ga:
                         return b;
@@ -19318,7 +19317,7 @@ function(a) {
             function r(a, b) {
                 for (var c, d, e = /(\n+)([^\n]*)/g, f = function() {
                     var c = a.indexOf("\n");
-                    return c = -1 !== c ? c : a.length, e.lastIndex = c, s(a.slice(0, c), b);
+                    return c = c !== -1 ? c : a.length, e.lastIndex = c, s(a.slice(0, c), b);
                 }(), g = "\n" === a[0] || " " === a[0]; d = e.exec(a); ) {
                     var h = d[1], i = d[2];
                     c = " " === i[0], f += h + (g || c || "" === i ? "" : "\n") + s(i, b), g = c;
@@ -19339,19 +19338,19 @@ function(a) {
             }
             function u(a, b, c) {
                 var d, e, f = "", g = a.tag;
-                for (d = 0, e = c.length; e > d; d += 1) z(a, b, c[d], !1, !1) && (0 !== d && (f += ", "), 
+                for (d = 0, e = c.length; d < e; d += 1) z(a, b, c[d], !1, !1) && (0 !== d && (f += ", "), 
                 f += a.dump);
                 a.tag = g, a.dump = "[" + f + "]";
             }
             function v(a, b, c, d) {
                 var e, f, g = "", i = a.tag;
-                for (e = 0, f = c.length; f > e; e += 1) z(a, b + 1, c[e], !0, !0) && (d && 0 === e || (g += h(a, b)), 
+                for (e = 0, f = c.length; e < f; e += 1) z(a, b + 1, c[e], !0, !0) && (d && 0 === e || (g += h(a, b)), 
                 g += "- " + a.dump);
                 a.tag = i, a.dump = g || "[]";
             }
             function w(a, b, c) {
                 var d, e, f, g, h, i = "", j = a.tag, k = Object.keys(c);
-                for (d = 0, e = k.length; e > d; d += 1) h = "", 0 !== d && (h += ", "), f = k[d], 
+                for (d = 0, e = k.length; d < e; d += 1) h = "", 0 !== d && (h += ", "), f = k[d], 
                 g = c[f], z(a, b, f, !1, !1) && (a.dump.length > 1024 && (h += "? "), h += a.dump + ": ", 
                 z(a, b, g, !1, !1) && (h += a.dump, i += h));
                 a.tag = j, a.dump = "{" + i + "}";
@@ -19359,7 +19358,7 @@ function(a) {
             function x(a, b, c, d) {
                 var e, f, g, i, j, k, l = "", m = a.tag, n = Object.keys(c);
                 if (a.sortKeys === !0) n.sort(); else if ("function" == typeof a.sortKeys) n.sort(a.sortKeys); else if (a.sortKeys) throw new F("sortKeys must be a boolean or a function");
-                for (e = 0, f = n.length; f > e; e += 1) k = "", d && 0 === e || (k += h(a, b)), 
+                for (e = 0, f = n.length; e < f; e += 1) k = "", d && 0 === e || (k += h(a, b)), 
                 g = n[e], i = c[g], z(a, b + 1, g, !0, !0, !0) && (j = null !== a.tag && "?" !== a.tag || a.dump && a.dump.length > 1024, 
                 j && (k += a.dump && L === a.dump.charCodeAt(0) ? "?" : "? "), k += a.dump, j && (k += h(a, b)), 
                 z(a, b + 1, i, !0, j) && (k += a.dump && L === a.dump.charCodeAt(0) ? ":" : ": ", 
@@ -19368,7 +19367,7 @@ function(a) {
             }
             function y(a, b, c) {
                 var d, e, f, g, h, i;
-                for (e = c ? a.explicitTypes : a.implicitTypes, f = 0, g = e.length; g > f; f += 1) if (h = e[f], 
+                for (e = c ? a.explicitTypes : a.implicitTypes, f = 0, g = e.length; f < g; f += 1) if (h = e[f], 
                 (h.instanceOf || h.predicate) && (!h.instanceOf || "object" == typeof b && b instanceof h.instanceOf) && (!h.predicate || h.predicate(b))) {
                     if (a.tag = c ? h.tag : "?", h.represent) {
                         if (i = a.styleMap[h.tag] || h.defaultStyle, "[object Function]" === I.call(h.represent)) d = h.represent(b, i); else {
@@ -19386,7 +19385,7 @@ function(a) {
                 var g = I.call(a.dump);
                 d && (d = a.flowLevel < 0 || a.flowLevel > b);
                 var h, i, j = "[object Object]" === g || "[object Array]" === g;
-                if (j && (h = a.duplicates.indexOf(c), i = -1 !== h), (null !== a.tag && "?" !== a.tag || i || 2 !== a.indent && b > 0) && (e = !1), 
+                if (j && (h = a.duplicates.indexOf(c), i = h !== -1), (null !== a.tag && "?" !== a.tag || i || 2 !== a.indent && b > 0) && (e = !1), 
                 i && a.usedDuplicates[h]) a.dump = "*ref_" + h; else {
                     if (j && i && !a.usedDuplicates[h] && (a.usedDuplicates[h] = !0), "[object Object]" === g) d && 0 !== Object.keys(a.dump).length ? (x(a, b, a.dump, e), 
                     i && (a.dump = "&ref_" + h + a.dump)) : (w(a, b, a.dump), i && (a.dump = "&ref_" + h + " " + a.dump)); else if ("[object Array]" === g) d && 0 !== a.dump.length ? (v(a, b, a.dump, e), 
@@ -19403,14 +19402,14 @@ function(a) {
             }
             function A(a, b) {
                 var c, d, e = [], f = [];
-                for (B(a, e, f), c = 0, d = f.length; d > c; c += 1) b.duplicates.push(e[f[c]]);
+                for (B(a, e, f), c = 0, d = f.length; c < d; c += 1) b.duplicates.push(e[f[c]]);
                 b.usedDuplicates = new Array(d);
             }
             function B(a, b, c) {
                 var d, e, f;
-                if (null !== a && "object" == typeof a) if (e = b.indexOf(a), -1 !== e) -1 === c.indexOf(e) && c.push(e); else if (b.push(a), 
-                Array.isArray(a)) for (e = 0, f = a.length; f > e; e += 1) B(a[e], b, c); else for (d = Object.keys(a), 
-                e = 0, f = d.length; f > e; e += 1) B(a[d[e]], b, c);
+                if (null !== a && "object" == typeof a) if (e = b.indexOf(a), e !== -1) c.indexOf(e) === -1 && c.push(e); else if (b.push(a), 
+                Array.isArray(a)) for (e = 0, f = a.length; e < f; e += 1) B(a[e], b, c); else for (d = Object.keys(a), 
+                e = 0, f = d.length; e < f; e += 1) B(a[d[e]], b, c);
             }
             function C(a, b) {
                 b = b || {};
@@ -19460,19 +19459,19 @@ function(a) {
             }
             function h(a) {
                 var b;
-                return a >= 48 && 57 >= a ? a - 48 : (b = 32 | a, b >= 97 && 102 >= b ? b - 97 + 10 : -1);
+                return 48 <= a && a <= 57 ? a - 48 : (b = 32 | a, 97 <= b && b <= 102 ? b - 97 + 10 : -1);
             }
             function i(a) {
                 return 120 === a ? 2 : 117 === a ? 4 : 85 === a ? 8 : 0;
             }
             function j(a) {
-                return a >= 48 && 57 >= a ? a - 48 : -1;
+                return 48 <= a && a <= 57 ? a - 48 : -1;
             }
             function k(a) {
-                return 48 === a ? "\x00" : 97 === a ? "" : 98 === a ? "\b" : 116 === a ? "	" : 9 === a ? "	" : 110 === a ? "\n" : 118 === a ? "\x0B" : 102 === a ? "\f" : 114 === a ? "\r" : 101 === a ? "" : 32 === a ? " " : 34 === a ? '"' : 47 === a ? "/" : 92 === a ? "\\" : 78 === a ? "" : 95 === a ? " " : 76 === a ? "\u2028" : 80 === a ? "\u2029" : "";
+                return 48 === a ? "\0" : 97 === a ? "" : 98 === a ? "\b" : 116 === a ? "\t" : 9 === a ? "\t" : 110 === a ? "\n" : 118 === a ? "\x0B" : 102 === a ? "\f" : 114 === a ? "\r" : 101 === a ? "" : 32 === a ? " " : 34 === a ? '"' : 47 === a ? "/" : 92 === a ? "\\" : 78 === a ? "" : 95 === a ? " " : 76 === a ? "\u2028" : 80 === a ? "\u2029" : "";
             }
             function l(a) {
-                return 65535 >= a ? String.fromCharCode(a) : String.fromCharCode((a - 65536 >> 10) + 55296, (a - 65536 & 1023) + 56320);
+                return a <= 65535 ? String.fromCharCode(a) : String.fromCharCode((a - 65536 >> 10) + 55296, (a - 65536 & 1023) + 56320);
             }
             function m(a, b) {
                 this.input = a, this.filename = b.filename || null, this.schema = b.schema || S, 
@@ -19492,22 +19491,22 @@ function(a) {
             }
             function q(a, b, c, d) {
                 var e, f, g, h;
-                if (c > b) {
-                    if (h = a.input.slice(b, c), d) for (e = 0, f = h.length; f > e; e += 1) g = h.charCodeAt(e), 
-                    9 === g || g >= 32 && 1114111 >= g || o(a, "expected valid JSON character"); else _.test(h) && o(a, "the stream contains non-printable characters");
+                if (b < c) {
+                    if (h = a.input.slice(b, c), d) for (e = 0, f = h.length; e < f; e += 1) g = h.charCodeAt(e), 
+                    9 === g || 32 <= g && g <= 1114111 || o(a, "expected valid JSON character"); else _.test(h) && o(a, "the stream contains non-printable characters");
                     a.result += h;
                 }
             }
             function r(a, b, c, d) {
                 var e, f, g, h;
                 for (O.isObject(c) || o(a, "cannot merge mappings; the provided source object is unacceptable"), 
-                e = Object.keys(c), g = 0, h = e.length; h > g; g += 1) f = e[g], T.call(b, f) || (b[f] = c[f], 
+                e = Object.keys(c), g = 0, h = e.length; g < h; g += 1) f = e[g], T.call(b, f) || (b[f] = c[f], 
                 d[f] = !0);
             }
             function s(a, b, c, d, e, f) {
                 var g, h;
                 if (e = String(e), null === b && (b = {}), "tag:yaml.org,2002:merge" === d) if (Array.isArray(f)) for (g = 0, 
-                h = f.length; h > g; g += 1) r(a, b, f[g], c); else r(a, b, f, c); else a.json || T.call(c, e) || !T.call(b, e) || o(a, "duplicated mapping key"), 
+                h = f.length; g < h; g += 1) r(a, b, f[g], c); else r(a, b, f, c); else a.json || T.call(c, e) || !T.call(b, e) || o(a, "duplicated mapping key"), 
                 b[e] = f, delete c[e];
                 return b;
             }
@@ -19525,13 +19524,13 @@ function(a) {
                     for (t(a), g = a.input.charCodeAt(a.position), f++, a.lineIndent = 0; 32 === g; ) a.lineIndent++, 
                     g = a.input.charCodeAt(++a.position);
                 }
-                return -1 !== c && 0 !== f && a.lineIndent < c && p(a, "deficient indentation"), 
+                return c !== -1 && 0 !== f && a.lineIndent < c && p(a, "deficient indentation"), 
                 f;
             }
             function v(a) {
                 var b, c = a.position;
-                return b = a.input.charCodeAt(c), (45 === b || 46 === b) && b === a.input.charCodeAt(c + 1) && b === a.input.charCodeAt(c + 2) && (c += 3, 
-                b = a.input.charCodeAt(c), 0 === b || f(b));
+                return b = a.input.charCodeAt(c), !(45 !== b && 46 !== b || b !== a.input.charCodeAt(c + 1) || b !== a.input.charCodeAt(c + 2) || (c += 3, 
+                b = a.input.charCodeAt(c), 0 !== b && !f(b)));
             }
             function w(a, b) {
                 1 === b ? a.result += " " : b > 1 && (a.result += O.repeat("\n", b - 1));
@@ -19559,7 +19558,7 @@ function(a) {
                     l && (q(a, j, k, !1), w(a, a.line - m), j = k = a.position, l = !1), e(p) || (k = a.position + 1), 
                     p = a.input.charCodeAt(++a.position);
                 }
-                return q(a, j, k, !1), a.result ? !0 : (a.kind = r, a.result = s, !1);
+                return q(a, j, k, !1), !!a.result || (a.kind = r, a.result = s, !1);
             }
             function y(a, b) {
                 var c, e, f;
@@ -19577,7 +19576,7 @@ function(a) {
                 for (a.kind = "scalar", a.result = "", a.position++, c = e = a.position; 0 !== (k = a.input.charCodeAt(a.position)); ) {
                     if (34 === k) return q(a, c, a.position, !0), a.position++, !0;
                     if (92 === k) {
-                        if (q(a, c, a.position, !0), k = a.input.charCodeAt(++a.position), d(k)) u(a, !1, b); else if (256 > k && ea[k]) a.result += fa[k], 
+                        if (q(a, c, a.position, !0), k = a.input.charCodeAt(++a.position), d(k)) u(a, !1, b); else if (k < 256 && ea[k]) a.result += fa[k], 
                         a.position++; else if ((j = i(k)) > 0) {
                             for (f = j, g = 0; f > 0; f--) k = a.input.charCodeAt(++a.position), (j = h(k)) >= 0 ? g = (g << 4) + j : o(a, "expected hexadecimal character");
                             a.result += l(g), a.position++;
@@ -19644,7 +19643,7 @@ function(a) {
                 f(d)); ) if (j = !0, a.position++, u(a, !0, -1) && a.lineIndent <= b) i.push(null), 
                 e = a.input.charCodeAt(a.position); else if (c = a.line, H(a, b, W, !1, !0), i.push(a.result), 
                 u(a, !0, -1), e = a.input.charCodeAt(a.position), (a.line === c || a.lineIndent > b) && 0 !== e) o(a, "bad indentation of a sequence entry"); else if (a.lineIndent < b) break;
-                return j ? (a.tag = g, a.anchor = h, a.kind = "sequence", a.result = i, !0) : !1;
+                return !!j && (a.tag = g, a.anchor = h, a.kind = "sequence", a.result = i, !0);
             }
             function D(a, b, c) {
                 var d, g, h, i, j = a.tag, k = a.anchor, l = {}, m = {}, n = null, p = null, q = null, r = !1, t = !1;
@@ -19718,7 +19717,7 @@ function(a) {
                 null === a.tag && null === a.anchor || o(a, "alias node should not have any properties")) : x(a, l, U === c) && (q = !0, 
                 null === a.tag && (a.tag = "?")), null !== a.anchor && (a.anchorMap[a.anchor] = a.result)) : 0 === n && (q = h && C(a, m))), 
                 null !== a.tag && "!" !== a.tag) if ("?" === a.tag) {
-                    for (i = 0, j = a.implicitTypes.length; j > i; i += 1) if (k = a.implicitTypes[i], 
+                    for (i = 0, j = a.implicitTypes.length; i < j; i += 1) if (k = a.implicitTypes[i], 
                     k.resolve(a.result)) {
                         a.result = k.construct(a.result), a.tag = k.tag, null !== a.anchor && (a.anchorMap[a.anchor] = a.result);
                         break;
@@ -19754,14 +19753,14 @@ function(a) {
                 a = String(a), b = b || {}, 0 !== a.length && (10 !== a.charCodeAt(a.length - 1) && 13 !== a.charCodeAt(a.length - 1) && (a += "\n"), 
                 65279 === a.charCodeAt(0) && (a = a.slice(1)));
                 var c = new m(a, b);
-                for (c.input += "\x00"; 32 === c.input.charCodeAt(c.position); ) c.lineIndent += 1, 
+                for (c.input += "\0"; 32 === c.input.charCodeAt(c.position); ) c.lineIndent += 1, 
                 c.position += 1;
                 for (;c.position < c.length - 1; ) I(c);
                 return c.documents;
             }
             function K(a, b, c) {
                 var d, e, f = J(a, c);
-                for (d = 0, e = f.length; e > d; d += 1) b(f[d]);
+                for (d = 0, e = f.length; d < e; d += 1) b(f[d]);
             }
             function L(a, b) {
                 var c = J(a, b);
@@ -19780,7 +19779,7 @@ function(a) {
                     schema: R
                 }, b));
             }
-            for (var O = a("./common"), P = a("./exception"), Q = a("./mark"), R = a("./schema/default_safe"), S = a("./schema/default_full"), T = Object.prototype.hasOwnProperty, U = 1, V = 2, W = 3, X = 4, Y = 1, Z = 2, $ = 3, _ = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x84\x86-\x9F\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/, aa = /[\x85\u2028\u2029]/, ba = /[,\[\]\{\}]/, ca = /^(?:!|!!|![a-z\-]+!)$/i, da = /^(?:!|[^,\[\]\{\}])(?:%[0-9a-f]{2}|[0-9a-z\-#;\/\?:@&=\+\$,_\.!~\*'\(\)\[\]])*$/i, ea = new Array(256), fa = new Array(256), ga = 0; 256 > ga; ga++) ea[ga] = k(ga) ? 1 : 0, 
+            for (var O = a("./common"), P = a("./exception"), Q = a("./mark"), R = a("./schema/default_safe"), S = a("./schema/default_full"), T = Object.prototype.hasOwnProperty, U = 1, V = 2, W = 3, X = 4, Y = 1, Z = 2, $ = 3, _ = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x84\x86-\x9F\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/, aa = /[\x85\u2028\u2029]/, ba = /[,\[\]\{\}]/, ca = /^(?:!|!!|![a-z\-]+!)$/i, da = /^(?:!|[^,\[\]\{\}])(?:%[0-9a-f]{2}|[0-9a-z\-#;\/\?:@&=\+\$,_\.!~\*'\(\)\[\]])*$/i, ea = new Array(256), fa = new Array(256), ga = 0; ga < 256; ga++) ea[ga] = k(ga) ? 1 : 0, 
             fa[ga] = k(ga);
             var ha = {
                 YAML: function(a, b, c) {
@@ -19788,7 +19787,7 @@ function(a) {
                     null !== a.version && o(a, "duplication of %YAML directive"), 1 !== c.length && o(a, "YAML directive accepts exactly one argument"), 
                     d = /^([0-9]+)\.([0-9]+)$/.exec(c[0]), null === d && o(a, "ill-formed argument of the YAML directive"), 
                     e = parseInt(d[1], 10), f = parseInt(d[2], 10), 1 !== e && o(a, "unacceptable YAML version of the document"), 
-                    a.version = c[0], a.checkLineBreaks = 2 > f, 1 !== f && 2 !== f && p(a, "unsupported YAML version of the document");
+                    a.version = c[0], a.checkLineBreaks = f < 2, 1 !== f && 2 !== f && p(a, "unsupported YAML version of the document");
                 },
                 TAG: function(a, b, c) {
                     var d, e;
@@ -19815,12 +19814,12 @@ function(a) {
             d.prototype.getSnippet = function(a, b) {
                 var c, d, f, g, h;
                 if (!this.buffer) return null;
-                for (a = a || 4, b = b || 75, c = "", d = this.position; d > 0 && -1 === "\x00\r\n\u2028\u2029".indexOf(this.buffer.charAt(d - 1)); ) if (d -= 1, 
+                for (a = a || 4, b = b || 75, c = "", d = this.position; d > 0 && "\0\r\n\u2028\u2029".indexOf(this.buffer.charAt(d - 1)) === -1; ) if (d -= 1, 
                 this.position - d > b / 2 - 1) {
                     c = " ... ", d += 5;
                     break;
                 }
-                for (f = "", g = this.position; g < this.buffer.length && -1 === "\x00\r\n\u2028\u2029".indexOf(this.buffer.charAt(g)); ) if (g += 1, 
+                for (f = "", g = this.position; g < this.buffer.length && "\0\r\n\u2028\u2029".indexOf(this.buffer.charAt(g)) === -1; ) if (g += 1, 
                 g - this.position > b / 2 - 1) {
                     f = " ... ", g -= 5;
                     break;
@@ -19844,7 +19843,7 @@ function(a) {
                         b.tag === a.tag && e.push(c);
                     }), c.push(a);
                 }), c.filter(function(a, b) {
-                    return -1 === e.indexOf(b);
+                    return e.indexOf(b) === -1;
                 });
             }
             function e() {
@@ -19852,7 +19851,7 @@ function(a) {
                     d[a.tag] = a;
                 }
                 var b, c, d = {};
-                for (b = 0, c = arguments.length; c > b; b += 1) arguments[b].forEach(a);
+                for (b = 0, c = arguments.length; b < c; b += 1) arguments[b].forEach(a);
                 return d;
             }
             function f(a) {
@@ -19968,14 +19967,14 @@ function(a) {
             }
             function e(a, b) {
                 if (b = b || {}, Object.keys(b).forEach(function(b) {
-                    if (-1 === g.indexOf(b)) throw new f('Unknown option "' + b + '" is met in definition of "' + a + '" YAML type.');
+                    if (g.indexOf(b) === -1) throw new f('Unknown option "' + b + '" is met in definition of "' + a + '" YAML type.');
                 }), this.tag = a, this.kind = b.kind || null, this.resolve = b.resolve || function() {
                     return !0;
                 }, this.construct = b.construct || function(a) {
                     return a;
                 }, this.instanceOf = b.instanceOf || null, this.predicate = b.predicate || null, 
                 this.represent = b.represent || null, this.defaultStyle = b.defaultStyle || null, 
-                this.styleAliases = d(b.styleAliases || null), -1 === h.indexOf(this.kind)) throw new f('Unknown kind "' + this.kind + '" is specified for "' + a + '" YAML type.');
+                this.styleAliases = d(b.styleAliases || null), h.indexOf(this.kind) === -1) throw new f('Unknown kind "' + this.kind + '" is specified for "' + a + '" YAML type.');
             }
             var f = a("./exception"), g = [ "kind", "resolve", "construct", "instanceOf", "predicate", "represent", "defaultStyle", "styleAliases" ], h = [ "scalar", "sequence", "mapping" ];
             b.exports = e;
@@ -19986,22 +19985,22 @@ function(a) {
             function d(a) {
                 if (null === a) return !1;
                 var b, c, d = 0, e = a.length, f = l;
-                for (c = 0; e > c; c++) if (b = f.indexOf(a.charAt(c)), !(b > 64)) {
-                    if (0 > b) return !1;
+                for (c = 0; c < e; c++) if (b = f.indexOf(a.charAt(c)), !(b > 64)) {
+                    if (b < 0) return !1;
                     d += 6;
                 }
                 return d % 8 === 0;
             }
             function e(a) {
                 var b, c, d = a.replace(/[\r\n=]/g, ""), e = d.length, f = l, g = 0, i = [];
-                for (b = 0; e > b; b++) b % 4 === 0 && b && (i.push(g >> 16 & 255), i.push(g >> 8 & 255), 
+                for (b = 0; b < e; b++) b % 4 === 0 && b && (i.push(g >> 16 & 255), i.push(g >> 8 & 255), 
                 i.push(255 & g)), g = g << 6 | f.indexOf(d.charAt(b));
                 return c = e % 4 * 6, 0 === c ? (i.push(g >> 16 & 255), i.push(g >> 8 & 255), i.push(255 & g)) : 18 === c ? (i.push(g >> 10 & 255), 
                 i.push(g >> 2 & 255)) : 12 === c && i.push(g >> 4 & 255), h ? new h(i) : i;
             }
             function f(a) {
                 var b, c, d = "", e = 0, f = a.length, g = l;
-                for (b = 0; f > b; b++) b % 3 === 0 && b && (d += g[e >> 18 & 63], d += g[e >> 12 & 63], 
+                for (b = 0; b < f; b++) b % 3 === 0 && b && (d += g[e >> 18 & 63], d += g[e >> 12 & 63], 
                 d += g[e >> 6 & 63], d += g[63 & e]), e = (e << 8) + a[b];
                 return c = f % 3, 0 === c ? (d += g[e >> 18 & 63], d += g[e >> 12 & 63], d += g[e >> 6 & 63], 
                 d += g[63 & e]) : 2 === c ? (d += g[e >> 10 & 63], d += g[e >> 4 & 63], d += g[e << 2 & 63], 
@@ -20063,7 +20062,7 @@ function(a) {
         } ],
         16: [ function(a, b, c) {
             function d(a) {
-                return null === a ? !1 : !!j.test(a);
+                return null !== a && !!j.test(a);
             }
             function e(a) {
                 var b, c, d, e;
@@ -20124,13 +20123,13 @@ function(a) {
         } ],
         17: [ function(a, b, c) {
             function d(a) {
-                return a >= 48 && 57 >= a || a >= 65 && 70 >= a || a >= 97 && 102 >= a;
+                return 48 <= a && a <= 57 || 65 <= a && a <= 70 || 97 <= a && a <= 102;
             }
             function e(a) {
-                return a >= 48 && 55 >= a;
+                return 48 <= a && a <= 55;
             }
             function f(a) {
-                return a >= 48 && 57 >= a;
+                return 48 <= a && a <= 57;
             }
             function g(a) {
                 if (null === a) return !1;
@@ -20139,36 +20138,36 @@ function(a) {
                 if (b = a[g], "-" !== b && "+" !== b || (b = a[++g]), "0" === b) {
                     if (g + 1 === c) return !0;
                     if (b = a[++g], "b" === b) {
-                        for (g++; c > g; g++) if (b = a[g], "_" !== b) {
+                        for (g++; g < c; g++) if (b = a[g], "_" !== b) {
                             if ("0" !== b && "1" !== b) return !1;
                             h = !0;
                         }
                         return h;
                     }
                     if ("x" === b) {
-                        for (g++; c > g; g++) if (b = a[g], "_" !== b) {
+                        for (g++; g < c; g++) if (b = a[g], "_" !== b) {
                             if (!d(a.charCodeAt(g))) return !1;
                             h = !0;
                         }
                         return h;
                     }
-                    for (;c > g; g++) if (b = a[g], "_" !== b) {
+                    for (;g < c; g++) if (b = a[g], "_" !== b) {
                         if (!e(a.charCodeAt(g))) return !1;
                         h = !0;
                     }
                     return h;
                 }
-                for (;c > g; g++) if (b = a[g], "_" !== b) {
+                for (;g < c; g++) if (b = a[g], "_" !== b) {
                     if (":" === b) break;
                     if (!f(a.charCodeAt(g))) return !1;
                     h = !0;
                 }
-                return h ? ":" !== b ? !0 : /^(:[0-5]?[0-9])+$/.test(a.slice(g)) : !1;
+                return !!h && (":" !== b || /^(:[0-5]?[0-9])+$/.test(a.slice(g)));
             }
             function h(a) {
                 var b, c, d = a, e = 1, f = [];
-                return -1 !== d.indexOf("_") && (d = d.replace(/_/g, "")), b = d[0], "-" !== b && "+" !== b || ("-" === b && (e = -1), 
-                d = d.slice(1), b = d[0]), "0" === d ? 0 : "0" === b ? "b" === d[1] ? e * parseInt(d.slice(2), 2) : "x" === d[1] ? e * parseInt(d, 16) : e * parseInt(d, 8) : -1 !== d.indexOf(":") ? (d.split(":").forEach(function(a) {
+                return d.indexOf("_") !== -1 && (d = d.replace(/_/g, "")), b = d[0], "-" !== b && "+" !== b || ("-" === b && (e = -1), 
+                d = d.slice(1), b = d[0]), "0" === d ? 0 : "0" === b ? "b" === d[1] ? e * parseInt(d.slice(2), 2) : "x" === d[1] ? e * parseInt(d, 16) : e * parseInt(d, 8) : d.indexOf(":") !== -1 ? (d.split(":").forEach(function(a) {
                     f.unshift(parseInt(a, 10));
                 }), d = 0, c = 1, f.forEach(function(a) {
                     d += a * c, c *= 60;
@@ -20375,14 +20374,14 @@ function(a) {
             function d(a) {
                 if (null === a) return !0;
                 var b, c, d, e, f, i = [], j = a;
-                for (b = 0, c = j.length; c > b; b += 1) {
+                for (b = 0, c = j.length; b < c; b += 1) {
                     if (d = j[b], f = !1, "[object Object]" !== h.call(d)) return !1;
                     for (e in d) if (g.call(d, e)) {
                         if (f) return !1;
                         f = !0;
                     }
                     if (!f) return !1;
-                    if (-1 !== i.indexOf(e)) return !1;
+                    if (i.indexOf(e) !== -1) return !1;
                     i.push(e);
                 }
                 return !0;
@@ -20403,7 +20402,7 @@ function(a) {
             function d(a) {
                 if (null === a) return !0;
                 var b, c, d, e, f, h = a;
-                for (f = new Array(h.length), b = 0, c = h.length; c > b; b += 1) {
+                for (f = new Array(h.length), b = 0, c = h.length; b < c; b += 1) {
                     if (d = h[b], "[object Object]" !== g.call(d)) return !1;
                     if (e = Object.keys(d), 1 !== e.length) return !1;
                     f[b] = [ e[0], d[e[0]] ];
@@ -20413,7 +20412,7 @@ function(a) {
             function e(a) {
                 if (null === a) return [];
                 var b, c, d, e, f, g = a;
-                for (f = new Array(g.length), b = 0, c = g.length; c > b; b += 1) d = g[b], e = Object.keys(d), 
+                for (f = new Array(g.length), b = 0, c = g.length; b < c; b += 1) d = g[b], e = Object.keys(d), 
                 f[b] = [ e[0], d[e[0]] ];
                 return f;
             }
@@ -20469,7 +20468,7 @@ function(a) {
         } ],
         29: [ function(a, b, c) {
             function d(a) {
-                return null === a ? !1 : null !== h.exec(a) ? !0 : null !== i.exec(a);
+                return null !== a && (null !== h.exec(a) || null !== i.exec(a));
             }
             function e(a) {
                 var b, c, d, e, f, g, j, k, l, m, n = 0, o = null;
@@ -20524,8 +20523,8 @@ function(a) {
         }
         function e(a, d) {
             var e, f = 0;
-            if (d = b.lowercase(d)) for (f = s.length - 1; f >= 0 && s[f] != d; f--) ;
-            if (f >= 0) {
+            if (d = b.lowercase(d)) for (f = s.length - 1; 0 <= f && s[f] != d; f--) ;
+            if (0 <= f) {
                 for (e = s.length - 1; e >= f; e--) c.end && c.end(s[e]);
                 s.length = f;
             }
@@ -20537,7 +20536,7 @@ function(a) {
         }; a; ) {
             if (i = "", h = !0, s.last() && y[s.last()] ? (a = a.replace(new RegExp("([\\W\\w]*)<\\s*\\/\\s*" + s.last() + "[^>]*>", "i"), function(a, b) {
                 return b = b.replace(p, "$1").replace(r, "$1"), c.chars && c.chars(g(b)), "";
-            }), e("", s.last())) : (0 === a.indexOf("<!--") ? (f = a.indexOf("--", 4), f >= 0 && a.lastIndexOf("-->", f) === f && (c.comment && c.comment(a.substring(4, f)), 
+            }), e("", s.last())) : (0 === a.indexOf("<!--") ? (f = a.indexOf("--", 4), 0 <= f && a.lastIndexOf("-->", f) === f && (c.comment && c.comment(a.substring(4, f)), 
             a = a.substring(f + 3), h = !1)) : q.test(a) ? (f = a.match(q)) && (a = a.replace(f[0], ""), 
             h = !1) : o.test(a) ? (f = a.match(l)) && (a = a.substring(f[0].length), f[0].replace(l, e), 
             h = !1) : n.test(a) && ((f = a.match(k)) ? (f[4] && (a = a.substring(f[0].length), 

@@ -122,8 +122,9 @@ exports.signup = function(req, res) {
 				}
 				return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 			});
+		} else {
+			return res.status(400).send({message: 'Error: User already exists!'});
 		}
-		return res.status(400).send({message: 'Error: User already exists!'});
 	});
 };
 
