@@ -136,6 +136,11 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
+	if(!req.user || (req.form.admin._id !== req.user._id) ){
+		console.log("readForRender");	
+		readForRender(req, res);
+	} else {
+	
 	FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
 		if (err) {
 			res.status(400).send({
@@ -156,6 +161,7 @@ exports.read = function(req, res) {
 		}
 		return res.json(newForm);
 	});
+	}
 };
 
 /**
@@ -169,9 +175,8 @@ exports.uploadTemp = function(req, res) {
 /**
  * Show the current form for rendering form live
  */
-exports.readForRender = function(req, res) {
+var readForRender = exports.readForRender = function(req, res) {
 	var newForm = req.form.toJSON();
-
 	if (!newForm.isLive && !req.user) {
 		return res.status(401).send({
 			message: 'Form is Not Public'
@@ -181,7 +186,6 @@ exports.readForRender = function(req, res) {
 	//Remove extraneous fields from form object
 	delete newForm.submissions;
 	delete newForm.analytics;
-	delete newForm.isLive;
 	delete newForm.admin;
 
 	if(!newForm.startPage.showStart){
