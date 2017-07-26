@@ -61,8 +61,13 @@ config_nev();
 
 exports.validateVerificationToken = function(req, res){
 	nev.confirmTempUser(req.params.token, function(err, user) {
+	    //FIXME: Quick hack to prevent already verified users from seeing link has expired page
+	    if(errorHandler.getErrorMessage(err) === "Unique field already exists") {
+		return res.status(200).send('User successfully verified');
+	    }   
+		
 	    if(err) {
-			return res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
+		return res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
 	    }
 	    else if (user){
 	        return res.status(200).send('User successfully verified');
