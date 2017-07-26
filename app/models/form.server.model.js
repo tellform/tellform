@@ -152,7 +152,7 @@ var FormSchema = new Schema({
 	},
 	isLive: {
 		type: Boolean,
-		default: false
+		default: true
 	},
 
 	design: {
