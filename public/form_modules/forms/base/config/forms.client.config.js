@@ -17,8 +17,10 @@ angular.module('view-form')
 			var fields = formObj.form_fields;
 
 			var valid_count = fields.filter(function(field){
-				if(typeof field === 'object' && field.fieldType !== 'statement' && field.fieldType !== 'rating'){
+				if(typeof field === 'object' && field.fieldType !== 'rating' && field.fieldType !== 'statement'){
 					return !!(field.fieldValue);
+				} else if (field.fieldType === 'rating'){
+					return true;
 				}
 
 			}).length;

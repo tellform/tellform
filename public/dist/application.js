@@ -1559,6 +1559,8 @@ angular.module('forms').run(['Menus',
 				var valid_count = fields.filter(function(field){
 					if(typeof field === 'object' && field.fieldType !== 'statement' && field.fieldType !== 'rating'){
 					    return !!(field.fieldValue);
+					} else if(field.fieldType === 'rating'){
+					    return true;
 					}
 
 				}).length;
@@ -3214,10 +3216,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 									stats[deviceType].visits++;
 
-									if(!stats[deviceType].average_time) {
-										stats[deviceType].average_time = 0;
-									}
-									
 									if (visitor.isSubmitted) { 
 										stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
 										stats[deviceType].responses++;
@@ -3232,7 +3230,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                                                                         }
 								}
 							}
-							console.log(stats);
 							return stats;
 						})();
 

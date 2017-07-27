@@ -482,8 +482,10 @@ angular.module('view-form')
 			var fields = formObj.form_fields;
 
 			var valid_count = fields.filter(function(field){
-				if(typeof field === 'object' && field.fieldType !== 'statement' && field.fieldType !== 'rating'){
+				if(typeof field === 'object' && field.fieldType !== 'rating' && field.fieldType !== 'statement'){
 					return !!(field.fieldValue);
+				} else if (field.fieldType === 'rating'){
+					return true;
 				}
 
 			}).length;
@@ -796,19 +798,19 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 $scope.forms = {};
 				TimeCounter.restartClock();
 
-				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
-                    if(field.fieldType === 'statement' || field.fieldType === 'rating'){
+		var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
+                    if(field.fieldType === 'statement'){
                         return false;
                     }
                     return true;
                 }).length;
 
-				var nb_valid = $filter('formValidity')($scope.myform);
-				$scope.translateAdvancementData = {
-					done: nb_valid,
-					total: form_fields_count,
-					answers_not_completed: form_fields_count - nb_valid
-				};
+		var nb_valid = $filter('formValidity')($scope.myform);
+		$scope.translateAdvancementData = {
+			done: nb_valid,
+			total: form_fields_count,
+			answers_not_completed: form_fields_count - nb_valid
+		};
 
                 $scope.reloadForm = function(){
                     //Reset Form
