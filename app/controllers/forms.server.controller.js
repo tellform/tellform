@@ -136,8 +136,7 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-	if(!req.user || (req.form.admin._id !== req.user._id) ){
-		console.log("readForRender");	
+	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
 	
