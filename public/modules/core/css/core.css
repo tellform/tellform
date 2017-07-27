@@ -1,4 +1,19 @@
 
+.form-item .title-row > .list-group-item-heading {
+	color: #34628a;
+}
+
+.form-item:hover .title-row > .list-group-item-heading {
+        color: white;
+}
+
+.form-item:hover .title-row {
+	text-decoration:none;
+}
+
+.form-item.paused .title-row > .list-group-item-heading {
+	color: white;
+}
 
 body {
 	overflow-x: hidden;

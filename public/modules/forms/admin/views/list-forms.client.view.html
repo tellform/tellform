@@ -27,13 +27,13 @@
 
 <section data-ng-controller="ListFormsController as ctrl" data-ng-init="findAll()" class="container">
 	<br>
-	<div class="row">
+	<!--<div class="row">
 		<div class="col-xs-4 col-xs-offset-4">
 			<h3 class="text-center forms-list-title">
 				{{ 'MY_FORMS' | translate }}
 			</h3>
 		</div>
-	</div>
+	</div>-->
 	<div class="row">
 		<div ng-click="openCreateModal()" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new">
 			<div class="title-row col-xs-12">
@@ -89,7 +89,7 @@
 
 			<div class="row">
 				<a data-ng-href="#!/forms/{{form._id}}/admin/create"
-					class="title-row col-xs-12" style="color: white;">
+					class="title-row col-xs-12">
 					<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
 				</a>
 				<div class="col-xs-12 responses-row">
