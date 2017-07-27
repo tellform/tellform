@@ -302,6 +302,12 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
 					$.ajaxSetup( { 'async': true } );
 
+					if(!geoData || !geoData.ip){
+						geoData = {
+							ip: 'Adblocker'
+						};
+					}
+
 					return {
 						ipAddr: geoData.ip,
 						geoLocation: {
