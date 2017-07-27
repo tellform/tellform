@@ -45,7 +45,6 @@ module.exports = function (io, socket) {
 			});
 		});
 
-		socket.disconnect(0);
 	};
 
 	io.on('connection', function(current_socket) {
@@ -55,18 +54,15 @@ module.exports = function (io, socket) {
 				current_socket.id = data.formId;
 				visitorsData[current_socket.id] = data;
 				visitorsData[current_socket.id].isSaved = false;
-
 				if (data.isSubmitted) {
 					saveVisitorData(data, function () {
 						visitorsData[current_socket.id].isSaved = true;
-						current_socket.disconnect(0);
 					});
 				}
 		});
 
 		current_socket.on('disconnect', function() {
 			var data = visitorsData[current_socket.id];
-
 			if(data && !data.isSubmitted && !data.isSaved) {
 				data.isSaved = true;
 				saveVisitorData(data);

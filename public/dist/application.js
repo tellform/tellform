@@ -3156,10 +3156,13 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 						//Iterate through form's submissions
 						for(var i = 0; i < submissions.length; i++){
-							for(var x = 0; x < submissions[i].form_fields; x++){
-								var oldValue = submissions[i].form_fields[x].fieldValue || '';
-								submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
-								submissions[i].form_fields[x].fieldValue = oldValue;
+							for(var x = 0; x < submissions[i].form_fields.length; x++){
+								if(submissions[i].form_fields[x].fieldType === 'dropdown'){
+									submissions[i].form_fields[x].fieldValue = submissions[i].form_fields[x].fieldValue.option_value;
+								}
+								//var oldValue = submissions[i].form_fields[x].fieldValue || '';
+								//submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
+								//submissions[i].form_fields[x].fieldValue = oldValue;
 							}
 							submissions[i].selected = false;
 						}
@@ -3211,24 +3214,25 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
 									stats[deviceType].visits++;
 
-									stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
-
-									stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].visits).toFixed(0);
 									if(!stats[deviceType].average_time) {
 										stats[deviceType].average_time = 0;
 									}
 									
 									if (visitor.isSubmitted) { 
+										stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
 										stats[deviceType].responses++;
 									}
 
-									stats[deviceType].completion = (stats[deviceType].responses / stats[deviceType].visits).toFixed(0);
-									if(!stats[deviceType].completion) {
-										stats[deviceType].completion = 0;
+									if(stats[deviceType].visits) {
+									        stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
 									}
+
+									if(stats[deviceType].responses){
+                                                                                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
+                                                                        }
 								}
 							}
-
+							console.log(stats);
 							return stats;
 						})();
 
@@ -3237,7 +3241,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 				};
 				initController();
 
-				var updateFields = $interval(initController, 2000);
+				var updateFields = $interval(initController, 1000000);
 
 				$scope.$on('$destroy', function() {
 					if (updateFields) {
