@@ -60,20 +60,17 @@ var config_nev = function () {
 config_nev();
 
 exports.validateVerificationToken = function(req, res){
+	console.log(req.user);
 	nev.confirmTempUser(req.params.token, function(err, user) {
-	    //FIXME: Quick hack to prevent already verified users from seeing link has expired page
-	    if(errorHandler.getErrorMessage(err) === "Unique field already exists") {
-		return res.status(200).send('User successfully verified');
-	    }   
-		
+	    console.log(err);
 	    if(err) {
-		return res.status(500).send( {message: errorHandler.getErrorMessage(err) } );
+		return res.status(500).send( {message: err } );
 	    }
 	    else if (user){
 	        return res.status(200).send('User successfully verified');
 	    }
 	    // redirect to resend verification email
-	    return res.status(400).send( {message: 'Verification token is invalid or has expired'} );
+	    else return res.status(400).send( {message: 'Verification token is invalid or has expired'} );
 	});
 };
 

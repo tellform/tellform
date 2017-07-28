@@ -106,6 +106,7 @@
     "coveralls": "^2.11.4",
     "cross-spawn": "^5.0.0",
     "del": "^2.2.2",
+    "email-verification": "github:tellform/node-email-verification",
     "grunt-closure-compiler": "0.0.21",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
