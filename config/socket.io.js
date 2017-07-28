@@ -9,11 +9,7 @@ var config = require('./config'),
 // Define the Socket.io configuration method
 module.exports = function (app, db) {
 	var server = http.createServer(app);
-	var io = socketio(20523, { transports: ['websocket', 'polling'] });
-
-	if(config.socketPort){
-		io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
-	}
+  var	io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
 
 	if(config.disableClusterMode){
 		var redis = require('socket.io-redis');
