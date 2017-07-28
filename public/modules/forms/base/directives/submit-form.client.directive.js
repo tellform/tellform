@@ -219,8 +219,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
 							.success(function (data, status, headers) {
-								console.log('\n\n\n\n\nSUBMITTING PROMISE');
-								console.log(data);
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);

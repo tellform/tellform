@@ -217,7 +217,15 @@ module.exports = function(grunt) {
 			unit: {
 				configFile: 'karma.conf.js',
 			    singleRun: true
-             }
+            },
+            debug: {
+            	configFile: 'karma.conf.js',
+            	browserConsoleLogOptions: {
+				    level: 'log',
+				    terminal: true
+				},
+			    singleRun: true
+            }
 		},
 		protractor: {
 			options: {
@@ -339,9 +347,9 @@ module.exports = function(grunt) {
 
 	// Code coverage tasks.
 	grunt.registerTask('coveralls', ['env:test','mocha_istanbul:coveralls']);
-    	grunt.registerTask('coverage', ['env:test', 'mocha_istanbul:coverage']);
-    	grunt.registerTask('coverage:client', ['env:test', 'mocha_istanbul:coverageClient']);
-    	grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
+    grunt.registerTask('coverage', ['env:test', 'mocha_istanbul:coverage']);
+    grunt.registerTask('coverage:client', ['env:test', 'mocha_istanbul:coverageClient']);
+    grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'html2js:main', 'html2js:forms', 'env', 'concurrent:default']);
@@ -367,4 +375,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);
 	grunt.registerTask('test:server', ['lint:tests', 'env:test', 'mochaTest']);
 	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit']);
+
+	grunt.registerTask('testdebug', ['env:test', 'karma:debug']);
 };

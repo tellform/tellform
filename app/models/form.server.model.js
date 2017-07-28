@@ -218,7 +218,7 @@ FormSchema.virtual('analytics.fields').get(function () {
 	if(this.form_fields.length === 0) {
 		return null;
 	}
-	
+
 	for(var i=0; i<this.form_fields.length; i++){
 		var field = this.form_fields[i];
 

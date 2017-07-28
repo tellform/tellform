@@ -243,7 +243,6 @@
 
 			//Run controller functionality
 			scope.openDeleteModal();
-			console.log(scope.deleteModal);
 			expect(scope.deleteModal.opened).toEqual(true);
 		});
 

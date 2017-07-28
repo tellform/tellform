@@ -126,7 +126,7 @@
     "karma-jasmine-html-reporter": "^0.1.8",
     "karma-mocha-reporter": "^1.1.1",
     "karma-ng-html2js-preprocessor": "^0.2.0",
-    "karma-phantomjs-launcher": "~0.2.1",
+    "karma-phantomjs-launcher": "^1.0.4",
     "mailosaur": "^1.0.1",
     "mocha": "^3.1.2",
     "mocha-lcov-reporter": "^1.0.0",

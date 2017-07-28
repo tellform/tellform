@@ -65,7 +65,6 @@
 
 //         it('should be able to render entryPage in html', function() {
 //             scope.myStartPage = _.cloneDeep(sampleStartPage);  
-//             console.log(scope.myStartPage);
 //             var element = angular.element('<entry-page pageData="myStartPage" pageType="startPage"></entry-page>');
 //             $compile(element)(scope);
 //             scope.$digest();

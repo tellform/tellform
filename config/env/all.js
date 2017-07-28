@@ -28,7 +28,7 @@ module.exports = {
 	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
 
     signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
-	disableClusterMode: (process.env.DISABLE_CLUSTER_MODE === 'TRUE'),
+	enableClusterMode: (process.env.ENABLE_CLUSTER_MODE === 'TRUE'),
 	baseUrl: '',
 	tempUserCollection: 'temporary_users',
 
