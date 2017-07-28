@@ -1,72 +1,72 @@
 'use strict';
 
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
-angular.module('forms').service('FormFields', [
-	function() {
+angular.module('forms').service('FormFields', [ '$filter',
+	function($filter) {
 		this.types = [
 		    {
 		        name : 'textfield',
-		        value : 'Short Text'
+		        value : $filter('translate')('SHORT_TEXT'),
 		    },
 		    {
 		        name : 'email',
-		        value : 'Email'
+		        value : $filter('translate')('EMAIL'),
 		    },
 		    {
 		        name : 'radio',
-		        value : 'Multiple Choice'
+		        value : $filter('translate')('MULTIPLE_CHOICE'),
 		    },
 		    {
 		        name : 'dropdown',
-		        value : 'Dropdown'
+		        value : $filter('translate')('DROPDOWN'),
 		    },
 		    {
 		        name : 'date',
-		        value : 'Date'
+		        value : $filter('translate')('DATE'),
 		    },
 		    {
 		        name : 'textarea',
-		        value : 'Paragraph Text'
+		        value : $filter('translate')('PARAGRAPH'),
 		    },
 		    {
 		        name : 'yes_no',
-		        value : 'Yes/No'
+		        value : $filter('translate')('YES_NO'),
 		    },
 		    {
 		        name : 'legal',
-		        value : 'Legal'
+		        value : $filter('translate')('LEGAL'),
 		    },
 		    // {
 		    //     name : 'sig',
-		    //     value : 'Signature'
+		    //     value : $filter('translate')('SIGNATURE'),
 		    // },
 			// {
 		    //     name : 'file',
-		    //     value : 'File Upload'
+		    //     value : $filter('translate')('FILE_UPLOAD'),
 		    // },
 		    {
 		        name : 'rating',
-		        value : 'Rating'
+		        value : $filter('translate')('RATING'),
 		    },
 		    {
 		        name : 'link',
-		        value : 'Link'
+		        value : $filter('translate')('LINK'),
 		    },
 		    {
 		        name : 'number',
-		        value : 'Numbers'
+		        value : $filter('translate')('NUMBERS'),
 		    },
 		    // {
 		    //     name : 'scale',
-		    //     value : 'Opinion Scale'
+		    //     value : $filter('translate')('OPINION SCALE'),
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : 'Payment'
+		    //     value : $filter('translate')('PAYMENT'),
 		    // },
 		    {
 		        name : 'statement',
-		        value : 'Statement'
+		        value : $filter('translate')('STATEMENT')
 		    }
 		];
 	}
