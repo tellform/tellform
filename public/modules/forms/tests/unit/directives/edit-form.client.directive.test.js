@@ -86,9 +86,7 @@
             scope = el.isolateScope() || el.scope();
 
 			scope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
-				if(cb){
-					cb();
-				}
+				if(cb) cb();
 			};
 
         }));
@@ -153,53 +151,5 @@
 	        });
 
 		});
-		/*
-		describe('> Form Field Button >',function(){
-
-	        it('$scope.addButton() should ADD a button to $scope.myform.startPage.buttons', function() {
-
-	            var expectedStartPageBtn = {
-	            	bgColor:'#ddd',
-	                color:'#ffffff',
-	                text: 'Button'
-	            };
-
-	        	//Run controller methods
-	            scope.addButton();
-	            var actualStartPageBtn = _.cloneDeep(_.last(scope.myform.startPage.buttons));
-	            delete actualStartPageBtn._id;
-
-	            expect(scope.myform.startPage.buttons.length).toEqual(sampleForm.startPage.buttons.length+1);
-	            expect(actualStartPageBtn).toEqualData(expectedStartPageBtn);
-	        });
-
-	        it('$scope.deleteButton() should DELETE a button from $scope.myform.startPage.buttons', function() {
-	        	//Run controller methods
-	            scope.deleteButton(scope.myform.startPage.buttons[0]);
-
-	            expect(scope.myform.startPage.buttons.length).toEqual(0);
-	        });
-	    });
-
-        describe('> Form Field Option >',function(){
-	        it('$scope.addOption() should ADD a new option to a field.fieldOptions', function() {
-	        	var originalOptionLen = scope.myform.form_fields[1].fieldOptions.length;
-
-	        	//Run controller methods
-	            scope.addOption(1);
-
-	            expect(originalOptionLen+1).toEqual(scope.myform.form_fields[1].fieldOptions.length);
-	            expect(scope.myform.form_fields[1].fieldOptions[0].option_title).toEqualData('Option 0');
-                expect(scope.myform.form_fields[1].fieldOptions[0].option_value).toEqualData('Option 0');
-	        });
-
-	        it('$scope.deleteOption() should DELETE remove option from field.fieldOptions', function() {
-                //Run controller methods
-                scope.deleteOption(1, scope.myform.form_fields[1].fieldOptions[0]);
-
-	            expect(scope.myform.form_fields[0].fieldOptions.length).toEqual(0);
-	            expect(scope.myform.form_fields[0].fieldOptions[0]).not.toBeDefined();
-	        });
-	    });*/
     });
 }());

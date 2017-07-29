@@ -38,7 +38,7 @@
 				service.socket.removeListener(eventName);
 			}
 		}
-		
+
 		var service = {
 			connect: connect,
 			emit: emit,

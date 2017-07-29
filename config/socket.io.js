@@ -9,13 +9,9 @@ var config = require('./config'),
 // Define the Socket.io configuration method
 module.exports = function (app, db) {
 	var server = http.createServer(app);
-	var io = socketio(20523, { transports: ['websocket', 'polling'] });
+  	var io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
 
-	if(config.socketPort){
-		io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
-	}
-
-	if(config.disableClusterMode){
+	if(config.enableClusterMode){
 		var redis = require('socket.io-redis');
 		io.adapter(redis( process.env.REDIS_URL || { host: process.env.REDIS_DB_PORT_6379_TCP_ADDR || '127.0.0.1' , port: process.env.REDIS_DB_PORT_6379_TCP_PORT || 6379 }));
 	}

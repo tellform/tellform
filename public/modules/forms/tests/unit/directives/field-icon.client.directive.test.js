@@ -35,7 +35,7 @@
 
         it('should be able render all field-icon types', inject(function($compile) {
             var currType, currClass;
-            
+
             for(var i=0; i<FormFields.types.length; i++){
                 currType = FormFields.types[i];
                 currClass = faClasses[currType.name];

@@ -65,7 +65,6 @@
 		}));
 
 		it('Auth.getUserState() should fetch current user state', function() {
-			
 			//Run Service Logic to Test
 			Auth.login(sampleUser);
 			var currUserState = Auth.getUserState();

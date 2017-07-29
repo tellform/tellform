@@ -14,7 +14,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 /*
                 **  Initialize scope with variables
                 */
-        var newField;
+        		var newField;
 
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
@@ -28,8 +28,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						});
 					},
 					start: function(e, ui) {
-						console.log(ui.item);
-						console.log(ui.placeholder);
 					}
 				};
 

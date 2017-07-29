@@ -2,59 +2,59 @@
 
 // Forms controller
 angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
-	function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
+    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
 
-		$scope.trustSrc = function (src) {
-			return $sce.trustAsResourceUrl(src);
-		};
+        $scope.trustSrc = function (src) {
+            return $sce.trustAsResourceUrl(src);
+        };
 
-		//Set active tab to Create
-		$scope.activePill = 0;
+        //Set active tab to Create
+        $scope.activePill = 0;
 
-		$scope.copied = false;
-		$scope.onCopySuccess = function (e) {
-			$scope.copied = true;
-		};
+        $scope.copied = false;
+        $scope.onCopySuccess = function (e) {
+            $scope.copied = true;
+        };
 
-		$scope = $rootScope;
-		$scope.animationsEnabled = true;
-		$scope.myform = myForm;
-		$rootScope.saveInProgress = false;
+        $scope = $rootScope;
+        $scope.animationsEnabled = true;
+        $scope.myform = myForm;
+        $rootScope.saveInProgress = false;
 
-		CurrentForm.setForm($scope.myform);
+        CurrentForm.setForm($scope.myform);
 
-		$scope.formURL = '/#!/forms/' + $scope.myform._id;
+        $scope.formURL = '/#!/forms/' + $scope.myform._id;
 
-		if ($scope.myform.isLive) {
-			if ($window.subdomainsDisabled === true) {
-				$scope.actualFormURL = window.location.protocol + '//' + window.location.host + '/view' + $scope.formURL;
-			} else {
-				if (window.location.host.split('.').length < 3) {
-					$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + $scope.formURL;
-				} else {
-					$scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1, 3).join('.') + $scope.formURL;
-				}
-			}
-		} else {
-			$scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
-		}
+        if ($scope.myform.isLive) {
+            if ($window.subdomainsDisabled === true) {
+                $scope.actualFormURL = window.location.protocol + '//' + window.location.host + '/view' + $scope.formURL;
+            } else {
+                if (window.location.host.split('.').length < 3) {
+                    $scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host + $scope.formURL;
+                } else {
+                    $scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.username + '.' + window.location.host.split('.').slice(1, 3).join('.') + $scope.formURL;
+                }
+            }
+        } else {
+            $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
+        }
 
 
-		var refreshFrame = $scope.refreshFrame = function(){
-			if(document.getElementById('iframe')) {
-				document.getElementById('iframe').contentWindow.location.reload();
-			}
-		};
+        var refreshFrame = $scope.refreshFrame = function(){
+            if(document.getElementById('iframe')) {
+                document.getElementById('iframe').contentWindow.location.reload();
+            }
+        };
 
-		$scope.tabData   = [
+        $scope.tabData   = [
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-				templateName:   'configure'
+                templateName:   'configure'
             },
-            {
+            /*{
                 heading: $filter('translate')('ANALYZE_TAB'),
-				templateName:   'analyze'
-            }
+                templateName:   'analyze'
+            }*/
         ];
 
         $scope.setForm = function(form){
@@ -72,19 +72,19 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         */
         $scope.openDeleteModal = function(){
             $scope.deleteModal = $uibModal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: 'formDeleteModal.html',
-				controller: 'AdminFormController',
-				resolve: {
-					myForm: function(){
-						return $scope.myform;
-					}
-				}
+                animation: $scope.animationsEnabled,
+                templateUrl: 'formDeleteModal.html',
+                controller: 'AdminFormController',
+                resolve: {
+                    myForm: function(){
+                        return $scope.myform;
+                    }
+                }
             });
             $scope.deleteModal.result.then(function (selectedItem) {
-            	$scope.selected = selectedItem;
+                $scope.selected = selectedItem;
             }, function () {
-            	console.log('Modal dismissed at: ' + new Date());
+                console.log('Modal dismissed at: ' + new Date());
             });
         };
 
@@ -118,7 +118,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
         // Update existing Form
         $scope.update = $rootScope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
-			refreshFrame();
+            refreshFrame();
 
             var continueUpdate = true;
             if(!updateImmediately){
@@ -127,64 +127,64 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
             //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
             if(continueUpdate) {
-				var err = null;
+                var err = null;
 
-				if (!updateImmediately) {
-					$rootScope.saveInProgress = true;
-				}
+                if (!updateImmediately) {
+                    $rootScope.saveInProgress = true;
+                }
 
-				if (isDiffed) {
-					$scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
-						.then(function (response) {
+                if (isDiffed) {
+                    $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
+                        .then(function (response) {
 
-							if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
-							// console.log(response.data);
-						}).catch(function (response) {
-							console.log('Error occured during form UPDATE.\n');
-							// console.log(response.data);
-							err = response.data;
-						}).finally(function () {
-							// console.log('finished updating');
-							if (!updateImmediately) {
-								$rootScope.saveInProgress = false;
-							}
+                            if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+                            // console.log(response.data);
+                        }).catch(function (response) {
+                            console.log('Error occured during form UPDATE.\n');
+                            // console.log(response.data);
+                            err = response.data;
+                        }).finally(function () {
+                            // console.log('finished updating');
+                            if (!updateImmediately) {
+                                $rootScope.saveInProgress = false;
+                            }
 
-							if ((typeof cb) === 'function') {
-								return cb(err);
-							}
-						});
-				} else {
-					var dataToSend = data;
-					if(dataToSend.analytics && dataToSend.analytics.visitors){
-						delete dataToSend.analytics.visitors;
-					}
-					if(dataToSend.submissions){
-						delete dataToSend.submissions;
-					}
+                            if ((typeof cb) === 'function') {
+                                return cb(err);
+                            }
+                        });
+                } else {
+                    var dataToSend = data;
+                    if(dataToSend.analytics && dataToSend.analytics.visitors){
+                        delete dataToSend.analytics.visitors;
+                    }
+                    if(dataToSend.submissions){
+                        delete dataToSend.submissions;
+                    }
 
-					$scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
-						.then(function (response) {
+                    $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
+                        .then(function (response) {
 
-							if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+                            if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
 
-						}).catch(function (response) {
-							console.log('Error occured during form UPDATE.\n');
-							// console.log(response.data);
-							err = response.data;
-						}).finally(function () {
-							// console.log('finished updating');
-							if (!updateImmediately) {
-								$rootScope.saveInProgress = false;
-							}
+                        }).catch(function (response) {
+                            console.log('Error occured during form UPDATE.\n');
+                            // console.log(response.data);
+                            err = response.data;
+                        }).finally(function () {
+                            // console.log('finished updating');
+                            if (!updateImmediately) {
+                                $rootScope.saveInProgress = false;
+                            }
 
-							if ((typeof cb) === 'function') {
-								return cb(err);
-							}
-						});
-				}
+                            if ((typeof cb) === 'function') {
+                                return cb(err);
+                            }
+                        });
+                }
             }
         };
 
 
-	}
+    }
 ]);
