@@ -67,6 +67,7 @@
 				<uib-tab ng-repeat="tab in tabData" index="{{$index}}+1" heading="{{tab.heading}}">
 					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
 				</uib-tab>
+				<uib-tab ng-if="tabData" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length}}">
 				<uib-tab index="2" heading="{{ 'ANALYZE_TAB' | translate }}">
 					<edit-form-directive myform="myform" user="myform.admin"></edit-form-directive>
 				</uib-tab>
@@ -75,7 +76,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<uib-tabset active="activePill" vertical="true" type="pills">
-									<uib-tab index="0" heading="Share your Form">
+									<uib-tab index="0" heading="{{ 'SHARE_YOUR_FORM' | translate }}">
 										<div class="row">
 											<div class="col-sm-12">
 												{{ 'TELLFORM_URL' | translate }}
@@ -90,7 +91,7 @@
 											</div>
 										</div>
 									</uib-tab>
-									<uib-tab index="1" heading="Embed your Form">
+									<uib-tab index="1" heading="{{ 'EMBED_YOUR_FORM' | translate }}">
 										<div class="row">
 											<div class="col-sm-12">
 												{{ 'COPY_AND_PASTE' | translate }}
@@ -116,7 +117,7 @@
 						</div>
 					</div>
 				</uib-tab>
-				<uib-tab ng-if="tabData && myform.form_fields.length" heading="Design" index="{{tabData.length}}+1">
+				<uib-tab ng-if="tabData && myform.form_fields.length" heading="{{ 'DESIGN_TAB' | translate }}" index="{{tabData.length}}+1">
 					<div class="config-form design container">
 						<div class="row">
 							<div class="col-md-4 col-sm-12 container">

@@ -137,11 +137,33 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		BTN_BACKGROUND_COLOR: 'Button Background Color',
 		BTN_TEXT_COLOR: 'Button Text Color',
 
+    //Share View
+    EMBED_YOUR_FORM: 'Embed your form',
+    SHARE_YOUR_FORM: 'Share your form',
+
 		//Admin Tabs
 		CREATE_TAB: 'Create',
 		DESIGN_TAB: 'Design',
 		CONFIGURE_TAB: 'Configure',
-		ANALYZE_TAB: 'Analyze'
+		ANALYZE_TAB: 'Analyze',
+    SHARE_TAB: 'Share',
 
+    //Field Types
+    SHORT_TEXT: 'Short Text',
+    EMAIL: 'Email',
+    MULTIPLE_CHOICE: 'Multiple Choice',
+    DROPDOWN: 'Dropdown',
+    DATE: 'Date',
+    PARAGRAPH_T: 'Paragraph',
+    YES_NO: 'Yes/No',
+    LEGAL: 'Legal',
+    RATING: 'Rating',
+    NUMBERS: 'Numbers',
+    SIGNATURE: 'Signature',
+    FILE_UPLOAD: 'File upload',
+    OPTION_SCALE: 'Option Scale',
+    PAYMENT: 'Payment',
+    STATEMENT: 'Statement',
+    LINK: 'Link'
 	});
 }]);
