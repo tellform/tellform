@@ -210,7 +210,8 @@ module.exports = function(grunt) {
 				reporter: 'spec',
 				quiet: false,
 				require: 'server.js',
-				ui: 'bdd'
+				ui: 'bdd',
+				debug: true
 			}
 		},
 		karma: {

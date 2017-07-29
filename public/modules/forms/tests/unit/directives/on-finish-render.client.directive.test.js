@@ -18,7 +18,6 @@
         }));
 
         it('should emit Custom "Finished" and "Started" events on ng-repeat', inject(function($compile, $rootScope) {
-        
             scope.myfields = FormFields.types;
 
             $compile('<div><div ng-repeat="item in myfields" on-finish-render="editFormFields">{{item.name}}</div></div>')(scope);
@@ -30,8 +29,6 @@
         }));
 
         it('should emit "ngRepeat Finished" and "ngRepeat Started" events on ng-repeat when attr is not set to string', inject(function($compile, $rootScope) {
-        
-            // console.log(FormFields.types);
             scope.myfields = FormFields.types;
 
             $compile('<div><div ng-repeat="item in myfields" on-finish-render>{{item.name}}</div></div>')(scope);

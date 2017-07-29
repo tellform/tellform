@@ -10,6 +10,9 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	LogicJumpSchema = require('./logic_jump.server.model');
 
+const UIDGenerator = require('uid-generator');
+const uidgen3 = new UIDGenerator(256, UIDGenerator.BASE62);
+
 var FieldOptionSchema = new Schema({
 	option_id: {
 		type: Number
@@ -61,6 +64,9 @@ function BaseFieldSchema(){
 	Schema.apply(this, arguments);
 
 	this.add({
+		globalId: {
+			type: String,
+    	},
 		isSubmission: {
 			type: Boolean,
 			default: false
@@ -192,6 +198,9 @@ FormFieldSchema.pre('validate', function(next) {
 FormFieldSchema.pre('save', function(next) {
 	if(this.logicJump && this.logicJump.fieldA) {
 		if(this.logicJump.jumpTo === '') delete this.logicJump.jumpTo;
+	}
+	if(!this.globalId){
+		this.globalId = uidgen3.generateSync()
 	}
 	next();
 });
