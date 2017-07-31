@@ -12,7 +12,6 @@ angular.module('stateMock').service('$state', function($q){
         }else{
             throw Error('No more transitions were expected! Tried to transition to '+ stateName );
         }
-        console.log('Mock transition to: ' + stateName);
         var deferred = $q.defer();
         var promise = deferred.promise;
         deferred.resolve();

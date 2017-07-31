@@ -140,8 +140,6 @@
         describe('Form Table Methods', function(){
 
             it('$scope.toggleAllCheckers should toggle all checkboxes in table', function(){
-                $httpBackend.flush();
-
                 //Run Controller Logic to Test
                 scope.table.masterChecker = true;
                 scope.toggleAllCheckers();
@@ -153,8 +151,6 @@
             });
 
             it('$scope.isAtLeastOneChecked should return true when at least one checkbox is selected', function(){
-                $httpBackend.flush();
-
                 scope.table.masterChecker = true;
                 scope.toggleAllCheckers();
 
@@ -165,8 +161,6 @@
             });
 
             it('$scope.deleteSelectedSubmissions should delete all submissions that are selected', function(){
-                $httpBackend.flush();
-
                 scope.table.masterChecker = true;
                 scope.toggleAllCheckers();
 

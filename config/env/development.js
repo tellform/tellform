@@ -9,7 +9,6 @@ module.exports = {
 			pass: ''
 		}
 	},
-
     log: {
         // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
         format: 'dev',

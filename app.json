@@ -10,9 +10,9 @@
 			"description": "Disable support for running subdomains. (This should be true if you are not using your own custom domain.",
 			"value": "TRUE"
 		},
-		"DISABLE_CLUSTER_MODE": {
-			"description": "Disable support for running in cluster mode on pm2",
-			"value": "TRUE"
+		"ENABLE_CLUSTER_MODE": {
+			"description": "ENABLE support for running in cluster mode on pm2",
+			"value": "FALSE"
 		},
 		"NODE_ENV": {
 			"description": "Choose whether to run app in development or production mode",

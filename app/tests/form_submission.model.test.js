@@ -149,7 +149,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 			 mySubmission.save(function(err, submission) {
 				should.not.exist(err);
 				should.exist(submission);
-
 				done();
 			});
 		});
@@ -187,7 +186,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 
 			//Create Submission
 			mySubmission = new FormSubmission({
-				form_fields: sampleSubmission,
+				form_fields: _.merge(sampleSubmission, myForm.form_fields),
 				admin: user,
 				form: myForm,
 				timeElapsed: 17.55
@@ -200,7 +199,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 
 		});
 
-		/*
         it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
 			var old_fields = myForm.toObject().form_fields;
@@ -214,17 +212,18 @@ describe('FormSubmission Model Unit Tests:', function() {
 				should.not.exist(err);
 				should.exist(_form.form_fields);
 
-				var actual_fields = _.deepOmit(_form.toObject().form_fields, ['lastModified', 'created', '_id']);
-				old_fields = _.deepOmit(old_fields, ['lastModified', 'created', '_id']);
+				var actual_fields = _.deepOmit(_form.toObject().form_fields, ['deletePreserved', 'globalId', 'lastModified', 'created', '_id', 'submissionId']);
+				old_fields = _.deepOmit(old_fields, ['deletePreserved', 'globalId', 'lastModified', 'created', '_id', 'submissionId']);
 
-				should.deepEqual(JSON.stringify(actual_fields), JSON.stringify(old_fields), 'old form_fields not equal to newly saved form_fields');
+				should.deepEqual(actual_fields, old_fields, 'old form_fields not equal to newly saved form_fields');
 				done();
 			});
 		});
-		//
+
 		it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
 
 			var old_fields = myForm.toObject().form_fields;
+			old_fields.splice(0,1);
 			var new_form_fields = _.clone(myForm.toObject().form_fields);
 			new_form_fields.splice(0, 1);
 
@@ -240,16 +239,9 @@ describe('FormSubmission Model Unit Tests:', function() {
 
 				should.deepEqual(JSON.stringify(actual_fields), JSON.stringify(old_fields)); //'old form_fields not equal to newly saved form_fields');
 				done();
-
-				// //Remove submission
-				// mySubmission.remove(function(err){
-				// 	myForm.submissions.should.have.length(0);
-				// 	myForm.form_fields.should.not.containDeep(old_fields[0]);
-				// 	done();
-				// });
 			});
 		});
-        */
+
 		afterEach(function(done){
 			mySubmission.remove(function(){
 				done();

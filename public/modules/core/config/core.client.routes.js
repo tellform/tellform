@@ -25,13 +25,11 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 			if(statesToIgnore.indexOf(toState.name) > 0){
 				if(Auth.isAuthenticated()){
 					event.preventDefault(); // stop current execution
-					//console.log('go to forms');
 					$state.go('listForms'); // go to listForms page
 				}
 			}
 			//Redirect to 'signup' route if user is not authenticated
 			else if(toState.name !== 'access_denied' && !Auth.isAuthenticated() && toState.name !== 'submitForm'){
-				console.log('go to signup');
 				event.preventDefault(); // stop current execution
 				$state.go('listForms'); // go to listForms page
 			}

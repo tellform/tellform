@@ -7,116 +7,110 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
             restrict: 'E',
             scope: {
                 user:'=',
-		myform: '='
+                myform: '='
             },
             controller: function($scope){
 
                 $scope.table = {
                     masterChecker: false,
-                    rows: []
+                    rows: $scope.myform.submissions
                 };
 
-				$scope.table.rows = [];
+                var initController = function(){
+                    Forms.get({
+                        formId: $stateParams.formId
+                    }, function(form){
+                        $scope.myform = form;
+                        $scope.table.rows = form.submissions;
+                        /*var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
-				var initController = function(){
+                        var submissions = $scope.myform.submissions || [];
 
-					Forms.get({
-						formId: $stateParams.formId
-					}, function(form){
-						$scope.myform = form;
-						var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+                        //Iterate through form's submissions
+                        for(var i = 0; i < submissions.length; i++){
+                            for(var x = 0; x < submissions[i].form_fields.length; x++){
+                                if(submissions[i].form_fields[x].fieldType === 'dropdown'){
+                                    submissions[i].form_fields[x].fieldValue = submissions[i].form_fields[x].fieldValue.option_value;
+                                }
+                                //var oldValue = submissions[i].form_fields[x].fieldValue || '';
+                                //submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
+                                //submissions[i].form_fields[x].fieldValue = oldValue;
+                            }
+                            submissions[i].selected = false;
+                        }
 
-						var submissions = $scope.myform.submissions || [];
+                        $scope.table.rows = submissions;*/
+                    });
+                };
 
-						//Iterate through form's submissions
-						for(var i = 0; i < submissions.length; i++){
-							for(var x = 0; x < submissions[i].form_fields.length; x++){
-								if(submissions[i].form_fields[x].fieldType === 'dropdown'){
-									submissions[i].form_fields[x].fieldValue = submissions[i].form_fields[x].fieldValue.option_value;
-								}
-								//var oldValue = submissions[i].form_fields[x].fieldValue || '';
-								//submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
-								//submissions[i].form_fields[x].fieldValue = oldValue;
-							}
-							submissions[i].selected = false;
-						}
 
-						$scope.table.rows = submissions;
+                /*
+                ** Analytics Functions
+                */
+                $scope.AverageTimeElapsed = (function(){
+                    var totalTime = 0;
+                    var numSubmissions = $scope.table.rows.length;
 
-						/*
-						 ** Analytics Functions
-						 */
+                    for(var i=0; i<$scope.table.rows.length; i++){
+                        totalTime += $scope.table.rows[i].timeElapsed;
+                    }
 
-						$scope.AverageTimeElapsed = (function(){
-							var totalTime = 0;
-							var numSubmissions = $scope.table.rows.length;
+                    if(numSubmissions === 0) {
+                        return 0;
+                    }
+                    return (totalTime/numSubmissions).toFixed(0);
+                })();
 
-							for(i=0; i<$scope.table.rows.length; i++){
-								totalTime += $scope.table.rows[i].timeElapsed;
-							}
+                $scope.DeviceStatistics = (function(){
+                    var newStatItem = function(){
+                        return {
+                            visits: 0,
+                            responses: 0,
+                            completion: 0,
+                            average_time: 0,
+                            total_time: 0
+                        };
+                    };
 
-							if(numSubmissions === 0) {
-								return 0;
-							}
+                    var stats = {
+                        desktop: newStatItem(),
+                        tablet: newStatItem(),
+                        phone: newStatItem(),
+                        other: newStatItem()
+                    };
 
-							return (totalTime/numSubmissions).toFixed(0);
-						})();
+                    if($scope.myform.analytics && $scope.myform.analytics.visitors) {
+                        var visitors = $scope.myform.analytics.visitors;
+                        for (var i = 0; i < visitors.length; i++) {
+                            var visitor = visitors[i];
+                            var deviceType = visitor.deviceType;
 
-						$scope.DeviceStatistics = (function(){
-							var newStatItem = function(){
-								return {
-									visits: 0,
-									responses: 0,
-									completion: 0,
-									average_time: 0,
-									total_time: 0
-								};
-							};
+                            stats[deviceType].visits++;
 
-							var stats = {
-								desktop: newStatItem(),
-								tablet: newStatItem(),
-								phone: newStatItem(),
-								other: newStatItem()
-							};
+                            if (visitor.isSubmitted) {
+                                stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
+                                stats[deviceType].responses++;
+                            }
 
-							if($scope.myform.analytics && $scope.myform.analytics.visitors) {
-								var visitors = $scope.myform.analytics.visitors;
-								for (i = 0; i < visitors.length; i++) {
-									var visitor = visitors[i];
-									var deviceType = visitor.deviceType;
+                            if(stats[deviceType].visits) {
+                                stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
+                            }
 
-									stats[deviceType].visits++;
+                            if(stats[deviceType].responses){
+                                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
+                            }
+                        }
+                    }
+                    return stats;
+                })();
 
-									if (visitor.isSubmitted) { 
-										stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
-										stats[deviceType].responses++;
-									}
+                var updateFields = $interval(initController, 1000000);
 
-									if(stats[deviceType].visits) {
-									        stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
-									}
-
-									if(stats[deviceType].responses){
-                                                                                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
-                                                                        }
-								}
-							}
-							return stats;
-						})();
-
-					});
-
-				};
-				initController();
-
-				var updateFields = $interval(initController, 1000000);
-
-				$scope.$on('$destroy', function() {
-					if (updateFields) {
-						$interval.cancel($scope.updateFields);
-					}
-				});
+                $scope.$on('$destroy', function() {
+                    if (updateFields) {
+                        $interval.cancel($scope.updateFields);
+                    }
+                });
 
                 /*
                 ** Table Functions
@@ -174,7 +168,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 //Export selected submissions of Form
                 $scope.exportSubmissions = function(type){
 
-					angular.element('#table-submission-data').tableExport({type: type, escape:false});
+                    angular.element('#table-submission-data').tableExport({type: type, escape:false});
                 };
 
             }
