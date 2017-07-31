@@ -84,11 +84,11 @@ angular.module('TellForm.templates', []).run(['$templateCache', function ($templ
     "            <button type=\"submit\" ng-click=\"removeCurrentForm()\" class=\"btn btn-block btn-danger\" ng-disabled=\"myform.title != deleteConfirm\">\n" +
     "            	{{ 'I_UNDERSTAND' | translate }}\n" +
     "            </button>\n" +
-    "        </div></script><div class=page-header style=\"padding-bottom: 1em\"><div class=\"col-xs-10 col-sm-8\"><h1 class=\"hidden-sm hidden-xs\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h1><h2 class=\"hidden-md hidden-lg\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h2></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><button class=\"btn btn-danger\" ng-click=openDeleteModal()><i class=\"fa fa-trash-o\"></i> <span class=\"show-sm hidden-lg hidden-md hidden-xs\">{{ 'DELETE_FORM_SM' | translate}}</span> <span class=\"hidden-xs hidden-sm\">{{ 'DELETE_FORM_MD' | translate}}</span></button></small></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><a class=\"btn btn-secondary view-form-btn\" href={{actualFormURL}}><span class=\"hidden-xs hidden-sm\">{{ 'VIEW' | translate }} <span ng-show=myform.isLive>{{ 'LIVE' | translate }} </span><span ng-hide=myform.isLive>{{ 'PREVIEW' | translate }}</span> </span><i class=\"status-light status-light-on fa fa-dot-circle-o\" ng-if=myform.isLive></i> <i class=\"status-light status-light-off fa fa-dot-circle-o\" ng-if=!myform.isLive></i></a></small></div></div><div class=row><div class=col-xs-12><uib-tabset active=activePill vertical=true type=pills><uib-tab index=0 heading=\"{{ 'CREATE_TAB' | translate }}\"><edit-submissions-form-directive myform=myform></edit-submissions-form-directive></uib-tab><uib-tab ng-repeat=\"tab in tabData\" index={{$index}}+1 heading={{tab.heading}}><div class=row data-ng-include=\"'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'\" onload=\"form_url = trustSrc(formURL)\"></div></uib-tab><uib-tab index=2 heading=\"{{ 'ANALYZE_TAB' | translate }}\"><edit-form-directive myform=myform user=myform.admin></edit-form-directive></uib-tab><uib-tab ng-if=tabData heading=Share index={{tabData.length}}><div class=config-form><div class=row><div class=col-sm-12><uib-tabset active=activePill vertical=true type=pills><uib-tab index=0 heading=\"Share your Form\"><div class=row><div class=col-sm-12>{{ 'TELLFORM_URL' | translate }}</div><div class=\"col-sm-8 form-input\"><span ngclipboard data-clipboard-target=#copyURL><input id=copyURL ng-value=actualFormURL class=\"form-control ng-pristine ng-untouched ng-valid\"></span></div><div class=col-sm-4><button class=\"btn btn btn-secondary view-form-btn\" ngclipboard data-clipboard-target=#copyURL>{{ 'COPY' | translate }} <i class=\"fa fa-clipboard\" aria-hidden=true></i></button></div></div></uib-tab><uib-tab index=1 heading=\"Embed your Form\"><div class=row><div class=col-sm-12>{{ 'COPY_AND_PASTE' | translate }}</div><div class=\"col-sm-8 form-input\"><span ngclipboard data-clipboard-target=#copyEmbedded><textarea id=copyEmbedded class=\"form-control ng-pristine ng-untouched ng-valid\" style=\"min-height:200px; width:100%; background-color: #FFFFCC; color: #30313F\">\n" +
+    "        </div></script><div class=page-header style=\"padding-bottom: 1em\"><div class=\"col-xs-10 col-sm-8\"><h1 class=\"hidden-sm hidden-xs\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h1><h2 class=\"hidden-md hidden-lg\" data-ng-bind=myform.title style=\"margin-bottom: 0px\"></h2></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><button class=\"btn btn-danger\" ng-click=openDeleteModal()><i class=\"fa fa-trash-o\"></i> <span class=\"show-sm hidden-lg hidden-md hidden-xs\">{{ 'DELETE_FORM_SM' | translate}}</span> <span class=\"hidden-xs hidden-sm\">{{ 'DELETE_FORM_MD' | translate}}</span></button></small></div><div class=\"col-xs-1 col-sm-2\"><small class=pull-right><a class=\"btn btn-secondary view-form-btn\" href={{actualFormURL}}><span class=\"hidden-xs hidden-sm\">{{ 'VIEW' | translate }} <span ng-show=myform.isLive>{{ 'LIVE' | translate }} </span><span ng-hide=myform.isLive>{{ 'PREVIEW' | translate }}</span> </span><i class=\"status-light status-light-on fa fa-dot-circle-o\" ng-if=myform.isLive></i> <i class=\"status-light status-light-off fa fa-dot-circle-o\" ng-if=!myform.isLive></i></a></small></div></div><div class=row><div class=col-xs-12><uib-tabset active=activePill vertical=true type=pills><uib-tab index=0 heading=\"{{ 'CREATE_TAB' | translate }}\"><edit-form-directive myform=myform></edit-form-directive></uib-tab><uib-tab ng-repeat=\"tab in tabData\" index={{$index}}+1 heading={{tab.heading}}><div class=row data-ng-include=\"'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'\" onload=\"form_url = trustSrc(formURL)\"></div></uib-tab><uib-tab index=2 heading=\"{{ 'ANALYZE_TAB' | translate }}\"><edit-submissions-form-directive myform=myform user=myform.admin></edit-submissions-form-directive></uib-tab><uib-tab ng-if=tabData heading=\"{{ 'SHARE_TAB' | translate }}\" index={{tabData.length}}><div class=config-form><div class=row><div class=col-sm-12><uib-tabset active=activePill vertical=true type=pills><uib-tab index=0 heading=\"{{ 'SHARE_YOUR_FORM' | translate }}\"><div class=row><div class=col-sm-12>{{ 'TELLFORM_URL' | translate }}</div><div class=\"col-sm-8 form-input\"><span ngclipboard data-clipboard-target=#copyURL><input id=copyURL ng-value=actualFormURL class=\"form-control ng-pristine ng-untouched ng-valid\"></span></div><div class=col-sm-4><button class=\"btn btn btn-secondary view-form-btn\" ngclipboard data-clipboard-target=#copyURL>{{ 'COPY' | translate }} <i class=\"fa fa-clipboard\" aria-hidden=true></i></button></div></div></uib-tab><uib-tab index=1 heading=\"{{ 'EMBED_YOUR_FORM' | translate }}\"><div class=row><div class=col-sm-12>{{ 'COPY_AND_PASTE' | translate }}</div><div class=\"col-sm-8 form-input\"><span ngclipboard data-clipboard-target=#copyEmbedded><textarea id=copyEmbedded class=\"form-control ng-pristine ng-untouched ng-valid\" style=\"min-height:200px; width:100%; background-color: #FFFFCC; color: #30313F\">\n" +
     "														&lt;!-- {{ 'CHANGE_WIDTH_AND_HEIGHT' | translate }} --&gt;\n" +
     "														<iframe id=iframe src={{actualFormURL}} style=width:100%;height:500px></iframe>\n" +
     "														<div style=\"font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px\">{{ 'POWERED_BY' | translate }} <a href=https://www.tellform.com style=\"color: #999\" target=_blank>TellForm</a></div>\n" +
-    "													</textarea></span></div><div class=col-sm-4><button class=\"btn btn btn-secondary view-form-btn\" ngclipboard data-clipboard-target=#copyEmbedded>{{ 'COPY' | translate }} <i class=\"fa fa-clipboard\" aria-hidden=true></i></button></div></div></uib-tab></uib-tabset></div></div></div></uib-tab><uib-tab ng-if=\"tabData && myform.form_fields.length\" heading=Design index={{tabData.length}}+1><div class=\"config-form design container\"><div class=row><div class=\"col-md-4 col-sm-12 container\"><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.backgroundColor ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.questionColor ng-style=\"{ 'background-color': myform.design.colors.questionColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.answerColor ng-style=\"{ 'background-color': myform.design.colors.answerColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonColor ng-style=\"{ 'background-color': myform.design.colors.buttonColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonTextColor ng-style=\"{ 'background-color': myform.design.colors.buttonTextColor }\"></div></div></div><div class=\"col-md-8 hide-md hide-lg\"><iframe id=iframe ng-if=!!formURL src={{trustSrc(formURL)}} style=\"border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute\"></iframe></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div></uib-tab></uib-tabset></div></div></section>");
+    "													</textarea></span></div><div class=col-sm-4><button class=\"btn btn btn-secondary view-form-btn\" ngclipboard data-clipboard-target=#copyEmbedded>{{ 'COPY' | translate }} <i class=\"fa fa-clipboard\" aria-hidden=true></i></button></div></div></uib-tab></uib-tabset></div></div></div></uib-tab><uib-tab ng-if=\"tabData && myform.form_fields.length\" heading=\"{{ 'DESIGN_TAB' | translate }}\" index={{tabData.length}}+1><div class=\"config-form design container\"><div class=row><div class=\"col-md-4 col-sm-12 container\"><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.backgroundColor ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.questionColor ng-style=\"{ 'background-color': myform.design.colors.questionColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.answerColor ng-style=\"{ 'background-color': myform.design.colors.answerColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonColor ng-style=\"{ 'background-color': myform.design.colors.buttonColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonTextColor ng-style=\"{ 'background-color': myform.design.colors.buttonTextColor }\"></div></div></div><div class=\"col-md-8 hide-md hide-lg\"><iframe id=iframe ng-if=!!formURL src={{trustSrc(formURL)}} style=\"border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute\"></iframe></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div></uib-tab></uib-tabset></div></div></section>");
   $templateCache.put("modules/forms/admin/views/list-forms.client.view.html",
     "<header data-ng-include=\"'/static/modules/core/views/header.client.view.html'\"></header><section class=overlay ng-if=showCreateModal ng-click=closeCreateModal()></section><script type=text/ng-template id=deleteModalListForms.html><div class=\"modal-header\">\n" +
     "		<h2 class=\"modal-title hidden-md hidden-lg\">{{ 'ARE_YOU_SURE' | translate }}</h2>\n" +
@@ -828,12 +828,34 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		BTN_BACKGROUND_COLOR: 'Button Background Color',
 		BTN_TEXT_COLOR: 'Button Text Color',
 
+    //Share View
+    EMBED_YOUR_FORM: 'Embed your form',
+    SHARE_YOUR_FORM: 'Share your form',
+
 		//Admin Tabs
 		CREATE_TAB: 'Create',
 		DESIGN_TAB: 'Design',
 		CONFIGURE_TAB: 'Configure',
-		ANALYZE_TAB: 'Analyze'
+		ANALYZE_TAB: 'Analyze',
+    SHARE_TAB: 'Share',
 
+    //Field Types
+    SHORT_TEXT: 'Short Text',
+    EMAIL: 'Email',
+    MULTIPLE_CHOICE: 'Multiple Choice',
+    DROPDOWN: 'Dropdown',
+    DATE: 'Date',
+    PARAGRAPH_T: 'Paragraph',
+    YES_NO: 'Yes/No',
+    LEGAL: 'Legal',
+    RATING: 'Rating',
+    NUMBERS: 'Numbers',
+    SIGNATURE: 'Signature',
+    FILE_UPLOAD: 'File upload',
+    OPTION_SCALE: 'Option Scale',
+    PAYMENT: 'Payment',
+    STATEMENT: 'Statement',
+    LINK: 'Link'
 	});
 }]);
 
@@ -976,12 +998,34 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		BTN_BACKGROUND_COLOR: 'Color de fondo del botón',
 		BTN_TEXT_COLOR: 'Color del texto del botón',
 
+    //Share View
+    EMBED_YOUR_FORM: 'Pone tu formulario',
+    SHARE_YOUR_FORM: 'Compartí tu formulario',
+
 		//Admin Tabs
 		CREATE_TAB: 'Crear',
 		DESIGN_TAB: 'Diseño',
 		CONFIGURE_TAB: 'Configuración',
-		ANALYZE_TAB: 'Análisis'
+		ANALYZE_TAB: 'Análisis',
+    SHARE_TAB: 'Compartir',
 
+    //Field Types
+    SHORT_TEXT: 'Texto corto',
+    EMAIL: 'Email',
+    MULTIPLE_CHOICE: 'Opciones múltiples',
+    DROPDOWN: 'Desplegable',
+    DATE: 'Fecha',
+    PARAGRAPH_T: 'Párrafo',
+    YES_NO: 'Si/No',
+    LEGAL: 'Legal',
+    RATING: 'Puntaje',
+    NUMBERS: 'Números',
+    SIGNATURE: 'Firma',
+    FILE_UPLOAD: 'Subir archivo',
+    OPTION_SCALE: 'Escala',
+    PAYMENT: 'Pago',
+    STATEMENT: 'Declaración',
+    LINK: 'Enlace'
 	});
 }]);
 
@@ -1501,7 +1545,7 @@ angular.module('core').service('Menus', [
 				service.socket.removeListener(eventName);
 			}
 		}
-		
+
 		var service = {
 			connect: connect,
 			emit: emit,
@@ -1630,49 +1674,15 @@ angular.module('forms').config(['$stateProvider',
 
 (function () {
 	'use strict';
-
+	//Dummy Service for Previewing Form
 	function SendVisitorData() {
 
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveIndex) {
-			// Create a new message object
-			/*var visitorData = {
-				referrer: document.referrer,
-				isSubmitted: form.submitted,
-				formId: form._id,
-				lastActiveField: form.form_fields[lastActiveIndex]._id,
-				timeElapsed: timeElapsed,
-				//@TODO @FIXME: David: Need to make this get the language from the HTTP Header instead
-				language: window.navigator.userLanguage || window.navigator.language,
-				ipAddr: '',
-				deviceType: ''
-			};
-
-			$http.get('https://jsonip.com/').success(function(response) {
-					visitorData.ipAddr = response['ip']+'';
-				}).error(function(error) {
-					console.error('Could not get users\'s ip');
-				}).then(function(){
-
-					visitorData.userAgent = deviceDetector.raw;
-
-					if(deviceDetector.isTablet()) {
-						visitorData.deviceType = 'tablet';
-					}else if(deviceDetector.isMobile()){
-						visitorData.deviceType = 'phone';
-					}else {
-						visitorData.deviceType = 'desktop';
-					}
-					Socket.emit('form-visitor-data', visitorData);
-				});*/
 
 		}
 
 		function init(){
-			// Make sure the Socket is connected
-			/*if (!Socket.socket) {
-				Socket.connect();
-			}*/
 		}
 
 		var service = {
@@ -1683,15 +1693,12 @@ angular.module('forms').config(['$stateProvider',
 		return service;
 
 	}
-	
 	// Create the SendVisitorData service
 	angular
 		.module('forms')
 		.factory('SendVisitorData', SendVisitorData);
 
 	SendVisitorData.$inject = [];
-
-	
 }());
 
 
@@ -2769,7 +2776,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 /*
                 **  Initialize scope with variables
                 */
-        var newField;
+        		var newField;
 
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
@@ -3301,72 +3308,72 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 'use strict';
 
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
-angular.module('forms').service('FormFields', [
-	function() {
+angular.module('forms').service('FormFields', [ '$filter',
+	function($filter) {
 		this.types = [
 		    {
 		        name : 'textfield',
-		        value : 'Short Text'
+		        value : $filter('translate')('SHORT_TEXT'),
 		    },
 		    {
 		        name : 'email',
-		        value : 'Email'
+		        value : $filter('translate')('EMAIL'),
 		    },
 		    {
 		        name : 'radio',
-		        value : 'Multiple Choice'
+		        value : $filter('translate')('MULTIPLE_CHOICE'),
 		    },
 		    {
 		        name : 'dropdown',
-		        value : 'Dropdown'
+		        value : $filter('translate')('DROPDOWN'),
 		    },
 		    {
 		        name : 'date',
-		        value : 'Date'
+		        value : $filter('translate')('DATE'),
 		    },
 		    {
 		        name : 'textarea',
-		        value : 'Paragraph Text'
+		        value : $filter('translate')('PARAGRAPH'),
 		    },
 		    {
 		        name : 'yes_no',
-		        value : 'Yes/No'
+		        value : $filter('translate')('YES_NO'),
 		    },
 		    {
 		        name : 'legal',
-		        value : 'Legal'
+		        value : $filter('translate')('LEGAL'),
 		    },
 		    // {
 		    //     name : 'sig',
-		    //     value : 'Signature'
+		    //     value : $filter('translate')('SIGNATURE'),
 		    // },
 			// {
 		    //     name : 'file',
-		    //     value : 'File Upload'
+		    //     value : $filter('translate')('FILE_UPLOAD'),
 		    // },
 		    {
 		        name : 'rating',
-		        value : 'Rating'
+		        value : $filter('translate')('RATING'),
 		    },
 		    {
 		        name : 'link',
-		        value : 'Link'
+		        value : $filter('translate')('LINK'),
 		    },
 		    {
 		        name : 'number',
-		        value : 'Numbers'
+		        value : $filter('translate')('NUMBERS'),
 		    },
 		    // {
 		    //     name : 'scale',
-		    //     value : 'Opinion Scale'
+		    //     value : $filter('translate')('OPINION SCALE'),
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : 'Payment'
+		    //     value : $filter('translate')('PAYMENT'),
 		    // },
 		    {
 		        name : 'statement',
-		        value : 'Statement'
+		        value : $filter('translate')('STATEMENT')
 		    }
 		];
 	}
@@ -3395,6 +3402,7 @@ angular.module('forms').factory('Submissions', ['$resource',
 		});
 	}
 ]);
+
 'use strict';
 
 // Configuring the Forms drop-down menus
