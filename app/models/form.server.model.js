@@ -349,9 +349,6 @@ FormSchema.pre('save', function (next) {
 				old_ids = _.map(_.map(old_form_fields, 'globalId'), function(id){ return ''+id;}),
 				deletedIds = getDeletedIndexes(old_ids, new_ids);
 
-			console.log(deletedIds);
-			console.log(new_ids);
-			console.log(old_ids);
 			//Check if any form_fileds were deleted
 			if( deletedIds.length > 0 ){
 
@@ -415,9 +412,7 @@ FormSchema.pre('save', function (next) {
 							submission.form_fields = submission_form_fields;
 							that.form_fields = currentform_form_fields;
 
-							submission.save(function (saveErr) {
-								return callback(saveErr);
-							});
+							return callback(null);
 						}, function (err) {
 							return cb(err);
 						});
