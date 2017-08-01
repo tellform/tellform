@@ -62,14 +62,14 @@
 		<div class="col-xs-12">
 			<uib-tabset active="activePill" vertical="true" type="pills">
 				<uib-tab index="0" heading="{{ 'CREATE_TAB' | translate }}">
-					<edit-submissions-form-directive myform="myform"></edit-submissions-form-directive>
+					<edit-form-directive myform="myform"></edit-form-directive>
 				</uib-tab>
 				<uib-tab ng-repeat="tab in tabData" index="{{$index}}+1" heading="{{tab.heading}}">
 					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
 				</uib-tab>
 				<uib-tab ng-if="tabData" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length}}">
 				<uib-tab index="2" heading="{{ 'ANALYZE_TAB' | translate }}">
-					<edit-form-directive myform="myform" user="myform.admin"></edit-form-directive>
+					<edit-submissions-form-directive myform="myform" user="myform.admin"></edit-submissions-form-directive>
 				</uib-tab>
 				<uib-tab ng-if="tabData" heading="Share" index="{{tabData.length}}">
 					<div class="config-form">
