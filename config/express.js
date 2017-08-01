@@ -91,11 +91,7 @@ module.exports = function(db) {
 			urlPath = url.parse(req.url).path.split('/');
 			if (urlPath.indexOf('static') > -1) {
 				urlPath.splice(1, 1);
-				if(process.env.NODE_ENV === 'development'){
-					req.root = req.protocol + '://' + config.baseUrl + ':' + config.port + urlPath.join('/');
-				} else {
-					req.root = req.protocol + '://' + config.baseUrl + urlPath.join('/');
-				}
+				req.root = req.protocol + '://' + config.baseUrl + urlPath.join('/');
 				return next();
 			}
 
@@ -287,7 +283,7 @@ module.exports = function(db) {
 		if (!err) {
 			return next();
 		}
-		
+
 		// Log it
 		client.captureError(err);
 
