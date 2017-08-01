@@ -25,7 +25,9 @@ exports.getErrorMessage = function(err) {
 
 	if(!err) {
 		return '';
-	} else if (err.code) {
+	} else if(typeof err === 'string'){
+        message = err;
+    } else if (err.code) {
 		switch (err.code) {
 			case 11000:
 			case 11001:
