@@ -56,7 +56,7 @@ module.exports = function(db) {
 
 	app.locals.subdomainsDisabled = config.subdomainsDisabled;
 
-	if(config.socketPort){
+	if(config.socketPort && process.env.NODE_ENV !== 'production'){
 		app.locals.socketPort = config.socketPort;
 	}
 
