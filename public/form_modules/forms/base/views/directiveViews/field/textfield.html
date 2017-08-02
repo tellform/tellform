@@ -41,7 +41,7 @@
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
 			<span ng-if="field.fieldType == 'email'"> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
-			<span ng-if="field.validateRegex"> {{ 'ERROR_NOT_A_NUMBER' | translate }} </span>
+			<span ng-if="field.fieldType == 'number'"> {{ 'ERROR_NOT_A_NUMBER' | translate }} </span>
 			<span ng-if="field.fieldType == 'link'"> {{ 'ERROR_URL_INVALID' | translate }} </span>
         </div>
     </div>
