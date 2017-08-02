@@ -64,7 +64,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 						$rootScope.nextField();
 					}
 				};
-
+                scope.nextField = $rootScope.nextField;
 				scope.setActiveField = $rootScope.setActiveField;
 
 				//Set format only if field is a date

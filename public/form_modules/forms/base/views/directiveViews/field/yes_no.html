@@ -1,7 +1,9 @@
 <div class="field row radio"
 	 	ng-click="setActiveField(field._id, index, true)"
 	 	on-tab-and-shift-key="prevField()"
-	 	key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field">
+	 	key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field"
+        on-valid-key="nextField()"
+        ng-show="!field.disabled">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
         <h3 class="row">
 			<small class="field-number">
@@ -26,11 +28,9 @@
 					class="focusOn"
                     style="opacity: 0; margin-left: 0px;"
 					ng-model="field.fieldValue"
-				    ng-focus="setActiveField(field._id, index, true)"
 					ng-model-options="{ debounce: 250 }"
 					ng-required="field.required"
-					ng-change="$root.nextField()"
-                    ng-disabled="field.disabled" />
+                    ng-change="nextField()"/>
 				<div class="letter">
 					{{ 'Y' | translate }}
 				</div>
@@ -48,14 +48,12 @@
 			        ng-model="field.fieldValue"
 			        ng-model-options="{ debounce: 250 }"
 			        ng-required="field.required"
-			        ng-change="$root.nextField()"
-                    ng-disabled="field.disabled"/>
-
-			<div class="letter">
-				{{ 'N' | translate }}
-			</div>
-			<span>{{ 'NO' | translate }}</span>
-                	<i ng-show="field.fieldValue === 'false'" class="fa fa-check" aria-hidden="true"></i>
+			        ng-change="nextField()"/>
+			    <div class="letter">
+				    {{ 'N' | translate }}
+			    </div>
+			    <span>{{ 'NO' | translate }}</span>
+                <i ng-show="field.fieldValue === 'false'" class="fa fa-check" aria-hidden="true"></i>
             </label>
         </div>
     </div>

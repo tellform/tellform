@@ -15517,7 +15517,7 @@ function(a) {
             }, a.getClass = function(b) {
                 return b >= a.last_value ? h.iconBase + " " + h.emptyIcon : h.iconBase + " " + h.fullIcon + " active ";
             }, a.unpaintStars = function(b, c) {
-                a.paintStars(a.last_value - 1, c);
+                0 !== a.last_value && a.paintStars(a.last_value - 1, c);
             }, a.paintStars = function(b, c) {
                 if (!a.readonly) {
                     for (var d = e.find("li").find("i"), f = 0; f < d.length; f++) {
@@ -15542,7 +15542,7 @@ function(a) {
     var f = {
         restrict: "EA",
         replace: !0,
-        template: '<ul ng-class="listClass"><li ng-touch="paintStars($index)" ng-mouseenter="paintStars($index, true)" ng-mouseleave="unpaintStars($index, false)" ng-repeat="item in items track by $index"><i  ng-class="getClass($index)" ng-click="setValue($index, $event)"></i></li></ul>',
+        template: '<ul ng-class="listClass"><li ng-init="paintStars(last_value)" ng-touch="paintStars($index)" ng-mouseenter="paintStars($index, true)" ng-mouseleave="unpaintStars($index, false)" ng-repeat="item in items track by $index"><i  ng-class="getClass($index)" ng-click="setValue($index, $event)"></i></li></ul>',
         require: "ngModel",
         scope: !0,
         link: e
