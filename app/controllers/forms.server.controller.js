@@ -198,6 +198,10 @@ var readForRender = exports.readForRender = function(req, res) {
  */
 exports.update = function(req, res) {
 	var form = req.form;
+    var updatedForm = req.body.form;
+
+    delete updatedForm.__v;
+    delete updatedForm.created; 
 
 	if (req.body.changes) {
 		var formChanges = req.body.changes;
@@ -207,8 +211,8 @@ exports.update = function(req, res) {
 		});
 	} else {
 		//Unless we have 'admin' privileges, updating form admin is disabled
-		if(req.body.form && req.user.roles.indexOf('admin') === -1) {
-			delete req.body.form.admin;
+		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
+			delete updatedForm.admin;
 		}
 
 		if(form.analytics === null){
@@ -224,12 +228,13 @@ exports.update = function(req, res) {
 				delete field._id;
 			}
 		}
-		form = _.extend(form, req.body.form);
+		form = _.extend(form, updatedForm);
 	}
 
 	form.save(function(err, savedForm) {
 		if (err) {
-			res.status(405).send({
+			console.log(err);
+            res.status(405).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {

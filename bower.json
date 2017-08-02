@@ -12,7 +12,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "angular-resource": "~1.4.7",
-		"angular-cache-buster": "~0.4.3",
+    "angular-cache-buster": "~0.4.3",
     "angular-mocks": "~1.4.7",
     "angular-bootstrap": "~0.14.3",
     "angular-ui-utils": "~3.0.0",
@@ -49,7 +49,8 @@
     "angular": "1.4.14",
     "angular-ui-select": "compiled",
     "jspdf": "~1.0.178",
-    "angular-sanitize": "1.4.14"
+    "angular-sanitize": "1.4.14",
+    "angular-ui-sortable": "^0.17.1"
   },
   "overrides": {
     "BOWER-PACKAGE": {
