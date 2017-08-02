@@ -24,7 +24,7 @@ TellForm 2.0.0
 - [Contributors](#contributors)
 - [Mentions on the Web](#mentions-on-the-web)
 
-## Features	
+## Features
 
 ### Currently following features are implemented:
 
@@ -55,7 +55,7 @@ All contributors are eligible to get a free [TellForm Sticker](https://www.stick
 
 ## Quickstart
 
-Before you start, make sure you have 
+Before you start, make sure you have
 1. [Redis](https://redis.io/) installed and running at 127.0.0.1:6379
 2. [MongoDB](https://www.mongodb.com/) installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
 
@@ -106,7 +106,7 @@ Your application should run on port 3000 or the port you specified in your .env 
 
 ## Deploying with Docker
 
-To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/). 
+To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/).
 
 Then run these commands
 
@@ -154,6 +154,60 @@ To calculate your client-side test coverage with Istanbul, run the coverage task
 ```bash
 $ grunt coverage:client
 ```
+
+## FORMA
+
+Before you start, make sure you have
+1. [Redis](https://redis.io/) installed and running at 127.0.0.1:6379
+2. [MongoDB](https://www.mongodb.com/) installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
+3. [Docker](https://docs.docker.com/engine/installation/) installed and running
+
+Also make sure to install [DNS Masq](http://www.thekelleys.org.uk/dnsmasq/doc.html) or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
+
+
+Install dependencies.
+```
+$ npm install
+```
+
+Create .env file at project root folder. Fill in MAILER_SERVICE_PROVIDER, MAILER_EMAIL_ID and MAILER_PASSWORD.
+```
+APP_NAME=forma
+APP_DESC=
+APP_KEYWORDS=
+NODE_ENV=development
+BASE_URL=localhost:5000
+PORT=5000
+username=forma_admin
+MAILER_SERVICE_PROVIDER=
+MAILER_EMAIL_ID=
+MAILER_PASSWORD=
+MAILER_FROM=forma@data.gov.sg
+SIGNUP_DISABLED=false
+SUBDOMAINS_DISABLED=true
+DISABLE_CLUSTER_MODE=true
+GOOGLE_ANALYTICS_ID=
+RAVEN_DSN=
+PRERENDER_TOKEN=
+COVERALLS_REPO_TOKEN=
+```
+
+#### Deploy with Docker:
+Create and start mongo & redis docker container.
+```
+$ docker run -p 27017:27017 -d --name forma-mongo mongo
+$ docker run -p 127.0.0.1:6379:6379 -d --name forma-redis redis
+```
+
+After code changes, build and start docker containers.
+```
+$ docker start forma-mongo && docker start forma-redis
+$ docker build -t forma-tellform .
+$ docker stop forma-tellform
+$ docker run --rm -p 5000:5000 --link forma-redis:redis-db --link forma-mongo:db --name forma-tellform forma-tellform
+```
+
+Your application should run on port 5000 or the port you specified in your .env file, so in your browser just go to [http://localhost:5000](http://localhost:5000)
 
 
 ## Where to get help
