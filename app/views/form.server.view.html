@@ -98,7 +98,10 @@
 <script type="text/javascript">
 	var user = {{ user | json | safe }};
 	var signupDisabled = {{signupDisabled | safe}};
-	var socketPort = {{socketPort | safe}};
+	var socketPort = false;
+	{% if socketPort %}
+		socketPort = {{socketPort | safe }};
+	{% endif %}
 	var socketUrl = "{{socketUrl | safe}}";
 	var subdomainsDisabled = {{subdomainsDisabled | safe}};
 </script>

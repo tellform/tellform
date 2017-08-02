@@ -58,11 +58,13 @@ module.exports = function(db) {
 
 	if(config.socketPort && process.env.NODE_ENV !== 'production'){
 		app.locals.socketPort = config.socketPort;
+	} else {
+		app.locals.socketPort = "";
 	}
 
 	if(config.socketUrl){
 		app.locals.socketUrl = config.socketUrl;
-	}
+	} 
 
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();

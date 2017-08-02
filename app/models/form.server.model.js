@@ -256,9 +256,14 @@ FormSchema.virtual('analytics.fields').get(function () {
 			}
 
 			var totalViews = dropoffViews+continueViews;
-			var continueRate = (continueViews/totalViews*100).toFixed(0);
-			var dropoffRate = (dropoffViews/totalViews*100).toFixed(0);
-
+			var continueRate = 0;
+			var dropoffRate = 0;
+			
+			if(totalViews > 0){
+				continueRate = (continueViews/totalViews*100).toFixed(0);
+				dropoffRate = (dropoffViews/totalViews*100).toFixed(0);
+			}
+			
 			fieldDropoffs[i] = {
 				dropoffViews: dropoffViews,
 				responses: continueViews,
