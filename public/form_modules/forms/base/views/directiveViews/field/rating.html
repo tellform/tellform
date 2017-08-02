@@ -17,7 +17,8 @@
 
 		<input-stars max="{{field.ratingOptions.steps}}"
 					 ng-init="field.fieldValue = 1"
-					 on-star-click="$root.nextField()"
+                     on-shape-click="true"
+                     on-star-click="nextField()"
 					 icon-full="{{field.ratingOptions.shape}}"
 					 icon-base="fa fa-3x"
 					 icon-empty="{{field.ratingOptions.shape}}"

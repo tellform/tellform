@@ -29,7 +29,7 @@
 				    ng-focus="setActiveField(field._id, index, true)"
 					ng-model-options="{ debounce: 250 }"
 					ng-required="field.required"
-					ng-change="$root.nextField()"
+					ng-click="nextField()"
                     ng-disabled="field.disabled" />
 				<div class="letter">
 					{{ 'Y' | translate }}
