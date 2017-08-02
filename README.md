@@ -18,6 +18,7 @@ TellForm 2.0.0
 - [Quickstart](#quickstart)
 - [Deploying with Docker](#deploying-with-docker)
 - [Testing your Application](#testing-your-application)
+- [FORMA](#forma)
 - [Where to Get Help](#where-to-get-help)
 - [Sponsors](#sponsors)
 - [Backers](#backers)
@@ -157,6 +158,7 @@ $ grunt coverage:client
 
 ## FORMA
 
+#### Prerequisite:
 Before you start, make sure you have
 1. [Redis](https://redis.io/) installed and running at 127.0.0.1:6379
 2. [MongoDB](https://www.mongodb.com/) installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
@@ -165,11 +167,12 @@ Before you start, make sure you have
 Also make sure to install [DNS Masq](http://www.thekelleys.org.uk/dnsmasq/doc.html) or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
 
 
-Install dependencies.
+#### Install dependencies:
 ```
 $ npm install
 ```
 
+#### Prepare .env file:
 Create .env file at project root folder. Fill in MAILER_SERVICE_PROVIDER, MAILER_EMAIL_ID and MAILER_PASSWORD.
 ```
 APP_NAME=forma
@@ -254,7 +257,7 @@ Love our work and community? [Become a backer](https://opencollective.com/tellfo
 	<img src="https://opencollective.com/public/images/users/avatar-01.svg" height="64">
 </a>
 
-## Contributors 
+## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 | [<img src="https://avatars2.githubusercontent.com/u/1160417?v=3" width="100px;"/><br /><sub>David Baldwynn</sub>](http://baldwynn.me)<br />[💻](https://github.com/tellform/TellForm/commits?author=whitef0x0 "Code") [🔧](#tool-whitef0x0 "Tools") [🚇](#infra-whitef0x0 "Infrastructure (Hosting, Build-Tools, etc)") [📖](https://github.com/tellform/TellForm/commits?author=whitef0x0 "Documentation") [💡](#example-whitef0x0 "Examples") [🎨](#design-whitef0x0 "Design") [🔍](#fundingFinding-whitef0x0 "Funding Finding") [👀](#review-whitef0x0 "Reviewed Pull Requests") [⚠️](https://github.com/tellform/TellForm/commits?author=whitef0x0 "Tests") | [<img src="https://avatars2.githubusercontent.com/u/313117?v=3" width="100px;"/><br /><sub>Samuel Laulhau</sub>](https://samuellaulhau.fr)<br />[💻](https://github.com/tellform/TellForm/commits?author=lalop "Code") [🌍](#translation-lalop "Translation") | [<img src="https://avatars0.githubusercontent.com/u/313507?v=3" width="100px;"/><br /><sub>Arun Pattnaik</sub>](http://arun.co)<br />[🎨](#design-arunpattnaik "Design") | [<img src="https://avatars0.githubusercontent.com/u/5405744?v=3" width="100px;"/><br /><sub>Thiên Toán</sub>](https://toanalien.com)<br />[🐛](https://github.com/tellform/TellForm/issues?q=author%3Atoanalien "Bug reports") [💻](https://github.com/tellform/TellForm/commits?author=toanalien "Code") [📖](https://github.com/tellform/TellForm/commits?author=toanalien "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/8615608?v=3" width="100px;"/><br /><sub>Adrian Portabales</sub>](https://github.com/AdrianP-)<br />[🐛](https://github.com/tellform/TellForm/issues?q=author%3AAdrianP- "Bug reports") [💻](https://github.com/tellform/TellForm/commits?author=AdrianP- "Code") | [<img src="https://avatars3.githubusercontent.com/u/8433587?v=3" width="100px;"/><br /><sub>Peter Thaleikis</sub>](https://github.com/spekulatius)<br />[📖](https://github.com/tellform/TellForm/commits?author=spekulatius "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/1247388?v=3" width="100px;"/><br /><sub>Mickaël Andrieu</sub>](http://www.mickael-andrieu.com)<br />[📖](https://github.com/tellform/TellForm/commits?author=mickaelandrieu "Documentation") |
