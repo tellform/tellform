@@ -23,7 +23,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
 					update: function(e, ui) {
-                        console.log(ui.item.sortable.model);
                         $scope.update(false, $scope.myform, false, false, function(err){
 						});
 					},
@@ -295,10 +294,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 					if(fieldType === 'rating'){
 						newField.ratingOptions = {
-							steps: 1,
+							steps: 5,
 							shape: 'Heart'
 						};
-						newField.fieldValue = '0';
+						newField.fieldValue = 0;
 					}
 
 					if($scope.showAddOptions(newField)){
