@@ -50,7 +50,8 @@
     "angular-ui-select": "compiled",
     "jspdf": "~1.0.178",
     "angular-sanitize": "1.4.14",
-    "angular-ui-sortable": "^0.17.1"
+    "angular-ui-sortable": "^0.17.1",
+    "angular-ui-date": "~0.0.11"
   },
   "overrides": {
     "BOWER-PACKAGE": {
