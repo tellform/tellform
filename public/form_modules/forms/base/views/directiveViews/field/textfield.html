@@ -29,7 +29,6 @@
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
 			value="field.fieldValue"
-		    ng-focus="setActiveField(field._id, index, true)"
 		   	on-enter-or-tab-key="nextField()"
 		   	on-tab-and-shift-key="prevField()"
 			ng-required="field.required"

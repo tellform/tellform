@@ -4,24 +4,31 @@ angular.module('view-form').directive('keyToTruthy', ['$rootScope', function($ro
 	return {
 		restrict: 'A',
 		scope: {
-			field: '='
+			field: '=',
+            nextField: '&'
 		},
 		link: function($scope, $element, $attrs) {
 			$element.bind('keydown keypress', function(event) {
 				var keyCode = event.which || event.keyCode;
 				var truthyKeyCode = $attrs.keyCharTruthy.charCodeAt(0) - 32;
 				var falseyKeyCode = $attrs.keyCharFalsey.charCodeAt(0) - 32;
-
-				if(keyCode === truthyKeyCode ) {
+				console.log($scope);
+                if(keyCode === truthyKeyCode ) {
 					event.preventDefault();
 					$scope.$apply(function() {
 						$scope.field.fieldValue = 'true';
+                        if($attrs.onValidKey){
+                            $scope.$root.$eval($attrs.onValidKey);
+                        }
 					});
 				}else if(keyCode === falseyKeyCode){
 					event.preventDefault();
 					$scope.$apply(function() {
 						$scope.field.fieldValue = 'false';
-					});
+					    if($attrs.onValidKey){
+                            $scope.$root.$eval($attrs.onValidKey);
+                        }   
+                    });
 				}
 			});
 		}

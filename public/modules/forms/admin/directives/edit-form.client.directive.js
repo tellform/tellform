@@ -26,9 +26,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         $scope.update(false, $scope.myform, false, false, function(err){
 						});
 					},
-					start: function(e, ui) {
-					    console.log(ui)
-                    }
 				};
 
 				/*
