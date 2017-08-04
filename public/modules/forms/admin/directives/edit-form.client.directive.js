@@ -131,6 +131,15 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 							$scope.saveField = function(){
 
+								// Remove duplicate first
+								if (curr_field.globalId != undefined) {
+									for (var i = 0; i < $scope.myform.form_fields.length; i++) {
+										var field = $scope.myform.form_fields[i];
+										if (field.globalId == curr_field.globalId) {
+											$scope.myform.form_fields.splice(i, 1);
+										}
+									}
+								}
 								$scope.myform.form_fields.push(curr_field);
 								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
 									$uibModalInstance.close();
