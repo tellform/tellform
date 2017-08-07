@@ -32,10 +32,10 @@ angular.module('forms').service('FormFields', [ '$filter',
 		        name : 'yes_no',
 		        value : $filter('translate')('YES_NO'),
 		    },
-		    {
-		        name : 'legal',
-		        value : $filter('translate')('LEGAL'),
-		    },
+		    // {
+		    //     name : 'legal',
+		    //     value : $filter('translate')('LEGAL'),
+		    // },
 		    // {
 		    //     name : 'sig',
 		    //     value : $filter('translate')('SIGNATURE'),
@@ -48,10 +48,10 @@ angular.module('forms').service('FormFields', [ '$filter',
 		        name : 'rating',
 		        value : $filter('translate')('RATING'),
 		    },
-		    {
-		        name : 'link',
-		        value : $filter('translate')('LINK'),
-		    },
+		    // {
+		    //     name : 'link',
+		    //     value : $filter('translate')('LINK'),
+		    // },
 		    {
 		        name : 'number',
 		        value : $filter('translate')('NUMBERS'),
