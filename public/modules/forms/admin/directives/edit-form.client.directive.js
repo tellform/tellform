@@ -19,12 +19,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
 					appendTo: '.dropzone',
-					helper: 'clone',
+					helper: 'original',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
 					update: function(e, ui) {
-						$scope.update(false, $scope.myform, false, false, function(err){
-							if(!err) $scope.myform.form_fields.push(newField);
+						$scope.update(false, $scope.myform, false, true, function(err){
+							if(err) console.log(err);
 						});
 					},
 					start: function(e, ui) {
@@ -131,7 +131,25 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 							$scope.saveField = function(){
 
-								$scope.myform.form_fields.push(curr_field);
+								// Have to insert back at same spot if it is an edit
+								var indexToInsert = -1;
+
+								// Remove duplicate first
+								if (curr_field.globalId != undefined) {
+									for (var i = 0; i < $scope.myform.form_fields.length; i++) {
+										var field = $scope.myform.form_fields[i];
+										if (field.globalId == curr_field.globalId) {
+											$scope.myform.form_fields.splice(i, 1);
+											indexToInsert = i;
+										}
+									}
+								}
+								if (indexToInsert >= 0) {
+									$scope.myform.form_fields.splice(indexToInsert, 0, curr_field);	
+								} else {
+									$scope.myform.form_fields.push(curr_field);	
+								}
+
 								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
 									$uibModalInstance.close();
 								});

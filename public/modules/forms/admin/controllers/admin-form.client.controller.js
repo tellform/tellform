@@ -133,15 +133,16 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                     $rootScope.saveInProgress = true;
                 }
 
+
                 if (isDiffed) {
+
                     $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
                         .then(function (response) {
 
                             if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
-                            // console.log(response.data);
+
                         }).catch(function (response) {
                             console.log('Error occured during form UPDATE.\n');
-                            // console.log(response.data);
                             err = response.data;
                         }).finally(function () {
                             // console.log('finished updating');
@@ -154,6 +155,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                             }
                         });
                 } else {
+
                     var dataToSend = data;
                     if(dataToSend.analytics && dataToSend.analytics.visitors){
                         delete dataToSend.analytics.visitors;
@@ -169,10 +171,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                         }).catch(function (response) {
                             console.log('Error occured during form UPDATE.\n');
-                            // console.log(response.data);
                             err = response.data;
                         }).finally(function () {
-                            // console.log('finished updating');
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
                             }

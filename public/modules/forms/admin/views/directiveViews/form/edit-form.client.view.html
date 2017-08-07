@@ -556,7 +556,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-10 dropzoneContainer">
 
-                <div class="panel-group dropzone" ui-sortable="sortableOptions">
+                <div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 
                     <div class="panel panel-default" ng-repeat="field in myform.form_fields"
 									 ng-if="!field.deletePreserved"
