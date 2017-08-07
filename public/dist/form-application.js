@@ -1192,9 +1192,9 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 
 	// Create the Socket.io wrapper service
 	function Socket($timeout, $window) {
-		
-		var service; 
-		
+
+		var service;
+
 		// Connect to Socket.io server
 		function connect(url) {
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
@@ -1224,7 +1224,7 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 				service.socket.removeListener(eventName);
 			}
 		}
-		
+
 		service = {
 			connect: connect,
 			emit: emit,
@@ -1233,10 +1233,11 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			socket: null
 		};
 
+		console.log($window.socketUrl);
 		var url = '';
 		if($window.socketUrl && $window.socketPort){
 			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl && !$window.socketPort){
+		} else if ($window.socketUrl){
 			url = window.location.protocol + '//' + $window.socketUrl;
 		} else if ($window.socketPort){
 			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
@@ -1247,14 +1248,13 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 
 		return service;
 	}
-	
+
 	angular
 		.module('view-form')
 		.factory('Socket', Socket);
 
 	Socket.$inject = ['$timeout', '$window'];
 
-	
 }());
 
 'use strict';
