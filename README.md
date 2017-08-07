@@ -170,6 +170,7 @@ Also make sure to install [DNS Masq](http://www.thekelleys.org.uk/dnsmasq/doc.ht
 #### Install dependencies:
 ```
 $ npm install
+$ bower install
 ```
 
 #### Prepare .env file:
