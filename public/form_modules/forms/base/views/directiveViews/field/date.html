@@ -24,7 +24,6 @@
 				   ng-required="field.required"
 				   ng-disabled="field.disabled"
 				   placeholder="MM/DD/YYYY"
-				   ng-focus="setActiveField(field._id, index, true)"
 				   on-tab-key="nextField()"
 				   on-tab-and-shift-key="prevField()"
 				   ng-change="$root.nextField()">

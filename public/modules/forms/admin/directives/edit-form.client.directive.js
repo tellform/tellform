@@ -19,16 +19,13 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
 					appendTo: '.dropzone',
-					helper: 'clone',
+				    //helper: 'clone',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
 					update: function(e, ui) {
-						$scope.update(false, $scope.myform, false, false, function(err){
-							if(!err) $scope.myform.form_fields.push(newField);
+                        $scope.update(false, $scope.myform, false, false, function(err){
 						});
 					},
-					start: function(e, ui) {
-					}
 				};
 
 				/*
@@ -294,10 +291,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 					if(fieldType === 'rating'){
 						newField.ratingOptions = {
-							steps: 1,
+							steps: 5,
 							shape: 'Heart'
 						};
-						newField.fieldValue = '0';
+						newField.fieldValue = 0;
 					}
 
 					if($scope.showAddOptions(newField)){

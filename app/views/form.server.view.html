@@ -98,7 +98,10 @@
 <script type="text/javascript">
 	var user = {{ user | json | safe }};
 	var signupDisabled = {{signupDisabled | safe}};
-	var socketPort = {{socketPort | safe}};
+	var socketPort = false;
+	{% if socketPort %}
+		socketPort = {{socketPort | safe }};
+	{% endif %}
 	var socketUrl = "{{socketUrl | safe}}";
 	var subdomainsDisabled = {{subdomainsDisabled | safe}};
 </script>
@@ -106,9 +109,10 @@
 <!--Socket.io Client Dependency-->
 <script src="/static/lib/socket.io-client/dist/socket.io.min.js" async></script>
 <script src="/static/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="/static/lib/jquery-ui/jquery-ui.js" type="text/javascript"></script>
 
 <script src="/static/dist/vendor.min.js"></script>
-
+ <script src="/static/lib/angular-ui-date/src/date.js" type="text/javascript"></script>
 <!--Application JavaScript Files-->
 {% for jsFile in formJSFiles %}
 <script type="text/javascript" src="{{jsFile}}"></script>

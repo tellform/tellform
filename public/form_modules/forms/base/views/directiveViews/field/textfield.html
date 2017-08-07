@@ -29,7 +29,6 @@
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
 			value="field.fieldValue"
-		    ng-focus="setActiveField(field._id, index, true)"
 		   	on-enter-or-tab-key="nextField()"
 		   	on-tab-and-shift-key="prevField()"
 			ng-required="field.required"
@@ -41,7 +40,7 @@
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
 			<span ng-if="field.fieldType == 'email'"> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
-			<span ng-if="field.validateRegex"> {{ 'ERROR_NOT_A_NUMBER' | translate }} </span>
+			<span ng-if="field.fieldType == 'number'"> {{ 'ERROR_NOT_A_NUMBER' | translate }} </span>
 			<span ng-if="field.fieldType == 'link'"> {{ 'ERROR_URL_INVALID' | translate }} </span>
         </div>
     </div>
@@ -49,7 +48,7 @@
 <div>
 	<div class="btn btn-lg btn-default col-xs-12 col-sm-4 hidden-xs"
 	 	style="padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)">
-			<button ng-disabled="!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid"
+			<button ng-disabled="!field.fieldValue || field.$invalid"
 				ng-style="{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"
                 ng-click="nextField()"
 				class="btn col-sm-5 col-xs-5">

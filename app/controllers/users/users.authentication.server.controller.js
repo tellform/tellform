@@ -19,6 +19,7 @@ var config_nev = function () {
 	nev.configure({
 	    persistentUserModel: User,
 	    tempUserCollection: config.tempUserCollection,
+        emailAndUsernameUnique: true,
 	    expirationTime: 86400,  // 24 hours
 
 	    verificationURL: config.baseUrl+'/#!/verify/${URL}',
@@ -103,10 +104,10 @@ exports.signup = function(req, res) {
 
 	// Add missing user fields
 	user.provider = 'local';
-
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
-		if (err) {
+		debugger;
+        if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -125,6 +126,7 @@ exports.signup = function(req, res) {
 				return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 			});
 		} else {
+            console.log(err);
 			return res.status(400).send({message: 'Error: User already exists!'});
 		}
 	});
