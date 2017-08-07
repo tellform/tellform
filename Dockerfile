@@ -26,6 +26,7 @@ RUN apt-get update -q \
  python \
  sudo \
  apt-utils \
+ sendmail \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -62,5 +63,7 @@ COPY ./server.js /opt/tellform/server.js
 COPY ./.env /opt/tellform/.env
 COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 
-# Run TellForm server
-CMD npm start
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

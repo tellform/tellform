@@ -8,8 +8,13 @@ var mongoose = require('mongoose'),
 	Form = mongoose.model('Form'),
 	FormSubmission = mongoose.model('FormSubmission'),
 	config = require('../../config/config'),
+	nodemailer = require('nodemailer'),
+	sendmail = require('nodemailer-sendmail-transport'),
 	diff = require('deep-diff'),
+	async = require('async'),
 	_ = require('lodash');
+
+var transport = nodemailer.createTransport(sendmail());
 
 /**
  * Delete a forms submissions
@@ -45,46 +50,46 @@ exports.deleteSubmissions = function(req, res) {
 /**
  * Submit a form entry
  */
-exports.createSubmission = function(req, res) {
+exports.createSubmission = function(req, res, next) {
 	var form = req.form;
 
-	var timeElapsed = 0;
+	var formData = {'key1' : 'value1', 'key2' : 'value2', 'key3' : 'value3'}
 
-	if(typeof req.body.timeElapsed === 'number'){
-		timeElapsed = req.body.timeElapsed;
-	}
-	var submission = new FormSubmission({
-		admin: form.admin._id,
-		form: form._id,
-		title: form.title,
-		form_fields: req.body.form_fields,
-		timeElapsed: timeElapsed,
-		percentageComplete: req.body.percentageComplete,
-		ipAddr: req.body.ipAddr,
-		geoLocation: req.body.geoLocation,
-		device: req.body.device
-	});
+	async.waterfall([
+		function(done) {
+			res.render('templates/submit-form-email', {
+				formTitle: form.title,
+				submissionTime: new Date().toString(),
+				formData: formData,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML);
+			});
+		},
+		function(emailHTML, done) {
+			var mailOptions = {
+				to: form.admin.email,
+				from: 'admin@forma.sg',
+				subject: 'forma-auto: ' + form.title,
+				html: emailHTML
+			};
 
+			transport.sendMail(mailOptions, function(err, info) {
+				if (!err) {
+					res.send({
+						message: 'Form submission email successfully sent to form admin.'
+					});
+				} else {
+					return res.status(400).send({
+						message: 'Failure sending form submission email123.'
+					});
+				}
 
-	submission.save(function(err, submission){
-		if (err) {
-			console.error(err.message);
-			return res.status(500).send({
-				message: errorHandler.getErrorMessage(err)
+				done(err);
 			});
 		}
-
-		form.submissions.push(submission);
-
-		form.save(function (err) {
-			if (err) {
-				console.error(err);
-				return res.status(500).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
-			res.status(200).send('Form submission successfully saved');
-		});
+	], function(err) {
+		if (err) return next(err);
 	});
 };
 
