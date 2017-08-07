@@ -19,12 +19,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
 					appendTo: '.dropzone',
-					helper: 'clone',
+					helper: 'original',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
 					update: function(e, ui) {
-						$scope.update(false, $scope.myform, false, false, function(err){
-							if(!err) $scope.myform.form_fields.push(newField);
+						$scope.update(false, $scope.myform, false, true, function(err){
+							if(err) console.log(err);
 						});
 					},
 					start: function(e, ui) {
