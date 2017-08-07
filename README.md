@@ -18,13 +18,14 @@ TellForm 2.0.0
 - [Quickstart](#quickstart)
 - [Deploying with Docker](#deploying-with-docker)
 - [Testing your Application](#testing-your-application)
+- [FORMA](#forma)
 - [Where to Get Help](#where-to-get-help)
 - [Sponsors](#sponsors)
 - [Backers](#backers)
 - [Contributors](#contributors)
 - [Mentions on the Web](#mentions-on-the-web)
 
-## Features	
+## Features
 
 ### Currently following features are implemented:
 
@@ -55,7 +56,7 @@ All contributors are eligible to get a free [TellForm Sticker](https://www.stick
 
 ## Quickstart
 
-Before you start, make sure you have 
+Before you start, make sure you have
 1. [Redis](https://redis.io/) installed and running at 127.0.0.1:6379
 2. [MongoDB](https://www.mongodb.com/) installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
 
@@ -106,7 +107,7 @@ Your application should run on port 3000 or the port you specified in your .env 
 
 ## Deploying with Docker
 
-To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/). 
+To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/).
 
 Then run these commands
 
@@ -155,6 +156,63 @@ To calculate your client-side test coverage with Istanbul, run the coverage task
 $ grunt coverage:client
 ```
 
+## FORMA
+
+#### Prerequisite:
+Before you start, make sure you have
+1. [Redis](https://redis.io/) installed and running at 127.0.0.1:6379
+2. [MongoDB](https://www.mongodb.com/) installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
+3. [Docker](https://docs.docker.com/engine/installation/) installed and running
+
+Also make sure to install [DNS Masq](http://www.thekelleys.org.uk/dnsmasq/doc.html) or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
+
+
+#### Install dependencies:
+```
+$ npm install
+$ bower install
+```
+
+#### Prepare .env file:
+Create .env file at project root folder. Fill in MAILER_SERVICE_PROVIDER, MAILER_EMAIL_ID and MAILER_PASSWORD.
+```
+APP_NAME=forma
+APP_DESC=
+APP_KEYWORDS=
+NODE_ENV=development
+BASE_URL=localhost:5000
+PORT=5000
+username=forma_admin
+MAILER_SERVICE_PROVIDER=
+MAILER_EMAIL_ID=
+MAILER_PASSWORD=
+MAILER_FROM=forma@data.gov.sg
+SIGNUP_DISABLED=false
+SUBDOMAINS_DISABLED=true
+DISABLE_CLUSTER_MODE=true
+GOOGLE_ANALYTICS_ID=
+RAVEN_DSN=
+PRERENDER_TOKEN=
+COVERALLS_REPO_TOKEN=
+```
+
+#### Deploy with Docker:
+Create and start mongo & redis docker container.
+```
+$ docker run -p 27017:27017 -d --name forma-mongo mongo
+$ docker run -p 127.0.0.1:6379:6379 -d --name forma-redis redis
+```
+
+After code changes, build and start docker containers.
+```
+$ docker start forma-mongo && docker start forma-redis
+$ docker build -t forma-tellform .
+$ docker stop forma-tellform
+$ docker run --rm -p 5000:5000 --link forma-redis:redis-db --link forma-mongo:db --name forma-tellform forma-tellform
+```
+
+Your application should run on port 5000 or the port you specified in your .env file, so in your browser just go to [http://localhost:5000](http://localhost:5000)
+
 
 ## Where to get help
 
@@ -200,7 +258,7 @@ Love our work and community? [Become a backer](https://opencollective.com/tellfo
 	<img src="https://opencollective.com/public/images/users/avatar-01.svg" height="64">
 </a>
 
-## Contributors 
+## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 | [<img src="https://avatars2.githubusercontent.com/u/1160417?v=3" width="100px;"/><br /><sub>David Baldwynn</sub>](http://baldwynn.me)<br />[💻](https://github.com/tellform/TellForm/commits?author=whitef0x0 "Code") [🔧](#tool-whitef0x0 "Tools") [🚇](#infra-whitef0x0 "Infrastructure (Hosting, Build-Tools, etc)") [📖](https://github.com/tellform/TellForm/commits?author=whitef0x0 "Documentation") [💡](#example-whitef0x0 "Examples") [🎨](#design-whitef0x0 "Design") [🔍](#fundingFinding-whitef0x0 "Funding Finding") [👀](#review-whitef0x0 "Reviewed Pull Requests") [⚠️](https://github.com/tellform/TellForm/commits?author=whitef0x0 "Tests") | [<img src="https://avatars2.githubusercontent.com/u/313117?v=3" width="100px;"/><br /><sub>Samuel Laulhau</sub>](https://samuellaulhau.fr)<br />[💻](https://github.com/tellform/TellForm/commits?author=lalop "Code") [🌍](#translation-lalop "Translation") | [<img src="https://avatars0.githubusercontent.com/u/313507?v=3" width="100px;"/><br /><sub>Arun Pattnaik</sub>](http://arun.co)<br />[🎨](#design-arunpattnaik "Design") | [<img src="https://avatars0.githubusercontent.com/u/5405744?v=3" width="100px;"/><br /><sub>Thiên Toán</sub>](https://toanalien.com)<br />[🐛](https://github.com/tellform/TellForm/issues?q=author%3Atoanalien "Bug reports") [💻](https://github.com/tellform/TellForm/commits?author=toanalien "Code") [📖](https://github.com/tellform/TellForm/commits?author=toanalien "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/8615608?v=3" width="100px;"/><br /><sub>Adrian Portabales</sub>](https://github.com/AdrianP-)<br />[🐛](https://github.com/tellform/TellForm/issues?q=author%3AAdrianP- "Bug reports") [💻](https://github.com/tellform/TellForm/commits?author=AdrianP- "Code") | [<img src="https://avatars3.githubusercontent.com/u/8433587?v=3" width="100px;"/><br /><sub>Peter Thaleikis</sub>](https://github.com/spekulatius)<br />[📖](https://github.com/tellform/TellForm/commits?author=spekulatius "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/1247388?v=3" width="100px;"/><br /><sub>Mickaël Andrieu</sub>](http://www.mickael-andrieu.com)<br />[📖](https://github.com/tellform/TellForm/commits?author=mickaelandrieu "Documentation") |

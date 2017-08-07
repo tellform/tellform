@@ -64,7 +64,7 @@
 				<uib-tab index="0" heading="{{ 'CREATE_TAB' | translate }}">
 					<edit-form-directive myform="myform"></edit-form-directive>
 				</uib-tab>
-				<uib-tab ng-repeat="tab in tabData" index="{{$index}}+1" heading="{{tab.heading}}">
+				<uib-tab ng-repeat="tab in tabData" index="{{$index+1}}" heading="{{tab.heading}}">
 					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
 				</uib-tab>
 				<uib-tab index="2" heading="{{ 'ANALYZE_TAB' | translate }}">
@@ -183,6 +183,55 @@
 							</div>
 							<div class="col-sm-1">
 								<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'CANCEL' | translate }}</button>
+							</div>
+						</div>
+					</div>
+				</uib-tab>
+				<uib-tab ng-if="tabData" heading="{{ 'ANALYZE_TAB' | translate }}" index="{{tabData.length+2}}">
+					<edit-submissions-form-directive myform="myform" user="myform.admin"></edit-submissions-form-directive>
+				</uib-tab>
+				<uib-tab ng-if="tabData" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length+3}}">
+					<div class="config-form">
+						<div class="row">
+							<div class="col-sm-12">
+								<uib-tabset active="activePill" vertical="true" type="pills">
+									<uib-tab index="0" heading="{{ 'SHARE_YOUR_FORM' | translate }}">
+										<div class="row">
+											<div class="col-sm-12">
+												{{ 'TELLFORM_URL' | translate }}
+											</div>
+											<div class="col-sm-8 form-input">
+												<span ngclipboard data-clipboard-target="#copyURL"> <input id="copyURL" ng-value="actualFormURL" class="form-control ng-pristine ng-untouched ng-valid"> </span>
+											</div>
+											<div class="col-sm-4">
+												<button class="btn btn btn-secondary view-form-btn" ngclipboard data-clipboard-target="#copyURL">
+													{{ 'COPY' | translate }} <i class="fa fa-clipboard" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</uib-tab>
+									<uib-tab index="1" heading="{{ 'EMBED_YOUR_FORM' | translate }}">
+										<div class="row">
+											<div class="col-sm-12">
+												{{ 'COPY_AND_PASTE' | translate }}
+											</div>
+											<div class="col-sm-8 form-input">
+												<span ngclipboard data-clipboard-target="#copyEmbedded">
+													<textarea id="copyEmbedded" class="form-control ng-pristine ng-untouched ng-valid" style="min-height:200px; width:100%; background-color: #FFFFCC; color: #30313F;">
+														&lt;!-- {{ 'CHANGE_WIDTH_AND_HEIGHT' | translate }} --&gt;
+														<iframe id="iframe" src="{{actualFormURL}}" style="width:100%;height:500px;"></iframe>
+														<div style="font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px;">{{ 'POWERED_BY' | translate }} <a href="https://www.tellform.com" style="color: #999" target="_blank">TellForm</a></div>
+													</textarea>
+												</span>
+											</div>
+											<div class="col-sm-4">
+												<button class="btn btn btn-secondary view-form-btn" ngclipboard data-clipboard-target="#copyEmbedded">
+													{{ 'COPY' | translate }} <i class="fa fa-clipboard" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</uib-tab>
+								</uib-tabset>
 							</div>
 						</div>
 					</div>
