@@ -52,8 +52,18 @@ exports.deleteSubmissions = function(req, res) {
  */
 exports.createSubmission = function(req, res, next) {
 	var form = req.form;
+	var formData = {};
 
-	var formData = {'key1' : 'value1', 'key2' : 'value2', 'key3' : 'value3'}
+	for(var i=0; i<req.body.form_fields.length; i++){
+		var field = req.body.form_fields[i];
+
+		if(field.fieldType === 'statement'){
+		} else if(field.fieldType === 'dropdown') {
+			formData[field.title] = field.fieldValue.option_value;
+		} else {
+			formData[field.title] = field.fieldValue;
+		}
+	}
 
 	async.waterfall([
 		function(done) {
