@@ -8,15 +8,15 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		ADVANCED_SETTINGS: 'Advanced Settings',
 		FORM_NAME: 'Form Name',
 		FORM_STATUS: 'Form Status',
-		PUBLIC: 'Public',
-		PRIVATE: 'Private',
+		PUBLIC: 'Active',
+		PRIVATE: 'Inactive',
 		GA_TRACKING_CODE: 'Google Analytics Tracking Code',
 		DISPLAY_FOOTER: 'Display Form Footer?',
 		SAVE_CHANGES: 'Save Changes',
 		CANCEL: 'Cancel',
 		DISPLAY_START_PAGE: 'Display Start Page?',
 		DISPLAY_END_PAGE: 'Display End Page?',
-		FORM_EMAIL: 'Additional Email (optional)',
+		FORM_EMAIL: 'Emails',
 		FORM_BUCKET: 'Bucket Name (optional)',
 
 		//List Forms View
