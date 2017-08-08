@@ -15,7 +15,9 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		SAVE_CHANGES: 'Save Changes',
 		CANCEL: 'Cancel',
 		DISPLAY_START_PAGE: 'Display Start Page?',
-		DISPLAY_END_PAGE: 'Display Custom End Page?',
+		DISPLAY_END_PAGE: 'Display End Page?',
+		FORM_EMAIL: 'Additional Email (optional)',
+		FORM_BUCKET: 'Bucket Name (optional)',
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Create a new form',
