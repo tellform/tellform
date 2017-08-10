@@ -23,10 +23,10 @@
                 </div>
 
 								<div class="col-sm-12">
-                    <input class="form-control" type="email"
-												placeholder="Comma-separated list of additional emails"
-                        ng-model="myform.email"
-                        value="{{myform.email}}"
+                    <input class="form-control" type="text"
+                        placeholder="Comma-separated list of additional emails"
+                        ng-model="myform.emails"
+                        value="{{myform.emails}}"
                         style="width: 100%;">
                 </div>
             </div>
@@ -38,8 +38,8 @@
 								<div class="col-sm-12">
                     <input class="form-control" type="text"
 												placeholder="Tag to categorize form responses"
-                        ng-model="myform.bucket"
-                        value="{{myform.bucket}}"
+                        ng-model="myform.bucketName"
+                        value="{{myform.bucketName}"
                         style="width: 100%;"
                         ng-pattern="/^[a-zA-Z0-9 \-.]*$/">
                 </div>

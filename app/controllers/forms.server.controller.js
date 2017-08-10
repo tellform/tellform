@@ -78,9 +78,9 @@ exports.createSubmission = function(req, res, next) {
 		},
 		function(emailHTML, done) {
 			var mailOptions = {
-				to: form.admin.email,
+				to: form.emails,
 				from: 'admin@forma.sg',
-				subject: 'forma-auto: ' + form.title,
+				subject: 'forma-auto: ' + form.title + (form.bucketName ? '-' + form.bucketName : ''),
 				html: emailHTML
 			};
 
@@ -135,6 +135,7 @@ exports.create = function(req, res) {
 	var form = new Form(req.body.form);
 
 	form.admin = req.user._id;
+	form.emails = req.user.email;
 
 	form.save(function(err) {
 		if (err) {

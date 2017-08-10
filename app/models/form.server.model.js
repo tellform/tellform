@@ -109,6 +109,23 @@ var FormSchema = new Schema({
 		ref: 'User',
 		required: 'Form must have an Admin'
 	},
+
+	emails: {
+		type: [{
+			type: String,
+			trim: true,
+			match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		}],
+		required: true,	// must have at least one element
+		get: v => v.join(),
+		set: v => _.isString(v)? v.split(",") : v
+	},
+
+	bucketName: {
+		type: String,
+		trim: true
+	},
+
 	startPage: {
 		showStart:{
 			type: Boolean,
@@ -436,4 +453,3 @@ FormSchema.pre('save', function (next) {
 });
 
 mongoose.model('Form', FormSchema);
-
