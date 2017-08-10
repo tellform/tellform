@@ -116,7 +116,7 @@ input.form-control {
 }
 
 .btn {
-	border: none;
+	border: 1px solid #acacac;
 }
 
 .authen-wrapper {
