@@ -1,5 +1,5 @@
 <section class="auth signup-view valign-wrapper" data-ng-controller="AuthenticationController">
-<!-- 	<h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
+	<!-- 	<h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
 	<div class="col-md-12 text-center">
 		<a href="/auth/facebook" class="undecorated-link">
 			<img src="/modules/users/img/buttons/facebook.png">
@@ -20,37 +20,39 @@
 	<!--<h3 class="col-md-12 text-center">{{ 'SIGNUP_HEADER_TEXT' | translate }}</h3>-->
 
 	<div class="row valign">
-		<div class="col-md-12 text-center vcenter" style="padding-bottom: 50px;">
-			<img src="/static/modules/core/img/logo_white.svg" height="100px">
-		</div>
-		<div class="col-xs-offset-3 col-xs-6 col-sm-offset-4 col-sm-4">
-			<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
-				<fieldset>
-					<div data-ng-show="error" id="signup_errors" class="text-center text-danger">
-						{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
-						<strong data-ng-bind="error"></strong>
-					</div>
-					<div class="form-group">
-						<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
-						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}" ng-minlength="4">
-					</div>
-					<div class="form-group">
-						<!--<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>-->
-						<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="{{ 'EMAIL_LABEL' | translate }}">
-					</div>
-					<div class="form-group">
-						<!--<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>-->
-						<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" ng-minlength="4">
-					</div>
-					<div class="text-center form-group">
-						<button type="submit" class="btn btn-signup btn-rounded btn-block">{{ 'SIGNUP_BTN' | translate }}</button>
-					</div>
+		<div class="col-md-4 col-md-offset-4 col-xs-12 authen-wrapper">
+			<div class="col-md-12 text-center vcenter" style="padding-bottom: 50px;">
+				<img src="/static/modules/core/img/logo-full.svg" height="100px">
+			</div>
+			<div class=" col-xs-12">
+				<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
+					<fieldset>
+						<div data-ng-show="error" id="signup_errors" class="text-center text-danger">
+							{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
+							<strong data-ng-bind="error"></strong>
+						</div>
+						<div class="form-group">
+							<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>
+							<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" ng-minlength="4">
+						</div>
+						<div class="form-group">
+							<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
+							<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email">
+						</div>
+						<div class="form-group">
+							<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>
+							<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" ng-minlength="4">
+						</div>
+						<div class="text-center form-group">
+							<button type="submit" class="btn btn-signup btn-rounded btn-block">{{ 'SIGNUP_BTN' | translate }}</button>
+						</div>
 
-				</fieldset>
-			</form>
+					</fieldset>
+				</form>
 
-			<div class="text-center forgot-password">
-				<a ui-sref="signin">{{ 'SIGN_IN_ACCOUNT_LINK' | translate }}</a>
+				<div class="text-center forgot-password">
+					<a ui-sref="signin">{{ 'SIGN_IN_ACCOUNT_LINK' | translate }}</a>
+				</div>
 			</div>
 		</div>
 	</div>
