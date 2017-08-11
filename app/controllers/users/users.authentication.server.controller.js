@@ -19,6 +19,7 @@ var config_nev = function () {
 	nev.configure({
 	    persistentUserModel: User,
 	    tempUserCollection: config.tempUserCollection,
+        emailAndUsernameUnique: true,
 	    expirationTime: 86400,  // 24 hours
 
 	    verificationURL: config.baseUrl+'/#!/verify/${URL}',
@@ -103,10 +104,9 @@ exports.signup = function(req, res) {
 
 	// Add missing user fields
 	user.provider = 'local';
-
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
-		if (err) {
+    if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});

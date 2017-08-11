@@ -13,16 +13,32 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
                 $scope.table = {
                     masterChecker: false,
-                    rows: $scope.myform.submissions
+                    rows: []
                 };
+
+		var submissions = $scope.myform.submissions || [];
+
+                        //Iterate through form's submissions
+                        for(var i = 0; i < submissions.length; i++){
+                            for(var x = 0; x < submissions[i].form_fields.length; x++){
+                                if(submissions[i].form_fields[x].fieldType === 'dropdown'){
+                                    submissions[i].form_fields[x].fieldValue = submissions[i].form_fields[x].fieldValue.option_value;
+                                }
+                                //var oldValue = submissions[i].form_fields[x].fieldValue || '';
+                                //submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
+                                //submissions[i].form_fields[x].fieldValue = oldValue;
+                            }
+                            submissions[i].selected = false;
+                        }
+
+                        $scope.table.rows = submissions;		
 
                 var initController = function(){
                     Forms.get({
                         formId: $stateParams.formId
                     }, function(form){
                         $scope.myform = form;
-                        $scope.table.rows = form.submissions;
-                        /*var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+                        var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
                         var submissions = $scope.myform.submissions || [];
 
@@ -39,7 +55,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             submissions[i].selected = false;
                         }
 
-                        $scope.table.rows = submissions;*/
+                        $scope.table.rows = submissions;
                     });
                 };
 
