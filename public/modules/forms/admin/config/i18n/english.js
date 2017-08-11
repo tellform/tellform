@@ -16,7 +16,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Cancel',
 		DISPLAY_START_PAGE: 'Display Start Page?',
 		DISPLAY_END_PAGE: 'Display End Page?',
-		FORM_EMAIL: 'Emails',
+		FORM_EMAIL: 'Emails (comma-separated)',
 		FORM_BUCKET: 'Bucket Name (optional)',
 
 		//List Forms View
