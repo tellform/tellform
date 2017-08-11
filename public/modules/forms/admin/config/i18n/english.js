@@ -53,10 +53,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LIVE: 'Live',
 		PREVIEW: 'Preview',
 		COPY: 'Copy',
-		COPY_AND_PASTE: 'Copy and Paste this to add your TellForm to your website',
+		COPY_AND_PASTE: 'Copy and Paste this to add your form to your website',
 		CHANGE_WIDTH_AND_HEIGHT: 'Change the width and height values to suit you best',
 		POWERED_BY: 'Powered by',
-		TELLFORM_URL: 'Your TellForm is permanently at this URL',
+		TELLFORM_URL: 'Your form is permanently at this URL',
 
 		//Edit Form View
 		DISABLED: 'Disabled',
