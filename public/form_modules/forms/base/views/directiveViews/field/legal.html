@@ -1,6 +1,7 @@
 <div class="field row radio legal"
 	 on-enter-or-tab-key="nextField()"
-	 key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field">
+     on-tab-and-shift-key="prevField()"
+	 key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field" on-valid-key="nextField()">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
     	<h3>
 			<small class="field-number">
@@ -14,20 +15,17 @@
     	<p class="col-xs-12">{{field.description}}</p>
     </div>
     <div class="col-xs-12 field-input container">
-		<div class="row-fluid"
-			 on-enter-or-tab-key="nextField()"
-			 on-tab-and-shift-key="prevField()">
+		<div class="row-fluid">
             <label class="btn col-md-5 col-xs-12"
 				   ng-class="{activeBtn: field.fieldValue == 'true'}">
                 <input class="focusOn"
-				    ng-focus="setActiveField(field._id, index, true)"
                     ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" value="true"
                     ng-model="field.fieldValue"
                     ng-model-options="{ debounce: 250 }"
                     ng-required="field.required"
                     ng-disabled="field.disabled"
-					ng-change="$root.nextField()"/>
+					ng-change="nextField()"/>
 				<div class="letter" style="float:left">
 					Y
 				</div>
@@ -42,7 +40,7 @@
                     ng-model-options="{ debounce: 250 }"
                     ng-required="field.required"
                     ng-disabled="field.disabled"
-					ng-change="$root.nextField()"/>
+					ng-change="nextField()"/>
 				<div class="letter" style="float:left">
 					N
 				</div>

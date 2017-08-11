@@ -72,8 +72,8 @@
 	<!--Embedding The signupDisabled Boolean-->
 	<script type="text/javascript">
 		var signupDisabled = {{signupDisabled | safe}};
-		var socketPort = {{socketPort | safe}};
-		var socketUrl = "{{socketUrl | safe}}";
+		var socketPort = {{socketPort | safe}} || false;
+		var socketUrl = "{{socketUrl | safe}}" || false;
 		var subdomainsDisabled = {{subdomainsDisabled | safe}};
 	</script>
 
