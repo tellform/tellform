@@ -22,9 +22,9 @@
 	<!-- <h3 class="col-md-12 text-center">Or with your account</h3> -->
 
 	<div class="row valign">
-		<div class="col-md-4 col-md-offset-4">
+		<div class="col-md-4 col-md-offset-4 col-xs-12 authen-wrapper">
 			<div class="col-md-12 text-center" style="padding-bottom: 50px;">
-				<img src="/static/modules/core/img/logo_white.svg" height="100px">
+				<img src="/static/modules/core/img/logo-full.svg" height="100px">
 			</div>
 			<div class="col-md-12">
 				<form class="signin form-horizontal" autocomplete="off">
@@ -33,12 +33,12 @@
 							Error: <strong data-ng-bind="error"></strong>
 						</div>
 						<div class="form-group">
-							<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
-							<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="{{ 'USERNAME_OR_EMAIL_LABEL' | translate }}" ng-minlength="4">
+							<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>
+							<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" ng-minlength="4">
 						</div>
 						<div class="form-group">
-							<!--<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>-->
-							<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" ng-minlength="4">
+							<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>
+							<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" ng-minlength="4">
 						</div>
 						<div class="form-group">
 							<button class="btn btn-signup btn-rounded btn-block" ng-click="signin()">{{ 'SIGNIN_BTN' | translate }}</button>
@@ -50,10 +50,9 @@
 					</fieldset>
 				</form>
 			</div>
-
-		</div>
-		<div class="text-center forgot-password col-md-12">
-			<a ui-sref="signup">{{ 'SIGNUP_ACCOUNT_LINK' | translate }}</a>
+			<div class="text-center forgot-password col-md-12">
+				<a ui-sref="signup">{{ 'SIGNUP_ACCOUNT_LINK' | translate }}</a>
+			</div>
 		</div>
 	</div>
 </section>

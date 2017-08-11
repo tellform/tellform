@@ -6,7 +6,7 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 		MENU: 'MENU',
 		SIGNUP_TAB: 'Sign Up',
 		SIGNIN_TAB: 'Sign In',
-		SIGNOUT_TAB: 'Signout',
+		SIGNOUT_TAB: 'Sign Out',
 		EDIT_PROFILE: 'Edit Profile',
 		MY_FORMS: 'My Forms',
 		MY_SETTINGS: 'My Settings',
