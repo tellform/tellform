@@ -60,7 +60,9 @@ exports.createSubmission = function(req, res, next) {
 		if(field.fieldType === 'statement'){
 		} else if(field.fieldType === 'dropdown') {
 			formData[field.title] = field.fieldValue.option_value;
-		} else {
+		} else if(field.fieldType === 'yes_no') {
+			formData[field.title] = field.fieldValue == 'true' ? 'Yes' : 'No';
+		}else {
 			formData[field.title] = field.fieldValue;
 		}
 	}
@@ -217,7 +219,7 @@ exports.update = function(req, res) {
     var updatedForm = req.body.form;
 
     delete updatedForm.__v;
-    delete updatedForm.created; 
+    delete updatedForm.created;
 
 	if (req.body.changes) {
 		var formChanges = req.body.changes;
