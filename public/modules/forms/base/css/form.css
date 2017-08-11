@@ -4,7 +4,10 @@
 	float: left;
 	position: relative;
 	min-height: 1px;
-	padding-right: 15px;
+	background: #fff;
+}
+.nav-pills>li>a {
+	border-radius: 0;
 }
 div.tab-content {
 	width: 83.33333333%;
@@ -270,12 +273,6 @@ form .row.field {
 .config-form > .row {
     padding: 19px;
     margin-bottom: 20px;
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
 
 div.config-form .row.field {
@@ -323,7 +320,11 @@ div.config-form .row.field {
 
 /*Styles for admin view tabs */
 .admin-form .tab-content {
-    padding-top: 3em;
+  padding-top: 3em;
+	border: 1px solid #337ab7;
+  border-left: 0;
+	background: #fff;
+	margin-bottom: 50px;
 }
 
 .admin-form .panel-heading {
@@ -331,13 +332,17 @@ div.config-form .row.field {
 	position: relative!important;
 }
     .admin-form .panel-heading:hover {
-        background-color: #fff;
+        background-color: #152c3f;
         cursor: pointer;
+				color: #fff;
     }
         .admin-form .panel-heading a:hover {
             text-decoration: none;
         }
 
+.current-fields {
+	margin-top: 30px;
+}
 .current-fields .panel-body .row.question input[type='text'], .current-fields .panel-body .row.description textarea{
     width: 100%;
 }
@@ -364,8 +369,8 @@ div.config-form .row.field {
     color: #9d9d9d!important;
 }
     .current-fields .tool-panel > .panel-default .panel-heading:hover {
-        background-color: #eee;
-        color: #000!important;
+        background-color: #152c3f;
+        color: #fff;
         cursor: pointer;
     }
 .current-fields .tool-panel > .panel-default .panel-heading a {
@@ -395,9 +400,10 @@ div.config-form .row.field {
 
 /*Styles for add fields tab*/
 .admin-form .add-field {
-    background-color: #ddd;
+    background-color: #fff;
     padding: 0 2% 0 2%;
-    border-radius: 3px;
+		margin-top: 10px;
+    border-right: 1px solid #e8e6e6;
 }
     .admin-form .add-field .col-xs-6 {
         padding: 0.25em 0.4em;
@@ -435,14 +441,20 @@ section.public-form .btn {
     border: 1px solid;
 }
 
+.form-item-toolbar {
+	padding: 10px 20px;
+}
+
 .form-item {
+	text-align: center;
+	/*border-bottom: 6px inset #ccc;*/
+	border: 1px solid #acacac;
 	border-radius: 5px;
-    text-align: center;
-    background-color: #eee;
-    width: 180px;
-    position: relative;
-    height: 215px;
-    margin-bottom: 45px;
+	background-color: #fcfdff;
+	width: 180px;
+	position: relative;
+	height: 215px;
+	margin: 25px;
 }
 
 
@@ -463,25 +475,26 @@ section.public-form .btn {
 }
 
 .form-item.create-new {
-    background-color: #3FA2F7;
+    background-color: #4caf50;
     color: white;
 }
 
 
 .form-item.create-new:hover {
-	background-color: #276496;
+	transition: all 0.2s;
+	background-color: #152c3f;
+	cursor: pointer;
 }
 
 /*CREATE-NEW FORM MODAL*/
+.form-item.create-new input{
+	width: 100%;
+}
 .form-item.create-new.new-form {
-    background-color: #832383;
-    background-color: rgb(300,131,131);
+    background-color: #152c3f;
     z-index: 11;
 }
-.form-item.create-new.new-form:hover {
-    background-color: #3079b5;
-}
-    .form-item.new-form input[type='text'] {
+    .form-item.new-form input[type='text'] {``
         margin-top:0.2em;
         width: inherit;
         color:black;
@@ -556,20 +569,11 @@ h3.forms-list-title {
 	background-color: #E4F1FD;
 }
 .form-item:hover {
-	background-color: #3FA2F7;
-	color: #23527C;
+	background-color: #152c3f;
+  cursor: pointer;
+  color: #f2f2f2;
+	transition: all 0.2s;
 }
-
-.form-item.create-new:hover {
-    background-color: #d9d9d9;
-	color: white;
-}
-
-.form-item.create-new:hover {
-    background-color: #515151;
-    background-color: rgb(81,81,81);
-}
-
 .form-item > .row.footer {
     position: absolute;
     bottom: 0;

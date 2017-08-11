@@ -50,29 +50,29 @@
 
 		<form name="forms.createForm" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form" ng-if="showCreateModal">
 			<div class="title-row row">
-				    <div class="col-xs-5 field-title text-left"> {{ 'NAME' | translate }} </div>
+				    <div class="col-xs-12 field-title text-left"> {{ 'Form Name' | translate }} </div>
 				    <div class="col-xs-12 field-input">
 						<input type="text" name="title" required ng-model="formTitle" ng-pattern="languageRegExp" ng-minlength="4" style="color:black;"/>
 				    </div>
 			</div>
-			<div class="details-row row">
-			    <div class="col-xs-5 field-title text-left"> {{ 'LANGUAGE' | translate }} </div>
-			    <div class="col-xs-12 field-input">
-				    <div class="button custom-select">
+			<div class="details-row row" ng-hide="true">
+				<div class="col-xs-5 field-title text-left"> {{ 'LANGUAGE' | translate }} </div>
+				<div class="col-xs-12 field-input">
+					<div class="button custom-select">
 						<select style="color:black;" name="language" required ng-model="formLanguage" ng-init="formLanguage = user.language">
-							<option ng-repeat="language in languages" value="{{language}}">
-								{{language}}
-							</option>
-				        </select>
-				    </div>
-			    </div>
+								<option ng-repeat="language in languages" value="{{language}}">
+									{{language}}
+								</option>
+									</select>
+					</div>
+				</div>
 			</div>
 			<div class="details-row submit row">
-			    <div class="col-xs-12 field-title text-center">
-			    	<button class="btn btn-primary" ng-disabled="forms.createForm.$invalid" ng-click="createNewForm()">
+				<div class="col-xs-12 field-title text-center">
+					<button class="btn btn-primary" ng-disabled="forms.createForm.$invalid" ng-click="createNewForm()">
 						{{ 'CREATE_FORM' | translate }}
-			    	</button>
-			    </div>
+					</button>
+				</div>
 			</div>
 		</form>
 
@@ -80,7 +80,7 @@
             class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container"
 			 ng-class="{'paused': !form.isLive}">
 
-			<div class="row">
+			<div class="row form-item-toolbar">
 				<span class="pull-right">
 					<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="openDeleteModal($index)"></i>
 					<i style="cursor:pointer;" class="fa fa-files-o" ng-click="duplicateForm($index)"></i>
