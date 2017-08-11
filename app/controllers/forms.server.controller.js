@@ -79,7 +79,7 @@ exports.createSubmission = function(req, res, next) {
 		function(emailHTML, done) {
 			var mailOptions = {
 				to: form.emails,
-				from: 'admin@forma.sg',
+				from: 'Forma <admin@forma.sg>',
 				subject: 'forma-auto: ' + form.title + (form.bucketName ? '-' + form.bucketName : ''),
 				html: emailHTML
 			};
