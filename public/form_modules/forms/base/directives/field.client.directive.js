@@ -72,9 +72,8 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 					scope.dateOptions = {
 						changeYear: true,
 						changeMonth: true,
-						altFormat: 'mm/dd/yyyy',
-						yearRange: '1900:-0',
-						defaultDate: 0
+						dateFormat: 'dd M yy',
+						yearRange: '1900:+0'
 					};
 				}
 
