@@ -196,6 +196,8 @@ PRERENDER_TOKEN=
 COVERALLS_REPO_TOKEN=
 ```
 
+**Note**: You can view the compatible types for MAILER_SERVICE_PROVIDER [here](https://nodemailer.com/smtp/well-known/)
+
 #### Deploy with Docker:
 Create and start mongo & redis docker container.
 ```
