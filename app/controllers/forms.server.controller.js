@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	nodemailer = require('nodemailer'),
 	sendmail = require('nodemailer-sendmail-transport'),
+	moment = require('moment-timezone'),
 	diff = require('deep-diff'),
 	async = require('async'),
 	_ = require('lodash');
@@ -62,7 +63,9 @@ exports.createSubmission = function(req, res, next) {
 			formData[field.title] = field.fieldValue.option_value;
 		} else if(field.fieldType === 'yes_no') {
 			formData[field.title] = field.fieldValue == 'true' ? 'Yes' : 'No';
-		}else {
+		} else if(field.fieldType === 'date') {
+			formData[field.title] = moment(field.fieldValue).tz('Asia/Singapore').format('DD MMM YYYY');
+		} else {
 			formData[field.title] = field.fieldValue;
 		}
 	}

@@ -72,6 +72,8 @@
     "main-bower-files": "~2.9.0",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
+    "moment": "2.18.1",
+    "moment-timezone": "0.5.13",
     "mongoose": "~4.4.19",
     "mongoose-utilities": "~0.1.1",
     "morgan": "~1.8.1",
