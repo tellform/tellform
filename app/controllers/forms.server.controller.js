@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	nodemailer = require('nodemailer'),
 	sendmail = require('nodemailer-sendmail-transport'),
+	moment = require('moment-timezone'),
 	diff = require('deep-diff'),
 	async = require('async'),
 	_ = require('lodash');
@@ -71,7 +72,7 @@ exports.createSubmission = function(req, res, next) {
 		function(done) {
 			res.render('templates/submit-form-email', {
 				formTitle: form.title,
-				submissionTime: new Date().toString(),
+				submissionTime: moment().tz('Asia/Singapore').format('ddd, DD MMM YYYY hh:mm:ss A'),
 				formData: formData,
 				appName: config.app.title
 			}, function(err, emailHTML) {
