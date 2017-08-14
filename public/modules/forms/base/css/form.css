@@ -292,7 +292,6 @@ div.config-form .row.field {
             div.config-form .row > .field-input label {
                 padding-left:1.3em;
                 display: block;
-								height: 67px;
 								min-width: 100px;
             }
 
