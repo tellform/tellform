@@ -217,6 +217,8 @@ MAILER_SMTP_PORT=465
 MAILER_SMTP_SECURE=true
 ```
 
+**Note**: You can view the compatible types for MAILER_SERVICE_PROVIDER [here](https://nodemailer.com/smtp/well-known/)
+
 #### Deploy with Docker:
 Create and start mongo & redis docker container.
 ```
