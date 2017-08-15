@@ -13,9 +13,6 @@ var mongoose = require('mongoose'),
 	querystring = require('querystring'),
 	nodemailer = require('nodemailer');
 
-var smtpTransport = nodemailer.createTransport(config.mailer.options);
-
-
 /**
  * A Validation function for local strategy properties
  */
