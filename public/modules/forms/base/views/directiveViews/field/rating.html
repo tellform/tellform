@@ -17,6 +17,7 @@
 
 		<input-stars max="{{field.ratingOptions.steps}}"
 					 ng-init="field.fieldValue = 0"
+					 on-shape-click="true"
 					 on-star-click="$root.nextField()"
 					 icon-full="{{field.ratingOptions.shape}}"
 					 icon-base="fa fa-3x"
@@ -27,7 +28,6 @@
 					 ng-disabled="field.disabled"
 					 on-enter-or-tab-key="nextField()"
 					 on-tab-and-shift-key="prevField()"
-					 ng-focus="setActiveField(field._id, index, true)"
 					 class="angular-input-stars focusOn">
 		</input-stars>
     </div>
