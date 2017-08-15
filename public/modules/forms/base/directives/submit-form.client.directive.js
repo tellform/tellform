@@ -14,12 +14,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 		        $scope.noscroll = false;
                 $scope.forms = {};
 
-				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
-                    if(field.fieldType === 'statement' || field.fieldType === 'rating'){
-                        return false;
-                    }
-                    return true;
-                }).length;
+				var form_fields_count = $scope.myform.visible_form_fields.length;
 
 				var nb_valid = $filter('formValidity')($scope.myform);
 				$scope.translateAdvancementData = {

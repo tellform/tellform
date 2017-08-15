@@ -22,12 +22,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 $scope.forms = {};
 				TimeCounter.restartClock();
 
-		var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
-                    if(field.fieldType === 'statement'){
-                        return false;
-                    }
-                    return true;
-                }).length;
+		var form_fields_count = $scope.myform.visible_form_fields.length;
 
 		var nb_valid = $filter('formValidity')($scope.myform);
 		$scope.translateAdvancementData = {

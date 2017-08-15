@@ -16,8 +16,8 @@
         	<button class="btn focusOn"
 			    ng-style="{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}"
                 ng-focused="setActiveField(field._id, index, true)"
-                ng-click="$root.nextField()">
-            		{{ 'CONTINUE' | translate }} 
+                ng-click="field.fieldValue='read';$root.nextField()">
+            		{{ 'CONTINUE' | translate }}
         	</button>
 	</div>
     </div>
