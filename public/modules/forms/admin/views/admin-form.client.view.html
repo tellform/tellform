@@ -41,7 +41,7 @@
 				</button>
 			</small>
 			<small>
-				<a class="btn btn-secondary view-form-btn" href="{{actualFormURL}}">
+				<a class="btn btn-secondary view-form-btn" href="{{actualFormURL}}" ng-class="myform.form_fields.length? '' : 'disabled'">
 					<span class="hidden-xs hidden-sm">
 						{{ 'VIEW' | translate }}
 						<span ng-show="myform.isLive">
@@ -65,7 +65,7 @@
 				<uib-tab ng-repeat="tab in tabData" index="{{$index+1}}" heading="{{tab.heading}}">
 					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
 				</uib-tab>
-				<uib-tab ng-if="tabData && myform.form_fields.length" heading="{{ 'DESIGN_TAB' | translate }}" index="{{tabData.length+1}}">
+				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'DESIGN_TAB' | translate }}" index="{{tabData.length+1}}">
 					<div class="config-form design container">
 						<div class="row">
 							<div class="col-md-4 col-sm-12 container">
@@ -141,7 +141,7 @@
 					<edit-submissions-form-directive myform="myform" user="myform.admin"></edit-submissions-form-directive>
 				</uib-tab>
 -->
-				<uib-tab ng-if="tabData" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length+3}}">
+				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length+3}}">
 					<div class="config-form">
 						<div class="row">
 							<div class="col-sm-12">
