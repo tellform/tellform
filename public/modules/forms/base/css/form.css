@@ -339,6 +339,10 @@ div.config-form .row.field {
         .admin-form .panel-heading a:hover {
             text-decoration: none;
         }
+					.admin-form .panel-heading a.disabled {
+						pointer-events: none;
+ 						cursor: default;
+					}
 
 .current-fields {
 	margin-top: 30px;

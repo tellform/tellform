@@ -43,7 +43,9 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                         _id: '',
                         index: 0
                     };
-                    $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
+                    if($scope.myform.visible_form_fields.length) {
+                      $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
+                    }
 
                     //console.log($scope.selected);
                     //Reset Timer
@@ -53,13 +55,15 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 				//Fire event when window is scrolled
 				$window.onscroll = function(){
             		$scope.scrollPos = document.body.scrollTop || document.documentElement.scrollTop || 0;
-					var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
-					$scope.fieldTop = elemBox.top;
-					$scope.fieldBottom = elemBox.bottom;
+                var elems = document.getElementsByClassName('activeField');
 
-                    //console.log($scope.forms.myForm);
-					var field_id;
-					var field_index;
+                if(elems.length) {
+                    var elemBox = elems[0].getBoundingClientRect();
+                    $scope.fieldTop = elemBox.top;
+                    $scope.fieldBottom = elemBox.bottom;
+
+                    var field_id;
+                    var field_index;
 
                     if(!$scope.noscroll){
                         //Focus on submit button
@@ -88,6 +92,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 					    //console.log('scroll pos: '+$scope.scrollPos+' fieldTop: '+$scope.fieldTop+' fieldBottom: '+$scope.fieldBottom);
             		    $scope.$apply();
                     }
+                }
         		};
 
                 /*
