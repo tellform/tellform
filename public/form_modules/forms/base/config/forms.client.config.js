@@ -17,12 +17,7 @@ angular.module('view-form')
 			var fields = formObj.form_fields;
 
 			var valid_count = fields.filter(function(field){
-				if(typeof field === 'object' && field.fieldType !== 'rating' && field.fieldType !== 'statement'){
 					return !!(field.fieldValue);
-				} else if (field.fieldType === 'rating'){
-					return true;
-				}
-
 			}).length;
 			return valid_count - (formObj.form_fields.length - formObj.visible_form_fields.length);
 		}
@@ -47,4 +42,3 @@ angular.module('view-form').value('supportedFields', [
 ]);
 
 angular.module('view-form').constant('VIEW_FORM_URL', '/forms/:formId/render');
-
