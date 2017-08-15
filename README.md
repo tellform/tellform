@@ -83,12 +83,23 @@ OR create your .env file
 GOOGLE_ANALYTICS_ID=yourGAID
 PRERENDER_TOKEN=yourPrerender.ioToken
 COVERALLS_REPO_TOKEN=yourCoveralls.ioToken
-MAILER_EMAIL_ID=SMTP_Injection
-MAILER_FROM=noreply@yourdomain.com
-MAILER_PASSWORD=your_sendgrid_apikey
-MAILER_SERVICE_PROVIDER=SendGrid
 BASE_URL=localhost
 DSN_KEY=yourPrivateRavenKey
+
+# Mail config
+MAILER_EMAIL_ID=user@domain.com
+MAILER_PASSWORD=some-pass
+MAILER_FROM=user@domain.com
+
+# Use this for one of Nodemailer's pre-configured service providers
+MAILER_SERVICE_PROVIDER=SendGrid
+
+# Use these for a custom service provider 
+# Note: MAILER_SMTP_HOST will override MAILER_SERVICE_PROVIDER
+MAILER_SMTP_HOST=smtp.domain.com
+MAILER_SMTP_PORT=465
+MAILER_SMTP_SECURE=true
+
 ```
 
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
@@ -174,7 +185,7 @@ $ bower install
 ```
 
 #### Prepare .env file:
-Create .env file at project root folder. Fill in MAILER_SERVICE_PROVIDER, MAILER_EMAIL_ID and MAILER_PASSWORD.
+Create .env file at project root folder. Fill in MAILER_EMAIL_ID and MAILER_PASSWORD, and either MAILER_SERVICE_PROVIDER using a [Nodemailer Well-known service](https://nodemailer.com/smtp/well-known/) or MAILER_SMTP_HOST, MAILER_SMTP_PORT, and MAILER_SMTP_SECURE for a custom SMTP server.
 ```
 APP_NAME=forma
 APP_DESC=
@@ -183,10 +194,6 @@ NODE_ENV=development
 BASE_URL=localhost:5000
 PORT=5000
 username=forma_admin
-MAILER_SERVICE_PROVIDER=
-MAILER_EMAIL_ID=
-MAILER_PASSWORD=
-MAILER_FROM=forma@data.gov.sg
 SIGNUP_DISABLED=false
 SUBDOMAINS_DISABLED=true
 DISABLE_CLUSTER_MODE=true
@@ -194,6 +201,20 @@ GOOGLE_ANALYTICS_ID=
 RAVEN_DSN=
 PRERENDER_TOKEN=
 COVERALLS_REPO_TOKEN=
+
+# Mail config
+MAILER_EMAIL_ID=forma@data.gov.sg
+MAILER_PASSWORD=some-pass
+MAILER_FROM=forma@data.gov.sg
+
+# Use this for one of Nodemailer's pre-configured service providers
+MAILER_SERVICE_PROVIDER=
+
+# Use these for a custom service provider 
+# Note: MAILER_SMTP_HOST will override MAILER_SERVICE_PROVIDER
+MAILER_SMTP_HOST=
+MAILER_SMTP_PORT=465
+MAILER_SMTP_SECURE=true
 ```
 
 **Note**: You can view the compatible types for MAILER_SERVICE_PROVIDER [here](https://nodemailer.com/smtp/well-known/)

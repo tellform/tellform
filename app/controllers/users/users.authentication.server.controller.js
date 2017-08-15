@@ -95,7 +95,6 @@ exports.resendVerificationEmail = function(req, res, next){
  * Signup
  */
 exports.signup = function(req, res) {
-
 	// For security measures we remove the roles from the req.body object
 	delete req.body.roles;
 
@@ -106,12 +105,12 @@ exports.signup = function(req, res) {
 	user.provider = 'local';
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
-		debugger;
-        if (err) {
+		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
+
 
 		// new user created
 		if (newTempUser) {
