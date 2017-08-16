@@ -24,7 +24,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		MY_FORMS: 'Mis formularios',
 		NAME: 'Nombre',
 		LANGUAGE: 'Idioma',
-		FORM_PAUSED: 'Formulario pausado',
+		FORM_INACTIVE: 'Formulario inactivo',
 
 		//Edit Field Modal
 		EDIT_FIELD: 'Editar este campo',
