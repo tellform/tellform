@@ -346,7 +346,7 @@ div.config-form .row.field {
 	position: relative!important;
 }
     .admin-form .panel-heading:hover {
-        background-color: #152c3f;
+        background-color: #45a247;
         cursor: pointer;
 				color: #fff;
     }
@@ -493,14 +493,14 @@ section.public-form .btn {
 }
 
 .form-item.create-new {
-    background-color: #4caf50;
+    background-color: #283c86;
     color: white;
 }
 
 
 .form-item.create-new:hover {
 	transition: all 0.2s;
-	background-color: #152c3f;
+	background-color: #45a247;
 	cursor: pointer;
 }
 
@@ -587,7 +587,7 @@ h3.forms-list-title {
 	background-color: #E4F1FD;
 }
 .form-item:hover {
-	background-color: #152c3f;
+	background-color: #45a247;
   cursor: pointer;
   color: #f2f2f2;
 	transition: all 0.2s;
