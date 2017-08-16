@@ -2,7 +2,7 @@
 
 <div class="container"></div>
 
-<section class="admin-form">
+<section class="admin-form container">
 
 	<!-- Modal Delete Dialog Template -->
     <script type="text/ng-template" id="formDeleteModal.html">
@@ -59,13 +59,13 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<uib-tabset active="activePill" vertical="true" type="pills">
+        <uib-tab ng-repeat="tab in tabData" index="{{$index+1}}" heading="{{tab.heading}}">
+          <div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
+        </uib-tab>
 				<uib-tab index="0" heading="{{ 'CREATE_TAB' | translate }}">
 					<edit-form-directive myform="myform"></edit-form-directive>
 				</uib-tab>
-				<uib-tab ng-repeat="tab in tabData" index="{{$index+1}}" heading="{{tab.heading}}">
-					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
-				</uib-tab>
-				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'DESIGN_TAB' | translate }}" index="{{tabData.length+1}}">
+				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'PREVIEW_TAB' | translate }}" index="{{tabData.length+1}}">
 					<div class="config-form design container">
 						<div class="row">
 							<div class="col-md-4 col-sm-12 container">

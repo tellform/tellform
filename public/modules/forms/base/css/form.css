@@ -4,11 +4,30 @@
 	float: left;
 	position: relative;
 	min-height: 1px;
-	background: #fff;
+	background: #283c86;
 }
 .nav-pills>li>a {
 	border-radius: 0;
 }
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+ .nav-pills>li.active>a:hover {
+	 background-color: #fff;
+	 color: #283d86;
+	 font-weight: bold;
+	 border: 1px solid #283d86;
+	 border-right: none;
+ }
+ .nav-stacked>li+li {
+	 margin-top: 0;
+ }
+ .nav>li>a {
+	 color: #fff;
+ }
+ .nav>li>a:focus, .nav>li>a:hover {
+	 background-color: #41964e;
+	 color: white;
+ }
 div.tab-content {
 	width: 83.33333333%;
 	position: relative;
@@ -43,10 +62,6 @@ div.tab-content {
 .dropzone h4.panel-title {
     height: 17px;
     overflow: hidden;
-}
-
-.container.admin-form {
-    margin-top: 70px;
 }
 
 .public-form input, .public-form textarea {
@@ -345,6 +360,7 @@ div.config-form .row.field {
 
 .current-fields {
 	margin-top: 30px;
+	padding: 0 35px;
 }
 .current-fields .panel-body .row.question input[type='text'], .current-fields .panel-body .row.description textarea{
     width: 100%;
@@ -404,8 +420,7 @@ div.config-form .row.field {
 /*Styles for add fields tab*/
 .admin-form .add-field {
     background-color: #fff;
-    padding: 0 2% 0 2%;
-		margin-top: 10px;
+    padding: 0 25px;
     border-right: 1px solid #e8e6e6;
 }
     .admin-form .add-field .col-xs-6 {
