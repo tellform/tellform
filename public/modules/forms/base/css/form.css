@@ -476,12 +476,12 @@ section.public-form .btn {
 
 
 .form-item.paused {
-	background-color: red;
+	background-color: grey;
 	color: white;
 }
 
 .form-item.paused:hover {
-	background-color: darkred;
+	background-color: #283c86;
 	color: white;
 }
 
@@ -508,7 +508,7 @@ section.public-form .btn {
 	width: 100%;
 }
 .form-item.create-new.new-form {
-    background-color: #152c3f;
+    background-color: #283c86;
     z-index: 11;
 }
     .form-item.new-form input[type='text'] {``
