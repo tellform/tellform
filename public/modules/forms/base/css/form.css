@@ -379,16 +379,15 @@ div.config-form .row.field {
 }
 
 .current-fields .tool-panel > .panel-default:hover {
-    border-color: #9d9d9d;
     cursor: pointer;
 }
 
 .current-fields .tool-panel > .panel-default .panel-heading {
     background-color: #fff;
-    color: #9d9d9d!important;
+    color: #9d9d9d;
 }
     .current-fields .tool-panel > .panel-default .panel-heading:hover {
-        background-color: #152c3f;
+        background-color: #45a247;
         color: #fff;
         cursor: pointer;
     }
