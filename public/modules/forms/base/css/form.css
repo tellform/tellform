@@ -331,7 +331,7 @@ div.config-form .row.field {
 	position: relative!important;
 }
     .admin-form .panel-heading:hover {
-        background-color: #152c3f;
+        background-color: #283c86;
         cursor: pointer;
 				color: #fff;
     }
@@ -372,7 +372,7 @@ div.config-form .row.field {
     color: #9d9d9d!important;
 }
     .current-fields .tool-panel > .panel-default .panel-heading:hover {
-        background-color: #152c3f;
+        background-color: #283c86;
         color: #fff;
         cursor: pointer;
     }
@@ -462,12 +462,12 @@ section.public-form .btn {
 
 
 .form-item.paused {
-	background-color: red;
+	background-color: grey;
 	color: white;
 }
 
 .form-item.paused:hover {
-	background-color: darkred;
+	background-color: #283c86;
 	color: white;
 }
 
@@ -485,7 +485,7 @@ section.public-form .btn {
 
 .form-item.create-new:hover {
 	transition: all 0.2s;
-	background-color: #152c3f;
+	background-color: #283c86;
 	cursor: pointer;
 }
 
@@ -494,7 +494,7 @@ section.public-form .btn {
 	width: 100%;
 }
 .form-item.create-new.new-form {
-    background-color: #152c3f;
+    background-color: #283c86;
     z-index: 11;
 }
     .form-item.new-form input[type='text'] {``
@@ -572,7 +572,7 @@ h3.forms-list-title {
 	background-color: #E4F1FD;
 }
 .form-item:hover {
-	background-color: #152c3f;
+	background-color: #283c86;
   cursor: pointer;
   color: #f2f2f2;
 	transition: all 0.2s;
