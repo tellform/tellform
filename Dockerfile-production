@@ -43,13 +43,10 @@ WORKDIR /opt/tellform
 # when the local package.json file changes.
 # Add npm package.json
 COPY package.json /opt/tellform/package.json
-RUN npm install --production
-RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
 
-# Add bower.json
+# Copy all other build files
 COPY bower.json /opt/tellform/bower.json
 COPY .bowerrc /opt/tellform/.bowerrc
-
 COPY ./app /opt/tellform/app
 COPY ./public /opt/tellform/public
 COPY ./config /opt/tellform/config
@@ -58,7 +55,11 @@ COPY ./server.js /opt/tellform/server.js
 COPY ./.env /opt/tellform/.env
 COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 
-RUN grunt build
+RUN npm install
+# RUN npm install --production
+# RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
+
+# RUN grunt build
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
