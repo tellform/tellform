@@ -139,8 +139,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		BTN_TEXT_COLOR: 'Button Text Color',
 
     //Share View
-    EMBED_YOUR_FORM: 'Embed your form',
-    SHARE_YOUR_FORM: 'Share your form',
+    EMBED_YOUR_FORM: 'Embed HTML',
+    SHARE_YOUR_FORM: 'Link',
 
 		//Admin Tabs
 		CREATE_TAB: 'Create',
