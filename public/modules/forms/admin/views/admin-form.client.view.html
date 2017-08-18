@@ -145,7 +145,7 @@
 					<div class="config-form">
 						<div class="row">
 							<div class="col-sm-12">
-                <h4> Share your form by: </h4>
+                <h4> Share via: </h4>
 								<uib-tabset active="activePill" type="pills" class="horizontal-tabs">
 									<uib-tab index="0">
                     <uib-tab-heading>
@@ -155,13 +155,11 @@
 											<h5 class="col-sm-12">
 												{{ 'TELLFORM_URL' | translate }}
 											</h5>
-											<div class="col-sm-10 form-input">
+											<div class="col-sm-12 form-input">
 												<span ngclipboard data-clipboard-target="#copyURL"> <input id="copyURL" ng-value="actualFormURL" class="form-control ng-pristine ng-untouched ng-valid"> </span>
 											</div>
-											<div class="col-sm-2">
-												<button class="btn btn btn-success view-form-btn" ngclipboard data-clipboard-target="#copyURL">
-													{{ 'COPY' | translate }} <i class="fa fa-clipboard" aria-hidden="true"></i>
-												</button>
+											<div class="col-sm-offset-5 col-sm-2">
+                        <button class="btn btn-signup btn-rounded" type="button" ngclipboard data-clipboard-target="#copyURL"><i class="icon-arrow-left icon-white"></i>{{ 'COPY' | translate }}</button>
 											</div>
 										</div>
 									</uib-tab>
@@ -173,7 +171,7 @@
 											<h5 class="col-sm-12">
 												{{ 'COPY_AND_PASTE' | translate }}
 											</h5>
-											<div class="col-sm-10 form-input">
+											<div class="col-sm-12 form-input">
 												<span ngclipboard data-clipboard-target="#copyEmbedded">
 													<textarea id="copyEmbedded" class="form-control ng-pristine ng-untouched ng-valid" style="min-height:200px; width:100%; background-color: #FFFFCC; color: #30313F;">
 														&lt;!-- {{ 'CHANGE_WIDTH_AND_HEIGHT' | translate }} --&gt;
@@ -182,10 +180,8 @@
 													</textarea>
 												</span>
 											</div>
-											<div class="col-sm-2">
-												<button class="btn btn btn-success view-form-btn" ngclipboard data-clipboard-target="#copyEmbedded">
-													{{ 'COPY' | translate }} <i class="fa fa-clipboard" aria-hidden="true"></i>
-												</button>
+											<div class="col-sm-offset-5 col-sm-2">
+                        <button class="btn btn-signup btn-rounded" type="button" ngclipboard data-clipboard-target="#copyEmbedded"><i class="icon-arrow-left icon-white"></i>{{ 'COPY' | translate }}</button>
 											</div>
 										</div>
 									</uib-tab>

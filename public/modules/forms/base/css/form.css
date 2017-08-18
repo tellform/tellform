@@ -34,16 +34,23 @@
  .horizontal-tabs .nav>li>a{
 	 color: inherit;
  }
+ .horizontal-tabs .nav>li>a:hover{
+	color: #fff;
+ }
  .horizontal-tabs .nav-pills>li.active>a,
  .horizontal-tabs .nav-pills>li.active>a:focus,
  .horizontal-tabs .nav-pills>li.active>a:hover{
 	 border: none;
 	 border-bottom: 5px solid green;
+	 color: #333;
  }
  .admin-form .horizontal-tabs .tab-content {
 	 border: none;
 	 margin: 10px 0;
  }
+.horizontal-tabs .tab-content {
+	width: 100%;
+}
 div.tab-content {
 	width: 83.33333333%;
 	position: relative;
@@ -305,8 +312,7 @@ form .row.field {
 }
 
 .config-form > .row {
-    padding: 19px;
-    margin-bottom: 20px;
+    padding: 20px 30px;
 }
 
 div.config-form .row.field {
