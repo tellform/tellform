@@ -5,7 +5,7 @@
 FROM  phusion/baseimage:0.9.19
 MAINTAINER David Baldwynn <team@tellform.com>
 
-EXPOSE 5000
+EXPOSE 4545
 
 ENV NODE_ENV production
 
@@ -21,6 +21,7 @@ ENV NODE_ENV production
  python \
  sudo \
  apt-utils \
+ sendmail \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -48,7 +49,6 @@ RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules
 # Add bower.json
 COPY bower.json /opt/tellform/bower.json
 COPY .bowerrc /opt/tellform/.bowerrc
-RUN bower install /
 
 COPY ./app /opt/tellform/app
 COPY ./public /opt/tellform/public
@@ -60,7 +60,9 @@ COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 
 RUN grunt build
 
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+CMD ["pm2-docker","process.yml"]
 
-ENTRYPOINT ["/entrypoint.sh"]
+# COPY ./entrypoint.sh /entrypoint.sh
+# RUN chmod +x /entrypoint.sh
+
+# ENTRYPOINT ["/entrypoint.sh"]
