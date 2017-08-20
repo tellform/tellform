@@ -7,5 +7,6 @@ echo "$line forma.sg $(hostname)" >> /etc/hosts
 # Restart sendmail
 service sendmail restart
 
-# Run TellForm server
-npm start
+# Run Server
+pm2 start process.yml
+# npm start

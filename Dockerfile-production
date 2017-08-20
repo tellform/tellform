@@ -56,13 +56,14 @@ COPY ./config /opt/tellform/config
 COPY ./gruntfile.js /opt/tellform/gruntfile.js
 COPY ./server.js /opt/tellform/server.js
 COPY ./.env /opt/tellform/.env
+COPY ./process.yml /opt/tellform/process.yml
 COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 
 RUN grunt build
 
-CMD ["pm2-docker","process.yml"]
+# CMD ["pm2-docker","process.yml"]
 
-# COPY ./entrypoint.sh /entrypoint.sh
-# RUN chmod +x /entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
