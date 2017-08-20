@@ -8,5 +8,5 @@ echo "$line forma.sg $(hostname)" >> /etc/hosts
 service sendmail restart
 
 # Run Server
-pm2 start process.yml
-# npm start
+# pm2 start process.yml
+npm start
