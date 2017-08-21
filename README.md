@@ -169,7 +169,22 @@ Create and start mongo & redis docker container:
 $ docker run --rm -p 80:4545 --link forma-redis:redis-db --link forma-mongo:db --name forma-prod forma-prod
 ```
 
-Your application should run on the default port 80, so in your browser just go to http://<PUBLIC IP>.
+Your application should run on the default port 80, so in your browser just go to your public IP.
+
+## Build from staging
+
+To build from staging, you will `ssh` into staging, then:
+
+```
+# Switch to your branch
+$ git checkout <YOUR-BRANCH>
+$ git pull
+
+# Restart server and rebuild
+$ docker stop forma-prod
+$ docker build -t forma-prod -f ./Dockerfile-production .
+$ docker run --rm -p 80:4545 --link forma-redis:redis-db --link forma-mongo:db --name forma-prod forma-prod
+```
 
 ## Support 
 
