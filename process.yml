@@ -1,10 +1,5 @@
 apps:
   - script   : 'server.js'
-    name     : 'Forma'
+    name     : 'TellForm'
     exec_mode: 'cluster'
     instances: 4
-    env:
-      NODE_ENV: production
-      BASE_URL: 54.169.18.149
-      DB_1_PORT_27017_TCP_ADDR: 172.31.23.166
-      PORT: 4545
