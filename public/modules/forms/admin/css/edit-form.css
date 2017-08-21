@@ -37,10 +37,9 @@
 }
 
 .admin-form iframe {
-	border: none;
+	border: 2px dashed #333;
 	margin-top: 23px;
 	overflow-x: hidden;
 	height: 400px;
-	width: 90%;
-	position: absolute;
+	width: 100%;
 }
