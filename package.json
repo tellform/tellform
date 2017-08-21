@@ -14,7 +14,7 @@
   },
   "engines": {
     "node": ">=6.11.2",
-    "npm": ">=3.3.6"
+    "npm": ">=3.10.10"
   },
   "scripts": {
     "addcontrib": "all-contributors add",
@@ -28,6 +28,7 @@
   "dependencies": {
     "async": "^1.4.2",
     "async-boolean-expression-evaluator": "^1.1.1",
+    "bcrypt": "^0.8.7",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.14.1",
     "bower": "~1.6.5",
