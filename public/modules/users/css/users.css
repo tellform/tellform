@@ -67,7 +67,7 @@ section.auth {
 	.btn-rounded.btn-signup {
 		background-color: #FFD747;
 		color: #896D0B;
-		border: 2px #FFD747 solid;
+		min-width: 100px;
 	}
 
 	.btn-rounded.btn-signup:hover {
