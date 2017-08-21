@@ -63,17 +63,17 @@ section.auth {
 		text-transform: uppercase;
 	}
 
-
+	.btn-rounded {
+	  min-width: 100px;
+	}
 	.btn-rounded.btn-signup {
 		background-color: #FFD747;
 		color: #896D0B;
-		min-width: 100px;
 	}
 
 	.btn-rounded.btn-signup:hover {
 		color: #FFD747;
 		background-color: #896D0B;
-		border: 2px #896D0B solid;
 	}
 
 	.btn-rounded.btn-default {
