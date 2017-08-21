@@ -41,7 +41,7 @@
  .horizontal-tabs .nav-pills>li.active>a:focus,
  .horizontal-tabs .nav-pills>li.active>a:hover{
 	 border: none;
-	 border-bottom: 5px solid green;
+	 border-bottom: 5px solid #45a247;
 	 color: #333;
  }
  .admin-form .horizontal-tabs .tab-content {
