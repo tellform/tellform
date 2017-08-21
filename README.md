@@ -22,7 +22,7 @@ $ npm install
 ```
 
 ### Prepare .env file:
-Create `.env` file at project root folder. Fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID` and `MAILER_PASSWORD`.
+Create `.env` file at project root folder. Fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID`, `MAILER_PASSWORD` and `MAILER_FROM`.
 ```
 APP_NAME=Forma
 APP_DESC=
@@ -34,7 +34,7 @@ username=forma_admin
 MAILER_SERVICE_PROVIDER=<TO-FILL-IN>
 MAILER_EMAIL_ID=<TO-FILL-IN>
 MAILER_PASSWORD=<TO-FILL-IN>
-MAILER_FROM=forma@data.gov.sg
+MAILER_FROM=<TO-FILL-IN>
 SIGNUP_DISABLED=false
 SUBDOMAINS_DISABLED=true
 DISABLE_CLUSTER_MODE=true
@@ -108,7 +108,7 @@ $ git clone https://github.com/datagovsg/forma-tellform.git
 ### Prepare .env file
 
 The `.env` file for remote deployment (or production) is slightly different from that of local deployment.
-Create `.env` file at project root folder. Similarly, fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID` and `MAILER_PASSWORD`. Note that now you have to fill in the public IP of your instance in `BASE_URL` and the private IP of your instance in `DB_1_PORT_27017_TCP_ADDR`.
+Create `.env` file at project root folder. Similarly, fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID`, `MAILER_PASSWORD` and `MAILER_FROM`. Note that now you have to fill in the public IP of your instance in `BASE_URL` and the private IP of your instance in `DB_1_PORT_27017_TCP_ADDR`.
 
 ```
 APP_NAME=Forma
@@ -122,7 +122,7 @@ username=forma_admin
 MAILER_SERVICE_PROVIDER=<TO-FILL-IN>
 MAILER_EMAIL_ID=<TO-FILL-IN>
 MAILER_PASSWORD=<TO-FILL-IN>
-MAILER_FROM=forma@data.gov.sg
+MAILER_FROM=<TO-FILL-IN>
 SIGNUP_DISABLED=false
 SUBDOMAINS_DISABLED=true
 DISABLE_CLUSTER_MODE=true
@@ -147,18 +147,13 @@ $ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh |
 $ nvm install 6.11.2
 $ npm install -g bower
 $ npm install -g grunt-cli
-```
-
-### Export node environment
-
-```
-$ export NODE_ENV=production
+$ npm install -g grunt
 ```
 
 ### Install dependencies
 
 ```
-$ npm install
+$ npm install --production
 ```
 
 ### Build docker image
