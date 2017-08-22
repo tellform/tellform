@@ -68,7 +68,7 @@
 				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'PREVIEW_TAB' | translate }}" index="{{tabData.length+1}}">
 					<div class="config-form design container">
 						<div class="row">
-							<div class="col-md-4 col-sm-12 container">
+							<div class="col-md-4 col-sm-12 container design-spec">
 								<div class="row field">
 									<div class="field-title col-sm-5">
 										<h5>{{ 'BACKGROUND_COLOR' | translate }}</h5>
@@ -122,16 +122,12 @@
 								</div>
 							</div>
 							<div class="col-md-8 hide-md hide-lg">
-								<iframe id="iframe" ng-if="!!formURL" src="{{trustSrc(formURL)}}" style="border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute;"></iframe>
+								<iframe id="iframe" ng-if="!!formURL" src="{{trustSrc(formURL)}}"></iframe>
 							</div>
-						</div>
 
-						<div class="row">
-							<div class="col-sm-offset-4 col-sm-2">
-								<button class="btn btn-signup btn-rounded" type="button" ng-click="update(false, myform, false, false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
-							</div>
-							<div class="col-sm-1">
-								<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'CANCEL' | translate }}</button>
+							<div class="col-xs-12 col-sm-offset-4 col-sm-4">
+								<button class="btn btn-signup btn-rounded" type="button" ng-click="update(false, myform, false, false, null)">{{ 'SAVE_CHANGES' | translate }}</button>
+								<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()">{{ 'CANCEL' | translate }}</button>
 							</div>
 						</div>
 					</div>
