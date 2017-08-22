@@ -370,8 +370,8 @@
 									</label>
 									<span><input type="text" ng-model="field.fieldOptionsFile" placeholder="{{ 'SELECT_OPTION_FILE' | translate }}" disabled></span>
 								</div>
-								<div id="optionFileProgressBar" ng-if="field.loadProgress >= 0">
-									<uib-progressbar class="load-file-progress progress-striped active" max="100" value="field.loadProgress" type="info">{{ field.loadProgress == 100? field.fileOptions.length + ' options loaded' : '' }}</uib-progressbar>
+								<div id="optionFileProgressBar">
+									<uib-progressbar class="load-file-progress progress-striped active" max="100" value="field.loadProgress" type="info">{{ field.loadProgress == 100? field.fileOptions.length + ' UNIQUE options loaded' : '' }}</uib-progressbar>
 								</div>
 							</div>
 						</div>

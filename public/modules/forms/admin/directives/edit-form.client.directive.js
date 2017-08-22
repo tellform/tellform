@@ -121,12 +121,14 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
               	if (currField.fieldType === 'dropdown') {
               		var optionsFile = files[0];
               		currField.fieldOptionsFile = optionsFile.name;
+
               		currField.loadProgress = 0;
+              		progress.classList.add('active');
 
               		reader.onload = function(e) {
               			var fileContent = e.target.result;
               			var options = fileContent.split('\n').map(option => option.trim());
-                    var uniq_options = [ ...new Set(options) ];
+              			var uniq_options = [...new Set(options)];
 
               			currField.fileOptions = [];
 
@@ -141,6 +143,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
               					currField.fileOptions.push(newOption);
               				}
               			}
+
+              			progress.classList.remove('active');
               		}
 
               		reader.onprogress = function(e) {
