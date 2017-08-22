@@ -116,14 +116,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							};
 
               $scope.loadOptions = function(currField, files) {
-              	var progress = document.querySelector('.load-file-progress');
-
               	if (currField.fieldType === 'dropdown') {
               		var optionsFile = files[0];
               		currField.fieldOptionsFile = optionsFile.name;
-
               		currField.loadProgress = 0;
-              		progress.classList.add('active');
 
               		reader.onload = function(e) {
               			var fileContent = e.target.result;
@@ -144,6 +140,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
               				}
               			}
 
+              			var progress = document.querySelector('.load-file-progress');
               			progress.classList.remove('active');
               		}
 
