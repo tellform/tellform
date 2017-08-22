@@ -540,8 +540,8 @@
 		<!-- Form Fields -->
         <div class="row">
 
-            <div id="form-placeholder">
-				<img src="/static/modules/core/img/pic_mountain.jpg" style="width:304px;height:228px;">
+            <div ng-show="!myform.form_fields.length">
+				<img src="/static/modules/core/img/placeholder.jpg" style="width:304px;height:228px;">
             </div>
 
 
@@ -564,13 +564,13 @@
 							</div>
                         </div>
                     </div>
-                    <!-- <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
-                        <div class="panel-heading">
-	                        <h4 class="panel-title text-center" style="color: #a9a9a9;">
+                    <!-- <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;"> -->
+                        <!-- <div class="panel-heading"> -->
+	                        <!-- <h4 class="panel-title text-center" style="color: #a9a9a9;">
 								{{ 'CLICK_FIELDS_FOOTER' | translate }}
-                            </h4>
-                        </div>
-                    </div> -->
+                            </h4> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
                 </div>
             </div>
 

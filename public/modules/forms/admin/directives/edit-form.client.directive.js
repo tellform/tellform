@@ -129,17 +129,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 							$scope.saveField = function(){
 
-								console.log("save modal")
-								
-								
-									// $('#form-fields').find('panel panel-default').length)
-
 								// Have to insert back at same spot if it is an edit
 								var indexToInsert = -1;
 
 								// Remove duplicate first
 								if (curr_field.globalId != undefined) {
-									console.log("global id defined")
 									for (var i = 0; i < $scope.myform.form_fields.length; i++) {
 										var field = $scope.myform.form_fields[i];
 										if (field.globalId == curr_field.globalId) {
@@ -147,14 +141,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 											indexToInsert = i;
 										}
 									}
-								} else {
-									console.log("global id undefined")
 								}
 								if (indexToInsert >= 0) {
-									console.log("modals already exist")
 									$scope.myform.form_fields.splice(indexToInsert, 0, curr_field);
 								} else {
-									console.log("this is the first modal")
 									$scope.myform.form_fields.push(curr_field);
 								}
 
@@ -162,9 +152,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 									$uibModalInstance.close();
 								});
 
-								if ($scope.myform.form_fields.length > 0) {
-									$('#form-placeholder').hide();
-								}
 							};
 							$scope.cancel = function(){
 								$uibModalInstance.close();
@@ -369,9 +356,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.deleteField = function (field_index) {
                     $scope.myform.form_fields.splice(field_index, 1);
 					$scope.update(false, $scope.myform, false, true, null);
-					if ($scope.myform.form_fields.length < 1) {
-						$('#form-placeholder').show();
-					}
                 };
 
                 $scope.duplicateField = function(field_index){
