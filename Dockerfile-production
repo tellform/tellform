@@ -1,22 +1,16 @@
 # Build:
-# docker build -t tellform-prod -f ./Dockerfile-production .
+# docker build -t forma-prod -f ./Dockerfile-production .
 #
-# Run:
-# docker run -it tellform-prod
 
 FROM  phusion/baseimage:0.9.19
 MAINTAINER David Baldwynn <team@tellform.com>
 
-# 4545 = TellForm server
 EXPOSE 4545
 
-# Set development environment as default
 ENV NODE_ENV production
-ENV PORT 4545
-ENV BASE_URL tellform.com
 
 # Install Utilities
-RUN apt-get update -q  \
+ RUN apt-get update -q \
  && apt-get install -yqq \
  curl \
  git \
@@ -27,6 +21,7 @@ RUN apt-get update -q  \
  python \
  sudo \
  apt-utils \
+ sendmail \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -61,9 +56,14 @@ COPY ./config /opt/tellform/config
 COPY ./gruntfile.js /opt/tellform/gruntfile.js
 COPY ./server.js /opt/tellform/server.js
 COPY ./.env /opt/tellform/.env
+COPY ./process.yml /opt/tellform/process.yml
 COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 
 RUN grunt build
 
-# Run TellForm server
-CMD ["pm2-docker","process.yml"]
+# CMD ["pm2-docker","process.yml"]
+
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

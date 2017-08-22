@@ -17,7 +17,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DISPLAY_START_PAGE: 'Display Start Page?',
 		DISPLAY_END_PAGE: 'Display End Page?',
 		FORM_EMAIL: 'Emails (comma-separated)',
-		FORM_BUCKET: 'Bucket Name (optional)',
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Create a new form',
@@ -26,7 +25,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		MY_FORMS: 'My forms',
 		NAME: 'Name',
 		LANGUAGE: 'Language',
-		FORM_PAUSED: 'Form paused',
+		FORM_INACTIVE: 'Form inactive',
 
 		//Edit Field Modal
 		EDIT_FIELD: 'Edit this Field',
@@ -144,12 +143,12 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		BTN_TEXT_COLOR: 'Button Text Color',
 
     //Share View
-    EMBED_YOUR_FORM: 'Embed your form',
-    SHARE_YOUR_FORM: 'Share your form',
+    EMBED_YOUR_FORM: 'Embed HTML',
+    SHARE_YOUR_FORM: 'Link',
 
 		//Admin Tabs
 		CREATE_TAB: 'Create',
-		DESIGN_TAB: 'Design',
+		PREVIEW_TAB: 'Preview',
 		CONFIGURE_TAB: 'Configure',
 		ANALYZE_TAB: 'Analyze',
     SHARE_TAB: 'Share',

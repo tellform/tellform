@@ -72,7 +72,7 @@
 	<!--Embedding The signupDisabled Boolean-->
 	<script type="text/javascript">
 		var signupDisabled = {{signupDisabled | safe}};
-		var socketPort = {{socketPort | safe}} || false;
+		var socketPort = "{{socketPort | safe}}" || false;
 		var socketUrl = "{{socketUrl | safe}}" || false;
 		var subdomainsDisabled = {{subdomainsDisabled | safe}};
 	</script>
@@ -96,13 +96,13 @@
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->
 	<script type="text/javascript" src="http://{{request.hostname}}:35729/livereload.js"></script>
-	{% endif %}
-
 	<script src="https://cdn.ravenjs.com/2.3.0/angular/raven.min.js"></script>
 
 	<script>
 		Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
 	</script>
+	{% endif %}
+
 
 	<!-- [if lt IE 9]>
 	<section class="browsehappy jumbotron hide">

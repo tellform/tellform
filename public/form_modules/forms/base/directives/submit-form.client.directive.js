@@ -22,12 +22,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 $scope.forms = {};
 				TimeCounter.restartClock();
 
-		var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
-                    if(field.fieldType === 'statement'){
-                        return false;
-                    }
-                    return true;
-                }).length;
+		var form_fields_count = $scope.myform.visible_form_fields.length;
 
 		var nb_valid = $filter('formValidity')($scope.myform);
 		$scope.translateAdvancementData = {
@@ -51,7 +46,9 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                         _id: '',
                         index: 0
                     };
-                    $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
+                    if($scope.myform.visible_form_fields.length) {
+                      $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
+                    }
 
                     //Reset Timer
                     TimeCounter.restartClock();
@@ -60,13 +57,15 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 				//Fire event when window is scrolled
 				$window.onscroll = function(){
             		$scope.scrollPos = document.body.scrollTop || document.documentElement.scrollTop || 0;
-					var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
-					$scope.fieldTop = elemBox.top;
-					$scope.fieldBottom = elemBox.bottom;
+                var elems = document.getElementsByClassName('activeField');
 
-                    //console.log($scope.forms.myForm);
-					var field_id;
-					var field_index;
+                if(elems.length) {
+                    var elemBox = elems[0].getBoundingClientRect();
+                    $scope.fieldTop = elemBox.top;
+                    $scope.fieldBottom = elemBox.bottom;
+
+                    var field_id;
+                    var field_index;
 
                     if(!$scope.noscroll){
                         //Focus on submit button
@@ -95,6 +94,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					    //console.log('scroll pos: '+$scope.scrollPos+' fieldTop: '+$scope.fieldTop+' fieldBottom: '+$scope.fieldBottom);
             		    $scope.$apply();
                     }
+                }
         		};
 
                 /*

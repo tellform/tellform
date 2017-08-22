@@ -24,7 +24,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		MY_FORMS: 'Mis formularios',
 		NAME: 'Nombre',
 		LANGUAGE: 'Idioma',
-		FORM_PAUSED: 'Formulario pausado',
+		FORM_INACTIVE: 'Formulario inactivo',
 
 		//Edit Field Modal
 		EDIT_FIELD: 'Editar este campo',
@@ -143,7 +143,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
 		//Admin Tabs
 		CREATE_TAB: 'Crear',
-		DESIGN_TAB: 'Diseño',
+		PREVIEW_TAB: 'Avance',
 		CONFIGURE_TAB: 'Configuración',
 		ANALYZE_TAB: 'Análisis',
     SHARE_TAB: 'Compartir',
