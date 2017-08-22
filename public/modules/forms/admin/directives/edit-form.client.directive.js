@@ -126,7 +126,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
               		reader.onload = function(e) {
               			var fileContent = e.target.result;
               			var options = fileContent.split('\n').map(option => option.trim());
-                    var uniq_options = [ ...new Set(options) ].sort();
+                    var uniq_options = [ ...new Set(options) ];
 
               			currField.fileOptions = [];
 
