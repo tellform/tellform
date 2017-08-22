@@ -37,7 +37,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						templateUrl: 'editFieldModal.html',
 						windowClass: 'edit-modal-window',
 						controller:  function($uibModalInstance, $scope) {
-							console.log("entered open edit modal")
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
 
