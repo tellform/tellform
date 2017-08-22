@@ -11,6 +11,7 @@
   "appPath": "public/modules",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "angular-animate": "1.4.14",
     "angular-resource": "~1.4.7",
     "angular-cache-buster": "~0.4.3",
     "angular-mocks": "~1.4.7",

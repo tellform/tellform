@@ -64,6 +64,14 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 				}
 			};
 
+      scope.getFieldOptions = function() {
+      	if (scope.field.fieldOptionsFromFile) {
+      		return scope.field.fileOptions;
+      	} else {
+      		return scope.field.manualOptions;
+      	}
+      };
+
             scope.setActiveField = $rootScope.setActiveField;
 
             //Set format only if field is a date
@@ -98,6 +106,10 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 				}
 				fieldType = 'textfield';
 			}
+
+      if (scope.field.fieldType === 'dropdown') {
+      	scope.getFieldOptions();
+      }
 
             var template = getTemplateUrl(fieldType);
            	element.html(template).show();

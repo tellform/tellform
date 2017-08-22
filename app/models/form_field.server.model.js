@@ -88,6 +88,13 @@ function BaseFieldSchema(){
 
 		ratingOptions: RatingFieldSchema,
 		fieldOptions: [FieldOptionSchema],
+		fieldOptionsFromFile: {
+			type: Boolean,
+			default: false
+		},
+		fieldOptionsFile: {
+			type: String
+		},
 		required: {
 			type: Boolean,
 			default: true
@@ -219,4 +226,3 @@ var Field = mongoose.model('Field', FormFieldSchema);
 var RatingOptions = mongoose.model('RatingOptions', RatingFieldSchema);
 
 module.exports = FormFieldSchema;
-
