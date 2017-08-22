@@ -648,3 +648,13 @@ h3.forms-list-title {
     .form-item.create-new  .details-row small {
         font-size: 0.95em;
     }
+
+.empty-form {
+	display: flex;
+}
+
+.empty-form img{
+		width:300px;
+		height:230px;
+		margin: 0 auto;
+}
