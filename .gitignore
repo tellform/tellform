@@ -1,4 +1,3 @@
-dist
 .vagrant
 npm-debug.*
 docs/Oscar_Credentials.md
@@ -33,7 +32,6 @@ app/tests/coverage/
 # ======================
 config/sslcerts/*.pem
 access.log
-public/dist/populate_template_cache.js
 uploads/
 # API keys file
 api_keys.js
