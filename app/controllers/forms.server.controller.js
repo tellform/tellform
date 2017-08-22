@@ -84,8 +84,8 @@ exports.createSubmission = function(req, res, next) {
 		function(emailHTML, done) {
 			var mailOptions = {
 				to: form.emails,
-				from: 'Forma <admin@forma.sg>',
-				subject: 'forma-auto: ' + form.title,
+				from: 'Form.sg <donotreply@form.sg>',
+				subject: 'formsg-auto: ' + form.title,
 				html: emailHTML
 			};
 
