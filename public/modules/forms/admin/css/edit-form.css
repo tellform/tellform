@@ -80,3 +80,11 @@
   background: #000;
 	background:rgba(0, 0, 0, 0.5) !important;
 }
+
+.admin-form iframe {
+	border: 2px dashed #333;
+	margin-top: 23px;
+	overflow-x: hidden;
+	height: 400px;
+	width: 100%;
+}

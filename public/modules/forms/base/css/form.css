@@ -316,16 +316,8 @@ form .row.field {
 }
 
 div.config-form .row.field {
-    padding-top:1.5em;
+    padding-top:1.8em;
 }
-
-    div.config-form > .row > .container:nth-of-type(odd){
-        border-right: 1px #ddd solid;
-    }
-    div.config-form.design > .row > .container:nth-of-type(odd){
-        border-right: none;
-    }
-
         div.config-form .row > .field-input {
             padding-left:0.1em;
         }
@@ -334,8 +326,6 @@ div.config-form .row.field {
                 display: block;
 								min-width: 100px;
             }
-
-
 /* Styles for form admin view (/forms/:formID/admin) */
 .admin-form > .page-header {
     padding-bottom: 0;
