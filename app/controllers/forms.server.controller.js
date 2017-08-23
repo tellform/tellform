@@ -59,8 +59,6 @@ exports.createSubmission = function(req, res, next) {
 		var field = req.body.form_fields[i];
 
 		if(field.fieldType === 'statement'){
-		} else if(field.fieldType === 'dropdown') {
-			formData[field.title] = field.fieldValue.option_value;
 		} else if(field.fieldType === 'yes_no') {
 			formData[field.title] = field.fieldValue == 'true' ? 'Yes' : 'No';
 		} else if(field.fieldType === 'date') {

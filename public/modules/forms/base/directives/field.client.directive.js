@@ -57,7 +57,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 				}else if(type === 'rating'){
 					scope.field.fieldValue = 0;
 				}else if(scope.field.fieldType === 'radio'){
-					scope.field.fieldValue = scope.field.fieldOptions[0].option_value;
+					scope.field.fieldValue = scope.field.fieldOptions[0];
 				}else if(type === 'legal'){
 					scope.field.fieldValue = 'true';
 					$rootScope.nextField();
@@ -65,11 +65,15 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 			};
 
       scope.getFieldOptions = function() {
-      	if (scope.field.fieldOptionsFromFile) {
-      		return scope.field.fileOptions;
-      	} else {
-      		return scope.field.manualOptions;
-      	}
+        if(!scope.field.fileOptions && !scope.field.manualOptions) {
+          return scope.field.fieldOptions;
+        } else {
+        	if (scope.field.fieldOptionsFromFile) {
+        		return scope.field.fileOptions;
+        	} else {
+        		return scope.field.manualOptions;
+        	}
+        }
       };
 
             scope.setActiveField = $rootScope.setActiveField;

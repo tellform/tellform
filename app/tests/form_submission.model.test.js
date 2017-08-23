@@ -41,7 +41,7 @@ var exampleDemo = {
 var sampleFormFields = [
 	{'fieldType':'textfield', 'title':'What\'s your first name', 'fieldValue': ''},
 	{'fieldType':'textfield', 'title':'And your last name',  'fieldValue': ''},
-	{'fieldType':'radio', 	'title':'And your sex',  'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''},
+	{'fieldType':'radio', 	'title':'And your sex',  'fieldOptions': ['M', 'F'], 'fieldValue': ''},
 	{'fieldType':'date', 	    'title':'When were you born?',  'fieldValue': ''},
 	{'fieldType':'number', 	'title':'What\'s your phone #?',  'fieldValue': ''}
 ];
@@ -49,7 +49,7 @@ var sampleFormFields = [
 var sampleSubmission = [
 	{'fieldType':'textfield', 'title':'What\'s your first name', 'fieldValue': 'David'},
 	{'fieldType':'textfield', 'title':'And your last name',  'fieldValue': 'Baldwynn'},
-	{'fieldType':'radio', 	'title':'And your sex',  'fieldValue': 'M', 'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }]},
+	{'fieldType':'radio', 	'title':'And your sex',  'fieldValue': 'M', 'fieldOptions': ['M', 'F']},
 	{'fieldType':'date', 	    'title':'When were you born?',  'fieldValue': 'Tue Oct 06 2015 15:17:48 GMT-0700 (PDT)'},
 	{'fieldType':'number', 	'title':'What\'s your phone #?',  'fieldValue': '6043158008'}
 ];
@@ -101,7 +101,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 				form_fields: [
 					{'fieldType':'textfield', 	'title':'What\'s your first name', 	'fieldValue': ''},
 					{'fieldType':'textfield', 	'title':'And your last name',  		'fieldValue': ''},
-					{'fieldType':'radio', 		'title':'And your sex',  			'fieldOptions': [{ 'option_id': 0, 'option_title': 'Male', 'option_value': 'M' }, { 'option_id': 1, 'option_title': 'Female', 'option_value': 'F' }], 'fieldValue': ''},
+					{'fieldType':'radio', 		'title':'And your sex',  			'fieldOptions': ['M', 'F'], 'fieldValue': ''},
 					{'fieldType':'date', 	    'title':'When were you born?',  	'fieldValue': ''},
 					{'fieldType':'number', 		'title':'What\'s your phone #?',  	'fieldValue': ''}
 				]
