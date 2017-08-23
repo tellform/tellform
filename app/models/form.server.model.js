@@ -71,6 +71,7 @@ var VisitorDataSchema = new Schema({
 });
 
 var formSchemaOptions = {
+	id: false,
 	toJSON: {
 		virtuals: true
 	}
@@ -199,9 +200,19 @@ var FormSchema = new Schema({
 	}
 }, formSchemaOptions);
 
+FormSchema.methods.getMainFields = function () {
+    var form = {
+        _id: this._id,
+        title: this.title,
+        isLive: this.isLive
+    };
+    return form;
+};
+
 /*
 ** In-Form Analytics Virtual Attributes
  */
+/*
 FormSchema.virtual('analytics.views').get(function () {
 	if(this.analytics && this.analytics.visitors && this.analytics.visitors.length > 0){
 		return this.analytics.visitors.length;
@@ -290,6 +301,7 @@ FormSchema.virtual('analytics.fields').get(function () {
 
 	return fieldDropoffs;
 });
+*/
 
 FormSchema.plugin(mUtilities.timestamp, {
 	createdPath: 'created',
