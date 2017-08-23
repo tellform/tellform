@@ -13,21 +13,6 @@ var mongoose = require('mongoose'),
 const UIDGenerator = require('uid-generator');
 const uidgen3 = new UIDGenerator(256, UIDGenerator.BASE62);
 
-var FieldOptionSchema = new Schema({
-	option_id: {
-		type: Number
-	},
-
-	option_title: {
-		type: String
-	},
-
-	option_value: {
-		type: String,
-		trim: true
-	}
-});
-
 var RatingFieldSchema = new Schema({
 	steps: {
 		type: Number,
@@ -87,7 +72,7 @@ function BaseFieldSchema(){
 		logicJump: LogicJumpSchema,
 
 		ratingOptions: RatingFieldSchema,
-		fieldOptions: [FieldOptionSchema],
+		fieldOptions: [String],
 		fieldOptionsFromFile: {
 			type: Boolean,
 			default: false
@@ -210,15 +195,6 @@ FormFieldSchema.pre('save', function(next) {
 		this.globalId = uidgen3.generateSync()
 	}
 	next();
-});
-
-//Submission fieldValue correction
-FormFieldSchema.pre('save', function(next) {
-	if(this.fieldType === 'dropdown' && this.isSubmission){
-		this.fieldValue = this.fieldValue.option_value;
-	}
-
-	return next();
 });
 
 

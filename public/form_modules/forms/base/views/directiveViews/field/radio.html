@@ -20,20 +20,20 @@
         <div ng-repeat="option in field.fieldOptions" class="row-fluid">
             <label class="btn col-md-4 col-xs-12 col-sm-12"
                     style="margin: 0.5em; padding-left:30px"
-                    ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}">
+                    ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index]}">
 				<div class="letter" style="float:left">
 					{{$index+1}}
 				</div>
 				<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" class="focusOn"
-				    value="{{option.option_value}}"
+				    value="{{option}}"
                     ng-model="field.fieldValue"
                     ng-model-options="{ debounce: 250 }"
                     ng-required="field.required"
                     ng-disabled="field.disabled"
 					ng-change="$root.nextField()"/>
 
-                <span ng-bind="option.option_value"></span>
+                <span ng-bind="option"></span>
             </label>
         </div>
     </div>

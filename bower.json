@@ -34,7 +34,7 @@
     "raven-js": "^3.0.4",
     "tableExport.jquery.plugin": "^1.5.1",
     "js-yaml": "^3.6.1",
-    "angular-ui-select": "https://github.com/tellform/ui-select.git#compiled",
+    "angular-ui-select": "~0.19.8",
     "angular-translate": "~2.11.0",
     "ng-translate": "*",
     "deep-diff": "^0.3.4",
@@ -48,7 +48,7 @@
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
     "angular": "1.4.14",
-    "angular-ui-select": "compiled",
+    "angular-ui-select": "~0.19.8",
     "jspdf": "~1.0.178",
     "angular-sanitize": "1.4.14",
     "angular-ui-sortable": "^0.17.1",

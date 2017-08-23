@@ -408,21 +408,6 @@
 				"$ref": "#/definitions/FormField"
 			}
 		},
-		"FieldOption": {
-			"type": "object",
-			"properties": {
-				"option_id": {
-					"type": "number"
-				},
-				"option_title": {
-					"type": "string"
-				},
-				"option_value": {
-					"type": "string",
-					"trim": true
-				}
-			}
-		},
 		"RatingField": {
 			"type": "object",
 			"properties": {
@@ -496,7 +481,7 @@
 				"fieldOptions": {
 					"type": "array",
 					"items": {
-						"type": "FieldOption"
+						"type": "string"
 					}
 				},
 				"required": {
