@@ -14,6 +14,8 @@ ENV NODE_ENV production
  && apt-get install -yqq \
  curl \
  git \
+ ant \
+ default-jdk \
  gcc \
  make \
  build-essential \
@@ -43,12 +45,14 @@ WORKDIR /opt/tellform
 # when the local package.json file changes.
 # Add npm package.json
 COPY package.json /opt/tellform/package.json
-RUN npm install --production
-RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
 
 # Add bower.json
 COPY bower.json /opt/tellform/bower.json
 COPY .bowerrc /opt/tellform/.bowerrc
+
+RUN npm install --production
+RUN bower install --allow-root
+RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
 
 COPY ./app /opt/tellform/app
 COPY ./public /opt/tellform/public
