@@ -104,6 +104,8 @@ exports.signup = function(req, res) {
 
 	// Add missing user fields
 	user.provider = 'local';
+	var domain = user.email.split("@")[1].split(".")[0]
+	user.agency = domain
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
     if (err) {
