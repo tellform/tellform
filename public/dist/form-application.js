@@ -487,7 +487,12 @@ angular.module('view-form')
 			var fields = formObj.form_fields;
 
 			var valid_count = fields.filter(function(field){
+				if(typeof field === 'object' && field.fieldType !== 'rating' && field.fieldType !== 'statement'){
 					return !!(field.fieldValue);
+				} else if (field.fieldType === 'rating'){
+					return true;
+				}
+
 			}).length;
 			return valid_count - (formObj.form_fields.length - formObj.visible_form_fields.length);
 		}
@@ -512,6 +517,7 @@ angular.module('view-form').value('supportedFields', [
 ]);
 
 angular.module('view-form').constant('VIEW_FORM_URL', '/forms/:formId/render');
+
 
 'use strict';
 
@@ -632,8 +638,9 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 					scope.dateOptions = {
 						changeYear: true,
 						changeMonth: true,
-						dateFormat: 'dd M yy',
-						yearRange: '1900:+0'
+						altFormat: 'mm/dd/yyyy',
+						yearRange: '1900:-0',
+						defaultDate: 0
 					};
 				}
 
@@ -796,7 +803,12 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 $scope.forms = {};
 				TimeCounter.restartClock();
 
-		var form_fields_count = $scope.myform.visible_form_fields.length;
+		var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
+                    if(field.fieldType === 'statement'){
+                        return false;
+                    }
+                    return true;
+                }).length;
 
 		var nb_valid = $filter('formValidity')($scope.myform);
 		$scope.translateAdvancementData = {
@@ -820,9 +832,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                         _id: '',
                         index: 0
                     };
-                    if($scope.myform.visible_form_fields.length) {
-                      $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
-                    }
+                    $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
 
                     //Reset Timer
                     TimeCounter.restartClock();
@@ -831,15 +841,13 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 				//Fire event when window is scrolled
 				$window.onscroll = function(){
             		$scope.scrollPos = document.body.scrollTop || document.documentElement.scrollTop || 0;
-                var elems = document.getElementsByClassName('activeField');
+					var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
+					$scope.fieldTop = elemBox.top;
+					$scope.fieldBottom = elemBox.bottom;
 
-                if(elems.length) {
-                    var elemBox = elems[0].getBoundingClientRect();
-                    $scope.fieldTop = elemBox.top;
-                    $scope.fieldBottom = elemBox.bottom;
-
-                    var field_id;
-                    var field_index;
+                    //console.log($scope.forms.myForm);
+					var field_id;
+					var field_index;
 
                     if(!$scope.noscroll){
                         //Focus on submit button
@@ -868,7 +876,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					    //console.log('scroll pos: '+$scope.scrollPos+' fieldTop: '+$scope.fieldTop+' fieldBottom: '+$scope.fieldBottom);
             		    $scope.$apply();
                     }
-                }
         		};
 
                 /*
