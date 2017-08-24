@@ -46,16 +46,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
               	curr_field.fileOptions = curr_field.fieldOptions;
 
               	curr_field.manualOptions = [];
-              	curr_field.manualOptions.push({
-              		'option_id': Math.floor(100000 * Math.random()), //Generate pseudo-random option id
-              		'option_title': 'Option 1',
-              		'option_value': 'Option 1'
-              	});
+              	curr_field.manualOptions.push('Option 1');
               } else {
               	curr_field.manualOptions = curr_field.fieldOptions;
               }
 
-							// decides whether field options block will be shown (true for dropdown and radio fields)
+							// decides whether field options block will be shown
 							$scope.showAddOptions = function (field){
 								if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
 									return true;
@@ -88,17 +84,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 									}
 
 									var lastOptionID = currField.manualOptions.length + 1;
-
-									// new option's id
-
-									var newOption = {
-										'option_id' : Math.floor(100000*Math.random()),
-										'option_title' : 'Option '+lastOptionID,
-										'option_value' : 'Option ' +lastOptionID
-									};
-
-									// put new option into fieldOptions array
-									currField.manualOptions.push(newOption);
+									currField.manualOptions.push('Option ' + lastOptionID);
 								}
 							};
 
@@ -106,8 +92,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.deleteOption = function (currField, option){
 								if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
 									for (var i = 0; i < currField.manualOptions.length; i++) {
-										if (currField.manualOptions[i].option_id === option.option_id) {
-
+										if (currField.manualOptions[i] === option) {
 											currField.manualOptions.splice(i, 1);
 											break;
 										}
@@ -130,13 +115,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
               			for (let option of uniq_options) {
               				if (option) {
-              					var newOption = {
-              						'option_id': Math.floor(100000 * Math.random()),
-              						'option_title': option + '-title',
-              						'option_value': option
-              					};
-
-              					currField.fileOptions.push(newOption);
+              					currField.fileOptions.push(option);
               				}
               			}
 
@@ -173,7 +152,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								'Trash': 'Trash Can'
 							};
 
-							// decides whether field options block will be shown (true for dropdown and radio fields)
+							// decides whether rating block will be shown
 							$scope.showRatingOptions = function (field){
 								if(field.fieldType === 'rating'){
 									return true;
@@ -380,11 +359,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 					if ($scope.showAddOptions(newField)) {
 						newField.fieldOptions = [];
-						newField.fieldOptions.push({
-							'option_id': Math.floor(100000 * Math.random()), //Generate pseudo-random option id
-							'option_title': 'Option 1',
-							'option_value': 'Option 1'
-						});
+						newField.fieldOptions.push('Option 1');
 						newField.fieldOptionsFromFile = false;
 						newField.loadProgress = 0;
 					}
@@ -397,7 +372,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					$scope.openEditModal(newField);
                 };
 
-				// decides whether field options block will be shown (true for dropdown and radio fields)
+				// decides whether field options block will be shown
 				$scope.showAddOptions = function (field){
 					if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
 						return true;
@@ -406,7 +381,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					}
 				};
 
-				// decides whether field options block will be shown (true for dropdown and radio fields)
+				// decides whether rating block will be shown
 				$scope.showRatingOptions = function (field){
 					if(field.fieldType === 'rating'){
 						return true;

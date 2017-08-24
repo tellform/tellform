@@ -47,7 +47,7 @@ COVERALLS_REPO_TOKEN=
 ### Build docker image
 
 ```
-$ docker build -t formsg-tellform .
+$ docker build -t formsg-dev .
 ```
 
 ### Run docker containers
@@ -60,7 +60,7 @@ $ docker run -p 127.0.0.1:6379:6379 -d --name formsg-redis redis
 
 Start formsg's MEAN container:
 ```
-$ docker run --rm -p 5000:5000 --link formsg-redis:redis-db --link formsg-mongo:db --name formsg-tellform formsg-tellform
+$ docker run --rm -p 5000:5000 --link formsg-redis:redis-db --link formsg-mongo:db --name formsg-dev formsg-dev
 ```
 
 Your application should run on port 5000 or the port you specified in your .env file, so in your browser just go to [http://localhost:5000](http://localhost:5000)
@@ -102,7 +102,7 @@ SSH back in, and test that `docker info` runs successfully.
 ### Clone our repo
 
 ```
-$ git clone https://github.com/datagovsg/forma-tellform.git
+$ git clone https://github.com/datagovsg/formsg-tellform.git
 ```
 
 ### Prepare .env file
@@ -136,8 +136,8 @@ COVERALLS_REPO_TOKEN=
 
 Download mongo and redis images and run them:
 ```
-$ docker run -p 27017:27017 -d --name formsg-mongo mongo
-$ docker run -p 6379:6379 -d --name formsg-redis redis
+$ docker run -p 27017:27017 -v ~/data/db:/data/db -d --name formsg-mongo mongo
+$ docker run -v ~/data/redis-db:/data -d --name formsg-redis redis redis-server --appendonly yes
 ```
 
 ### Install npm, bower and grunt

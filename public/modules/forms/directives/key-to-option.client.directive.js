@@ -16,7 +16,7 @@ angular.module('forms').directive('keyToOption', function(){
 				if (index < $scope.field.fieldOptions.length) {
 					event.preventDefault();
 					$scope.$apply(function () {
-						$scope.field.fieldValue = $scope.field.fieldOptions[index].option_value;
+						$scope.field.fieldValue = $scope.field.fieldOptions[index];
 					});
 				}
 

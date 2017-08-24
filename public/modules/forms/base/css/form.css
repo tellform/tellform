@@ -104,7 +104,7 @@ uib-tab-heading .glyphicon {
 /*.public-form input.no-border.ng-invalid, .public-form textarea.no-border {
     border-color: none;
 }*/
-.public-form input.ng-valid, .public-form textarea.ng-valid {
+.public-form input.ng-valid, .public-form textarea.ng-valid, .public-form.ui-select-match {
 	border-color: #20FF20!important;
 	border-style: solid!important;
 	border-width: 3px!important;

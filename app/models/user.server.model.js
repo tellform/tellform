@@ -92,6 +92,9 @@ var UserSchema = new Schema({
 		required: 'Provider is required',
 		default: 'local'
 	},
+	agency: {
+		type: String
+	},
 	providerData: {},
 	additionalProvidersData: {},
 	roles: {

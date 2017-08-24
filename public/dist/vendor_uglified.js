@@ -6397,8 +6397,8 @@
 }(window, document), !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 var duScrollDefaultEasing = function(a) {
-    return a < .5 ? Math.pow(2 * a, 2) / 2 : 1 - Math.pow(2 * (1 - a), 2) / 2;
-}, duScroll = angular.module("duScroll", [ "duScroll.scrollspy", "duScroll.smoothScroll", "duScroll.scrollContainer", "duScroll.spyContext", "duScroll.scrollHelpers" ]).value("duScrollDuration", 350).value("duScrollSpyWait", 100).value("duScrollSpyRefreshInterval", 0).value("duScrollGreedy", !1).value("duScrollOffset", 0).value("duScrollEasing", duScrollDefaultEasing).value("duScrollCancelOnEvents", "scroll mousedown mousewheel touchmove keydown").value("duScrollBottomSpy", !1).value("duScrollActiveClass", "active");
+    return .5 > a ? Math.pow(2 * a, 2) / 2 : 1 - Math.pow(2 * (1 - a), 2) / 2;
+}, duScroll = angular.module("duScroll", [ "duScroll.scrollspy", "duScroll.smoothScroll", "duScroll.scrollContainer", "duScroll.spyContext", "duScroll.scrollHelpers" ]).value("duScrollDuration", 350).value("duScrollSpyWait", 100).value("duScrollGreedy", !1).value("duScrollOffset", 0).value("duScrollEasing", duScrollDefaultEasing).value("duScrollCancelOnEvents", "scroll mousedown mousewheel touchmove keydown").value("duScrollBottomSpy", !1).value("duScrollActiveClass", "active");
 
 "undefined" != typeof module && module && module.exports && (module.exports = duScroll), 
 angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ "$window", "$q", "cancelAnimation", "requestAnimation", "duScrollEasing", "duScrollDuration", "duScrollOffset", "duScrollCancelOnEvents", function(a, b, c, d, e, f, g, h) {
@@ -6427,13 +6427,13 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
         var t = function(a) {
             null === p && (p = a), q = a - p;
             var b = q >= g ? 1 : i(q / g);
-            r.scrollTo(j + Math.ceil(l * b), k + Math.ceil(o * b)), b < 1 ? m = d(t) : (h && r.unbind(h, s), 
+            r.scrollTo(j + Math.ceil(l * b), k + Math.ceil(o * b)), 1 > b ? m = d(t) : (h && r.unbind(h, s), 
             m = null, n.resolve());
         };
         return r.duScrollTo(j, k), h && r.bind(h, s), m = d(t), n.promise;
     }, i.duScrollToElement = function(a, b, c, d) {
         var e = l(this);
-        angular.isNumber(b) && !isNaN(b) || (b = g);
+        (!angular.isNumber(b) || isNaN(b)) && (b = g);
         var f = this.duScrollTop() + l(a).getBoundingClientRect().top - b;
         return k(e) && (f -= e.getBoundingClientRect().top), this.duScrollTo(0, f, c, d);
     }, i.duScrollLeft = function(b, c, d) {
@@ -6476,69 +6476,66 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
         b.cancel(a);
     };
     return a("cancelAnimationFrame", c);
-} ]), angular.module("duScroll.spyAPI", [ "duScroll.scrollContainerAPI" ]).factory("spyAPI", [ "$rootScope", "$timeout", "$interval", "$window", "$document", "scrollContainerAPI", "duScrollGreedy", "duScrollSpyWait", "duScrollSpyRefreshInterval", "duScrollBottomSpy", "duScrollActiveClass", function(a, b, c, d, e, f, g, h, i, j, k) {
-    var l = function(c) {
-        var f = !1, i = !1, l = function() {
-            i = !1;
-            var b, f = c.container, h = f[0], l = 0;
-            if ("undefined" != typeof HTMLElement && h instanceof HTMLElement || h.nodeType && h.nodeType === h.ELEMENT_NODE) l = h.getBoundingClientRect().top, 
-            b = Math.round(h.scrollTop + h.clientHeight) >= h.scrollHeight; else {
-                var m = e[0].body.scrollHeight || e[0].documentElement.scrollHeight;
-                b = Math.round(d.pageYOffset + d.innerHeight) >= m;
+} ]), angular.module("duScroll.spyAPI", [ "duScroll.scrollContainerAPI" ]).factory("spyAPI", [ "$rootScope", "$timeout", "$window", "$document", "scrollContainerAPI", "duScrollGreedy", "duScrollSpyWait", "duScrollBottomSpy", "duScrollActiveClass", function(a, b, c, d, e, f, g, h, i) {
+    var j = function(e) {
+        var j = !1, k = !1, l = function() {
+            k = !1;
+            var b, g = e.container, j = g[0], l = 0;
+            if ("undefined" != typeof HTMLElement && j instanceof HTMLElement || j.nodeType && j.nodeType === j.ELEMENT_NODE) l = j.getBoundingClientRect().top, 
+            b = Math.round(j.scrollTop + j.clientHeight) >= j.scrollHeight; else {
+                var m = d[0].body.scrollHeight || d[0].documentElement.scrollHeight;
+                b = Math.round(c.pageYOffset + c.innerHeight) >= m;
             }
-            var n, o, p, q, r, s, t = j && b ? "bottom" : "top";
-            for (q = c.spies, o = c.currentlyActive, p = void 0, n = 0; n < q.length; n++) r = q[n], 
-            s = r.getTargetPosition(), s && r.$element && (j && b || s.top + r.offset - l < 20 && (g || s.top * -1 + l) < s.height) && (!p || p[t] < s[t]) && (p = {
+            var n, o, p, q, r, s, t = h && b ? "bottom" : "top";
+            for (q = e.spies, o = e.currentlyActive, p = void 0, n = 0; n < q.length; n++) r = q[n], 
+            s = r.getTargetPosition(), s && (h && b || s.top + r.offset - l < 20 && (f || -1 * s.top + l) < s.height) && (!p || p[t] < s[t]) && (p = {
                 spy: r
             }, p[t] = s[t]);
-            p && (p = p.spy), o === p || g && !p || (o && o.$element && (o.$element.removeClass(k), 
-            a.$broadcast("duScrollspy:becameInactive", o.$element, angular.element(o.getTargetElement()))), 
-            p && (p.$element.addClass(k), a.$broadcast("duScrollspy:becameActive", p.$element, angular.element(p.getTargetElement()))), 
-            c.currentlyActive = p);
+            p && (p = p.spy), o === p || f && !p || (o && (o.$element.removeClass(i), a.$broadcast("duScrollspy:becameInactive", o.$element, angular.element(o.getTargetElement()))), 
+            p && (p.$element.addClass(i), a.$broadcast("duScrollspy:becameActive", p.$element, angular.element(p.getTargetElement()))), 
+            e.currentlyActive = p);
         };
-        return h ? function() {
-            f ? i = !0 : (l(), f = b(function() {
-                f = !1, i && l();
-            }, h, !1));
+        return g ? function() {
+            j ? k = !0 : (l(), j = b(function() {
+                j = !1, k && l();
+            }, g, !1));
         } : l;
-    }, m = {}, n = function(a) {
+    }, k = {}, l = function(a) {
         var b = a.$id, c = {
             spies: []
         };
-        return c.handler = l(c), m[b] = c, a.$on("$destroy", function() {
-            o(a);
+        return c.handler = j(c), k[b] = c, a.$on("$destroy", function() {
+            m(a);
         }), b;
-    }, o = function(a) {
-        var b = a.$id, d = m[b], e = d.container;
-        d.intervalPromise && c.cancel(d.intervalPromise), e && e.off("scroll", d.handler), 
-        delete m[b];
-    }, p = n(a), q = function(a) {
-        return m[a.$id] ? m[a.$id] : a.$parent ? q(a.$parent) : m[p];
-    }, r = function(a) {
+    }, m = function(a) {
+        var b = a.$id, c = k[b], d = c.container;
+        d && d.off("scroll", c.handler), delete k[b];
+    }, n = l(a), o = function(a) {
+        return k[a.$id] ? k[a.$id] : a.$parent ? o(a.$parent) : k[n];
+    }, p = function(a) {
         var b, c, d = a.$scope;
-        if (d) return q(d);
-        for (c in m) if (b = m[c], b.spies.indexOf(a) !== -1) return b;
-    }, s = function(a) {
+        if (d) return o(d);
+        for (c in k) if (b = k[c], -1 !== b.spies.indexOf(a)) return b;
+    }, q = function(a) {
         for (;a.parentNode; ) if (a = a.parentNode, a === document) return !0;
         return !1;
-    }, t = function(a) {
-        var b = r(a);
-        b && (b.spies.push(a), b.container && s(b.container) || (b.container && b.container.off("scroll", b.handler), 
-        b.container = f.getContainer(a.$scope), i && !b.intervalPromise && (b.intervalPromise = c(b.handler, i, 0, !1)), 
-        b.container.on("scroll", b.handler).triggerHandler("scroll")));
-    }, u = function(b) {
-        var c = r(b);
+    }, r = function(a) {
+        var b = p(a);
+        b && (b.spies.push(a), b.container && q(b.container) || (b.container && b.container.off("scroll", b.handler), 
+        b.container = e.getContainer(a.$scope), b.container.on("scroll", b.handler).triggerHandler("scroll")));
+    }, s = function(b) {
+        var c = p(b);
         b === c.currentlyActive && (a.$broadcast("duScrollspy:becameInactive", c.currentlyActive.$element), 
         c.currentlyActive = null);
         var d = c.spies.indexOf(b);
-        d !== -1 && c.spies.splice(d, 1), b.$element = null;
+        -1 !== d && c.spies.splice(d, 1), b.$element = null;
     };
     return {
-        addSpy: t,
-        removeSpy: u,
-        createContext: n,
-        destroyContext: o,
-        getContextForScope: q
+        addSpy: r,
+        removeSpy: s,
+        createContext: l,
+        destroyContext: m,
+        getContextForScope: o
     };
 } ]), angular.module("duScroll.scrollContainerAPI", []).factory("scrollContainerAPI", [ "$document", function(a) {
     var b = {}, c = function(a, c) {
@@ -6563,7 +6560,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
     return {
         link: function(d, e, f) {
             e.on("click", function(e) {
-                if (f.href && f.href.indexOf("#") !== -1 || "" !== f.duSmoothScroll) {
+                if (f.href && -1 !== f.href.indexOf("#") || "" !== f.duSmoothScroll) {
                     var g = f.href ? f.href.replace(/.*(?=#[^\s]+$)/, "").substring(1) : f.duSmoothScroll, h = document.getElementById(g) || document.getElementsByName(g)[0];
                     if (h && h.getBoundingClientRect) {
                         e.stopPropagation && e.stopPropagation(), e.preventDefault && e.preventDefault();
@@ -6613,13 +6610,13 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
         this.target;
     }, e.prototype.getTargetPosition = function() {
         var a = this.getTargetElement();
-        if (a) return a.getBoundingClientRect();
+        return a ? a.getBoundingClientRect() : void 0;
     }, e.prototype.flushTargetCache = function() {
         this.targetId && (this.target = void 0);
     }, {
         link: function(f, g, h) {
             var i, j = h.ngHref || h.href;
-            if (j && j.indexOf("#") !== -1 ? i = j.replace(/.*(?=#[^\s]+$)/, "").substring(1) : h.duScrollspy ? i = h.duScrollspy : h.duSmoothScroll && (i = h.duSmoothScroll), 
+            if (j && -1 !== j.indexOf("#") ? i = j.replace(/.*(?=#[^\s]+$)/, "").substring(1) : h.duScrollspy ? i = h.duScrollspy : h.duSmoothScroll && (i = h.duSmoothScroll), 
             i) {
                 var k = c(function() {
                     var c = new e(i, f, g, (-(h.offset ? parseInt(h.offset, 10) : b)));
@@ -6636,10 +6633,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
         }
     };
 } ]), !function() {
-    function a(a) {
-        return angular.isUndefined(a) || null === a;
-    }
-    var b = {
+    var a = {
         TAB: 9,
         ENTER: 13,
         ESC: 27,
@@ -6761,33 +6755,33 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
             221: "]",
             222: "'"
         },
-        isControl: function(a) {
-            var c = a.which;
+        isControl: function(b) {
+            var c = b.which;
             switch (c) {
-              case b.COMMAND:
-              case b.SHIFT:
-              case b.CTRL:
-              case b.ALT:
+              case a.COMMAND:
+              case a.SHIFT:
+              case a.CTRL:
+              case a.ALT:
                 return !0;
             }
-            return !!(a.metaKey || a.ctrlKey || a.altKey);
+            return !!(b.metaKey || b.ctrlKey || b.altKey);
         },
         isFunctionKey: function(a) {
-            return a = a.which ? a.which : a, a >= 112 && a <= 123;
+            return a = a.which ? a.which : a, a >= 112 && 123 >= a;
         },
-        isVerticalMovement: function(a) {
-            return ~[ b.UP, b.DOWN ].indexOf(a);
+        isVerticalMovement: function(b) {
+            return ~[ a.UP, a.DOWN ].indexOf(b);
         },
-        isHorizontalMovement: function(a) {
-            return ~[ b.LEFT, b.RIGHT, b.BACKSPACE, b.DELETE ].indexOf(a);
+        isHorizontalMovement: function(b) {
+            return ~[ a.LEFT, a.RIGHT, a.BACKSPACE, a.DELETE ].indexOf(b);
         },
-        toSeparator: function(a) {
+        toSeparator: function(b) {
             var c = {
                 ENTER: "\n",
                 TAB: "\t",
                 SPACE: " "
-            }[a];
-            return c ? c : b[a] ? void 0 : a;
+            }[b];
+            return c ? c : a[b] ? void 0 : b;
         }
     };
     void 0 === angular.element.prototype.querySelectorAll && (angular.element.prototype.querySelectorAll = function(a) {
@@ -6799,7 +6793,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
         }
         return !1;
     });
-    var c = 0, d = angular.module("ui.select", []).constant("uiSelectConfig", {
+    var b = 0, c = angular.module("ui.select", []).constant("uiSelectConfig", {
         theme: "bootstrap",
         searchEnabled: !0,
         sortable: !1,
@@ -6809,14 +6803,10 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
         skipFocusser: !1,
         dropdownPosition: "auto",
         removeSelected: !0,
-        resetSearchInput: !0,
         generateId: function() {
-            return c++;
+            return b++;
         },
-        appendToBody: !1,
-        spinnerEnabled: !1,
-        spinnerClass: "glyphicon glyphicon-refresh ui-select-spin",
-        backspaceReset: !0
+        appendToBody: !1
     }).service("uiSelectMinErr", function() {
         var a = angular.$$minErr("ui.select");
         return function() {
@@ -6849,17 +6839,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
             };
         };
     } ]);
-    d.factory("$$uisDebounce", [ "$timeout", function(a) {
-        return function(b, c) {
-            var d;
-            return function() {
-                var e = this, f = Array.prototype.slice.call(arguments);
-                d && a.cancel(d), d = a(function() {
-                    b.apply(e, f);
-                }, c);
-            };
-        };
-    } ]), d.directive("uiSelectChoices", [ "uiSelectConfig", "uisRepeatParser", "uiSelectMinErr", "$compile", "$window", function(a, b, c, d, e) {
+    c.directive("uiSelectChoices", [ "uiSelectConfig", "uisRepeatParser", "uiSelectMinErr", "$compile", "$window", function(a, b, c, d, e) {
         return {
             restrict: "EA",
             require: "^uiSelect",
@@ -6886,84 +6866,64 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                 l.attr("uis-transclude-append", "");
                 var m = e.document.addEventListener ? k : l;
                 return m.attr("ng-click", "$select.select(" + j.itemName + ",$select.skipFocusser,$event)"), 
-                function(b, c, e, f) {
-                    f.parseRepeatAttr(e.repeat, g, h), f.disableChoiceExpression = e.uiDisableChoice, 
-                    f.onHighlightCallback = e.onHighlight, f.minimumInputLength = parseInt(e.minimumInputLength) || 0, 
-                    f.dropdownPosition = e.position ? e.position.toLowerCase() : a.dropdownPosition, 
-                    b.$watch("$select.search", function(a) {
-                        a && !f.open && f.multiple && f.activate(!1, !0), f.activeIndex = f.tagging.isActivated ? -1 : 0, 
-                        !e.minimumInputLength || f.search.length >= e.minimumInputLength ? f.refresh(e.refresh) : f.items = [];
-                    }), e.$observe("refreshDelay", function() {
-                        var c = b.$eval(e.refreshDelay);
-                        f.refreshDelay = void 0 !== c ? c : a.refreshDelay;
-                    }), b.$watch("$select.open", function(a) {
-                        a ? (d.attr("role", "listbox"), f.refresh(e.refresh)) : c.removeAttr("role");
+                function(b, c, d, e) {
+                    e.parseRepeatAttr(d.repeat, g, h), e.disableChoiceExpression = d.uiDisableChoice, 
+                    e.onHighlightCallback = d.onHighlight, e.dropdownPosition = d.position ? d.position.toLowerCase() : a.dropdownPosition, 
+                    b.$on("$destroy", function() {
+                        k.remove();
+                    }), b.$watch("$select.search", function(a) {
+                        a && !e.open && e.multiple && e.activate(!1, !0), e.activeIndex = e.tagging.isActivated ? -1 : 0, 
+                        !d.minimumInputLength || e.search.length >= d.minimumInputLength ? e.refresh(d.refresh) : e.items = [];
+                    }), d.$observe("refreshDelay", function() {
+                        var c = b.$eval(d.refreshDelay);
+                        e.refreshDelay = void 0 !== c ? c : a.refreshDelay;
                     });
                 };
             }
         };
-    } ]), d.controller("uiSelectCtrl", [ "$scope", "$element", "$timeout", "$filter", "$$uisDebounce", "uisRepeatParser", "uiSelectMinErr", "uiSelectConfig", "$parse", "$injector", "$window", function(c, d, e, f, g, h, i, j, k, l, m) {
-        function n(a, b, c) {
+    } ]), c.controller("uiSelectCtrl", [ "$scope", "$element", "$timeout", "$filter", "$$uisDebounce", "uisRepeatParser", "uiSelectMinErr", "uiSelectConfig", "$parse", "$injector", "$window", function(b, c, d, e, f, g, h, i, j, k, l) {
+        function m(a, b, c) {
             if (a.findIndex) return a.findIndex(b, c);
-            for (var d, e = Object(a), f = e.length >>> 0, g = 0; g < f; g++) if (d = e[g], 
+            for (var d, e = Object(a), f = e.length >>> 0, g = 0; f > g; g++) if (d = e[g], 
             b.call(c, d, g, e)) return g;
             return -1;
         }
-        function o() {
-            v.resetSearchInput && (v.search = w, v.selected && v.items.length && !v.multiple && (v.activeIndex = n(v.items, function(a) {
+        function n() {
+            (s.resetSearchInput || void 0 === s.resetSearchInput && i.resetSearchInput) && (s.search = t, 
+            s.selected && s.items.length && !s.multiple && (s.activeIndex = m(s.items, function(a) {
                 return angular.equals(this, a);
-            }, v.selected)));
+            }, s.selected)));
+        }
+        function o() {
+            (s.setSearchToAnswer || void 0 === s.setSearchToAnswer && i.setSearchToAnswer) && (console.log("searchBy: " + s.searchBy), 
+            s.searchBy && (console.log("_setSearchToAnswer"), s.resetSearchInput = !1, s.search = s.selected[s.searchBy]));
         }
         function p(a, b) {
             var c, d, e = [];
             for (c = 0; c < b.length; c++) for (d = 0; d < a.length; d++) a[d].name == [ b[c] ] && e.push(a[d]);
             return e;
         }
-        function q(a, b) {
-            var c = z.indexOf(a);
-            b && c === -1 && z.push(a), !b && c > -1 && z.splice(c, 1);
-        }
-        function r(a) {
-            return z.indexOf(a) > -1;
-        }
-        function s(a) {
-            function b(a, b) {
-                var c = d.indexOf(a);
-                b && c === -1 && d.push(a), !b && c > -1 && d.splice(c, 1);
-            }
-            function c(a) {
-                return d.indexOf(a) > -1;
-            }
-            if (a) {
-                var d = [];
-                v.isLocked = function(a, d) {
-                    var e = !1, f = v.selected[d];
-                    return f && (a ? (e = !!a.$eval(v.lockChoiceExpression), b(f, e)) : e = c(f)), e;
-                };
-            }
-        }
-        function t(a) {
+        function q(b) {
             var c = !0;
-            switch (a) {
-              case b.DOWN:
-                if (!v.open && v.multiple) v.activate(!1, !0); else if (v.activeIndex < v.items.length - 1) for (var d = ++v.activeIndex; r(v.items[d]) && d < v.items.length; ) v.activeIndex = ++d;
+            switch (b) {
+              case a.DOWN:
+                !s.open && s.multiple ? s.activate(!1, !0) : s.activeIndex < s.items.length - 1 && s.activeIndex++;
                 break;
 
-              case b.UP:
-                var e = 0 === v.search.length && v.tagging.isActivated ? -1 : 0;
-                if (!v.open && v.multiple) v.activate(!1, !0); else if (v.activeIndex > e) for (var f = --v.activeIndex; r(v.items[f]) && f > e; ) v.activeIndex = --f;
+              case a.UP:
+                !s.open && s.multiple ? s.activate(!1, !0) : (s.activeIndex > 0 || 0 === s.search.length && s.tagging.isActivated && s.activeIndex > -1) && s.activeIndex--;
                 break;
 
-              case b.TAB:
-                v.multiple && !v.open || v.select(v.items[v.activeIndex], !0);
+              case a.TAB:
+                s.multiple && !s.open || s.select(s.items[s.activeIndex], !0);
                 break;
 
-              case b.ENTER:
-                v.open && (v.tagging.isActivated || v.activeIndex >= 0) ? v.select(v.items[v.activeIndex], v.skipFocusser) : v.activate(!1, !0);
+              case a.ENTER:
+                s.open && (s.tagging.isActivated || s.activeIndex >= 0) ? s.select(s.items[s.activeIndex], s.skipFocusser) : s.activate(!1, !0);
                 break;
 
-              case b.ESC:
-                v.close();
+              case a.ESC:
+                s.close();
                 break;
 
               default:
@@ -6971,245 +6931,237 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
             }
             return c;
         }
-        function u() {
-            var a = d.querySelectorAll(".ui-select-choices-content"), b = a.querySelectorAll(".ui-select-choices-row");
-            if (b.length < 1) throw i("choices", "Expected multiple .ui-select-choices-row but got '{0}'.", b.length);
-            if (!(v.activeIndex < 0)) {
-                var c = b[v.activeIndex], e = c.offsetTop + c.clientHeight - a[0].scrollTop, f = a[0].offsetHeight;
-                e > f ? a[0].scrollTop += e - f : e < c.clientHeight && (v.isGrouped && 0 === v.activeIndex ? a[0].scrollTop = 0 : a[0].scrollTop -= c.clientHeight - e);
+        function r() {
+            var a = c.querySelectorAll(".ui-select-choices-content"), b = a.querySelectorAll(".ui-select-choices-row");
+            if (b.length < 1) throw h("choices", "Expected multiple .ui-select-choices-row but got '{0}'.", b.length);
+            if (!(s.activeIndex < 0)) {
+                var d = b[s.activeIndex], e = d.offsetTop + d.clientHeight - a[0].scrollTop, f = a[0].offsetHeight;
+                e > f ? a[0].scrollTop += e - f : e < d.clientHeight && (s.isGrouped && 0 === s.activeIndex ? a[0].scrollTop = 0 : a[0].scrollTop -= d.clientHeight - e);
             }
         }
-        var v = this, w = "";
-        if (v.placeholder = j.placeholder, v.searchEnabled = j.searchEnabled, v.sortable = j.sortable, 
-        v.refreshDelay = j.refreshDelay, v.paste = j.paste, v.resetSearchInput = j.resetSearchInput, 
-        v.refreshing = !1, v.spinnerEnabled = j.spinnerEnabled, v.spinnerClass = j.spinnerClass, 
-        v.removeSelected = j.removeSelected, v.closeOnSelect = !0, v.skipFocusser = !1, 
-        v.search = w, v.activeIndex = 0, v.items = [], v.open = !1, v.focus = !1, v.disabled = !1, 
-        v.selected = void 0, v.dropdownPosition = "auto", v.focusser = void 0, v.multiple = void 0, 
-        v.disableChoiceExpression = void 0, v.tagging = {
+        var s = this, t = "";
+        if (s.placeholder = i.placeholder, s.searchEnabled = i.searchEnabled, s.sortable = i.sortable, 
+        s.refreshDelay = i.refreshDelay, s.paste = i.paste, s.removeSelected = i.removeSelected, 
+        s.closeOnSelect = !0, s.skipFocusser = !1, s.search = t, s.activeIndex = 0, s.items = [], 
+        s.open = !1, s.focus = !1, s.disabled = !1, s.selected = void 0, s.dropdownPosition = "auto", 
+        s.focusser = void 0, s.resetSearchInput = !0, s.setSearchToAnswer = !1, s.searchBy = void 0, 
+        s.multiple = void 0, s.disableChoiceExpression = void 0, s.tagging = {
             isActivated: !1,
             fct: void 0
-        }, v.taggingTokens = {
+        }, s.taggingTokens = {
             isActivated: !1,
             tokens: void 0
-        }, v.lockChoiceExpression = void 0, v.clickTriggeredSelect = !1, v.$filter = f, 
-        v.$element = d, v.$animate = function() {
+        }, s.lockChoiceExpression = void 0, s.clickTriggeredSelect = !1, s.$filter = e, 
+        s.$element = c, s.$animate = function() {
             try {
-                return l.get("$animate");
+                return k.get("$animate");
             } catch (a) {
                 return null;
             }
-        }(), v.searchInput = d.querySelectorAll("input.ui-select-search"), 1 !== v.searchInput.length) throw i("searchInput", "Expected 1 input.ui-select-search but got '{0}'.", v.searchInput.length);
-        v.isEmpty = function() {
-            return a(v.selected) || "" === v.selected || v.multiple && 0 === v.selected.length;
-        }, v.activate = function(a, b) {
-            if (v.disabled || v.open) v.open && !v.searchEnabled && v.close(); else {
-                b || o(), c.$broadcast("uis:activate"), v.open = !0, v.activeIndex = v.activeIndex >= v.items.length ? 0 : v.activeIndex, 
-                v.activeIndex === -1 && v.taggingLabel !== !1 && (v.activeIndex = 0);
-                var f = d.querySelectorAll(".ui-select-choices-content"), g = d.querySelectorAll(".ui-select-search");
-                if (v.$animate && v.$animate.on && v.$animate.enabled(f[0])) {
+        }(), s.searchInput = c.querySelectorAll("input.ui-select-search"), 1 !== s.searchInput.length) throw h("searchInput", "Expected 1 input.ui-select-search but got '{0}'.", s.searchInput.length);
+        s.isEmpty = function() {
+            return angular.isUndefined(s.selected) || null === s.selected || "" === s.selected || s.multiple && 0 === s.selected.length;
+        }, s.activate = function(a, e) {
+            if (!s.disabled && !s.open) {
+                e || n(), b.$broadcast("uis:activate"), s.open = !0, s.activeIndex = s.activeIndex >= s.items.length ? 0 : s.activeIndex, 
+                -1 === s.activeIndex && s.taggingLabel !== !1 && (s.activeIndex = 0);
+                var f = c.querySelectorAll(".ui-select-choices-content"), g = c.querySelectorAll(".ui-select-search");
+                if (s.$animate && s.$animate.on && s.$animate.enabled(f[0])) {
                     var h = function(b, c) {
-                        "start" === c && 0 === v.items.length ? (v.$animate.off("removeClass", g[0], h), 
-                        e(function() {
-                            v.focusSearchInput(a);
-                        })) : "close" === c && (v.$animate.off("enter", f[0], h), e(function() {
-                            v.focusSearchInput(a);
+                        "start" === c && 0 === s.items.length ? (s.$animate.off("removeClass", g[0], h), 
+                        d(function() {
+                            s.focusSearchInput(a);
+                        })) : "close" === c && (s.$animate.off("enter", f[0], h), d(function() {
+                            s.focusSearchInput(a);
                         }));
                     };
-                    v.items.length > 0 ? v.$animate.on("enter", f[0], h) : v.$animate.on("removeClass", g[0], h);
-                } else e(function() {
-                    v.focusSearchInput(a), !v.tagging.isActivated && v.items.length > 1 && u();
+                    s.items.length > 0 ? s.$animate.on("enter", f[0], h) : s.$animate.on("removeClass", g[0], h);
+                } else d(function() {
+                    s.focusSearchInput(a), !s.tagging.isActivated && s.items.length > 1 && r();
                 });
             }
-        }, v.focusSearchInput = function(a) {
-            v.search = a || v.search, v.searchInput[0].focus();
-        }, v.findGroupByName = function(a) {
-            return v.groups && v.groups.filter(function(b) {
+        }, s.focusSearchInput = function(a) {
+            s.search = a || s.search, s.searchInput[0].focus();
+        }, s.findGroupByName = function(a) {
+            return s.groups && s.groups.filter(function(b) {
                 return b.name === a;
             })[0];
-        }, v.parseRepeatAttr = function(a, b, d) {
+        }, s.parseRepeatAttr = function(a, c, d) {
             function e(a) {
-                var e = c.$eval(b);
-                if (v.groups = [], angular.forEach(a, function(a) {
-                    var b = angular.isFunction(e) ? e(a) : a[e], c = v.findGroupByName(b);
-                    c ? c.items.push(a) : v.groups.push({
+                var e = b.$eval(c);
+                if (s.groups = [], angular.forEach(a, function(a) {
+                    var b = angular.isFunction(e) ? e(a) : a[e], c = s.findGroupByName(b);
+                    c ? c.items.push(a) : s.groups.push({
                         name: b,
                         items: [ a ]
                     });
                 }), d) {
-                    var f = c.$eval(d);
-                    angular.isFunction(f) ? v.groups = f(v.groups) : angular.isArray(f) && (v.groups = p(v.groups, f));
+                    var f = b.$eval(d);
+                    angular.isFunction(f) ? s.groups = f(s.groups) : angular.isArray(f) && (s.groups = p(s.groups, f));
                 }
-                v.items = [], v.groups.forEach(function(a) {
-                    v.items = v.items.concat(a.items);
+                s.items = [], s.groups.forEach(function(a) {
+                    s.items = s.items.concat(a.items);
                 });
             }
             function f(a) {
-                v.items = a || [];
+                s.items = a;
             }
-            v.setItemsFn = b ? e : f, v.parserResult = h.parse(a), v.isGrouped = !!b, v.itemProperty = v.parserResult.itemName;
-            var g = v.parserResult.source, j = function() {
-                var a = g(c);
-                c.$uisSource = Object.keys(a).map(function(b) {
+            s.setItemsFn = c ? e : f, s.parserResult = g.parse(a), s.isGrouped = !!c, s.itemProperty = s.parserResult.itemName;
+            var i = s.parserResult.source, k = function() {
+                var a = i(b);
+                b.$uisSource = Object.keys(a).map(function(b) {
                     var c = {};
-                    return c[v.parserResult.keyName] = b, c.value = a[b], c;
+                    return c[s.parserResult.keyName] = b, c.value = a[b], c;
                 });
             };
-            v.parserResult.keyName && (j(), v.parserResult.source = k("$uisSource" + v.parserResult.filters), 
-            c.$watch(g, function(a, b) {
-                a !== b && j();
-            }, !0)), v.refreshItems = function(a) {
-                a = a || v.parserResult.source(c);
-                var b = v.selected;
-                if (v.isEmpty() || angular.isArray(b) && !b.length || !v.multiple || !v.removeSelected) v.setItemsFn(a); else if (void 0 !== a && null !== a) {
+            s.parserResult.keyName && (k(), s.parserResult.source = j("$uisSource" + s.parserResult.filters), 
+            b.$watch(i, function(a, b) {
+                a !== b && k();
+            }, !0)), s.refreshItems = function(a) {
+                a = a || s.parserResult.source(b);
+                var c = s.selected;
+                if (s.isEmpty() || angular.isArray(c) && !c.length || !s.removeSelected) s.setItemsFn(a); else if (void 0 !== a) {
                     var d = a.filter(function(a) {
-                        return angular.isArray(b) ? b.every(function(b) {
+                        return angular.isArray(c) ? c.every(function(b) {
                             return !angular.equals(a, b);
-                        }) : !angular.equals(a, b);
+                        }) : !angular.equals(a, c);
                     });
-                    v.setItemsFn(d);
+                    s.setItemsFn(d);
                 }
-                "auto" !== v.dropdownPosition && "up" !== v.dropdownPosition || c.calculateDropdownPos(), 
-                c.$broadcast("uis:refresh");
-            }, c.$watchCollection(v.parserResult.source, function(a) {
-                if (void 0 === a || null === a) v.items = []; else {
-                    if (!angular.isArray(a)) throw i("items", "Expected an array but got '{0}'.", a);
-                    v.refreshItems(a), angular.isDefined(v.ngModel.$modelValue) && (v.ngModel.$modelValue = null);
+                "auto" !== s.dropdownPosition && "up" !== s.dropdownPosition || b.calculateDropdownPos(), 
+                b.$broadcast("uis:refresh");
+            }, b.$watchCollection(s.parserResult.source, function(a) {
+                if (void 0 === a || null === a) s.items = []; else {
+                    if (!angular.isArray(a)) throw h("items", "Expected an array but got '{0}'.", a);
+                    s.refreshItems(a), angular.isDefined(s.ngModel.$modelValue) && (s.ngModel.$modelValue = null);
                 }
             });
         };
-        var x;
-        v.refresh = function(a) {
-            void 0 !== a && (x && e.cancel(x), x = e(function() {
-                if (c.$select.search.length >= c.$select.minimumInputLength) {
-                    var b = c.$eval(a);
-                    b && angular.isFunction(b.then) && !v.refreshing && (v.refreshing = !0, b["finally"](function() {
-                        v.refreshing = !1;
-                    }));
-                }
-            }, v.refreshDelay));
-        }, v.isActive = function(a) {
-            if (!v.open) return !1;
-            var b = v.items.indexOf(a[v.itemProperty]), c = b == v.activeIndex;
-            return !(!c || b < 0) && (c && !angular.isUndefined(v.onHighlightCallback) && a.$eval(v.onHighlightCallback), 
+        var u;
+        s.refresh = function(a) {
+            void 0 !== a && (u && d.cancel(u), u = d(function() {
+                b.$eval(a);
+            }, s.refreshDelay));
+        }, s.isActive = function(a) {
+            if (!s.open) return !1;
+            var b = s.items.indexOf(a[s.itemProperty]), c = b == s.activeIndex;
+            return !(!c || 0 > b) && (c && !angular.isUndefined(s.onHighlightCallback) && a.$eval(s.onHighlightCallback), 
             c);
         };
-        var y = function(a) {
-            return v.selected && angular.isArray(v.selected) && v.selected.filter(function(b) {
+        var v = function(a) {
+            return s.selected && angular.isArray(s.selected) && s.selected.filter(function(b) {
                 return angular.equals(b, a);
             }).length > 0;
-        }, z = [];
-        v.isDisabled = function(a) {
-            if (v.open) {
-                var b = a[v.itemProperty], c = v.items.indexOf(b), d = !1;
-                if (c >= 0 && (angular.isDefined(v.disableChoiceExpression) || v.multiple)) {
-                    if (b.isTag) return !1;
-                    v.multiple && (d = y(b)), !d && angular.isDefined(v.disableChoiceExpression) && (d = !!a.$eval(v.disableChoiceExpression)), 
-                    q(b, d);
-                }
-                return d;
+        };
+        s.isDisabled = function(a) {
+            if (s.open) {
+                var b, c = s.items.indexOf(a[s.itemProperty]), d = !1;
+                return c >= 0 && (!angular.isUndefined(s.disableChoiceExpression) || s.multiple) && (b = s.items[c], 
+                d = !!a.$eval(s.disableChoiceExpression) || v(b), b._uiSelectChoiceDisabled = d), 
+                d;
             }
-        }, v.select = function(b, d, e) {
-            if (a(b) || !r(b)) {
-                if (!v.items && !v.search && !v.tagging.isActivated) return;
-                if (!b || !r(b)) {
-                    if (v.clickTriggeredSelect = !1, e && ("click" === e.type || "touchend" === e.type) && b && (v.clickTriggeredSelect = !0), 
-                    v.tagging.isActivated && v.clickTriggeredSelect === !1) {
-                        if (v.taggingLabel === !1) if (v.activeIndex < 0) {
-                            if (void 0 === b && (b = void 0 !== v.tagging.fct ? v.tagging.fct(v.search) : v.search), 
-                            !b || angular.equals(v.items[0], b)) return;
-                        } else b = v.items[v.activeIndex]; else if (0 === v.activeIndex) {
-                            if (void 0 === b) return;
-                            if (void 0 !== v.tagging.fct && "string" == typeof b) {
-                                if (b = v.tagging.fct(b), !b) return;
-                            } else "string" == typeof b && (b = b.replace(v.taggingLabel, "").trim());
+        }, s.select = function(a, c, e) {
+            if (void 0 === a || !a._uiSelectChoiceDisabled) {
+                if (!s.items && !s.search && !s.tagging.isActivated) return;
+                if (!a || !a._uiSelectChoiceDisabled) {
+                    if (s.tagging.isActivated) {
+                        if (s.taggingLabel === !1) if (s.activeIndex < 0) {
+                            if (a = void 0 !== s.tagging.fct ? s.tagging.fct(s.search) : s.search, !a || angular.equals(s.items[0], a)) return;
+                        } else a = s.items[s.activeIndex]; else if (0 === s.activeIndex) {
+                            if (void 0 === a) return;
+                            if (void 0 !== s.tagging.fct && "string" == typeof a) {
+                                if (a = s.tagging.fct(a), !a) return;
+                            } else "string" == typeof a && (a = a.replace(s.taggingLabel, "").trim());
                         }
-                        if (y(b)) return void v.close(d);
+                        if (v(a)) return void s.close(c);
                     }
-                    o(), c.$broadcast("uis:select", b), v.closeOnSelect && v.close(d);
+                    b.$broadcast("uis:select", a);
+                    var f = {};
+                    f[s.parserResult.itemName] = a, d(function() {
+                        s.onSelectCallback(b, {
+                            $item: a,
+                            $model: s.parserResult.modelMapper(b, f)
+                        });
+                    }), s.closeOnSelect && s.close(c), e && "click" === e.type && (s.clickTriggeredSelect = !0);
                 }
             }
-        }, v.close = function(a) {
-            v.open && (v.ngModel && v.ngModel.$setTouched && v.ngModel.$setTouched(), v.open = !1, 
-            o(), c.$broadcast("uis:close", a));
-        }, v.setFocus = function() {
-            v.focus || v.focusInput[0].focus();
-        }, v.clear = function(a) {
-            v.select(null), a.stopPropagation(), e(function() {
-                v.focusser[0].focus();
+        }, s.close = function(a) {
+            s.open && (s.ngModel && s.ngModel.$setTouched && s.ngModel.$setTouched(), n(), o(), 
+            s.open = !1, b.$broadcast("uis:close", a));
+        }, s.setFocus = function() {
+            s.focus || s.focusInput[0].focus();
+        }, s.clear = function(a) {
+            s.select(void 0), a.stopPropagation(), d(function() {
+                s.focusser[0].focus();
             }, 0, !1);
-        }, v.toggle = function(a) {
-            v.open ? (v.close(), a.preventDefault(), a.stopPropagation()) : v.activate();
-        }, v.isLocked = function() {
-            return !1;
-        }, c.$watch(function() {
-            return angular.isDefined(v.lockChoiceExpression) && "" !== v.lockChoiceExpression;
-        }, s);
-        var A = null, B = !1;
-        v.sizeSearchInput = function() {
-            var a = v.searchInput[0], b = v.$element[0], d = function() {
-                return b.clientWidth * !!a.offsetParent;
+        }, s.toggle = function(a) {
+            s.open ? (s.close(), a.preventDefault(), a.stopPropagation()) : s.activate();
+        }, s.isLocked = function(a, b) {
+            var c, d = s.selected[b];
+            return d && !angular.isUndefined(s.lockChoiceExpression) && (c = !!a.$eval(s.lockChoiceExpression), 
+            d._uiSelectChoiceLocked = c), c;
+        };
+        var w = null, x = !1;
+        s.sizeSearchInput = function() {
+            var a = s.searchInput[0], c = s.searchInput.parent().parent()[0], e = function() {
+                return c.clientWidth * !!a.offsetParent;
             }, f = function(b) {
                 if (0 === b) return !1;
-                var c = b - a.offsetLeft;
-                return c < 50 && (c = b), v.searchInput.css("width", c + "px"), !0;
+                var c = b - a.offsetLeft - 10;
+                return 50 > c && (c = b), s.searchInput.css("width", c + "px"), !0;
             };
-            v.searchInput.css("width", "10px"), e(function() {
-                null !== A || f(d()) || (A = c.$watch(function() {
-                    B || (B = !0, c.$$postDigest(function() {
-                        B = !1, f(d()) && (A(), A = null);
+            s.searchInput.css("width", "10px"), d(function() {
+                null !== w || f(e()) || (w = b.$watch(function() {
+                    x || (x = !0, b.$$postDigest(function() {
+                        x = !1, f(e()) && (w(), w = null);
                     }));
                 }, angular.noop));
             });
-        }, v.searchInput.on("keydown", function(a) {
-            var d = a.which;
-            ~[ b.ENTER, b.ESC ].indexOf(d) && (a.preventDefault(), a.stopPropagation()), c.$apply(function() {
-                var c = !1;
-                if ((v.items.length > 0 || v.tagging.isActivated) && (t(d) || v.searchEnabled || (a.preventDefault(), 
-                a.stopPropagation()), v.taggingTokens.isActivated)) {
-                    for (var f = 0; f < v.taggingTokens.tokens.length; f++) v.taggingTokens.tokens[f] === b.MAP[a.keyCode] && v.search.length > 0 && (c = !0);
-                    c && e(function() {
-                        v.searchInput.triggerHandler("tagged");
-                        var c = v.search.replace(b.MAP[a.keyCode], "").trim();
-                        v.tagging.fct && (c = v.tagging.fct(c)), c && v.select(c, !0);
+        }, s.searchInput.on("keydown", function(c) {
+            var e = c.which;
+            ~[ a.ENTER, a.ESC ].indexOf(e) && (c.preventDefault(), c.stopPropagation()), b.$apply(function() {
+                var b = !1;
+                if ((s.items.length > 0 || s.tagging.isActivated) && (q(e), s.taggingTokens.isActivated)) {
+                    for (var f = 0; f < s.taggingTokens.tokens.length; f++) s.taggingTokens.tokens[f] === a.MAP[c.keyCode] && s.search.length > 0 && (b = !0);
+                    b && d(function() {
+                        s.searchInput.triggerHandler("tagged");
+                        var b = s.search.replace(a.MAP[c.keyCode], "").trim();
+                        s.tagging.fct && (b = s.tagging.fct(b)), b && s.select(b, !0);
                     });
                 }
-            }), b.isVerticalMovement(d) && v.items.length > 0 && u(), d !== b.ENTER && d !== b.ESC || (a.preventDefault(), 
-            a.stopPropagation());
-        }), v.searchInput.on("paste", function(a) {
+            }), a.isVerticalMovement(e) && s.items.length > 0 && r(), e !== a.ENTER && e !== a.ESC || (c.preventDefault(), 
+            c.stopPropagation());
+        }), s.searchInput.on("paste", function(b) {
             var c;
-            if (c = window.clipboardData && window.clipboardData.getData ? window.clipboardData.getData("Text") : (a.originalEvent || a).clipboardData.getData("text/plain"), 
-            c = v.search + c, c && c.length > 0) if (v.taggingTokens.isActivated) {
-                for (var d = [], e = 0; e < v.taggingTokens.tokens.length; e++) {
-                    var f = b.toSeparator(v.taggingTokens.tokens[e]) || v.taggingTokens.tokens[e];
+            if (c = window.clipboardData && window.clipboardData.getData ? window.clipboardData.getData("Text") : (b.originalEvent || b).clipboardData.getData("text/plain"), 
+            c = s.search + c, c && c.length > 0) if (s.taggingTokens.isActivated) {
+                for (var d = [], e = 0; e < s.taggingTokens.tokens.length; e++) {
+                    var f = a.toSeparator(s.taggingTokens.tokens[e]) || s.taggingTokens.tokens[e];
                     if (c.indexOf(f) > -1) {
                         d = c.split(f);
                         break;
                     }
                 }
-                0 === d.length && (d = [ c ]);
-                var g = v.search;
-                angular.forEach(d, function(a) {
-                    var b = v.tagging.fct ? v.tagging.fct(a) : a;
-                    b && v.select(b, !0);
-                }), v.search = g || w, a.preventDefault(), a.stopPropagation();
-            } else v.paste && (v.paste(c), v.search = w, a.preventDefault(), a.stopPropagation());
-        }), v.searchInput.on("tagged", function() {
-            e(function() {
-                o();
+                if (0 === d.length && (d = [ c ]), d.length > 0) {
+                    var g = s.search;
+                    angular.forEach(d, function(a) {
+                        var b = s.tagging.fct ? s.tagging.fct(a) : a;
+                        b && s.select(b, !0);
+                    }), s.search = g || t, b.preventDefault(), b.stopPropagation();
+                }
+            } else s.paste && (s.paste(c), s.search = t, b.preventDefault(), b.stopPropagation());
+        }), s.searchInput.on("tagged", function() {
+            d(function() {
+                n();
             });
         });
-        var C = g(function() {
-            v.sizeSearchInput();
+        var y = f(function() {
+            s.sizeSearchInput();
         }, 50);
-        angular.element(m).bind("resize", C), c.$on("$destroy", function() {
-            v.searchInput.off("keyup keydown tagged blur paste"), angular.element(m).off("resize", C);
-        }), c.$watch("$select.activeIndex", function(a) {
-            a && d.find("input").attr("aria-activedescendant", "ui-select-choices-row-" + v.generatedId + "-" + a);
-        }), c.$watch("$select.open", function(a) {
-            a || d.find("input").removeAttr("aria-activedescendant");
+        angular.element(l).bind("resize", y), b.$on("$destroy", function() {
+            s.searchInput.off("keyup keydown tagged blur paste"), angular.element(l).off("resize", y);
         });
-    } ]), d.directive("uiSelect", [ "$document", "uiSelectConfig", "uiSelectMinErr", "uisOffset", "$compile", "$parse", "$timeout", function(a, b, c, d, e, f, g) {
+    } ]), c.directive("uiSelect", [ "$document", "uiSelectConfig", "uiSelectMinErr", "uisOffset", "$compile", "$parse", "$timeout", function(a, b, c, d, e, f, g) {
         return {
             restrict: "EA",
             templateUrl: function(a, c) {
@@ -7268,16 +7220,12 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                         return o.isGrouped && a && a.name;
                     }, i.tabindex && i.$observe("tabindex", function(a) {
                         o.focusInput.attr("tabindex", a), h.removeAttr("tabindex");
-                    }), e.$watch(function() {
-                        return e.$eval(i.searchEnabled);
-                    }, function(a) {
+                    }), e.$watch("searchEnabled", function() {
+                        var a = e.$eval(i.searchEnabled);
                         o.searchEnabled = void 0 !== a ? a : b.searchEnabled;
                     }), e.$watch("sortable", function() {
                         var a = e.$eval(i.sortable);
                         o.sortable = void 0 !== a ? a : b.sortable;
-                    }), i.$observe("backspaceReset", function() {
-                        var a = e.$eval(i.backspaceReset);
-                        o.backspaceReset = void 0 === a || a;
                     }), i.$observe("limit", function() {
                         o.limit = angular.isDefined(i.limit) ? parseInt(i.limit, 10) : void 0;
                     }), e.$watch("removeSelected", function() {
@@ -7288,6 +7236,11 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                     }), i.$observe("resetSearchInput", function() {
                         var a = e.$eval(i.resetSearchInput);
                         o.resetSearchInput = void 0 === a || a;
+                    }), i.$observe("setSearchToAnswer", function() {
+                        var a = e.$eval(i.setSearchToAnswer);
+                        o.setSearchToAnswer = void 0 === a || a;
+                    }), i.$observe("searchBy", function() {
+                        o.searchBy = i.searchBy;
                     }), i.$observe("paste", function() {
                         o.paste = e.$eval(i.paste);
                     }), i.$observe("tagging", function() {
@@ -7311,12 +7264,6 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                                 tokens: a
                             };
                         }
-                    }), i.$observe("spinnerEnabled", function() {
-                        var a = e.$eval(i.spinnerEnabled);
-                        o.spinnerEnabled = void 0 !== a ? a : b.spinnerEnabled;
-                    }), i.$observe("spinnerClass", function() {
-                        var a = i.spinnerClass;
-                        o.spinnerClass = void 0 !== a ? i.spinnerClass : b.spinnerClass;
                     }), angular.isDefined(i.autofocus) && g(function() {
                         o.setFocus();
                     }), angular.isDefined(i.focusOn) && e.$on(i.focusOn, function() {
@@ -7346,7 +7293,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                         "auto" !== o.dropdownPosition && "up" !== o.dropdownPosition || e.calculateDropdownPos();
                     });
                     var v = function(a, b) {
-                        a = a || d(h), b = b || d(t), t[0].style.position = "absolute", t[0].style.top = b.height * -1 + "px", 
+                        a = a || d(h), b = b || d(t), t[0].style.position = "absolute", t[0].style.top = -1 * b.height + "px", 
                         h.addClass(u);
                     }, w = function(a, b) {
                         h.removeClass(u), a = a || d(h), b = b || d(t), t[0].style.position = "", t[0].style.top = "";
@@ -7359,11 +7306,11 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                             }
                             t[0].style.opacity = 1;
                         });
-                    }, y = !1;
+                    };
                     e.calculateDropdownPos = function() {
                         if (o.open) {
                             if (t = angular.element(h).querySelectorAll(".ui-select-dropdown"), 0 === t.length) return;
-                            if ("" !== o.search || y || (t[0].style.opacity = 0, y = !0), !d(t).height && o.$animate && o.$animate.on && o.$animate.enabled(t)) {
+                            if (t[0].style.opacity = 0, !d(t).height && o.$animate && o.$animate.on && o.$animate.enabled(t)) {
                                 var a = !0;
                                 o.$animate.on("enter", t, function(b, c) {
                                     "close" === c && a && (x(), a = !1);
@@ -7377,7 +7324,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                 };
             }
         };
-    } ]), d.directive("uiSelectMatch", [ "uiSelectConfig", function(a) {
+    } ]), c.directive("uiSelectMatch", [ "uiSelectConfig", function(a) {
         function b(a, b) {
             return a[0].hasAttribute(b) ? a.attr(b) : a[0].hasAttribute("data-" + b) ? a.attr("data-" + b) : a[0].hasAttribute("x-" + b) ? a.attr("x-" + b) : void 0;
         }
@@ -7400,7 +7347,7 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                 }), d.$observe("allowClear", f), f(d.allowClear), e.multiple && e.sizeSearchInput();
             }
         };
-    } ]), d.directive("uiSelectMultiple", [ "uiSelectMinErr", "$timeout", function(c, d) {
+    } ]), c.directive("uiSelectMultiple", [ "uiSelectMinErr", "$timeout", function(b, c) {
         return {
             restrict: "EA",
             require: [ "^uiSelect", "^ngModel" ],
@@ -7411,81 +7358,83 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                 }), d.activeMatchIndex = -1, d.updateModel = function() {
                     c.$setViewValue(Date.now()), d.refreshComponent();
                 }, d.refreshComponent = function() {
-                    e.refreshItems && e.refreshItems(), e.sizeSearchInput && e.sizeSearchInput();
+                    e.refreshItems(), e.sizeSearchInput();
                 }, d.removeChoice = function(c) {
-                    if (e.isLocked(null, c)) return !1;
-                    var f = e.selected[c], g = {};
-                    return g[e.parserResult.itemName] = f, e.selected.splice(c, 1), d.activeMatchIndex = -1, 
-                    e.sizeSearchInput(), b(function() {
-                        e.onRemoveCallback(a, {
-                            $item: f,
-                            $model: e.parserResult.modelMapper(a, g)
-                        });
-                    }), d.updateModel(), !0;
+                    var f = e.selected[c];
+                    if (!f._uiSelectChoiceLocked) {
+                        var g = {};
+                        g[e.parserResult.itemName] = f, e.selected.splice(c, 1), d.activeMatchIndex = -1, 
+                        e.sizeSearchInput(), b(function() {
+                            e.onRemoveCallback(a, {
+                                $item: f,
+                                $model: e.parserResult.modelMapper(a, g)
+                            });
+                        }), d.updateModel();
+                    }
                 }, d.getPlaceholder = function() {
-                    if (!e.selected || !e.selected.length) return e.placeholder;
+                    return e.selected && e.selected.length ? void 0 : e.placeholder;
                 };
             } ],
             controllerAs: "$selectMultiple",
-            link: function(e, f, g, h) {
-                function i(a) {
+            link: function(d, e, f, g) {
+                function h(a) {
                     return angular.isNumber(a.selectionStart) ? a.selectionStart : a.value.length;
                 }
-                function j(a) {
+                function i(b) {
                     function c() {
-                        switch (a) {
-                          case b.LEFT:
-                            return ~o.activeMatchIndex ? k : g;
+                        switch (b) {
+                          case a.LEFT:
+                            return ~n.activeMatchIndex ? k : g;
 
-                          case b.RIGHT:
-                            return ~o.activeMatchIndex && h !== g ? j : (m.activate(), !1);
+                          case a.RIGHT:
+                            return ~n.activeMatchIndex && i !== g ? j : (l.activate(), !1);
 
-                          case b.BACKSPACE:
-                            return ~o.activeMatchIndex ? o.removeChoice(h) ? k : h : g;
+                          case a.BACKSPACE:
+                            return ~n.activeMatchIndex ? (n.removeChoice(i), k) : g;
 
-                          case b.DELETE:
-                            return !!~o.activeMatchIndex && (o.removeChoice(o.activeMatchIndex), h);
+                          case a.DELETE:
+                            return !!~n.activeMatchIndex && (n.removeChoice(n.activeMatchIndex), i);
                         }
                     }
-                    var d = i(m.searchInput[0]), e = m.selected.length, f = 0, g = e - 1, h = o.activeMatchIndex, j = o.activeMatchIndex + 1, k = o.activeMatchIndex - 1, l = h;
-                    return !(d > 0 || m.search.length && a == b.RIGHT || (m.close(), l = c(), m.selected.length && l !== !1 ? o.activeMatchIndex = Math.min(g, Math.max(f, l)) : o.activeMatchIndex = -1, 
-                    0));
+                    var d = h(l.searchInput[0]), e = l.selected.length, f = 0, g = e - 1, i = n.activeMatchIndex, j = n.activeMatchIndex + 1, k = n.activeMatchIndex - 1, m = i;
+                    return !(d > 0 || l.search.length && b == a.RIGHT) && (l.close(), m = c(), l.selected.length && m !== !1 ? n.activeMatchIndex = Math.min(g, Math.max(f, m)) : n.activeMatchIndex = -1, 
+                    !0);
                 }
-                function k(a) {
-                    if (void 0 === a || void 0 === m.search) return !1;
+                function j(a) {
+                    if (void 0 === a || void 0 === l.search) return !1;
                     var b = a.filter(function(a) {
-                        return void 0 !== m.search.toUpperCase() && void 0 !== a && a.toUpperCase() === m.search.toUpperCase();
+                        return void 0 !== l.search.toUpperCase() && void 0 !== a && a.toUpperCase() === l.search.toUpperCase();
                     }).length > 0;
                     return b;
                 }
-                function l(a, b) {
+                function k(a, b) {
                     var c = -1;
-                    if (angular.isArray(a)) for (var d = angular.copy(a), e = 0; e < d.length; e++) if (void 0 === m.tagging.fct) d[e] + " " + m.taggingLabel === b && (c = e); else {
+                    if (angular.isArray(a)) for (var d = angular.copy(a), e = 0; e < d.length; e++) if (void 0 === l.tagging.fct) d[e] + " " + l.taggingLabel === b && (c = e); else {
                         var f = d[e];
                         angular.isObject(f) && (f.isTag = !0), angular.equals(f, b) && (c = e);
                     }
                     return c;
                 }
-                var m = h[0], n = e.ngModel = h[1], o = e.$selectMultiple;
-                m.multiple = !0, m.focusInput = m.searchInput, n.$isEmpty = function(a) {
+                var l = g[0], m = d.ngModel = g[1], n = d.$selectMultiple;
+                l.multiple = !0, l.focusInput = l.searchInput, m.$isEmpty = function(a) {
                     return !a || 0 === a.length;
-                }, n.$parsers.unshift(function() {
-                    for (var a, b = {}, c = [], d = m.selected.length - 1; d >= 0; d--) b = {}, b[m.parserResult.itemName] = m.selected[d], 
-                    a = m.parserResult.modelMapper(e, b), c.unshift(a);
+                }, m.$parsers.unshift(function() {
+                    for (var a, b = {}, c = [], e = l.selected.length - 1; e >= 0; e--) b = {}, b[l.parserResult.itemName] = l.selected[e], 
+                    a = l.parserResult.modelMapper(d, b), c.unshift(a);
                     return c;
-                }), n.$formatters.unshift(function(a) {
-                    var b, c = m.parserResult && m.parserResult.source(e, {
+                }), m.$formatters.unshift(function(a) {
+                    var b, c = l.parserResult && l.parserResult.source(d, {
                         $select: {
                             search: ""
                         }
-                    }), d = {};
+                    }), e = {};
                     if (!c) return a;
                     var f = [], g = function(a, c) {
                         if (a && a.length) {
                             for (var g = a.length - 1; g >= 0; g--) {
-                                if (d[m.parserResult.itemName] = a[g], b = m.parserResult.modelMapper(e, d), m.parserResult.trackByExp) {
-                                    var h = /(\w*)\./.exec(m.parserResult.trackByExp), i = /\.([^\s]+)/.exec(m.parserResult.trackByExp);
-                                    if (h && h.length > 0 && h[1] == m.parserResult.itemName && i && i.length > 0 && b[i[1]] == c[i[1]]) return f.unshift(a[g]), 
+                                if (e[l.parserResult.itemName] = a[g], b = l.parserResult.modelMapper(d, e), l.parserResult.trackByExp) {
+                                    var h = /(\w*)\./.exec(l.parserResult.trackByExp), i = /\.([^\s]+)/.exec(l.parserResult.trackByExp);
+                                    if (h && h.length > 0 && h[1] == l.parserResult.itemName && i && i.length > 0 && b[i[1]] == c[i[1]]) return f.unshift(a[g]), 
                                     !0;
                                 }
                                 if (angular.equals(b, c)) return f.unshift(a[g]), !0;
@@ -7494,75 +7443,66 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                         }
                     };
                     if (!a) return f;
-                    for (var h = a.length - 1; h >= 0; h--) g(m.selected, a[h]) || g(c, a[h]) || f.unshift(a[h]);
+                    for (var h = a.length - 1; h >= 0; h--) g(l.selected, a[h]) || g(c, a[h]) || f.unshift(a[h]);
                     return f;
-                }), e.$watchCollection(function() {
-                    return n.$modelValue;
+                }), d.$watchCollection(function() {
+                    return m.$modelValue;
                 }, function(a, b) {
-                    b != a && (angular.isDefined(n.$modelValue) && (n.$modelValue = null), o.refreshComponent());
-                }), n.$render = function() {
-                    if (!angular.isArray(n.$viewValue)) {
-                        if (!a(n.$viewValue)) throw c("multiarr", "Expected model value to be array but got '{0}'", n.$viewValue);
-                        n.$viewValue = [];
+                    b != a && (angular.isDefined(m.$modelValue) && (m.$modelValue = null), n.refreshComponent());
+                }), m.$render = function() {
+                    if (!angular.isArray(m.$viewValue)) {
+                        if (!angular.isUndefined(m.$viewValue) && null !== m.$viewValue) throw b("multiarr", "Expected model value to be array but got '{0}'", m.$viewValue);
+                        l.selected = [];
                     }
-                    m.selected = n.$viewValue, o.refreshComponent(), e.$evalAsync();
-                }, e.$on("uis:select", function(a, b) {
-                    if (!(m.selected.length >= m.limit)) {
-                        m.selected.push(b);
-                        var c = {};
-                        c[m.parserResult.itemName] = b, d(function() {
-                            m.onSelectCallback(e, {
-                                $item: b,
-                                $model: m.parserResult.modelMapper(e, c)
-                            });
-                        }), o.updateModel();
-                    }
-                }), e.$on("uis:activate", function() {
-                    o.activeMatchIndex = -1;
-                }), e.$watch("$select.disabled", function(a, b) {
-                    b && !a && m.sizeSearchInput();
-                }), m.searchInput.on("keydown", function(a) {
-                    var c = a.which;
-                    e.$apply(function() {
+                    l.selected = m.$viewValue, n.refreshComponent(), d.$evalAsync();
+                }, d.$on("uis:select", function(a, b) {
+                    l.selected.length >= l.limit || (l.selected.push(b), n.updateModel());
+                }), d.$on("uis:activate", function() {
+                    n.activeMatchIndex = -1;
+                }), d.$watch("$select.disabled", function(a, b) {
+                    b && !a && l.sizeSearchInput();
+                }), l.searchInput.on("keydown", function(b) {
+                    var c = b.which;
+                    d.$apply(function() {
                         var d = !1;
-                        b.isHorizontalMovement(c) && (d = j(c)), d && c != b.TAB && (a.preventDefault(), 
-                        a.stopPropagation());
+                        a.isHorizontalMovement(c) && (d = i(c)), d && c != a.TAB && (b.preventDefault(), 
+                        b.stopPropagation());
                     });
-                }), m.searchInput.on("keyup", function(a) {
-                    if (b.isVerticalMovement(a.which) || e.$evalAsync(function() {
-                        m.activeIndex = m.taggingLabel === !1 ? -1 : 0;
-                    }), m.tagging.isActivated && m.search.length > 0) {
-                        if (a.which === b.TAB || b.isControl(a) || b.isFunctionKey(a) || a.which === b.ESC || b.isVerticalMovement(a.which)) return;
-                        if (m.activeIndex = m.taggingLabel === !1 ? -1 : 0, m.taggingLabel === !1) return;
-                        var c, d, f, g, h = angular.copy(m.items), i = angular.copy(m.items), j = !1, n = -1;
-                        if (void 0 !== m.tagging.fct) {
-                            if (f = m.$filter("filter")(h, {
+                }), l.searchInput.on("keyup", function(b) {
+                    if (a.isVerticalMovement(b.which) || d.$evalAsync(function() {
+                        l.activeIndex = l.taggingLabel === !1 ? -1 : 0;
+                    }), l.tagging.isActivated && l.search.length > 0) {
+                        if (b.which === a.TAB || a.isControl(b) || a.isFunctionKey(b) || b.which === a.ESC || a.isVerticalMovement(b.which)) return;
+                        if (l.activeIndex = l.taggingLabel === !1 ? -1 : 0, l.taggingLabel === !1) return;
+                        var c, e, f, g, h = angular.copy(l.items), i = angular.copy(l.items), m = !1, n = -1;
+                        if (void 0 !== l.tagging.fct) {
+                            if (f = l.$filter("filter")(h, {
                                 isTag: !0
-                            }), f.length > 0 && (g = f[0]), h.length > 0 && g && (j = !0, h = h.slice(1, h.length), 
-                            i = i.slice(1, i.length)), c = m.tagging.fct(m.search), i.some(function(a) {
+                            }), f.length > 0 && (g = f[0]), h.length > 0 && g && (m = !0, h = h.slice(1, h.length), 
+                            i = i.slice(1, i.length)), c = l.tagging.fct(l.search), i.some(function(a) {
                                 return angular.equals(a, c);
-                            }) || m.selected.some(function(a) {
+                            }) || l.selected.some(function(a) {
                                 return angular.equals(a, c);
-                            })) return void e.$evalAsync(function() {
-                                m.activeIndex = 0, m.items = h;
+                            })) return void d.$evalAsync(function() {
+                                l.activeIndex = 0, l.items = h;
                             });
                             c && (c.isTag = !0);
                         } else {
-                            if (f = m.$filter("filter")(h, function(a) {
-                                return a.match(m.taggingLabel);
-                            }), f.length > 0 && (g = f[0]), d = h[0], void 0 !== d && h.length > 0 && g && (j = !0, 
-                            h = h.slice(1, h.length), i = i.slice(1, i.length)), c = m.search + " " + m.taggingLabel, 
-                            l(m.selected, m.search) > -1) return;
-                            if (k(i.concat(m.selected))) return void (j && (h = i, e.$evalAsync(function() {
-                                m.activeIndex = 0, m.items = h;
+                            if (f = l.$filter("filter")(h, function(a) {
+                                return a.match(l.taggingLabel);
+                            }), f.length > 0 && (g = f[0]), e = h[0], void 0 !== e && h.length > 0 && g && (m = !0, 
+                            h = h.slice(1, h.length), i = i.slice(1, i.length)), c = l.search + " " + l.taggingLabel, 
+                            k(l.selected, l.search) > -1) return;
+                            if (j(i.concat(l.selected))) return void (m && (h = i, d.$evalAsync(function() {
+                                l.activeIndex = 0, l.items = h;
                             })));
-                            if (k(i)) return void (j && (m.items = i.slice(1, i.length)));
+                            if (j(i)) return void (m && (l.items = i.slice(1, i.length)));
                         }
-                        j && (n = l(m.selected, c)), n > -1 ? h = h.slice(n + 1, h.length - 1) : (h = [], 
-                        c && h.push(c), h = h.concat(i)), e.$evalAsync(function() {
-                            if (m.activeIndex = 0, m.items = h, m.isGrouped) {
+                        m && (n = k(l.selected, c)), n > -1 ? h = h.slice(n + 1, h.length - 1) : (h = [], 
+                        c && h.push(c), h = h.concat(i)), d.$evalAsync(function() {
+                            if (l.activeIndex = 0, l.items = h, l.isGrouped) {
                                 var a = c ? h.slice(1) : h;
-                                m.setItemsFn(a), c && (m.items.unshift(c), m.groups.unshift({
+                                l.setItemsFn(a), c && (l.items.unshift(c), l.groups.unshift({
                                     name: "",
                                     items: [ c ],
                                     tagging: !0
@@ -7570,14 +7510,14 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                             }
                         });
                     }
-                }), m.searchInput.on("blur", function() {
-                    d(function() {
-                        o.activeMatchIndex = -1;
+                }), l.searchInput.on("blur", function() {
+                    c(function() {
+                        n.activeMatchIndex = -1;
                     });
                 });
             }
         };
-    } ]), d.directive("uiSelectNoChoice", [ "uiSelectConfig", function(a) {
+    } ]), c.directive("uiSelectNoChoice", [ "uiSelectConfig", function(a) {
         return {
             restrict: "EA",
             require: "^uiSelect",
@@ -7589,71 +7529,62 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                 return c + "/no-choice.tpl.html";
             }
         };
-    } ]), d.directive("uiSelectSingle", [ "$timeout", "$compile", function(c, d) {
+    } ]), c.directive("uiSelectSingle", [ "$timeout", "$compile", function(b, c) {
         return {
             restrict: "EA",
             require: [ "^uiSelect", "^ngModel" ],
-            link: function(e, f, g, h) {
-                var i = h[0], j = h[1];
-                j.$parsers.unshift(function(b) {
-                    if (a(b)) return b;
-                    var c, d = {};
-                    return d[i.parserResult.itemName] = b, c = i.parserResult.modelMapper(e, d);
-                }), j.$formatters.unshift(function(b) {
-                    if (a(b)) return b;
-                    var c, d = i.parserResult && i.parserResult.source(e, {
+            link: function(d, e, f, g) {
+                var h = g[0], i = g[1];
+                i.$parsers.unshift(function(a) {
+                    var b, c = {};
+                    return c[h.parserResult.itemName] = a, b = h.parserResult.modelMapper(d, c);
+                }), i.$formatters.unshift(function(a) {
+                    var b, c = h.parserResult && h.parserResult.source(d, {
                         $select: {
                             search: ""
                         }
-                    }), f = {};
-                    if (d) {
-                        var g = function(a) {
-                            return f[i.parserResult.itemName] = a, c = i.parserResult.modelMapper(e, f), c === b;
+                    }), e = {};
+                    if (c) {
+                        var f = function(c) {
+                            return e[h.parserResult.itemName] = c, b = h.parserResult.modelMapper(d, e), b === a;
                         };
-                        if (i.selected && g(i.selected)) return i.selected;
-                        for (var h = d.length - 1; h >= 0; h--) if (g(d[h])) return d[h];
+                        if (h.selected && f(h.selected)) return h.selected;
+                        for (var g = c.length - 1; g >= 0; g--) if (f(c[g])) return c[g];
                     }
-                    return b;
-                }), e.$watch("$select.selected", function(a) {
-                    j.$viewValue !== a && j.$setViewValue(a);
-                }), j.$render = function() {
-                    i.selected = j.$viewValue;
-                }, e.$on("uis:select", function(b, d) {
-                    i.selected = d;
-                    var f = {};
-                    f[i.parserResult.itemName] = d, c(function() {
-                        i.onSelectCallback(e, {
-                            $item: d,
-                            $model: a(d) ? d : i.parserResult.modelMapper(e, f)
-                        });
-                    });
-                }), e.$on("uis:close", function(a, b) {
-                    c(function() {
-                        i.focusser.prop("disabled", !1), b || i.focusser[0].focus();
+                    return a;
+                }), d.$watch("$select.selected", function(a) {
+                    i.$viewValue !== a && i.$setViewValue(a);
+                }), i.$render = function() {
+                    h.selected = i.$viewValue;
+                }, d.$on("uis:select", function(a, b) {
+                    h.selected = b;
+                }), d.$on("uis:close", function(a, c) {
+                    b(function() {
+                        h.focusser.prop("disabled", !1), c || h.focusser[0].focus();
                     }, 0, !1);
-                }), e.$on("uis:activate", function() {
-                    k.prop("disabled", !0);
+                }), d.$on("uis:activate", function() {
+                    j.prop("disabled", !0);
                 });
-                var k = angular.element("<input ng-disabled='$select.disabled' class='ui-select-focusser ui-select-offscreen' type='text' id='{{ $select.focusserId }}' aria-label='{{ $select.focusserTitle }}' aria-haspopup='true' role='button' />");
-                d(k)(e), i.focusser = k, i.focusInput = k, f.parent().append(k), k.bind("focus", function() {
-                    e.$evalAsync(function() {
-                        i.focus = !0;
+                var j = angular.element("<input ng-disabled='$select.disabled' class='ui-select-focusser ui-select-offscreen' type='text' id='{{ $select.focusserId }}' aria-label='{{ $select.focusserTitle }}' aria-haspopup='true' role='button' />");
+                c(j)(d), h.focusser = j, h.focusInput = j, e.parent().append(j), j.bind("focus", function() {
+                    d.$evalAsync(function() {
+                        h.focus = !0;
                     });
-                }), k.bind("blur", function() {
-                    e.$evalAsync(function() {
-                        i.focus = !1;
+                }), j.bind("blur", function() {
+                    d.$evalAsync(function() {
+                        h.focus = !1;
                     });
-                }), k.bind("keydown", function(a) {
-                    return a.which === b.BACKSPACE && i.backspaceReset !== !1 ? (a.preventDefault(), 
-                    a.stopPropagation(), i.select(void 0), void e.$apply()) : void (a.which === b.TAB || b.isControl(a) || b.isFunctionKey(a) || a.which === b.ESC || (a.which != b.DOWN && a.which != b.UP && a.which != b.ENTER && a.which != b.SPACE || (a.preventDefault(), 
-                    a.stopPropagation(), i.activate()), e.$digest()));
-                }), k.bind("keyup input", function(a) {
-                    a.which === b.TAB || b.isControl(a) || b.isFunctionKey(a) || a.which === b.ESC || a.which == b.ENTER || a.which === b.BACKSPACE || (i.activate(k.val()), 
-                    k.val(""), e.$digest());
+                }), j.bind("keydown", function(b) {
+                    return b.which === a.BACKSPACE ? (b.preventDefault(), b.stopPropagation(), h.select(void 0), 
+                    void d.$apply()) : void (b.which === a.TAB || a.isControl(b) || a.isFunctionKey(b) || b.which === a.ESC || (b.which != a.DOWN && b.which != a.UP && b.which != a.ENTER && b.which != a.SPACE || (b.preventDefault(), 
+                    b.stopPropagation(), h.activate()), d.$digest()));
+                }), j.bind("keyup input", function(b) {
+                    b.which === a.TAB || a.isControl(b) || a.isFunctionKey(b) || b.which === a.ESC || b.which == a.ENTER || b.which === a.BACKSPACE || (h.activate(j.val()), 
+                    j.val(""), d.$digest());
                 });
             }
         };
-    } ]), d.directive("uiSelectSort", [ "$timeout", "uiSelectConfig", "uiSelectMinErr", function(a, b, c) {
+    } ]), c.directive("uiSelectSort", [ "$timeout", "uiSelectConfig", "uiSelectMinErr", function(a, b, c) {
         return {
             require: [ "^^uiSelect", "^ngModel" ],
             link: function(b, d, e, f) {
@@ -7706,21 +7637,17 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                 });
             }
         };
-    } ]), d.directive("uisOpenClose", [ "$parse", "$timeout", function(a, b) {
-        return {
-            restrict: "A",
-            require: "uiSelect",
-            link: function(c, d, e, f) {
-                f.onOpenCloseCallback = a(e.uisOpenClose), c.$watch("$select.open", function(a, d) {
-                    a !== d && b(function() {
-                        f.onOpenCloseCallback(c, {
-                            isOpen: a
-                        });
-                    });
-                });
-            }
+    } ]), c.factory("$$uisDebounce", [ "$timeout", function(a) {
+        return function(b, c) {
+            var d;
+            return function() {
+                var e = this, f = Array.prototype.slice.call(arguments);
+                d && a.cancel(d), d = a(function() {
+                    b.apply(e, f);
+                }, c);
+            };
         };
-    } ]), d.service("uisRepeatParser", [ "uiSelectMinErr", "$parse", function(a, b) {
+    } ]), c.service("uisRepeatParser", [ "uiSelectMinErr", "$parse", function(a, b) {
         var c = this;
         c.parse = function(c) {
             var d;
@@ -7745,28 +7672,24 @@ angular.module("duScroll.scrollHelpers", [ "duScroll.requestAnimation" ]).run([ 
                 }
             };
         }, c.getGroupNgRepeatExpression = function() {
-            return "$group in $select.groups track by $group.name";
+            return "$group in $select.groups";
         };
     } ]);
 }(), angular.module("ui.select").run([ "$templateCache", function(a) {
-    a.put("bootstrap/choices.tpl.html", '<ul class="ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu" ng-show="$select.open && $select.items.length > 0"><li class="ui-select-choices-group" id="ui-select-choices-{{ $select.generatedId }}"><div class="divider" ng-show="$select.isGrouped && $index > 0"></div><div ng-show="$select.isGrouped" class="ui-select-choices-group-label dropdown-header" ng-bind="$group.name"></div><div ng-attr-id="ui-select-choices-row-{{ $select.generatedId }}-{{$index}}" class="ui-select-choices-row" ng-class="{active: $select.isActive(this), disabled: $select.isDisabled(this)}" role="option"><span class="ui-select-choices-row-inner"></span></div></li></ul>'), 
-    a.put("bootstrap/match-multiple.tpl.html", '<span class="ui-select-match"><span ng-repeat="$item in $select.selected track by $index"><span class="ui-select-match-item btn btn-default btn-xs" tabindex="-1" type="button" ng-disabled="$select.disabled" ng-click="$selectMultiple.activeMatchIndex = $index;" ng-class="{\'btn-primary\':$selectMultiple.activeMatchIndex === $index, \'select-locked\':$select.isLocked(this, $index)}" ui-select-sort="$select.selected"><span class="close ui-select-match-close" ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)">&nbsp;&times;</span> <span uis-transclude-append=""></span></span></span></span>'), 
+    a.put("bootstrap/choices.tpl.html", '<ul class="ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu" role="listbox" ng-show="$select.open && $select.items.length > 0"><li class="ui-select-choices-group" id="ui-select-choices-{{ $select.generatedId }}"><div class="divider" ng-show="$select.isGrouped && $index > 0"></div><div ng-show="$select.isGrouped" class="ui-select-choices-group-label dropdown-header" ng-bind="$group.name"></div><div ng-attr-id="ui-select-choices-row-{{ $select.generatedId }}-{{$index}}" class="ui-select-choices-row" ng-class="{active: $select.isActive(this), disabled: $select.isDisabled(this)}" role="option"><a href="" class="ui-select-choices-row-inner"></a></div></li></ul>'), 
+    a.put("bootstrap/match-multiple.tpl.html", '<span class="ui-select-match"><span ng-repeat="$item in $select.selected"><span class="ui-select-match-item btn btn-default btn-xs" tabindex="-1" type="button" ng-disabled="$select.disabled" ng-click="$selectMultiple.activeMatchIndex = $index;" ng-class="{\'btn-primary\':$selectMultiple.activeMatchIndex === $index, \'select-locked\':$select.isLocked(this, $index)}" ui-select-sort="$select.selected"><span class="close ui-select-match-close" ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)">&nbsp;&times;</span> <span uis-transclude-append=""></span></span></span></span>'), 
     a.put("bootstrap/match.tpl.html", '<div class="ui-select-match" ng-hide="$select.open && $select.searchEnabled" ng-disabled="$select.disabled" ng-class="{\'btn-default-focus\':$select.focus}"><span tabindex="-1" class="btn btn-default form-control ui-select-toggle" aria-label="{{ $select.baseTitle }} activate" ng-disabled="$select.disabled" ng-click="$select.activate()" style="outline: 0;"><span ng-show="$select.isEmpty()" class="ui-select-placeholder text-muted">{{$select.placeholder}}</span> <span ng-hide="$select.isEmpty()" class="ui-select-match-text pull-left" ng-class="{\'ui-select-allow-clear\': $select.allowClear && !$select.isEmpty()}" ng-transclude=""></span> <i class="caret pull-right" ng-click="$select.toggle($event)"></i> <a ng-show="$select.allowClear && !$select.isEmpty() && ($select.disabled !== true)" aria-label="{{ $select.baseTitle }} clear" style="margin-right: 10px" ng-click="$select.clear($event)" class="btn btn-xs btn-link pull-right"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a></span></div>'), 
     a.put("bootstrap/no-choice.tpl.html", '<ul class="ui-select-no-choice dropdown-menu" ng-show="$select.items.length == 0"><li ng-transclude=""></li></ul>'), 
-    a.put("bootstrap/select-multiple.tpl.html", '<div class="ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control" ng-class="{open: $select.open}"><div><div class="ui-select-match"></div><input type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="ui-select-search input-xs" placeholder="{{$selectMultiple.getPlaceholder()}}" ng-disabled="$select.disabled" ng-click="$select.activate()" ng-model="$select.search" role="combobox" aria-expanded="{{$select.open}}" aria-label="{{$select.baseTitle}}" ng-class="{\'spinner\': $select.refreshing}" ondrop="return false;"></div><div class="ui-select-choices"></div><div class="ui-select-no-choice"></div></div>'), 
-    a.put("bootstrap/select.tpl.html", '<div class="ui-select-container ui-select-bootstrap dropdown" ng-class="{open: $select.open}"><div class="ui-select-match"></div><span ng-show="$select.open && $select.refreshing && $select.spinnerEnabled" class="ui-select-refreshing {{$select.spinnerClass}}"></span> <input type="search" autocomplete="off" tabindex="-1" aria-expanded="true" aria-label="{{ $select.baseTitle }}" aria-owns="ui-select-choices-{{ $select.generatedId }}" class="form-control ui-select-search" ng-class="{ \'ui-select-search-hidden\' : !$select.searchEnabled }" placeholder="{{$select.placeholder}}" ng-model="$select.search" ng-show="$select.open"><div class="ui-select-choices"></div><div class="ui-select-no-choice"></div></div>'), 
-    a.put("select2/choices.tpl.html", '<ul tabindex="-1" class="ui-select-choices ui-select-choices-content select2-results"><li class="ui-select-choices-group" ng-class="{\'select2-result-with-children\': $select.choiceGrouped($group) }"><div ng-show="$select.choiceGrouped($group)" class="ui-select-choices-group-label select2-result-label" ng-bind="$group.name"></div><ul id="ui-select-choices-{{ $select.generatedId }}" ng-class="{\'select2-result-sub\': $select.choiceGrouped($group), \'select2-result-single\': !$select.choiceGrouped($group) }"><li role="option" ng-attr-id="ui-select-choices-row-{{ $select.generatedId }}-{{$index}}" class="ui-select-choices-row" ng-class="{\'select2-highlighted\': $select.isActive(this), \'select2-disabled\': $select.isDisabled(this)}"><div class="select2-result-label ui-select-choices-row-inner"></div></li></ul></li></ul>'), 
-    a.put("select2/match-multiple.tpl.html", '<span class="ui-select-match"><li class="ui-select-match-item select2-search-choice" ng-repeat="$item in $select.selected track by $index" ng-class="{\'select2-search-choice-focus\':$selectMultiple.activeMatchIndex === $index, \'select2-locked\':$select.isLocked(this, $index)}" ui-select-sort="$select.selected"><span uis-transclude-append=""></span> <a href="javascript:;" class="ui-select-match-close select2-search-choice-close" ng-click="$selectMultiple.removeChoice($index)" tabindex="-1"></a></li></span>'), 
+    a.put("bootstrap/select-multiple.tpl.html", '<div class="ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control" ng-class="{open: $select.open}"><div><div class="ui-select-match"></div><input type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="ui-select-search input-xs" placeholder="{{$selectMultiple.getPlaceholder()}}" ng-disabled="$select.disabled" ng-hide="$select.disabled" ng-click="$select.activate()" ng-model="$select.search" role="combobox" aria-label="{{ $select.baseTitle }}" ondrop="return false;"></div><div class="ui-select-choices"></div><div class="ui-select-no-choice"></div></div>'), 
+    a.put("bootstrap/select.tpl.html", '<div class="ui-select-container ui-select-bootstrap dropdown" ng-class="{open: $select.open}"><div class="ui-select-match"></div><input type="search" autocomplete="off" tabindex="-1" aria-expanded="true" aria-label="{{ $select.baseTitle }}" aria-owns="ui-select-choices-{{ $select.generatedId }}" aria-activedescendant="ui-select-choices-row-{{ $select.generatedId }}-{{ $select.activeIndex }}" class="form-control ui-select-search" placeholder="{{$select.placeholder}}" ng-model="$select.search" ng-show="$select.searchEnabled && $select.open"><div class="ui-select-choices"></div><div class="ui-select-no-choice"></div></div>'), 
+    a.put("select2/choices.tpl.html", '<ul tabindex="-1" class="ui-select-choices ui-select-choices-content select2-results"><li class="ui-select-choices-group" ng-class="{\'select2-result-with-children\': $select.choiceGrouped($group) }"><div ng-show="$select.choiceGrouped($group)" class="ui-select-choices-group-label select2-result-label" ng-bind="$group.name"></div><ul role="listbox" id="ui-select-choices-{{ $select.generatedId }}" ng-class="{\'select2-result-sub\': $select.choiceGrouped($group), \'select2-result-single\': !$select.choiceGrouped($group) }"><li role="option" ng-attr-id="ui-select-choices-row-{{ $select.generatedId }}-{{$index}}" class="ui-select-choices-row" ng-class="{\'select2-highlighted\': $select.isActive(this), \'select2-disabled\': $select.isDisabled(this)}"><div class="select2-result-label ui-select-choices-row-inner"></div></li></ul></li></ul>'), 
+    a.put("select2/match-multiple.tpl.html", '<span class="ui-select-match"><li class="ui-select-match-item select2-search-choice" ng-repeat="$item in $select.selected" ng-class="{\'select2-search-choice-focus\':$selectMultiple.activeMatchIndex === $index, \'select2-locked\':$select.isLocked(this, $index)}" ui-select-sort="$select.selected"><span uis-transclude-append=""></span> <a href="javascript:;" class="ui-select-match-close select2-search-choice-close" ng-click="$selectMultiple.removeChoice($index)" tabindex="-1"></a></li></span>'), 
     a.put("select2/match.tpl.html", '<a class="select2-choice ui-select-match" ng-class="{\'select2-default\': $select.isEmpty()}" ng-click="$select.toggle($event)" aria-label="{{ $select.baseTitle }} select"><span ng-show="$select.isEmpty()" class="select2-chosen">{{$select.placeholder}}</span> <span ng-hide="$select.isEmpty()" class="select2-chosen" ng-transclude=""></span> <abbr ng-if="$select.allowClear && !$select.isEmpty()" class="select2-search-choice-close" ng-click="$select.clear($event)"></abbr> <span class="select2-arrow ui-select-toggle"><b></b></span></a>'), 
-    a.put("select2/no-choice.tpl.html", '<div class="ui-select-no-choice dropdown" ng-show="$select.items.length == 0"><div class="dropdown-content"><div data-selectable="" ng-transclude=""></div></div></div>'), 
     a.put("select2/select-multiple.tpl.html", '<div class="ui-select-container ui-select-multiple select2 select2-container select2-container-multi" ng-class="{\'select2-container-active select2-dropdown-open open\': $select.open, \'select2-container-disabled\': $select.disabled}"><ul class="select2-choices"><span class="ui-select-match"></span><li class="select2-search-field"><input type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true" aria-owns="ui-select-choices-{{ $select.generatedId }}" aria-label="{{ $select.baseTitle }}" aria-activedescendant="ui-select-choices-row-{{ $select.generatedId }}-{{ $select.activeIndex }}" class="select2-input ui-select-search" placeholder="{{$selectMultiple.getPlaceholder()}}" ng-disabled="$select.disabled" ng-hide="$select.disabled" ng-model="$select.search" ng-click="$select.activate()" style="width: 34px;" ondrop="return false;"></li></ul><div class="ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active" ng-class="{\'select2-display-none\': !$select.open || $select.items.length === 0}"><div class="ui-select-choices"></div></div></div>'), 
-    a.put("select2/select.tpl.html", '<div class="ui-select-container select2 select2-container" ng-class="{\'select2-container-active select2-dropdown-open open\': $select.open, \'select2-container-disabled\': $select.disabled, \'select2-container-active\': $select.focus, \'select2-allowclear\': $select.allowClear && !$select.isEmpty()}"><div class="ui-select-match"></div><div class="ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active" ng-class="{\'select2-display-none\': !$select.open}"><div class="search-container" ng-class="{\'ui-select-search-hidden\':!$select.searchEnabled, \'select2-search\':$select.searchEnabled}"><input type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" ng-class="{\'select2-active\': $select.refreshing}" role="combobox" aria-expanded="true" aria-owns="ui-select-choices-{{ $select.generatedId }}" aria-label="{{ $select.baseTitle }}" class="ui-select-search select2-input" ng-model="$select.search"></div><div class="ui-select-choices"></div><div class="ui-select-no-choice"></div></div></div>'), 
-    a.put("selectize/choices.tpl.html", '<div ng-show="$select.open" class="ui-select-choices ui-select-dropdown selectize-dropdown" ng-class="{\'single\': !$select.multiple, \'multi\': $select.multiple}"><div class="ui-select-choices-content selectize-dropdown-content"><div class="ui-select-choices-group optgroup"><div ng-show="$select.isGrouped" class="ui-select-choices-group-label optgroup-header" ng-bind="$group.name"></div><div role="option" class="ui-select-choices-row" ng-class="{active: $select.isActive(this), disabled: $select.isDisabled(this)}"><div class="option ui-select-choices-row-inner" data-selectable=""></div></div></div></div></div>'), 
-    a.put("selectize/match-multiple.tpl.html", '<div class="ui-select-match" data-value="" ng-repeat="$item in $select.selected track by $index" ng-click="$selectMultiple.activeMatchIndex = $index;" ng-class="{\'active\':$selectMultiple.activeMatchIndex === $index}" ui-select-sort="$select.selected"><span class="ui-select-match-item" ng-class="{\'select-locked\':$select.isLocked(this, $index)}"><span uis-transclude-append=""></span> <span class="remove ui-select-match-close" ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)">&times;</span></span></div>'), 
-    a.put("selectize/match.tpl.html", '<div ng-hide="$select.searchEnabled && ($select.open || $select.isEmpty())" class="ui-select-match"><span ng-show="!$select.searchEnabled && ($select.isEmpty() || $select.open)" class="ui-select-placeholder text-muted">{{$select.placeholder}}</span> <span ng-hide="$select.isEmpty() || $select.open" ng-transclude=""></span></div>'), 
-    a.put("selectize/no-choice.tpl.html", '<div class="ui-select-no-choice selectize-dropdown" ng-show="$select.items.length == 0"><div class="selectize-dropdown-content"><div data-selectable="" ng-transclude=""></div></div></div>'), 
-    a.put("selectize/select-multiple.tpl.html", '<div class="ui-select-container selectize-control multi plugin-remove_button" ng-class="{\'open\': $select.open}"><div class="selectize-input" ng-class="{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}" ng-click="$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()"><div class="ui-select-match"></div><input type="search" autocomplete="off" tabindex="-1" class="ui-select-search" ng-class="{\'ui-select-search-hidden\':!$select.searchEnabled}" placeholder="{{$selectMultiple.getPlaceholder()}}" ng-model="$select.search" ng-disabled="$select.disabled" aria-expanded="{{$select.open}}" aria-label="{{ $select.baseTitle }}" ondrop="return false;"></div><div class="ui-select-choices"></div><div class="ui-select-no-choice"></div></div>'), 
-    a.put("selectize/select.tpl.html", '<div class="ui-select-container selectize-control single" ng-class="{\'open\': $select.open}"><div class="selectize-input" ng-class="{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}" ng-click="$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()"><div class="ui-select-match"></div><input type="search" autocomplete="off" tabindex="-1" class="ui-select-search ui-select-toggle" ng-class="{\'ui-select-search-hidden\':!$select.searchEnabled}" ng-click="$select.toggle($event)" placeholder="{{$select.placeholder}}" ng-model="$select.search" ng-hide="!$select.isEmpty() && !$select.open" ng-disabled="$select.disabled" aria-label="{{ $select.baseTitle }}"></div><div class="ui-select-choices"></div><div class="ui-select-no-choice"></div></div>');
+    a.put("select2/select.tpl.html", '<div class="ui-select-container select2 select2-container" ng-class="{\'select2-container-active select2-dropdown-open open\': $select.open, \'select2-container-disabled\': $select.disabled, \'select2-container-active\': $select.focus, \'select2-allowclear\': $select.allowClear && !$select.isEmpty()}"><div class="ui-select-match"></div><div class="ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active" ng-class="{\'select2-display-none\': !$select.open}"><div class="select2-search" ng-show="$select.searchEnabled"><input type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true" aria-owns="ui-select-choices-{{ $select.generatedId }}" aria-label="{{ $select.baseTitle }}" aria-activedescendant="ui-select-choices-row-{{ $select.generatedId }}-{{ $select.activeIndex }}" class="ui-select-search select2-input" ng-model="$select.search"></div><div class="ui-select-choices"></div></div></div>'), 
+    a.put("selectize/choices.tpl.html", '<div ng-show="$select.open" class="ui-select-choices ui-select-dropdown selectize-dropdown single"><div class="ui-select-choices-content selectize-dropdown-content"><div class="ui-select-choices-group optgroup" role="listbox"><div ng-show="$select.isGrouped" class="ui-select-choices-group-label optgroup-header" ng-bind="$group.name"></div><div role="option" class="ui-select-choices-row" ng-class="{active: $select.isActive(this), disabled: $select.isDisabled(this)}"><div class="option ui-select-choices-row-inner" data-selectable=""></div></div></div></div></div>'), 
+    a.put("selectize/match.tpl.html", '<div ng-hide="$select.searchEnabled && ($select.open || $select.isEmpty())" class="ui-select-match" ng-transclude=""></div>'), 
+    a.put("selectize/select.tpl.html", '<div class="ui-select-container selectize-control single" ng-class="{\'open\': $select.open}"><div class="selectize-input" ng-class="{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}" ng-click="$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()" ng-focus"$select.open="" &&="" !$select.searchenabled="" ?="" $select.toggle($event)="" :="" $select.activate()"=""><div class="ui-select-match" ng-hide="$select.setSearchToAnswer"></div><input type="search" autocomplete="off" tabindex="-1" class="ui-select-search ui-select-toggle" ng-click="$select.toggle($event)" placeholder="{{$select.placeholder}}" ng-model="$select.search" ng-hide="(!$select.searchEnabled || ($select.selected && !$select.open)) && !$select.setSearchToAnswer" ng-disabled="$select.disabled" aria-label="{{ $select.baseTitle }}"></div><div class="ui-select-choices"></div></div>');
 } ]), !function(a) {
     function b(b, c) {
         return {
@@ -15661,8 +15584,8 @@ function(a) {
                 a.last_value = g.$viewValue || 0;
             }, a.getClass = function(b) {
                 return b >= a.last_value ? h.iconBase + " " + h.emptyIcon : h.iconBase + " " + h.fullIcon + " active ";
-            }, a.unpaintStars = function(b) {
-                0 !== a.last_value ? a.paintStars(a.last_value - 1, b) : a.paintStars(a.last_value, b);
+            }, a.unpaintStars = function(b, c) {
+                a.paintStars(a.last_value - 1, c);
             }, a.paintStars = function(b, c) {
                 if (!a.readonly) {
                     for (var d = e.find("li").find("i"), f = 0; f < d.length; f++) {
@@ -15687,7 +15610,7 @@ function(a) {
     var f = {
         restrict: "EA",
         replace: !0,
-        template: '<ul ng-class="listClass"><li ng-init="unpaintStars()" ng-touch="paintStars($index)" ng-touch="paintStars($index)" ng-mouseenter="paintStars($index, true)" ng-mouseleave="unpaintStars(false)" ng-repeat="item in items track by $index"><i ng-class="getClass($index)" ng-click="setValue($index, $event)"></i></li></ul>',
+        template: '<ul ng-class="listClass"><li ng-touch="paintStars($index)" ng-mouseenter="paintStars($index, true)" ng-mouseleave="unpaintStars($index, false)" ng-repeat="item in items track by $index"><i  ng-class="getClass($index)" ng-click="setValue($index, $event)"></i></li></ul>',
         require: "ngModel",
         scope: !0,
         link: e
@@ -15995,13 +15918,8 @@ function(a) {
                 function d() {
                     return +new Date();
                 }
-                function e(a, b) {
-                    return h(b) ? function(c) {
-                        return b(c, a);
-                    } : b;
-                }
-                function f() {
-                    this.a = !("object" != typeof JSON || !JSON.stringify), this.b = !g(J), this.c = !g(K), 
+                function e() {
+                    this.a = !("object" != typeof JSON || !JSON.stringify), this.b = !f(H), this.c = !f(I), 
                     this.d = null, this.e = null, this.f = null, this.g = null, this.h = null, this.i = null, 
                     this.j = {}, this.k = {
                         logger: "javascript",
@@ -16012,58 +15930,53 @@ function(a) {
                         crossOrigin: "anonymous",
                         collectWindowErrors: !0,
                         maxMessageLength: 0,
-                        maxUrlLength: 250,
                         stackTraceLimit: 50,
                         autoBreadcrumbs: !0,
-                        instrument: !0,
                         sampleRate: 1
-                    }, this.l = 0, this.m = !1, this.n = Error.stackTraceLimit, this.o = I.console || {}, 
+                    }, this.l = 0, this.m = !1, this.n = Error.stackTraceLimit, this.o = G.console || {}, 
                     this.p = {}, this.q = [], this.r = d(), this.s = [], this.t = [], this.u = null, 
-                    this.v = I.location, this.w = this.v && this.v.href, this.x();
+                    this.v = G.location, this.w = this.v && this.v.href, this.x();
                     for (var a in this.o) this.p[a] = this.o[a];
                 }
-                function g(a) {
+                function f(a) {
                     return void 0 === a;
                 }
-                function h(a) {
+                function g(a) {
                     return "function" == typeof a;
                 }
-                function i(a) {
-                    return "[object String]" === L.toString.call(a);
+                function h(a) {
+                    return "[object String]" === J.toString.call(a);
                 }
-                function j(a) {
+                function i(a) {
                     for (var b in a) return !1;
                     return !0;
                 }
-                function k(a, b) {
+                function j(a, b) {
                     var c, d;
-                    if (g(a.length)) for (c in a) o(a, c) && b.call(null, c, a[c]); else if (d = a.length) for (c = 0; c < d; c++) b.call(null, c, a[c]);
+                    if (f(a.length)) for (c in a) m(a, c) && b.call(null, c, a[c]); else if (d = a.length) for (c = 0; c < d; c++) b.call(null, c, a[c]);
                 }
-                function l(a, b) {
-                    return b ? (k(b, function(b, c) {
+                function k(a, b) {
+                    return b ? (j(b, function(b, c) {
                         a[b] = c;
                     }), a) : a;
                 }
-                function m(a) {
-                    return !!Object.isFrozen && Object.isFrozen(a);
-                }
-                function n(a, b) {
+                function l(a, b) {
                     return !b || a.length <= b ? a : a.substr(0, b) + "…";
                 }
-                function o(a, b) {
-                    return L.hasOwnProperty.call(a, b);
+                function m(a, b) {
+                    return J.hasOwnProperty.call(a, b);
                 }
-                function p(a) {
-                    for (var b, c = [], d = 0, e = a.length; d < e; d++) b = a[d], i(b) ? c.push(b.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")) : b && b.source && c.push(b.source);
+                function n(a) {
+                    for (var b, c = [], d = 0, e = a.length; d < e; d++) b = a[d], h(b) ? c.push(b.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")) : b && b.source && c.push(b.source);
                     return new RegExp(c.join("|"), "i");
                 }
-                function q(a) {
+                function o(a) {
                     var b = [];
-                    return k(a, function(a, c) {
+                    return j(a, function(a, c) {
                         b.push(encodeURIComponent(a) + "=" + encodeURIComponent(c));
                     }), b.join("&");
                 }
-                function r(a) {
+                function p(a) {
                     var b = a.match(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/);
                     if (!b) return {};
                     var c = b[6] || "", d = b[8] || "";
@@ -16074,9 +15987,9 @@ function(a) {
                         relative: b[5] + c + d
                     };
                 }
-                function s() {
-                    var a = I.crypto || I.msCrypto;
-                    if (!g(a) && a.getRandomValues) {
+                function q() {
+                    var a = G.crypto || G.msCrypto;
+                    if (!f(a) && a.getRandomValues) {
                         var b = new Uint16Array(8);
                         a.getRandomValues(b), b[3] = 4095 & b[3] | 16384, b[4] = 16383 & b[4] | 32768;
                         var c = function(a) {
@@ -16090,53 +16003,53 @@ function(a) {
                         return c.toString(16);
                     });
                 }
-                function t(a) {
-                    for (var b, c = 5, d = 80, e = [], f = 0, g = 0, h = " > ", i = h.length; a && f++ < c && (b = u(a), 
+                function r(a) {
+                    for (var b, c = 5, d = 80, e = [], f = 0, g = 0, h = " > ", i = h.length; a && f++ < c && (b = s(a), 
                     !("html" === b || f > 1 && g + e.length * i + b.length >= d)); ) e.push(b), g += b.length, 
                     a = a.parentNode;
                     return e.reverse().join(h);
                 }
-                function u(a) {
+                function s(a) {
                     var b, c, d, e, f, g = [];
                     if (!a || !a.tagName) return "";
                     if (g.push(a.tagName.toLowerCase()), a.id && g.push("#" + a.id), b = a.className, 
-                    b && i(b)) for (c = b.split(/\s+/), f = 0; f < c.length; f++) g.push("." + c[f]);
-                    var h = [ "type", "name", "title", "alt" ];
-                    for (f = 0; f < h.length; f++) d = h[f], e = a.getAttribute(d), e && g.push("[" + d + '="' + e + '"]');
+                    b && h(b)) for (c = b.split(/\s+/), f = 0; f < c.length; f++) g.push("." + c[f]);
+                    var i = [ "type", "name", "title", "alt" ];
+                    for (f = 0; f < i.length; f++) d = i[f], e = a.getAttribute(d), e && g.push("[" + d + '="' + e + '"]');
                     return g.join("");
                 }
-                function v(a, b) {
+                function t(a, b) {
                     return !!(!!a ^ !!b);
                 }
-                function w(a, b) {
-                    return !v(a, b) && (a = a.values[0], b = b.values[0], a.type === b.type && a.value === b.value && x(a.stacktrace, b.stacktrace));
+                function u(a, b) {
+                    return !t(a, b) && (a = a.values[0], b = b.values[0], a.type === b.type && a.value === b.value && v(a.stacktrace, b.stacktrace));
                 }
-                function x(a, b) {
-                    if (v(a, b)) return !1;
+                function v(a, b) {
+                    if (t(a, b)) return !1;
                     var c = a.frames, d = b.frames;
                     if (c.length !== d.length) return !1;
                     for (var e, f, g = 0; g < c.length; g++) if (e = c[g], f = d[g], e.filename !== f.filename || e.lineno !== f.lineno || e.colno !== f.colno || e["function"] !== f["function"]) return !1;
                     return !0;
                 }
-                function y(a, b, c, d) {
+                function w(a, b, c, d) {
                     var e = a[b];
                     a[b] = c(e), d && d.push([ a, b, e ]);
                 }
-                var z = a(6), A = a(7), B = a(1), C = a(5), D = C.isError, E = C.isObject, F = a(2).wrapMethod, G = "source protocol user pass host port path".split(" "), H = /^(?:(\w+):)?\/\/(?:(\w+)(:\w+)?@)?([\w\.-]+)(?::(\d+))?(\/.*)/, I = "undefined" != typeof window ? window : "undefined" != typeof c ? c : "undefined" != typeof self ? self : {}, J = I.document, K = I.navigator;
-                f.prototype = {
-                    VERSION: "3.17.0",
+                var x = a(6), y = a(7), z = a(1), A = a(5), B = A.isError, C = A.isObject, D = a(2).wrapMethod, E = "source protocol user pass host port path".split(" "), F = /^(?:(\w+):)?\/\/(?:(\w+)(:\w+)?@)?([\w\.-]+)(?::(\d+))?(\/.*)/, G = "undefined" != typeof window ? window : "undefined" != typeof c ? c : "undefined" != typeof self ? self : {}, H = G.document, I = G.navigator;
+                e.prototype = {
+                    VERSION: "3.13.1",
                     debug: !1,
-                    TraceKit: z,
+                    TraceKit: x,
                     config: function(a, b) {
                         var c = this;
                         if (c.g) return this.y("error", "Error: Raven has already been configured"), c;
                         if (!a) return c;
                         var d = c.k;
-                        b && k(b, function(a, b) {
+                        b && j(b, function(a, b) {
                             "tags" === a || "extra" === a || "user" === a ? c.j[a] = b : d[a] = b;
                         }), c.setDSN(a), d.ignoreErrors.push(/^Script error\.?$/), d.ignoreErrors.push(/^Javascript error: Script error\.? on line 0$/), 
-                        d.ignoreErrors = p(d.ignoreErrors), d.ignoreUrls = !!d.ignoreUrls.length && p(d.ignoreUrls), 
-                        d.whitelistUrls = !!d.whitelistUrls.length && p(d.whitelistUrls), d.includePaths = p(d.includePaths), 
+                        d.ignoreErrors = n(d.ignoreErrors), d.ignoreUrls = !!d.ignoreUrls.length && n(d.ignoreUrls), 
+                        d.whitelistUrls = !!d.whitelistUrls.length && n(d.whitelistUrls), d.includePaths = n(d.includePaths), 
                         d.maxBreadcrumbs = Math.max(0, Math.min(d.maxBreadcrumbs || 100, 100));
                         var e = {
                             xhr: !0,
@@ -16144,19 +16057,15 @@ function(a) {
                             dom: !0,
                             location: !0
                         }, f = d.autoBreadcrumbs;
-                        "[object Object]" === {}.toString.call(f) ? f = l(e, f) : f !== !1 && (f = e), d.autoBreadcrumbs = f;
-                        var g = {
-                            tryCatch: !0
-                        }, h = d.instrument;
-                        return "[object Object]" === {}.toString.call(h) ? h = l(g, h) : h !== !1 && (h = g), 
-                        d.instrument = h, z.collectWindowErrors = !!d.collectWindowErrors, c;
+                        return "[object Object]" === {}.toString.call(f) ? f = k(e, f) : f !== !1 && (f = e), 
+                        d.autoBreadcrumbs = f, x.collectWindowErrors = !!d.collectWindowErrors, c;
                     },
                     install: function() {
                         var a = this;
-                        return a.isSetup() && !a.m && (z.report.subscribe(function() {
+                        return a.isSetup() && !a.m && (x.report.subscribe(function() {
                             a.z.apply(a, arguments);
-                        }), a.k.instrument && a.k.instrument.tryCatch && a.A(), a.k.autoBreadcrumbs && a.B(), 
-                        a.C(), a.m = !0), Error.stackTraceLimit = a.k.stackTraceLimit, this;
+                        }), a.A(), a.k.autoBreadcrumbs && a.B(), a.C(), a.m = !0), Error.stackTraceLimit = a.k.stackTraceLimit, 
+                        this;
                     },
                     setDSN: function(a) {
                         var b = this, c = b.D(a), d = c.path.lastIndexOf("/"), e = c.path.substr(1, d);
@@ -16164,12 +16073,12 @@ function(a) {
                         b.g = b.G(c), b.H = b.g + "/" + e + "api/" + b.i + "/store/", this.x();
                     },
                     context: function(a, b, c) {
-                        return h(a) && (c = b || [], b = a, a = void 0), this.wrap(a, b).apply(this, c);
+                        return g(a) && (c = b || [], b = a, a = void 0), this.wrap(a, b).apply(this, c);
                     },
                     wrap: function(a, b, c) {
                         function d() {
-                            var d = [], f = arguments.length, g = !a || a && a.deep !== !1;
-                            for (c && h(c) && c.apply(this, arguments); f--; ) d[f] = g ? e.wrap(a, arguments[f]) : arguments[f];
+                            var d = [], f = arguments.length, h = !a || a && a.deep !== !1;
+                            for (c && g(c) && c.apply(this, arguments); f--; ) d[f] = h ? e.wrap(a, arguments[f]) : arguments[f];
                             try {
                                 return b.apply(this, d);
                             } catch (i) {
@@ -16177,29 +16086,29 @@ function(a) {
                             }
                         }
                         var e = this;
-                        if (g(b) && !h(a)) return a;
-                        if (h(a) && (b = a, a = void 0), !h(b)) return b;
+                        if (f(b) && !g(a)) return a;
+                        if (g(a) && (b = a, a = void 0), !g(b)) return b;
                         try {
                             if (b.J) return b;
                             if (b.K) return b.K;
-                        } catch (f) {
+                        } catch (h) {
                             return b;
                         }
-                        for (var i in b) o(b, i) && (d[i] = b[i]);
+                        for (var i in b) m(b, i) && (d[i] = b[i]);
                         return d.prototype = b.prototype, b.K = d, d.J = !0, d.L = b, d;
                     },
                     uninstall: function() {
-                        return z.report.uninstall(), this.M(), Error.stackTraceLimit = this.n, this.m = !1, 
+                        return x.report.uninstall(), this.M(), Error.stackTraceLimit = this.n, this.m = !1, 
                         this;
                     },
                     captureException: function(a, b) {
-                        if (!D(a)) return this.captureMessage(a, l({
+                        if (!B(a)) return this.captureMessage(a, k({
                             trimHeadFrames: 1,
                             stacktrace: !0
                         }, b));
                         this.d = a;
                         try {
-                            var c = z.computeStackTrace(a);
+                            var c = x.computeStackTrace(a);
                             this.N(c, b);
                         } catch (d) {
                             if (a !== d) throw d;
@@ -16209,7 +16118,7 @@ function(a) {
                     captureMessage: function(a, b) {
                         if (!this.k.ignoreErrors.test || !this.k.ignoreErrors.test(a)) {
                             b = b || {};
-                            var c = l({
+                            var c = k({
                                 message: a + ""
                             }, b);
                             if (this.k.stacktrace || b && b.stacktrace) {
@@ -16219,11 +16128,11 @@ function(a) {
                                 } catch (e) {
                                     d = e;
                                 }
-                                d.name = null, b = l({
+                                d.name = null, b = k({
                                     fingerprint: a,
                                     trimHeadFrames: (b.trimHeadFrames || 0) + 1
                                 }, b);
-                                var f = z.computeStackTrace(d), g = this.O(f, b);
+                                var f = x.computeStackTrace(d), g = this.O(f, b);
                                 c.stacktrace = {
                                     frames: g.reverse()
                                 };
@@ -16232,12 +16141,12 @@ function(a) {
                         }
                     },
                     captureBreadcrumb: function(a) {
-                        var b = l({
+                        var b = k({
                             timestamp: d() / 1e3
                         }, a);
-                        if (h(this.k.breadcrumbCallback)) {
+                        if (g(this.k.breadcrumbCallback)) {
                             var c = this.k.breadcrumbCallback(b);
-                            if (E(c) && !j(c)) b = c; else if (c === !1) return this;
+                            if (C(c) && !i(c)) b = c; else if (c === !1) return this;
                         }
                         return this.t.push(b), this.t.length > this.k.maxBreadcrumbs && this.t.shift(), 
                         this;
@@ -16259,7 +16168,7 @@ function(a) {
                         return this.j = {}, this;
                     },
                     getContext: function() {
-                        return JSON.parse(A(this.j));
+                        return JSON.parse(y(this.j));
                     },
                     setEnvironment: function(a) {
                         return this.k.environment = a, this;
@@ -16269,15 +16178,21 @@ function(a) {
                     },
                     setDataCallback: function(a) {
                         var b = this.k.dataCallback;
-                        return this.k.dataCallback = e(b, a), this;
+                        return this.k.dataCallback = g(a) ? function(c) {
+                            return a(c, b);
+                        } : a, this;
                     },
                     setBreadcrumbCallback: function(a) {
                         var b = this.k.breadcrumbCallback;
-                        return this.k.breadcrumbCallback = e(b, a), this;
+                        return this.k.breadcrumbCallback = g(a) ? function(c) {
+                            return a(c, b);
+                        } : a, this;
                     },
                     setShouldSendCallback: function(a) {
                         var b = this.k.shouldSendCallback;
-                        return this.k.shouldSendCallback = e(b, a), this;
+                        return this.k.shouldSendCallback = g(a) ? function(c) {
+                            return a(c, b);
+                        } : a, this;
                     },
                     setTransport: function(a) {
                         return this.k.transport = a, this;
@@ -16293,22 +16208,22 @@ function(a) {
                         this.y("error", "Error: Raven has not been configured.")), 1));
                     },
                     afterLoad: function() {
-                        var a = I.RavenConfig;
+                        var a = G.RavenConfig;
                         a && this.config(a.dsn, a.config).install();
                     },
                     showReportDialog: function(a) {
-                        if (J) {
+                        if (H) {
                             a = a || {};
                             var b = a.eventId || this.lastEventId();
-                            if (!b) throw new B("Missing eventId");
+                            if (!b) throw new z("Missing eventId");
                             var c = a.dsn || this.E;
-                            if (!c) throw new B("Missing DSN");
+                            if (!c) throw new z("Missing DSN");
                             var d = encodeURIComponent, e = "";
                             e += "?eventId=" + d(b), e += "&dsn=" + d(c);
                             var f = a.user || this.j.user;
                             f && (f.name && (e += "&name=" + d(f.name)), f.email && (e += "&email=" + d(f.email)));
-                            var g = this.G(this.D(c)), h = J.createElement("script");
-                            h.async = !0, h.src = g + "/api/embed/error-page/" + e, (J.head || J.body).appendChild(h);
+                            var g = this.G(this.D(c)), h = H.createElement("script");
+                            h.async = !0, h.src = g + "/api/embed/error-page/" + e, (H.head || H.body).appendChild(h);
                         }
                     },
                     I: function() {
@@ -16320,11 +16235,11 @@ function(a) {
                     R: function(a, b) {
                         var c, d;
                         if (this.b) {
-                            b = b || {}, a = "raven" + a.substr(0, 1).toUpperCase() + a.substr(1), J.createEvent ? (c = J.createEvent("HTMLEvents"), 
-                            c.initEvent(a, !0, !0)) : (c = J.createEventObject(), c.eventType = a);
-                            for (d in b) o(b, d) && (c[d] = b[d]);
-                            if (J.createEvent) J.dispatchEvent(c); else try {
-                                J.fireEvent("on" + c.eventType.toLowerCase(), c);
+                            b = b || {}, a = "raven" + a.substr(0, 1).toUpperCase() + a.substr(1), H.createEvent ? (c = H.createEvent("HTMLEvents"), 
+                            c.initEvent(a, !0, !0)) : (c = H.createEventObject(), c.eventType = a);
+                            for (d in b) m(b, d) && (c[d] = b[d]);
+                            if (H.createEvent) H.dispatchEvent(c); else try {
+                                H.fireEvent("on" + c.eventType.toLowerCase(), c);
                             } catch (e) {}
                         }
                     },
@@ -16335,7 +16250,7 @@ function(a) {
                                 b.u = c;
                                 var d;
                                 try {
-                                    d = t(c.target);
+                                    d = r(c.target);
                                 } catch (e) {
                                     d = "<unknown>";
                                 }
@@ -16365,7 +16280,7 @@ function(a) {
                         };
                     },
                     V: function(a, b) {
-                        var c = r(this.v.href), d = r(b), e = r(a);
+                        var c = p(this.v.href), d = p(b), e = p(a);
                         this.w = b, c.protocol === d.protocol && c.host === d.host && (b = d.relative), 
                         c.protocol === e.protocol && c.host === e.host && (a = e.relative), this.captureBreadcrumb({
                             category: "navigation",
@@ -16379,13 +16294,13 @@ function(a) {
                         function a(a) {
                             return function(b, d) {
                                 for (var e = new Array(arguments.length), f = 0; f < e.length; ++f) e[f] = arguments[f];
-                                var g = e[0];
-                                return h(g) && (e[0] = c.wrap(g)), a.apply ? a.apply(this, e) : a(e[0], e[1]);
+                                var h = e[0];
+                                return g(h) && (e[0] = c.wrap(h)), a.apply ? a.apply(this, e) : a(e[0], e[1]);
                             };
                         }
                         function b(a) {
-                            var b = I[a] && I[a].prototype;
-                            b && b.hasOwnProperty && b.hasOwnProperty("addEventListener") && (y(b, "addEventListener", function(b) {
+                            var b = G[a] && G[a].prototype;
+                            b && b.hasOwnProperty && b.hasOwnProperty("addEventListener") && (w(b, "addEventListener", function(b) {
                                 return function(d, f, g, h) {
                                     try {
                                         f && f.handleEvent && (f.handleEvent = c.wrap(f.handleEvent));
@@ -16404,7 +16319,7 @@ function(a) {
                                         }
                                     }), b.call(this, d, c.wrap(f, void 0, j), g, h);
                                 };
-                            }, d), y(b, "removeEventListener", function(a) {
+                            }, d), w(b, "removeEventListener", function(a) {
                                 return function(b, c, d, e) {
                                     try {
                                         c = c && (c.K ? c.K : c);
@@ -16414,31 +16329,31 @@ function(a) {
                             }, d));
                         }
                         var c = this, d = c.s, e = this.k.autoBreadcrumbs;
-                        y(I, "setTimeout", a, d), y(I, "setInterval", a, d), I.requestAnimationFrame && y(I, "requestAnimationFrame", function(a) {
+                        w(G, "setTimeout", a, d), w(G, "setInterval", a, d), G.requestAnimationFrame && w(G, "requestAnimationFrame", function(a) {
                             return function(b) {
                                 return a(c.wrap(b));
                             };
                         }, d);
-                        for (var f = [ "EventTarget", "Window", "Node", "ApplicationCache", "AudioTrackList", "ChannelMergerNode", "CryptoOperation", "EventSource", "FileReader", "HTMLUnknownElement", "IDBDatabase", "IDBRequest", "IDBTransaction", "KeyOperation", "MediaController", "MessagePort", "ModalWindow", "Notification", "SVGElementInstance", "Screen", "TextTrack", "TextTrackCue", "TextTrackList", "WebSocket", "WebSocketWorker", "Worker", "XMLHttpRequest", "XMLHttpRequestEventTarget", "XMLHttpRequestUpload" ], g = 0; g < f.length; g++) b(f[g]);
+                        for (var f = [ "EventTarget", "Window", "Node", "ApplicationCache", "AudioTrackList", "ChannelMergerNode", "CryptoOperation", "EventSource", "FileReader", "HTMLUnknownElement", "IDBDatabase", "IDBRequest", "IDBTransaction", "KeyOperation", "MediaController", "MessagePort", "ModalWindow", "Notification", "SVGElementInstance", "Screen", "TextTrack", "TextTrackCue", "TextTrackList", "WebSocket", "WebSocketWorker", "Worker", "XMLHttpRequest", "XMLHttpRequestEventTarget", "XMLHttpRequestUpload" ], h = 0; h < f.length; h++) b(f[h]);
                     },
                     B: function() {
                         function a(a, c) {
-                            a in c && h(c[a]) && y(c, a, function(a) {
+                            a in c && g(c[a]) && w(c, a, function(a) {
                                 return b.wrap(a);
                             });
                         }
                         var b = this, c = this.k.autoBreadcrumbs, d = b.s;
-                        if (c.xhr && "XMLHttpRequest" in I) {
+                        if (c.xhr && "XMLHttpRequest" in G) {
                             var e = XMLHttpRequest.prototype;
-                            y(e, "open", function(a) {
+                            w(e, "open", function(a) {
                                 return function(c, d) {
-                                    return i(d) && d.indexOf(b.h) === -1 && (this.W = {
+                                    return h(d) && d.indexOf(b.h) === -1 && (this.W = {
                                         method: c,
                                         url: d,
                                         status_code: null
                                     }), a.apply(this, arguments);
                                 };
-                            }, d), y(e, "send", function(c) {
+                            }, d), w(e, "send", function(c) {
                                 return function(d) {
                                     function e() {
                                         if (f.W && (1 === f.readyState || 4 === f.readyState)) {
@@ -16452,48 +16367,48 @@ function(a) {
                                             });
                                         }
                                     }
-                                    for (var f = this, g = [ "onload", "onerror", "onprogress" ], i = 0; i < g.length; i++) a(g[i], f);
-                                    return "onreadystatechange" in f && h(f.onreadystatechange) ? y(f, "onreadystatechange", function(a) {
+                                    for (var f = this, h = [ "onload", "onerror", "onprogress" ], i = 0; i < h.length; i++) a(h[i], f);
+                                    return "onreadystatechange" in f && g(f.onreadystatechange) ? w(f, "onreadystatechange", function(a) {
                                         return b.wrap(a, void 0, e);
                                     }) : f.onreadystatechange = e, c.apply(this, arguments);
                                 };
                             }, d);
                         }
-                        c.xhr && "fetch" in I && y(I, "fetch", function(a) {
+                        c.xhr && "fetch" in G && w(G, "fetch", function(a) {
                             return function(c, d) {
                                 for (var e = new Array(arguments.length), f = 0; f < e.length; ++f) e[f] = arguments[f];
-                                var g, h = e[0], i = "GET";
-                                "string" == typeof h ? g = h : (g = h.url, h.method && (i = h.method)), e[1] && e[1].method && (i = e[1].method);
-                                var j = {
-                                    method: i,
-                                    url: g,
+                                var g = "GET";
+                                e[1] && e[1].method && (g = e[1].method);
+                                var h = {
+                                    method: g,
+                                    url: e[0],
                                     status_code: null
                                 };
                                 return b.captureBreadcrumb({
                                     type: "http",
                                     category: "fetch",
-                                    data: j
+                                    data: h
                                 }), a.apply(this, e).then(function(a) {
-                                    return j.status_code = a.status, a;
+                                    return h.status_code = a.status, a;
                                 });
                             };
-                        }, d), c.dom && this.b && (J.addEventListener ? (J.addEventListener("click", b.S("click"), !1), 
-                        J.addEventListener("keypress", b.U(), !1)) : (J.attachEvent("onclick", b.S("click")), 
-                        J.attachEvent("onkeypress", b.U())));
-                        var f = I.chrome, g = f && f.app && f.app.runtime, j = !g && I.history && history.pushState;
-                        if (c.location && j) {
-                            var l = I.onpopstate;
-                            I.onpopstate = function() {
+                        }, d), c.dom && this.b && (H.addEventListener ? (H.addEventListener("click", b.S("click"), !1), 
+                        H.addEventListener("keypress", b.U(), !1)) : (H.attachEvent("onclick", b.S("click")), 
+                        H.attachEvent("onkeypress", b.U())));
+                        var f = G.chrome, i = f && f.app && f.app.runtime, k = !i && G.history && history.pushState;
+                        if (c.location && k) {
+                            var l = G.onpopstate;
+                            G.onpopstate = function() {
                                 var a = b.v.href;
                                 if (b.V(b.w, a), l) return l.apply(this, arguments);
-                            }, y(history, "pushState", function(a) {
+                            }, w(history, "pushState", function(a) {
                                 return function() {
                                     var c = arguments.length > 2 ? arguments[2] : void 0;
                                     return c && b.V(b.w, c + ""), a.apply(this, arguments);
                                 };
                             }, d);
                         }
-                        if (c.console && "console" in I && console.log) {
+                        if (c.console && "console" in G && console.log) {
                             var m = function(a, c) {
                                 b.captureBreadcrumb({
                                     message: a,
@@ -16501,8 +16416,8 @@ function(a) {
                                     category: "console"
                                 });
                             };
-                            k([ "debug", "info", "warn", "error", "log" ], function(a, b) {
-                                F(console, b, m);
+                            j([ "debug", "info", "warn", "error", "log" ], function(a, b) {
+                                D(console, b, m);
                             });
                         }
                     },
@@ -16515,19 +16430,19 @@ function(a) {
                     },
                     C: function() {
                         var a = this;
-                        k(this.q, function(b, c) {
+                        j(this.q, function(b, c) {
                             var d = c[0], e = c[1];
                             d.apply(a, [ a ].concat(e));
                         });
                     },
                     D: function(a) {
-                        var b = H.exec(a), c = {}, d = 7;
+                        var b = F.exec(a), c = {}, d = 7;
                         try {
-                            for (;d--; ) c[G[d]] = b[d] || "";
+                            for (;d--; ) c[E[d]] = b[d] || "";
                         } catch (e) {
-                            throw new B("Invalid DSN: " + a);
+                            throw new z("Invalid DSN: " + a);
                         }
-                        if (c.pass && !this.k.allowSecretKey) throw new B("Do not specify your secret key in the DSN. See: http://bit.ly/raven-secret-key");
+                        if (c.pass && !this.k.allowSecretKey) throw new z("Do not specify your secret key in the DSN. See: http://bit.ly/raven-secret-key");
                         return c;
                     },
                     G: function(a) {
@@ -16546,7 +16461,7 @@ function(a) {
                     },
                     O: function(a, b) {
                         var c = this, d = [];
-                        if (a.stack && a.stack.length && (k(a.stack, function(a, b) {
+                        if (a.stack && a.stack.length && (j(a.stack, function(a, b) {
                             var e = c.Y(b);
                             e && d.push(e);
                         }), b && b.trimHeadFrames)) for (var e = 0; e < b.trimHeadFrames && e < d.length; e++) d[e].in_app = !1;
@@ -16576,7 +16491,7 @@ function(a) {
                                 in_app: !0
                             } ]
                         }), (!this.k.ignoreUrls.test || !this.k.ignoreUrls.test(c)) && (!this.k.whitelistUrls.test || this.k.whitelistUrls.test(c)))) {
-                            var h = l({
+                            var h = k({
                                 exception: {
                                     values: [ {
                                         type: a,
@@ -16591,50 +16506,40 @@ function(a) {
                     },
                     Z: function(a) {
                         var b = this.k.maxMessageLength;
-                        if (a.message && (a.message = n(a.message, b)), a.exception) {
+                        if (a.message && (a.message = l(a.message, b)), a.exception) {
                             var c = a.exception.values[0];
-                            c.value = n(c.value, b);
+                            c.value = l(c.value, b);
                         }
-                        var d = a.request;
-                        return d && (d.url && (d.url = n(d.url, this.k.maxUrlLength)), d.Referer && (d.Referer = n(d.Referer, this.k.maxUrlLength))), 
-                        a.breadcrumbs && a.breadcrumbs.values && this.$(a.breadcrumbs), a;
+                        return a;
                     },
-                    $: function(a) {
-                        for (var b, c, d, e = [ "to", "from", "url" ], f = 0; f < a.values.length; ++f) if (c = a.values[f], 
-                        c.hasOwnProperty("data") && E(c.data) && !m(c.data)) {
-                            d = l({}, c.data);
-                            for (var g = 0; g < e.length; ++g) b = e[g], d.hasOwnProperty(b) && (d[b] = n(d[b], this.k.maxUrlLength));
-                            a.values[f].data = d;
-                        }
-                    },
-                    _: function() {
+                    $: function() {
                         if (this.c || this.b) {
                             var a = {};
-                            return this.c && K.userAgent && (a.headers = {
+                            return this.c && I.userAgent && (a.headers = {
                                 "User-Agent": navigator.userAgent
-                            }), this.b && (J.location && J.location.href && (a.url = J.location.href), J.referrer && (a.headers || (a.headers = {}), 
-                            a.headers.Referer = J.referrer)), a;
+                            }), this.b && (H.location && H.location.href && (a.url = H.location.href), H.referrer && (a.headers || (a.headers = {}), 
+                            a.headers.Referer = H.referrer)), a;
                         }
                     },
                     x: function() {
-                        this.aa = 0, this.ba = null;
+                        this._ = 0, this.aa = null;
                     },
-                    ca: function() {
-                        return this.aa && d() - this.ba < this.aa;
+                    ba: function() {
+                        return this._ && d() - this.aa < this._;
+                    },
+                    ca: function(a) {
+                        var b = this.e;
+                        return !(!b || a.message !== b.message || a.culprit !== b.culprit) && (a.stacktrace || b.stacktrace ? v(a.stacktrace, b.stacktrace) : !a.exception && !b.exception || u(a.exception, b.exception));
                     },
                     da: function(a) {
-                        var b = this.e;
-                        return !(!b || a.message !== b.message || a.culprit !== b.culprit) && (a.stacktrace || b.stacktrace ? x(a.stacktrace, b.stacktrace) : !a.exception && !b.exception || w(a.exception, b.exception));
-                    },
-                    ea: function(a) {
-                        if (!this.ca()) {
+                        if (!this.ba()) {
                             var b = a.status;
                             if (400 === b || 401 === b || 429 === b) {
                                 var c;
                                 try {
                                     c = a.getResponseHeader("Retry-After"), c = 1e3 * parseInt(c, 10);
                                 } catch (e) {}
-                                this.aa = c ? c : 2 * this.aa || 1e3, this.ba = d();
+                                this._ = c ? c : 2 * this._ || 1e3, this.aa = d();
                             }
                         }
                     },
@@ -16643,22 +16548,22 @@ function(a) {
                             project: this.i,
                             logger: b.logger,
                             platform: "javascript"
-                        }, e = this._();
-                        if (e && (c.request = e), a.trimHeadFrames && delete a.trimHeadFrames, a = l(c, a), 
-                        a.tags = l(l({}, this.j.tags), a.tags), a.extra = l(l({}, this.j.extra), a.extra), 
+                        }, e = this.$();
+                        if (e && (c.request = e), a.trimHeadFrames && delete a.trimHeadFrames, a = k(c, a), 
+                        a.tags = k(k({}, this.j.tags), a.tags), a.extra = k(k({}, this.j.extra), a.extra), 
                         a.extra["session:duration"] = d() - this.r, this.t && this.t.length > 0 && (a.breadcrumbs = {
                             values: [].slice.call(this.t, 0)
-                        }), j(a.tags) && delete a.tags, this.j.user && (a.user = this.j.user), b.environment && (a.environment = b.environment), 
+                        }), i(a.tags) && delete a.tags, this.j.user && (a.user = this.j.user), b.environment && (a.environment = b.environment), 
                         b.release && (a.release = b.release), b.serverName && (a.server_name = b.serverName), 
-                        h(b.dataCallback) && (a = b.dataCallback(a) || a), a && !j(a) && (!h(b.shouldSendCallback) || b.shouldSendCallback(a))) return this.ca() ? void this.y("warn", "Raven dropped error due to backoff: ", a) : void ("number" == typeof b.sampleRate ? Math.random() < b.sampleRate && this.fa(a) : this.fa(a));
+                        g(b.dataCallback) && (a = b.dataCallback(a) || a), a && !i(a) && (!g(b.shouldSendCallback) || b.shouldSendCallback(a))) return this.ba() ? void this.y("warn", "Raven dropped error due to backoff: ", a) : void ("number" == typeof b.sampleRate ? Math.random() < b.sampleRate && this.ea(a) : this.ea(a));
                     },
-                    ga: function() {
-                        return s();
+                    fa: function() {
+                        return q();
                     },
-                    fa: function(a, b) {
+                    ea: function(a, b) {
                         var c = this, d = this.k;
                         if (this.isSetup()) {
-                            if (this.f = a.event_id || (a.event_id = this.ga()), a = this.Z(a), !this.k.allowDuplicates && this.da(a)) return void this.y("warn", "Raven dropped repeat event: ", a);
+                            if (this.f = a.event_id || (a.event_id = this.fa()), a = this.Z(a), !this.k.allowDuplicates && this.ca(a)) return void this.y("warn", "Raven dropped repeat event: ", a);
                             this.e = a, this.y("debug", "Raven about to send:", a);
                             var e = {
                                 sentry_version: "7",
@@ -16674,7 +16579,7 @@ function(a) {
                                 level: a.level || "error"
                             });
                             var g = this.H;
-                            (d.transport || this.ha).call(this, {
+                            (d.transport || this.ga).call(this, {
                                 url: g,
                                 auth: e,
                                 data: a,
@@ -16686,7 +16591,7 @@ function(a) {
                                     }), b && b();
                                 },
                                 onError: function(d) {
-                                    c.y("error", "Raven transport failed to send: ", d), d.request && c.ea(d.request), 
+                                    c.y("error", "Raven transport failed to send: ", d), d.request && c.da(d.request), 
                                     c.R("failure", {
                                         data: a,
                                         src: g
@@ -16695,7 +16600,7 @@ function(a) {
                             });
                         }
                     },
-                    ha: function(a) {
+                    ga: function(a) {
                         var b = new XMLHttpRequest(), c = "withCredentials" in b || "undefined" != typeof XDomainRequest;
                         if (c) {
                             var d = a.url;
@@ -16708,19 +16613,19 @@ function(a) {
                             a.onError && (b.onerror = function() {
                                 var c = new Error("Sentry error code: XDomainRequest");
                                 c.request = b, a.onError(c);
-                            })), b.open("POST", d + "?" + q(a.auth)), b.send(A(a.data));
+                            })), b.open("POST", d + "?" + o(a.auth)), b.send(y(a.data));
                         }
                     },
                     y: function(a) {
                         this.p[a] && this.debug && Function.prototype.apply.call(this.p[a], this.o, [].slice.call(arguments, 1));
                     },
                     Q: function(a, b) {
-                        g(b) ? delete this.j[a] : this.j[a] = l(this.j[a] || {}, b);
+                        f(b) ? delete this.j[a] : this.j[a] = k(this.j[a] || {}, b);
                     }
                 };
-                var L = Object.prototype;
-                f.prototype.setUser = f.prototype.setUserContext, f.prototype.setReleaseContext = f.prototype.setRelease, 
-                b.exports = f;
+                var J = Object.prototype;
+                e.prototype.setUser = e.prototype.setUserContext, e.prototype.setReleaseContext = e.prototype.setRelease, 
+                b.exports = e;
             }).call(this, "undefined" != typeof global ? global : "undefined" != typeof self ? self : "undefined" != typeof window ? window : {});
         }, {
             1: 1,
@@ -16744,31 +16649,12 @@ function(a) {
                 return "object" == typeof a && null !== a;
             }
             function e(a) {
-                switch ({}.toString.call(a)) {
-                  case "[object Error]":
-                    return !0;
-
-                  case "[object Exception]":
-                    return !0;
-
-                  case "[object DOMException]":
-                    return !0;
-
-                  default:
-                    return a instanceof Error;
-                }
-            }
-            function f(a) {
-                function b(b, c) {
-                    var d = a(b) || b;
-                    return c ? c(d) || d : d;
-                }
-                return b;
+                var b = {}.toString.call(a);
+                return d(a) && "[object Error]" === b || "[object Exception]" === b || a instanceof Error;
             }
             b.exports = {
                 isObject: d,
-                isError: e,
-                wrappedCallback: f
+                isError: e
             };
         }, {} ],
         6: [ function(a, b, c) {
@@ -16849,43 +16735,42 @@ function(a) {
                 }(), f.computeStackTrace = function() {
                     function a(a) {
                         if ("undefined" != typeof a.stack && a.stack) {
-                            for (var b, c, e, f = /^\s*at (.*?) ?\(((?:file|https?|blob|chrome-extension|native|eval|webpack|<anonymous>|\/).*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i, g = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)((?:file|https?|blob|chrome|webpack|resource|\[native).*?|[^@]*bundle)(?::(\d+))?(?::(\d+))?\s*$/i, h = /^\s*at (?:((?:\[object object\])?.+) )?\(?((?:file|ms-appx|https?|webpack|blob):.*?):(\d+)(?::(\d+))?\)?\s*$/i, j = /(\S+) line (\d+)(?: > eval line \d+)* > eval/i, k = /\((\S*)(?::(\d+))(?::(\d+))\)/, l = a.stack.split("\n"), m = [], n = (/^(.*) is undefined$/.exec(a.message), 
-                            0), o = l.length; n < o; ++n) {
-                                if (c = f.exec(l[n])) {
-                                    var p = c[2] && 0 === c[2].indexOf("native"), q = c[2] && 0 === c[2].indexOf("eval");
-                                    q && (b = k.exec(c[2])) && (c[2] = b[1], c[3] = b[2], c[4] = b[3]), e = {
-                                        url: p ? null : c[2],
-                                        func: c[1] || i,
-                                        args: p ? [ c[2] ] : [],
-                                        line: c[3] ? +c[3] : null,
-                                        column: c[4] ? +c[4] : null
+                            for (var b, c, e = /^\s*at (.*?) ?\(((?:file|https?|blob|chrome-extension|native|eval|<anonymous>).*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i, f = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)((?:file|https?|blob|chrome|resource|\[native).*?)(?::(\d+))?(?::(\d+))?\s*$/i, g = /^\s*at (?:((?:\[object object\])?.+) )?\(?((?:file|ms-appx|https?|blob):.*?):(\d+)(?::(\d+))?\)?\s*$/i, h = a.stack.split("\n"), j = [], k = (/^(.*) is undefined$/.exec(a.message), 
+                            0), l = h.length; k < l; ++k) {
+                                if (b = e.exec(h[k])) {
+                                    var m = b[2] && b[2].indexOf("native") !== -1;
+                                    c = {
+                                        url: m ? null : b[2],
+                                        func: b[1] || i,
+                                        args: m ? [ b[2] ] : [],
+                                        line: b[3] ? +b[3] : null,
+                                        column: b[4] ? +b[4] : null
                                     };
-                                } else if (c = h.exec(l[n])) e = {
-                                    url: c[2],
-                                    func: c[1] || i,
+                                } else if (b = g.exec(h[k])) c = {
+                                    url: b[2],
+                                    func: b[1] || i,
                                     args: [],
-                                    line: +c[3],
-                                    column: c[4] ? +c[4] : null
+                                    line: +b[3],
+                                    column: b[4] ? +b[4] : null
                                 }; else {
-                                    if (!(c = g.exec(l[n]))) continue;
-                                    var q = c[3] && c[3].indexOf(" > eval") > -1;
-                                    q && (b = j.exec(c[3])) ? (c[3] = b[1], c[4] = b[2], c[5] = null) : 0 !== n || c[5] || "undefined" == typeof a.columnNumber || (m[0].column = a.columnNumber + 1), 
-                                    e = {
-                                        url: c[3],
-                                        func: c[1] || i,
-                                        args: c[2] ? c[2].split(",") : [],
-                                        line: c[4] ? +c[4] : null,
-                                        column: c[5] ? +c[5] : null
+                                    if (!(b = f.exec(h[k]))) continue;
+                                    c = {
+                                        url: b[3],
+                                        func: b[1] || i,
+                                        args: b[2] ? b[2].split(",") : [],
+                                        line: b[4] ? +b[4] : null,
+                                        column: b[5] ? +b[5] : null
                                     };
                                 }
-                                !e.func && e.line && (e.func = i), m.push(e);
+                                !c.func && c.line && (c.func = i), j.push(c);
                             }
-                            return m.length ? {
+                            return j.length ? (j[0].column || "undefined" == typeof a.columnNumber || (j[0].column = a.columnNumber + 1), 
+                            {
                                 name: a.name,
                                 message: a.message,
                                 url: d(),
-                                stack: m
-                            } : null;
+                                stack: j
+                            }) : null;
                         }
                     }
                     function b(a, b, c, d) {
@@ -19064,7 +18949,7 @@ function(a) {
                 Nexus: "Nexus One|Nexus S|Galaxy.*Nexus|Android.*Nexus.*Mobile|Nexus 4|Nexus 5|Nexus 6",
                 Dell: "Dell.*Streak|Dell.*Aero|Dell.*Venue|DELL.*Venue Pro|Dell Flash|Dell Smoke|Dell Mini 3iX|XCD28|XCD35|\\b001DL\\b|\\b101DL\\b|\\bGS01\\b",
                 Motorola: "Motorola|DROIDX|DROID BIONIC|\\bDroid\\b.*Build|Android.*Xoom|HRI39|MOT-|A1260|A1680|A555|A853|A855|A953|A955|A956|Motorola.*ELECTRIFY|Motorola.*i1|i867|i940|MB200|MB300|MB501|MB502|MB508|MB511|MB520|MB525|MB526|MB611|MB612|MB632|MB810|MB855|MB860|MB861|MB865|MB870|ME501|ME502|ME511|ME525|ME600|ME632|ME722|ME811|ME860|ME863|ME865|MT620|MT710|MT716|MT720|MT810|MT870|MT917|Motorola.*TITANIUM|WX435|WX445|XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|\\bMoto E\\b",
-                Samsung: "\\bSamsung\\b|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|GT-B3210|GT-B3310|GT-B3410|GT-B3730|GT-B3740|GT-B5510|GT-B5512|GT-B5722|GT-B6520|GT-B7300|GT-B7320|GT-B7330|GT-B7350|GT-B7510|GT-B7722|GT-B7800|GT-C3010|GT-C3011|GT-C3060|GT-C3200|GT-C3212|GT-C3212I|GT-C3262|GT-C3222|GT-C3300|GT-C3300K|GT-C3303|GT-C3303K|GT-C3310|GT-C3322|GT-C3330|GT-C3350|GT-C3500|GT-C3510|GT-C3530|GT-C3630|GT-C3780|GT-C5010|GT-C5212|GT-C6620|GT-C6625|GT-C6712|GT-E1050|GT-E1070|GT-E1075|GT-E1080|GT-E1081|GT-E1085|GT-E1087|GT-E1100|GT-E1107|GT-E1110|GT-E1120|GT-E1125|GT-E1130|GT-E1160|GT-E1170|GT-E1175|GT-E1180|GT-E1182|GT-E1200|GT-E1210|GT-E1225|GT-E1230|GT-E1390|GT-E2100|GT-E2120|GT-E2121|GT-E2152|GT-E2220|GT-E2222|GT-E2230|GT-E2232|GT-E2250|GT-E2370|GT-E2550|GT-E2652|GT-E3210|GT-E3213|GT-I5500|GT-I5503|GT-I5700|GT-I5800|GT-I5801|GT-I6410|GT-I6420|GT-I7110|GT-I7410|GT-I7500|GT-I8000|GT-I8150|GT-I8160|GT-I8190|GT-I8320|GT-I8330|GT-I8350|GT-I8530|GT-I8700|GT-I8703|GT-I8910|GT-I9000|GT-I9001|GT-I9003|GT-I9010|GT-I9020|GT-I9023|GT-I9070|GT-I9082|GT-I9100|GT-I9103|GT-I9220|GT-I9250|GT-I9300|GT-I9305|GT-I9500|GT-I9505|GT-M3510|GT-M5650|GT-M7500|GT-M7600|GT-M7603|GT-M8800|GT-M8910|GT-N7000|GT-S3110|GT-S3310|GT-S3350|GT-S3353|GT-S3370|GT-S3650|GT-S3653|GT-S3770|GT-S3850|GT-S5210|GT-S5220|GT-S5229|GT-S5230|GT-S5233|GT-S5250|GT-S5253|GT-S5260|GT-S5263|GT-S5270|GT-S5300|GT-S5330|GT-S5350|GT-S5360|GT-S5363|GT-S5369|GT-S5380|GT-S5380D|GT-S5560|GT-S5570|GT-S5600|GT-S5603|GT-S5610|GT-S5620|GT-S5660|GT-S5670|GT-S5690|GT-S5750|GT-S5780|GT-S5830|GT-S5839|GT-S6102|GT-S6500|GT-S7070|GT-S7200|GT-S7220|GT-S7230|GT-S7233|GT-S7250|GT-S7500|GT-S7530|GT-S7550|GT-S7562|GT-S7710|GT-S8000|GT-S8003|GT-S8500|GT-S8530|GT-S8600|SCH-A310|SCH-A530|SCH-A570|SCH-A610|SCH-A630|SCH-A650|SCH-A790|SCH-A795|SCH-A850|SCH-A870|SCH-A890|SCH-A930|SCH-A950|SCH-A970|SCH-A990|SCH-I100|SCH-I110|SCH-I400|SCH-I405|SCH-I500|SCH-I510|SCH-I515|SCH-I600|SCH-I730|SCH-I760|SCH-I770|SCH-I830|SCH-I910|SCH-I920|SCH-I959|SCH-LC11|SCH-N150|SCH-N300|SCH-R100|SCH-R300|SCH-R351|SCH-R400|SCH-R410|SCH-T300|SCH-U310|SCH-U320|SCH-U350|SCH-U360|SCH-U365|SCH-U370|SCH-U380|SCH-U410|SCH-U430|SCH-U450|SCH-U460|SCH-U470|SCH-U490|SCH-U540|SCH-U550|SCH-U620|SCH-U640|SCH-U650|SCH-U660|SCH-U700|SCH-U740|SCH-U750|SCH-U810|SCH-U820|SCH-U900|SCH-U940|SCH-U960|SCS-26UC|SGH-A107|SGH-A117|SGH-A127|SGH-A137|SGH-A157|SGH-A167|SGH-A177|SGH-A187|SGH-A197|SGH-A227|SGH-A237|SGH-A257|SGH-A437|SGH-A517|SGH-A597|SGH-A637|SGH-A657|SGH-A667|SGH-A687|SGH-A697|SGH-A707|SGH-A717|SGH-A727|SGH-A737|SGH-A747|SGH-A767|SGH-A777|SGH-A797|SGH-A817|SGH-A827|SGH-A837|SGH-A847|SGH-A867|SGH-A877|SGH-A887|SGH-A897|SGH-A927|SGH-B100|SGH-B130|SGH-B200|SGH-B220|SGH-C100|SGH-C110|SGH-C120|SGH-C130|SGH-C140|SGH-C160|SGH-C170|SGH-C180|SGH-C200|SGH-C207|SGH-C210|SGH-C225|SGH-C230|SGH-C417|SGH-C450|SGH-D307|SGH-D347|SGH-D357|SGH-D407|SGH-D415|SGH-D780|SGH-D807|SGH-D980|SGH-E105|SGH-E200|SGH-E315|SGH-E316|SGH-E317|SGH-E335|SGH-E590|SGH-E635|SGH-E715|SGH-E890|SGH-F300|SGH-F480|SGH-I200|SGH-I300|SGH-I320|SGH-I550|SGH-I577|SGH-I600|SGH-I607|SGH-I617|SGH-I627|SGH-I637|SGH-I677|SGH-I700|SGH-I717|SGH-I727|SGH-i747M|SGH-I777|SGH-I780|SGH-I827|SGH-I847|SGH-I857|SGH-I896|SGH-I897|SGH-I900|SGH-I907|SGH-I917|SGH-I927|SGH-I937|SGH-I997|SGH-J150|SGH-J200|SGH-L170|SGH-L700|SGH-M110|SGH-M150|SGH-M200|SGH-N105|SGH-N500|SGH-N600|SGH-N620|SGH-N625|SGH-N700|SGH-N710|SGH-P107|SGH-P207|SGH-P300|SGH-P310|SGH-P520|SGH-P735|SGH-P777|SGH-Q105|SGH-R210|SGH-R220|SGH-R225|SGH-S105|SGH-S307|SGH-T109|SGH-T119|SGH-T139|SGH-T209|SGH-T219|SGH-T229|SGH-T239|SGH-T249|SGH-T259|SGH-T309|SGH-T319|SGH-T329|SGH-T339|SGH-T349|SGH-T359|SGH-T369|SGH-T379|SGH-T409|SGH-T429|SGH-T439|SGH-T459|SGH-T469|SGH-T479|SGH-T499|SGH-T509|SGH-T519|SGH-T539|SGH-T559|SGH-T589|SGH-T609|SGH-T619|SGH-T629|SGH-T639|SGH-T659|SGH-T669|SGH-T679|SGH-T709|SGH-T719|SGH-T729|SGH-T739|SGH-T746|SGH-T749|SGH-T759|SGH-T769|SGH-T809|SGH-T819|SGH-T839|SGH-T919|SGH-T929|SGH-T939|SGH-T959|SGH-T989|SGH-U100|SGH-U200|SGH-U800|SGH-V205|SGH-V206|SGH-X100|SGH-X105|SGH-X120|SGH-X140|SGH-X426|SGH-X427|SGH-X475|SGH-X495|SGH-X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH-Z130|SGH-Z150|SGH-Z170|SGH-ZX10|SGH-ZX20|SHW-M110|SPH-A120|SPH-A400|SPH-A420|SPH-A460|SPH-A500|SPH-A560|SPH-A600|SPH-A620|SPH-A660|SPH-A700|SPH-A740|SPH-A760|SPH-A790|SPH-A800|SPH-A820|SPH-A840|SPH-A880|SPH-A900|SPH-A940|SPH-A960|SPH-D600|SPH-D700|SPH-D710|SPH-D720|SPH-I300|SPH-I325|SPH-I330|SPH-I350|SPH-I500|SPH-I600|SPH-I700|SPH-L700|SPH-M100|SPH-M220|SPH-M240|SPH-M300|SPH-M305|SPH-M320|SPH-M330|SPH-M350|SPH-M360|SPH-M370|SPH-M380|SPH-M510|SPH-M540|SPH-M550|SPH-M560|SPH-M570|SPH-M580|SPH-M610|SPH-M620|SPH-M630|SPH-M800|SPH-M810|SPH-M850|SPH-M900|SPH-M910|SPH-M920|SPH-M930|SPH-N100|SPH-N200|SPH-N240|SPH-N300|SPH-N400|SPH-Z400|SWC-E100|SCH-i909|GT-N7100|GT-N7105|SCH-I535|SM-N900A|SGH-I317|SGH-T999L|GT-S5360B|GT-I8262|GT-S6802|GT-S6312|GT-S6310|GT-S5312|GT-S5310|GT-I9105|GT-I8510|GT-S6790N|SM-G7105|SM-N9005|GT-S5301|GT-I9295|GT-I9195|SM-C101|GT-S7392|GT-S7560|GT-B7610|GT-I5510|GT-S7582|GT-S7530E|GT-I8750|SM-G9006V|SM-G9008V|SM-G9009D|SM-G900A|SM-G900D|SM-G900F|SM-G900H|SM-G900I|SM-G900J|SM-G900K|SM-G900L|SM-G900M|SM-G900P|SM-G900R4|SM-G900S|SM-G900T|SM-G900V|SM-G900W8|SHV-E160K|SCH-P709|SCH-P729|SM-T2558|GT-I9205|SM-G9350|SM-J120F|SM-G920F|SM-G920V|SM-G930F|SM-N910C",
+                Samsung: "\\bSamsung\\b|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|GT-B3210|GT-B3310|GT-B3410|GT-B3730|GT-B3740|GT-B5510|GT-B5512|GT-B5722|GT-B6520|GT-B7300|GT-B7320|GT-B7330|GT-B7350|GT-B7510|GT-B7722|GT-B7800|GT-C3010|GT-C3011|GT-C3060|GT-C3200|GT-C3212|GT-C3212I|GT-C3262|GT-C3222|GT-C3300|GT-C3300K|GT-C3303|GT-C3303K|GT-C3310|GT-C3322|GT-C3330|GT-C3350|GT-C3500|GT-C3510|GT-C3530|GT-C3630|GT-C3780|GT-C5010|GT-C5212|GT-C6620|GT-C6625|GT-C6712|GT-E1050|GT-E1070|GT-E1075|GT-E1080|GT-E1081|GT-E1085|GT-E1087|GT-E1100|GT-E1107|GT-E1110|GT-E1120|GT-E1125|GT-E1130|GT-E1160|GT-E1170|GT-E1175|GT-E1180|GT-E1182|GT-E1200|GT-E1210|GT-E1225|GT-E1230|GT-E1390|GT-E2100|GT-E2120|GT-E2121|GT-E2152|GT-E2220|GT-E2222|GT-E2230|GT-E2232|GT-E2250|GT-E2370|GT-E2550|GT-E2652|GT-E3210|GT-E3213|GT-I5500|GT-I5503|GT-I5700|GT-I5800|GT-I5801|GT-I6410|GT-I6420|GT-I7110|GT-I7410|GT-I7500|GT-I8000|GT-I8150|GT-I8160|GT-I8190|GT-I8320|GT-I8330|GT-I8350|GT-I8530|GT-I8700|GT-I8703|GT-I8910|GT-I9000|GT-I9001|GT-I9003|GT-I9010|GT-I9020|GT-I9023|GT-I9070|GT-I9082|GT-I9100|GT-I9103|GT-I9220|GT-I9250|GT-I9300|GT-I9305|GT-I9500|GT-I9505|GT-M3510|GT-M5650|GT-M7500|GT-M7600|GT-M7603|GT-M8800|GT-M8910|GT-N7000|GT-S3110|GT-S3310|GT-S3350|GT-S3353|GT-S3370|GT-S3650|GT-S3653|GT-S3770|GT-S3850|GT-S5210|GT-S5220|GT-S5229|GT-S5230|GT-S5233|GT-S5250|GT-S5253|GT-S5260|GT-S5263|GT-S5270|GT-S5300|GT-S5330|GT-S5350|GT-S5360|GT-S5363|GT-S5369|GT-S5380|GT-S5380D|GT-S5560|GT-S5570|GT-S5600|GT-S5603|GT-S5610|GT-S5620|GT-S5660|GT-S5670|GT-S5690|GT-S5750|GT-S5780|GT-S5830|GT-S5839|GT-S6102|GT-S6500|GT-S7070|GT-S7200|GT-S7220|GT-S7230|GT-S7233|GT-S7250|GT-S7500|GT-S7530|GT-S7550|GT-S7562|GT-S7710|GT-S8000|GT-S8003|GT-S8500|GT-S8530|GT-S8600|SCH-A310|SCH-A530|SCH-A570|SCH-A610|SCH-A630|SCH-A650|SCH-A790|SCH-A795|SCH-A850|SCH-A870|SCH-A890|SCH-A930|SCH-A950|SCH-A970|SCH-A990|SCH-I100|SCH-I110|SCH-I400|SCH-I405|SCH-I500|SCH-I510|SCH-I515|SCH-I600|SCH-I730|SCH-I760|SCH-I770|SCH-I830|SCH-I910|SCH-I920|SCH-I959|SCH-LC11|SCH-N150|SCH-N300|SCH-R100|SCH-R300|SCH-R351|SCH-R400|SCH-R410|SCH-T300|SCH-U310|SCH-U320|SCH-U350|SCH-U360|SCH-U365|SCH-U370|SCH-U380|SCH-U410|SCH-U430|SCH-U450|SCH-U460|SCH-U470|SCH-U490|SCH-U540|SCH-U550|SCH-U620|SCH-U640|SCH-U650|SCH-U660|SCH-U700|SCH-U740|SCH-U750|SCH-U810|SCH-U820|SCH-U900|SCH-U940|SCH-U960|SCS-26UC|SGH-A107|SGH-A117|SGH-A127|SGH-A137|SGH-A157|SGH-A167|SGH-A177|SGH-A187|SGH-A197|SGH-A227|SGH-A237|SGH-A257|SGH-A437|SGH-A517|SGH-A597|SGH-A637|SGH-A657|SGH-A667|SGH-A687|SGH-A697|SGH-A707|SGH-A717|SGH-A727|SGH-A737|SGH-A747|SGH-A767|SGH-A777|SGH-A797|SGH-A817|SGH-A827|SGH-A837|SGH-A847|SGH-A867|SGH-A877|SGH-A887|SGH-A897|SGH-A927|SGH-B100|SGH-B130|SGH-B200|SGH-B220|SGH-C100|SGH-C110|SGH-C120|SGH-C130|SGH-C140|SGH-C160|SGH-C170|SGH-C180|SGH-C200|SGH-C207|SGH-C210|SGH-C225|SGH-C230|SGH-C417|SGH-C450|SGH-D307|SGH-D347|SGH-D357|SGH-D407|SGH-D415|SGH-D780|SGH-D807|SGH-D980|SGH-E105|SGH-E200|SGH-E315|SGH-E316|SGH-E317|SGH-E335|SGH-E590|SGH-E635|SGH-E715|SGH-E890|SGH-F300|SGH-F480|SGH-I200|SGH-I300|SGH-I320|SGH-I550|SGH-I577|SGH-I600|SGH-I607|SGH-I617|SGH-I627|SGH-I637|SGH-I677|SGH-I700|SGH-I717|SGH-I727|SGH-i747M|SGH-I777|SGH-I780|SGH-I827|SGH-I847|SGH-I857|SGH-I896|SGH-I897|SGH-I900|SGH-I907|SGH-I917|SGH-I927|SGH-I937|SGH-I997|SGH-J150|SGH-J200|SGH-L170|SGH-L700|SGH-M110|SGH-M150|SGH-M200|SGH-N105|SGH-N500|SGH-N600|SGH-N620|SGH-N625|SGH-N700|SGH-N710|SGH-P107|SGH-P207|SGH-P300|SGH-P310|SGH-P520|SGH-P735|SGH-P777|SGH-Q105|SGH-R210|SGH-R220|SGH-R225|SGH-S105|SGH-S307|SGH-T109|SGH-T119|SGH-T139|SGH-T209|SGH-T219|SGH-T229|SGH-T239|SGH-T249|SGH-T259|SGH-T309|SGH-T319|SGH-T329|SGH-T339|SGH-T349|SGH-T359|SGH-T369|SGH-T379|SGH-T409|SGH-T429|SGH-T439|SGH-T459|SGH-T469|SGH-T479|SGH-T499|SGH-T509|SGH-T519|SGH-T539|SGH-T559|SGH-T589|SGH-T609|SGH-T619|SGH-T629|SGH-T639|SGH-T659|SGH-T669|SGH-T679|SGH-T709|SGH-T719|SGH-T729|SGH-T739|SGH-T746|SGH-T749|SGH-T759|SGH-T769|SGH-T809|SGH-T819|SGH-T839|SGH-T919|SGH-T929|SGH-T939|SGH-T959|SGH-T989|SGH-U100|SGH-U200|SGH-U800|SGH-V205|SGH-V206|SGH-X100|SGH-X105|SGH-X120|SGH-X140|SGH-X426|SGH-X427|SGH-X475|SGH-X495|SGH-X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH-Z130|SGH-Z150|SGH-Z170|SGH-ZX10|SGH-ZX20|SHW-M110|SPH-A120|SPH-A400|SPH-A420|SPH-A460|SPH-A500|SPH-A560|SPH-A600|SPH-A620|SPH-A660|SPH-A700|SPH-A740|SPH-A760|SPH-A790|SPH-A800|SPH-A820|SPH-A840|SPH-A880|SPH-A900|SPH-A940|SPH-A960|SPH-D600|SPH-D700|SPH-D710|SPH-D720|SPH-I300|SPH-I325|SPH-I330|SPH-I350|SPH-I500|SPH-I600|SPH-I700|SPH-L700|SPH-M100|SPH-M220|SPH-M240|SPH-M300|SPH-M305|SPH-M320|SPH-M330|SPH-M350|SPH-M360|SPH-M370|SPH-M380|SPH-M510|SPH-M540|SPH-M550|SPH-M560|SPH-M570|SPH-M580|SPH-M610|SPH-M620|SPH-M630|SPH-M800|SPH-M810|SPH-M850|SPH-M900|SPH-M910|SPH-M920|SPH-M930|SPH-N100|SPH-N200|SPH-N240|SPH-N300|SPH-N400|SPH-Z400|SWC-E100|SCH-i909|GT-N7100|GT-N7105|SCH-I535|SM-N900A|SGH-I317|SGH-T999L|GT-S5360B|GT-I8262|GT-S6802|GT-S6312|GT-S6310|GT-S5312|GT-S5310|GT-I9105|GT-I8510|GT-S6790N|SM-G7105|SM-N9005|GT-S5301|GT-I9295|GT-I9195|SM-C101|GT-S7392|GT-S7560|GT-B7610|GT-I5510|GT-S7582|GT-S7530E|GT-I8750|SM-G9006V|SM-G9008V|SM-G9009D|SM-G900A|SM-G900D|SM-G900F|SM-G900H|SM-G900I|SM-G900J|SM-G900K|SM-G900L|SM-G900M|SM-G900P|SM-G900R4|SM-G900S|SM-G900T|SM-G900V|SM-G900W8|SHV-E160K|SCH-P709|SCH-P729|SM-T2558|GT-I9205|SM-G9350|SM-J120F",
                 LG: "\\bLG\\b;|LG[- ]?(C800|C900|E400|E610|E900|E-900|F160|F180K|F180L|F180S|730|855|L160|LS740|LS840|LS970|LU6200|MS690|MS695|MS770|MS840|MS870|MS910|P500|P700|P705|VM696|AS680|AS695|AX840|C729|E970|GS505|272|C395|E739BK|E960|L55C|L75C|LS696|LS860|P769BK|P350|P500|P509|P870|UN272|US730|VS840|VS950|LN272|LN510|LS670|LS855|LW690|MN270|MN510|P509|P769|P930|UN200|UN270|UN510|UN610|US670|US740|US760|UX265|UX840|VN271|VN530|VS660|VS700|VS740|VS750|VS910|VS920|VS930|VX9200|VX11000|AX840A|LW770|P506|P925|P999|E612|D955|D802|MS323)",
                 Sony: "SonyST|SonyLT|SonyEricsson|SonyEricssonLT15iv|LT18i|E10i|LT28h|LT26w|SonyEricssonMT27i|C5303|C6902|C6903|C6906|C6943|D2533",
                 Asus: "Asus.*Galaxy|PadFone.*Mobile",
@@ -19087,8 +18972,8 @@ function(a) {
             tablets: {
                 iPad: "iPad|iPad.*Mobile",
                 NexusTablet: "Android.*Nexus[\\s]+(7|9|10)",
-                SamsungTablet: "SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|SCH-I915|GT-N8013|GT-P3113|GT-P5113|GT-P8110|GT-N8010|GT-N8005|GT-N8020|GT-P1013|GT-P6201|GT-P7501|GT-N5100|GT-N5105|GT-N5110|SHV-E140K|SHV-E140L|SHV-E140S|SHV-E150S|SHV-E230K|SHV-E230L|SHV-E230S|SHW-M180K|SHW-M180L|SHW-M180S|SHW-M180W|SHW-M300W|SHW-M305W|SHW-M380K|SHW-M380S|SHW-M380W|SHW-M430W|SHW-M480K|SHW-M480S|SHW-M480W|SHW-M485W|SHW-M486W|SHW-M500W|GT-I9228|SCH-P739|SCH-I925|GT-I9200|GT-P5200|GT-P5210|GT-P5210X|SM-T311|SM-T310|SM-T310X|SM-T210|SM-T210R|SM-T211|SM-P600|SM-P601|SM-P605|SM-P900|SM-P901|SM-T217|SM-T217A|SM-T217S|SM-P6000|SM-T3100|SGH-I467|XE500|SM-T110|GT-P5220|GT-I9200X|GT-N5110X|GT-N5120|SM-P905|SM-T111|SM-T2105|SM-T315|SM-T320|SM-T320X|SM-T321|SM-T520|SM-T525|SM-T530NU|SM-T230NU|SM-T330NU|SM-T900|XE500T1C|SM-P605V|SM-P905V|SM-T337V|SM-T537V|SM-T707V|SM-T807V|SM-P600X|SM-P900X|SM-T210X|SM-T230|SM-T230X|SM-T325|GT-P7503|SM-T531|SM-T330|SM-T530|SM-T705|SM-T705C|SM-T535|SM-T331|SM-T800|SM-T700|SM-T537|SM-T807|SM-P907A|SM-T337A|SM-T537A|SM-T707A|SM-T807A|SM-T237|SM-T807P|SM-P607T|SM-T217T|SM-T337T|SM-T807T|SM-T116NQ|SM-P550|SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T815|SM-T360|SM-T533|SM-T113|SM-T335|SM-T715|SM-T560|SM-T670|SM-T677|SM-T377|SM-T567|SM-T357T|SM-T555|SM-T561|SM-T713|SM-T719|SM-T813|SM-T819|SM-T580|SM-T355Y|SM-T280|SM-T817A|SM-T820|SM-W700|SM-P580|SM-T587",
-                Kindle: "Kindle|Silk.*Accelerated|Android.*\\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI|KFARWI|KFFOWI|KFGIWI|KFMEWI)\\b|Android.*Silk/[0-9.]+ like Chrome/[0-9.]+ (?!Mobile)",
+                SamsungTablet: "SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|SCH-I915|GT-N8013|GT-P3113|GT-P5113|GT-P8110|GT-N8010|GT-N8005|GT-N8020|GT-P1013|GT-P6201|GT-P7501|GT-N5100|GT-N5105|GT-N5110|SHV-E140K|SHV-E140L|SHV-E140S|SHV-E150S|SHV-E230K|SHV-E230L|SHV-E230S|SHW-M180K|SHW-M180L|SHW-M180S|SHW-M180W|SHW-M300W|SHW-M305W|SHW-M380K|SHW-M380S|SHW-M380W|SHW-M430W|SHW-M480K|SHW-M480S|SHW-M480W|SHW-M485W|SHW-M486W|SHW-M500W|GT-I9228|SCH-P739|SCH-I925|GT-I9200|GT-P5200|GT-P5210|GT-P5210X|SM-T311|SM-T310|SM-T310X|SM-T210|SM-T210R|SM-T211|SM-P600|SM-P601|SM-P605|SM-P900|SM-P901|SM-T217|SM-T217A|SM-T217S|SM-P6000|SM-T3100|SGH-I467|XE500|SM-T110|GT-P5220|GT-I9200X|GT-N5110X|GT-N5120|SM-P905|SM-T111|SM-T2105|SM-T315|SM-T320|SM-T320X|SM-T321|SM-T520|SM-T525|SM-T530NU|SM-T230NU|SM-T330NU|SM-T900|XE500T1C|SM-P605V|SM-P905V|SM-T337V|SM-T537V|SM-T707V|SM-T807V|SM-P600X|SM-P900X|SM-T210X|SM-T230|SM-T230X|SM-T325|GT-P7503|SM-T531|SM-T330|SM-T530|SM-T705|SM-T705C|SM-T535|SM-T331|SM-T800|SM-T700|SM-T537|SM-T807|SM-P907A|SM-T337A|SM-T537A|SM-T707A|SM-T807A|SM-T237|SM-T807P|SM-P607T|SM-T217T|SM-T337T|SM-T807T|SM-T116NQ|SM-P550|SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T815|SM-T360|SM-T533|SM-T113|SM-T335|SM-T715|SM-T560|SM-T670|SM-T677|SM-T377|SM-T567|SM-T357T|SM-T555|SM-T561|SM-T713|SM-T719|SM-T813|SM-T819|SM-T580|SM-T355Y|SM-T280",
+                Kindle: "Kindle|Silk.*Accelerated|Android.*\\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI|KFARWI)\\b",
                 SurfaceTablet: "Windows NT [0-9.]+; ARM;.*(Tablet|ARMBJS)",
                 HPTablet: "HP Slate (7|8|10)|HP ElitePad 900|hp-tablet|EliteBook.*Touch|HP 8|Slate 21|HP SlateBook 10",
                 AsusTablet: "^.*PadFone((?!Mobile).)*$|Transformer|TF101|TF101G|TF300T|TF300TG|TF300TL|TF700T|TF700KL|TF701T|TF810C|ME171|ME301T|ME302C|ME371MG|ME370T|ME372MG|ME172V|ME173X|ME400C|Slider SL101|\\bK00F\\b|\\bK00C\\b|\\bK00E\\b|\\bK00L\\b|TX201LA|ME176C|ME102A|\\bM80TA\\b|ME372CL|ME560CG|ME372CG|ME302KL| K010 | K011 | K017 | K01E |ME572C|ME103K|ME170C|ME171C|\\bME70C\\b|ME581C|ME581CL|ME8510C|ME181C|P01Y|PO1MA|P01Z",
@@ -19111,7 +18996,7 @@ function(a) {
                 MegafonTablet: "MegaFon V9|\\bZTE V9\\b|Android.*\\bMT7A\\b",
                 EbodaTablet: "E-Boda (Supreme|Impresspeed|Izzycomm|Essential)",
                 AllViewTablet: "Allview.*(Viva|Alldro|City|Speed|All TV|Frenzy|Quasar|Shine|TX1|AX1|AX2)",
-                ArchosTablet: "\\b(101G9|80G9|A101IT)\\b|Qilive 97R|Archos5|\\bARCHOS (70|79|80|90|97|101|FAMILYPAD|)(b|c|)(G10| Cobalt| TITANIUM(HD|)| Xenon| Neon|XSK| 2| XS 2| PLATINUM| CARBON|GAMEPAD)\\b",
+                ArchosTablet: "\\b(101G9|80G9|A101IT)\\b|Qilive 97R|Archos5|\\bARCHOS (70|79|80|90|97|101|FAMILYPAD|)(b|)(G10| Cobalt| TITANIUM(HD|)| Xenon| Neon|XSK| 2| XS 2| PLATINUM| CARBON|GAMEPAD)\\b",
                 AinolTablet: "NOVO7|NOVO8|NOVO10|Novo7Aurora|Novo7Basic|NOVO7PALADIN|novo9-Spark",
                 NokiaLumiaTablet: "Lumia 2520",
                 SonyTablet: "Sony.*Tablet|Xperia Tablet|Sony Tablet S|SO-03E|SGPT12|SGPT13|SGPT114|SGPT121|SGPT122|SGPT123|SGPT111|SGPT112|SGPT113|SGPT131|SGPT132|SGPT133|SGPT211|SGPT212|SGPT213|SGP311|SGP312|SGP321|EBRD1101|EBRD1102|EBRD1201|SGP351|SGP341|SGP511|SGP512|SGP521|SGP541|SGP551|SGP621|SGP612|SOT31",
@@ -19401,7 +19286,7 @@ function(a) {
             }
         }, "undefined" != typeof window && window.screen ? e.isPhoneSized = function(a) {
             return a < 0 ? b : f.getDeviceSmallerSide() <= a;
-        } : e.isPhoneSized = function() {}, e._impl = f, e.version = "1.3.6 2017-04-05", 
+        } : e.isPhoneSized = function() {}, e._impl = f, e.version = "1.3.5 2016-11-14", 
         e;
     });
 }(function(a) {
@@ -19413,1486 +19298,133 @@ function(a) {
         window.MobileDetect = a();
     };
     throw new Error("unknown environment");
-}()), function(a) {
-    if ("object" == typeof exports && "undefined" != typeof module) module.exports = a(); else if ("function" == typeof define && define.amd) define([], a); else {
-        var b;
-        b = "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this, 
-        b.jsyaml = a();
+}()), function(a, b) {
+    function c(a) {
+        var b = [];
+        return l(b, i).chars(a), b.join("");
     }
-}(function() {
-    return function a(b, c, d) {
-        function e(g, h) {
-            if (!c[g]) {
-                if (!b[g]) {
-                    var i = "function" == typeof require && require;
-                    if (!h && i) return i(g, !0);
-                    if (f) return f(g, !0);
-                    var j = new Error("Cannot find module '" + g + "'");
-                    throw j.code = "MODULE_NOT_FOUND", j;
-                }
-                var k = c[g] = {
-                    exports: {}
-                };
-                b[g][0].call(k.exports, function(a) {
-                    var c = b[g][1][a];
-                    return e(c ? c : a);
-                }, k, k.exports, a, b, c, d);
-            }
-            return c[g].exports;
-        }
-        for (var f = "function" == typeof require && require, g = 0; g < d.length; g++) e(d[g]);
-        return e;
-    }({
-        1: [ function(a, b, c) {
-            function d(a) {
-                return function() {
-                    throw new Error("Function " + a + " is deprecated and cannot be used.");
-                };
-            }
-            var e = a("./js-yaml/loader"), f = a("./js-yaml/dumper");
-            b.exports.Type = a("./js-yaml/type"), b.exports.Schema = a("./js-yaml/schema"), 
-            b.exports.FAILSAFE_SCHEMA = a("./js-yaml/schema/failsafe"), b.exports.JSON_SCHEMA = a("./js-yaml/schema/json"), 
-            b.exports.CORE_SCHEMA = a("./js-yaml/schema/core"), b.exports.DEFAULT_SAFE_SCHEMA = a("./js-yaml/schema/default_safe"), 
-            b.exports.DEFAULT_FULL_SCHEMA = a("./js-yaml/schema/default_full"), b.exports.load = e.load, 
-            b.exports.loadAll = e.loadAll, b.exports.safeLoad = e.safeLoad, b.exports.safeLoadAll = e.safeLoadAll, 
-            b.exports.dump = f.dump, b.exports.safeDump = f.safeDump, b.exports.YAMLException = a("./js-yaml/exception"), 
-            b.exports.MINIMAL_SCHEMA = a("./js-yaml/schema/failsafe"), b.exports.SAFE_SCHEMA = a("./js-yaml/schema/default_safe"), 
-            b.exports.DEFAULT_SCHEMA = a("./js-yaml/schema/default_full"), b.exports.scan = d("scan"), 
-            b.exports.parse = d("parse"), b.exports.compose = d("compose"), b.exports.addConstructor = d("addConstructor");
-        }, {
-            "./js-yaml/dumper": 3,
-            "./js-yaml/exception": 4,
-            "./js-yaml/loader": 5,
-            "./js-yaml/schema": 7,
-            "./js-yaml/schema/core": 8,
-            "./js-yaml/schema/default_full": 9,
-            "./js-yaml/schema/default_safe": 10,
-            "./js-yaml/schema/failsafe": 11,
-            "./js-yaml/schema/json": 12,
-            "./js-yaml/type": 13
-        } ],
-        2: [ function(a, b, c) {
-            function d(a) {
-                return "undefined" == typeof a || null === a;
-            }
-            function e(a) {
-                return "object" == typeof a && null !== a;
-            }
-            function f(a) {
-                return Array.isArray(a) ? a : d(a) ? [] : [ a ];
-            }
-            function g(a, b) {
-                var c, d, e, f;
-                if (b) for (f = Object.keys(b), c = 0, d = f.length; c < d; c += 1) e = f[c], a[e] = b[e];
-                return a;
-            }
-            function h(a, b) {
-                var c, d = "";
-                for (c = 0; c < b; c += 1) d += a;
-                return d;
-            }
-            function i(a) {
-                return 0 === a && Number.NEGATIVE_INFINITY === 1 / a;
-            }
-            b.exports.isNothing = d, b.exports.isObject = e, b.exports.toArray = f, b.exports.repeat = h, 
-            b.exports.isNegativeZero = i, b.exports.extend = g;
-        }, {} ],
-        3: [ function(a, b, c) {
-            function d(a, b) {
-                var c, d, e, f, g, h, i;
-                if (null === b) return {};
-                for (c = {}, d = Object.keys(b), e = 0, f = d.length; e < f; e += 1) g = d[e], h = String(b[g]), 
-                "!!" === g.slice(0, 2) && (g = "tag:yaml.org,2002:" + g.slice(2)), i = a.compiledTypeMap[g], 
-                i && J.call(i.styleAliases, h) && (h = i.styleAliases[h]), c[g] = h;
-                return c;
-            }
-            function e(a) {
-                var b, c, d;
-                if (b = a.toString(16).toUpperCase(), a <= 255) c = "x", d = 2; else if (a <= 65535) c = "u", 
-                d = 4; else {
-                    if (!(a <= 4294967295)) throw new F("code point within a string may not be greater than 0xFFFFFFFF");
-                    c = "U", d = 8;
-                }
-                return "\\" + c + E.repeat("0", d - b.length) + b;
-            }
-            function f(a) {
-                this.schema = a.schema || G, this.indent = Math.max(1, a.indent || 2), this.skipInvalid = a.skipInvalid || !1, 
-                this.flowLevel = E.isNothing(a.flowLevel) ? -1 : a.flowLevel, this.styleMap = d(this.schema, a.styles || null), 
-                this.sortKeys = a.sortKeys || !1, this.lineWidth = a.lineWidth || 80, this.noRefs = a.noRefs || !1, 
-                this.noCompatMode = a.noCompatMode || !1, this.implicitTypes = this.schema.compiledImplicit, 
-                this.explicitTypes = this.schema.compiledExplicit, this.tag = null, this.result = "", 
-                this.duplicates = [], this.usedDuplicates = null;
-            }
-            function g(a, b) {
-                for (var c, d = E.repeat(" ", b), e = 0, f = -1, g = "", h = a.length; e < h; ) f = a.indexOf("\n", e), 
-                f === -1 ? (c = a.slice(e), e = h) : (c = a.slice(e, f + 1), e = f + 1), c.length && "\n" !== c && (g += d), 
-                g += c;
-                return g;
-            }
-            function h(a, b) {
-                return "\n" + E.repeat(" ", a.indent * b);
-            }
-            function i(a, b) {
-                var c, d, e;
-                for (c = 0, d = a.implicitTypes.length; c < d; c += 1) if (e = a.implicitTypes[c], 
-                e.resolve(b)) return !0;
-                return !1;
-            }
-            function j(a) {
-                return a === M || a === K;
-            }
-            function k(a) {
-                return 32 <= a && a <= 126 || 161 <= a && a <= 55295 && 8232 !== a && 8233 !== a || 57344 <= a && a <= 65533 && 65279 !== a || 65536 <= a && a <= 1114111;
-            }
-            function l(a) {
-                return k(a) && 65279 !== a && a !== U && a !== $ && a !== _ && a !== ba && a !== da && a !== W && a !== P;
-            }
-            function m(a) {
-                return k(a) && 65279 !== a && !j(a) && a !== V && a !== Y && a !== W && a !== U && a !== $ && a !== _ && a !== ba && a !== da && a !== P && a !== R && a !== T && a !== N && a !== ca && a !== X && a !== S && a !== O && a !== Q && a !== Z && a !== aa;
-            }
-            function n(a, b, c, d, e) {
-                var f, g, h = !1, i = !1, n = d !== -1, o = -1, p = m(a.charCodeAt(0)) && !j(a.charCodeAt(a.length - 1));
-                if (b) for (f = 0; f < a.length; f++) {
-                    if (g = a.charCodeAt(f), !k(g)) return ka;
-                    p = p && l(g);
-                } else {
-                    for (f = 0; f < a.length; f++) {
-                        if (g = a.charCodeAt(f), g === L) h = !0, n && (i = i || f - o - 1 > d && " " !== a[o + 1], 
-                        o = f); else if (!k(g)) return ka;
-                        p = p && l(g);
-                    }
-                    i = i || n && f - o - 1 > d && " " !== a[o + 1];
-                }
-                return h || i ? " " === a[0] && c > 9 ? ka : i ? ja : ia : p && !e(a) ? ga : ha;
-            }
-            function o(a, b, c, d) {
-                a.dump = function() {
-                    function e(b) {
-                        return i(a, b);
-                    }
-                    if (0 === b.length) return "''";
-                    if (!a.noCompatMode && fa.indexOf(b) !== -1) return "'" + b + "'";
-                    var f = a.indent * Math.max(1, c), h = a.lineWidth === -1 ? -1 : Math.max(Math.min(a.lineWidth, 40), a.lineWidth - f), j = d || a.flowLevel > -1 && c >= a.flowLevel;
-                    switch (n(b, j, a.indent, h, e)) {
-                      case ga:
-                        return b;
-
-                      case ha:
-                        return "'" + b.replace(/'/g, "''") + "'";
-
-                      case ia:
-                        return "|" + p(b, a.indent) + q(g(b, f));
-
-                      case ja:
-                        return ">" + p(b, a.indent) + q(g(r(b, h), f));
-
-                      case ka:
-                        return '"' + t(b, h) + '"';
-
-                      default:
-                        throw new F("impossible error: invalid scalar style");
-                    }
-                }();
-            }
-            function p(a, b) {
-                var c = " " === a[0] ? String(b) : "", d = "\n" === a[a.length - 1], e = d && ("\n" === a[a.length - 2] || "\n" === a), f = e ? "+" : d ? "" : "-";
-                return c + f + "\n";
-            }
-            function q(a) {
-                return "\n" === a[a.length - 1] ? a.slice(0, -1) : a;
-            }
-            function r(a, b) {
-                for (var c, d, e = /(\n+)([^\n]*)/g, f = function() {
-                    var c = a.indexOf("\n");
-                    return c = c !== -1 ? c : a.length, e.lastIndex = c, s(a.slice(0, c), b);
-                }(), g = "\n" === a[0] || " " === a[0]; d = e.exec(a); ) {
-                    var h = d[1], i = d[2];
-                    c = " " === i[0], f += h + (g || c || "" === i ? "" : "\n") + s(i, b), g = c;
-                }
-                return f;
-            }
-            function s(a, b) {
-                if ("" === a || " " === a[0]) return a;
-                for (var c, d, e = / [^ ]/g, f = 0, g = 0, h = 0, i = ""; c = e.exec(a); ) h = c.index, 
-                h - f > b && (d = g > f ? g : h, i += "\n" + a.slice(f, d), f = d + 1), g = h;
-                return i += "\n", i += a.length - f > b && g > f ? a.slice(f, g) + "\n" + a.slice(g + 1) : a.slice(f), 
-                i.slice(1);
-            }
-            function t(a) {
-                for (var b, c, d = "", f = 0; f < a.length; f++) b = a.charCodeAt(f), c = ea[b], 
-                d += !c && k(b) ? a[f] : c || e(b);
-                return d;
-            }
-            function u(a, b, c) {
-                var d, e, f = "", g = a.tag;
-                for (d = 0, e = c.length; d < e; d += 1) z(a, b, c[d], !1, !1) && (0 !== d && (f += ", "), 
-                f += a.dump);
-                a.tag = g, a.dump = "[" + f + "]";
-            }
-            function v(a, b, c, d) {
-                var e, f, g = "", i = a.tag;
-                for (e = 0, f = c.length; e < f; e += 1) z(a, b + 1, c[e], !0, !0) && (d && 0 === e || (g += h(a, b)), 
-                g += "- " + a.dump);
-                a.tag = i, a.dump = g || "[]";
-            }
-            function w(a, b, c) {
-                var d, e, f, g, h, i = "", j = a.tag, k = Object.keys(c);
-                for (d = 0, e = k.length; d < e; d += 1) h = "", 0 !== d && (h += ", "), f = k[d], 
-                g = c[f], z(a, b, f, !1, !1) && (a.dump.length > 1024 && (h += "? "), h += a.dump + ": ", 
-                z(a, b, g, !1, !1) && (h += a.dump, i += h));
-                a.tag = j, a.dump = "{" + i + "}";
-            }
-            function x(a, b, c, d) {
-                var e, f, g, i, j, k, l = "", m = a.tag, n = Object.keys(c);
-                if (a.sortKeys === !0) n.sort(); else if ("function" == typeof a.sortKeys) n.sort(a.sortKeys); else if (a.sortKeys) throw new F("sortKeys must be a boolean or a function");
-                for (e = 0, f = n.length; e < f; e += 1) k = "", d && 0 === e || (k += h(a, b)), 
-                g = n[e], i = c[g], z(a, b + 1, g, !0, !0, !0) && (j = null !== a.tag && "?" !== a.tag || a.dump && a.dump.length > 1024, 
-                j && (k += a.dump && L === a.dump.charCodeAt(0) ? "?" : "? "), k += a.dump, j && (k += h(a, b)), 
-                z(a, b + 1, i, !0, j) && (k += a.dump && L === a.dump.charCodeAt(0) ? ":" : ": ", 
-                k += a.dump, l += k));
-                a.tag = m, a.dump = l || "{}";
-            }
-            function y(a, b, c) {
-                var d, e, f, g, h, i;
-                for (e = c ? a.explicitTypes : a.implicitTypes, f = 0, g = e.length; f < g; f += 1) if (h = e[f], 
-                (h.instanceOf || h.predicate) && (!h.instanceOf || "object" == typeof b && b instanceof h.instanceOf) && (!h.predicate || h.predicate(b))) {
-                    if (a.tag = c ? h.tag : "?", h.represent) {
-                        if (i = a.styleMap[h.tag] || h.defaultStyle, "[object Function]" === I.call(h.represent)) d = h.represent(b, i); else {
-                            if (!J.call(h.represent, i)) throw new F("!<" + h.tag + '> tag resolver accepts not "' + i + '" style');
-                            d = h.represent[i](b, i);
-                        }
-                        a.dump = d;
-                    }
-                    return !0;
-                }
-                return !1;
-            }
-            function z(a, b, c, d, e, f) {
-                a.tag = null, a.dump = c, y(a, c, !1) || y(a, c, !0);
-                var g = I.call(a.dump);
-                d && (d = a.flowLevel < 0 || a.flowLevel > b);
-                var h, i, j = "[object Object]" === g || "[object Array]" === g;
-                if (j && (h = a.duplicates.indexOf(c), i = h !== -1), (null !== a.tag && "?" !== a.tag || i || 2 !== a.indent && b > 0) && (e = !1), 
-                i && a.usedDuplicates[h]) a.dump = "*ref_" + h; else {
-                    if (j && i && !a.usedDuplicates[h] && (a.usedDuplicates[h] = !0), "[object Object]" === g) d && 0 !== Object.keys(a.dump).length ? (x(a, b, a.dump, e), 
-                    i && (a.dump = "&ref_" + h + a.dump)) : (w(a, b, a.dump), i && (a.dump = "&ref_" + h + " " + a.dump)); else if ("[object Array]" === g) d && 0 !== a.dump.length ? (v(a, b, a.dump, e), 
-                    i && (a.dump = "&ref_" + h + a.dump)) : (u(a, b, a.dump), i && (a.dump = "&ref_" + h + " " + a.dump)); else {
-                        if ("[object String]" !== g) {
-                            if (a.skipInvalid) return !1;
-                            throw new F("unacceptable kind of an object to dump " + g);
-                        }
-                        "?" !== a.tag && o(a, a.dump, b, f);
-                    }
-                    null !== a.tag && "?" !== a.tag && (a.dump = "!<" + a.tag + "> " + a.dump);
-                }
-                return !0;
-            }
-            function A(a, b) {
-                var c, d, e = [], f = [];
-                for (B(a, e, f), c = 0, d = f.length; c < d; c += 1) b.duplicates.push(e[f[c]]);
-                b.usedDuplicates = new Array(d);
-            }
-            function B(a, b, c) {
-                var d, e, f;
-                if (null !== a && "object" == typeof a) if (e = b.indexOf(a), e !== -1) c.indexOf(e) === -1 && c.push(e); else if (b.push(a), 
-                Array.isArray(a)) for (e = 0, f = a.length; e < f; e += 1) B(a[e], b, c); else for (d = Object.keys(a), 
-                e = 0, f = d.length; e < f; e += 1) B(a[d[e]], b, c);
-            }
-            function C(a, b) {
-                b = b || {};
-                var c = new f(b);
-                return c.noRefs || A(a, c), z(c, 0, a, !0, !0) ? c.dump + "\n" : "";
-            }
-            function D(a, b) {
-                return C(a, E.extend({
-                    schema: H
-                }, b));
-            }
-            var E = a("./common"), F = a("./exception"), G = a("./schema/default_full"), H = a("./schema/default_safe"), I = Object.prototype.toString, J = Object.prototype.hasOwnProperty, K = 9, L = 10, M = 32, N = 33, O = 34, P = 35, Q = 37, R = 38, S = 39, T = 42, U = 44, V = 45, W = 58, X = 62, Y = 63, Z = 64, $ = 91, _ = 93, aa = 96, ba = 123, ca = 124, da = 125, ea = {};
-            ea[0] = "\\0", ea[7] = "\\a", ea[8] = "\\b", ea[9] = "\\t", ea[10] = "\\n", ea[11] = "\\v", 
-            ea[12] = "\\f", ea[13] = "\\r", ea[27] = "\\e", ea[34] = '\\"', ea[92] = "\\\\", 
-            ea[133] = "\\N", ea[160] = "\\_", ea[8232] = "\\L", ea[8233] = "\\P";
-            var fa = [ "y", "Y", "yes", "Yes", "YES", "on", "On", "ON", "n", "N", "no", "No", "NO", "off", "Off", "OFF" ], ga = 1, ha = 2, ia = 3, ja = 4, ka = 5;
-            b.exports.dump = C, b.exports.safeDump = D;
-        }, {
-            "./common": 2,
-            "./exception": 4,
-            "./schema/default_full": 9,
-            "./schema/default_safe": 10
-        } ],
-        4: [ function(a, b, c) {
-            function d(a, b) {
-                Error.call(this), Error.captureStackTrace ? Error.captureStackTrace(this, this.constructor) : this.stack = new Error().stack || "", 
-                this.name = "YAMLException", this.reason = a, this.mark = b, this.message = (this.reason || "(unknown reason)") + (this.mark ? " " + this.mark.toString() : "");
-            }
-            d.prototype = Object.create(Error.prototype), d.prototype.constructor = d, d.prototype.toString = function(a) {
-                var b = this.name + ": ";
-                return b += this.reason || "(unknown reason)", !a && this.mark && (b += " " + this.mark.toString()), 
-                b;
-            }, b.exports = d;
-        }, {} ],
-        5: [ function(a, b, c) {
-            function d(a) {
-                return 10 === a || 13 === a;
-            }
-            function e(a) {
-                return 9 === a || 32 === a;
-            }
-            function f(a) {
-                return 9 === a || 32 === a || 10 === a || 13 === a;
-            }
-            function g(a) {
-                return 44 === a || 91 === a || 93 === a || 123 === a || 125 === a;
-            }
-            function h(a) {
-                var b;
-                return 48 <= a && a <= 57 ? a - 48 : (b = 32 | a, 97 <= b && b <= 102 ? b - 97 + 10 : -1);
-            }
-            function i(a) {
-                return 120 === a ? 2 : 117 === a ? 4 : 85 === a ? 8 : 0;
-            }
-            function j(a) {
-                return 48 <= a && a <= 57 ? a - 48 : -1;
-            }
-            function k(a) {
-                return 48 === a ? "\0" : 97 === a ? "" : 98 === a ? "\b" : 116 === a ? "\t" : 9 === a ? "\t" : 110 === a ? "\n" : 118 === a ? "\x0B" : 102 === a ? "\f" : 114 === a ? "\r" : 101 === a ? "" : 32 === a ? " " : 34 === a ? '"' : 47 === a ? "/" : 92 === a ? "\\" : 78 === a ? "" : 95 === a ? " " : 76 === a ? "\u2028" : 80 === a ? "\u2029" : "";
-            }
-            function l(a) {
-                return a <= 65535 ? String.fromCharCode(a) : String.fromCharCode((a - 65536 >> 10) + 55296, (a - 65536 & 1023) + 56320);
-            }
-            function m(a, b) {
-                this.input = a, this.filename = b.filename || null, this.schema = b.schema || S, 
-                this.onWarning = b.onWarning || null, this.legacy = b.legacy || !1, this.json = b.json || !1, 
-                this.listener = b.listener || null, this.implicitTypes = this.schema.compiledImplicit, 
-                this.typeMap = this.schema.compiledTypeMap, this.length = a.length, this.position = 0, 
-                this.line = 0, this.lineStart = 0, this.lineIndent = 0, this.documents = [];
-            }
-            function n(a, b) {
-                return new P(b, new Q(a.filename, a.input, a.position, a.line, a.position - a.lineStart));
-            }
-            function o(a, b) {
-                throw n(a, b);
-            }
-            function p(a, b) {
-                a.onWarning && a.onWarning.call(null, n(a, b));
-            }
-            function q(a, b, c, d) {
-                var e, f, g, h;
-                if (b < c) {
-                    if (h = a.input.slice(b, c), d) for (e = 0, f = h.length; e < f; e += 1) g = h.charCodeAt(e), 
-                    9 === g || 32 <= g && g <= 1114111 || o(a, "expected valid JSON character"); else _.test(h) && o(a, "the stream contains non-printable characters");
-                    a.result += h;
-                }
-            }
-            function r(a, b, c, d) {
-                var e, f, g, h;
-                for (O.isObject(c) || o(a, "cannot merge mappings; the provided source object is unacceptable"), 
-                e = Object.keys(c), g = 0, h = e.length; g < h; g += 1) f = e[g], T.call(b, f) || (b[f] = c[f], 
-                d[f] = !0);
-            }
-            function s(a, b, c, d, e, f) {
-                var g, h;
-                if (e = String(e), null === b && (b = {}), "tag:yaml.org,2002:merge" === d) if (Array.isArray(f)) for (g = 0, 
-                h = f.length; g < h; g += 1) r(a, b, f[g], c); else r(a, b, f, c); else a.json || T.call(c, e) || !T.call(b, e) || o(a, "duplicated mapping key"), 
-                b[e] = f, delete c[e];
-                return b;
-            }
-            function t(a) {
-                var b;
-                b = a.input.charCodeAt(a.position), 10 === b ? a.position++ : 13 === b ? (a.position++, 
-                10 === a.input.charCodeAt(a.position) && a.position++) : o(a, "a line break is expected"), 
-                a.line += 1, a.lineStart = a.position;
-            }
-            function u(a, b, c) {
-                for (var f = 0, g = a.input.charCodeAt(a.position); 0 !== g; ) {
-                    for (;e(g); ) g = a.input.charCodeAt(++a.position);
-                    if (b && 35 === g) do g = a.input.charCodeAt(++a.position); while (10 !== g && 13 !== g && 0 !== g);
-                    if (!d(g)) break;
-                    for (t(a), g = a.input.charCodeAt(a.position), f++, a.lineIndent = 0; 32 === g; ) a.lineIndent++, 
-                    g = a.input.charCodeAt(++a.position);
-                }
-                return c !== -1 && 0 !== f && a.lineIndent < c && p(a, "deficient indentation"), 
-                f;
-            }
-            function v(a) {
-                var b, c = a.position;
-                return b = a.input.charCodeAt(c), !(45 !== b && 46 !== b || b !== a.input.charCodeAt(c + 1) || b !== a.input.charCodeAt(c + 2) || (c += 3, 
-                b = a.input.charCodeAt(c), 0 !== b && !f(b)));
-            }
-            function w(a, b) {
-                1 === b ? a.result += " " : b > 1 && (a.result += O.repeat("\n", b - 1));
-            }
-            function x(a, b, c) {
-                var h, i, j, k, l, m, n, o, p, r = a.kind, s = a.result;
-                if (p = a.input.charCodeAt(a.position), f(p) || g(p) || 35 === p || 38 === p || 42 === p || 33 === p || 124 === p || 62 === p || 39 === p || 34 === p || 37 === p || 64 === p || 96 === p) return !1;
-                if ((63 === p || 45 === p) && (i = a.input.charCodeAt(a.position + 1), f(i) || c && g(i))) return !1;
-                for (a.kind = "scalar", a.result = "", j = k = a.position, l = !1; 0 !== p; ) {
-                    if (58 === p) {
-                        if (i = a.input.charCodeAt(a.position + 1), f(i) || c && g(i)) break;
-                    } else if (35 === p) {
-                        if (h = a.input.charCodeAt(a.position - 1), f(h)) break;
-                    } else {
-                        if (a.position === a.lineStart && v(a) || c && g(p)) break;
-                        if (d(p)) {
-                            if (m = a.line, n = a.lineStart, o = a.lineIndent, u(a, !1, -1), a.lineIndent >= b) {
-                                l = !0, p = a.input.charCodeAt(a.position);
-                                continue;
-                            }
-                            a.position = k, a.line = m, a.lineStart = n, a.lineIndent = o;
-                            break;
-                        }
-                    }
-                    l && (q(a, j, k, !1), w(a, a.line - m), j = k = a.position, l = !1), e(p) || (k = a.position + 1), 
-                    p = a.input.charCodeAt(++a.position);
-                }
-                return q(a, j, k, !1), !!a.result || (a.kind = r, a.result = s, !1);
-            }
-            function y(a, b) {
-                var c, e, f;
-                if (c = a.input.charCodeAt(a.position), 39 !== c) return !1;
-                for (a.kind = "scalar", a.result = "", a.position++, e = f = a.position; 0 !== (c = a.input.charCodeAt(a.position)); ) if (39 === c) {
-                    if (q(a, e, a.position, !0), c = a.input.charCodeAt(++a.position), 39 !== c) return !0;
-                    e = f = a.position, a.position++;
-                } else d(c) ? (q(a, e, f, !0), w(a, u(a, !1, b)), e = f = a.position) : a.position === a.lineStart && v(a) ? o(a, "unexpected end of the document within a single quoted scalar") : (a.position++, 
-                f = a.position);
-                o(a, "unexpected end of the stream within a single quoted scalar");
-            }
-            function z(a, b) {
-                var c, e, f, g, j, k;
-                if (k = a.input.charCodeAt(a.position), 34 !== k) return !1;
-                for (a.kind = "scalar", a.result = "", a.position++, c = e = a.position; 0 !== (k = a.input.charCodeAt(a.position)); ) {
-                    if (34 === k) return q(a, c, a.position, !0), a.position++, !0;
-                    if (92 === k) {
-                        if (q(a, c, a.position, !0), k = a.input.charCodeAt(++a.position), d(k)) u(a, !1, b); else if (k < 256 && ea[k]) a.result += fa[k], 
-                        a.position++; else if ((j = i(k)) > 0) {
-                            for (f = j, g = 0; f > 0; f--) k = a.input.charCodeAt(++a.position), (j = h(k)) >= 0 ? g = (g << 4) + j : o(a, "expected hexadecimal character");
-                            a.result += l(g), a.position++;
-                        } else o(a, "unknown escape sequence");
-                        c = e = a.position;
-                    } else d(k) ? (q(a, c, e, !0), w(a, u(a, !1, b)), c = e = a.position) : a.position === a.lineStart && v(a) ? o(a, "unexpected end of the document within a double quoted scalar") : (a.position++, 
-                    e = a.position);
-                }
-                o(a, "unexpected end of the stream within a double quoted scalar");
-            }
-            function A(a, b) {
-                var c, d, e, g, h, i, j, k, l, m, n, p = !0, q = a.tag, r = a.anchor, t = {};
-                if (n = a.input.charCodeAt(a.position), 91 === n) g = 93, j = !1, d = []; else {
-                    if (123 !== n) return !1;
-                    g = 125, j = !0, d = {};
-                }
-                for (null !== a.anchor && (a.anchorMap[a.anchor] = d), n = a.input.charCodeAt(++a.position); 0 !== n; ) {
-                    if (u(a, !0, b), n = a.input.charCodeAt(a.position), n === g) return a.position++, 
-                    a.tag = q, a.anchor = r, a.kind = j ? "mapping" : "sequence", a.result = d, !0;
-                    p || o(a, "missed comma between flow collection entries"), l = k = m = null, h = i = !1, 
-                    63 === n && (e = a.input.charCodeAt(a.position + 1), f(e) && (h = i = !0, a.position++, 
-                    u(a, !0, b))), c = a.line, H(a, b, U, !1, !0), l = a.tag, k = a.result, u(a, !0, b), 
-                    n = a.input.charCodeAt(a.position), !i && a.line !== c || 58 !== n || (h = !0, n = a.input.charCodeAt(++a.position), 
-                    u(a, !0, b), H(a, b, U, !1, !0), m = a.result), j ? s(a, d, t, l, k, m) : h ? d.push(s(a, null, t, l, k, m)) : d.push(k), 
-                    u(a, !0, b), n = a.input.charCodeAt(a.position), 44 === n ? (p = !0, n = a.input.charCodeAt(++a.position)) : p = !1;
-                }
-                o(a, "unexpected end of the stream within a flow collection");
-            }
-            function B(a, b) {
-                var c, f, g, h, i = Y, k = !1, l = !1, m = b, n = 0, p = !1;
-                if (h = a.input.charCodeAt(a.position), 124 === h) f = !1; else {
-                    if (62 !== h) return !1;
-                    f = !0;
-                }
-                for (a.kind = "scalar", a.result = ""; 0 !== h; ) if (h = a.input.charCodeAt(++a.position), 
-                43 === h || 45 === h) Y === i ? i = 43 === h ? $ : Z : o(a, "repeat of a chomping mode identifier"); else {
-                    if (!((g = j(h)) >= 0)) break;
-                    0 === g ? o(a, "bad explicit indentation width of a block scalar; it cannot be less than one") : l ? o(a, "repeat of an indentation width identifier") : (m = b + g - 1, 
-                    l = !0);
-                }
-                if (e(h)) {
-                    do h = a.input.charCodeAt(++a.position); while (e(h));
-                    if (35 === h) do h = a.input.charCodeAt(++a.position); while (!d(h) && 0 !== h);
-                }
-                for (;0 !== h; ) {
-                    for (t(a), a.lineIndent = 0, h = a.input.charCodeAt(a.position); (!l || a.lineIndent < m) && 32 === h; ) a.lineIndent++, 
-                    h = a.input.charCodeAt(++a.position);
-                    if (!l && a.lineIndent > m && (m = a.lineIndent), d(h)) n++; else {
-                        if (a.lineIndent < m) {
-                            i === $ ? a.result += O.repeat("\n", k ? 1 + n : n) : i === Y && k && (a.result += "\n");
-                            break;
-                        }
-                        for (f ? e(h) ? (p = !0, a.result += O.repeat("\n", k ? 1 + n : n)) : p ? (p = !1, 
-                        a.result += O.repeat("\n", n + 1)) : 0 === n ? k && (a.result += " ") : a.result += O.repeat("\n", n) : a.result += O.repeat("\n", k ? 1 + n : n), 
-                        k = !0, l = !0, n = 0, c = a.position; !d(h) && 0 !== h; ) h = a.input.charCodeAt(++a.position);
-                        q(a, c, a.position, !1);
-                    }
-                }
-                return !0;
-            }
-            function C(a, b) {
-                var c, d, e, g = a.tag, h = a.anchor, i = [], j = !1;
-                for (null !== a.anchor && (a.anchorMap[a.anchor] = i), e = a.input.charCodeAt(a.position); 0 !== e && 45 === e && (d = a.input.charCodeAt(a.position + 1), 
-                f(d)); ) if (j = !0, a.position++, u(a, !0, -1) && a.lineIndent <= b) i.push(null), 
-                e = a.input.charCodeAt(a.position); else if (c = a.line, H(a, b, W, !1, !0), i.push(a.result), 
-                u(a, !0, -1), e = a.input.charCodeAt(a.position), (a.line === c || a.lineIndent > b) && 0 !== e) o(a, "bad indentation of a sequence entry"); else if (a.lineIndent < b) break;
-                return !!j && (a.tag = g, a.anchor = h, a.kind = "sequence", a.result = i, !0);
-            }
-            function D(a, b, c) {
-                var d, g, h, i, j = a.tag, k = a.anchor, l = {}, m = {}, n = null, p = null, q = null, r = !1, t = !1;
-                for (null !== a.anchor && (a.anchorMap[a.anchor] = l), i = a.input.charCodeAt(a.position); 0 !== i; ) {
-                    if (d = a.input.charCodeAt(a.position + 1), h = a.line, 63 !== i && 58 !== i || !f(d)) {
-                        if (!H(a, c, V, !1, !0)) break;
-                        if (a.line === h) {
-                            for (i = a.input.charCodeAt(a.position); e(i); ) i = a.input.charCodeAt(++a.position);
-                            if (58 === i) i = a.input.charCodeAt(++a.position), f(i) || o(a, "a whitespace character is expected after the key-value separator within a block mapping"), 
-                            r && (s(a, l, m, n, p, null), n = p = q = null), t = !0, r = !1, g = !1, n = a.tag, 
-                            p = a.result; else {
-                                if (!t) return a.tag = j, a.anchor = k, !0;
-                                o(a, "can not read an implicit mapping pair; a colon is missed");
-                            }
-                        } else {
-                            if (!t) return a.tag = j, a.anchor = k, !0;
-                            o(a, "can not read a block mapping entry; a multiline key may not be an implicit key");
-                        }
-                    } else 63 === i ? (r && (s(a, l, m, n, p, null), n = p = q = null), t = !0, r = !0, 
-                    g = !0) : r ? (r = !1, g = !0) : o(a, "incomplete explicit mapping pair; a key node is missed"), 
-                    a.position += 1, i = d;
-                    if ((a.line === h || a.lineIndent > b) && (H(a, b, X, !0, g) && (r ? p = a.result : q = a.result), 
-                    r || (s(a, l, m, n, p, q), n = p = q = null), u(a, !0, -1), i = a.input.charCodeAt(a.position)), 
-                    a.lineIndent > b && 0 !== i) o(a, "bad indentation of a mapping entry"); else if (a.lineIndent < b) break;
-                }
-                return r && s(a, l, m, n, p, null), t && (a.tag = j, a.anchor = k, a.kind = "mapping", 
-                a.result = l), t;
-            }
-            function E(a) {
-                var b, c, d, e, g = !1, h = !1;
-                if (e = a.input.charCodeAt(a.position), 33 !== e) return !1;
-                if (null !== a.tag && o(a, "duplication of a tag property"), e = a.input.charCodeAt(++a.position), 
-                60 === e ? (g = !0, e = a.input.charCodeAt(++a.position)) : 33 === e ? (h = !0, 
-                c = "!!", e = a.input.charCodeAt(++a.position)) : c = "!", b = a.position, g) {
-                    do e = a.input.charCodeAt(++a.position); while (0 !== e && 62 !== e);
-                    a.position < a.length ? (d = a.input.slice(b, a.position), e = a.input.charCodeAt(++a.position)) : o(a, "unexpected end of the stream within a verbatim tag");
-                } else {
-                    for (;0 !== e && !f(e); ) 33 === e && (h ? o(a, "tag suffix cannot contain exclamation marks") : (c = a.input.slice(b - 1, a.position + 1), 
-                    ca.test(c) || o(a, "named tag handle cannot contain such characters"), h = !0, b = a.position + 1)), 
-                    e = a.input.charCodeAt(++a.position);
-                    d = a.input.slice(b, a.position), ba.test(d) && o(a, "tag suffix cannot contain flow indicator characters");
-                }
-                return d && !da.test(d) && o(a, "tag name cannot contain such characters: " + d), 
-                g ? a.tag = d : T.call(a.tagMap, c) ? a.tag = a.tagMap[c] + d : "!" === c ? a.tag = "!" + d : "!!" === c ? a.tag = "tag:yaml.org,2002:" + d : o(a, 'undeclared tag handle "' + c + '"'), 
-                !0;
-            }
-            function F(a) {
-                var b, c;
-                if (c = a.input.charCodeAt(a.position), 38 !== c) return !1;
-                for (null !== a.anchor && o(a, "duplication of an anchor property"), c = a.input.charCodeAt(++a.position), 
-                b = a.position; 0 !== c && !f(c) && !g(c); ) c = a.input.charCodeAt(++a.position);
-                return a.position === b && o(a, "name of an anchor node must contain at least one character"), 
-                a.anchor = a.input.slice(b, a.position), !0;
-            }
-            function G(a) {
-                var b, c, d;
-                if (d = a.input.charCodeAt(a.position), 42 !== d) return !1;
-                for (d = a.input.charCodeAt(++a.position), b = a.position; 0 !== d && !f(d) && !g(d); ) d = a.input.charCodeAt(++a.position);
-                return a.position === b && o(a, "name of an alias node must contain at least one character"), 
-                c = a.input.slice(b, a.position), a.anchorMap.hasOwnProperty(c) || o(a, 'unidentified alias "' + c + '"'), 
-                a.result = a.anchorMap[c], u(a, !0, -1), !0;
-            }
-            function H(a, b, c, d, e) {
-                var f, g, h, i, j, k, l, m, n = 1, p = !1, q = !1;
-                if (null !== a.listener && a.listener("open", a), a.tag = null, a.anchor = null, 
-                a.kind = null, a.result = null, f = g = h = X === c || W === c, d && u(a, !0, -1) && (p = !0, 
-                a.lineIndent > b ? n = 1 : a.lineIndent === b ? n = 0 : a.lineIndent < b && (n = -1)), 
-                1 === n) for (;E(a) || F(a); ) u(a, !0, -1) ? (p = !0, h = f, a.lineIndent > b ? n = 1 : a.lineIndent === b ? n = 0 : a.lineIndent < b && (n = -1)) : h = !1;
-                if (h && (h = p || e), 1 !== n && X !== c || (l = U === c || V === c ? b : b + 1, 
-                m = a.position - a.lineStart, 1 === n ? h && (C(a, m) || D(a, m, l)) || A(a, l) ? q = !0 : (g && B(a, l) || y(a, l) || z(a, l) ? q = !0 : G(a) ? (q = !0, 
-                null === a.tag && null === a.anchor || o(a, "alias node should not have any properties")) : x(a, l, U === c) && (q = !0, 
-                null === a.tag && (a.tag = "?")), null !== a.anchor && (a.anchorMap[a.anchor] = a.result)) : 0 === n && (q = h && C(a, m))), 
-                null !== a.tag && "!" !== a.tag) if ("?" === a.tag) {
-                    for (i = 0, j = a.implicitTypes.length; i < j; i += 1) if (k = a.implicitTypes[i], 
-                    k.resolve(a.result)) {
-                        a.result = k.construct(a.result), a.tag = k.tag, null !== a.anchor && (a.anchorMap[a.anchor] = a.result);
-                        break;
-                    }
-                } else T.call(a.typeMap, a.tag) ? (k = a.typeMap[a.tag], null !== a.result && k.kind !== a.kind && o(a, "unacceptable node kind for !<" + a.tag + '> tag; it should be "' + k.kind + '", not "' + a.kind + '"'), 
-                k.resolve(a.result) ? (a.result = k.construct(a.result), null !== a.anchor && (a.anchorMap[a.anchor] = a.result)) : o(a, "cannot resolve a node with !<" + a.tag + "> explicit tag")) : o(a, "unknown tag !<" + a.tag + ">");
-                return null !== a.listener && a.listener("close", a), null !== a.tag || null !== a.anchor || q;
-            }
-            function I(a) {
-                var b, c, g, h, i = a.position, j = !1;
-                for (a.version = null, a.checkLineBreaks = a.legacy, a.tagMap = {}, a.anchorMap = {}; 0 !== (h = a.input.charCodeAt(a.position)) && (u(a, !0, -1), 
-                h = a.input.charCodeAt(a.position), !(a.lineIndent > 0 || 37 !== h)); ) {
-                    for (j = !0, h = a.input.charCodeAt(++a.position), b = a.position; 0 !== h && !f(h); ) h = a.input.charCodeAt(++a.position);
-                    for (c = a.input.slice(b, a.position), g = [], c.length < 1 && o(a, "directive name must not be less than one character in length"); 0 !== h; ) {
-                        for (;e(h); ) h = a.input.charCodeAt(++a.position);
-                        if (35 === h) {
-                            do h = a.input.charCodeAt(++a.position); while (0 !== h && !d(h));
-                            break;
-                        }
-                        if (d(h)) break;
-                        for (b = a.position; 0 !== h && !f(h); ) h = a.input.charCodeAt(++a.position);
-                        g.push(a.input.slice(b, a.position));
-                    }
-                    0 !== h && t(a), T.call(ha, c) ? ha[c](a, c, g) : p(a, 'unknown document directive "' + c + '"');
-                }
-                return u(a, !0, -1), 0 === a.lineIndent && 45 === a.input.charCodeAt(a.position) && 45 === a.input.charCodeAt(a.position + 1) && 45 === a.input.charCodeAt(a.position + 2) ? (a.position += 3, 
-                u(a, !0, -1)) : j && o(a, "directives end mark is expected"), H(a, a.lineIndent - 1, X, !1, !0), 
-                u(a, !0, -1), a.checkLineBreaks && aa.test(a.input.slice(i, a.position)) && p(a, "non-ASCII line breaks are interpreted as content"), 
-                a.documents.push(a.result), a.position === a.lineStart && v(a) ? void (46 === a.input.charCodeAt(a.position) && (a.position += 3, 
-                u(a, !0, -1))) : void (a.position < a.length - 1 && o(a, "end of the stream or a document separator is expected"));
-            }
-            function J(a, b) {
-                a = String(a), b = b || {}, 0 !== a.length && (10 !== a.charCodeAt(a.length - 1) && 13 !== a.charCodeAt(a.length - 1) && (a += "\n"), 
-                65279 === a.charCodeAt(0) && (a = a.slice(1)));
-                var c = new m(a, b);
-                for (c.input += "\0"; 32 === c.input.charCodeAt(c.position); ) c.lineIndent += 1, 
-                c.position += 1;
-                for (;c.position < c.length - 1; ) I(c);
-                return c.documents;
-            }
-            function K(a, b, c) {
-                var d, e, f = J(a, c);
-                for (d = 0, e = f.length; d < e; d += 1) b(f[d]);
-            }
-            function L(a, b) {
-                var c = J(a, b);
-                if (0 !== c.length) {
-                    if (1 === c.length) return c[0];
-                    throw new P("expected a single document in the stream, but found more");
-                }
-            }
-            function M(a, b, c) {
-                K(a, b, O.extend({
-                    schema: R
-                }, c));
-            }
-            function N(a, b) {
-                return L(a, O.extend({
-                    schema: R
-                }, b));
-            }
-            for (var O = a("./common"), P = a("./exception"), Q = a("./mark"), R = a("./schema/default_safe"), S = a("./schema/default_full"), T = Object.prototype.hasOwnProperty, U = 1, V = 2, W = 3, X = 4, Y = 1, Z = 2, $ = 3, _ = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x84\x86-\x9F\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/, aa = /[\x85\u2028\u2029]/, ba = /[,\[\]\{\}]/, ca = /^(?:!|!!|![a-z\-]+!)$/i, da = /^(?:!|[^,\[\]\{\}])(?:%[0-9a-f]{2}|[0-9a-z\-#;\/\?:@&=\+\$,_\.!~\*'\(\)\[\]])*$/i, ea = new Array(256), fa = new Array(256), ga = 0; ga < 256; ga++) ea[ga] = k(ga) ? 1 : 0, 
-            fa[ga] = k(ga);
-            var ha = {
-                YAML: function(a, b, c) {
-                    var d, e, f;
-                    null !== a.version && o(a, "duplication of %YAML directive"), 1 !== c.length && o(a, "YAML directive accepts exactly one argument"), 
-                    d = /^([0-9]+)\.([0-9]+)$/.exec(c[0]), null === d && o(a, "ill-formed argument of the YAML directive"), 
-                    e = parseInt(d[1], 10), f = parseInt(d[2], 10), 1 !== e && o(a, "unacceptable YAML version of the document"), 
-                    a.version = c[0], a.checkLineBreaks = f < 2, 1 !== f && 2 !== f && p(a, "unsupported YAML version of the document");
-                },
-                TAG: function(a, b, c) {
-                    var d, e;
-                    2 !== c.length && o(a, "TAG directive accepts exactly two arguments"), d = c[0], 
-                    e = c[1], ca.test(d) || o(a, "ill-formed tag handle (first argument) of the TAG directive"), 
-                    T.call(a.tagMap, d) && o(a, 'there is a previously declared suffix for "' + d + '" tag handle'), 
-                    da.test(e) || o(a, "ill-formed tag prefix (second argument) of the TAG directive"), 
-                    a.tagMap[d] = e;
-                }
-            };
-            b.exports.loadAll = K, b.exports.load = L, b.exports.safeLoadAll = M, b.exports.safeLoad = N;
-        }, {
-            "./common": 2,
-            "./exception": 4,
-            "./mark": 6,
-            "./schema/default_full": 9,
-            "./schema/default_safe": 10
-        } ],
-        6: [ function(a, b, c) {
-            function d(a, b, c, d, e) {
-                this.name = a, this.buffer = b, this.position = c, this.line = d, this.column = e;
-            }
-            var e = a("./common");
-            d.prototype.getSnippet = function(a, b) {
-                var c, d, f, g, h;
-                if (!this.buffer) return null;
-                for (a = a || 4, b = b || 75, c = "", d = this.position; d > 0 && "\0\r\n\u2028\u2029".indexOf(this.buffer.charAt(d - 1)) === -1; ) if (d -= 1, 
-                this.position - d > b / 2 - 1) {
-                    c = " ... ", d += 5;
-                    break;
-                }
-                for (f = "", g = this.position; g < this.buffer.length && "\0\r\n\u2028\u2029".indexOf(this.buffer.charAt(g)) === -1; ) if (g += 1, 
-                g - this.position > b / 2 - 1) {
-                    f = " ... ", g -= 5;
-                    break;
-                }
-                return h = this.buffer.slice(d, g), e.repeat(" ", a) + c + h + f + "\n" + e.repeat(" ", a + this.position - d + c.length) + "^";
-            }, d.prototype.toString = function(a) {
-                var b, c = "";
-                return this.name && (c += 'in "' + this.name + '" '), c += "at line " + (this.line + 1) + ", column " + (this.column + 1), 
-                a || (b = this.getSnippet(), b && (c += ":\n" + b)), c;
-            }, b.exports = d;
-        }, {
-            "./common": 2
-        } ],
-        7: [ function(a, b, c) {
-            function d(a, b, c) {
-                var e = [];
-                return a.include.forEach(function(a) {
-                    c = d(a, b, c);
-                }), a[b].forEach(function(a) {
-                    c.forEach(function(b, c) {
-                        b.tag === a.tag && e.push(c);
-                    }), c.push(a);
-                }), c.filter(function(a, b) {
-                    return e.indexOf(b) === -1;
-                });
-            }
-            function e() {
-                function a(a) {
-                    d[a.tag] = a;
-                }
-                var b, c, d = {};
-                for (b = 0, c = arguments.length; b < c; b += 1) arguments[b].forEach(a);
-                return d;
-            }
-            function f(a) {
-                this.include = a.include || [], this.implicit = a.implicit || [], this.explicit = a.explicit || [], 
-                this.implicit.forEach(function(a) {
-                    if (a.loadKind && "scalar" !== a.loadKind) throw new h("There is a non-scalar type in the implicit list of a schema. Implicit resolving of such types is not supported.");
-                }), this.compiledImplicit = d(this, "implicit", []), this.compiledExplicit = d(this, "explicit", []), 
-                this.compiledTypeMap = e(this.compiledImplicit, this.compiledExplicit);
-            }
-            var g = a("./common"), h = a("./exception"), i = a("./type");
-            f.DEFAULT = null, f.create = function() {
-                var a, b;
-                switch (arguments.length) {
-                  case 1:
-                    a = f.DEFAULT, b = arguments[0];
-                    break;
-
-                  case 2:
-                    a = arguments[0], b = arguments[1];
-                    break;
-
-                  default:
-                    throw new h("Wrong number of arguments for Schema.create function");
-                }
-                if (a = g.toArray(a), b = g.toArray(b), !a.every(function(a) {
-                    return a instanceof f;
-                })) throw new h("Specified list of super schemas (or a single Schema object) contains a non-Schema object.");
-                if (!b.every(function(a) {
-                    return a instanceof i;
-                })) throw new h("Specified list of YAML types (or a single Type object) contains a non-Type object.");
-                return new f({
-                    include: a,
-                    explicit: b
-                });
-            }, b.exports = f;
-        }, {
-            "./common": 2,
-            "./exception": 4,
-            "./type": 13
-        } ],
-        8: [ function(a, b, c) {
-            var d = a("../schema");
-            b.exports = new d({
-                include: [ a("./json") ]
-            });
-        }, {
-            "../schema": 7,
-            "./json": 12
-        } ],
-        9: [ function(a, b, c) {
-            var d = a("../schema");
-            b.exports = d.DEFAULT = new d({
-                include: [ a("./default_safe") ],
-                explicit: [ a("../type/js/undefined"), a("../type/js/regexp"), a("../type/js/function") ]
-            });
-        }, {
-            "../schema": 7,
-            "../type/js/function": 18,
-            "../type/js/regexp": 19,
-            "../type/js/undefined": 20,
-            "./default_safe": 10
-        } ],
-        10: [ function(a, b, c) {
-            var d = a("../schema");
-            b.exports = new d({
-                include: [ a("./core") ],
-                implicit: [ a("../type/timestamp"), a("../type/merge") ],
-                explicit: [ a("../type/binary"), a("../type/omap"), a("../type/pairs"), a("../type/set") ]
-            });
-        }, {
-            "../schema": 7,
-            "../type/binary": 14,
-            "../type/merge": 22,
-            "../type/omap": 24,
-            "../type/pairs": 25,
-            "../type/set": 27,
-            "../type/timestamp": 29,
-            "./core": 8
-        } ],
-        11: [ function(a, b, c) {
-            var d = a("../schema");
-            b.exports = new d({
-                explicit: [ a("../type/str"), a("../type/seq"), a("../type/map") ]
-            });
-        }, {
-            "../schema": 7,
-            "../type/map": 21,
-            "../type/seq": 26,
-            "../type/str": 28
-        } ],
-        12: [ function(a, b, c) {
-            var d = a("../schema");
-            b.exports = new d({
-                include: [ a("./failsafe") ],
-                implicit: [ a("../type/null"), a("../type/bool"), a("../type/int"), a("../type/float") ]
-            });
-        }, {
-            "../schema": 7,
-            "../type/bool": 15,
-            "../type/float": 16,
-            "../type/int": 17,
-            "../type/null": 23,
-            "./failsafe": 11
-        } ],
-        13: [ function(a, b, c) {
-            function d(a) {
-                var b = {};
-                return null !== a && Object.keys(a).forEach(function(c) {
-                    a[c].forEach(function(a) {
-                        b[String(a)] = c;
-                    });
-                }), b;
-            }
-            function e(a, b) {
-                if (b = b || {}, Object.keys(b).forEach(function(b) {
-                    if (g.indexOf(b) === -1) throw new f('Unknown option "' + b + '" is met in definition of "' + a + '" YAML type.');
-                }), this.tag = a, this.kind = b.kind || null, this.resolve = b.resolve || function() {
-                    return !0;
-                }, this.construct = b.construct || function(a) {
-                    return a;
-                }, this.instanceOf = b.instanceOf || null, this.predicate = b.predicate || null, 
-                this.represent = b.represent || null, this.defaultStyle = b.defaultStyle || null, 
-                this.styleAliases = d(b.styleAliases || null), h.indexOf(this.kind) === -1) throw new f('Unknown kind "' + this.kind + '" is specified for "' + a + '" YAML type.');
-            }
-            var f = a("./exception"), g = [ "kind", "resolve", "construct", "instanceOf", "predicate", "represent", "defaultStyle", "styleAliases" ], h = [ "scalar", "sequence", "mapping" ];
-            b.exports = e;
-        }, {
-            "./exception": 4
-        } ],
-        14: [ function(a, b, c) {
-            function d(a) {
-                if (null === a) return !1;
-                var b, c, d = 0, e = a.length, f = l;
-                for (c = 0; c < e; c++) if (b = f.indexOf(a.charAt(c)), !(b > 64)) {
-                    if (b < 0) return !1;
-                    d += 6;
-                }
-                return d % 8 === 0;
-            }
-            function e(a) {
-                var b, c, d = a.replace(/[\r\n=]/g, ""), e = d.length, f = l, g = 0, i = [];
-                for (b = 0; b < e; b++) b % 4 === 0 && b && (i.push(g >> 16 & 255), i.push(g >> 8 & 255), 
-                i.push(255 & g)), g = g << 6 | f.indexOf(d.charAt(b));
-                return c = e % 4 * 6, 0 === c ? (i.push(g >> 16 & 255), i.push(g >> 8 & 255), i.push(255 & g)) : 18 === c ? (i.push(g >> 10 & 255), 
-                i.push(g >> 2 & 255)) : 12 === c && i.push(g >> 4 & 255), h ? new h(i) : i;
-            }
-            function f(a) {
-                var b, c, d = "", e = 0, f = a.length, g = l;
-                for (b = 0; b < f; b++) b % 3 === 0 && b && (d += g[e >> 18 & 63], d += g[e >> 12 & 63], 
-                d += g[e >> 6 & 63], d += g[63 & e]), e = (e << 8) + a[b];
-                return c = f % 3, 0 === c ? (d += g[e >> 18 & 63], d += g[e >> 12 & 63], d += g[e >> 6 & 63], 
-                d += g[63 & e]) : 2 === c ? (d += g[e >> 10 & 63], d += g[e >> 4 & 63], d += g[e << 2 & 63], 
-                d += g[64]) : 1 === c && (d += g[e >> 2 & 63], d += g[e << 4 & 63], d += g[64], 
-                d += g[64]), d;
-            }
-            function g(a) {
-                return h && h.isBuffer(a);
-            }
-            var h;
-            try {
-                var i = a;
-                h = i("buffer").Buffer;
-            } catch (j) {}
-            var k = a("../type"), l = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r";
-            b.exports = new k("tag:yaml.org,2002:binary", {
-                kind: "scalar",
-                resolve: d,
-                construct: e,
-                predicate: g,
-                represent: f
-            });
-        }, {
-            "../type": 13
-        } ],
-        15: [ function(a, b, c) {
-            function d(a) {
-                if (null === a) return !1;
-                var b = a.length;
-                return 4 === b && ("true" === a || "True" === a || "TRUE" === a) || 5 === b && ("false" === a || "False" === a || "FALSE" === a);
-            }
-            function e(a) {
-                return "true" === a || "True" === a || "TRUE" === a;
-            }
-            function f(a) {
-                return "[object Boolean]" === Object.prototype.toString.call(a);
-            }
-            var g = a("../type");
-            b.exports = new g("tag:yaml.org,2002:bool", {
-                kind: "scalar",
-                resolve: d,
-                construct: e,
-                predicate: f,
-                represent: {
-                    lowercase: function(a) {
-                        return a ? "true" : "false";
-                    },
-                    uppercase: function(a) {
-                        return a ? "TRUE" : "FALSE";
-                    },
-                    camelcase: function(a) {
-                        return a ? "True" : "False";
-                    }
-                },
-                defaultStyle: "lowercase"
-            });
-        }, {
-            "../type": 13
-        } ],
-        16: [ function(a, b, c) {
-            function d(a) {
-                return null !== a && !!j.test(a);
-            }
-            function e(a) {
-                var b, c, d, e;
-                return b = a.replace(/_/g, "").toLowerCase(), c = "-" === b[0] ? -1 : 1, e = [], 
-                "+-".indexOf(b[0]) >= 0 && (b = b.slice(1)), ".inf" === b ? 1 === c ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY : ".nan" === b ? NaN : b.indexOf(":") >= 0 ? (b.split(":").forEach(function(a) {
-                    e.unshift(parseFloat(a, 10));
-                }), b = 0, d = 1, e.forEach(function(a) {
-                    b += a * d, d *= 60;
-                }), c * b) : c * parseFloat(b, 10);
-            }
-            function f(a, b) {
-                var c;
-                if (isNaN(a)) switch (b) {
-                  case "lowercase":
-                    return ".nan";
-
-                  case "uppercase":
-                    return ".NAN";
-
-                  case "camelcase":
-                    return ".NaN";
-                } else if (Number.POSITIVE_INFINITY === a) switch (b) {
-                  case "lowercase":
-                    return ".inf";
-
-                  case "uppercase":
-                    return ".INF";
-
-                  case "camelcase":
-                    return ".Inf";
-                } else if (Number.NEGATIVE_INFINITY === a) switch (b) {
-                  case "lowercase":
-                    return "-.inf";
-
-                  case "uppercase":
-                    return "-.INF";
-
-                  case "camelcase":
-                    return "-.Inf";
-                } else if (h.isNegativeZero(a)) return "-0.0";
-                return c = a.toString(10), k.test(c) ? c.replace("e", ".e") : c;
-            }
-            function g(a) {
-                return "[object Number]" === Object.prototype.toString.call(a) && (a % 1 !== 0 || h.isNegativeZero(a));
-            }
-            var h = a("../common"), i = a("../type"), j = new RegExp("^(?:[-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+][0-9]+)?|\\.[0-9_]+(?:[eE][-+][0-9]+)?|[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*|[-+]?\\.(?:inf|Inf|INF)|\\.(?:nan|NaN|NAN))$"), k = /^[-+]?[0-9]+e/;
-            b.exports = new i("tag:yaml.org,2002:float", {
-                kind: "scalar",
-                resolve: d,
-                construct: e,
-                predicate: g,
-                represent: f,
-                defaultStyle: "lowercase"
-            });
-        }, {
-            "../common": 2,
-            "../type": 13
-        } ],
-        17: [ function(a, b, c) {
-            function d(a) {
-                return 48 <= a && a <= 57 || 65 <= a && a <= 70 || 97 <= a && a <= 102;
-            }
-            function e(a) {
-                return 48 <= a && a <= 55;
-            }
-            function f(a) {
-                return 48 <= a && a <= 57;
-            }
-            function g(a) {
-                if (null === a) return !1;
-                var b, c = a.length, g = 0, h = !1;
-                if (!c) return !1;
-                if (b = a[g], "-" !== b && "+" !== b || (b = a[++g]), "0" === b) {
-                    if (g + 1 === c) return !0;
-                    if (b = a[++g], "b" === b) {
-                        for (g++; g < c; g++) if (b = a[g], "_" !== b) {
-                            if ("0" !== b && "1" !== b) return !1;
-                            h = !0;
-                        }
-                        return h;
-                    }
-                    if ("x" === b) {
-                        for (g++; g < c; g++) if (b = a[g], "_" !== b) {
-                            if (!d(a.charCodeAt(g))) return !1;
-                            h = !0;
-                        }
-                        return h;
-                    }
-                    for (;g < c; g++) if (b = a[g], "_" !== b) {
-                        if (!e(a.charCodeAt(g))) return !1;
-                        h = !0;
-                    }
-                    return h;
-                }
-                for (;g < c; g++) if (b = a[g], "_" !== b) {
-                    if (":" === b) break;
-                    if (!f(a.charCodeAt(g))) return !1;
-                    h = !0;
-                }
-                return !!h && (":" !== b || /^(:[0-5]?[0-9])+$/.test(a.slice(g)));
-            }
-            function h(a) {
-                var b, c, d = a, e = 1, f = [];
-                return d.indexOf("_") !== -1 && (d = d.replace(/_/g, "")), b = d[0], "-" !== b && "+" !== b || ("-" === b && (e = -1), 
-                d = d.slice(1), b = d[0]), "0" === d ? 0 : "0" === b ? "b" === d[1] ? e * parseInt(d.slice(2), 2) : "x" === d[1] ? e * parseInt(d, 16) : e * parseInt(d, 8) : d.indexOf(":") !== -1 ? (d.split(":").forEach(function(a) {
-                    f.unshift(parseInt(a, 10));
-                }), d = 0, c = 1, f.forEach(function(a) {
-                    d += a * c, c *= 60;
-                }), e * d) : e * parseInt(d, 10);
-            }
-            function i(a) {
-                return "[object Number]" === Object.prototype.toString.call(a) && a % 1 === 0 && !j.isNegativeZero(a);
-            }
-            var j = a("../common"), k = a("../type");
-            b.exports = new k("tag:yaml.org,2002:int", {
-                kind: "scalar",
-                resolve: g,
-                construct: h,
-                predicate: i,
-                represent: {
-                    binary: function(a) {
-                        return "0b" + a.toString(2);
-                    },
-                    octal: function(a) {
-                        return "0" + a.toString(8);
-                    },
-                    decimal: function(a) {
-                        return a.toString(10);
-                    },
-                    hexadecimal: function(a) {
-                        return "0x" + a.toString(16).toUpperCase();
-                    }
-                },
-                defaultStyle: "decimal",
-                styleAliases: {
-                    binary: [ 2, "bin" ],
-                    octal: [ 8, "oct" ],
-                    decimal: [ 10, "dec" ],
-                    hexadecimal: [ 16, "hex" ]
-                }
-            });
-        }, {
-            "../common": 2,
-            "../type": 13
-        } ],
-        18: [ function(a, b, c) {
-            function d(a) {
-                if (null === a) return !1;
-                try {
-                    var b = "(" + a + ")", c = h.parse(b, {
-                        range: !0
-                    });
-                    return "Program" === c.type && 1 === c.body.length && "ExpressionStatement" === c.body[0].type && "FunctionExpression" === c.body[0].expression.type;
-                } catch (d) {
-                    return !1;
-                }
-            }
-            function e(a) {
-                var b, c = "(" + a + ")", d = h.parse(c, {
-                    range: !0
-                }), e = [];
-                if ("Program" !== d.type || 1 !== d.body.length || "ExpressionStatement" !== d.body[0].type || "FunctionExpression" !== d.body[0].expression.type) throw new Error("Failed to resolve function");
-                return d.body[0].expression.params.forEach(function(a) {
-                    e.push(a.name);
-                }), b = d.body[0].expression.body.range, new Function(e, c.slice(b[0] + 1, b[1] - 1));
-            }
-            function f(a) {
-                return a.toString();
-            }
-            function g(a) {
-                return "[object Function]" === Object.prototype.toString.call(a);
-            }
-            var h;
-            try {
-                var i = a;
-                h = i("esprima");
-            } catch (j) {
-                "undefined" != typeof window && (h = window.esprima);
-            }
-            var k = a("../../type");
-            b.exports = new k("tag:yaml.org,2002:js/function", {
-                kind: "scalar",
-                resolve: d,
-                construct: e,
-                predicate: g,
-                represent: f
-            });
-        }, {
-            "../../type": 13
-        } ],
-        19: [ function(a, b, c) {
-            function d(a) {
-                if (null === a) return !1;
-                if (0 === a.length) return !1;
-                var b = a, c = /\/([gim]*)$/.exec(a), d = "";
-                if ("/" === b[0]) {
-                    if (c && (d = c[1]), d.length > 3) return !1;
-                    if ("/" !== b[b.length - d.length - 1]) return !1;
-                }
-                return !0;
-            }
-            function e(a) {
-                var b = a, c = /\/([gim]*)$/.exec(a), d = "";
-                return "/" === b[0] && (c && (d = c[1]), b = b.slice(1, b.length - d.length - 1)), 
-                new RegExp(b, d);
-            }
-            function f(a) {
-                var b = "/" + a.source + "/";
-                return a.global && (b += "g"), a.multiline && (b += "m"), a.ignoreCase && (b += "i"), 
-                b;
-            }
-            function g(a) {
-                return "[object RegExp]" === Object.prototype.toString.call(a);
-            }
-            var h = a("../../type");
-            b.exports = new h("tag:yaml.org,2002:js/regexp", {
-                kind: "scalar",
-                resolve: d,
-                construct: e,
-                predicate: g,
-                represent: f
-            });
-        }, {
-            "../../type": 13
-        } ],
-        20: [ function(a, b, c) {
-            function d() {
-                return !0;
-            }
-            function e() {}
-            function f() {
-                return "";
-            }
-            function g(a) {
-                return "undefined" == typeof a;
-            }
-            var h = a("../../type");
-            b.exports = new h("tag:yaml.org,2002:js/undefined", {
-                kind: "scalar",
-                resolve: d,
-                construct: e,
-                predicate: g,
-                represent: f
-            });
-        }, {
-            "../../type": 13
-        } ],
-        21: [ function(a, b, c) {
-            var d = a("../type");
-            b.exports = new d("tag:yaml.org,2002:map", {
-                kind: "mapping",
-                construct: function(a) {
-                    return null !== a ? a : {};
-                }
-            });
-        }, {
-            "../type": 13
-        } ],
-        22: [ function(a, b, c) {
-            function d(a) {
-                return "<<" === a || null === a;
-            }
-            var e = a("../type");
-            b.exports = new e("tag:yaml.org,2002:merge", {
-                kind: "scalar",
-                resolve: d
-            });
-        }, {
-            "../type": 13
-        } ],
-        23: [ function(a, b, c) {
-            function d(a) {
-                if (null === a) return !0;
-                var b = a.length;
-                return 1 === b && "~" === a || 4 === b && ("null" === a || "Null" === a || "NULL" === a);
-            }
-            function e() {
-                return null;
-            }
-            function f(a) {
-                return null === a;
-            }
-            var g = a("../type");
-            b.exports = new g("tag:yaml.org,2002:null", {
-                kind: "scalar",
-                resolve: d,
-                construct: e,
-                predicate: f,
-                represent: {
-                    canonical: function() {
-                        return "~";
-                    },
-                    lowercase: function() {
-                        return "null";
-                    },
-                    uppercase: function() {
-                        return "NULL";
-                    },
-                    camelcase: function() {
-                        return "Null";
-                    }
-                },
-                defaultStyle: "lowercase"
-            });
-        }, {
-            "../type": 13
-        } ],
-        24: [ function(a, b, c) {
-            function d(a) {
-                if (null === a) return !0;
-                var b, c, d, e, f, i = [], j = a;
-                for (b = 0, c = j.length; b < c; b += 1) {
-                    if (d = j[b], f = !1, "[object Object]" !== h.call(d)) return !1;
-                    for (e in d) if (g.call(d, e)) {
-                        if (f) return !1;
-                        f = !0;
-                    }
-                    if (!f) return !1;
-                    if (i.indexOf(e) !== -1) return !1;
-                    i.push(e);
-                }
-                return !0;
-            }
-            function e(a) {
-                return null !== a ? a : [];
-            }
-            var f = a("../type"), g = Object.prototype.hasOwnProperty, h = Object.prototype.toString;
-            b.exports = new f("tag:yaml.org,2002:omap", {
-                kind: "sequence",
-                resolve: d,
-                construct: e
-            });
-        }, {
-            "../type": 13
-        } ],
-        25: [ function(a, b, c) {
-            function d(a) {
-                if (null === a) return !0;
-                var b, c, d, e, f, h = a;
-                for (f = new Array(h.length), b = 0, c = h.length; b < c; b += 1) {
-                    if (d = h[b], "[object Object]" !== g.call(d)) return !1;
-                    if (e = Object.keys(d), 1 !== e.length) return !1;
-                    f[b] = [ e[0], d[e[0]] ];
-                }
-                return !0;
-            }
-            function e(a) {
-                if (null === a) return [];
-                var b, c, d, e, f, g = a;
-                for (f = new Array(g.length), b = 0, c = g.length; b < c; b += 1) d = g[b], e = Object.keys(d), 
-                f[b] = [ e[0], d[e[0]] ];
-                return f;
-            }
-            var f = a("../type"), g = Object.prototype.toString;
-            b.exports = new f("tag:yaml.org,2002:pairs", {
-                kind: "sequence",
-                resolve: d,
-                construct: e
-            });
-        }, {
-            "../type": 13
-        } ],
-        26: [ function(a, b, c) {
-            var d = a("../type");
-            b.exports = new d("tag:yaml.org,2002:seq", {
-                kind: "sequence",
-                construct: function(a) {
-                    return null !== a ? a : [];
-                }
-            });
-        }, {
-            "../type": 13
-        } ],
-        27: [ function(a, b, c) {
-            function d(a) {
-                if (null === a) return !0;
-                var b, c = a;
-                for (b in c) if (g.call(c, b) && null !== c[b]) return !1;
-                return !0;
-            }
-            function e(a) {
-                return null !== a ? a : {};
-            }
-            var f = a("../type"), g = Object.prototype.hasOwnProperty;
-            b.exports = new f("tag:yaml.org,2002:set", {
-                kind: "mapping",
-                resolve: d,
-                construct: e
-            });
-        }, {
-            "../type": 13
-        } ],
-        28: [ function(a, b, c) {
-            var d = a("../type");
-            b.exports = new d("tag:yaml.org,2002:str", {
-                kind: "scalar",
-                construct: function(a) {
-                    return null !== a ? a : "";
-                }
-            });
-        }, {
-            "../type": 13
-        } ],
-        29: [ function(a, b, c) {
-            function d(a) {
-                return null !== a && (null !== h.exec(a) || null !== i.exec(a));
-            }
-            function e(a) {
-                var b, c, d, e, f, g, j, k, l, m, n = 0, o = null;
-                if (b = h.exec(a), null === b && (b = i.exec(a)), null === b) throw new Error("Date resolve error");
-                if (c = +b[1], d = +b[2] - 1, e = +b[3], !b[4]) return new Date(Date.UTC(c, d, e));
-                if (f = +b[4], g = +b[5], j = +b[6], b[7]) {
-                    for (n = b[7].slice(0, 3); n.length < 3; ) n += "0";
-                    n = +n;
-                }
-                return b[9] && (k = +b[10], l = +(b[11] || 0), o = 6e4 * (60 * k + l), "-" === b[9] && (o = -o)), 
-                m = new Date(Date.UTC(c, d, e, f, g, j, n)), o && m.setTime(m.getTime() - o), m;
-            }
-            function f(a) {
-                return a.toISOString();
-            }
-            var g = a("../type"), h = new RegExp("^([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])$"), i = new RegExp("^([0-9][0-9][0-9][0-9])-([0-9][0-9]?)-([0-9][0-9]?)(?:[Tt]|[ \\t]+)([0-9][0-9]?):([0-9][0-9]):([0-9][0-9])(?:\\.([0-9]*))?(?:[ \\t]*(Z|([-+])([0-9][0-9]?)(?::([0-9][0-9]))?))?$");
-            b.exports = new g("tag:yaml.org,2002:timestamp", {
-                kind: "scalar",
-                resolve: d,
-                construct: e,
-                instanceOf: Date,
-                represent: f
-            });
-        }, {
-            "../type": 13
-        } ],
-        "/": [ function(a, b, c) {
-            var d = a("./lib/js-yaml.js");
-            b.exports = d;
-        }, {
-            "./lib/js-yaml.js": 1
-        } ]
-    }, {}, [])("/");
-}), function(a, b, c) {
-    function d(a) {
-        var c = [];
-        return i(c, b.noop).chars(a), c.join("");
-    }
-    function e(a, c) {
-        var d, e = {}, f = a.split(",");
-        for (d = 0; d < f.length; d++) e[c ? b.lowercase(f[d]) : f[d]] = !0;
-        return e;
-    }
-    function f(a, c) {
-        function d(a, d, f, h) {
-            if (d = b.lowercase(d), w[d]) for (;s.last() && x[s.last()]; ) e("", s.last());
-            v[d] && s.last() == d && e("", d), (h = u[d] || !!h) || s.push(d);
-            var i = {};
-            f.replace(m, function(a, b, c, d, e) {
-                i[b] = g(c || d || e || "");
-            }), c.start && c.start(d, i, h);
-        }
-        function e(a, d) {
-            var e, f = 0;
-            if (d = b.lowercase(d)) for (f = s.length - 1; 0 <= f && s[f] != d; f--) ;
-            if (0 <= f) {
-                for (e = s.length - 1; e >= f; e--) c.end && c.end(s[e]);
-                s.length = f;
-            }
-        }
-        "string" != typeof a && (a = null === a || "undefined" == typeof a ? "" : "" + a);
-        var f, h, i, s = [], t = a;
-        for (s.last = function() {
-            return s[s.length - 1];
-        }; a; ) {
-            if (i = "", h = !0, s.last() && y[s.last()] ? (a = a.replace(new RegExp("([\\W\\w]*)<\\s*\\/\\s*" + s.last() + "[^>]*>", "i"), function(a, b) {
-                return b = b.replace(p, "$1").replace(r, "$1"), c.chars && c.chars(g(b)), "";
-            }), e("", s.last())) : (0 === a.indexOf("<!--") ? (f = a.indexOf("--", 4), 0 <= f && a.lastIndexOf("-->", f) === f && (c.comment && c.comment(a.substring(4, f)), 
-            a = a.substring(f + 3), h = !1)) : q.test(a) ? (f = a.match(q)) && (a = a.replace(f[0], ""), 
-            h = !1) : o.test(a) ? (f = a.match(l)) && (a = a.substring(f[0].length), f[0].replace(l, e), 
-            h = !1) : n.test(a) && ((f = a.match(k)) ? (f[4] && (a = a.substring(f[0].length), 
-            f[0].replace(k, d)), h = !1) : (i += "<", a = a.substring(1))), h && (f = a.indexOf("<"), 
-            i += 0 > f ? a : a.substring(0, f), a = 0 > f ? "" : a.substring(f), c.chars && c.chars(g(i)))), 
-            a == t) throw j("badparse", a);
-            t = a;
-        }
-        e();
-    }
-    function g(a) {
-        return a ? (C.innerHTML = a.replace(/</g, "&lt;"), C.textContent) : "";
-    }
-    function h(a) {
-        return a.replace(/&/g, "&amp;").replace(s, function(a) {
-            var b = a.charCodeAt(0);
-            return a = a.charCodeAt(1), "&#" + (1024 * (b - 55296) + (a - 56320) + 65536) + ";";
-        }).replace(t, function(a) {
-            return "&#" + a.charCodeAt(0) + ";";
-        }).replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
-    function i(a, c) {
-        var d = !1, e = b.bind(a, a.push);
-        return {
-            start: function(a, f, g) {
-                a = b.lowercase(a), !d && y[a] && (d = a), d || !0 !== z[a] || (e("<"), e(a), b.forEach(f, function(d, f) {
-                    var g = b.lowercase(f), i = "img" === a && "src" === g || "background" === g;
-                    !0 !== B[g] || !0 === A[g] && !c(d, i) || (e(" "), e(f), e('="'), e(h(d)), e('"'));
-                }), e(g ? "/>" : ">"));
-            },
-            end: function(a) {
-                a = b.lowercase(a), d || !0 !== z[a] || (e("</"), e(a), e(">")), a == d && (d = !1);
-            },
-            chars: function(a) {
-                d || e(h(a));
-            }
-        };
-    }
-    var j = b.$$minErr("$sanitize"), k = /^<((?:[a-zA-Z])[\w:-]*)((?:\s+[\w:-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*(>?)/, l = /^<\/\s*([\w:-]+)[^>]*>/, m = /([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g, n = /^</, o = /^<\//, p = /\x3c!--(.*?)--\x3e/g, q = /<!DOCTYPE([^>]*?)>/i, r = /<!\[CDATA\[(.*?)]]\x3e/g, s = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g, t = /([^\#-~| |!])/g, u = e("area,br,col,hr,img,wbr");
-    a = e("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"), c = e("rp,rt");
-    var v = b.extend({}, c, a), w = b.extend({}, a, e("address,article,aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5,h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul")), x = b.extend({}, c, e("a,abbr,acronym,b,bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s,samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
-    a = e("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph,hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline,radialGradient,rect,stop,svg,switch,text,title,tspan,use");
-    var y = e("script,style"), z = b.extend({}, u, w, x, v, a), A = e("background,cite,href,longdesc,src,usemap,xlink:href");
-    a = e("abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,valign,value,vspace,width"), 
-    c = e("accent-height,accumulate,additive,alphabetic,arabic-form,ascent,baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan", !0);
-    var B = b.extend({}, A, c, a), C = document.createElement("pre");
+    var d, e, f, g, h, i, j, k, l, m = b.$$minErr("$sanitize");
     b.module("ngSanitize", []).provider("$sanitize", function() {
+        function c(a, b) {
+            var c, d = {}, e = a.split(",");
+            for (c = 0; c < e.length; c++) d[b ? h(e[c]) : e[c]] = !0;
+            return d;
+        }
+        function n(a) {
+            for (var b = {}, c = 0, d = a.length; c < d; c++) {
+                var e = a[c];
+                b[e.name] = e.value;
+            }
+            return b;
+        }
+        function o(a) {
+            return a.replace(/&/g, "&amp;").replace(t, function(a) {
+                var b = a.charCodeAt(0);
+                return a = a.charCodeAt(1), "&#" + (1024 * (b - 55296) + (a - 56320) + 65536) + ";";
+            }).replace(u, function(a) {
+                return "&#" + a.charCodeAt(0) + ";";
+            }).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+        function p(b) {
+            for (;b; ) {
+                if (b.nodeType === a.Node.ELEMENT_NODE) for (var c = b.attributes, d = 0, e = c.length; d < e; d++) {
+                    var f = c[d], g = f.name.toLowerCase();
+                    "xmlns:ns1" !== g && 0 !== g.lastIndexOf("ns1:", 0) || (b.removeAttributeNode(f), 
+                    d--, e--);
+                }
+                (c = b.firstChild) && p(c), b = q("nextSibling", b);
+            }
+        }
+        function q(a, b) {
+            var c = b[a];
+            if (c && j.call(b, c)) throw m("elclob", b.outerHTML || b.outerText);
+            return c;
+        }
+        var r = !1;
         this.$get = [ "$$sanitizeUri", function(a) {
-            return function(b) {
+            return r && e(B, z), function(b) {
                 var c = [];
-                return f(b, i(c, function(b, c) {
-                    return !/^unsafe/.test(a(b, c));
+                return k(b, l(c, function(b, c) {
+                    return !/^unsafe:/.test(a(b, c));
                 })), c.join("");
             };
-        } ];
+        } ], this.enableSvg = function(a) {
+            return g(a) ? (r = a, this) : r;
+        }, d = b.bind, e = b.extend, f = b.forEach, g = b.isDefined, h = b.lowercase, i = b.noop, 
+        k = function(b, c) {
+            null === b || void 0 === b ? b = "" : "string" != typeof b && (b = "" + b), s.innerHTML = b;
+            var d = 5;
+            do {
+                if (0 === d) throw m("uinput");
+                d--, a.document.documentMode && p(s), b = s.innerHTML, s.innerHTML = b;
+            } while (b !== s.innerHTML);
+            for (d = s.firstChild; d; ) {
+                switch (d.nodeType) {
+                  case 1:
+                    c.start(d.nodeName.toLowerCase(), n(d.attributes));
+                    break;
+
+                  case 3:
+                    c.chars(d.textContent);
+                }
+                var e;
+                if (!(e = d.firstChild) && (1 === d.nodeType && c.end(d.nodeName.toLowerCase()), 
+                e = q("nextSibling", d), !e)) for (;null == e && (d = q("parentNode", d), d !== s); ) e = q("nextSibling", d), 
+                1 === d.nodeType && c.end(d.nodeName.toLowerCase());
+                d = e;
+            }
+            for (;d = s.firstChild; ) s.removeChild(d);
+        }, l = function(a, b) {
+            var c = !1, e = d(a, a.push);
+            return {
+                start: function(a, d) {
+                    a = h(a), !c && A[a] && (c = a), c || !0 !== B[a] || (e("<"), e(a), f(d, function(c, d) {
+                        var f = h(d), g = "img" === a && "src" === f || "background" === f;
+                        !0 !== D[f] || !0 === C[f] && !b(c, g) || (e(" "), e(d), e('="'), e(o(c)), e('"'));
+                    }), e(">"));
+                },
+                end: function(a) {
+                    a = h(a), c || !0 !== B[a] || !0 === v[a] || (e("</"), e(a), e(">")), a == c && (c = !1);
+                },
+                chars: function(a) {
+                    c || e(o(a));
+                }
+            };
+        }, j = a.Node.prototype.contains || function(a) {
+            return !!(16 & this.compareDocumentPosition(a));
+        };
+        var s, t = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g, u = /([^#-~ |!])/g, v = c("area,br,col,hr,img,wbr"), w = c("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"), x = c("rp,rt"), y = e({}, x, w), w = e({}, w, c("address,article,aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5,h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,section,table,ul")), x = e({}, x, c("a,abbr,acronym,b,bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s,samp,small,span,strike,strong,sub,sup,time,tt,u,var")), z = c("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph,hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline,radialGradient,rect,stop,svg,switch,text,title,tspan"), A = c("script,style"), B = e({}, v, w, x, y), C = c("background,cite,href,longdesc,src,xlink:href"), y = c("abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,valign,value,vspace,width"), x = c("accent-height,accumulate,additive,alphabetic,arabic-form,ascent,baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan", !0), D = e({}, C, x, y);
+        !function(a) {
+            if (!a.document || !a.document.implementation) throw m("noinert");
+            a = a.document.implementation.createHTMLDocument("inert");
+            var b = (a.documentElement || a.getDocumentElement()).getElementsByTagName("body");
+            1 === b.length ? s = b[0] : (b = a.createElement("html"), s = a.createElement("body"), 
+            b.appendChild(s), a.appendChild(b));
+        }(a);
+    }).info({
+        angularVersion: "1.6.3"
     }), b.module("ngSanitize").filter("linky", [ "$sanitize", function(a) {
-        var c = /((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"\u201d\u2019]/i, e = /^mailto:/i;
-        return function(f, g) {
-            function h(a) {
-                a && n.push(d(a));
+        var d = /((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"\u201d\u2019]/i, e = /^mailto:/i, f = b.$$minErr("linky"), g = b.isDefined, h = b.isFunction, i = b.isObject, j = b.isString;
+        return function(b, k, l) {
+            function m(a) {
+                a && s.push(c(a));
             }
-            function i(a, c) {
-                n.push("<a "), b.isDefined(g) && n.push('target="', g, '" '), n.push('href="', a.replace(/"/g, "&quot;"), '">'), 
-                h(c), n.push("</a>");
+            function n(a, b) {
+                var c, d = q(a);
+                s.push("<a ");
+                for (c in d) s.push(c + '="' + d[c] + '" ');
+                !g(k) || "target" in d || s.push('target="', k, '" '), s.push('href="', a.replace(/"/g, "&quot;"), '">'), 
+                m(b), s.push("</a>");
             }
-            if (!f) return f;
-            for (var j, k, l, m = f, n = []; j = m.match(c); ) k = j[0], j[2] || j[4] || (k = (j[3] ? "http://" : "mailto:") + k), 
-            l = j.index, h(m.substr(0, l)), i(k, j[0].replace(e, "")), m = m.substring(l + j[0].length);
-            return h(m), a(n.join(""));
+            if (null == b || "" === b) return b;
+            if (!j(b)) throw f("notstring", b);
+            for (var o, p, q = h(l) ? l : i(l) ? function() {
+                return l;
+            } : function() {
+                return {};
+            }, r = b, s = []; b = r.match(d); ) o = b[0], b[2] || b[4] || (o = (b[3] ? "http://" : "mailto:") + o), 
+            p = b.index, m(r.substr(0, p)), n(o, b[0].replace(e, "")), r = r.substring(p + b[0].length);
+            return m(r), a(s.join(""));
         };
     } ]);
 }(window, window.angular);
