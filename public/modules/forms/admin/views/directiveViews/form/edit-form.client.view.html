@@ -349,11 +349,11 @@
 								</label>
 							</div>
 							<div ng-if="!field.fieldOptionsFromFile" class="option-panel">
-								<div ng-repeat="option in field.manualOptions" class="option">
+								<div ng-repeat="option in field.manualOptions track by $index" class="option">
 									<a class="btn btn-danger btn-mini" type="button" ng-click="deleteOption(field, option)">
 										<i class="fa fa-trash-o"></i>
 									</a>
-									<span><input type="text" name="{{option}}{{field._id}}" ng-model="option"></span>
+									<span><input type="text" name="{{option}}{{field._id}}" ng-model="field.manualOptions[$index]"></span>
 								</div>
 								<div>
 									<button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption(field)">
