@@ -102,7 +102,7 @@ SSH back in, and test that `docker info` runs successfully.
 ### Clone our repo
 
 ```
-$ git clone https://github.com/datagovsg/forma-tellform.git
+$ git clone https://github.com/datagovsg/formsg-tellform.git
 ```
 
 ### Prepare .env file
