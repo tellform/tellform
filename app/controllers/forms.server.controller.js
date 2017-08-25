@@ -291,8 +291,13 @@ exports.duplicate = function(req, res) {
 			});
 		} else {
 			form._id = mongoose.Types.ObjectId();
-			form.title = form.title + '_copy';
+			if (form.isNew) {
+				
+			}
+			form.parentTitle = form.title
 			form.isNew = true;
+			form.title = form.title + '_copy';
+			form.isOriginal = false
 
 			form.save(function(err, form) {
 				if (err) {
