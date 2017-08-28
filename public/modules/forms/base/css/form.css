@@ -346,6 +346,9 @@ div.config-form .row.field {
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .admin-form > .page-header div[uib-tooltip-popup] {
+        word-wrap: break-word;
+    }
     .admin-form > .page-header > .col-xs-3 {
         padding-top: 1.4em;
     }

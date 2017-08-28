@@ -5,6 +5,9 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.form-item .title-row > div[uib-tooltip-popup] {
+	word-wrap: break-word;
+}
 
 .form-item:hover .title-row > .list-group-item-heading {
         color: white;
