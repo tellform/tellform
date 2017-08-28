@@ -52,7 +52,7 @@
 			<div class="title-row row">
 				    <div class="col-xs-12 field-title text-left"> {{ 'Form Name' | translate }} </div>
 				    <div class="col-xs-12 field-input">
-						<input type="text" name="title" required ng-model="formTitle" ng-pattern="languageRegExp" ng-minlength="4" style="color:black;"/>
+						<input type="text" name="title" required ng-model="formTitle" ng-pattern="languageRegExp" ng-minlength="4" ng-maxlength="200" maxlength="200" style="color:black;"/>
 				    </div>
 			</div>
 			<div class="details-row row" ng-hide="true">
@@ -90,7 +90,7 @@
 			<div class="row">
 				<a data-ng-href="#!/forms/{{form._id}}/admin/create"
 					class="title-row col-xs-12">
-					<h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
+					<h4 class="list-group-item-heading" data-ng-bind="form.title" uib-tooltip="{{ form.title }}"></h4>
 				</a>
 				<div class="col-xs-12 responses-row">
 					<!-- <small class="list-group-item-text">

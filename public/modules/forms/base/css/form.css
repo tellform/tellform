@@ -340,6 +340,15 @@ div.config-form .row.field {
         margin-bottom: 0;
         margin-top: 0;
     }
+    .admin-form > .page-header h1,
+    .admin-form > .page-header h2 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .admin-form > .page-header div[uib-tooltip-popup] {
+        word-wrap: break-word;
+    }
     .admin-form > .page-header > .col-xs-3 {
         padding-top: 1.4em;
     }
@@ -620,7 +629,7 @@ h3.forms-list-title {
 .form-item .title-row {
     position: relative;
     top: 15px;
-    padding-top:3em;
+    padding-top:2em;
     padding-bottom:1em;
 }
     .form-item .title-row h4 {
