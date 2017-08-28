@@ -16,7 +16,6 @@ ENV NODE_ENV production
  git \
  ant \
  default-jdk \
- default-jre \
  gcc \
  make \
  build-essential \
