@@ -187,10 +187,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								} else {
 									$scope.myform.form_fields.push(curr_field);
 								}
-
 								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
 									$uibModalInstance.close();
 								});
+
 							};
 							$scope.cancel = function(){
 								$uibModalInstance.close();

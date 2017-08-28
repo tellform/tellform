@@ -90,13 +90,13 @@ uib-tab-heading .glyphicon {
     overflow: hidden;
 }
 
-.public-form input, .public-form textarea {
+.public-form input:not(.ui-select-search), .public-form textarea, .public-form .selectize-input {
 	background-color: #000000;
     background-color: rgba(0,0,0,0);
     border: 2px dashed #ddd!important;
 }
 
-.public-form input:focus, .public-form textarea:focus {
+.public-form input:focus:not(.ui-select-search), .public-form textarea:focus {
     border: 2px dashed #ddd!important;
     outline: 0;
 }
@@ -104,7 +104,7 @@ uib-tab-heading .glyphicon {
 /*.public-form input.no-border.ng-invalid, .public-form textarea.no-border {
     border-color: none;
 }*/
-.public-form input.ng-valid, .public-form textarea.ng-valid, .public-form.ui-select-match {
+.public-form input.ng-valid:not(.ui-select-search), .public-form textarea.ng-valid {
 	border-color: #20FF20!important;
 	border-style: solid!important;
 	border-width: 3px!important;
@@ -227,7 +227,9 @@ form .row.field {
         padding-bottom: 1.8em;
         width: inherit;
     }
-    form .row.field > .field-input {
+    form .row.field > .field-input,
+    form .row.field > .field-input .selectize-input .ui-select-match,
+    form .row.field > .field-input .selectize-input input.ui-select-search {
         font-size: 1.4em;
         color: #777;
     }
@@ -275,26 +277,29 @@ form .row.field {
             width: 50%;
             line-height: 160%;
         }
-        form .field-input > input.text-field-input{
-            padding: 0.45em 0.9em;
+        form .field-input .selectize-input .ui-select-match,
+        form .field-input .selectize-input input.ui-select-search,
+        form .field-input > input.text-field-input {
+            padding: 0.45em 0.9em !important;
             width: 100%;
-            line-height: 160%;
+            line-height: 160% !important;
         }
         form .required-error{
             color: #ddd;
             font-size:0.8em;
         }
 
-    form .row.field.dropdown > .field-input input {
-        min-height: 34px;
-		border-width: 0 0 2px 0;
-		border-radius: 5px;
-    }
-
-	form .row.field.dropdown > .field-input input:focus {
-		border: none;
-	}
-
+	   	form .dropdown > .field-input .selectize-input {
+          border: inherit;
+          box-shadow: none;
+          padding: 0;
+	   	}
+	   	form .dropdown > .field-input .selectize-dropdown {
+          margin-top: 16px;
+	   	}
+	   	form .dropdown > .field-input .selectize-dropdown-content {
+          max-height: 220px;
+	   	}
 	   	form .dropdown > .field-input .ui-select-choices-row-inner {
 			border-radius: 3px;
 			margin: 5px;
@@ -334,6 +339,15 @@ div.config-form .row.field {
     .admin-form > .page-header h1 {
         margin-bottom: 0;
         margin-top: 0;
+    }
+    .admin-form > .page-header h1,
+    .admin-form > .page-header h2 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .admin-form > .page-header div[uib-tooltip-popup] {
+        word-wrap: break-word;
     }
     .admin-form > .page-header > .col-xs-3 {
         padding-top: 1.4em;
@@ -615,7 +629,7 @@ h3.forms-list-title {
 .form-item .title-row {
     position: relative;
     top: 15px;
-    padding-top:3em;
+    padding-top:2em;
     padding-bottom:1em;
 }
     .form-item .title-row h4 {
@@ -638,3 +652,13 @@ h3.forms-list-title {
     .form-item.create-new  .details-row small {
         font-size: 0.95em;
     }
+
+.empty-form {
+	display: flex;
+}
+
+.empty-form img{
+		width:300px;
+		height:230px;
+		margin: 0 auto;
+}
