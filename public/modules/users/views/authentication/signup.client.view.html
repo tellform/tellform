@@ -47,12 +47,12 @@
 						<div class="form-group email">
 							<div>
 								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
-								<input type="text" id="email" name="email" class="form-control" ng-model="credentials.email">
+								<input type="text" id="email" name="email" class="form-control" ng-model="emailName">
 							</div>
 							<div>
 								 <div class="input-group">
 									 <div class="input-group-addon">@</div>
-									 <input type="text" class="form-control" id="inlineFormInputGroup" disabled="disabled" ng-model="credentials.agencyDomain" ng-value="agencyDomain">
+									 <input type="text" class="form-control" disabled="disabled" ng-model="agencyDomain" ng-init="agencyDomain='data.gov.sg'">
 								 </div>
 							 </div>
 						</div>

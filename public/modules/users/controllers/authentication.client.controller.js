@@ -6,14 +6,11 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope = $rootScope;
 		$scope.credentials = {};
 		$scope.error = '';
-		//TODO: load the agency domain base on dropdownlist dynamically.
-		//Hardcoded it for now
-		$scope.agencyDomain = 'smc.gov.sg';
 
 		//Pre-process sign-up form
 		  $scope.preProcessForm = function() {
 				//Concatenate email name and its domain
-				$scope.credentials.email=$scope.credentials.email + '@' + $scope.agencyDomain;
+				$scope.credentials.email=this.emailName + '@' + this.agencyDomain;
 				//Combine email as username
 				$scope.credentials.username = $scope.credentials.email;
 			};
