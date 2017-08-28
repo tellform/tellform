@@ -5,6 +5,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 	$translateProvider.translations('en', {
 		ACCESS_DENIED_TEXT: 'You need to be logged in to access this page',
 		USERNAME_OR_EMAIL_LABEL: 'Username or Email',
+		AGENCY_LABEL: 'Agency',
 		USERNAME_LABEL: 'Username',
 		PASSWORD_LABEL: 'Password',
 		CURRENT_PASSWORD_LABEL: 'Current Password',
