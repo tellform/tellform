@@ -283,6 +283,7 @@ exports.delete = function(req, res) {
  */
 exports.duplicate = function(req, res) {
 	var id = req.form._id;
+	var copy_num = req.body.name
 
 	Form.findById({_id: id}).exec(function(err, form) {
 		if (err) {
@@ -291,14 +292,10 @@ exports.duplicate = function(req, res) {
 			});
 		} else {
 			form._id = mongoose.Types.ObjectId();
-			if (form.isNew) {
-				
-			}
-			form.parentTitle = form.title
-			form.isNew = true;
-			form.title = form.title + '_copy';
-			form.isOriginal = false
 
+			form.isNew = true;
+			form.title = form.title + '_' + copy_num;
+			
 			form.save(function(err, form) {
 				if (err) {
 					return res.status(405).send({

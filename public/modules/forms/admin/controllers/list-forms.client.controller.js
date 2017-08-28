@@ -77,8 +77,23 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         $scope.duplicateForm = function(form_index) {
         	var id = $scope.myforms[form_index]._id;
+            var title = $scope.myforms[form_index].title;
 
-        	$http.post('/forms/' + id + '/duplicate', {})
+            // Only appends number when original form is copied, treats duplicates as originals too
+            var copy_index = 1
+            while (true) {
+                for (var form_index = 0; form_index < $scope.myforms.length; form_index ++){
+                    if ($scope.myforms[form_index].title == title + "_" + copy_index.toString()) {
+                        break
+                    }
+                }
+                if (form_index == $scope.myforms.length) {
+                    break
+                } 
+                copy_index ++
+            }
+
+        	$http.post('/forms/' + id + '/duplicate', {name: copy_index})
         		.success(function(data, status, headers) {
         			$scope.myforms.splice(form_index + 1, 0, data);
         		}).error(function(errorResponse) {

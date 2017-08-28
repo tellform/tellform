@@ -86,10 +86,6 @@ var FormSchema = new Schema({
 		trim: true,
 		required: 'Form Title cannot be blank'
 	},
-	parentTitle: {
-		type: String,
-		default: ""
-	},
 	language: {
 		type: String,
 		enum: ['en', 'fr', 'es', 'it', 'de'],
@@ -171,11 +167,6 @@ var FormSchema = new Schema({
 		type: Boolean,
 		default: true
 	},
-	isOriginal: {
-		type: Boolean,
-		default: true
-	},
-
 	design: {
 		colors:{
 			backgroundColor: {
