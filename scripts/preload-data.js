@@ -11,7 +11,7 @@ exports.loadAgency = function(cb) {
 			if (fs.existsSync(agencyJson)) {
 				var file = fs.readFileSync(agencyJson, 'utf8');
 				agencyData = JSON.parse(file);
-				var count = agencyData.length;
+				var dataCount = agencyData.length;
 
 				for (let data of agencyData) {
 					agency = new Agency(data);
@@ -20,8 +20,8 @@ exports.loadAgency = function(cb) {
 							cb(err);
 							return;
 						}
-						count--;
-						if (count === 0) {
+						dataCount--;
+						if (dataCount === 0) {
 							console.log(chalk.green('Successfully pre-load agency data.'));
 							cb();
 						}
