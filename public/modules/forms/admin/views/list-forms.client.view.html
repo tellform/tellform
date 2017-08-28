@@ -76,7 +76,7 @@
 			</div>
 		</form>
 
-		<div data-ng-repeat="form in myforms"
+		<div data-ng-repeat="form in myforms | orderBy:'title'"
             class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container"
 			 ng-class="{'paused': !form.isLive}">
 
