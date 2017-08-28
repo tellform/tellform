@@ -125,3 +125,18 @@ input.form-control {
 	border-radius: 10px;
 
 }
+
+.form-group.email {
+	display: flex;
+	align-items: flex-end;
+}
+.form-group.email div{
+	flex: 2;
+}
+.form-group.email div:nth-child(2){
+	margin-left: 3px;
+}
+.form-control #agency {
+	height: 50px;
+	font-size: 16px;
+}

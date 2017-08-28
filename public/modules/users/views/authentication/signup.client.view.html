@@ -48,10 +48,19 @@
 								<option>4</option>
 							</select>
 						</div>
-						<div class="form-group">
-							<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
-							<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email">
+						<div class="form-group email">
+							<div>
+								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
+								<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email">
+							</div>
+							<div>
+								 <div class="input-group">
+									 <div class="input-group-addon">@</div>
+									 <input type="text" class="form-control" id="inlineFormInputGroup" disabled="disabled" value="smc.gov.sg">
+								 </div>
+							 </div>
 						</div>
+
 						<div class="text-center form-group">
 							<button type="submit" class="btn btn-signup btn-rounded btn-block">{{ 'SIGNUP_BTN' | translate }}</button>
 						</div>
