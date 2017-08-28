@@ -11,18 +11,22 @@ exports.loadAgency = function(cb) {
 			if (fs.existsSync(agencyJson)) {
 				var file = fs.readFileSync(agencyJson, 'utf8');
 				agencyData = JSON.parse(file);
+				var count = agencyData.length;
 
 				for (let data of agencyData) {
 					agency = new Agency(data);
 					agency.save(function(err) {
 						if (err) {
-							return cb(err);
+							cb(err);
+							return;
+						}
+						count--;
+						if (count === 0) {
+							console.log(chalk.green('Successfully pre-load agency data.'));
+							cb();
 						}
 					});
 				}
-
-				console.log(chalk.green('Successfully pre-load agency data.'));
-				cb();
 			}
 		}
 	});
