@@ -136,7 +136,7 @@ input.form-control {
 .form-group.email div:nth-child(2){
 	margin-left: 3px;
 }
-.form-control #agency {
+.form-group #agency {
 	height: 50px;
 	font-size: 16px;
 }
