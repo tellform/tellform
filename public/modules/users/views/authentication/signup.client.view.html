@@ -45,7 +45,8 @@
 						<div class="form-group email">
 							<div>
 								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
-								<input type="text" id="email" name="email" class="form-control" ng-model="emailName">
+								<input type="text" id="email" name="email" class="form-control" ng-model="emailName" pattern="[A-Za-z0-9]+"
+								title="Special characters are not allowed.">
 							</div>
 							<div>
 								 <div class="input-group">
