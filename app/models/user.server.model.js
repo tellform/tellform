@@ -87,8 +87,9 @@ var UserSchema = new Schema({
 		default: 'local'
 	},
 	agency: {
-		type: String,
-		required: 'Please enter your agency',
+		type: Schema.Types.ObjectId,
+		ref: 'Agency',
+		required: 'Agency is required'
 	},
 	providerData: {},
 	additionalProvidersData: {},
