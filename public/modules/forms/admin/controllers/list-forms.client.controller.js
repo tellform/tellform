@@ -111,7 +111,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         // Create new Form
         $scope.createNewForm = function(){
 
-            console.log('create new form')
             var form = {};
             form.title = $scope.forms.createForm.title.$modelValue;
             form.language = $scope.forms.createForm.language.$modelValue;
@@ -119,7 +118,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
                 $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
-                    console.log($scope.myforms);
                     // Redirect after save
                     $scope.goToWithId('viewForm.create', data._id+'');
                 }).error(function(errorResponse){
