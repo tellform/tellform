@@ -72,13 +72,7 @@ var UserSchema = new Schema({
 	},
 	username: {
 		type: String,
-		unique: true,
-		required: true,
-		lowercase: true,
-		validate: {
-			validator: validateUsername,
-			message: 'Please use a valid username'
-		}
+		unique: true
 	},
 	passwordHash: {
 		type: String,
@@ -93,7 +87,8 @@ var UserSchema = new Schema({
 		default: 'local'
 	},
 	agency: {
-		type: String
+		type: String,
+		required: 'Please enter your agency',
 	},
 	providerData: {},
 	additionalProvidersData: {},

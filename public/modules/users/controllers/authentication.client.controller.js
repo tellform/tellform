@@ -6,6 +6,15 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope = $rootScope;
 		$scope.credentials = {};
 		$scope.error = '';
+		$scope.agencies = ['SMC - Singapore Medical Council','GovTech - Goverment Technology Agency']
+
+		//Pre-process sign-up form
+		  $scope.preProcessForm = function() {
+				//Concatenate email name and its domain
+				$scope.credentials.email=this.emailName + '@' + this.agencyDomain;
+				//Combine email as username
+				$scope.credentials.username = $scope.credentials.email;
+			};
 
 	    $scope.signin = function() {
 			User.login($scope.credentials).then(
