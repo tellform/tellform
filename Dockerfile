@@ -56,9 +56,8 @@ COPY ./public /opt/formsg/public
 COPY ./config /opt/formsg/config
 COPY ./gruntfile.js /opt/formsg/gruntfile.js
 COPY ./server.js /opt/formsg/server.js
-COPY ./.env /opt/formsg/.env
+# COPY ./.env /opt/formsg/.env
 COPY ./scripts /opt/formsg/scripts
-COPY ./data /opt/tellform/data
 
 RUN grunt build
 

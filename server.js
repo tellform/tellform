@@ -4,9 +4,9 @@
  */
 
 //Load ENV vars from .env
-if ((process.env.NODE_ENV || 'development') === 'development') {
-	require('dotenv').config();
-}
+// if ((process.env.NODE_ENV || 'development') === 'development') {
+	// require('dotenv').config();
+// }
 
 require('events').EventEmitter.prototype._maxListeners = 0;
 
