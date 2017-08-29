@@ -39,7 +39,7 @@ WORKDIR /opt/formsg
 # when the local package.json file changes.
 # Add npm package.json
 COPY package.json /opt/formsg/package.json
-RUN npm install
+RUN npm install --production
 RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
 
 # Add bower.json
