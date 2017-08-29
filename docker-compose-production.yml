@@ -22,5 +22,8 @@ services:
     links:
       - formsg-redis:redis-db
       - formsg-mongo:db
+    environment:
+      - DB_PORT_27017_TCP_ADDR=formsg-mongo
+      - REDIS_DB_PORT_6379_TCP_ADDR=formsg-redis
     env_file:
       - .env

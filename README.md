@@ -11,8 +11,11 @@ Make you sure have the following packages and versions on your machine:
 ```
 "node": ">=6.11.2"
 "npm": ">=3.3.6"
-"bower": "1.8.0"
-"grunt-cli": "1.2.0"
+"bower": ">=1.8.0"
+"grunt-cli": ">=1.2.0"
+"grunt": ">=0.4.5"
+"docker": ">=17.06.0-ce"
+"docker-compose": ">=1.14.0"
 ```
 
 ### Install dependencies
@@ -111,7 +114,7 @@ $ git clone https://github.com/datagovsg/formsg.git
 ### Prepare .env file
 
 The `.env` file for remote deployment (or production) is slightly different from that of local deployment.
-Create `.env` file at project root folder. Similarly, fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID`, `MAILER_PASSWORD` and `MAILER_FROM`. Note that now you have to fill in the public IP of your instance in `BASE_URL`, and private IP of your instance in `DB_PORT_27017_TCP_ADDR`.
+Create `.env` file at project root folder. Similarly, fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID`, `MAILER_PASSWORD` and `MAILER_FROM`. Note that now you have to fill in the public IP of your instance in `BASE_URL`.
 
 ```
 APP_NAME=Form.sg
@@ -119,7 +122,6 @@ APP_DESC=
 APP_KEYWORDS=
 NODE_ENV=production
 BASE_URL=<PUBLIC IP OF YOUR INSTANCE>
-DB_PORT_27017_TCP_ADDR=<PRIVATE IP OF YOUR INSTANCE>
 REDIS_DB_PORT_6379_TCP_ADDR=formsg-redis
 PORT=4545
 username=formsg_admin
