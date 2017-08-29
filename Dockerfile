@@ -63,7 +63,7 @@ COPY ./server.js /opt/tellform/server.js
 COPY ./.env /opt/tellform/.env
 COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 COPY ./scripts/preload-data.js /opt/tellform/scripts/preload-data.js
-COPY ./data /opt/tellform/data
+COPY ./seed-data /opt/tellform/seed-data
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

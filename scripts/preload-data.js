@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 exports.loadAgency = function(cb) {
 	Agency.count(function(err, count) {
 		if (!err && count === 0) {
-			var agencyJson = './data/agency.json';
+			var agencyJson = './seed-data/agency.json';
 
 			if (fs.existsSync(agencyJson)) {
 				var file = fs.readFileSync(agencyJson, 'utf8');

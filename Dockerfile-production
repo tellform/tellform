@@ -59,7 +59,7 @@ COPY ./.env /opt/tellform/.env
 COPY ./process.yml /opt/tellform/process.yml
 COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 COPY ./scripts/preload-data.js /opt/tellform/scripts/preload-data.js
-COPY ./data /opt/tellform/data
+COPY ./seed-data /opt/tellform/seed-data
 
 RUN grunt build
 
