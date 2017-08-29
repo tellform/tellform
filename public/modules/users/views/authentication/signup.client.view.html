@@ -31,20 +31,37 @@
 							{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
 							<strong data-ng-bind="error"></strong>
 						</div>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>
 							<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" ng-minlength="4">
-						</div>
+						</div> -->
 						<div class="form-group">
-							<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
-							<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email">
+							<label for="agency">{{ 'AGENCY_LABEL' | translate }}</label>
+							<select class="form-control"  id="agency" ng-required="true">
+								<option selected disabled></option>
+								<option ng-repeat="item in agencies">{{item}}</option>
+							</select>
+						</div>
+						<div class="form-group email">
+							<div>
+								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
+								<input type="text" id="email" name="email" class="form-control" ng-model="emailName" pattern="[A-Za-z0-9-_]+"
+								title="Special characters are not allowed.">
+							</div>
+							<div>
+								 <div class="input-group">
+									 <div class="input-group-addon">@</div>
+									 <input type="text" class="form-control" disabled="disabled" ng-model="agencyDomain" ng-init="agencyDomain='data.gov.sg'">
+								 </div>
+							 </div>
 						</div>
 						<div class="form-group">
 							<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>
-							<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" ng-minlength="4">
+							<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" ng-minlength="4" ng-required="true">
 						</div>
+
 						<div class="text-center form-group">
-							<button type="submit" class="btn btn-signup btn-rounded btn-block">{{ 'SIGNUP_BTN' | translate }}</button>
+							<button type="submit" class="btn btn-signup btn-rounded btn-block" ng-click="preProcessForm()">{{ 'SIGNUP_BTN' | translate }}</button>
 						</div>
 					</fieldset>
 				</form>

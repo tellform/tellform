@@ -5,6 +5,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 	$translateProvider.translations('en', {
 		ACCESS_DENIED_TEXT: 'You need to be logged in to access this page',
 		USERNAME_OR_EMAIL_LABEL: 'Username or Email',
+		AGENCY_LABEL: 'Agency',
 		USERNAME_LABEL: 'Username',
 		PASSWORD_LABEL: 'Password',
 		CURRENT_PASSWORD_LABEL: 'Current Password',
@@ -41,13 +42,13 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SIGNUP_BTN: 'Sign up',
 		SAVE_PASSWORD_BTN: 'Save Password',
 
-		SUCCESS_HEADER: 'Signup Successful',
-		SUCCESS_TEXT: 'You’ve successfully registered an account at TellForm.',
+		SUCCESS_HEADER: 'Almost there... Just one more step!',
+		SUCCESS_TEXT: 'Please verify your account by clicking the activation link sent to your email inbox. Then you will be all set!',
 		VERIFICATION_EMAIL_SENT: 'Verification Email has been Sent',
 		VERIFICATION_EMAIL_SENT_TO: 'A verification email has been sent to',
-		NOT_ACTIVATED_YET: 'But your account is not activated yet',
-		BEFORE_YOU_CONTINUE: 'Before you continue, make sure to check your email for our verification. If you don’t receive it within 24h drop us a line at ',
-		CHECK_YOUR_EMAIL: 'Check your email and click on the activation link to activate your account. If you have any questions drop us a line at',
+		NOT_ACTIVATED_YET: '',
+		BEFORE_YOU_CONTINUE: 'If you do not receive the activation email within 24 hrs, please contact the FormSG team at',
+		CHECK_YOUR_EMAIL: '',
 		CONTINUE: 'Continue',
 
 		PASSWORD_RESTORE_HEADER: 'Restore your password',
