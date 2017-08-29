@@ -23,6 +23,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
         CurrentForm.setForm($scope.myform);
 
+        // $scope.formURL = '/#!/forms/' + $scope.myform.admin.agency  + '/' + $scope.myform._id;
         $scope.formURL = '/#!/forms/' + $scope.myform._id;
 
         if ($scope.myform.isLive) {
@@ -30,9 +31,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 $scope.actualFormURL = window.location.protocol + '//' + window.location.host + '/view' + $scope.formURL;
             } else {
                 if (window.location.host.split('.').length < 3) {
-                    $scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.agency + '.' + window.location.host + $scope.formURL;
+                    $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
                 } else {
-                    $scope.actualFormURL = window.location.protocol + '//' + $scope.myform.admin.agency + '.' + window.location.host.split('.').slice(1, 3).join('.') + $scope.formURL;
+                    $scope.actualFormURL = window.location.protocol + '//' + window.location.host.split('.').slice(1, 3).join('.') + $scope.formURL;
                 }
             }
         } else {

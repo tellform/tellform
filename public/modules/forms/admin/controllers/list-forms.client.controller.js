@@ -52,6 +52,8 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         // Return all user's Forms
         $scope.findAll = function() {
             Forms.query(function(_forms){
+                console.log('finding all forms...')
+                console.log(_forms)
                 $scope.myforms = _forms;
             });
         };
@@ -80,9 +82,9 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             var title = $scope.myforms[form_index].title;
 
             // Only appends number when original form is copied, treats duplicates as originals too
-            var copy_index = 1
+            var copy_index = 1 //fails for a1, a1_1, a_2
             while (true) {
-                for (var form_index = 0; form_index < $scope.myforms.length; form_index ++){
+                for (form_index = 0; form_index < $scope.myforms.length; form_index ++){
                     if ($scope.myforms[form_index].title == title + "_" + copy_index.toString()) {
                         break
                     }
@@ -93,9 +95,19 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 copy_index ++
             }
 
+            // case-insensitive ordering of forms
+            var copy_name = (title + "_" + copy_index.toString()).toLowerCase()
+            for (form_index = 0; form_index < $scope.myforms.length; form_index ++){
+                if (copy_name < $scope.myforms[form_index].title.toLowerCase()) {
+                    break
+                }
+            }
+
         	$http.post('/forms/' + id + '/duplicate', {name: copy_index})
         		.success(function(data, status, headers) {
-        			$scope.myforms.splice(form_index + 1, 0, data);
+        			$scope.myforms.splice(form_index, 0, data);
+                    console.log('duplicate form...')
+                    console.log($scope.myforms)
         		}).error(function(errorResponse) {
         			console.error(errorResponse);
         			if (errorResponse === null) {
@@ -106,8 +118,8 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         // Create new Form
         $scope.createNewForm = function(){
-            // console.log($scope.forms.createForm);
 
+            console.log('create new form')
             var form = {};
             form.title = $scope.forms.createForm.title.$modelValue;
             form.language = $scope.forms.createForm.language.$modelValue;
@@ -115,7 +127,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
                 $http.post('/forms', {form: form})
                 .success(function(data, status, headers){
-                    //console.log('new form created');
+                    console.log($scope.myforms);
                     // Redirect after save
                     $scope.goToWithId('viewForm.create', data._id+'');
                 }).error(function(errorResponse){
