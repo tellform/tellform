@@ -59,8 +59,6 @@ exports.createSubmission = function(req, res, next) {
 		var field = req.body.form_fields[i];
 
 		if(field.fieldType === 'statement'){
-		} else if(field.fieldType === 'dropdown') {
-			formData[field.title] = field.fieldValue.option_value;
 		} else if(field.fieldType === 'yes_no') {
 			formData[field.title] = field.fieldValue == 'true' ? 'Yes' : 'No';
 		} else if(field.fieldType === 'date') {
@@ -84,8 +82,8 @@ exports.createSubmission = function(req, res, next) {
 		function(emailHTML, done) {
 			var mailOptions = {
 				to: form.emails,
-				from: 'Forma <admin@forma.sg>',
-				subject: 'forma-auto: ' + form.title,
+				from: 'Form.sg <donotreply@form.sg>',
+				subject: 'formsg-auto: ' + form.title,
 				html: emailHTML
 			};
 
@@ -281,14 +279,45 @@ exports.delete = function(req, res) {
 };
 
 /**
+ * Duplicate a form
+ */
+exports.duplicate = function(req, res) {
+	var id = req.form._id;
+
+	Form.findById({_id: id}).exec(function(err, form) {
+		if (err) {
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			form._id = mongoose.Types.ObjectId();
+			form.title = form.title + '_copy';
+			form.isNew = true;
+
+			form.save(function(err, form) {
+				if (err) {
+					return res.status(405).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+
+				res.json(form.getMainFields());
+			});
+		}
+	});
+};
+
+/**
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
 	//Allow 'admin' user to view all forms
 	var searchObj = {admin: req.user};
+	var returnedFields = '_id title isLive';
+
 	if(req.user.isAdmin()) searchObj = {};
 
-	Form.find(searchObj).sort('-created').populate('admin.username', 'admin._id').exec(function(err, forms) {
+	Form.find(searchObj, returnedFields).sort('-created').populate('admin.username', 'admin._id').exec(function(err, forms) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

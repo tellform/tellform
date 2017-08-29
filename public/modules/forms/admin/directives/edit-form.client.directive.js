@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', '$uibModal',
-    function ($rootScope, FormFields, $uibModal) {
+angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', '$uibModal', '$timeout',
+    function ($rootScope, FormFields, $uibModal, $timeout) {
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
@@ -37,10 +37,21 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						templateUrl: 'editFieldModal.html',
 						windowClass: 'edit-modal-window',
 						controller:  function($uibModalInstance, $scope) {
+              var reader = new FileReader();
+
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
 
-							// decides whether field options block will be shown (true for dropdown and radio fields)
+              if (curr_field.fieldOptionsFromFile) {
+              	curr_field.fileOptions = curr_field.fieldOptions;
+
+              	curr_field.manualOptions = [];
+              	curr_field.manualOptions.push('Option 1');
+              } else {
+              	curr_field.manualOptions = curr_field.fieldOptions;
+              }
+
+							// decides whether field options block will be shown
 							$scope.showAddOptions = function (field){
 								if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
 									return true;
@@ -68,37 +79,61 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							// add new option to the field
 							$scope.addOption = function(currField){
 								if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
-									if(!currField.fieldOptions){
-										currField.fieldOptions = [];
+									if (!currField.manualOptions) {
+										currField.manualOptions = [];
 									}
 
-									var lastOptionID = currField.fieldOptions.length+1;
-
-									// new option's id
-
-									var newOption = {
-										'option_id' : Math.floor(100000*Math.random()),
-										'option_title' : 'Option '+lastOptionID,
-										'option_value' : 'Option ' +lastOptionID
-									};
-
-									// put new option into fieldOptions array
-									currField.fieldOptions.push(newOption);
+									var lastOptionID = currField.manualOptions.length + 1;
+									currField.manualOptions.push('Option ' + lastOptionID);
 								}
 							};
 
 							// delete particular option
 							$scope.deleteOption = function (currField, option){
 								if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
-									for(var i = 0; i < currField.fieldOptions.length; i++){
-										if(currField.fieldOptions[i].option_id === option.option_id){
-
-											currField.fieldOptions.splice(i, 1);
+									for (var i = 0; i < currField.manualOptions.length; i++) {
+										if (currField.manualOptions[i] === option) {
+											currField.manualOptions.splice(i, 1);
 											break;
 										}
 									}
 								}
 							};
+
+              $scope.loadOptions = function(currField, files) {
+              	if (currField.fieldType === 'dropdown') {
+              		var optionsFile = files[0];
+              		currField.fieldOptionsFile = optionsFile.name;
+              		currField.loadProgress = 0;
+
+              		reader.onload = function(e) {
+              			var fileContent = e.target.result;
+              			var options = fileContent.split('\n').map(option => option.trim());
+              			var uniq_options = [...new Set(options)];
+
+              			currField.fileOptions = [];
+
+              			for (let option of uniq_options) {
+              				if (option) {
+              					currField.fileOptions.push(option);
+              				}
+              			}
+
+              			var progress = document.querySelector('.load-file-progress');
+              			progress.classList.remove('active');
+              		}
+
+              		reader.onprogress = function(e) {
+              			$timeout(function() {
+              				if (e && e.lengthComputable) {
+              					currField.loadProgress = Math.round((e.loaded * 100) / e.total);
+              				}
+              			}, 10);
+              		};
+
+              		reader.readAsText(optionsFile);
+              	}
+              };
 
 							//Populate Name to Font-awesomeName Conversion Map
 							$scope.select2FA = {
@@ -117,7 +152,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								'Trash': 'Trash Can'
 							};
 
-							// decides whether field options block will be shown (true for dropdown and radio fields)
+							// decides whether rating block will be shown
 							$scope.showRatingOptions = function (field){
 								if(field.fieldType === 'rating'){
 									return true;
@@ -126,7 +161,13 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								}
 							};
 
-							$scope.saveField = function(){
+							$scope.saveField = function() {
+								if (curr_field.fieldOptionsFromFile) {
+									curr_field.fieldOptions = curr_field.fileOptions;
+								} else {
+									curr_field.fieldOptionsFile = '';
+									curr_field.fieldOptions = curr_field.manualOptions;
+								}
 
 								// Have to insert back at same spot if it is an edit
 								var indexToInsert = -1;
@@ -146,10 +187,10 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								} else {
 									$scope.myform.form_fields.push(curr_field);
 								}
-
 								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
 									$uibModalInstance.close();
 								});
+
 							};
 							$scope.cancel = function(){
 								$uibModalInstance.close();
@@ -315,13 +356,11 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						newField.fieldValue = 0;
 					}
 
-					if($scope.showAddOptions(newField)){
+					if ($scope.showAddOptions(newField)) {
 						newField.fieldOptions = [];
-						newField.fieldOptions.push({
-							'option_id' : Math.floor(100000*Math.random()), //Generate pseudo-random option id
-							'option_title' : 'Option 0',
-							'option_value' : 'Option 0'
-						});
+						newField.fieldOptions.push('Option 1');
+						newField.fieldOptionsFromFile = false;
+						newField.loadProgress = 0;
 					}
 
                     if(modifyForm){
@@ -332,7 +371,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					$scope.openEditModal(newField);
                 };
 
-				// decides whether field options block will be shown (true for dropdown and radio fields)
+				// decides whether field options block will be shown
 				$scope.showAddOptions = function (field){
 					if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
 						return true;
@@ -341,7 +380,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					}
 				};
 
-				// decides whether field options block will be shown (true for dropdown and radio fields)
+				// decides whether rating block will be shown
 				$scope.showRatingOptions = function (field){
 					if(field.fieldType === 'rating'){
 						return true;

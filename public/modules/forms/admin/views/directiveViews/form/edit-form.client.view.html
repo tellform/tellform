@@ -319,21 +319,60 @@
 						</div>
 					</div>
 
-					<div class="row" ng-show="showAddOptions(field)"><br></div>
-					<div class="row options" ng-if="showAddOptions(field)">
-						<div class="col-md-4 col-xs-12">{{ 'OPTIONS' | translate }}</div>
-						<div class="col-md-8 col-xs-12">
-							<div ng-repeat="option in field.fieldOptions track by option.option_id" class="row">
-								<input type="text" name="{{option.option_value}}{{field._id}}" ng-model="option.option_value" class="col-xs-5">
+					<div class="row"><br></div>
+					<div class="row">
+						<div class="col-md-4 col-xs-12 field-title">{{ 'REQUIRED_FIELD' | translate }}</div>
+						<div class="col-md-8 col-xs-12 field-input">
+							<label class="switch-light switch-holo" onclick="">
+								<input type="checkbox" ng-model="field.required">
+								<span class="large-3 columns float-left">
+									<span> {{ 'OFF' | translate }}</span>
+									<span> {{ 'ON' | translate }}</span>
+									<a></a>
+								</span>
+							</label>
+						</div>
+					</div>
 
-								<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
-									<i class="fa fa-trash-o"></i>
-								</a>
+					<div class="row" ng-show="showAddOptions(field)"><br></div>
+					<div class="row" ng-if="showAddOptions(field)">
+						<div class="col-md-4 col-xs-12 field-title">{{ 'OPTIONS' | translate }}</div>
+						<div class="col-md-8 col-xs-12 field-input">
+							<div ng-if="field.fieldType === 'dropdown'" class="row optionFrom">
+								<label class="col-md-6 col-xs-6">
+									<input type="radio" data-ng-value="false" ng-model="field.fieldOptionsFromFile"  ng-required="true" checked/>
+									<span>{{ 'ADD_OPTIONS_MANUAL' | translate }}</span>
+								</label>
+								<label class="col-md-6 col-xs-6">
+									<input type="radio" data-ng-value="true" ng-model="field.fieldOptionsFromFile"  ng-required="true" />
+									<span>{{ 'ADD_OPTIONS_FILE' | translate }}</span>
+								</label>
 							</div>
-							<div class="row">
-								<button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption(field)">
-									<i class="icon-plus icon-white"></i> {{ 'ADD_OPTION' | translate }}
-								</button>
+							<div ng-if="!field.fieldOptionsFromFile" class="option-panel">
+								<div ng-repeat="option in field.manualOptions track by $index" class="option">
+									<a class="btn btn-danger btn-mini" type="button" ng-click="deleteOption(field, option)">
+										<i class="fa fa-trash-o"></i>
+									</a>
+									<span><input type="text" name="{{option}}{{field._id}}" ng-model="field.manualOptions[$index]"></span>
+								</div>
+								<div>
+									<button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption(field)">
+										<i class="icon-plus icon-white"></i>
+										{{ 'ADD' | translate }}
+									</button>
+								</div>
+							</div>
+							<div ng-if="field.fieldOptionsFromFile" class="option-panel">
+								<div>
+									<label type="button" class="btn btn-primary btn-small">
+										<span>{{ 'BROWSE' | translate }}</span>
+										<input type="file" on-file-select="loadOptions(currField, files)" curr-field="field"/>
+									</label>
+									<span><input type="text" ng-model="field.fieldOptionsFile" placeholder="{{ 'SELECT_OPTION_FILE' | translate }}" disabled></span>
+								</div>
+								<div ng-if="field.loadProgress >= 0">
+									<uib-progressbar class="load-file-progress progress-striped active" max="100" value="field.loadProgress" type="info">{{ field.loadProgress == 100? field.fileOptions.length + ' UNIQUE options loaded' : '' }}</uib-progressbar>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -364,20 +403,6 @@
 					</div>
 
 					<div class="row"><br></div>
-
-					<div class="row">
-						<div class="col-md-4 col-xs-12 field-title">{{ 'REQUIRED_FIELD' | translate }}</div>
-						<div class="col-md-8 col-xs-12 field-input">
-							<label class="switch-light switch-holo" onclick="">
-								<input type="checkbox" ng-model="field.required">
-								<span class="large-3 columns float-left">
-									<span> {{ 'OFF' | translate }}</span>
-									<span> {{ 'ON' | translate }}</span>
-									<a></a>
-								</span>
-							</label>
-						</div>
-					</div>
 
 <!--
 					<div class="row">
@@ -539,38 +564,28 @@
 
 		<!-- Form Fields -->
         <div class="row">
-            <div class="col-sm-12 col-md-10 dropzoneContainer">
-
-                <div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
-
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields"
-									 ng-if="!field.deletePreserved"
-									 ng-click="openEditModal(field)">
-                        <div class="panel-heading">
-							<div class="row">
-								<span class="col-xs-1" ng-switch="field.fieldType">
-									<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
-								</span>
-								<span class="col-xs-11">
-									{{field.title}}
-									<span ng-show="field.required">*</span>
-								</span>
-							</div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
-                        <div class="panel-heading">
-                            <h4 class="panel-title text-center" style="color: #a9a9a9;">
-								{{ 'CLICK_FIELDS_FOOTER' | translate }}
-                            </h4>
-                        </div>
-                    </div>
-
-                    <hr>
-                </div>
+            <div ng-show="!myform.form_fields.length" class="empty-form">
+							<img src="/static/modules/core/img/placeholder.svg">
             </div>
 
+            <div class="col-sm-12 col-md-10 dropzoneContainer">
+							<div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
+
+								<div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved" ng-click="openEditModal(field)">
+									<div class="panel-heading">
+										<div class="row">
+											<span class="col-xs-1" ng-switch="field.fieldType">
+																<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
+															</span>
+											<span class="col-xs-11">
+																{{field.title}}
+																<span ng-show="field.required">*</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+            </div>
             <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">
                     <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">

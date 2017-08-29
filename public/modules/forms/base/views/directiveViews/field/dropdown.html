@@ -17,18 +17,16 @@
 		<ui-select ng-model="field.fieldValue"
                 theme="selectize"
 			    search-enabled="true"
-			    search-by="option_value"
-			    set-search-to-answer="true"
 				ng-required="field.required"
 				ng-disabled="field.disabled"
 			    on-tab-and-shift-key="prevField()"
 			    on-tab-key="nextField()"
 				ng-change="$root.nextField()">
-			<ui-select-match placeholder="{{ 'TYPE_OR_SELECT_OPTION' | translate }}">
+			<ui-select-match class="public-form" placeholder="{{ 'TYPE_OR_SELECT_OPTION' | translate }}">
+				{{ $select.selected }}
 			</ui-select-match>
-			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"
-							   ng-class="{'active': option.option_value === field.fieldValue }">
-				<span ng-bind-html="option.option_value | highlight: $select.search"></span>
+			<ui-select-choices repeat="option in getFieldOptions() | filter: $select.search">
+				<span ng-bind-html="option | highlight: $select.search"></span>
 			</ui-select-choices>
         </ui-select>
     </div>

@@ -75,6 +75,7 @@ mongod
 *.swp
 logs/
 build/
+data/
 
 #Coverage
 # =======

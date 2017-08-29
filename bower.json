@@ -11,6 +11,7 @@
   "appPath": "public/modules",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "angular-animate": "1.4.14",
     "angular-resource": "~1.4.7",
     "angular-cache-buster": "~0.4.3",
     "angular-mocks": "~1.4.7",
@@ -33,7 +34,8 @@
     "raven-js": "^3.0.4",
     "tableExport.jquery.plugin": "^1.5.1",
     "js-yaml": "^3.6.1",
-    "angular-ui-select": "https://github.com/tellform/ui-select.git#compiled",
+    "angular-ui-select": "~0.19.8",
+    "selectize": "0.12.4",
     "angular-translate": "~2.11.0",
     "ng-translate": "*",
     "deep-diff": "^0.3.4",
@@ -47,7 +49,7 @@
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
     "angular": "1.4.14",
-    "angular-ui-select": "compiled",
+    "angular-ui-select": "~0.19.8",
     "jspdf": "~1.0.178",
     "angular-sanitize": "1.4.14",
     "angular-ui-sortable": "^0.17.1",

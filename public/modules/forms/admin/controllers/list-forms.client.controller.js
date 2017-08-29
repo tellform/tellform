@@ -75,19 +75,18 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             $state.go(route, {'formId': id}, {reload: true});
         };
 
-        $scope.duplicateForm = function(form_index){
-            var form = _.cloneDeep($scope.myforms[form_index]);
-            delete form._id;
+        $scope.duplicateForm = function(form_index) {
+        	var id = $scope.myforms[form_index]._id;
 
-            $http.post('/forms', {form: form})
-                .success(function(data, status, headers){
-                    $scope.myforms.splice(form_index+1, 0, data);
-                }).error(function(errorResponse){
-                    console.error(errorResponse);
-                    if(errorResponse === null){
-                        $scope.error = errorResponse.data.message;
-                    }
-                });
+        	$http.post('/forms/' + id + '/duplicate', {})
+        		.success(function(data, status, headers) {
+        			$scope.myforms.splice(form_index + 1, 0, data);
+        		}).error(function(errorResponse) {
+        			console.error(errorResponse);
+        			if (errorResponse === null) {
+        				$scope.error = errorResponse.data.message;
+        			}
+        		});
         };
 
         // Create new Form
