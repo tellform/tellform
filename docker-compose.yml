@@ -4,10 +4,14 @@ services:
     image: redis:3
     ports:
       - "6379:6379"
+    volumes:
+      - /data/redis-db:/data
   formsg-mongo:
     image: mongo:3.0
     ports:
       - "27017:27017"
+    volumes:
+      - /data/db:/data/db
   formsg-dev:
     build:
       context: ./
@@ -18,8 +22,5 @@ services:
     links:
       - formsg-redis:redis-db
       - formsg-mongo:db
-    environment:
-      - DB_PORT_27017_TCP_ADDR=formsg-mongo
-      - REDIS_DB_PORT_6379_TCP_ADDR=formsg-redis
     env_file:
       - .env
