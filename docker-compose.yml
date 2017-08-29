@@ -1,22 +1,28 @@
-version: "3"
+version: "3.2"
 services:
-  tellform:
-    image: tellform/production:no_subdomains
+  formsg-dev:
+    image: formsg-dev
     ports:
-      - 3000:3000
-      - 8080:80
+      - 5000:5000
     links:
-      - redis:redis-db
-      - mongo:db
+      - formsg-redis:redis-db
+      - formsg-mongo:db
     environment:
-      - BASE_URL=localhost
+      - BASE_URL=localhost:5000
       - DB_1_PORT_27017_TCP_ADDR=mongo
       - REDIS_DB_PORT_6379_TCP_ADDR=redis
-  redis:
-    image: redis:alpine
+      - SIGNUP_DISABLED=false
+      - SUBDOMAINS_DISABLED=true
+      - DISABLE_CLUSTER_MODE=true
+  formsg-redis:
+    image: redis:latest
     ports:
-      - 6379
-  mongo:
+      - 6379:6379
+    volumes:
+      - ~/data/redis-db:/data
+  formsg-mongo:
     image: mongo:latest
     ports:
-      - 27017
+      - 27017:27017
+    volumes:
+      - ~/data/db:/data/db

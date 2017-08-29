@@ -7,8 +7,6 @@ MAINTAINER David Baldwynn <team@tellform.com>
 
 EXPOSE 4545
 
-ENV NODE_ENV production
-
 # Install Utilities
  RUN apt-get update -q \
  && apt-get install -yqq \
@@ -45,14 +43,13 @@ WORKDIR /opt/tellform
 # when the local package.json file changes.
 # Add npm package.json
 COPY package.json /opt/tellform/package.json
+RUN npm install
+RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
 
 # Add bower.json
 COPY bower.json /opt/tellform/bower.json
 COPY .bowerrc /opt/tellform/.bowerrc
-
-RUN npm install --production
-RUN bower install --allow-root
-RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
+RUN bower install --allow-root --config.interactive=false
 
 COPY ./app /opt/tellform/app
 COPY ./public /opt/tellform/public
@@ -60,12 +57,11 @@ COPY ./config /opt/tellform/config
 COPY ./gruntfile.js /opt/tellform/gruntfile.js
 COPY ./server.js /opt/tellform/server.js
 COPY ./.env /opt/tellform/.env
-COPY ./process.yml /opt/tellform/process.yml
 COPY ./scripts /opt/tellform/scripts
 
-RUN grunt build
+ENV NODE_ENV production
 
-# CMD ["pm2-docker","process.yml"]
+RUN grunt build
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

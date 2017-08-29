@@ -21,7 +21,6 @@
     "generate": "all-contributors generate",
     "start": "npm run version && grunt",
     "test": "npm run version && grunt test",
-    "postinstall": "bower install --config.interactive=false; grunt build;",
     "init": "node scripts/setup.js",
     "version": "check-node-version --package"
   },
