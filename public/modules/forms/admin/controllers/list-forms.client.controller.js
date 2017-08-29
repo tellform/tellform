@@ -52,8 +52,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         // Return all user's Forms
         $scope.findAll = function() {
             Forms.query(function(_forms){
-                console.log('finding all forms...')
-                console.log(_forms)
                 $scope.myforms = _forms;
             });
         };
@@ -80,25 +78,21 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.duplicateForm = function(form_index) {
         	var id = $scope.myforms[form_index]._id;
             var title = $scope.myforms[form_index].title;
-
+            
             // Only appends number when original form is copied, treats duplicates as originals too
-            var copy_index = 1 //fails for a1, a1_1, a_2
-            while (true) {
-                for (form_index = 0; form_index < $scope.myforms.length; form_index ++){
-                    if ($scope.myforms[form_index].title == title + "_" + copy_index.toString()) {
-                        break
-                    }
-                }
-                if (form_index == $scope.myforms.length) {
-                    break
-                } 
-                copy_index ++
-            }
+            var copy_index = 1 
+            var cur_title;
+            var query_title = title + "_" + copy_index.toString()
 
-            // case-insensitive ordering of forms
-            var copy_name = (title + "_" + copy_index.toString()).toLowerCase()
             for (form_index = 0; form_index < $scope.myforms.length; form_index ++){
-                if (copy_name < $scope.myforms[form_index].title.toLowerCase()) {
+                
+                cur_title = $scope.myforms[form_index].title
+                if (cur_title == query_title) {
+                    copy_index ++
+                    query_title = title + "_" + copy_index.toString()
+                    
+                }
+                if (cur_title > query_title) {
                     break
                 }
             }
@@ -106,8 +100,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         	$http.post('/forms/' + id + '/duplicate', {name: copy_index})
         		.success(function(data, status, headers) {
         			$scope.myforms.splice(form_index, 0, data);
-                    console.log('duplicate form...')
-                    console.log($scope.myforms)
         		}).error(function(errorResponse) {
         			console.error(errorResponse);
         			if (errorResponse === null) {

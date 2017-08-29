@@ -319,7 +319,7 @@ exports.list = function(req, res) {
 
 	if(req.user.isAdmin()) searchObj = {};
 
-	Form.find(searchObj, returnedFields).sort('-created').populate('admin.username', 'admin._id').exec(function(err, forms) {
+	Form.find(searchObj, returnedFields).sort('title').populate('admin.username', 'admin._id').exec(function(err, forms) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

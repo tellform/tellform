@@ -8,24 +8,7 @@ angular.module('forms').factory('Forms', ['$resource', 'FORM_URL',
 		}, {
 			'query' : {
 				method: 'GET',
-				isArray: true,
-				transformResponse: function (data) {
-					
-					var forms = angular.fromJson(data);
-					
-					function compareStrings(a, b) {
-					  // Assuming you want case-insensitive comparison
-					  a = a.toLowerCase();
-					  b = b.toLowerCase();
-					  return (a < b) ? -1 : (a > b) ? 1 : 0;
-					}
-
-					forms.sort(function(a, b) {
-					  return compareStrings(a.title, b.title);
-					})
-
-					return forms
-				}
+				isArray: true
 			},
 			'get' : {
 				method: 'GET',
