@@ -77,7 +77,7 @@ ng-style="{'color':button.color}">
 	<button ng-if="!forms.myForm.$invalid"
 		class="Button btn col-sm-2 col-xs-8 focusOn"
 		v-busy="loading" v-busy-label="Please wait" v-pressable
-		ng-disabled="loading || forms.myForm.$invalid"
+		ng-disabled="loading || forms.myForm.$invalid || myform.isPreview"
 		ng-click="submitForm()"
 		on-enter-key="submitForm()"
 		on-enter-key-disabled="loading || forms.myForm.$invalid"

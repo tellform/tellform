@@ -1,23 +1,17 @@
-# Build:
-# docker build -t tellform -f ./Dockerfile .
-#
-# Run:
-# docker run -it tellform
 FROM  phusion/baseimage:0.9.19
-MAINTAINER David Baldwynn <team@tellform.com>
+MAINTAINER Leonard Loo <leonard@data.gov.sg>
 
-# 3000 = TellForm server, 35729 = livereload, 8080 = node-inspector
-EXPOSE 3000 35729 8080
+# 5000 = App server, 35729 = livereload, 8080 = node-inspector
+EXPOSE 5000 35729 8080
 
-# Set development environment as default
 ENV NODE_ENV development
-ENV BASE_URL tellform.dev
-ENV PORT 3000
 
 # Install Utilities
 RUN apt-get update -q \
  && apt-get install -yqq \
  curl \
+ ant \
+ default-jdk \
  git \
  gcc \
  make \
@@ -39,31 +33,30 @@ RUN sudo apt-get install -yq nodejs \
 # Install MEAN.JS Prerequisites
 RUN npm install --quiet -g grunt bower && npm cache clean
 
-RUN mkdir -p /opt/tellform/public/lib
-WORKDIR /opt/tellform
+RUN mkdir -p /opt/formsg/public/lib
+WORKDIR /opt/formsg
 
 # Copies the local package.json file to the container
 # and utilities docker container cache to not needing to rebuild
 # and install node_modules/ everytime we build the docker, but only
 # when the local package.json file changes.
 # Add npm package.json
-COPY package.json /opt/tellform/package.json
-RUN npm install --production
+COPY package.json /opt/formsg/package.json
+RUN npm install
 RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
 
 # Add bower.json
-COPY bower.json /opt/tellform/bower.json
-COPY .bowerrc /opt/tellform/.bowerrc
+COPY bower.json /opt/formsg/bower.json
+COPY .bowerrc /opt/formsg/.bowerrc
+RUN bower install --allow-root --config.interactive=false
 
-COPY ./app /opt/tellform/app
-COPY ./public /opt/tellform/public
-COPY ./config /opt/tellform/config
-COPY ./gruntfile.js /opt/tellform/gruntfile.js
-COPY ./server.js /opt/tellform/server.js
-COPY ./.env /opt/tellform/.env
-COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
-COPY ./scripts/preload-data.js /opt/tellform/scripts/preload-data.js
-COPY ./seed-data /opt/tellform/seed-data
+COPY ./app /opt/formsg/app
+COPY ./public /opt/formsg/public
+COPY ./config /opt/formsg/config
+COPY ./gruntfile.js /opt/formsg/gruntfile.js
+COPY ./server.js /opt/formsg/server.js
+COPY ./scripts /opt/formsg/scripts
+COPY ./seed-data /opt/formsg/seed-data
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
