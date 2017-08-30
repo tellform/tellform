@@ -58,8 +58,6 @@ COPY ./server.js /opt/formsg/server.js
 COPY ./scripts /opt/formsg/scripts
 COPY ./seed-data /opt/formsg/seed-data
 
-RUN grunt build
-
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
