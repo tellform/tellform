@@ -10,7 +10,22 @@ angular.module('forms').config(['$stateProvider',
 			url: '/forms',
 			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html'
   		}).state('submitForm', {
-			url: '/forms/:formId?isPreview',
+			url: '/forms/:formId',
+			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
+			data: {
+				hideNav: true
+			},
+			resolve: {
+				Forms: 'Forms',
+				myForm: function (Forms, $stateParams) {
+					var formToGet = Forms.get({formId: $stateParams.formId})
+					return formToGet.$promise;
+				}
+			},
+			controller: 'SubmitFormController',
+			controllerAs: 'ctrl'
+		}).state('previewForm', {
+			url: '/forms/:formId/preview',
 			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
 			data: {
 				hideNav: true
@@ -19,7 +34,7 @@ angular.module('forms').config(['$stateProvider',
 				Forms: 'Forms',
 				myForm: function (Forms, $stateParams) {
 					var formToGet = Forms.get({formId: $stateParams.formId}, 
-						function(form) { form.isPreview = $stateParams.isPreview });
+						function(form) { form.isPreview = true });
 					return formToGet.$promise;
 				}
 			},
