@@ -3,11 +3,6 @@
  * Module dependencies.
  */
 
-//Load ENV vars from .env
-// if ((process.env.NODE_ENV || 'development') === 'development') {
-	// require('dotenv').config();
-// }
-
 require('events').EventEmitter.prototype._maxListeners = 0;
 
 var config = require('./config/config'),
