@@ -7,10 +7,10 @@ angular.module('forms').config(['$stateProvider',
 		// Forms state routing
 		$stateProvider.
 		state('listForms', {
-			url: '/forms',
+			url: '/formx/forms',
 			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html'
   		}).state('submitForm', {
-			url: '/forms/:formId',
+			url: '/formx/forms/:formId',
 			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
 			data: {
 				hideNav: true
@@ -24,7 +24,7 @@ angular.module('forms').config(['$stateProvider',
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
 		}).state('viewForm', {
-			url: '/forms/:formId/admin',
+			url: '/formx/forms/:formId/admin',
 			templateUrl: 'modules/forms/admin/views/admin-form.client.view.html',
 			data: {
 				permissions: [ 'editForm' ]

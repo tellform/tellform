@@ -24,7 +24,9 @@
 		</button>
 	</div>
 </script>
-
+<script>
+console.log('2');
+</script>
 <section data-ng-controller="ListFormsController as ctrl" data-ng-init="findAll()" class="container">
 	<br>
 	<!--<div class="row">
@@ -88,7 +90,7 @@
 			</div>
 
 			<div class="row">
-				<a data-ng-href="#!/forms/{{form._id}}/admin/create"
+				<a data-ng-href="#!/formx/forms/{{form._id}}/admin/create"
 					class="title-row col-xs-12">
 					<h4 class="list-group-item-heading" data-ng-bind="form.title" uib-tooltip="{{ form.title }}"></h4>
 				</a>

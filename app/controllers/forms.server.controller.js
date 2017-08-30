@@ -129,7 +129,7 @@ exports.listSubmissions = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
-
+	console.log('4b');
 	if(!req.body.form){
 		return res.status(400).send({
 			message: 'Invalid Input'
@@ -313,19 +313,21 @@ exports.duplicate = function(req, res) {
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
+	console.log('4');
 	//Allow 'admin' user to view all forms
 	var searchObj = {admin: req.user};
 	var returnedFields = '_id title isLive';
 
 	if(req.user.isAdmin()) searchObj = {};
 
-	Form.find(searchObj, returnedFields).sort('-created').populate('admin.username', 'admin._id').exec(function(err, forms) {
+	Form.find(searchObj, returnedFields).sort('title').populate('admin.username', 'admin._id').exec(function(err, forms) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			res.json(forms);
+			console.log(forms);
 		}
 	});
 };
