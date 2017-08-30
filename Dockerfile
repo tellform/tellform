@@ -10,7 +10,6 @@ ENV NODE_ENV development
 RUN apt-get update -q \
  && apt-get install -yqq \
  curl \
- git \
  ant \
  default-jdk \
  git \
