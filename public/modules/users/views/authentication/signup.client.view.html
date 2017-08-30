@@ -43,7 +43,7 @@
 												 search-enabled="true"
 												 ng-required="true"
 												 ng-change="credentials.emailDomain = ''">
-								<ui-select-match class="public-form" placeholder="{{ 'TYPE_OR_SELECT_OPTION' | translate }}">
+								<ui-select-match class="public-form" placeholder="{{ 'TYPE_OR_SELECT_AGENCY' | translate }}">
 									{{ $select.selected.fullName }}
 								</ui-select-match>
 								<ui-select-choices repeat="agency in (agencies | filter: $select.search) track by agency._id">
@@ -54,7 +54,7 @@
 						<div class="form-group email">
 							<div>
 								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
-								<input type="text" id="email" name="email" class="form-control" ng-model="credentials.emailName" pattern="[A-Za-z0-9-_]+"
+								<input type="text" id="email" name="email" class="form-control" ng-model="credentials.emailName" pattern="[A-Za-z0-9-_.]+"
 								title="Special characters are not allowed.">
 							</div>
 							<div>
@@ -66,7 +66,7 @@
 															search-enabled="false"
 															ng-required="true"
 															ng-disabled="!credentials.agency">
-		 								<ui-select-match class="public-form" placeholder="{{ 'TYPE_OR_SELECT_OPTION' | translate }}">
+		 								<ui-select-match class="public-form">
 		 									{{ $select.selected }}
 		 								</ui-select-match>
 		 								<ui-select-choices repeat="emailDomain in credentials.agency.emailDomain">
