@@ -24,7 +24,7 @@
 			<div class="col-md-12 text-center vcenter" style="padding-bottom: 50px;">
 				<img src="/static/modules/core/img/logo-full.svg" height="100px">
 			</div>
-			<div class=" col-xs-12">
+			<div class="col-xs-12">
 				<form ng-if="agencies" name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
 					<fieldset>
 						<div data-ng-show="error" id="signup_errors" class="text-center text-danger">
@@ -52,13 +52,13 @@
 							</ui-select>
 						</div>
 						<div class="form-group email">
-							<div>
+							<div class="col-md-6 col-xs-6">
 								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
 								<input type="text" id="email" name="email" class="form-control" ng-model="credentials.emailName" pattern="[A-Za-z0-9-_.]+"
 								title="Special characters are not allowed.">
 							</div>
-							<div>
-								 <div class="input-group">
+							<div class="col-md-6 col-xs-6">
+								 <div class="input-group emailDomain">
 									 <div class="input-group-addon">@</div>
 									 <ui-select class="form-control"
 									 						ng-model="credentials.emailDomain"
