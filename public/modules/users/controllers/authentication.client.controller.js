@@ -27,6 +27,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 			};
 
 	    $scope.signin = function() {
+	    	$scope.credentials.username = $scope.credentials.username.toLowerCase()
 			User.login($scope.credentials).then(
 				function(response) {
 					Auth.login(response);
