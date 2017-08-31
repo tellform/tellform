@@ -69,9 +69,12 @@ body {
   color: white!important;
 	border-radius: 0;
 }
-.navbar .navbar-brand {
-	min-height: 70px;
-	padding: 10px;
+
+@media only screen and (min-width: 760px) {
+	.navbar .navbar-brand {
+		min-height: 70px;
+		padding: 10px;
+	}
 }
 
 .navbar-nav {
