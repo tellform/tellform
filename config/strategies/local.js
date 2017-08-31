@@ -19,7 +19,9 @@ module.exports = function () {
 					{'username': username},
 					{'email': username}
 				]
-			}, function (err, user) {
+			})
+			.populate('agency', '_id shortName fullName')
+			.exec(function (err, user) {
 				if (err) {
 					return done(err);
 				}

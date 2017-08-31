@@ -20,7 +20,9 @@ exports.run = function(app, db, cb) {
 		roles: ['admin', 'user']
 	});
 
-	User.findOne({email: email}, function (err, user) {
+	User.findOne({email: email})
+	.populate('agency', '_id shortName fullName')
+	.exec(function (err, user) {
 		if (err) {
 			cb(err);
 		}
