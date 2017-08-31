@@ -1,4 +1,4 @@
-<div class="config-form container">
+<div class="config-form container" ng-form="configureForm">
 	<!-- Settings -->
 	<div class="row">
         <div class="col-sm-offset-2 col-sm-4">
@@ -10,13 +10,14 @@
                 <div class="col-sm-12">
                     <input class="form-control"
 					    type="text"
-                        ng-model="myform.title"
+					    ng-model="myform.title"
+						ng-model-options="{ allowInvalid: true }"
                         value="{{myform.title}}"
                         style="width: 100%;"
                         ng-minlength="4"
                         ng-maxlength="200"
                         maxlength="200"
-                        ng-pattern="/^[a-zA-Z0-9\_]*$/">
+                        ng-pattern="/^[a-zA-Z0-9_\-.]*$/">
                 </div>
             </div>
 						<div class="row field">
@@ -96,7 +97,7 @@
     </div>
     <div class="row">
 		<div class="col-xs-12 col-sm-offset-4 col-sm-4">
-			<button class="btn btn-signup btn-rounded" type="button" ng-click="update(false, myform, false, false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
+			<button class="btn btn-signup btn-rounded" type="button" ng-disabled="configureForm.$invalid || myform.title.length === 0" ng-click="update(false, myform, false, false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
 			<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'RESET' | translate }}</button>
 		</div>
     </div>

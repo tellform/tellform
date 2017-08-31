@@ -52,7 +52,7 @@
 			<div class="title-row row">
 				    <div class="col-xs-12 field-title text-left"> {{ 'Form Name' | translate }} </div>
 				    <div class="col-xs-12 field-input">
-						<input type="text" name="title" required ng-model="formTitle" ng-pattern="/^[a-zA-Z0-9\_]*$/" ng-minlength="4" ng-maxlength="200" maxlength="200" style="color:black;"/>
+						<input type="text" name="title" required ng-model="formTitle" ng-pattern="/^[a-zA-Z0-9_\-.]*$/" ng-minlength="4" ng-maxlength="200" maxlength="200" style="color:black;"/>
 				    </div>
 			</div>
 			<div class="details-row row" ng-hide="true">
