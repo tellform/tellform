@@ -14,6 +14,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DISPLAY_FOOTER: 'Display Form Footer?',
 		SAVE_CHANGES: 'Save',
 		CANCEL: 'Cancel',
+		RESET: 'Reset',
 		DISPLAY_START_PAGE: 'Display Start Page?',
 		DISPLAY_END_PAGE: 'Display End Page?',
 		FORM_EMAIL: 'Emails (comma-separated)',
