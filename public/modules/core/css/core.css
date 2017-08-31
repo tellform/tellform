@@ -69,8 +69,18 @@ body {
   color: white!important;
 	border-radius: 0;
 }
+
+.navbar-collapse {
+	border-style:none;
+}
+
+@media only screen and (min-width: 500px) {
+	.navbar .navbar-brand {
+		min-height: 70px;
+	}
+}
+
 .navbar .navbar-brand {
-	min-height: 70px;
 	padding: 10px;
 }
 
