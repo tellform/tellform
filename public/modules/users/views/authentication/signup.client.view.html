@@ -1,4 +1,4 @@
-<section class="auth signup-view valign-wrapper" data-ng-controller="AuthenticationController">
+<section class="auth signup-view valign-wrapper" data-ng-controller="AuthenticationController" ng-init="getAgencies()">
 	<!-- 	<h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
 	<div class="col-md-12 text-center">
 		<a href="/auth/facebook" class="undecorated-link">
@@ -24,8 +24,8 @@
 			<div class="col-md-12 text-center vcenter" style="padding-bottom: 50px;">
 				<img src="/static/modules/core/img/logo-full.svg" height="100px">
 			</div>
-			<div class=" col-xs-12">
-				<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
+			<div class="col-xs-12">
+				<form ng-if="agencies" name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
 					<fieldset>
 						<div data-ng-show="error" id="signup_errors" class="text-center text-danger">
 							{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
@@ -37,21 +37,42 @@
 						</div> -->
 						<div class="form-group">
 							<label for="agency">{{ 'AGENCY_LABEL' | translate }}</label>
-							<select class="form-control"  id="agency" ng-required="true">
-								<option selected disabled></option>
-								<option ng-repeat="item in agencies">{{item}}</option>
-							</select>
+							<ui-select class="form-control"
+												 ng-model="credentials.agency"
+												 theme="selectize"
+												 search-enabled="true"
+												 ng-required="true"
+												 ng-change="credentials.emailDomain = ''">
+								<ui-select-match class="public-form" placeholder="{{ 'TYPE_OR_SELECT_AGENCY' | translate }}">
+									{{ $select.selected.fullName }}
+								</ui-select-match>
+								<ui-select-choices repeat="agency in (agencies | filter: $select.search) track by agency._id">
+									<span ng-bind-html="agency.fullName | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
 						</div>
 						<div class="form-group email">
-							<div>
+							<div class="col-md-6 col-xs-6 email-name">
 								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
-								<input type="text" id="email" name="email" class="form-control" ng-model="emailName" pattern="[A-Za-z0-9-_]+"
-								title="Special characters are not allowed.">
+								<input type="text" id="email" name="email" class="form-control" ng-model="credentials.emailName" pattern="[A-Za-z0-9-_.]+"
+								title="Special characters are not allowed." ng-required="true">
 							</div>
-							<div>
-								 <div class="input-group">
+							<div class="col-md-6 col-xs-6">
+								 <div class="input-group email-domain">
 									 <div class="input-group-addon">@</div>
-									 <input type="text" class="form-control" disabled="disabled" ng-model="agencyDomain" ng-init="agencyDomain='data.gov.sg'">
+									 <ui-select class="form-control"
+									 						ng-model="credentials.emailDomain"
+															theme="selectize"
+															search-enabled="false"
+															ng-required="true"
+															ng-disabled="!credentials.agency">
+		 								<ui-select-match class="public-form">
+		 									{{ $select.selected }}
+		 								</ui-select-match>
+		 								<ui-select-choices repeat="emailDomain in credentials.agency.emailDomain">
+		 									<span ng-bind-html="emailDomain"></span>
+		 								</ui-select-choices>
+		 							</ui-select>
 								 </div>
 							 </div>
 						</div>

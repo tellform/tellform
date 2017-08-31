@@ -1,0 +1,22 @@
+[
+  {
+    "shortName": "ava",
+    "fullName": "Agri-Food & Veterinary Authority of Singapore",
+    "emailDomain": "ava.gov.sg"
+  },
+  {
+    "shortName": "pa",
+    "fullName": "People's Association",
+    "emailDomain": "pa.gov.sg"
+  },
+  {
+    "shortName": "smc",
+    "fullName": "Singapore Medical Council",
+    "emailDomain": "smc.gov.sg"
+  },
+  {
+    "shortName": "govtech",
+    "fullName": "Government Technology Agency",
+    "emailDomain": "tech.gov.sg, data.gov.sg"
+  }
+]
