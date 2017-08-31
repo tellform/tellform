@@ -108,8 +108,6 @@ section.auth input.form-control {
 }
 
 input.form-control, .form-control.ui-select-container {
-	height: auto;
-	border-radius: 4px;
 	height: 58px;
 }
 .form-control.ui-select-container {
@@ -141,7 +139,7 @@ input.form-control,
 	padding-right: 40px !important;
 }
 .form-control.ui-select-container .selectize-dropdown {
-	margin-top: 20px;
+	margin-top: 24px;
 }
 .form-control.ui-select-container .selectize-dropdown-content {
 	max-height: 220px;
@@ -165,23 +163,23 @@ input.form-control,
 
 }
 
-.form-group.email .input-group {
-	width: 100%;
-}
 .form-group.email > div {
 	padding: 0;
 }
-.form-group.email .emailDomain {
+.form-group.email .email-domain {
 	margin-top: 27px;
 	margin-left: 3px;
 }
-.form-group.email .emailDomain .ui-select-choices-row-inner {
+.form-group.email .email-domain .ui-select-choices-row-inner {
 	word-break: break-all;
 }
-.form-group.email .emailDomain .ui-select-match {
+.form-group.email .email-domain .ui-select-match {
 	display: block;
 	line-height: inherit;
 }
-.form-group.email .emailDomain .input-group-addon {
+.form-group.email .email-domain .input-group-addon {
 	padding-bottom: 13px;
+}
+.form-group.email .email-name input.form-control {
+	padding-top: 6px !important;
 }
