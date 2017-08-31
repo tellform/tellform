@@ -3,7 +3,7 @@
 angular.module('core').config(['$translateProvider', function ($translateProvider) {
 
 	$translateProvider.translations('en', {
-		MENU: 'MENU',
+		MENU_BTN: 'Menu',
 		SIGNUP_TAB: 'Sign Up',
 		SIGNIN_TAB: 'Sign In',
 		SIGNOUT_TAB: 'Sign Out',
