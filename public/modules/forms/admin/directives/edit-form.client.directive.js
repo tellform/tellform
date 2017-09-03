@@ -329,15 +329,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.addNewField = function(modifyForm, fieldType){
                     // increment lastAddedID counter
                     $scope.addField.lastAddedID++;
-                    var fieldTitle = fieldType;
+                    var fieldTitle = $scope.addField.types.find(f => f.name === fieldType).value;
 
-                    for(var i = 0; i < $scope.addField.types.length; i++){
-                        if($scope.addField.types[i].name === fieldType){
-                            $scope.addField.types[i].lastAddedID++;
-                            fieldTitle = $scope.addField.types[i].value+$scope.addField.types[i].lastAddedID;
-                            break;
-                        }
-                    }
                     newField = {
                         title: fieldTitle,
                         fieldType: fieldType,

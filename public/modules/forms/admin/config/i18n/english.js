@@ -160,16 +160,16 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
     MULTIPLE_CHOICE: 'Multiple Choice',
     DROPDOWN: 'Dropdown',
     DATE: 'Date',
-    PARAGRAPH_T: 'Paragraph',
+    PARAGRAPH_T: 'Text Area',
     YES_NO: 'Yes/No',
     LEGAL: 'Legal',
     RATING: 'Rating',
-    NUMBERS: 'Numbers',
+    NUMBERS: 'Number',
     SIGNATURE: 'Signature',
     FILE_UPLOAD: 'File upload',
     OPTION_SCALE: 'Option Scale',
     PAYMENT: 'Payment',
-    STATEMENT: 'Statement',
+    STATEMENT: 'Instructions',
     LINK: 'Link'
 	});
 }]);

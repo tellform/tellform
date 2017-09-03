@@ -11,6 +11,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         //Set active tab to Create
         $scope.activePill = 0;
 
+        $scope.isNotMobileView = $window.innerWidth >= 515;
+
         $scope.copied = false;
         $scope.onCopySuccess = function (e) {
             $scope.copied = true;
