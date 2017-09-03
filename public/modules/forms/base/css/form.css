@@ -19,6 +19,16 @@
         display: none;
     }
 }
+@media all and (min-width: 750px) {
+    .lead {
+        font-size:30px !important;
+    }
+}
+@media not all and (min-width: 750px) {
+    .lead {
+        text-align:center;
+    }
+}
 .nav.nav-pills.nav-stacked {
 	float: left;
 	position: relative;
