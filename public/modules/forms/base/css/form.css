@@ -63,16 +63,21 @@
 .nav-pills>li.active>a,
 .nav-pills>li.active>a:focus,
  .nav-pills>li.active>a:hover {
-     background-color: #fff;
-     color: #283d86;
+     background-color: #fff !important;
+     color: #283d86 !important;
      font-weight: bold;
  }
  .nav-stacked>li+li {
      margin-top: 0;
  }
  .nav>li>a {
-     padding: 10px 10px !important;
+     padding: 20px 20px !important;
  }
+.nav-pills>li>a {
+    background-color:#283d86;
+    color:#fff;
+    border-radius: 0;
+}
 }
 
  .horizontal-tabs .nav {
@@ -437,6 +442,12 @@ form .row.field {
   border: 1px solid #337ab7;
   background: #fff;
   margin-bottom: 50px;
+}
+
+@media not all and (min-width: 750px) {
+    .admin-form .tab-content {
+        border-top: 0;
+    }
 }
 
 @media all and (min-width: 750px) {

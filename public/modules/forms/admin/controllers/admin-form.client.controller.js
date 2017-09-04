@@ -11,7 +11,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         //Set active tab to Create
         $scope.activePill = 0;
 
-        $scope.isNotMobileView = $window.innerWidth >= 515;
+        $scope.isNotMobileView = $window.innerWidth >= 750;
 
         $scope.copied = false;
         $scope.onCopySuccess = function (e) {
@@ -52,7 +52,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $scope.tabData   = [
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-                templateName:   'configure'
+                templateName: 'configure'
             },
             /*{
                 heading: $filter('translate')('ANALYZE_TAB'),

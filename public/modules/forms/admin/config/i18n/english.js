@@ -160,7 +160,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
     MULTIPLE_CHOICE: 'Multiple Choice',
     DROPDOWN: 'Dropdown',
     DATE: 'Date',
-    PARAGRAPH_T: 'Text Area',
+    PARAGRAPH_T: 'Paragraph',
     YES_NO: 'Yes/No',
     LEGAL: 'Legal',
     RATING: 'Rating',
