@@ -21,7 +21,6 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		//Pre-process sign-up form
 		  $scope.preProcessForm = function() {
 				//Concatenate email name and its domain
-				$scope.credentials.emailName = $scope.credentials.emailName.toLowerCase()
 				$scope.credentials.email=$scope.credentials.emailName + '@' + $scope.credentials.emailDomain;
 				//Combine email as username
 				$scope.credentials.username = $scope.credentials.email;
@@ -51,6 +50,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    };
 
 	    $scope.signup = function() {
+			$scope.credentials.username = $scope.credentials.username.toLowerCase()
+			$scope.credentials.email = $scope.credentials.email.toLowerCase()
+			// console.log($scope.credentials)
 	        User.signup($scope.credentials).then(
 		        function(response) {
 		        	$state.go('signup-success');
