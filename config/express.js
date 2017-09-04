@@ -48,7 +48,6 @@ module.exports = function(db) {
 	});
 
 	// Setting application local variables
-	app.locals.google_analytics_id = config.app.google_analytics_id;
 	app.locals.title = config.app.title;
 	app.locals.signupDisabled = config.signupDisabled;
 	app.locals.description = config.app.description;
@@ -64,7 +63,7 @@ module.exports = function(db) {
 
 	if(config.socketUrl){
 		app.locals.socketUrl = config.socketUrl;
-	} 
+	}
 
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();
@@ -89,7 +88,7 @@ module.exports = function(db) {
 			if (!subdomains.length) {
 				return next();
 			}
-			
+
 			urlPath = url.parse(req.url).path.split('/');
 			if (urlPath.indexOf('static') > -1) {
 				urlPath.splice(1, 1);

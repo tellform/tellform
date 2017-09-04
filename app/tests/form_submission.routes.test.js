@@ -60,9 +60,7 @@ describe('Form Submission Routes Unit tests', function() {
 				if (formSaveErr) done(formSaveErr);
 
 				_Submission = {
-					form: form._id,
-					percentageComplete: 100,
-					timeElapsed: 11.55
+					form: form._id
 				};
 
 				FormObj = form;

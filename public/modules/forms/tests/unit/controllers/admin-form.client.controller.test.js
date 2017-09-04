@@ -32,9 +32,6 @@
                 {fieldType:'checkbox', title:'nascar',      fieldValue: '', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
                 {fieldType:'checkbox', title:'hockey',      fieldValue: '', deletePreserved: false, _id:'56e90745f5934fc9e22028a6'}
 			],
-			analytics: {
-				visitors: []
-			},
 			_id: '525a8422f6d0f87f0e407a33',
 			id:  '525a8422f6d0f87f0e407a33'
 		};

@@ -533,59 +533,6 @@
 				}
 			}
 		},
-		"VisitorData": {
-			"type": "object",
-			"properties": {
-				"referrer": {
-					"type": "string",
-					"description": "Referring site of Form Visitor",
-					"example": "http://google.com"
-				},
-				"lastActiveField": {
-					"type": "string",
-					"description": "ID of Last Active Field",
-					"example": "57bca0969ca8e18b825bcc2b"
-				},
-				"timeElapsed": {
-					"type": "number",
-					"description": "Time Elasped for Visitor on Form (in seconds)",
-					"example": "333.33"
-				},
-				"isSubmitted": {
-					"type": "boolean",
-					"description": "Specifies whether user submitted form before leaving page",
-					"example": false
-				},
-				"language": {
-					"type": "string",
-					"description": "Language of User using form",
-					"example": "en"
-				},
-				"ipAddr": {
-					"type": "string",
-					"default": "",
-					"description": "IP Address of User",
-					"example": "324.332.322.333"
-				},
-				"deviceType": {
-					"type": "string",
-					"enum": [
-						"desktop",
-						"phone",
-						"tablet",
-						"other"
-					],
-					"default": "other",
-					"description": "Device Type of User",
-					"example": "phone"
-				},
-				"userAgent": {
-					"type": "string",
-					"description": "User Agent of User",
-					"example": "Mozilla/5.0 (Linux; <Android Version>; <Build Tag etc.>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) Chrome/<Chrome Rev> Mobile Safari/<WebKit Rev>"
-				}
-			}
-		},
 		"Button": {
 			"type": "object",
 			"properties": {
@@ -630,40 +577,6 @@
 				"respondentEmail": {
 					"type": "string",
 					"format": "email"
-				},
-				"ipAddr": {
-					"type": "string"
-				},
-				"geoLocation": {
-					"type": "object",
-					"properties": {
-						"Country": {
-							"type": "string"
-						},
-						"Region": {
-							"type": "string"
-						},
-						"City": {
-							"type": "string"
-						}
-					}
-				},
-				"device": {
-					"type": "object",
-					"properties": {
-						"type": {
-							"type": "string"
-						},
-						"name": {
-							"type": "string"
-						}
-					}
-				},
-				"timeElapsed": {
-					"type": "number"
-				},
-				"percentageComplete": {
-					"type": "number"
 				}
 			}
 		},
@@ -694,23 +607,6 @@
 					"required": "Form must have a language",
 					"description": "Language of Form",
 					"example": "en"
-				},
-				"analytics": {
-					"type": "object",
-					"description": "Analytics of Form",
-					"properties": {
-						"gaCode": {
-							"type": "string",
-							"description": "Analytics of Form",
-							"example": "UA-000000-01"
-						},
-						"visitors": {
-							"type": "array",
-							"items": {
-								"type": "#/definitions/VisitorData"
-							}
-						}
-					}
 				},
 				"form_fields": {
 					"type": "array",

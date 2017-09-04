@@ -21,33 +21,6 @@ var FormSubmissionSchema = new Schema({
 		type: String,
 		trim: true,
 		match: [/.+\@.+\..+/, 'Please provide a valid email.']
-	},
-
-	ipAddr: {
-		type: String
-	},
-	geoLocation: {
-		Country: {
-			type: String
-		},
-		City: {
-			type: String
-		}
-	},
-	device: {
-		type: {
-			type: String
-		},
-		name: {
-			type: String
-		}
-	},
-
-	timeElapsed: {
-		type: Number
-	},
-	percentageComplete: {
-		type: Number
 	}
 });
 

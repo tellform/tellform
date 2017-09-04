@@ -43,7 +43,6 @@ MAILER_FROM=<TO-FILL-IN>
 SIGNUP_DISABLED=false
 SUBDOMAINS_DISABLED=true
 DISABLE_CLUSTER_MODE=true
-GOOGLE_ANALYTICS_ID=
 RAVEN_DSN=
 PRERENDER_TOKEN=
 COVERALLS_REPO_TOKEN=
@@ -135,7 +134,6 @@ MAILER_FROM=<TO-FILL-IN>
 SIGNUP_DISABLED=false
 SUBDOMAINS_DISABLED=true
 DISABLE_CLUSTER_MODE=true
-GOOGLE_ANALYTICS_ID=
 RAVEN_DSN=
 PRERENDER_TOKEN=
 COVERALLS_REPO_TOKEN=
@@ -144,7 +142,7 @@ COVERALLS_REPO_TOKEN=
 ### Install npm, bower and grunt
 
 ```
-$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash 
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 $ . ~/.nvm/nvm.sh
 $ nvm install 6.11.2
 $ npm install -g bower
@@ -172,7 +170,6 @@ $ docker-compose -f docker-compose-production.yml up
 
 Your application should run on the default port 80, so in your browser just go to your public IP.
 
-## Support 
+## Support
 
 Please contact Leonard Loo (leonard@data.gov.sg) for any details.
-

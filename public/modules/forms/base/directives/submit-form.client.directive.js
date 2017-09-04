@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'Auth', 'SendVisitorData',
-    function ($http, TimeCounter, $filter, $rootScope, Auth, SendVisitorData) {
+angular.module('forms').directive('submitFormDirective', ['$http', '$filter', '$rootScope', 'Auth',
+    function ($http, $filter, $rootScope, Auth) {
         return {
             templateUrl: 'modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
@@ -41,10 +41,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     if($scope.myform.visible_form_fields.length) {
                       $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
                     }
-
-                    //console.log($scope.selected);
-                    //Reset Timer
-                    TimeCounter.restartClock();
                 };
 
 				//Fire event when window is scrolled
@@ -199,15 +195,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 				};
 
 				$rootScope.submitForm = $scope.submitForm = function(cb) {
-
-					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
 
 					var form = _.cloneDeep($scope.myform);
 
-					form.timeElapsed = _timeElapsed;
-
-					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
 					delete form.visible_form_fields;
 
 					setTimeout(function () {
@@ -215,7 +206,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 							.success(function (data, status, headers) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
-								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);
 								if(cb){
 									cb();
 								}

@@ -42,21 +42,17 @@
         };
 
         var sampleSubmission = {
-            form: sampleForm,
-            timeElapsed: 17.55
+            form: sampleForm
         };
 
         var sampleSubmissions = [{
-            form: sampleForm,
-            timeElapsed: 10.33
+            form: sampleForm
         },
         {
-            form: sampleForm,
-            timeElapsed: 2.33
+            form: sampleForm
         },
         {
-            form: sampleForm,
-            timeElapsed: 11.11
+            form: sampleForm
         }];
 
         // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -130,8 +126,6 @@
             var data = function(data) {
                 var form = angular.fromJson(data);
                 var compareForm = _.cloneDeep(form);
-                delete compareForm.timeElapsed;
-                delete compareForm.percentageComplete;
 
                 return Validator.isNewForm(form) && _.isEqual(compareForm, expectedForm);
             };

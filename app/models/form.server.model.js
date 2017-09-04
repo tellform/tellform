@@ -35,37 +35,6 @@ var ButtonSchema = new Schema({
 	}
 });
 
-var VisitorDataSchema = new Schema({
-	referrer: {
-		type: String
-	},
-	lastActiveField: {
-		type: Schema.Types.ObjectId
-	},
-	timeElapsed: {
-		type: Number
-	},
-	isSubmitted: {
-		type: Boolean
-	},
-	language: {
-		type: String
-	},
-	ipAddr: {
-		type: String,
-		default: ''
-	},
-	deviceType: {
-		type: String,
-		enum: ['desktop', 'phone', 'tablet', 'other'],
-		default: 'other'
-	},
-	userAgent: {
-		type: String
-	}
-
-});
-
 var formSchemaOptions = {
 	id: false,
 	toJSON: {
@@ -87,12 +56,6 @@ var FormSchema = new Schema({
 		enum: ['en', 'fr', 'es', 'it', 'de'],
 		default: 'en',
 		required: 'Form must have a language'
-	},
-	analytics:{
-		gaCode: {
-			type: String
-		},
-		visitors: [VisitorDataSchema]
 	},
 
 	form_fields: [FieldSchema],
@@ -199,100 +162,6 @@ FormSchema.methods.getMainFields = function () {
     };
     return form;
 };
-
-/*
-** In-Form Analytics Virtual Attributes
- */
-/*
-FormSchema.virtual('analytics.views').get(function () {
-	if(this.analytics && this.analytics.visitors && this.analytics.visitors.length > 0){
-		return this.analytics.visitors.length;
-	} else {
-		return 0;
-	}
-});
-
-FormSchema.virtual('analytics.submissions').get(function () {
-	return this.submissions.length;
-});
-
-FormSchema.virtual('analytics.conversionRate').get(function () {
-	if(this.analytics && this.analytics.visitors && this.analytics.visitors.length > 0){
-		return this.submissions.length/this.analytics.visitors.length*100;
-	} else {
-		return 0;
-	}
-});
-
-FormSchema.virtual('analytics.fields').get(function () {
-	var fieldDropoffs = [];
-	var visitors = this.analytics.visitors;
-	var that = this;
-
-	if(this.form_fields.length === 0) {
-		return null;
-	}
-
-	for(var i=0; i<this.form_fields.length; i++){
-		var field = this.form_fields[i];
-
-		if(field && !field.deletePreserved){
-
-			var dropoffViews =  _.reduce(visitors, function(sum, visitorObj){
-
-					if(visitorObj.lastActiveField+'' === field._id+'' && !visitorObj.isSubmitted){
-						return sum + 1;
-					}
-					return sum;
-				}, 0);
-
-			var continueViews, nextIndex;
-
-			if(i !== this.form_fields.length-1){
-				continueViews =  _.reduce(visitors, function(sum, visitorObj){
-					nextIndex = that.form_fields.indexOf(_.find(that.form_fields, function(o) {
-						return o._id+'' === visitorObj.lastActiveField+'';
-					}));
-
-					if(nextIndex > i){
-						return sum + 1;
-					}
-					return sum;
-				}, 0);
-			} else {
-				continueViews =  _.reduce(visitors, function(sum, visitorObj){
-					if(visitorObj.lastActiveField+'' === field._id+'' && visitorObj.isSubmitted){
-						return sum + 1;
-					}
-					return sum;
-				}, 0);
-
-			}
-
-			var totalViews = dropoffViews+continueViews;
-			var continueRate = 0;
-			var dropoffRate = 0;
-
-			if(totalViews > 0){
-				continueRate = (continueViews/totalViews*100).toFixed(0);
-				dropoffRate = (dropoffViews/totalViews*100).toFixed(0);
-			}
-
-			fieldDropoffs[i] = {
-				dropoffViews: dropoffViews,
-				responses: continueViews,
-				totalViews: totalViews,
-				continueRate: continueRate,
-				dropoffRate: dropoffRate,
-				field: field
-			};
-
-		}
-	}
-
-	return fieldDropoffs;
-});
-*/
 
 FormSchema.plugin(mUtilities.timestamp, {
 	createdPath: 'created',

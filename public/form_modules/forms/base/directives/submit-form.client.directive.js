@@ -9,8 +9,8 @@ jsep.addBinaryOp('!begins', 10);
 jsep.addBinaryOp('ends', 10);
 jsep.addBinaryOp('!ends', 10);
 
-angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
-    function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
+angular.module('view-form').directive('submitFormDirective', ['$http', '$filter', '$rootScope',
+    function ($http, $filter, $rootScope) {
         return {
             templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
@@ -20,7 +20,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
             controller: function($document, $window, $scope){
 		        $scope.noscroll = false;
                 $scope.forms = {};
-				TimeCounter.restartClock();
 
 		var form_fields_count = $scope.myform.visible_form_fields.length;
 
@@ -49,9 +48,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     if($scope.myform.visible_form_fields.length) {
                       $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
                     }
-
-                    //Reset Timer
-                    TimeCounter.restartClock();
                 };
 
 				//Fire event when window is scrolled
@@ -229,8 +225,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 							}
 						});
 					}
-
-					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
@@ -278,62 +272,11 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
 				};
 
-				var getDeviceData = function(){
-					var md = new MobileDetect(window.navigator.userAgent);
-					var deviceType = 'other';
-
-					if (md.tablet()){
-						deviceType = 'tablet';
-					} else if (md.mobile()) {
-						deviceType = 'mobile';
-					} else if (!md.is('bot')) {
-						deviceType = 'desktop';
-					}
-
-					return {
-						type: deviceType,
-						name: window.navigator.platform
-					};
-				};
-
-				var getIpAndGeo = function(){
-					//Get Ip Address and GeoLocation Data
-					$.ajaxSetup( { 'async': false } );
-					var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
-					$.ajaxSetup( { 'async': true } );
-
-					if(!geoData || !geoData.ip){
-						geoData = {
-							ip: 'Adblocker'
-						};
-					}
-
-					return {
-						ipAddr: geoData.ip,
-						geoLocation: {
-							City: geoData.city,
-							Country: geoData.country_name
-						}
-					};
-				};
-
 				$rootScope.submitForm = $scope.submitForm = function() {
-
-					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;
 
 					var form = _.cloneDeep($scope.myform);
 
-					var deviceData = getDeviceData();
-					form.device = deviceData;
-
-					var geoData = getIpAndGeo();
-					form.ipAddr = geoData.ipAddr;
-					form.geoLocation = geoData.geoLocation;
-					console.log(geoData);
-
-					form.timeElapsed = _timeElapsed;
-					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
 					delete form.visible_form_fields;
 
 					setTimeout(function () {
@@ -341,7 +284,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 							.success(function (data, status) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
-								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);
 							})
 							.error(function (error) {
 								$scope.loading = false;

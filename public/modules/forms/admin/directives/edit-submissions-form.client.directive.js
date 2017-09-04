@@ -43,67 +43,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     });
                 };
 
-
-                /*
-                ** Analytics Functions
-                */
-                $scope.AverageTimeElapsed = (function(){
-                    var totalTime = 0;
-                    var numSubmissions = $scope.table.rows.length;
-
-                    for(var i=0; i<$scope.table.rows.length; i++){
-                        totalTime += $scope.table.rows[i].timeElapsed;
-                    }
-
-                    if(numSubmissions === 0) {
-                        return 0;
-                    }
-                    return (totalTime/numSubmissions).toFixed(0);
-                })();
-
-                $scope.DeviceStatistics = (function(){
-                    var newStatItem = function(){
-                        return {
-                            visits: 0,
-                            responses: 0,
-                            completion: 0,
-                            average_time: 0,
-                            total_time: 0
-                        };
-                    };
-
-                    var stats = {
-                        desktop: newStatItem(),
-                        tablet: newStatItem(),
-                        phone: newStatItem(),
-                        other: newStatItem()
-                    };
-
-                    if($scope.myform.analytics && $scope.myform.analytics.visitors) {
-                        var visitors = $scope.myform.analytics.visitors;
-                        for (var i = 0; i < visitors.length; i++) {
-                            var visitor = visitors[i];
-                            var deviceType = visitor.deviceType;
-
-                            stats[deviceType].visits++;
-
-                            if (visitor.isSubmitted) {
-                                stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
-                                stats[deviceType].responses++;
-                            }
-
-                            if(stats[deviceType].visits) {
-                                stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
-                            }
-
-                            if(stats[deviceType].responses){
-                                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
-                            }
-                        }
-                    }
-                    return stats;
-                })();
-
                 var updateFields = $interval(initController, 1000000);
 
                 $scope.$on('$destroy', function() {

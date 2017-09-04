@@ -120,10 +120,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 				}
 
 				mySubmission = new FormSubmission({
-					admin: user._id,
-					form: myForm._id,
-					timeElapsed: 17.55,
-					form_fields: submissionFields
+					form: myForm._id
 				});
 
 				done();
@@ -186,10 +183,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 
 			//Create Submission
 			mySubmission = new FormSubmission({
-				form_fields: _.merge(sampleSubmission, myForm.form_fields),
-				admin: user,
-				form: myForm,
-				timeElapsed: 17.55
+				form: myForm
 			});
 
 			mySubmission.save(function(err){

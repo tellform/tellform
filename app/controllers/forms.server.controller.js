@@ -34,7 +34,6 @@ exports.deleteSubmissions = function(req, res) {
 			return;
 		}
 
-		form.analytics.visitors = [];
 		form.save(function(formSaveErr){
 			if(formSaveErr){
 				res.status(400).send({
@@ -201,7 +200,6 @@ var readForRender = exports.readForRender = function(req, res) {
 	}
 
 	//Remove extraneous fields from form object
-	delete newForm.analytics;
 	delete newForm.admin;
 
 	if(!newForm.startPage.showStart){
@@ -231,11 +229,6 @@ exports.update = function(req, res) {
 		//Unless we have 'admin' privileges, updating form admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
-		}
-
-		if(form.analytics === null){
-			form.analytics.visitors = [];
-			form.analytics.gaCode = '';
 		}
 
 		//Do this so we can create duplicate fields

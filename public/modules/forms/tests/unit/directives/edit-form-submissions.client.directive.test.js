@@ -26,9 +26,6 @@
                 {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
                 {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
-            analytics: {
-				visitors: []
-			},
             startPage: {
                 showStart: false
             },
@@ -42,21 +39,17 @@
         };
 
         var sampleSubmission = {
-            form: sampleForm,
-            timeElapsed: 17.55
+            form: sampleForm
         };
 
         var sampleSubmissions = [{
-            form: sampleForm,
-            timeElapsed: 10.33
+            form: sampleForm
         },
         {
-            form: sampleForm,
-            timeElapsed: 2.33
+            form: sampleForm
         },
         {
-            form: sampleForm,
-            timeElapsed: 11.11
+            form: sampleForm
         }];
 
         // The $resource service augments the response object with methods for updating and deleting the resource.
