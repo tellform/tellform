@@ -3,11 +3,6 @@
  * Module dependencies.
  */
 
-//Load ENV vars from .env
-if ((process.env.NODE_ENV || 'development') === 'development') {
-	require('dotenv').config();
-}
-
 require('events').EventEmitter.prototype._maxListeners = 0;
 
 var config = require('./config/config'),
@@ -45,6 +40,13 @@ if (process.env.CREATE_ADMIN_ACCOUNT === 'TRUE') {
 	});
 }
 
+// Preload data
+var preloadData = require('./scripts/preload-data');
+preloadData.loadAgency(function(err) {
+	if (err) {
+		console.error(chalk.red('Could not pre-load agency data: ' + err));
+	}
+});
 
 // Bootstrap passport config
 require('./config/passport')();

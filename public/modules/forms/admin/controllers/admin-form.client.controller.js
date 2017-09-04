@@ -24,6 +24,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         CurrentForm.setForm($scope.myform);
 
         // $scope.formURL = '/#!/forms/' + $scope.myform.admin.agency  + '/' + $scope.myform._id;
+
         // :agency
         $scope.formURL = '/#!/forms/' + $scope.myform.title + '/' + $scope.myform._id;
 

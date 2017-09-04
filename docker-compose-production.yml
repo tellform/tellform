@@ -9,14 +9,14 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ~/data/db:/data/db
-  formsg-dev:
+      - /data/db:/data/db
+  formsg-prod:
     build:
       context: ./
-      dockerfile: Dockerfile
-    image: formsg-dev
+      dockerfile: Dockerfile-production
+    image: formsg-prod
     ports:
-      - "5000:5000"
+      - "80:4545"
     links:
       - formsg-redis:redis-db
       - formsg-mongo:db
