@@ -42,45 +42,17 @@
         };
 
         var sampleSubmission = {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name',             fieldValue: 'John Smith',   deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
-                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: true,           deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
-                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: false,          deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
-            ],
-            admin: sampleUser,
-            form: sampleForm,
-            timeElapsed: 17.55
+            form: sampleForm
         };
 
         var sampleSubmissions = [{
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'The Terminator', deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'true', deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'false', deletePreserved: false}
-            ],
-            admin: sampleUser,
-            form: sampleForm,
-            timeElapsed: 10.33
+            form: sampleForm
         },
         {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'true',     deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'true',     deletePreserved: false}
-            ],
-            admin: sampleUser,
-            form: sampleForm,
-            timeElapsed: 2.33
+            form: sampleForm
         },
         {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'Jane Doe', deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like nascar',     fieldValue: 'false',    deletePreserved: false},
-                {fieldType:'yes_no',    title:'Do you like hockey',     fieldValue: 'false',    deletePreserved: false}
-            ],
-            admin: sampleUser,
-            form: sampleForm,
-            timeElapsed: 11.11
+            form: sampleForm
         }];
 
         // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -154,8 +126,6 @@
             var data = function(data) {
                 var form = angular.fromJson(data);
                 var compareForm = _.cloneDeep(form);
-                delete compareForm.timeElapsed;
-                delete compareForm.percentageComplete;
 
                 return Validator.isNewForm(form) && _.isEqual(compareForm, expectedForm);
             };

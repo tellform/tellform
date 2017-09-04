@@ -2,7 +2,6 @@
 
 module.exports = {
 	app: {
-		google_analytics_id: process.env.GOOGLE_ANALYTICS_ID || '',
 		title: process.env.APP_NAME || 'TellForm',
 		description: process.env.APP_DESC || 'Opensource form builder alternative to TypeForm',
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'

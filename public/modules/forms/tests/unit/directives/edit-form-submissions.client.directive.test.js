@@ -26,10 +26,6 @@
                 {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
                 {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
-            analytics: {
-				visitors: []
-			},
-			submissions: [],
             startPage: {
                 showStart: false
             },
@@ -43,45 +39,17 @@
         };
 
         var sampleSubmission = {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: 0, deletePreserved: false}
-            ],
-            admin: sampleUser,
-            form: sampleForm,
-            timeElapsed: 17.55
+            form: sampleForm
         };
 
         var sampleSubmissions = [{
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'The Terminator', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: 0, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: 1, deletePreserved: false}
-            ],
-            admin: sampleUser,
-            form: sampleForm,
-            timeElapsed: 10.33
+            form: sampleForm
         },
         {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: 0, deletePreserved: false}
-            ],
-            admin: sampleUser,
-            form: sampleForm,
-            timeElapsed: 2.33
+            form: sampleForm
         },
         {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'Jane Doe', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: 1, deletePreserved: false}
-            ],
-            admin: sampleUser,
-            form: sampleForm,
-            timeElapsed: 11.11
+            form: sampleForm
         }];
 
         // The $resource service augments the response object with methods for updating and deleting the resource.
