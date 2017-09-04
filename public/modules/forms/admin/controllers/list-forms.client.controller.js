@@ -8,13 +8,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.forms = {};
         $scope.showCreateModal = false;
 
-		$rootScope.languageRegExp = {
-			regExp: /[@!#$%^&*()\-+={}\[\]|\\/'";:`.,~№?<>]+/i,
-			test: function(val) {
-				return !this.regExp.test(val);
-			}
-		};
-
 		/*
 		 ** DeleteModal Functions
 		 */

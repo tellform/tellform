@@ -19,7 +19,9 @@ exports.userByID = function (req, res, next, id) {
 
   User.findOne({
     _id: id
-  }).exec(function (err, user) {
+  })
+  .populate('agency', '_id shortName fullName')
+  .exec(function(err, user) {
     if (err) {
       return next(err);
     } else if (!user) {

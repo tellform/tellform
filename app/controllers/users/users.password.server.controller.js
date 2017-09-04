@@ -35,7 +35,9 @@ exports.forgot = function(req, res, next) {
 						{'username': req.body.username},
 						{'email': req.body.username}
 					]
-				}, '-salt -password', function(err, user) {
+				}, '-salt -password')
+				.populate('agency', '_id shortName fullName')
+				.exec(function (err, user) {
 					if(err){
 						return res.status(500).send({
 							message: err.message
@@ -109,7 +111,9 @@ exports.validateResetToken = function(req, res) {
 		resetPasswordExpires: {
 			$gt: Date.now()
 		}
-	}, function(err, user) {
+	})
+	.populate('agency', '_id shortName fullName')
+	.exec(function (err, user) {
 		if(err){
 			return res.status(500).send({
 				message: err.message
@@ -137,7 +141,9 @@ exports.reset = function(req, res, next) {
 				resetPasswordExpires: {
 					$gt: Date.now()
 				}
-			}, function(err, user) {
+			})
+			.populate('agency', '_id shortName fullName')
+			.exec(function (err, user) {
 				if (!err && user) {
 					if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
 						user.password = passwordDetails.newPassword;
@@ -201,7 +207,9 @@ exports.changePassword = function(req, res) {
 
 	if (req.user) {
 		if (passwordDetails.newPassword) {
-			User.findById(req.user.id, function(err, user) {
+			User.findById(req.user.id)
+			.populate('agency', '_id shortName fullName')
+			.exec(function (err, user) {
 				if (!err && user) {
 					if (user.authenticate(passwordDetails.currentPassword)) {
 						if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
