@@ -64,7 +64,7 @@ module.exports = function(db) {
 
 	if(config.socketUrl){
 		app.locals.socketUrl = config.socketUrl;
-	} 
+	}
 
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();
@@ -89,7 +89,7 @@ module.exports = function(db) {
 			if (!subdomains.length) {
 				return next();
 			}
-			
+
 			urlPath = url.parse(req.url).path.split('/');
 			if (urlPath.indexOf('static') > -1) {
 				urlPath.splice(1, 1);
@@ -114,7 +114,9 @@ module.exports = function(db) {
 				return next();
 			}
 
-			User.findOne({username: req.subdomains.reverse()[0]}).exec(function (err, user) {
+			User.findOne({username: req.subdomains.reverse()[0]})
+			.populate('agency', '_id shortName fullName')
+			.exec(function (err, user) {
 
 				if (err) {
 					req.subdomains = null;
