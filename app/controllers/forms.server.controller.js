@@ -67,22 +67,33 @@ exports.createSubmission = function(req, res, next) {
 		}
 	}
 
+	var newSubmission = new FormSubmission({
+		form: form._id,
+		respondentEmail: req.body.respondentEmail
+	});
+
 	async.waterfall([
 		function(done) {
+			newSubmission.save(function(err, submission){
+				done(err, submission);
+			});
+		},
+		function(submission, done) {
 			res.render('templates/submit-form-email', {
+				refNo: submission.id,
 				formTitle: form.title,
-				submissionTime: moment().tz('Asia/Singapore').format('ddd, DD MMM YYYY hh:mm:ss A'),
+				submissionTime: moment(submission.created).tz('Asia/Singapore').format('ddd, DD MMM YYYY hh:mm:ss A'),
 				formData: formData,
 				appName: config.app.title
 			}, function(err, emailHTML) {
-				done(err, emailHTML);
+				done(err, emailHTML, submission);
 			});
 		},
-		function(emailHTML, done) {
+		function(emailHTML, submission, done) {
 			var mailOptions = {
 				to: form.emails,
 				from: 'Form.sg <donotreply@form.sg>',
-				subject: 'formsg-auto: ' + form.title,
+				subject: 'formsg-auto: ' + form.title + ' (Ref: ' + submission.id + ')',
 				html: emailHTML
 			};
 
@@ -93,7 +104,7 @@ exports.createSubmission = function(req, res, next) {
 					});
 				} else {
 					return res.status(400).send({
-						message: 'Failure sending form submission email123.'
+						message: 'Failure sending form submission email.'
 					});
 				}
 
