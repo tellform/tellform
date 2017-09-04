@@ -35,7 +35,6 @@
 			analytics: {
 				visitors: []
 			},
-			submissions: [],
 			_id: '525a8422f6d0f87f0e407a33',
 			id:  '525a8422f6d0f87f0e407a33'
 		};

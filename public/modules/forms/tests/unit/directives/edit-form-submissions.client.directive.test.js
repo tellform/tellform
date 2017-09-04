@@ -29,7 +29,6 @@
             analytics: {
 				visitors: []
 			},
-			submissions: [],
             startPage: {
                 showStart: false
             },
@@ -43,43 +42,19 @@
         };
 
         var sampleSubmission = {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: 0, deletePreserved: false}
-            ],
-            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 17.55
         };
 
         var sampleSubmissions = [{
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'The Terminator', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: 0, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: 1, deletePreserved: false}
-            ],
-            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 10.33
         },
         {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: 0, deletePreserved: false}
-            ],
-            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 2.33
         },
         {
-            form_fields: [
-                {fieldType:'textfield', title:'First Name', fieldValue: 'Jane Doe', deletePreserved: false},
-                {fieldType:'checkbox', title:'nascar',      fieldValue: 1, deletePreserved: false},
-                {fieldType:'checkbox', title:'hockey',      fieldValue: 1, deletePreserved: false}
-            ],
-            admin: sampleUser,
             form: sampleForm,
             timeElapsed: 11.11
         }];

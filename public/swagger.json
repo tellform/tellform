@@ -448,17 +448,6 @@
 				"fieldType"
 			],
 			"properties": {
-				"isSubmission": {
-					"type": "boolean",
-					"default": false,
-					"description": "Specifies whether Field is part of a Submission or not",
-					"example": true
-				},
-				"submissionId": {
-					"type": "string",
-					"description": "ID of Submission that this Field belongs to",
-					"example": "57bca0969ca8e18b825bcc2b"
-				},
 				"title": {
 					"type": "string",
 					"trim": true,
@@ -634,30 +623,13 @@
 		},
 		"FormSubmission": {
 			"type": "object",
-			"required": [
-				"language",
-				"admin",
-				"title"
-			],
 			"properties": {
-				"title": {
-					"type": "string",
-					"required": "Form Title cannot be blank"
+				"form": {
+					"$ref": "#/definitions/Form"
 				},
-				"language": {
+				"respondentEmail": {
 					"type": "string",
-					"enum": [
-						"en",
-						"fr",
-						"es",
-						"it",
-						"de"
-					],
-					"default": "en",
-					"required": "Form must have a language"
-				},
-				"admin": {
-					"$ref": "#/definitions/User"
+					"format": "email"
 				},
 				"ipAddr": {
 					"type": "string"
@@ -686,12 +658,6 @@
 							"type": "string"
 						}
 					}
-				},
-				"pdfFilePath": {
-					"type": "string"
-				},
-				"pdf": {
-					"type": "string"
 				},
 				"timeElapsed": {
 					"type": "number"
@@ -750,12 +716,6 @@
 					"type": "array",
 					"items": {
 						"type": "FormField"
-					}
-				},
-				"submissions": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/FormSubmission"
 					}
 				},
 				"admin": {

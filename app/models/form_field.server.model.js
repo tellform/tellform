@@ -52,13 +52,6 @@ function BaseFieldSchema(){
 		globalId: {
 			type: String,
     	},
-		isSubmission: {
-			type: Boolean,
-			default: false
-		},
-		submissionId: {
-			type: Schema.Types.ObjectId
-		},
 		title: {
 			type: String,
 			trim: true,

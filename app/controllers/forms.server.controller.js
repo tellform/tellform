@@ -201,7 +201,6 @@ var readForRender = exports.readForRender = function(req, res) {
 	}
 
 	//Remove extraneous fields from form object
-	delete newForm.submissions;
 	delete newForm.analytics;
 	delete newForm.admin;
 
@@ -295,7 +294,7 @@ exports.duplicate = function(req, res) {
 
 			form.isNew = true;
 			form.title = form.title + '_' + copy_num;
-			
+
 			form.save(function(err, form) {
 				if (err) {
 					return res.status(405).send({
@@ -339,7 +338,7 @@ exports.formByID = function(req, res, next, id) {
 			message: 'Form is invalid'
 		});
 	}
-	Form.findById(id).populate('admin').populate('submissions').exec(function(err, form) {
+	Form.findById(id).populate('admin').exec(function(err, form) {
 		if (err) {
 			return next(err);
 		} else if (!form || form === null) {

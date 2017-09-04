@@ -14,11 +14,11 @@ module.exports = function(app) {
 
 	app.route('/forms/:formId([a-zA-Z0-9]+)')
 		.get(forms.read)
-		.post(forms.createSubmission)
 		.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.update)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.delete);
 
 	app.route('/forms/:formId([a-zA-Z0-9]+)/submissions')
+		.post(forms.createSubmission)
 		.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.listSubmissions)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.deleteSubmissions);
 

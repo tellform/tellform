@@ -60,13 +60,7 @@ describe('Form Submission Routes Unit tests', function() {
 				if (formSaveErr) done(formSaveErr);
 
 				_Submission = {
-					form_fields: [
-						{'fieldType':'textfield', 'title':'First Name', 'fieldValue': 'David'},
-						{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': true},
-						{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': false}
-					],
 					form: form._id,
-					admin: user._id,
 					percentageComplete: 100,
 					timeElapsed: 11.55
 				};
@@ -85,7 +79,7 @@ describe('Form Submission Routes Unit tests', function() {
 	it(' > should be able to create a Form Submission without signing in', function(done) {
 
 		//Create Submission
-		submissionSession.post('/forms/' + FormObj._id)
+		submissionSession.post('/forms/' + FormObj._id + '/submissions')
 			.send(_Submission)
 			.expect(200)
 			.end(function(err, res) {
@@ -98,7 +92,7 @@ describe('Form Submission Routes Unit tests', function() {
 
 	it(' > should be able to get Form Submissions if signed in', function(done) {
 		//Create Submission
-		submissionSession.post('/forms/' + FormObj._id)
+		submissionSession.post('/forms/' + FormObj._id + '/submissions')
 			.send(_Submission)
 			.expect(200)
 			.end(function(err, res) {
