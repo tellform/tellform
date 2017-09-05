@@ -1,6 +1,35 @@
 /* Custom Tab CSS */
+@media all and (min-width: 750px) {
+    .nav.nav-pills.nav-stacked {
+        width: 16.66666667%;
+    }
+}
+@media not all and (min-width: 750px) {
+    .nav.nav-pills.nav-stacked {
+        width: 100%;
+    }
+}
+@media all and (min-width: 750px) {
+    .hidden-when-large {
+        display: none;
+    }
+}
+@media not all and (min-width: 750px) {
+    .hidden-when-small {
+        display: none;
+    }
+}
+@media all and (min-width: 750px) {
+    .lead {
+        font-size:30px !important;
+    }
+}
+@media not all and (min-width: 750px) {
+    .lead {
+        text-align:center;
+    }
+}
 .nav.nav-pills.nav-stacked {
-	width: 16.66666667%;
 	float: left;
 	position: relative;
 	min-height: 1px;
@@ -9,6 +38,7 @@
 .nav-pills>li>a {
 	border-radius: 0;
 }
+
 .nav-pills>li.active>a,
 .nav-pills>li.active>a:focus,
  .nav-pills>li.active>a:hover {
@@ -28,11 +58,38 @@
 	 background-color: #41964e;
 	 color: white;
  }
+ 
+ .mobile-tabs > .nav>li>a {
+  color: #fff;
+ }
+
+ .mobile-tabs > .nav {
+  background-color: #283d86;
+ }
+
+ .mobile-tabs > .nav-pills>li.active>a,
+ .mobile-tabs > .nav-pills>li.active>a:focus,
+ .mobile-tabs > .nav-pills>li.active>a:hover{
+  border:1px solid #283d86;
+  border-bottom:none;
+  color: #283d86;
+  background-color: #fff;
+ }
+
+ .mobile-tabs > .nav-pills>li.active>a.disabled{
+  color: #777;
+ }
+
+ .mobile-tabs .nav>li.disabled>a {
+  color: #777;
+  cursor: not-allowed;
+ }
+
  .horizontal-tabs .nav {
 	 border-bottom: 1px solid #ccc;
  }
  .horizontal-tabs .nav>li>a{
-	 color: inherit;
+	 color: #333;
  }
  .horizontal-tabs .nav>li>a:hover{
 	color: #fff;
@@ -51,8 +108,20 @@
 .horizontal-tabs .tab-content {
 	width: 100%;
 }
+
+@media all and (min-width: 750px) {
+    div.tab-content {
+        width: 83.33333333%;
+    }
+}
+
+@media not all and (min-width: 750px) {
+    div.tab-content {
+        width: 100%;
+    }
+}
+
 div.tab-content {
-	width: 83.33333333%;
 	position: relative;
 	min-height: 1px;
 	float:left;
@@ -181,7 +250,6 @@ div.form-fields {
     zoom: 1;
     width: 16px;
     padding: 0;
-    height: 17px;
     font-size: 12px;
     line-height: 19px;
     border: 1px solid #000;
@@ -320,8 +388,10 @@ form .row.field {
     padding: 20px 30px;
 }
 
-div.config-form .row.field {
-    padding-top:1.8em;
+@media all and (min-width: 750px) {
+    div.config-form .row.field {
+        padding-top:1.8em;
+    }
 }
         div.config-form .row > .field-input {
             padding-left:0.1em;
@@ -332,14 +402,24 @@ div.config-form .row.field {
 								min-width: 100px;
             }
 /* Styles for form admin view (/forms/:formID/admin) */
-.admin-form > .page-header {
-    padding-bottom: 0;
-    margin-bottom: 40px;
+@media all and (min-width: 750px) {
+    .admin-form > .page-header {
+        padding-bottom: 0;
+        margin-bottom: 40px;
+    }
+}
+
+@media not all and (min-width: 750px) {
+    .admin-form > .page-header {
+        margin-bottom: 10px !important;
+        margin-top: 0px !important;
+    }
 }
     .admin-form > .page-header h1 {
         margin-bottom: 0;
         margin-top: 0;
     }
+
     .admin-form > .page-header h1,
     .admin-form > .page-header h2 {
         white-space: nowrap;
@@ -364,16 +444,41 @@ div.config-form .row.field {
 /*Styles for admin view tabs */
 .admin-form .tab-content {
   padding-top: 3em;
-	border: 1px solid #337ab7;
-  border-left: 0;
-	background: #fff;
-	margin-bottom: 50px;
+  border: 1px solid #283d86;
+  background: #fff;
+  margin-bottom: 50px;
+}
+
+@media not all and (min-width: 750px) {
+    .admin-form .tab-content {
+        border-top: 0;
+    }
+}
+
+@media all and (min-width: 750px) {
+    .admin-form .tab-content {
+        border-left: 0;
+    }
 }
 
 .admin-form .panel-heading {
     background-color: #f1f1f1;
 	position: relative!important;
 }
+
+@media all and (min-width: 750px) {
+    .admin-form .panel-heading {
+        padding-left: 10px; 
+        padding-right: 10px;
+    }
+}
+
+@media not all and (min-width: 750px) {
+    .admin-form .panel-heading {
+        text-align:center;
+    }
+}
+
     .admin-form .panel-heading:hover {
         background-color: #45a247;
         cursor: pointer;
@@ -387,10 +492,19 @@ div.config-form .row.field {
  						cursor: default;
 					}
 
-.current-fields {
-	margin-top: 30px;
-	padding: 0 35px;
+@media all and (min-width: 750px) {
+    .current-fields {
+        margin-top: 30px;
+        padding: 0 35px;
+    }
 }
+
+@media not all and (min-width: 750px) {
+    .current-fields {
+        margin-top: 8px;
+    }
+}
+
 .current-fields .panel-body .row.question input[type='text'], .current-fields .panel-body .row.description textarea{
     width: 100%;
 }
@@ -444,26 +558,32 @@ div.config-form .row.field {
     background-color:#efefef;
 }
 
-
 /*Styles for add fields tab*/
 .admin-form .add-field {
     background-color: #fff;
-    padding: 0 25px;
     border-right: 1px solid #e8e6e6;
 }
-    .admin-form .add-field .col-xs-6 {
-        padding: 0.25em 0.4em;
-    }
-        .admin-form .add-field .col-xs-6 .panel-heading {
-            border-width: 1px;
-            border-style: solid;
-            border-color: #bbb;
-            border-radius: 4px;
-        }
 
-        .admin-form .oscar-field-select {
-            margin: 10px 0 10px;
-        }
+@media all and (min-width: 750px) {
+    .admin-form .add-field {
+        padding: 0 25px;
+    }
+}
+
+.admin-form .add-field .col-xs-6 {
+    padding: 0.25em 0.4em;
+}
+
+.admin-form .add-field .col-xs-6 .panel-heading {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #bbb;
+    border-radius: 4px;
+}
+
+.admin-form .oscar-field-select {
+    margin: 10px 0 10px;
+}
 
 .view-form-btn.span {
     padding-right:0.6em;

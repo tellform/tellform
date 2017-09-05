@@ -523,18 +523,16 @@
 	</script>
 
 	<!-- Add Fields Element -->
-    <div class="col-xs-2 col-sm-4 add-field">
+    <div class="col-xs-3 col-sm-4 add-field">
 
         <div class="row add-field-title">
-            <h3 class="col-md-12 hidden-sm hidden-xs">{{ 'ADD_FIELD_LG' | translate }}</h3>
-            <h4 class="col-sm-12 hidden-xs hidden-md hidden-lg">{{ 'ADD_FIELD_MD' | translate }}</h4>
-            <h5 class="col-xs-12 hidden-sm hidden-md hidden-lg">{{ 'ADD_FIELD_SM' | translate }}</h5>
+            <h3 class="col-md-12 hidden-xs">{{ 'ADD_FIELD_LG' | translate }}</h3>
         </div>
         <div class="panel-group row" class="draggable" ng-model="addField.types">
 
             <div class="col-xs-12 col-sm-12 col-md-6" ng-repeat="type in addField.types" style="padding-top:7.5px;">
                 <div class="panel panel-default" style="background-color:#f5f5f5;">
-                    <div class="panel-heading" ng-click="addNewField(false, type.name)" style="cursor: pointer; font-size:12px; padding-left: 10px; padding-right: 10px;">
+                    <div class="panel-heading" ng-click="addNewField(false, type.name)" style="cursor: pointer; font-size:12px;">
                         <span>
                             <field-icon-directive type-name="{{type.name}}">
                             </field-icon-directive>
@@ -548,7 +546,7 @@
     </div>
 
 	<!-- Current Fields Element -->
-	<div class="col-xs-10 col-sm-8 current-fields">
+	<div class="col-xs-9 col-sm-8 current-fields">
 		<!-- Start Page -->
         <div class="row" ng-if="myform.startPage.showStart">
             <div class="col-sm-12">
@@ -568,16 +566,16 @@
 							<img src="/static/modules/core/img/placeholder.svg">
             </div>
 
-            <div class="col-sm-12 col-md-11 dropzoneContainer">
+            <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10 dropzoneContainer" style="padding-right:0px !important;">
 							<div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 
 								<div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved" ng-click="openEditModal(field)">
 									<div class="panel-heading">
 										<div class="row">
-											<span class="col-xs-1" ng-switch="field.fieldType">
+											<span class="hidden-xs col-md-1" ng-switch="field.fieldType">
 																<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
 															</span>
-											<span class="col-xs-11">
+											<span class="col-xs-12 col-md-11">
 																{{field.title}}
 																<span ng-show="field.required">*</span>
 											</span>
@@ -586,10 +584,10 @@
 								</div>
 							</div>
             </div>
-            <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;" >
+            <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">
                     <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">
-                        <div class="panel-heading" style="padding: 10px 10px;" ng-click="deleteField($index)">
+                        <div class="panel-heading" style="padding: 10px 0px;" ng-click="deleteField($index)">
                             <span class="text-center">
                                 <a href="" class="fa fa-trash-o"></a>
                             </span>
