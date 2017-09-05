@@ -12,11 +12,12 @@ module.exports = function(app) {
 		.get(auth.isAuthenticatedOrApiKey, forms.list)
 		.post(auth.isAuthenticatedOrApiKey, forms.create);
 
-	app.route('/forms/:formIdx([a-zA-Z0-9]+)')
+	app.route('/forms/:agency/:formId([a-zA-Z0-9]+)')
 		.get(forms.read)
 		.post(forms.createSubmission)
 		.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.update)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.delete);
+			// formidx
 
 	app.route('/forms/:formId([a-zA-Z0-9]+)/submissions')
 		.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.listSubmissions)
@@ -26,5 +27,7 @@ module.exports = function(app) {
 		.post(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.duplicate);
 
 	// Finish by binding the form middleware
-	app.param('formIdx', forms.formByID);
+	app.param('formId', forms.formByID);
+	// app.param('agency', forms.formByAgency);
+	// formidx
 };

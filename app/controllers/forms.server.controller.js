@@ -156,6 +156,7 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
 	console.log('forms.server.controller - read()')
+	console.log(req.params.agency)
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {

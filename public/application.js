@@ -26,7 +26,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).constant('USER_RO
 });
 
 //form url
-angular.module(ApplicationConfiguration.applicationModuleName).constant('FORM_URL', '/forms/:formIdx');
+angular.module(ApplicationConfiguration.applicationModuleName).constant('FORM_URL', '/forms/:agency/:formId');
+// formidx
 
 //Then define the init function for starting up the application
 angular.element(document).ready(function() {

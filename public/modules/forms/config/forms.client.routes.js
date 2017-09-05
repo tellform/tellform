@@ -50,8 +50,11 @@ angular.module('forms').config(['$stateProvider',
 				Forms: 'Forms',
 		        myForm: function (Forms, $stateParams) {
 		        	console.log('step 1 - view forms')
-		            return Forms.get({formIdx: $stateParams.formId}).$promise;
+		        	console.log($stateParams)
+		            // return Forms.get({formId: $stateParams.formId}).$promise;
+		            return Forms.get($stateParams).$promise
 		            // return Forms.get({formId: "123"}).$promise;
+		            // formidx
 		        }
 			},
 			controller: 'AdminFormController'
