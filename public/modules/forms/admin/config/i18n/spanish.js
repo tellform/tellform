@@ -10,7 +10,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_STATUS: 'Estado del formulario',
 		PUBLIC: 'Público',
 		PRIVATE: 'Privado',
-		GA_TRACKING_CODE: 'Código de Google Analytics',
 		DISPLAY_FOOTER: '¿Mostrar pie de página?',
 		SAVE_CHANGES: 'Grabar',
 		CANCEL: 'Cancelar',
@@ -102,17 +101,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		THEN_JUMP_TO: 'luego salta a',
 
 		//Edit Submissions View
-		TOTAL_VIEWS: 'Total de visitas únicas',
-		RESPONSES: 'respuestas',
-		COMPLETION_RATE: 'Taza de terminación',
-		AVERAGE_TIME_TO_COMPLETE: 'Promedio de tiempo de rellenado',
-
-		DESKTOP_AND_LAPTOP: 'Computadora',
-		TABLETS: 'Tablets',
-		PHONES: 'Móviles',
-		OTHER: 'Otros',
-		UNIQUE_VISITS: 'Visitas únicas',
-
 		FIELD_TITLE: 'Título de campo',
 		FIELD_VIEWS: 'Vistas de campo',
 		FIELD_DROPOFF: 'Finalización de campo',
@@ -121,11 +109,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		EXPORT_TO_EXCEL: 'Exportar a Excel',
 		EXPORT_TO_CSV: 'Exportar a CSV',
 		EXPORT_TO_JSON: 'Exportar a JSON',
-		PERCENTAGE_COMPLETE: 'Porcentaje de completitud',
-		TIME_ELAPSED: 'Tiempo usado',
-		DEVICE: 'Dispositivo',
-		LOCATION: 'Lugar',
-		IP_ADDRESS: 'Dirección IP',
 		DATE_SUBMITTED: 'Fecha de envío',
 		GENERATED_PDF: 'PDF generado',
 

@@ -142,11 +142,6 @@ var questions = [
 	},
 	{
 		type: 'input',
-		name: 'GOOGLE_ANALYTICS_ID',
-		message: 'What is your Google Analytics Tag? (optional)'
-	},
-	{
-		type: 'input',
 		name: 'RAVEN_DSN',
 		message: 'What is your Private Raven DSN key? (optional)'
 	},

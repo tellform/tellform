@@ -10,7 +10,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_STATUS: 'Form Status',
 		PUBLIC: 'Active',
 		PRIVATE: 'Inactive',
-		GA_TRACKING_CODE: 'Google Analytics Tracking Code',
 		DISPLAY_FOOTER: 'Display Form Footer?',
 		SAVE_CHANGES: 'Save',
 		CANCEL: 'Cancel',
@@ -108,17 +107,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		THEN_JUMP_TO: 'then jump to',
 
 		//Edit Submissions View
-		TOTAL_VIEWS: 'total unique visits',
-		RESPONSES: 'responses',
-		COMPLETION_RATE: 'completion rate',
-		AVERAGE_TIME_TO_COMPLETE: 'avg. completion time',
-
-		DESKTOP_AND_LAPTOP: 'Desktops',
-		TABLETS: 'Tablets',
-		PHONES: 'Phones',
-		OTHER: 'Other',
-		UNIQUE_VISITS: 'Unique Visits',
-
 		FIELD_TITLE: 'Field Title',
 		FIELD_VIEWS: 'Field Views',
 		FIELD_DROPOFF: 'Field Completion',
@@ -127,11 +115,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		EXPORT_TO_EXCEL: 'Export to Excel',
 		EXPORT_TO_CSV: 'Export to CSV',
 		EXPORT_TO_JSON: 'Export to JSON',
-		PERCENTAGE_COMPLETE: 'Percentage Complete',
-		TIME_ELAPSED: 'Time Elapsed',
-		DEVICE: 'Device',
-		LOCATION: 'Location',
-		IP_ADDRESS: 'IP Address',
 		DATE_SUBMITTED: 'Date Submitted',
 		GENERATED_PDF: 'Generated PDF',
 

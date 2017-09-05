@@ -27,6 +27,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 			};
 
 	    $scope.signin = function() {
+	    	$scope.credentials.username = $scope.credentials.username.toLowerCase()
 			User.login($scope.credentials).then(
 				function(response) {
 					Auth.login(response);
@@ -49,6 +50,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    };
 
 	    $scope.signup = function() {
+			$scope.credentials.username = $scope.credentials.username.toLowerCase()
+			$scope.credentials.email = $scope.credentials.email.toLowerCase()
+			// console.log($scope.credentials)
 	        User.signup($scope.credentials).then(
 		        function(response) {
 		        	$state.go('signup-success');

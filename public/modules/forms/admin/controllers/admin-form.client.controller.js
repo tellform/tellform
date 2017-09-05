@@ -72,12 +72,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 } else {
 
                     var dataToSend = data;
-                    if(dataToSend.analytics && dataToSend.analytics.visitors){
-                        delete dataToSend.analytics.visitors;
-                    }
-                    if(dataToSend.submissions){
-                        delete dataToSend.submissions;
-                    }
 
                     $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
                         .then(function (response) {
