@@ -38,7 +38,7 @@
 .nav-pills>li>a {
 	border-radius: 0;
 }
-@media all and (min-width: 750px) {
+
 .nav-pills>li.active>a,
 .nav-pills>li.active>a:focus,
  .nav-pills>li.active>a:hover {
@@ -58,36 +58,33 @@
 	 background-color: #41964e;
 	 color: white;
  }
-}
-@media not all and (min-width: 750px) {
-.nav-pills>li.active>a,
-.nav-pills>li.active>a:focus,
- .nav-pills>li.active>a:hover {
-     background-color: #fff !important;
-     color: #283d86 !important;
-     font-weight: bold;
+ 
+ .mobile-tabs > .nav>li>a {
+  color: #fff;
  }
- .nav-stacked>li+li {
-     margin-top: 0;
+
+ .mobile-tabs > .nav {
+  border: 1px solid #283d86;
+  border-bottom: none;
+  background-color: #283d86;
  }
- .nav>li>a {
-     padding: 20px 20px !important;
+
+ .mobile-tabs > .nav-pills>li.active>a,
+ .mobile-tabs > .nav-pills>li.active>a:focus,
+ .mobile-tabs > .nav-pills>li.active>a:hover{
+  border:none;
+  color: #283d86;
+  background-color: #fff;
  }
-.nav-pills>li>a {
-    background-color:#283d86;
-    color:#fff;
-    border-radius: 0;
-}
-}
 
  .horizontal-tabs .nav {
 	 border-bottom: 1px solid #ccc;
  }
  .horizontal-tabs .nav>li>a{
-	 color: inherit;
+	 color: #333;
  }
  .horizontal-tabs .nav>li>a:hover{
-	color: #fff;
+	color: #333;
  }
  .horizontal-tabs .nav-pills>li.active>a,
  .horizontal-tabs .nav-pills>li.active>a:focus,
@@ -439,7 +436,7 @@ form .row.field {
 /*Styles for admin view tabs */
 .admin-form .tab-content {
   padding-top: 3em;
-  border: 1px solid #337ab7;
+  border: 1px solid #283d86;
   background: #fff;
   margin-bottom: 50px;
 }
@@ -496,7 +493,7 @@ form .row.field {
 
 @media not all and (min-width: 750px) {
     .current-fields {
-        margin-top: 10px;
+        margin-top: 8px;
     }
 }
 
