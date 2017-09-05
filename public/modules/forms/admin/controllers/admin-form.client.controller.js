@@ -5,14 +5,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
     function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
 
         $scope.activePill = 0;
-
-        $scope.isNotMobileView = $window.innerWidth >= 750;
-
-        $scope.copied = false;
-        $scope.onCopySuccess = function (e) {
-            $scope.copied = true;
-        };
-
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
