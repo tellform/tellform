@@ -64,15 +64,15 @@
  }
 
  .mobile-tabs > .nav {
-  border: 1px solid #283d86;
-  border-bottom: none;
+  /*border:none;*/
   background-color: #283d86;
  }
 
  .mobile-tabs > .nav-pills>li.active>a,
  .mobile-tabs > .nav-pills>li.active>a:focus,
  .mobile-tabs > .nav-pills>li.active>a:hover{
-  border:none;
+  border:1px solid #283d86;
+  border-bottom:none;
   color: #283d86;
   background-color: #fff;
  }
