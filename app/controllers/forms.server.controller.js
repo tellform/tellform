@@ -155,6 +155,7 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
+	console.log('forms.server.controller - read()')
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
@@ -336,6 +337,8 @@ exports.list = function(req, res) {
  * Form middleware
  */
 exports.formByID = function(req, res, next, id) {
+	console.log('forms.server.controller - formbyid()')
+	console.log(id)
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(400).send({
 			message: 'Form is invalid'
