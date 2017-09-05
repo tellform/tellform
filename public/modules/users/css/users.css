@@ -71,7 +71,7 @@ section.auth {
 		color: #896D0B;
 	}
 
-	.btn-rounded.btn-signup:hover {
+	.btn-rounded.btn-signup:hover:not([disabled]) {
 		color: #FFD747;
 		background-color: #896D0B;
 	}
@@ -82,7 +82,7 @@ section.auth {
 		border: 2px white solid;
 	}
 
-	.btn-rounded.btn-default:focus, .btn-rounded.btn-default:hover {
+	.btn-rounded.btn-default:focus, .btn-rounded.btn-default:hover:not([disabled]) {
 		color: #6450A0;
 		background-color: white;
 		border-color: white;

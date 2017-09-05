@@ -568,7 +568,7 @@
 							<img src="/static/modules/core/img/placeholder.svg">
             </div>
 
-            <div class="col-sm-12 col-md-10 dropzoneContainer">
+            <div class="col-sm-12 col-md-11 dropzoneContainer">
 							<div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 
 								<div class="panel panel-default" ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved" ng-click="openEditModal(field)">
@@ -597,7 +597,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;">
+<!--             <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;">
                 <div class="panel-group tool-panel text-center">
                     <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">
                         <div class="panel-heading" style="padding: 10px 10px;" ng-click="duplicateField($index)">
@@ -607,7 +607,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 		</div>
 
 		<!-- End Page -->

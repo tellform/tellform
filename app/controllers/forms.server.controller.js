@@ -34,7 +34,6 @@ exports.deleteSubmissions = function(req, res) {
 			return;
 		}
 
-		form.analytics.visitors = [];
 		form.save(function(formSaveErr){
 			if(formSaveErr){
 				res.status(400).send({
@@ -68,22 +67,33 @@ exports.createSubmission = function(req, res, next) {
 		}
 	}
 
+	var newSubmission = new FormSubmission({
+		form: form._id,
+		respondentEmail: req.body.respondentEmail
+	});
+
 	async.waterfall([
 		function(done) {
+			newSubmission.save(function(err, submission){
+				done(err, submission);
+			});
+		},
+		function(submission, done) {
 			res.render('templates/submit-form-email', {
+				refNo: submission.id,
 				formTitle: form.title,
-				submissionTime: moment().tz('Asia/Singapore').format('ddd, DD MMM YYYY hh:mm:ss A'),
+				submissionTime: moment(submission.created).tz('Asia/Singapore').format('ddd, DD MMM YYYY hh:mm:ss A'),
 				formData: formData,
 				appName: config.app.title
 			}, function(err, emailHTML) {
-				done(err, emailHTML);
+				done(err, emailHTML, submission);
 			});
 		},
-		function(emailHTML, done) {
+		function(emailHTML, submission, done) {
 			var mailOptions = {
 				to: form.emails,
 				from: 'Form.sg <donotreply@form.sg>',
-				subject: 'formsg-auto: ' + form.title,
+				subject: 'formsg-auto: ' + form.title + ' (Ref: ' + submission.id + ')',
 				html: emailHTML
 			};
 
@@ -94,7 +104,7 @@ exports.createSubmission = function(req, res, next) {
 					});
 				} else {
 					return res.status(400).send({
-						message: 'Failure sending form submission email123.'
+						message: 'Failure sending form submission email.'
 					});
 				}
 
@@ -203,8 +213,6 @@ var readForRender = exports.readForRender = function(req, res) {
 	}
 
 	//Remove extraneous fields from form object
-	delete newForm.submissions;
-	delete newForm.analytics;
 	delete newForm.admin;
 
 	if(!newForm.startPage.showStart){
@@ -234,11 +242,6 @@ exports.update = function(req, res) {
 		//Unless we have 'admin' privileges, updating form admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
-		}
-
-		if(form.analytics === null){
-			form.analytics.visitors = [];
-			form.analytics.gaCode = '';
 		}
 
 		//Do this so we can create duplicate fields
@@ -297,7 +300,7 @@ exports.duplicate = function(req, res) {
 
 			form.isNew = true;
 			form.title = form.title + '_' + copy_num;
-			
+
 			form.save(function(err, form) {
 				if (err) {
 					return res.status(405).send({
@@ -345,7 +348,7 @@ exports.formByID = function(req, res, next, id) {
 			message: 'Form is invalid'
 		});
 	}
-	Form.findById(id).populate('admin').populate('submissions').exec(function(err, form) {
+	Form.findById(id).populate('admin').exec(function(err, form) {
 		if (err) {
 			return next(err);
 		} else if (!form || form === null) {

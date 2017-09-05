@@ -10,7 +10,9 @@ module.exports = function() {
 	}, function(req, apiKey, done) {
 		return User.findOne({
 			'apiKey': apiKey
-		}, function(err, user) {
+		})
+		.populate('agency', '_id shortName fullName')
+		.exec(function (err, user) {
 			if (err)
 				return done(err);
 

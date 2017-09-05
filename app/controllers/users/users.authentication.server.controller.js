@@ -209,7 +209,9 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 			$or: [mainProviderSearchQuery, additionalProviderSearchQuery]
 		};
 
-		User.findOne(searchQuery, function(err, user) {
+		User.findOne(searchQuery)
+		.populate('agency', '_id shortName fullName')
+		.exec(function (err, user) {
 			if (err) {
 				return done(err);
 			} else {
@@ -304,7 +306,8 @@ exports.generateAPIKey = function(req, res) {
 	}
 
 	User.findById(req.user.id)
-		.exec( function(err, user) {
+		.populate('agency', '_id shortName fullName')
+		.exec(function(err, user) {
 			if (err) {
 				return res.status(400).send(err);
 			}
