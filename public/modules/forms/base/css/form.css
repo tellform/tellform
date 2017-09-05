@@ -77,6 +77,15 @@
   background-color: #fff;
  }
 
+ .mobile-tabs > .nav-pills>li.active>a.disabled{
+  color: #777;
+ }
+
+ .mobile-tabs .nav>li.disabled>a {
+  color: #777;
+  cursor: not-allowed;
+ }
+
  .horizontal-tabs .nav {
 	 border-bottom: 1px solid #ccc;
  }
