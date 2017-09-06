@@ -43,7 +43,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_WARNING1: 'This action CANNOT be undone. This will permanently delete the "',
 		DELETE_WARNING2: '" form and remove all associated form submissions.',
 		DELETE_CONFIRM: 'Please type in the name of the form to confirm.',
-		I_UNDERSTAND: 'I understand the consequences, delete this form.',
+		I_UNDERSTAND: 'Delete this form.',
 		DELETE_FORM_SM: 'Delete',
 		DELETE_FORM_MD: 'Delete Form',
 		DELETE: 'Delete',
@@ -55,7 +55,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		COPY_AND_PASTE: 'Copy and Paste this to add your form to your website',
 		CHANGE_WIDTH_AND_HEIGHT: 'Change the width and height values to suit you best',
 		POWERED_BY: 'Powered by',
-		TELLFORM_URL: 'Your form is permanently at this URL',
+		SHARE_URL_TEXT: 'Your form is permanently at this URL',
 
 		//Edit Form View
 		DISABLED: 'Disabled',
@@ -147,12 +147,12 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
     YES_NO: 'Yes/No',
     LEGAL: 'Legal',
     RATING: 'Rating',
-    NUMBERS: 'Numbers',
+    NUMBERS: 'Number',
     SIGNATURE: 'Signature',
     FILE_UPLOAD: 'File upload',
     OPTION_SCALE: 'Option Scale',
     PAYMENT: 'Payment',
-    STATEMENT: 'Statement',
+    STATEMENT: 'Instructions',
     LINK: 'Link'
 	});
 }]);

@@ -82,6 +82,7 @@ body {
 
 .navbar .navbar-brand {
 	padding: 10px;
+	margin-left: 10px;
 }
 
 .navbar-nav {
