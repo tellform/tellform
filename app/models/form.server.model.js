@@ -190,4 +190,4 @@ FormSchema.pre('save', function (next) {
 	next();
 });
 
-mongoose.model('Form', FormSchema);
+module.exports = mongoose.model('Form', FormSchema);

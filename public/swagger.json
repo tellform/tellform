@@ -568,7 +568,7 @@
 				}
 			}
 		},
-		"FormSubmission": {
+		"Submission": {
 			"type": "object",
 			"properties": {
 				"form": {
