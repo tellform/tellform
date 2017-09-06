@@ -7,7 +7,7 @@ angular.module('forms').directive('previewFormDirective', ['$rootScope', '$sce',
             restrict: 'E',
             scope: {
                 myform:'=',
-                actualformurl:'='
+                formurl:'='
             },
             controller: function($scope){
                 $scope.trustSrc = function (src) {
@@ -15,7 +15,7 @@ angular.module('forms').directive('previewFormDirective', ['$rootScope', '$sce',
                 };
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
-                $scope.actualFormURL = $scope.actualformurl
+                $scope.formURL = $scope.formurl;
             }
         };
     }
