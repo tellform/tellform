@@ -1,30 +1,30 @@
 /* Custom Tab CSS */
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     .nav.nav-pills.nav-stacked {
         width: 16.66666667%;
     }
 }
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 768px) {
     .nav.nav-pills.nav-stacked {
         width: 100%;
     }
 }
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     .hidden-when-large {
         display: none;
     }
 }
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 768px) {
     .hidden-when-small {
         display: none;
     }
 }
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     .lead {
         font-size:30px !important;
     }
 }
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 768px) {
     .lead {
         text-align:center;
     }
@@ -109,13 +109,13 @@
 	width: 100%;
 }
 
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     div.tab-content {
         width: 83.33333333%;
     }
 }
 
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 768px) {
     div.tab-content {
         width: 100%;
     }
@@ -388,7 +388,7 @@ form .row.field {
     padding: 20px 30px;
 }
 
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     div.config-form .row.field {
         padding-top:1.8em;
     }
@@ -402,14 +402,14 @@ form .row.field {
 								min-width: 100px;
             }
 /* Styles for form admin view (/forms/:formID/admin) */
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     .admin-form > .page-header {
         padding-bottom: 0;
         margin-bottom: 40px;
     }
 }
 
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 768px) {
     .admin-form > .page-header {
         margin-bottom: 10px !important;
         margin-top: 0px !important;
@@ -449,13 +449,13 @@ form .row.field {
   margin-bottom: 50px;
 }
 
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 768px) {
     .admin-form .tab-content {
         border-top: 0;
     }
 }
 
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     .admin-form .tab-content {
         border-left: 0;
     }
@@ -466,14 +466,14 @@ form .row.field {
 	position: relative!important;
 }
 
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     .admin-form .panel-heading {
         padding-left: 10px; 
         padding-right: 10px;
     }
 }
 
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 768px) {
     .admin-form .panel-heading {
         text-align:center;
     }
@@ -492,14 +492,14 @@ form .row.field {
  						cursor: default;
 					}
 
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     .current-fields {
         margin-top: 30px;
         padding: 0 35px;
     }
 }
 
-@media not all and (min-width: 750px) {
+@media not all and (min-width: 768px) {
     .current-fields {
         margin-top: 8px;
     }
@@ -564,7 +564,7 @@ form .row.field {
     border-right: 1px solid #e8e6e6;
 }
 
-@media all and (min-width: 750px) {
+@media all and (min-width: 768px) {
     .admin-form .add-field {
         padding: 0 25px;
     }
@@ -585,9 +585,24 @@ form .row.field {
     margin: 10px 0 10px;
 }
 
-.view-form-btn.span {
-    padding-right:0.6em;
+.view-form-btn {
+    border-color:#ddd;
+    float: right;
+    font-size: 16px;
 }
+
+.view-form-btn:hover {
+    background-color:#45a247 !important;
+    color:#fff !important;
+    border-color:#45a247 !important;
+}
+
+@media not all and (min-width:768px) {
+    .view-form-btn {
+        margin-top:17px;
+    }
+}
+
 .status-light.status-light-off {
     color: #BE0000;
 }
@@ -630,7 +645,7 @@ section.public-form .btn {
 }
 
 .form-item.paused:hover {
-	background-color: #283c86;
+	background-color: #45a247;
 	color: white;
 }
 
