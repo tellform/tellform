@@ -38,26 +38,12 @@ angular.module('users').config(['$stateProvider',
 
 	// Users state routing
 	$stateProvider.
-		state('profile', {
+		state('account', {
 			resolve: {
           		loggedin: checkLoggedin
         	},
-			url: '/settings/profile',
-			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
-		}).
-		state('password', {
-			resolve: {
-	          	loggedin: checkLoggedin
-	        },
-			url: '/settings/password',
-			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
-		}).
-		state('accounts', {
-			resolve: {
-	          	loggedin: checkLoggedin
-	        },
-			url: '/settings/accounts',
-			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
+			url: '/settings/account',
+			templateUrl: 'modules/users/views/settings/edit-account.client.view.html'
 		}).
 		state('signup', {
 			resolve: {

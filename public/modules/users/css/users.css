@@ -160,7 +160,6 @@ input.form-control,
 	background: white;
 	padding: 40px 30px;
 	border-radius: 10px;
-
 }
 
 .form-group.email > div {
@@ -182,4 +181,24 @@ input.form-control,
 }
 .form-group.email .email-name input.form-control {
 	padding-top: 6px !important;
+}
+
+.my-account {
+	margin-top: 20px;
+}
+
+.my-account .password-wrapper {
+	float: left;
+	text-align: left;
+	background: white;
+	padding: 10px 30px 30px 30px;
+	border-radius: 10px;
+}
+
+.my-account .account-gap {
+	height: 50px;
+}
+
+.my-account hr {
+	border-top: 1px solid #ccc !important;
 }

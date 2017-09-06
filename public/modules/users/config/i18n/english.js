@@ -8,9 +8,9 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		AGENCY_LABEL: 'Agency',
 		USERNAME_LABEL: 'Username',
 		PASSWORD_LABEL: 'Password',
-		CURRENT_PASSWORD_LABEL: 'Current Password',
-		NEW_PASSWORD_LABEL: 'New Password',
-		VERIFY_PASSWORD_LABEL: 'Verify Password',
+		CURRENT_PASSWORD_LABEL: 'Old password',
+		NEW_PASSWORD_LABEL: 'New password',
+		VERIFY_PASSWORD_LABEL: 'Confirm new password',
 		UPDATE_PASSWORD_LABEL: 'Update Password',
 		FIRST_NAME_LABEL: 'First Name',
 		LAST_NAME_LABEL: 'Last Name',
@@ -29,19 +29,12 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SAVE_CHANGES: 'Save',
 		CANCEL_BTN: 'Cancel',
 
-		EDIT_PROFILE: 'Edit your profile',
-		UPDATE_PROFILE_BTN: 'Update Profile',
-		PROFILE_SAVE_SUCCESS: 'Profile saved successfully',
-		PROFILE_SAVE_ERROR: 'Could\'t Save Your Profile.',
-		CONNECTED_SOCIAL_ACCOUNTS: 'Connected social accounts',
-		CONNECT_OTHER_SOCIAL_ACCOUNTS: 'Connect other social accounts',
-
 		FORGOT_PASSWORD_LINK: 'Forgot your password?',
 		REVERIFY_ACCOUNT_LINK: 'Resend your verification email',
 
 		SIGNIN_BTN: 'Sign in',
 		SIGNUP_BTN: 'Sign up',
-		SAVE_PASSWORD_BTN: 'Save Password',
+		SAVE_PASSWORD_BTN: 'Change Password',
 
 		SUCCESS_HEADER: 'Almost there... Just one more step!',
 		SUCCESS_TEXT: 'Please verify your account by clicking the activation link sent to your email inbox. Then you will be all set!',
@@ -62,6 +55,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		PASSWORD_CHANGE_SUCCESS: 'Passport successfully changed',
 		RESET_PASSWORD: 'Reset your password',
 		CHANGE_PASSWORD: 'Change your password',
+		VIEW_ACCOUNT: 'Account details',
 
 		CONTINUE_TO_LOGIN: 'Continue to login page',
 
