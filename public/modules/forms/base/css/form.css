@@ -588,6 +588,7 @@ form .row.field {
 .view-form-btn {
     border-color:#ddd;
     float: right;
+    font-size: 16px;
 }
 
 .view-form-btn:hover {
