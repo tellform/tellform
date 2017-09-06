@@ -12,12 +12,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
         CurrentForm.setForm($scope.myform);
 
-        // $scope.formURL = '/#!/forms/' + $scope.myform.admin.agency  + '/' + $scope.myform._id;
-
         // :agency
         $scope.formURL = '/#!/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id;
-        console.log('admin.form.client.controller')
-        console.log($scope)
 
 
         $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
@@ -58,7 +54,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                 if (isDiffed) {
 
-                    $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
+                    $scope.updatePromise = $http.put('/forms/' + $scope.user.agency.shortName +'/' + $scope.myform._id, {changes: data})
                         .then(function (response) {
 
                             if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
@@ -80,7 +76,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                     var dataToSend = data;
 
-                    $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
+                    $scope.updatePromise = $http.put('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id, {form: dataToSend})
                         .then(function (response) {
 
                             if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;

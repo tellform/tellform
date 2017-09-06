@@ -140,7 +140,6 @@ exports.listSubmissions = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
-	console.log('4b');
 	if(!req.body.form){
 		return res.status(400).send({
 			message: 'Invalid Input'
@@ -166,30 +165,41 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-	if(!req.user || (req.form.admin.id !== req.user.id) ){
-		readForRender(req, res);
-	} else {
-		FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
-			if (err) {
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
 
-			var newForm = req.form.toJSON();
-			newForm.submissions = _submissions;
+	if (req.params.agency == req.form.admin.agency.shortName) {
 
-			if (req.userId) {
-				if(req.form.admin._id+'' === req.userId+''){
-					return res.json(newForm);
+		if(!req.user || (req.form.admin.id !== req.user.id) ){
+			readForRender(req, res);
+		} else {
+			FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
+				if (err) {
+					res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
 				}
-				return res.status(404).send({
-					message: 'Form Does Not Exist'
-				});
-			}
-			return res.json(newForm);
-		});
+
+				var newForm = req.form.toJSON();
+				newForm.submissions = _submissions;
+
+				if (req.userId) {
+					if(req.form.admin._id+'' === req.userId+''){
+						return res.json(newForm);
+					}
+					return res.status(404).send({
+						message: 'Form Does Not Exist'
+					});
+				}
+				return res.json(newForm);
+			});
+		}
+
+	} else {
+		res.status(404).send({
+		message: 'Agency does not match'
+		})
 	}
+
+	
 };
 
 /**
@@ -344,7 +354,13 @@ exports.formByID = function(req, res, next, id) {
 		});
 	}
 
-	Form.findById(id).populate('admin').exec(function(err, form) {
+	Form.findById(id).populate({
+		path: 'admin',
+		populate: {
+			path: 'agency',
+			model: 'Agency'
+		}
+	}).exec(function(err, form) {
 		if (err) {
 			return next(err);
 		} else if (!form || form === null) {
@@ -359,21 +375,7 @@ exports.formByID = function(req, res, next, id) {
 			_form.admin.salt = null;
 			_form.provider = null;
 			req.form = _form;
-			console.log('in formby id')
-
-			Agency.findById(_form.admin.agency).exec(function(err, agency) {
-				if (err) {
-					return next(err);
-				} else {
-					if (req.params.agency == agency.shortName) {
-						return next();
-					} else {
-						res.status(404).send({
-						message: 'Agency does not match'
-						});
-					}	
-				}
-			});
+			return next();
 		}
 	});
 };

@@ -4,7 +4,6 @@
 angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 	function($stateProvider, $urlRouterProvider, Authorization) {
 		// Redirect to home view when route not found
-		console.log('1');
 		$urlRouterProvider.otherwise('/forms');
 	}
 ]);

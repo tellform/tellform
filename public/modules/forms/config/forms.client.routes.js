@@ -25,7 +25,7 @@ angular.module('forms').config(['$stateProvider',
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
 		}).state('previewForm', {
-			url: '/forms/:formId/preview',
+			url: '/forms/:agency/:formId/preview',
 			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
 			data: {
 				hideNav: true
@@ -49,12 +49,7 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 		        myForm: function (Forms, $stateParams) {
-		        	console.log('step 1 - view forms')
-		        	console.log($stateParams)
-		            // return Forms.get({formId: $stateParams.formId}).$promise;
 		            return Forms.get($stateParams).$promise
-		            // return Forms.get({formId: "123"}).$promise;
-		            // formidx
 		        }
 			},
 			controller: 'AdminFormController'

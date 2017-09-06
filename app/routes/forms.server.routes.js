@@ -16,7 +16,6 @@ module.exports = function(app) {
 		.get(forms.read)
 		.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.update)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.delete);
-			// formidx
 
 	app.route('/forms/:formId([a-zA-Z0-9]+)/submissions')
 		.post(forms.createSubmission)
@@ -28,6 +27,4 @@ module.exports = function(app) {
 
 	// Finish by binding the form middleware
 	app.param('formId', forms.formByID);
-	// app.param('agency', forms.formByAgency);
-	// formidx
 };
