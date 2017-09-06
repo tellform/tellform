@@ -4,7 +4,6 @@
 angular.module('forms').factory('Forms', ['$resource', 'FORM_URL',
 	function($resource, FORM_URL) {
 		return $resource(FORM_URL, {
-			formId: '@_id'
 		}, {
 			'query' : {
 				method: 'GET',

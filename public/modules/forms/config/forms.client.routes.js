@@ -10,7 +10,7 @@ angular.module('forms').config(['$stateProvider',
 			url: '/forms',
 			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html'
   		}).state('submitForm', {
-			url: '/forms/:formId',
+			url: '/forms/:agency/:formId',
 			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
 			data: {
 				hideNav: true
@@ -18,14 +18,14 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 				myForm: function (Forms, $stateParams) {
-					var formToGet = Forms.get({formId: $stateParams.formId});
+					var formToGet = Forms.get($stateParams);
 					return formToGet.$promise;
 				}
 			},
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
 		}).state('previewForm', {
-			url: '/forms/:formId/preview',
+			url: '/forms/:agency/:formId/preview',
 			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
 			data: {
 				hideNav: true
@@ -33,7 +33,7 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 				myForm: function (Forms, $stateParams) {
-					var formToGet = Forms.get({formId: $stateParams.formId},
+					var formToGet = Forms.get($stateParams,
 						function(form) { form.isPreview = true });
 					return formToGet.$promise;
 				}
@@ -41,7 +41,7 @@ angular.module('forms').config(['$stateProvider',
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
 		}).state('viewForm', {
-			url: '/forms/:formId/admin',
+			url: '/forms/:agency/:formId/admin',
 			templateUrl: 'modules/forms/admin/views/admin-form.client.view.html',
 			data: {
 				permissions: [ 'editForm' ]
@@ -49,7 +49,7 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 		        myForm: function (Forms, $stateParams) {
-		            return Forms.get({formId: $stateParams.formId}).$promise;
+		            return Forms.get($stateParams).$promise
 		        }
 			},
 			controller: 'AdminFormController'

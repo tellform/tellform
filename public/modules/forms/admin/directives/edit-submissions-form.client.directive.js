@@ -83,7 +83,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         return !!row.selected;
                     }).pluck('_id').value();
 
-                    $http({ url: '/forms/'+$scope.myform._id+'/submissions',
+                    $http({ url: '/forms/'+$scope.user.agency.shortName+'/'+$scope.myform._id+'/submissions',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}

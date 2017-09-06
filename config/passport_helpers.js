@@ -19,6 +19,7 @@ module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next
 				if (loginErr) return res.sendStatus(500);
 
 				req.user = user;
+				
 				return next();
 			});
 

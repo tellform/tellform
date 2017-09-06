@@ -46,6 +46,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.findAll = function() {
             Forms.query(function(_forms){
                 $scope.myforms = _forms;
+                
             });
         };
 
@@ -65,7 +66,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             $scope.myform = form;
         };
         $scope.goToWithId = function(route, id) {
-            $state.go(route, {'formId': id}, {reload: true});
+            $state.go(route, {'formId': id, 'agency': $scope.user.agency.shortName}, {reload: true});
         };
 
         $scope.duplicateForm = function(form_index) {
@@ -90,7 +91,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 }
             }
 
-        	$http.post('/forms/' + id + '/duplicate', {name: copy_index})
+        	$http.post('/forms/' + $scope.user.agency.shortName + '/' + id + '/duplicate', {name: copy_index})
         		.success(function(data, status, headers) {
         			$scope.myforms.splice(form_index, 0, data);
         		}).error(function(errorResponse) {
@@ -125,7 +126,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 throw new Error('Error: form_index in removeForm() must be between 0 and '+$scope.myforms.length-1);
             }
 
-            $http.delete('/forms/'+$scope.myforms[form_index]._id)
+            $http.delete('/forms/'+ $scope.user.agency.shortName + '/' + $scope.myforms[form_index]._id)
                 .success(function(data, status, headers){
                     //console.log('form deleted successfully');
                     $scope.myforms.splice(form_index, 1);
