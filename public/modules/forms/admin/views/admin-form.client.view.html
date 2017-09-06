@@ -21,7 +21,7 @@
 
 	<div class="row">
 		<div class="col-xs-12">
-			<uib-tabset class="hidden-xs" active="activePill" type="pills" vertical="true">
+			<uib-tabset class="hidden-xs main-tabs" active="activePill" type="pills" vertical="true">
 				<uib-tab index="0">
 					<uib-tab-heading class="ng-scope">{{ 'CONFIGURE_TAB' | translate }}</uib-tab-heading>
 					<configure-form-directive myform="myform" user="user"></configure-form-directive>
@@ -38,7 +38,7 @@
 				</uib-tab>
 			</uib-tabset>
 
-			<uib-tabset class="hidden-sm hidden-md hidden-lg mobile-tabs" active="activePill" type="pills" vertical="false">
+			<uib-tabset class="hidden-sm hidden-md hidden-lg mobile-tabs main-tabs" active="activePill" type="pills" vertical="false">
 				<uib-tab index="0">
 					<uib-tab-heading><i class="glyphicon glyphicon-wrench"></i></uib-tab-heading>
 					<configure-form-directive myform="myform" user="user"></configure-form-directive>
@@ -53,7 +53,6 @@
 					<uib-tab-heading class="ng-scope"><i class="glyphicon glyphicon-share"></i></uib-tab-heading>
 					<share-form-directive actualformurl="actualFormURL"></share-form-directive>
 				</uib-tab>
-			-->
 			</uib-tabset>
 		</div>
 	</div>
