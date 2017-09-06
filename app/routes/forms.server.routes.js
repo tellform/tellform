@@ -22,7 +22,7 @@ module.exports = function(app) {
 		.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.listSubmissions)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.deleteSubmissions);
 
-	app.route('/forms/:formId([a-zA-Z0-9]+)/duplicate')
+	app.route('/forms/:agency/:formId([a-zA-Z0-9]+)/duplicate')
 		.post(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.duplicate);
 
 	// Finish by binding the form middleware

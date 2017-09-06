@@ -91,7 +91,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
                 }
             }
 
-        	$http.post('/forms/' + id + '/duplicate', {name: copy_index})
+        	$http.post('/forms/' + $scope.user.agency.shortName + '/' + id + '/duplicate', {name: copy_index})
         		.success(function(data, status, headers) {
         			$scope.myforms.splice(form_index, 0, data);
         		}).error(function(errorResponse) {

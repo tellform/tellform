@@ -166,39 +166,30 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
 
-	if (req.params.agency == req.form.admin.agency.shortName) {
-
-		if(!req.user || (req.form.admin.id !== req.user.id) ){
-			readForRender(req, res);
-		} else {
-			FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
-				if (err) {
-					res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				}
-
-				var newForm = req.form.toJSON();
-				newForm.submissions = _submissions;
-
-				if (req.userId) {
-					if(req.form.admin._id+'' === req.userId+''){
-						return res.json(newForm);
-					}
-					return res.status(404).send({
-						message: 'Form Does Not Exist'
-					});
-				}
-				return res.json(newForm);
-			});
-		}
-
+	if(!req.user || (req.form.admin.id !== req.user.id) ){
+		readForRender(req, res);
 	} else {
-		res.status(404).send({
-		message: 'Agency does not match'
-		})
-	}
+		FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
+			if (err) {
+				res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			}
 
+			var newForm = req.form.toJSON();
+			newForm.submissions = _submissions;
+
+			if (req.userId) {
+				if(req.form.admin._id+'' === req.userId+''){
+					return res.json(newForm);
+				}
+				return res.status(404).send({
+					message: 'Form Does Not Exist'
+				});
+			}
+			return res.json(newForm);
+		});
+	}
 	
 };
 
@@ -375,7 +366,14 @@ exports.formByID = function(req, res, next, id) {
 			_form.admin.salt = null;
 			_form.provider = null;
 			req.form = _form;
-			return next();
+
+			if (req.params.agency == req.form.admin.agency.shortName) {
+				return next();
+			} else {
+				res.status(404).send({
+				message: 'Agency does not match'
+				})
+			}
 		}
 	});
 };
