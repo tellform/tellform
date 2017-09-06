@@ -3,7 +3,7 @@
 //Submissions service used for communicating with the forms REST endpoints
 angular.module('forms').factory('Submissions', ['$resource',
 	function($resource) {
-		return $resource('forms/:formID/submissions/:submissionId', {
+		return $resource('forms/:agency/:formID/submissions/:submissionId', {
 			submissionId: '@_id',
 			formId: '@_id'
 		}, {

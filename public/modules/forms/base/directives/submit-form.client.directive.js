@@ -202,7 +202,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$filter', '$
 					delete form.visible_form_fields;
 
 					setTimeout(function () {
-						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id + '/submissions', form)
+						$scope.submitPromise = $http.post('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id + '/submissions', form)
 							.success(function (data, status, headers) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
