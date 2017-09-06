@@ -15,7 +15,8 @@
 							<input id="copyURL" ng-value="actualFormURL" class="form-control ng-pristine ng-untouched ng-valid">
 						</div>	
 						<div class="col-sm-offset-5 col-sm-2">
-							<button class="btn btn-signup btn-rounded" type="button" ngclipboard data-clipboard-target="#copyURL"><i class="icon-arrow-left icon-white"></i>{{ 'COPY' | translate }}</button>
+							<button class="btn btn-signup btn-rounded hidden-sm hidden-md hidden-lg" type="button" ngclipboard data-clipboard-target=".main-tabs:not(.hidden-xs) #copyURL">{{ 'COPY' | translate }}</button>
+							<button class="btn btn-signup btn-rounded hidden-xs" type="button" ngclipboard data-clipboard-target=".main-tabs:not(.hidden-sm):not(.hidden-md):not(.hidden-lg) #copyURL">{{ 'COPY' | translate }}</button>
 						</div>
 					</div>
 				</uib-tab>
@@ -35,7 +36,8 @@
 								</textarea>
 						</div>
 						<div class="col-sm-offset-5 col-sm-2">
-							<button class="btn btn-signup btn-rounded" type="button" ngclipboard data-clipboard-target="#copyEmbedded">{{ 'COPY' | translate }}</button>
+							<button class="btn btn-signup btn-rounded hidden-sm hidden-md hidden-lg" type="button" ngclipboard data-clipboard-target=".main-tabs:not(.hidden-xs) #copyEmbedded">{{ 'COPY' | translate }}</button>
+							<button class="btn btn-signup btn-rounded hidden-xs" type="button" ngclipboard data-clipboard-target=".main-tabs:not(.hidden-sm):not(.hidden-md):not(.hidden-lg) #copyEmbedded">{{ 'COPY' | translate }}</button>
 						</div>
 					</div>
 				</uib-tab>

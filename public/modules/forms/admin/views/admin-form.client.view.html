@@ -6,14 +6,14 @@
 
 	<div class="page-header" style="padding-bottom: 1em;">
 		<div class="col-xs-12 col-md-12" style="padding-left: 0px !important;">
-			<h1 class="hidden-sm hidden-xs" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h1>
-			<h2 class="hidden-md hidden-lg" style="margin-bottom: 10px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h2>
+			<h1 class="hidden-xs" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h1>
+			<h2 class="hidden-sm hidden-md hidden-lg" style="margin-bottom: 10px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h2>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-xs-12">
-			<uib-tabset class="hidden-xs" active="activePill" type="pills" vertical="true">
+			<uib-tabset class="hidden-xs main-tabs" active="activePill" type="pills" vertical="true">
 				<uib-tab index="0">
 					<uib-tab-heading class="ng-scope">{{ 'CONFIGURE_TAB' | translate }}</uib-tab-heading>
 					<configure-form-directive myform="myform" user="user"></configure-form-directive>
@@ -44,7 +44,7 @@
 			-->
 			</uib-tabset>
 
-			<uib-tabset class="hidden-sm hidden-md hidden-lg mobile-tabs" active="activePill" type="pills" vertical="false">
+			<uib-tabset class="hidden-sm hidden-md hidden-lg mobile-tabs main-tabs" active="activePill" type="pills" vertical="false">
 				<uib-tab index="0">
 					<uib-tab-heading><i class="glyphicon glyphicon-wrench"></i></uib-tab-heading>
 					<configure-form-directive myform="myform" user="user"></configure-form-directive>
