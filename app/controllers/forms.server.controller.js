@@ -360,7 +360,6 @@ exports.formByID = function(req, res, next, id) {
 			_form.provider = null;
 			req.form = _form;
 			console.log('in formby id')
-			console.log(form)
 
 			Agency.findById(_form.admin.agency).exec(function(err, agency) {
 				if (err) {

@@ -18,7 +18,7 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 				myForm: function (Forms, $stateParams) {
-					var formToGet = Forms.get({formId: $stateParams.formId});
+					var formToGet = Forms.get($stateParams);
 					return formToGet.$promise;
 				}
 			},
@@ -33,7 +33,7 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 				myForm: function (Forms, $stateParams) {
-					var formToGet = Forms.get({formId: $stateParams.formId},
+					var formToGet = Forms.get($stateParams,
 						function(form) { form.isPreview = true });
 					return formToGet.$promise;
 				}
