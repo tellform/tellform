@@ -26,7 +26,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         // $scope.formURL = '/#!/forms/' + $scope.myform.admin.agency  + '/' + $scope.myform._id;
 
         // :agency
-        $scope.formURL = '/#!/forms/' + $scope.myform.title + '/' + $scope.myform._id;
+        $scope.formURL = '/#!/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id;
+        console.log('admin.form.client.controller')
+        console.log($scope)
 
         // if ($scope.myform.isLive) {
         //     if ($window.subdomainsDisabled === true) {

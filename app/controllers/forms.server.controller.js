@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Form = mongoose.model('Form'),
+	Agency = mongoose.model('Agency'),
 	FormSubmission = mongoose.model('FormSubmission'),
 	config = require('../../config/config'),
 	nodemailer = require('nodemailer'),
@@ -165,8 +166,6 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-	console.log('forms.server.controller - read()')
-	console.log(req.params.agency)
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
@@ -318,21 +317,19 @@ exports.duplicate = function(req, res) {
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
-	console.log('4');
 	//Allow 'admin' user to view all forms
 	var searchObj = {admin: req.user};
 	var returnedFields = '_id title isLive';
 
 	if(req.user.isAdmin()) searchObj = {};
 
-	Form.find(searchObj, returnedFields).sort('title').populate('admin.username', 'admin._id').exec(function(err, forms) {
-		if (err) {
+	Form.find(searchObj, returnedFields).sort('title').populate('admin').exec(function(err, forms) {
+			if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			res.json(forms);
-			console.log(forms);
 		}
 	});
 };
@@ -341,13 +338,12 @@ exports.list = function(req, res) {
  * Form middleware
  */
 exports.formByID = function(req, res, next, id) {
-	console.log('forms.server.controller - formbyid()')
-	console.log(id)
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(400).send({
 			message: 'Form is invalid'
 		});
 	}
+
 	Form.findById(id).populate('admin').exec(function(err, form) {
 		if (err) {
 			return next(err);
@@ -362,9 +358,23 @@ exports.formByID = function(req, res, next, id) {
 			_form.admin.password = null;
 			_form.admin.salt = null;
 			_form.provider = null;
-
 			req.form = _form;
-			return next();
+			console.log('in formby id')
+			console.log(form)
+
+			Agency.findById(_form.admin.agency).exec(function(err, agency) {
+				if (err) {
+					return next(err);
+				} else {
+					if (req.params.agency == agency.shortName) {
+						return next();
+					} else {
+						res.status(404).send({
+						message: 'Agency does not match'
+						});
+					}	
+				}
+			});
 		}
 	});
 };

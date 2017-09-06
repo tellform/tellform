@@ -47,7 +47,10 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             console.log('3');
             Forms.query(function(_forms){
                 console.log('5');
+                console.log(_forms)
+                console.log($scope)
                 $scope.myforms = _forms;
+                
             });
         };
 
