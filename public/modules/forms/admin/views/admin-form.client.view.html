@@ -5,9 +5,17 @@
 <section class="admin-form container">
 
 	<div class="page-header" style="padding-bottom: 1em;">
-		<div class="col-xs-12 col-md-12" style="padding-left: 0px !important;">
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="padding-left: 0px !important;">
 			<h1 class="hidden-xs" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h1>
 			<h2 class="hidden-sm hidden-md hidden-lg" style="margin-bottom: 10px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h2>
+		</div>
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-right: 0px !important">
+			<a class="btn btn-secondary view-form-btn" href="{{actualFormURL + '/preview'}}" ng-class="myform.form_fields.length? '' : 'disabled'" target="_blank">
+				<i class="glyphicon glyphicon-eye-open"></i>
+				<span class="hidden-xs">
+					&nbsp; {{ 'PREVIEW' | translate }} 
+				</span>
+			</a>
 		</div>
 	</div>
 
@@ -20,28 +28,14 @@
 				</uib-tab>
 
 				<uib-tab index="1">
-					<!-- <i class="glyphicon glyphicon-pencil"></i> -->
 					<uib-tab-heading class="ng-scope">{{ 'CREATE_TAB' | translate }}</uib-tab-heading>
 					<edit-form-directive myform="myform"></edit-form-directive>
 				</uib-tab>
 
 				<uib-tab disable="!myform.form_fields.length" index="2">
-					<!-- <i class="glyphicon glyphicon-eye-open"></i> -->
-					<uib-tab-heading class="ng-scope">{{ 'PREVIEW_TAB' | translate }}</uib-tab-heading>
-					<preview-form-directive myform="myform" formurl="formURL"></preview-form-directive>
-				</uib-tab>
-
-				<uib-tab disable="!myform.form_fields.length" index="3">
-				<!-- <i class="glyphicon glyphicon-share"></i> -->
 					<uib-tab-heading class="ng-scope">{{ 'SHARE_TAB' | translate }}	</uib-tab-heading>
 					<share-form-directive actualformurl="actualFormURL"></share-form-directive>
 				</uib-tab>
-
-<!--
-				<uib-tab ng-if="tabData" heading="{{ 'ANALYZE_TAB' | translate }}" index="{{tabData.length+2}}">
-					<edit-submissions-form-directive myform="myform" user="myform.admin"></edit-submissions-form-directive>
-				</uib-tab>
-			-->
 			</uib-tabset>
 
 			<uib-tabset class="hidden-sm hidden-md hidden-lg mobile-tabs main-tabs" active="activePill" type="pills" vertical="false">
@@ -55,21 +49,10 @@
 					<edit-form-directive myform="myform"></edit-form-directive>
 				</uib-tab>
 
-				<uib-tab disable="!myform.form_fields.length" index="2">
-					<uib-tab-heading class="ng-scope"><i class="glyphicon glyphicon-eye-open"></i></uib-tab-heading>
-					<preview-form-directive myform="myform" formurl="formURL"></preview-form-directive>
-				</uib-tab>
-
-				<uib-tab disable="!myform.form_fields.length" index="3">			
+				<uib-tab disable="!myform.form_fields.length" index="2">			
 					<uib-tab-heading class="ng-scope"><i class="glyphicon glyphicon-share"></i></uib-tab-heading>
 					<share-form-directive actualformurl="actualFormURL"></share-form-directive>
 				</uib-tab>
-
-<!--
-				<uib-tab ng-if="tabData" heading="{{ 'ANALYZE_TAB' | translate }}" index="{{tabData.length+2}}">
-					<edit-submissions-form-directive myform="myform" user="myform.admin"></edit-submissions-form-directive>
-				</uib-tab>
-			-->
 			</uib-tabset>
 		</div>
 	</div>
