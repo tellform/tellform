@@ -92,8 +92,8 @@
 					class="title-row col-xs-12">
 					<h4 class="list-group-item-heading" data-ng-bind="form.title" uib-tooltip="{{ form.title }}"></h4>
 				</a>
-				<div class="col-xs-12 inactive-row">
-					<small ng-if="!form.isLive" class="list-group-item-text">
+				<div class="col-xs-12 inactive-row" ng-if="!form.isLive">
+					<small class="list-group-item-text">
 						<span> {{ 'FORM_INACTIVE' | translate }} </span>
 					</small>
 				</div>
