@@ -623,7 +623,7 @@ section.public-form .btn {
 }
 
 .form-item-toolbar {
-	padding: 10px 20px;
+	padding: 10px 8px;
 }
 
 .form-item {
@@ -763,9 +763,9 @@ h3.forms-list-title {
 
 .form-item .title-row {
     position: relative;
-    top: 15px;
     padding-top:2em;
     padding-bottom:1em;
+    top: 10px;
 }
     .form-item .title-row h4 {
         font-size: 1.3em;
@@ -779,7 +779,7 @@ h3.forms-list-title {
     }
 
 .form-item .details-row{
-    margin-top: 3.2em;
+    margin-top: 2.3em;
 }
     .form-item  .details-row small {
         font-size: 0.6em;
@@ -787,6 +787,12 @@ h3.forms-list-title {
     .form-item.create-new  .details-row small {
         font-size: 0.95em;
     }
+
+.form-item-toolbar .form-item-icon {
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+}
 
 .empty-form {
 	display: flex;
@@ -797,3 +803,9 @@ h3.forms-list-title {
 		height:230px;
 		margin: 0 auto;
 }
+
+.responses-row .list-group-item-text {
+    font-size:0.95em;
+}
+
+

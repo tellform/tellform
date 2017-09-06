@@ -52,7 +52,7 @@
 			<div class="title-row row">
 				    <div class="col-xs-12 field-title text-left"> {{ 'Form Name' | translate }} </div>
 				    <div class="col-xs-12 field-input">
-						<input type="text" name="title" required ng-model="formTitle" ng-pattern="/^[a-zA-Z0-9_\-.]*$/" ng-minlength="4" ng-maxlength="200" maxlength="200" style="color:black;"/>
+						<input type="text" name="title" required ng-model="formTitle" ng-pattern="/^[a-zA-Z0-9_\-. ]*$/" ng-minlength="4" ng-maxlength="200" maxlength="200" style="color:black;"/>
 				    </div>
 			</div>
 			<div class="details-row row" ng-hide="true">
@@ -82,8 +82,8 @@
 
 			<div class="row form-item-toolbar">
 				<span class="pull-right">
-					<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="openDeleteModal($index)"></i>
-					<i style="cursor:pointer;" class="fa fa-files-o" ng-click="duplicateForm($index)"></i>
+					<i style="cursor:pointer;" class="fa fa-trash-o form-item-icon" ng-click="openDeleteModal($index)"></i>
+					<i style="cursor:pointer;" class="fa fa-files-o form-item-icon" ng-click="duplicateForm($index)"></i>
 				</span>
 			</div>
 
