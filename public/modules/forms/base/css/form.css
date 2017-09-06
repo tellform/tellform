@@ -779,7 +779,7 @@ h3.forms-list-title {
     }
 
 .form-item .details-row{
-    margin-top: 2.3em;
+    margin-top: 23px;
 }
     .form-item  .details-row small {
         font-size: 0.6em;
@@ -804,7 +804,11 @@ h3.forms-list-title {
 		margin: 0 auto;
 }
 
-.responses-row .list-group-item-text {
+.inactive-row {
+    margin-top:29px;
+}
+
+.inactive-row .list-group-item-text {
     font-size:0.95em;
 }
 
