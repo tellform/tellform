@@ -4,12 +4,6 @@ services:
     image: redis
     ports:
       - "6379:6379"
-  formsg-mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - /data/db:/data/db
   formsg-prod:
     build:
       context: ./
@@ -19,6 +13,5 @@ services:
       - "80:4545"
     links:
       - formsg-redis:redis-db
-      - formsg-mongo:db
     env_file:
       - .env
