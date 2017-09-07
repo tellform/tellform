@@ -52,10 +52,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 heading: $filter('translate')('CONFIGURE_TAB'),
                 templateName:   'configure'
             },
-            /*{
-                heading: $filter('translate')('ANALYZE_TAB'),
-                templateName:   'analyze'
-            }*/
         ];
 
         $scope.setForm = function(form){

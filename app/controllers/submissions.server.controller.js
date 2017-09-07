@@ -122,28 +122,38 @@ exports.create = function(req, res, next) {
  * Get list of submissions of a form
  */
 exports.list = function(req, res) {
-	var _form = req.form;
+	var searchCriteria = { form: req.form._id };
+	var returnedFields = '_id created';
 
-	Submission.find({
-		form: _form._id
-	}).exec(function(err, _submissions) {
-		if (err) {
-			console.error(err);
-			res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-		res.json(_submissions);
-
-	});
-
+	Submission.find(searchCriteria, returnedFields)
+		.exec(function(err, _submissions) {
+			if (err) {
+				console.error(err);
+				res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			}
+			res.json(_submissions);
+		});
 };
 
 /**
  * Count number of submissions of a form
  */
 exports.count = function(req, res) {
-
+	Submission.find({
+			form: req.form._id
+		})
+		.count()
+		.exec(function(err, count) {
+			if (err) {
+				console.error(err);
+				res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			}
+			res.json(count);
+		});
 };
 
 /**

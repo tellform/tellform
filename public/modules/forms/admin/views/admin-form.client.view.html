@@ -132,11 +132,11 @@
 						</div>
 					</div>
 				</uib-tab>
-<!--
-				<uib-tab ng-if="tabData" heading="{{ 'ANALYZE_TAB' | translate }}" index="{{tabData.length+2}}">
-					<edit-submissions-form-directive myform="myform" user="myform.admin"></edit-submissions-form-directive>
+
+				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'RESPONSE_TAB' | translate }}" index="{{tabData.length+2}}">
+					<edit-submissions-directive myform="myform" user="myform.admin"></edit-submissions-directive>
 				</uib-tab>
--->
+
 				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length+3}}">
 					<div class="config-form">
 						<div class="row">

@@ -1,0 +1,23 @@
+.submissions-table {
+	width: inherit;
+}
+
+.ui-grid {
+	border: 0;
+	text-align: center;
+}
+
+.ui-grid-pager-panel {
+	position: inherit;
+}
+
+.ui-grid-pager-container,
+.ui-grid-pager-count-container {
+	margin: 10px 0;
+}
+
+.ui-grid-pager-panel abbr[title] {
+	border-bottom: none;
+	cursor: inherit;
+	text-decoration: none;
+}

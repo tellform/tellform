@@ -59,9 +59,9 @@ angular.module('forms').config(['$stateProvider',
 	    }).state('viewForm.design', {
 			url: '/design',
 			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
-	    }).state('viewForm.analyze', {
-			url: '/analyze',
-			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html'
+		}).state('viewForm.response', {
+			url: '/response',
+			templateUrl: 'modules/forms/admin/views/adminTabs/response.html'
 	    }).state('viewForm.create', {
 			url: '/create',
 			templateUrl: 'modules/forms/admin/views/adminTabs/create.html'

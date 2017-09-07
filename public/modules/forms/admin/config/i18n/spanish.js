@@ -101,16 +101,13 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		THEN_JUMP_TO: 'luego salta a',
 
 		//Edit Submissions View
-		FIELD_TITLE: 'Título de campo',
-		FIELD_VIEWS: 'Vistas de campo',
-		FIELD_DROPOFF: 'Finalización de campo',
-		FIELD_RESPONSES: 'Respuestas de campo',
 		DELETE_SELECTED: 'Borrar selección',
 		EXPORT_TO_EXCEL: 'Exportar a Excel',
 		EXPORT_TO_CSV: 'Exportar a CSV',
 		EXPORT_TO_JSON: 'Exportar a JSON',
-		DATE_SUBMITTED: 'Fecha de envío',
-		GENERATED_PDF: 'PDF generado',
+		REFERENCE_NO: 'Número de referencia',
+		SUBMISSION_TIME: 'Tiempo de presentación',
+		RESPONDENT_EMAIL: 'Correo electrónico del demandado',
 
 		//Design View
 		BACKGROUND_COLOR: 'Color de fondo',
@@ -128,7 +125,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CREATE_TAB: 'Crear',
 		PREVIEW_TAB: 'Avance',
 		CONFIGURE_TAB: 'Configuración',
-		ANALYZE_TAB: 'Análisis',
+		RESPONSE_TAB: 'Respuesta',
     SHARE_TAB: 'Compartir',
 
     //Field Types
