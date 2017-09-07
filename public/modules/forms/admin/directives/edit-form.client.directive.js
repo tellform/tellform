@@ -286,6 +286,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							// delete particular Button from startPage
 							$scope.deleteButton = function(button){
 								var currID;
+								console.log('at delete button on create page')
 								for(var i = 0; i < $scope.myform.endPage.buttons.length; i++){
 
 									currID = $scope.myform.endPage.buttons[i]._id;
@@ -384,6 +385,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index) {
+                	console.log('at delete field on create page')
                     $scope.myform.form_fields.splice(field_index, 1);
 					$scope.update(false, $scope.myform, false, true, null);
                 };
