@@ -15,39 +15,21 @@ var mongoose = require('mongoose'),
 var transport = nodemailer.createTransport(sendmail());
 
 /**
- * Delete a form submission
+ * Delete form submissions
  */
 exports.delete = function(req, res) {
-
-	var submission_id_list = req.body.deleted_submissions,
-		form = req.form;
-
 	Submission.remove({
-		form: req.form,
-		admin: req.user,
-		_id: {
-			$in: submission_id_list
-		}
-	}, function(err) {
-
-		if (err) {
-			res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-			return;
-		}
-
-		form.save(function(formSaveErr) {
-			if (formSaveErr) {
+			_id: { $in: req.body.submission_ids }
+		})
+		.exec(function(err) {
+			if (err) {
+				console.error(err);
 				res.status(400).send({
-					message: errorHandler.getErrorMessage(formSaveErr)
+					message: errorHandler.getErrorMessage(err)
 				});
-				return;
 			}
 			res.status(200).send('Form submissions successfully deleted');
-
 		});
-	});
 };
 
 /**

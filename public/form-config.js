@@ -4,7 +4,12 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'TellForm-Form';
-	var applicationModuleVendorDependencies = ['duScroll', 'ui.select', 'ui.grid', 'ui.grid.edit', 'ui.grid.pagination', 'ngSanitize', 'vButton', 'ngResource', 'TellForm-Form.form_templates', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate'];
+	var applicationModuleVendorDependencies = [
+		'duScroll', 'ui.select', 'ui.grid', 'ui.grid.edit', 'ui.grid.pagination',
+		'ui.grid.selection', 'ngAnimate', 'ngSanitize', 'vButton', 'ngResource',
+		'TellForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils',
+		'pascalprecht.translate', 'colorpicker.module'
+	];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
