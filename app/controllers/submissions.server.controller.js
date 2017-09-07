@@ -107,7 +107,12 @@ exports.list = function(req, res) {
 	var searchCriteria = { form: req.form._id };
 	var returnedFields = '_id created';
 
+	var limit = parseInt(req.query.pageSize);
+	var offset = (parseInt(req.query.pageNumber) - 1) * limit;
+
 	Submission.find(searchCriteria, returnedFields)
+		.skip(offset)
+		.limit(limit)
 		.exec(function(err, _submissions) {
 			if (err) {
 				console.error(err);

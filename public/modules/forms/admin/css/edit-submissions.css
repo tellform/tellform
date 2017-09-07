@@ -33,3 +33,7 @@
 	cursor: inherit;
 	text-decoration: none;
 }
+
+.ui-grid-pager-row-count-label {
+	display: none;
+}

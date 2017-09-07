@@ -10,9 +10,11 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 				myform: '='
 			},
 			controller: function($scope) {
+				var DEFAULT_PAGE_SIZE = 20;
+
 				var paginationOptions = {
 					pageNumber: 1,
-					pageSize: 10,
+					pageSize: DEFAULT_PAGE_SIZE,
 					sort: null
 				};
 
@@ -25,7 +27,8 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 					enableSelectAll: true,
 					multiSelect: true,
 
-					paginationPageSize: 10,
+					paginationPageSize: DEFAULT_PAGE_SIZE,
+					paginationPageSizes: [ DEFAULT_PAGE_SIZE ],
 					useExternalPagination: true,
 
 					useExternalSorting: true,
@@ -83,7 +86,7 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 							$scope.error = err.message;
 						});
 
-					$http.get('/forms/' + $scope.myform._id + '/submissions')
+					$http.get('/forms/' + $scope.myform._id + '/submissions', { params: paginationOptions })
 						.success(function(response) {
 							$scope.gridOptions.data = response;
 						})
