@@ -165,7 +165,7 @@ $ docker-compose -f docker-compose-production.yml build
 ### Run docker containers
 
 ```
-$ docker run -v /data/db:/data/db -d --name formsg-mongo mongo
+$ docker run -d -p 27017:27017 -v /data/db:/data/db --name formsg-mongo mongo
 $ docker-compose -f docker-compose-production.yml up
 ```
 
