@@ -124,7 +124,7 @@ APP_KEYWORDS=
 NODE_ENV=production
 BASE_URL=<PUBLIC IP OF YOUR INSTANCE>
 PORT=4545
-DB_PORT_27017_TCP_ADDR=formsg-mongo
+DB_PORT_27017_TCP_ADDR=<PRIVATE IP OF YOUR MONGODB HOST>
 REDIS_DB_PORT_6379_TCP_ADDR=formsg-redis
 username=formsg_admin
 MAILER_SERVICE_PROVIDER=<TO-FILL-IN>
@@ -165,10 +165,11 @@ $ docker-compose -f docker-compose-production.yml build
 ### Run docker containers
 
 ```
+$ docker run -d -p 27017:27017 -v /data/db:/data/db --name formsg-mongo mongo
 $ docker-compose -f docker-compose-production.yml up
 ```
 
-Your application should run on the default port 80, so in your browser just go to your public IP.
+Note that unlike dev, mongo container is run separately from compose. Hence `docker-compose down` does not take down the mongo container each time. Your application should run on the default port 80, so in your browser just go to your public IP.
 
 ## Support
 
