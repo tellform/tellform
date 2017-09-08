@@ -65,7 +65,6 @@ exports.read = function(req, res) {
 			return res.json(newForm);
 		});
 	}
-
 };
 
 /**
