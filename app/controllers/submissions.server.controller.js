@@ -19,6 +19,7 @@ var transport = nodemailer.createTransport(sendmail());
  */
 exports.delete = function(req, res) {
 	Submission.remove({
+			form: req.form._id,
 			_id: { $in: req.body.submission_ids }
 		})
 		.exec(function(err) {
@@ -107,21 +108,31 @@ exports.list = function(req, res) {
 	var searchCriteria = { form: req.form._id };
 	var returnedFields = '_id created';
 
+	var sortField = req.query.sortField;
+	var sortDirection = req.query.sortDirection;
+
 	var limit = parseInt(req.query.pageSize);
 	var offset = (parseInt(req.query.pageNumber) - 1) * limit;
 
-	Submission.find(searchCriteria, returnedFields)
-		.skip(offset)
-		.limit(limit)
-		.exec(function(err, _submissions) {
-			if (err) {
-				console.error(err);
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
-			res.json(_submissions);
-		});
+	var query = Submission.find(searchCriteria, returnedFields);
+
+	if (sortField && sortDirection !== undefined) {
+		query = query.sort({ [sortField]: sortDirection });
+	}
+
+	if (limit !== undefined && offset !== undefined) {
+		query = query.skip(offset).limit(limit);
+	}
+
+	query.exec(function(err, _submissions) {
+		if (err) {
+			console.error(err);
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		res.json(_submissions);
+	});
 };
 
 /**

@@ -15,11 +15,13 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 				var paginationOptions = {
 					pageNumber: 1,
 					pageSize: DEFAULT_PAGE_SIZE,
-					sort: null
+					sortField: 'created',
+					sortDirection: -1
 				};
 
 				$scope.gridOptions = {
 					enableColumnMenus: false,
+					enableVerticalScrollbar: uiGridConstants.scrollbars.ALWAYS,
 					enableHorizontalScrollbar: uiGridConstants.scrollbars.ALWAYS,
 
 					enableRowHeaderSelection: true,
@@ -37,6 +39,8 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 							name: 'Reference Number',
 							field: '_id',
 							enableCellEdit: false,
+							enableSorting: true,
+							sortDirectionCycle: [ uiGridConstants.ASC, uiGridConstants.DESC ],
 							width: '50%',
 							minWidth: 250
 						},
@@ -44,6 +48,10 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 							name: 'Submission Time',
 							field: 'created',
 							enableCellEdit: false,
+							enableSorting: true,
+							sort: { direction: uiGridConstants.DESC },
+							defaultSort: { direction: uiGridConstants.DESC },
+							sortDirectionCycle: [ uiGridConstants.ASC, uiGridConstants.DESC ],
 							width: '50%',
 							minWidth: 250
 						}
@@ -53,9 +61,11 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 
 						gridApi.core.on.sortChanged($scope, function(grid, sortColumns) {
 							if (sortColumns.length == 0) {
-								paginationOptions.sort = null;
+								paginationOptions.sortField = null;
+								paginationOptions.sortDirection = null;
 							} else {
-								paginationOptions.sort = sortColumns[0].sort.direction;
+								paginationOptions.sortField = sortColumns[0].field;
+								paginationOptions.sortDirection = sortColumns[0].sort.direction === 'asc' ? 1 : -1;
 							}
 							getPage();
 						});
