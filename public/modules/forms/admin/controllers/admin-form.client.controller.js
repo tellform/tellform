@@ -1,21 +1,10 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
-    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
+    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
 
-        $scope.trustSrc = function (src) {
-            return $sce.trustAsResourceUrl(src);
-        };
-
-        //Set active tab to Create
         $scope.activePill = 0;
-
-        $scope.copied = false;
-        $scope.onCopySuccess = function (e) {
-            $scope.copied = true;
-        };
-
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
@@ -23,36 +12,17 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
         CurrentForm.setForm($scope.myform);
 
-        // $scope.formURL = '/#!/forms/' + $scope.myform.admin.agency  + '/' + $scope.myform._id;
-        $scope.formURL = '/#!/forms/' + $scope.myform._id;
+        // :agency
+        $scope.formURL = '/#!/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id;
 
-        // if ($scope.myform.isLive) {
-            // if ($window.subdomainsDisabled === true) {
-            // $scope.actualFormURL = window.location.protocol + '//' + window.location.host + '/view' + $scope.formURL;
-            // } else {
-            //     if (window.location.host.split('.').length < 3) {
-            //         $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
-            //     } else {
-            //         $scope.actualFormURL = window.location.protocol + '//' + window.location.host.split('.').slice(1, 3).join('.') + $scope.formURL;
-            //     }
-            // }
-        // } else {
+
         $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
-        // }
-
 
         var refreshFrame = $scope.refreshFrame = function(){
             if(document.getElementById('iframe')) {
                 document.getElementById('iframe').contentWindow.location.reload();
             }
         };
-
-        $scope.tabData   = [
-            {
-                heading: $filter('translate')('CONFIGURE_TAB'),
-                templateName:   'configure'
-            },
-        ];
 
         $scope.setForm = function(form){
             $scope.myform = form;
@@ -62,55 +32,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             $scope.myform = Forms.get({
                 formId: $stateParams.formId
             });
-        };
-
-        /*
-        ** DeleteModal Functions
-        */
-        $scope.openDeleteModal = function(){
-            $scope.deleteModal = $uibModal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'formDeleteModal.html',
-                controller: 'AdminFormController',
-                resolve: {
-                    myForm: function(){
-                        return $scope.myform;
-                    }
-                }
-            });
-            $scope.deleteModal.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-                console.log('Modal dismissed at: ' + new Date());
-            });
-        };
-
-        $scope.cancelDeleteModal = function(){
-            if($scope.deleteModal){
-                $scope.deleteModal.dismiss('cancel');
-            }
-        };
-
-        // Remove existing Form
-        $scope.removeCurrentForm = function() {
-            if($scope.deleteModal && $scope.deleteModal.opened){
-
-                $scope.deleteModal.close();
-
-                var form_id = $scope.myform._id;
-                if(!form_id) throw new Error('Error - removeCurrentForm(): $scope.myform._id does not exist');
-
-                $http.delete('/forms/'+form_id)
-                    .then(function(response){
-                        console.log('form deleted successfully');
-
-                        $state.go('listForms', {}, {reload: true});
-
-                    }, function(error){
-                        console.log('ERROR: Form could not be deleted.');
-                        console.error(error);
-                    });
-            }
         };
 
         // Update existing Form
@@ -133,7 +54,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                 if (isDiffed) {
 
-                    $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
+                    $scope.updatePromise = $http.put('/forms/' + $scope.user.agency.shortName +'/' + $scope.myform._id, {changes: data})
                         .then(function (response) {
 
                             if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
@@ -155,7 +76,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                     var dataToSend = data;
 
-                    $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
+                    $scope.updatePromise = $http.put('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id, {form: dataToSend})
                         .then(function (response) {
 
                             if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
@@ -175,7 +96,5 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 }
             }
         };
-
-
     }
 ]);

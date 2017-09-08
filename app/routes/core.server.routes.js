@@ -20,7 +20,7 @@ module.exports = function(app) {
 		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/')
 		 .get(core.form);
 
-		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)/submissions')
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:agency([a-zA-Z0-9]+)/:formId([a-zA-Z0-9]+)/submissions')
 		 .post(submissions.create);
 
 		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)/render')
@@ -29,7 +29,7 @@ module.exports = function(app) {
 		app.route('/view/')
 			.get(core.form);
 
-		app.route('/forms/:formId([a-zA-Z0-9]+)/submissions')
+		app.route('/forms/:agency([a-zA-Z0-9]+)/:formId([a-zA-Z0-9]+)/submissions')
 			.post(submissions.create);
 
 		app.route('/forms/:formId([a-zA-Z0-9]+)/render')

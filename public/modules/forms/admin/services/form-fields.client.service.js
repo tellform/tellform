@@ -9,24 +9,28 @@ angular.module('forms').service('FormFields', [ '$filter',
 		        value : $filter('translate')('SHORT_TEXT'),
 		    },
 		    {
+		        name : 'textarea',
+		        value : $filter('translate')('PARAGRAPH_T'),
+		    },
+		    {
 		        name : 'email',
 		        value : $filter('translate')('EMAIL'),
 		    },
 		    {
-		        name : 'radio',
-		        value : $filter('translate')('MULTIPLE_CHOICE'),
+		        name : 'number',
+		        value : $filter('translate')('NUMBERS'),
 		    },
 		    {
 		        name : 'dropdown',
 		        value : $filter('translate')('DROPDOWN'),
 		    },
+		    // {
+		    //     name : 'radio',
+		    //     value : $filter('translate')('MULTIPLE_CHOICE'),
+		    // },
 		    {
 		        name : 'date',
 		        value : $filter('translate')('DATE'),
-		    },
-		    {
-		        name : 'textarea',
-		        value : $filter('translate')('PARAGRAPH'),
 		    },
 		    {
 		        name : 'yes_no',
@@ -41,9 +45,9 @@ angular.module('forms').service('FormFields', [ '$filter',
 		    //     value : $filter('translate')('SIGNATURE'),
 		    // },
 			// {
-		    //     name : 'file',
-		    //     value : $filter('translate')('FILE_UPLOAD'),
-		    // },
+		 //        name : 'file',
+		 //        value : $filter('translate')('FILE_UPLOAD'),
+		 //    },
 		    {
 		        name : 'rating',
 		        value : $filter('translate')('RATING'),
@@ -52,10 +56,6 @@ angular.module('forms').service('FormFields', [ '$filter',
 		    //     name : 'link',
 		    //     value : $filter('translate')('LINK'),
 		    // },
-		    {
-		        name : 'number',
-		        value : $filter('translate')('NUMBERS'),
-		    },
 		    // {
 		    //     name : 'scale',
 		    //     value : $filter('translate')('OPINION SCALE'),

@@ -15,7 +15,6 @@ var mongoose = require('mongoose'),
  * Create a new form
  */
 exports.create = function(req, res) {
-
 	if(!req.body.form){
 		return res.status(400).send({
 			message: 'Invalid Input'
@@ -41,6 +40,7 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
+
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
@@ -65,6 +65,7 @@ exports.read = function(req, res) {
 			return res.json(newForm);
 		});
 	}
+
 };
 
 /**
@@ -198,8 +199,8 @@ exports.list = function(req, res) {
 
 	if(req.user.isAdmin()) searchObj = {};
 
-	Form.find(searchObj, returnedFields).sort('title').populate('admin.username', 'admin._id').exec(function(err, forms) {
-		if (err) {
+	Form.find(searchObj, returnedFields).sort('title').populate('admin').exec(function(err, forms) {
+			if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -218,7 +219,14 @@ exports.formByID = function(req, res, next, id) {
 			message: 'Form is invalid'
 		});
 	}
-	Form.findById(id).populate('admin').exec(function(err, form) {
+
+	Form.findById(id).populate({
+		path: 'admin',
+		populate: {
+			path: 'agency',
+			model: 'Agency'
+		}
+	}).exec(function(err, form) {
 		if (err) {
 			return next(err);
 		} else if (!form || form === null) {
@@ -232,9 +240,15 @@ exports.formByID = function(req, res, next, id) {
 			_form.admin.password = null;
 			_form.admin.salt = null;
 			_form.provider = null;
-
 			req.form = _form;
-			return next();
+
+			if (req.params.agency == req.form.admin.agency.shortName) {
+				return next();
+			} else {
+				res.status(404).send({
+				message: 'Agency does not match'
+				})
+			}
 		}
 	});
 };

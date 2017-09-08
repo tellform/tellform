@@ -12,8 +12,8 @@
 		<div class="modal-body-alert">
 			{{ 'READ_WARNING' | translate }}
 		</div>
-		<p class="hidden-xs hidden-sm">
-			{{ 'DELETE_WARNING1' | translate }} <strong>{{content.currFormTitle}}</strong> {{ 'DELETE_WARNING2' | translate }}
+		<p>
+			{{ 'DELETE_WARNING1' | translate }}<strong>{{content.currFormTitle}}</strong>{{ 'DELETE_WARNING2' | translate }}
 		</p>
 		<p>{{ 'DELETE_CONFIRM' | translate }}</p>
 	</div>
@@ -24,7 +24,8 @@
 		</button>
 	</div>
 </script>
-
+<script>
+</script>
 <section data-ng-controller="ListFormsController as ctrl" data-ng-init="findAll()" class="container">
 	<br>
 	<!--<div class="row">
@@ -52,7 +53,7 @@
 			<div class="title-row row">
 				    <div class="col-xs-12 field-title text-left"> {{ 'Form Name' | translate }} </div>
 				    <div class="col-xs-12 field-input">
-						<input type="text" name="title" required ng-model="formTitle" ng-pattern="/^[a-zA-Z0-9_\-.]*$/" ng-minlength="4" ng-maxlength="200" maxlength="200" style="color:black;"/>
+						<input type="text" name="title" required ng-model="formTitle" ng-pattern="/^[a-zA-Z0-9_\-. ]*$/" ng-minlength="4" ng-maxlength="200" maxlength="200" style="color:black;"/>
 				    </div>
 			</div>
 			<div class="details-row row" ng-hide="true">
@@ -82,23 +83,19 @@
 
 			<div class="row form-item-toolbar">
 				<span class="pull-right">
-					<i style="cursor:pointer;" class="fa fa-trash-o" ng-click="openDeleteModal($index)"></i>
-					<i style="cursor:pointer;" class="fa fa-files-o" ng-click="duplicateForm($index)"></i>
+					<i style="cursor:pointer;" class="fa fa-trash-o form-item-icon" ng-click="openDeleteModal($index)"></i>
+					<i style="cursor:pointer;" class="fa fa-files-o form-item-icon" ng-click="duplicateForm($index)"></i>
 				</span>
 			</div>
 
 			<div class="row">
-				<a data-ng-href="#!/forms/{{form._id}}/admin/create"
+			<!-- :agency -->
+				<a data-ng-href="#!/forms/{{user.agency.shortName}}/{{form._id}}/admin/create"
 					class="title-row col-xs-12">
 					<h4 class="list-group-item-heading" data-ng-bind="form.title" uib-tooltip="{{ form.title }}"></h4>
 				</a>
-				<div class="col-xs-12 responses-row">
-					<!-- <small class="list-group-item-text">
-						<span> {{ form.submissions.length }} {{ 'RESPONSES' | translate }} </span>
-					</small> -->
-					<br>
-					<br>
-					<small ng-if="!form.isLive" class="list-group-item-text">
+				<div class="col-xs-12 inactive-row" ng-if="!form.isLive">
+					<small class="list-group-item-text">
 						<span> {{ 'FORM_INACTIVE' | translate }} </span>
 					</small>
 				</div>

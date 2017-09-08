@@ -4,187 +4,64 @@
 
 <section class="admin-form container">
 
-	<!-- Modal Delete Dialog Template -->
-    <script type="text/ng-template" id="formDeleteModal.html">
-        <div class="modal-header">
-            <h2 class="modal-title hidden-md hidden-lg">{{ 'ARE_YOU_SURE' | translate }}</h2>
-            <h3 class="modal-title hidden-xs hidden-sm">{{ 'ARE_YOU_SURE' | translate }}</h3>
-        </div>
-        <div class="modal-body">
-        	<div class="modal-body-alert">
-				{{ 'READ_WARNING' | translate }}
-			</div>
-       		<p class="hidden-xs hidden-sm">
-       		 	{{ 'DELETE_WARNING1' | translate }} <strong>{{myform.title}}</strong> {{ 'DELETE_WARNING2' | translate }}
-       		</p>
-            <p>{{ 'DELETE_CONFIRM' | translate }}</p>
-        </div>
-        <div class="modal-footer">
-			<input type="text" style="width:100%" data-ng-model="deleteConfirm" class="input-block" autofocus required aria-label="Type in the name of the form to confirm that you want to delete this form.">
-            <button type="submit" ng-click="removeCurrentForm()" class="btn btn-block btn-danger" ng-disabled="myform.title != deleteConfirm">
-            	{{ 'I_UNDERSTAND' | translate }}
-            </button>
-        </div>
-    </script>
-
 	<div class="page-header" style="padding-bottom: 1em;">
-		<div class="col-xs-12 col-md-12">
-			<h1 class="hidden-sm hidden-xs" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h1>
-			<h2 class="hidden-md hidden-lg" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h2>
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="padding-left: 0px !important;">
+			<h1 class="hidden-xs" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h1>
+			<h2 class="hidden-sm hidden-md hidden-lg" style="margin-bottom: 10px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h2>
 		</div>
-		<!-- <div class="col-xs-2 col-md-3">
-			<small>
-				<button class="btn btn-danger" ng-click="openDeleteModals()">
-					<i class="fa fa-trash-o"></i>
-					<span class="show-sm hidden-lg hidden-md hidden-xs">{{ 'DELETE_FORM_SM' | translate}}</span>
-					<span class="hidden-xs hidden-sm">{{ 'DELETE_FORM_MD' | translate}}</span>
-				</button>
-			</small>
-			<small>
-				<a class="btn btn-secondary view-form-btn" href="{{actualFormURL}}" ng-class="myform.form_fields.length? '' : 'disabled'">
-					<span class="hidden-xs hidden-sm">
-						{{ 'VIEW' | translate }}
-						<span ng-show="myform.isLive">
-							{{ 'LIVE' | translate }}
-						</span>
-						<span ng-hide="myform.isLive">{{ 'PREVIEW' | translate }}</span>
-					</span>
-					<i class="status-light status-light-on fa fa-dot-circle-o" ng-if="myform.isLive"></i>
-					<i class="status-light status-light-off fa fa-dot-circle-o" ng-if="!myform.isLive"></i>
-				</a>
-			</small>
-		</div> -->
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-right: 0px !important">
+			<a class="btn btn-secondary view-form-btn" href="{{actualFormURL + '/preview'}}" ng-class="myform.form_fields.length? '' : 'disabled'" target="_blank">
+				<i class="glyphicon glyphicon-eye-open"></i>
+				<span class="hidden-xs">
+					&nbsp; {{ 'PREVIEW' | translate }}
+				</span>
+			</a>
+		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-xs-12">
-			<uib-tabset active="activePill" vertical="true" type="pills">
-        <uib-tab ng-repeat="tab in tabData" index="{{$index+1}}" heading="{{tab.heading}}">
-          <div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'" onload="form_url = trustSrc(formURL)"></div>
-        </uib-tab>
-				<uib-tab index="0" heading="{{ 'CREATE_TAB' | translate }}">
+			<uib-tabset class="hidden-xs main-tabs" active="activePill" type="pills" vertical="true">
+				<uib-tab index="0">
+					<uib-tab-heading class="ng-scope">{{ 'CONFIGURE_TAB' | translate }}</uib-tab-heading>
+					<configure-form-directive myform="myform" user="user"></configure-form-directive>
+				</uib-tab>
+
+				<uib-tab index="1">
+					<uib-tab-heading class="ng-scope">{{ 'CREATE_TAB' | translate }}</uib-tab-heading>
 					<edit-form-directive myform="myform"></edit-form-directive>
 				</uib-tab>
-				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'PREVIEW_TAB' | translate }}" index="{{tabData.length+1}}">
-					<div class="config-form design container">
-						<div class="row">
-							<div class="col-md-4 col-sm-12 container design-spec">
-								<div class="row field">
-									<div class="field-title col-sm-5">
-										<h5>{{ 'BACKGROUND_COLOR' | translate }}</h5>
-									</div>
-									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.backgroundColor" ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
-									</div>
-								</div>
 
-								<div class="row field">
-									<div class="field-title col-sm-5">
-										<h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5>
-									</div>
-
-									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.questionColor" ng-style="{ 'background-color': myform.design.colors.questionColor }"/>
-									</div>
-								</div>
-
-								<div class="row field">
-									<div class="field-title col-sm-5">
-										<h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5>
-									</div>
-
-									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
-									</div>
-								</div>
-
-								<div class="row field">
-									<div class="field-title col-sm-5">
-										<h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5>
-									</div>
-
-									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text"
-											   ng-model="myform.design.colors.buttonColor"
-											   ng-style="{ 'background-color': myform.design.colors.buttonColor }"/>
-									</div>
-								</div>
-								<div class="row field">
-									<div class="field-title col-sm-5">
-										<h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5>
-									</div>
-
-									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text"
-											   ng-model="myform.design.colors.buttonTextColor"
-											   ng-style="{ 'background-color': myform.design.colors.buttonTextColor }"/>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-8 hide-md hide-lg">
-								<iframe id="iframe" ng-if="!!formURL" src="{{trustSrc(formURL + '/preview')}}"></iframe>
-							</div>
-
-							<div class="col-xs-12 col-sm-offset-4 col-sm-4">
-								<button class="btn btn-signup btn-rounded" type="button" ng-click="update(false, myform, false, false, null)">{{ 'SAVE_CHANGES' | translate }}</button>
-								<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()">{{ 'RESET' | translate }}</button>
-							</div>
-						</div>
-					</div>
+				<uib-tab disable="!myform.form_fields.length" index="2">
+					<uib-tab-heading class="ng-scope">{{ 'RESPONSE_TAB' | translate }}</uib-tab-heading>
+					<edit-submissions-directive myform="myform" user="user"></edit-submissions-directive>
 				</uib-tab>
 
-				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'RESPONSE_TAB' | translate }}" index="{{tabData.length+2}}">
-					<edit-submissions-directive myform="myform" user="myform.admin"></edit-submissions-directive>
+				<uib-tab disable="!myform.form_fields.length" index="3">
+					<uib-tab-heading class="ng-scope">{{ 'SHARE_TAB' | translate }}	</uib-tab-heading>
+					<share-form-directive actualformurl="actualFormURL"></share-form-directive>
+				</uib-tab>
+			</uib-tabset>
+
+			<uib-tabset class="hidden-sm hidden-md hidden-lg mobile-tabs main-tabs" active="activePill" type="pills" vertical="false">
+				<uib-tab index="0">
+					<uib-tab-heading><i class="glyphicon glyphicon-wrench"></i></uib-tab-heading>
+					<configure-form-directive myform="myform" user="user"></configure-form-directive>
 				</uib-tab>
 
-				<uib-tab ng-if="tabData" disable="!myform.form_fields.length" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length+3}}">
-					<div class="config-form">
-						<div class="row">
-							<div class="col-sm-12">
-                <h4> Share via: </h4>
-								<uib-tabset active="activePill" type="pills" class="horizontal-tabs">
-									<uib-tab index="0">
-                    <uib-tab-heading>
-                      <i class="glyphicon glyphicon-link"></i> {{ 'SHARE_YOUR_FORM' | translate }}
-                    </uib-tab-heading>
-										<div class="row">
-											<h5 class="col-sm-12">
-												{{ 'TELLFORM_URL' | translate }}
-											</h5>
-											<div class="col-sm-12 form-input">
-												<span ngclipboard data-clipboard-target="#copyURL"> <input id="copyURL" ng-value="actualFormURL" class="form-control ng-pristine ng-untouched ng-valid"> </span>
-											</div>
-											<div class="col-sm-offset-5 col-sm-2">
-                        <button class="btn btn-signup btn-rounded" type="button" ngclipboard data-clipboard-target="#copyURL"><i class="icon-arrow-left icon-white"></i>{{ 'COPY' | translate }}</button>
-											</div>
-										</div>
-									</uib-tab>
-									<uib-tab index="1">
-                    <uib-tab-heading>
-                      <i class="glyphicon glyphicon-globe"></i> {{ 'EMBED_YOUR_FORM' | translate }}
-                    </uib-tab-heading>
-										<div class="row">
-											<h5 class="col-sm-12">
-												{{ 'COPY_AND_PASTE' | translate }}
-											</h5>
-											<div class="col-sm-12 form-input">
-												<span ngclipboard data-clipboard-target="#copyEmbedded">
-													<textarea id="copyEmbedded" class="form-control ng-pristine ng-untouched ng-valid" style="min-height:200px; width:100%; background-color: #FFFFCC; color: #30313F;">
-														&lt;!-- {{ 'CHANGE_WIDTH_AND_HEIGHT' | translate }} --&gt;
-														<iframe id="iframe" src="{{actualFormURL}}" style="width:100%;height:500px;"></iframe>
-														<div style="font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px;">{{ 'POWERED_BY' | translate }} <a href="https://www.tellform.com" style="color: #999" target="_blank">TellForm</a></div>
-													</textarea>
-												</span>
-											</div>
-											<div class="col-sm-offset-5 col-sm-2">
-                        <button class="btn btn-signup btn-rounded" type="button" ngclipboard data-clipboard-target="#copyEmbedded">{{ 'COPY' | translate }}</button>
-											</div>
-										</div>
-									</uib-tab>
-								</uib-tabset>
-							</div>
-						</div>
-					</div>
+				<uib-tab index="1">
+					<uib-tab-heading class="ng-scope"><i class="glyphicon glyphicon-pencil"></i></uib-tab-heading>
+					<edit-form-directive myform="myform"></edit-form-directive>
+				</uib-tab>
+
+				<uib-tab disable="!myform.form_fields.length" index="2">
+					<uib-tab-heading class="ng-scope"><i class="glyphicon glyphicon-check"></i></uib-tab-heading>
+					<edit-submissions-directive myform="myform" user="user"></edit-submissions-directive>
+				</uib-tab>
+
+				<uib-tab disable="!myform.form_fields.length" index="3">
+					<uib-tab-heading class="ng-scope"><i class="glyphicon glyphicon-share"></i></uib-tab-heading>
+					<share-form-directive actualformurl="actualFormURL"></share-form-directive>
 				</uib-tab>
 			</uib-tabset>
 		</div>

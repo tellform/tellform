@@ -3,6 +3,8 @@
 */
 .edit-modal-window .modal-dialog {
 	width: 90%;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 .edit-modal-window .modal-body {
