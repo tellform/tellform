@@ -595,8 +595,8 @@
 				<div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
 
 				<div class="row">
-					<div class="panel panel-default panel-heading col-lg-11 col-md-11 col-sm-10 col-xs-10">
-						<div class="" ng-click="openEditModal(field)">
+					<div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
+						<div class="panel panel-default panel-heading" ng-click="openEditModal(field)">
 							<div class="row">
 								<span class="hidden-xs col-md-1" ng-switch="field.fieldType">
 									<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
@@ -610,13 +610,11 @@
 					</div>
 
 
-					<div class="panel-group tool-panel text-center col-lg-1 col-md-1 col-sm-2 col-xs-2" style="padding:0 5px;">
-						<div class="panel panel-default panel-heading">
-							<div class="" ng-click="deleteField($index)">
-							    <span class="text-center" >
-							        <a href="" class="fa fa-trash-o"></a>
-							    </span>
-							</div>
+					<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2" style="padding:0 5px;">
+						<div class="panel-group tool-panel text-center panel panel-default panel-heading" ng-click="deleteField($index)">
+						    <span>
+						        <a href="" class="fa fa-trash-o"></a>
+						    </span>
 						</div>
 					</div>
 
