@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 /**
  * Form Submission Schema
  */
-var FormSubmissionSchema = new Schema({
+var SubmissionSchema = new Schema({
 	form: {
 		type: Schema.Types.ObjectId,
 		ref: 'Form',
@@ -24,10 +24,10 @@ var FormSubmissionSchema = new Schema({
 	}
 });
 
-FormSubmissionSchema.plugin(mUtilities.timestamp, {
+SubmissionSchema.plugin(mUtilities.timestamp, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
 	useVirtual: false
 });
 
-module.exports = mongoose.model('FormSubmission', FormSubmissionSchema);
+module.exports = mongoose.model('Submission', SubmissionSchema);

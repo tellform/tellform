@@ -9,7 +9,7 @@ var should = require('should'),
 	User = mongoose.model('User'),
 	Form = mongoose.model('Form'),
 	Field = mongoose.model('Field'),
-	FormSubmission = mongoose.model('FormSubmission'),
+	Submission = mongoose.model('Submission'),
 	agent = request.agent(app);
 
 /**
@@ -20,7 +20,7 @@ var credentials, user;
 /**
  * Form routes tests
  */
-describe('Form Submission Routes Unit tests', function() {
+describe('Submission Routes Unit tests', function() {
 	var FormObj, _Submission, submissionSession;
 
 	beforeEach(function(done) {
@@ -74,7 +74,7 @@ describe('Form Submission Routes Unit tests', function() {
 	});
 
 
-	it(' > should be able to create a Form Submission without signing in', function(done) {
+	it(' > should be able to create a Submission without signing in', function(done) {
 
 		//Create Submission
 		submissionSession.post('/forms/' + FormObj._id + '/submissions')
@@ -88,7 +88,7 @@ describe('Form Submission Routes Unit tests', function() {
 			});
 	});
 
-	it(' > should be able to get Form Submissions if signed in', function(done) {
+	it(' > should be able to get Submissions if signed in', function(done) {
 		//Create Submission
 		submissionSession.post('/forms/' + FormObj._id + '/submissions')
 			.send(_Submission)
@@ -120,9 +120,9 @@ describe('Form Submission Routes Unit tests', function() {
 			});
 	});
 
-	it(' > should be able to delete Form Submission if signed in', function(done) {
-		// Create new FormSubmission model instance
-		var SubmissionObj = new FormSubmission(_Submission);
+	it(' > should be able to delete Submission if signed in', function(done) {
+		// Create new Submission model instance
+		var SubmissionObj = new Submission(_Submission);
 
 		SubmissionObj.save(function (err, submission) {
 			should.not.exist(err);
@@ -138,7 +138,7 @@ describe('Form Submission Routes Unit tests', function() {
 
 					var submission_ids = _.map([submission], '_id');
 
-					//Delete form submissions
+					//Delete submissions
 					submissionSession.delete('/forms/' + FormObj._id + '/submissions')
 						.send({deleted_submissions: submission_ids})
 						.expect(200)
@@ -146,7 +146,7 @@ describe('Form Submission Routes Unit tests', function() {
 
 							// Set assertions
 							should.not.exist(submissionErr);
-							(res.text).should.equal('Form submissions successfully deleted');
+							(res.text).should.equal('Submissions successfully deleted');
 
 							// Call the assertion callback
 							done();
@@ -155,8 +155,8 @@ describe('Form Submission Routes Unit tests', function() {
 		});
 	});
 
-	it(' > should not be able to get Form Submissions if not signed in', function(done) {
-		// Attempt to fetch form submissions
+	it(' > should not be able to get Submissions if not signed in', function(done) {
+		// Attempt to fetch submissions
 		submissionSession.get('/forms/' + FormObj._id + '/submissions')
 			.expect(401)
 			.end(function(err, res) {
@@ -168,8 +168,8 @@ describe('Form Submission Routes Unit tests', function() {
 
 	});
 
-	it(' > should not be able to delete Form Submission if not signed in', function(done) {
-		var SubmissionObj = new FormSubmission(_Submission);
+	it(' > should not be able to delete Submission if not signed in', function(done) {
+		var SubmissionObj = new Submission(_Submission);
 
 		SubmissionObj.save(function (err, submission) {
 			should.not.exist(err);
@@ -192,7 +192,7 @@ describe('Form Submission Routes Unit tests', function() {
 	});
 
 	afterEach(function(done) {//logout current user if there is one
-		FormSubmission.remove().exec(function() {
+		Submission.remove().exec(function() {
 			Form.remove().exec(function (err) {
 				User.remove({}).exec(function() {
 					submissionSession.destroy();

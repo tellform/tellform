@@ -1,0 +1,39 @@
+.submissions-table {
+	width: inherit;
+}
+
+.button-panel {
+	margin: 10px 0;
+}
+
+.ui-grid {
+	border: 0;
+	text-align: center;
+}
+
+.ui-grid-header {
+	border-top: 1px solid #d4d4d4;
+}
+
+.ui-grid-cell.ui-grid-disable-selection.ui-grid-row-header-cell {
+	pointer-events: initial;
+}
+
+.ui-grid-pager-panel {
+	position: inherit;
+}
+
+.ui-grid-pager-container,
+.ui-grid-pager-count-container {
+	margin: 10px 0;
+}
+
+.ui-grid-pager-panel abbr[title] {
+	border-bottom: none;
+	cursor: inherit;
+	text-decoration: none;
+}
+
+.ui-grid-pager-row-count-label {
+	display: none;
+}

@@ -4070,7 +4070,6 @@ angular.module('forms').factory('Forms', ['$resource', 'FORM_URL',
 			'get' : {
 				method: 'GET',
 				transformResponse: function(data, header) {
-                console.log('application.js file')
 		          	var form = angular.fromJson(data);
 
 					form.visible_form_fields = _.filter(form.form_fields, function(field){

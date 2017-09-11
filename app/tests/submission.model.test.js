@@ -11,7 +11,7 @@ var should = require('should'),
 	_ = require('lodash'),
 	async = require('async'),
 	config = require('../../config/config'),
-	FormSubmission = mongoose.model('FormSubmission');
+	Submission = mongoose.model('Submission');
 
 var exampleDemo = {
 	address: '880-9650 Velit. St.',
@@ -76,7 +76,7 @@ var user, myForm, mySubmission;
 /**
  * Unit tests
  */
-describe('FormSubmission Model Unit Tests:', function() {
+describe('Submission Model Unit Tests:', function() {
 	this.timeout(15000);
 	beforeEach(function(done) {
 		user = new User({
@@ -119,7 +119,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 					submissionFields[z] = _.extend(myForm.form_fields[z], sampleSubmission[z]);
 				}
 
-				mySubmission = new FormSubmission({
+				mySubmission = new Submission({
 					form: myForm._id
 				});
 
@@ -157,8 +157,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 				done();
 			});
 		});
-		it('should be able to findOne FormSubmission without problems', function(done) {
-			 FormSubmission.findOne({_id: mySubmission._id}).exec(function(err,submission) {
+		it('should be able to findOne Submission without problems', function(done) {
+			 Submission.findOne({_id: mySubmission._id}).exec(function(err,submission) {
 				should.not.exist(err);
 				should.exist(submission);
 				should.deepEqual(submission.toObject(), mySubmission.toObject());
@@ -166,8 +166,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to find FormSubmission by $elemMatch on form_fields id', function(done){
-			 FormSubmission.findOne({ form: myForm._id, admin: user, form_fields: {$elemMatch: {_id: myForm.form_fields[0]._id} }  })
+		it('should be able to find Submission by $elemMatch on form_fields id', function(done){
+			 Submission.findOne({ form: myForm._id, admin: user, form_fields: {$elemMatch: {_id: myForm.form_fields[0]._id} }  })
 				.exec(function(err, submission){
 					should.not.exist(err);
 					should.exist(submission);
@@ -182,7 +182,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 		beforeEach(function(done){
 
 			//Create Submission
-			mySubmission = new FormSubmission({
+			mySubmission = new Submission({
 				form: myForm
 			});
 
@@ -246,7 +246,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 	afterEach(function(done) {
 		Form.remove().exec(function() {
 			User.remove().exec(function() {
-				FormSubmission.remove().exec(done);
+				Submission.remove().exec(done);
 			});
 		});
 	});

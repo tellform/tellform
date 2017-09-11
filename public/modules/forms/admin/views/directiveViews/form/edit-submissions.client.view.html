@@ -1,0 +1,20 @@
+<div class="submissions-table container">
+	<div>
+		<div class="button-panel">
+			<small>
+				<button class="btn btn-danger"
+								ng-click="deleteSubmissions()"
+								ng-disabled="!selectedRows || selectedRows.length === 0">
+					<i class="fa fa-trash-o"></i>
+					<span class="hidden-xs hidden-sm">{{ 'DELETE' | translate }}</span>
+				</button>
+			</small>
+		</div>
+		<div ng-if="gridOptions.totalItems && gridOptions.data"
+					class="grid"
+					ui-grid="gridOptions"
+					ui-grid-pagination
+					ui-grid-selection>
+		</div>
+	</div>
+</div>
