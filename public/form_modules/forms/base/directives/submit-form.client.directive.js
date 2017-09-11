@@ -280,6 +280,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
 					delete form.visible_form_fields;
 
 					setTimeout(function () {
+						console.log('on submit form page')
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform.admin.agency.shortName +'/'+$scope.myform._id + '/submissions', form)
 							.success(function (data, status) {
 								$scope.myform.submitted = true;

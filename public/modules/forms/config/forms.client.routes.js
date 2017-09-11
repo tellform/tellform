@@ -18,9 +18,23 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 				myForm: function (Forms, $stateParams) {
-					var formToGet = Forms.get($stateParams);
+
+					var formToGet = Forms.load($stateParams);
 					return formToGet.$promise;
 				}
+
+
+
+// $http.get('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id + '/submissions/count')
+// 	.success(function(response) {
+// 		$scope.gridOptions.totalItems = response;
+// 	})
+// 	.error(function(err) {
+// 		console.error(err);
+// 		$scope.error = err.message;
+// 	});
+
+
 			},
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'

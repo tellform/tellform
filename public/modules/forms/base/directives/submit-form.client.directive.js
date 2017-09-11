@@ -13,6 +13,8 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$filter', '$
                 $scope.authentication = $rootScope.authentication;
 		        $scope.noscroll = false;
                 $scope.forms = {};
+                console.log('in submit form client controller')
+                console.log($scope.myform)
 
 				var form_fields_count = $scope.myform.visible_form_fields.length;
 
