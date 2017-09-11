@@ -13,9 +13,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         CurrentForm.setForm($scope.myform);
 
         // :agency
-        $scope.formURL = '/#!/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id;
-
-
+        $scope.formURL = '/#!/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id
         $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
 
         var refreshFrame = $scope.refreshFrame = function(){
@@ -54,7 +52,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                 if (isDiffed) {
 
-                    $scope.updatePromise = $http.put('/forms/' + $scope.user.agency.shortName +'/' + $scope.myform._id, {changes: data})
+                    $scope.updatePromise = $http.put('/forms/' + $scope.myform.admin.agency.shortName +'/' + $scope.myform._id, {changes: data})
                         .then(function (response) {
 
                             if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
@@ -76,7 +74,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                     var dataToSend = data;
 
-                    $scope.updatePromise = $http.put('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id, {form: dataToSend})
+                    $scope.updatePromise = $http.put('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id, {form: dataToSend})
                         .then(function (response) {
 
                             if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
