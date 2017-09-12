@@ -13,7 +13,10 @@ angular.module('forms').run(['Menus',
 }]).filter('formValidity',
     function(){
         return function(formObj){
-        	if(formObj && formObj.form_fields && formObj.visible_form_fields){
+
+        	console.log('entered FORM CLIENT CONFI')
+
+        	if(formObj && formObj.form_fields){
 
 				//get keys
 				var formKeys = Object.keys(formObj);
@@ -28,7 +31,7 @@ angular.module('forms').run(['Menus',
 				var valid_count = fields.filter(function(field){
 					    return !!(field.fieldValue);
 				}).length;
-				return valid_count - (formObj.form_fields.length - formObj.visible_form_fields.length);
+				return valid_count - formObj.form_fields.length;
 			}
 			return 0;
         };

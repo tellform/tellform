@@ -27,5 +27,3 @@ module.exports = function(app) {
 	app.param('formId', forms.formByID);
 };
 
-// viewform and submitform should have different routes
-// something to do with changing form_url in the forms.client.service page
