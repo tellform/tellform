@@ -42,8 +42,10 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
 
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
+		console.log('reached READ FOR RENDER')
 		readForRender(req, res);
 	} else {
+		console.log('reached NORMAL READ')
 		Submission.find({ form: req.form._id }).exec(function(err, _submissions) {
 			if (err) {
 				res.status(400).send({
