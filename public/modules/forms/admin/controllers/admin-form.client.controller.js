@@ -13,7 +13,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         CurrentForm.setForm($scope.myform);
 
         // :agency
-        $scope.formURL = '/#!/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id
+        $scope.formURL = '/#!/forms/' + $stateParams.agency + '/' + $stateParams.formId
         $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
 
         var refreshFrame = $scope.refreshFrame = function(){

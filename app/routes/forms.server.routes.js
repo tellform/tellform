@@ -13,12 +13,9 @@ module.exports = function(app) {
 		.post(auth.isAuthenticatedOrApiKey, forms.create);
 
 	app.route('/forms/:agency/:formId([a-zA-Z0-9]+)')
-		.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.read)
+		.get(forms.read)
 		.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.update)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.delete);
-		
-	app.route('/forms/:agency/:formId([a-zA-Z0-9]+)/submitform')
-		.get(forms.read);
 
 	app.route('/forms/:agency/:formId([a-zA-Z0-9]+)/duplicate')
 		.post(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.duplicate);

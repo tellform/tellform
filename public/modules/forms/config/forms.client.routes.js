@@ -19,7 +19,7 @@ angular.module('forms').config(['$stateProvider',
 				Forms: 'Forms',
 				myForm: function (Forms, $stateParams) {
 
-					var formToGet = Forms.load($stateParams);
+					var formToGet = Forms.get($stateParams);
 					return formToGet.$promise;
 				}
 

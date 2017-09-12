@@ -17,10 +17,6 @@ angular.module('forms').factory('Forms', ['$resource',
 			},
 			'save': {
 				method: 'POST'
-			},
-			'load': {
-				url: '/forms/:agency/:formId/submitform',
-				method: 'GET'
 			}
 		});
 	}
