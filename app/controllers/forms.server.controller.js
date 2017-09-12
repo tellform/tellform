@@ -99,7 +99,7 @@ var readForRender = exports.readForRender = function(req, res) {
 	}
 
 	//Remove extraneous fields from form object
-	delete newForm.admin;
+	// delete newForm.admin;
 
 	if(!newForm.startPage.showStart){
 		delete newForm.startPage;
