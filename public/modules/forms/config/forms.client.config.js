@@ -14,8 +14,6 @@ angular.module('forms').run(['Menus',
     function(){
         return function(formObj){
 
-        	console.log('entered FORM CLIENT CONFI')
-
         	if(formObj && formObj.form_fields){
 
 				//get keys

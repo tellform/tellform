@@ -42,11 +42,9 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
 
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
-		console.log('read for render')
 		readForRender(req, res);
 
 	} else {
-		console.log('can read form')
 		Submission.find({ form: req.form._id }).exec(function(err, _submissions) {
 			if (err) {
 				res.status(400).send({
@@ -83,9 +81,20 @@ exports.uploadTemp = function(req, res) {
  */
 var readForRender = exports.readForRender = function(req, res) {
 	var newForm = req.form.toJSON();
-	if (!newForm.isLive && !req.user) {
-		return res.status(401).send({
+
+	if (!req.user) {
+		// non-user trying to access viewform and submitform
+		if (!newForm.isLive) {
+			// non-user is blocked from accessing submitform if not live
+			return res.status(401).send({
 			message: 'Form is Not Public'
+			});
+		}
+		// non-user is blocked from accessing viewform by header controller
+	} else if (req.form.admin.id !== req.user.id) {
+		// Works on preview and viewform page to block access to non-admin users
+		return res.status(401).send({
+			message: 'User is not admin of form'
 		});
 	}
 
