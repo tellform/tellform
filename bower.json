@@ -37,6 +37,8 @@
     "angular-ui-select": "~0.19.8",
     "angular-ui-grid": "~4.0.6",
     "selectize": "0.12.4",
+    "moment-timezone": "0.5.13",
+    "angular-moment": "1.0.1",
     "angular-translate": "~2.11.0",
     "ng-translate": "*",
     "deep-diff": "^0.3.4",
