@@ -593,33 +593,37 @@
 		<div class="dropzoneContainer" style="padding-right:0px !important;">
 			<div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 				<div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
+					<div class="row">
+						<div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
+							<div class="panel panel-default" ng-click="openEditModal(field)">
+								<div class="panel-heading">
+									<div class="row">
+										<span class="hidden-xs col-md-1" ng-switch="field.fieldType">
+											<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
+										</span>
+										<span class="col-xs-12 col-md-11">
+											{{field.title}}
+											<span ng-show="field.required">*</span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
 
-				<div class="row">
-					<div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
-						<div class="panel panel-default panel-heading" ng-click="openEditModal(field)">
-							<div class="row">
-								<span class="hidden-xs col-md-1" ng-switch="field.fieldType">
-									<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
-								</span>
-								<span class="col-xs-12 col-md-11">
-									{{field.title}}
-									<span ng-show="field.required">*</span>
-								</span>
+
+						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2" style="padding:0 5px;">
+							<div class="tool-panel">
+								<div class="panel panel-default" ng-click="deleteField($index)">
+									<div class="panel-heading">
+									    <span class="text-center">
+									        <a href="" class="fa fa-trash-o"></a>
+									    </span>
+									<div>
+								</div>
 							</div>
 						</div>
 					</div>
-
-
-					<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2" style="padding:0 5px;">
-						<div class="panel-group tool-panel text-center panel panel-default panel-heading" ng-click="deleteField($index)">
-						    <span>
-						        <a href="" class="fa fa-trash-o"></a>
-						    </span>
-						</div>
-					</div>
-
-				</div>
-
+				</div>	
 			</div>
 		</div>
 
