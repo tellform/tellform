@@ -23,3 +23,4 @@ module.exports = function(app) {
 	// Finish by binding the form middleware
 	app.param('formId', forms.formByID);
 };
+

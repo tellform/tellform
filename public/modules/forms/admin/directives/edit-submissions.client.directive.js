@@ -94,7 +94,7 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 				};
 
 				var getPage = function() {
-					$http.get('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id + '/submissions/count', { params: getPageOptions })
+					$http.get('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id + '/submissions/count', { params: getPageOptions })
 						.success(function(response) {
 							$scope.gridOptions.totalItems = response;
 						})
@@ -103,7 +103,7 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 							$scope.error = err.message;
 						});
 
-					$http.get('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id + '/submissions', { params: getPageOptions })
+					$http.get('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id + '/submissions', { params: getPageOptions })
 						.success(function(response) {
 							$scope.gridOptions.data = response.map(submission => {
 								submission.created = moment(submission.created).tz('Asia/Singapore').format('DD MMM YYYY hh:mm:ss A');
@@ -120,7 +120,7 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 					var submission_ids = $scope.selectedRows.map(row => row._id);
 
 					$http({
-							url: '/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id + '/submissions',
+							url: '/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id + '/submissions',
 							method: 'DELETE',
 							data: {
 								submission_ids: submission_ids
