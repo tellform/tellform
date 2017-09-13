@@ -590,11 +590,12 @@
 
 	<!-- <div style="display: inline-block"> -->
 
-		<div class="dropzoneContainer" style="padding-right:0px !important;">
+		<div class="dropzoneContainer">
 			<div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 				<div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
-					<div class="row">
-						<div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
+					<div class="row" style="margin-left: 0px !important; margin-right: 5px !important">
+
+						<div class="col-lg-11 col-md-11 col-sm-10 col-xs-10" style="padding-right:10px !important;">
 							<div class="panel panel-default" ng-click="openEditModal(field)">
 								<div class="panel-heading">
 									<div class="row">
@@ -612,9 +613,9 @@
 
 
 						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2" style="padding:0 5px;">
-							<div class="tool-panel">
+							<div class="tool-panel text-center">
 								<div class="panel panel-default" ng-click="deleteField($index)">
-									<div class="panel-heading">
+									<div class="panel-heading" style="padding: 10px 0px;">
 									    <span class="text-center">
 									        <a href="" class="fa fa-trash-o"></a>
 									    </span>
@@ -622,6 +623,7 @@
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>	
 			</div>
