@@ -21,7 +21,8 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
 		        $scope.noscroll = false;
                 $scope.forms = {};
 
-		var form_fields_count = $scope.myform.visible_form_fields.length;
+		var form_fields_count = $scope.myform.form_fields.length;
+
 
 		var nb_valid = $filter('formValidity')($scope.myform);
 		$scope.translateAdvancementData = {
@@ -33,7 +34,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
                 $scope.reloadForm = function(){
                     //Reset Form
                     $scope.myform.submitted = false;
-                    $scope.myform.form_fields = _.chain($scope.myform.visible_form_fields).map(function(field){
+                    $scope.myform.form_fields = _.chain($scope.myform.form_fields).map(function(field){
                             field.fieldValue = '';
                             return field;
                         }).value();
@@ -45,8 +46,8 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
                         _id: '',
                         index: 0
                     };
-                    if($scope.myform.visible_form_fields.length) {
-                      $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
+                    if($scope.myform.form_fields.length) {
+                      $scope.setActiveField($scope.myform.form_fields[0]._id, 0, false);
                     }
                 };
 
@@ -65,25 +66,25 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
 
                     if(!$scope.noscroll){
                         //Focus on submit button
-                        if( $scope.selected.index === $scope.myform.visible_form_fields.length-1 && $scope.fieldBottom < 200){
+                        if( $scope.selected.index === $scope.myform.form_fields.length-1 && $scope.fieldBottom < 200){
                             field_index = $scope.selected.index+1;
                             field_id = 'submit_field';
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //Focus on field above submit button
-                        else if($scope.selected.index === $scope.myform.visible_form_fields.length){
+                        else if($scope.selected.index === $scope.myform.form_fields.length){
                             if($scope.fieldTop > 200){
                                 field_index = $scope.selected.index-1;
-                                field_id = $scope.myform.visible_form_fields[field_index]._id;
+                                field_id = $scope.myform.form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
                         }else if( $scope.fieldBottom < 0){
                             field_index = $scope.selected.index+1;
-                            field_id = $scope.myform.visible_form_fields[field_index]._id;
+                            field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
                             field_index = $scope.selected.index-1;
-                            field_id = $scope.myform.visible_form_fields[field_index]._id;
+                            field_id = $scope.myform.form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
                         //console.log('$scope.selected.index: '+$scope.selected.index);
@@ -180,8 +181,8 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
 					if(!field_index){
-						for(var i=0; i<$scope.myform.visible_form_fields.length; i++){
-							var currField = $scope.myform.visible_form_fields[i];
+						for(var i=0; i<$scope.myform.form_fields.length; i++){
+							var currField = $scope.myform.form_fields[i];
 							if(field_id === currField._id){
 								$scope.selected.index = i;
 								break;
@@ -228,7 +229,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
-					var currField = $scope.myform.visible_form_fields[$scope.selected.index];
+					var currField = $scope.myform.form_fields[$scope.selected.index];
 
 					if($scope.selected && $scope.selected.index > -1){
 						//Jump to logicJump's destination if it is true
@@ -236,11 +237,11 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
 							$rootScope.setActiveField(currField.logicJump.jumpTo, null, true);
 						} else {
 							var selected_index, selected_id;
-							if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
+							if($scope.selected.index < $scope.myform.form_fields.length-1){
 								selected_index = $scope.selected.index+1;
-								selected_id = $scope.myform.visible_form_fields[selected_index]._id;
+								selected_id = $scope.myform.form_fields[selected_index]._id;
 								$rootScope.setActiveField(selected_id, selected_index, true);
-							} else if($scope.selected.index === $scope.myform.visible_form_fields.length-1) {
+							} else if($scope.selected.index === $scope.myform.form_fields.length-1) {
 								selected_index = $scope.selected.index+1;
 								selected_id = 'submit_field';
 								$rootScope.setActiveField(selected_id, selected_index, true);
@@ -253,7 +254,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
                 $rootScope.prevField = $scope.prevField = function(){
                     if($scope.selected.index > 0){
                         var selected_index = $scope.selected.index - 1;
-                        var selected_id = $scope.myform.visible_form_fields[selected_index]._id;
+                        var selected_id = $scope.myform.form_fields[selected_index]._id;
                         $scope.setActiveField(selected_id, selected_index, true);
                     }
                 };
@@ -263,8 +264,8 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
                 */
                 $scope.exitStartPage = function(){
                     $scope.myform.startPage.showStart = false;
-                    if($scope.myform.visible_form_fields.length > 0){
-                        $scope.selected._id = $scope.myform.visible_form_fields[0]._id;
+                    if($scope.myform.form_fields.length > 0){
+                        $scope.selected._id = $scope.myform.form_fields[0]._id;
                     }
                 };
 
@@ -277,10 +278,11 @@ angular.module('view-form').directive('submitFormDirective', ['$http', '$filter'
 
 					var form = _.cloneDeep($scope.myform);
 
-					delete form.visible_form_fields;
+					delete form.form_fields;
 
 					setTimeout(function () {
-						$scope.submitPromise = $http.post('/forms/' + $scope.user.agency.shortName+'/'+$scope.myform._id + '/submissions', form)
+						console.log('on submit form page')
+						$scope.submitPromise = $http.post('/forms/' + $scope.myform.admin.agency.shortName +'/'+$scope.myform._id + '/submissions', form)
 							.success(function (data, status) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
