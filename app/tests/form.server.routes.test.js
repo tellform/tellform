@@ -10,7 +10,7 @@ var should = require('should'),
 	User = mongoose.model('User'),
 	Form = mongoose.model('Form'),
 	Field = mongoose.model('Field'),
-	FormSubmission = mongoose.model('FormSubmission');
+	Submission = mongoose.model('Submission');
 
 /**
  * Globals

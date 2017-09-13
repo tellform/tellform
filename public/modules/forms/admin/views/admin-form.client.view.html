@@ -13,7 +13,7 @@
 			<a class="btn btn-secondary view-form-btn" href="{{actualFormURL + '/preview'}}" ng-class="myform.form_fields.length? '' : 'disabled'" target="_blank">
 				<i class="glyphicon glyphicon-eye-open"></i>
 				<span class="hidden-xs">
-					&nbsp; {{ 'PREVIEW' | translate }} 
+					&nbsp; {{ 'PREVIEW' | translate }}
 				</span>
 			</a>
 		</div>
@@ -33,6 +33,11 @@
 				</uib-tab>
 
 				<uib-tab disable="!myform.form_fields.length" index="2">
+					<uib-tab-heading class="ng-scope">{{ 'RESPONSE_TAB' | translate }}</uib-tab-heading>
+					<edit-submissions-directive myform="myform" user="user"></edit-submissions-directive>
+				</uib-tab>
+
+				<uib-tab disable="!myform.form_fields.length" index="3">
 					<uib-tab-heading class="ng-scope">{{ 'SHARE_TAB' | translate }}	</uib-tab-heading>
 					<share-form-directive actualformurl="actualFormURL"></share-form-directive>
 				</uib-tab>
@@ -49,7 +54,12 @@
 					<edit-form-directive myform="myform"></edit-form-directive>
 				</uib-tab>
 
-				<uib-tab disable="!myform.form_fields.length" index="2">			
+				<uib-tab disable="!myform.form_fields.length" index="2">
+					<uib-tab-heading class="ng-scope"><i class="glyphicon glyphicon-check"></i></uib-tab-heading>
+					<edit-submissions-directive myform="myform" user="user"></edit-submissions-directive>
+				</uib-tab>
+
+				<uib-tab disable="!myform.form_fields.length" index="3">
 					<uib-tab-heading class="ng-scope"><i class="glyphicon glyphicon-share"></i></uib-tab-heading>
 					<share-form-directive actualformurl="actualFormURL"></share-form-directive>
 				</uib-tab>

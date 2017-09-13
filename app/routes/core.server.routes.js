@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var forms = require('../../app/controllers/forms.server.controller'),
+	submissions = require('../../app/controllers/submissions.server.controller'),
 	core = require('../../app/controllers/core.server.controller'),
 	config = require('../../config/config');
 
@@ -20,7 +21,7 @@ module.exports = function(app) {
 		 .get(core.form);
 
 		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:agency([a-zA-Z0-9]+)/:formId([a-zA-Z0-9]+)/submissions')
-		 .post(forms.createSubmission);
+		 .post(submissions.create);
 
 		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)/render')
 		 .get(forms.readForRender);
@@ -29,7 +30,7 @@ module.exports = function(app) {
 			.get(core.form);
 
 		app.route('/forms/:agency([a-zA-Z0-9]+)/:formId([a-zA-Z0-9]+)/submissions')
-			.post(forms.createSubmission);
+			.post(submissions.create);
 
 		app.route('/forms/:formId([a-zA-Z0-9]+)/render')
 			.get(forms.readForRender);
