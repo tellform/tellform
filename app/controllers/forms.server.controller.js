@@ -90,9 +90,9 @@ exports.uploadTemp = function(req, res) {
  */
 var readForRender = exports.readForRender = function(req, res) {
 	
-	var newForm = req.form.toJSON();
+	var currForm = req.form.toJSON();
 
-	if (!newForm.isLive) {
+	if (!currForm.isLive) {
 
 		return res.status(401).send({
 			message: 'Form is Not Public'
@@ -100,10 +100,10 @@ var readForRender = exports.readForRender = function(req, res) {
 
 	} else {
 
-		if(!newForm.startPage.showStart){
-			delete newForm.startPage;
+		if(!currForm.startPage.showStart){
+			delete currForm.startPage;
 		}
-		return res.json(newForm);
+		return res.json(currForm);
 
 	}
 	
