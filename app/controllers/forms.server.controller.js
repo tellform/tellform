@@ -41,32 +41,40 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
 
-	if(!req.user || (req.form.admin.id !== req.user.id) ){
-		console.log('reached READ FOR RENDER')
+	// Server arrives at this route in 2 cases:
+	// (1) submitform page where authentication is not needed
+	// (2) viewform/preview page where authentication is needed
+	// * client side should make sure that no other cases are let through
+
+	if (!req.user) {
+
+		// case (1)
 		readForRender(req, res);
+
 	} else {
-		console.log('reached NORMAL READ')
-		Submission.find({ form: req.form._id }).exec(function(err, _submissions) {
-			if (err) {
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
 
-			var newForm = req.form.toJSON();
-			newForm.submissions = _submissions;
-
-			if (req.userId) {
-				if(req.form.admin._id+'' === req.userId+''){
-					return res.json(newForm);
+		// case (2)
+		if (req.form.admin.id !== req.user.id) {
+			return res.status(401).send({
+				message: 'User is not admin of form'
+			});
+		} else {
+			Submission.find({ form: req.form._id }).exec(function(err, _submissions) {
+				if (err) {
+					res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
 				}
-				return res.status(404).send({
-					message: 'Form Does Not Exist'
-				});
-			}
-			return res.json(newForm);
-		});
+
+				var currForm = req.form.toJSON();
+				currForm.submissions = _submissions;
+
+				return res.json(currForm);
+			});
+		}
+
 	}
+	
 };
 
 /**
@@ -81,21 +89,25 @@ exports.uploadTemp = function(req, res) {
  * Show the current form for rendering form live
  */
 var readForRender = exports.readForRender = function(req, res) {
-	var newForm = req.form.toJSON();
-	if (!newForm.isLive && !req.user) {
+	
+	var currForm = req.form.toJSON();
+
+	if (!currForm.isLive) {
+
 		return res.status(401).send({
 			message: 'Form is Not Public'
 		});
+
+	} else {
+
+		if(!currForm.startPage.showStart){
+			delete currForm.startPage;
+		}
+		return res.json(currForm);
+
 	}
+	
 
-	//Remove extraneous fields from form object
-	delete newForm.admin;
-
-	if(!newForm.startPage.showStart){
-		delete newForm.startPage;
-	}
-
-	return res.json(newForm);
 };
 
 /**
