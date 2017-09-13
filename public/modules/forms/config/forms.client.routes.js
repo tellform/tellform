@@ -18,9 +18,11 @@ angular.module('forms').config(['$stateProvider',
 			resolve: {
 				Forms: 'Forms',
 				myForm: function (Forms, $stateParams) {
+
 					var formToGet = Forms.get($stateParams);
 					return formToGet.$promise;
 				}
+
 			},
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
