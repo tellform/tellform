@@ -1,20 +1,58 @@
 <div class="submissions-table container">
 	<div>
-		<div class="button-panel">
-			<small>
-				<button class="btn btn-danger"
-								ng-click="deleteSubmissions()"
-								ng-disabled="!selectedRows || selectedRows.length === 0">
-					<i class="fa fa-trash-o"></i>
-					<span class="hidden-xs hidden-sm">{{ 'DELETE' | translate }}</span>
-				</button>
-			</small>
+		<div class="button-filter-bar row">
+			<div class="button-panel col-md-2">
+				<small>
+					<button class="btn btn-danger"
+									ng-click="deleteSubmissions()"
+									ng-disabled="!selectedRows || selectedRows.length === 0">
+						<i class="glyphicon glyphicon-trash"></i>
+						<span class="hidden-xs hidden-sm">{{ 'DELETE' | translate }}</span>
+					</button>
+				</small>
+			</div>
+			<div class="date-filter-panel col-md-10">
+				<label class="col-md-1"></label>
+				<div class="col-md-5">
+					<div class="input-group">
+						<span class="input-group-addon transparent"><i class="glyphicon glyphicon-calendar"></i></span>
+						<input readonly
+									 id="startDateFilter"
+									 class="form-control date-filter"
+									 ui-date="dateOptions"
+									 ng-model="startDate"
+									 ng-model-options="{ debounce: 250 }"
+									 placeholder="Start Date"
+									 ng-change="dateFilterChanged()">
+						<span class="input-group-btn">
+							<button type="button" class="btn" ng-click="clearStartDate()" ng-disabled="!startDate"><i class="glyphicon glyphicon-remove"></i></button>
+						</span>
+					</div>
+				</div>
+				<label class="col-md-1">To</label>
+				<div class="col-md-5">
+					<div class="input-group">
+						<span class="input-group-addon transparent"><i class="glyphicon glyphicon-calendar"></i></span>
+						<input readonly
+									 id="endDateFilter"
+									 class="form-control date-filter"
+									 ui-date="dateOptions"
+									 ng-model="endDate"
+									 ng-model-options="{ debounce: 250 }"
+									 placeholder="End Date"
+									 ng-change="dateFilterChanged()">
+						<span class="input-group-btn">
+							<button type="button" class="btn" ng-click="clearEndDate()" ng-disabled="!endDate"><i class="glyphicon glyphicon-remove"></i></button>
+						</span>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div ng-if="gridOptions.totalItems && gridOptions.data"
-					class="grid"
-					ui-grid="gridOptions"
-					ui-grid-pagination
-					ui-grid-selection>
+				 class="grid"
+				 ui-grid="gridOptions"
+				 ui-grid-pagination
+				 ui-grid-selection>
 		</div>
 	</div>
 </div>

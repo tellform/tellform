@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$http', 'Forms', '$stateParams', '$interval', 'uiGridConstants',
-	function($rootScope, $http, Forms, $stateParams, $interval, uiGridConstants) {
+angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$http', 'Forms', '$stateParams', '$interval', 'uiGridConstants', 'moment',
+	function($rootScope, $http, Forms, $stateParams, $interval, uiGridConstants, moment) {
 		return {
 			templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-submissions.client.view.html',
 			restrict: 'E',
@@ -12,11 +12,18 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 			controller: function($scope) {
 				var DEFAULT_PAGE_SIZE = 20;
 
-				var paginationOptions = {
+				var getPageOptions = {
 					pageNumber: 1,
 					pageSize: DEFAULT_PAGE_SIZE,
 					sortField: 'created',
 					sortDirection: -1
+				};
+
+				$scope.dateOptions = {
+					changeYear: true,
+					changeMonth: true,
+					dateFormat: 'dd M yy',
+					yearRange: '1900:+0'
 				};
 
 				$scope.gridOptions = {
@@ -61,18 +68,18 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 
 						gridApi.core.on.sortChanged($scope, function(grid, sortColumns) {
 							if (sortColumns.length == 0) {
-								paginationOptions.sortField = null;
-								paginationOptions.sortDirection = null;
+								getPageOptions.sortField = null;
+								getPageOptions.sortDirection = null;
 							} else {
-								paginationOptions.sortField = sortColumns[0].field;
-								paginationOptions.sortDirection = sortColumns[0].sort.direction === 'asc' ? 1 : -1;
+								getPageOptions.sortField = sortColumns[0].field;
+								getPageOptions.sortDirection = sortColumns[0].sort.direction === 'asc' ? 1 : -1;
 							}
 							getPage();
 						});
 
 						gridApi.pagination.on.paginationChanged($scope, function(newPage, pageSize) {
-							paginationOptions.pageNumber = newPage;
-							paginationOptions.pageSize = pageSize;
+							getPageOptions.pageNumber = newPage;
+							getPageOptions.pageSize = pageSize;
 							getPage();
 						});
 
@@ -87,7 +94,7 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 				};
 
 				var getPage = function() {
-					$http.get('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id + '/submissions/count')
+					$http.get('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id + '/submissions/count', { params: getPageOptions })
 						.success(function(response) {
 							$scope.gridOptions.totalItems = response;
 						})
@@ -96,9 +103,12 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 							$scope.error = err.message;
 						});
 
-					$http.get('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id + '/submissions', { params: paginationOptions })
+					$http.get('/forms/' + $scope.user.agency.shortName + '/' + $scope.myform._id + '/submissions', { params: getPageOptions })
 						.success(function(response) {
-							$scope.gridOptions.data = response;
+							$scope.gridOptions.data = response.map(submission => {
+								submission.created = moment(submission.created).tz('Asia/Singapore').format('DD MMM YYYY hh:mm:ss A');
+								return submission;
+							});
 						})
 						.error(function(err) {
 							console.error(err);
@@ -126,6 +136,36 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 							$scope.error = err.message;
 						});
 				};
+
+				var startDateFilter = $( "#startDateFilter" );
+				var endDateFilter = $( "#endDateFilter" );
+
+				$scope.dateFilterChanged = function() {
+					if($scope.startDate) {
+						endDateFilter.datepicker( 'option', 'minDate', $scope.startDate );
+						getPageOptions.startDate = $scope.startDate;
+					}
+
+					if($scope.endDate) {
+						startDateFilter.datepicker( 'option', 'maxDate', $scope.endDate );
+						getPageOptions.endDate = $scope.endDate;
+					}
+					getPage();
+				};
+
+				$scope.clearStartDate = function() {
+					$scope.startDate = undefined;
+					endDateFilter.datepicker( 'option', 'minDate', null );
+					delete getPageOptions.startDate;
+					getPage();
+				}
+
+				$scope.clearEndDate = function() {
+					$scope.endDate = undefined;
+					startDateFilter.datepicker( 'option', 'maxDate', null );
+					delete getPageOptions.endDate;
+					getPage();
+				}
 
 				getPage();
 			}

@@ -2,8 +2,36 @@
 	width: inherit;
 }
 
-.button-panel {
+.button-panel, .date-filter-panel {
 	margin: 10px 0;
+}
+
+.date-filter-panel label {
+	margin-top: 5px;
+	text-align: center;
+}
+
+.date-filter-panel label,
+.date-filter-panel div {
+	padding: 0;
+}
+
+.date-filter-panel .input-group-addon.transparent {
+	opacity: 1;
+}
+
+.date-filter-panel .input-group input {
+	padding: 0;
+	border-left: 0;
+}
+
+.date-filter-panel .input-group input:focus {
+	border-color: #ccc;
+	box-shadow: none;
+}
+
+.date-filter-panel button[disabled] {
+	background-color: #eee;
 }
 
 .ui-grid {

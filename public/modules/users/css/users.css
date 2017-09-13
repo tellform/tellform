@@ -103,11 +103,11 @@ section.auth {
 	position: absolute;
 }
 
-section.auth input.form-control {
+section.auth input.form-control:not(.date-filter) {
 	min-height: 30px!important;
 }
 
-input.form-control, .form-control.ui-select-container {
+input.form-control:not(.date-filter), .form-control.ui-select-container {
 	height: 58px;
 }
 .form-control.ui-select-container {
@@ -121,7 +121,7 @@ input.form-control, .form-control.ui-select-container {
 	padding: 0;
 	line-height: 23px;
 }
-input.form-control,
+input.form-control:not(.date-filter),
 .form-control.ui-select-container .selectize-input .ui-select-match,
 .form-control.ui-select-container .selectize-input > input.ui-select-search {
 	font-size: 18px;

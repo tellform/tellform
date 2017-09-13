@@ -105,7 +105,7 @@ exports.create = function(req, res, next) {
  * Get list of submissions of a form
  */
 exports.list = function(req, res) {
-	var searchCriteria = { form: req.form._id };
+	var searchCriteria = getSearchCriteria(req);
 	var returnedFields = '_id created';
 
 	var sortField = req.query.sortField;
@@ -139,10 +139,10 @@ exports.list = function(req, res) {
  * Count number of submissions of a form
  */
 exports.count = function(req, res) {
-	Submission.find({
-			form: req.form._id
-		})
-		.count()
+	var searchCriteria = getSearchCriteria(req);
+	var query = Submission.find(searchCriteria);
+
+	query.count()
 		.exec(function(err, count) {
 			if (err) {
 				console.error(err);
@@ -153,6 +153,30 @@ exports.count = function(req, res) {
 			res.json(count);
 		});
 };
+
+var getSearchCriteria = function(req) {
+	var searchCriteria = { form: req.form._id };
+
+	var startDate = req.query.startDate;
+	var endDate = moment(req.query.endDate).add(1, 'days');
+
+	if(startDate && endDate) {
+    searchCriteria.created = {
+      $gte: new Date(startDate),
+      $lt: new Date(endDate)
+    }
+  } else if(startDate) {
+		searchCriteria.created = {
+      $gte: new Date(startDate)
+    }
+	} else if (endDate) {
+		searchCriteria.created = {
+      $lt: new Date(endDate)
+    }
+	}
+
+	return searchCriteria;
+}
 
 /**
  * Form submission authorization middleware
