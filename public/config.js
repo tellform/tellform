@@ -8,7 +8,7 @@ var ApplicationConfiguration = (function() {
 		'duScroll', 'ui.select', 'ui.grid', 'ui.grid.edit', 'ui.grid.pagination',
 		'ui.grid.selection', 'ngAnimate', 'ngSanitize', 'vButton', 'ngResource',
 		'TellForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils',
-		'pascalprecht.translate', 'colorpicker.module'
+		'pascalprecht.translate', 'colorpicker.module', 'angularMoment'
 	];
 
 	// Add a new vertical module

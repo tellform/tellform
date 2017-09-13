@@ -101,10 +101,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		THEN_JUMP_TO: 'luego salta a',
 
 		//Edit Submissions View
-		DELETE_SELECTED: 'Borrar selección',
-		EXPORT_TO_EXCEL: 'Exportar a Excel',
-		EXPORT_TO_CSV: 'Exportar a CSV',
-		EXPORT_TO_JSON: 'Exportar a JSON',
 		REFERENCE_NO: 'Número de referencia',
 		SUBMISSION_TIME: 'Tiempo de presentación',
 		RESPONDENT_EMAIL: 'Correo electrónico del demandado',
