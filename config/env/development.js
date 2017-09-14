@@ -42,7 +42,7 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'no-reply@tellform.com',
+		from: process.env.MAILER_FROM || 'donotreply@form.sg',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			auth: {

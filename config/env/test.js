@@ -3,7 +3,7 @@
 module.exports = {
 	baseUrl: '127.0.0.1:3001',
 	db: {
-		uri: 'mongodb://localhost/mean-test',
+		uri: 'mongodb://localhost/formsg-test',
 		options: {
 			user: '',
 			pass: ''
@@ -20,7 +20,7 @@ module.exports = {
 		}
 	},
 	app: {
-		title: 'TellForm Test'
+		title: 'FormSG Test'
 	},
 	sessionCookie: {
 		maxAge:  24 * 60 * 60 * 1000 // 24 hours

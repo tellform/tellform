@@ -27,7 +27,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SAVE_PASSWORD_BTN: 'Enregistrer votre nouveau Mot de Passe',
 
 		SUCCESS_HEADER: 'Votre Compte a été enregistré !',
-		SUCCESS_TEXT: 'Votre compte Tellform a été crée avec succès.',
+		SUCCESS_TEXT: 'Votre compte FormSG a été crée avec succès.',
 		VERIFICATION_EMAIL_SENT: 'Un email de verification a été envoyer à',
 		NOT_ACTIVATED_YET: 'Mais votre compte n\'est pas activé',
 		BEFORE_YOU_CONTINUE: 'Avant de continuer, vous devez valider votre adresse mail. Merci de vérifier votre boite mail. Si vous ne l’avez pas reçu dans les prochaines 24h, contactez-nous a ',

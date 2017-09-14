@@ -1,10 +1,10 @@
 {
-  "name": "tellform",
-  "description": "Opensource alternative to TypeForm",
-  "version": "2.0.0",
-  "homepage": "https://github.com/whitef0x0/tellform",
+  "name": "FormSG",
+  "description": "Form Manager for Government",
+  "version": "1.0.0",
+  "homepage": "https://github.com/datagovsg/formsg",
   "authors": [
-    "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
+    "Leonard Loo <leonard@data.gov.sg>"
   ],
   "license": "MIT",
   "private": true,

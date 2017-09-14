@@ -48,7 +48,7 @@ RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules
 # Add bower.json
 COPY bower.json /opt/formsg/bower.json
 COPY .bowerrc /opt/formsg/.bowerrc
-RUN bower install --allow-root --config.interactive=false
+RUN bower install
 
 COPY ./app /opt/formsg/app
 COPY ./public /opt/formsg/public

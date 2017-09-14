@@ -1,5 +1,5 @@
-Form.sg
-========
+FormSG
+======
 
 > Forked from Tellforms (https://github.com/tellform/tellform)
 
@@ -27,7 +27,7 @@ $ npm install
 ### Prepare .env file:
 Create `.env` file at project root folder. Fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID`, `MAILER_PASSWORD` and `MAILER_FROM`.
 ```
-APP_NAME=Form.sg
+APP_NAME=FormSG
 APP_DESC=
 APP_KEYWORDS=
 NODE_ENV=development
@@ -118,7 +118,7 @@ The `.env` file for remote deployment (or production) is slightly different from
 Create `.env` file at project root folder. Similarly, fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID`, `MAILER_PASSWORD` and `MAILER_FROM`. Note that now you have to fill in the public IP of your instance in `BASE_URL`.
 
 ```
-APP_NAME=Form.sg
+APP_NAME=FormSG
 APP_DESC=
 APP_KEYWORDS=
 NODE_ENV=production
