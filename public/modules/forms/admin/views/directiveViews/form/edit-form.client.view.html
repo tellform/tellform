@@ -569,16 +569,16 @@
 		<div class="dropzoneContainer">
 			<div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 				<div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved">
-					<div class="row" style="margin-left: 0px !important; margin-right: 5px !important; margin-bottom: 5px">
-
-						<div class="col-lg-11 col-md-11 col-sm-10 col-xs-10" style="padding-right:10px !important;">
+					<div class="row panel-row">
+					
+						<div class="col-lg-11 col-md-11 col-sm-10 col-xs-10 panel-field">
 							<div class="panel panel-default" ng-click="openEditModal(field)">
 								<div class="panel-heading">
 									<div class="row">
 										<span class="hidden-xs col-md-1" ng-switch="field.fieldType">
 											<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
 										</span>
-										<span class="col-xs-12 col-md-11">
+										<span class="col-xs-12 col-md-11 ">
 											{{field.title}}
 											<span ng-show="field.required">*</span>
 										</span>
@@ -588,10 +588,10 @@
 						</div>
 
 
-						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2" style="padding:0 5px;">
+						<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 panel-delete">
 							<div class="tool-panel text-center">
 								<div class="panel panel-default" ng-click="deleteField($index)">
-									<div class="panel-heading" style="padding: 10px 0px;">
+									<div class="panel-heading">
 									    <span class="text-center">
 									        <a href="" class="fa fa-trash-o"></a>
 									    </span>
@@ -604,6 +604,11 @@
 				</div>	
 			</div>
 		</div>
+
+
+		<!-- dropzonecontainer.tool-panel.panel-heading => then set css criteria -->
+		<!-- try not to use important, it is a bad css practice -->
+		<!-- class = "row class1" => class1 should override specifications in row -->
 
 <!--             <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;">
                 <div class="panel-group tool-panel text-center">
