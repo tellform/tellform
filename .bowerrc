@@ -1,4 +1,6 @@
 {
 	"directory": "public/lib",
+	"allow_root": true,
+	"interactive": false,
 	"analytics": false
 }

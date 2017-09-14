@@ -2,17 +2,13 @@
 	"swagger": "2.0",
 	"info": {
 		"version": "1.0.0",
-		"title": "TellForm API",
+		"title": "FormSG API",
 		"contact": {
-			"name": "TellForm Team",
-			"email": "team@tellform.com"
+			"name": "FormSG Team",
+			"email": "team@form.sg"
 		}
 	},
-	"externalDocs": {
-		"description": "Find out how to host your own TellForm instance.",
-		"url": "https://github.com/whitef0x0/tellform"
-	},
-	"host": "api.tellform.com",
+	"host": "api.form.sg",
 	"basePath": "/",
 	"schemes": [
 		"http",

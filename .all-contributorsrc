@@ -1,6 +1,6 @@
 {
-  "projectName": "TellForm",
-  "projectOwner": "tellform",
+  "projectName": "FormSG",
+  "projectOwner": "GovTech",
   "files": [
     "README.md"
   ],
@@ -8,96 +8,59 @@
   "commit": true,
   "contributors": [
     {
-      "login": "whitef0x0",
-      "name": "David Baldwynn",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/1160417?v=3",
-      "profile": "http://baldwynn.me",
+      "login": "leonardloo",
+      "name": "Leonard Loo",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4787315?v=4",
+      "url": "https://api.github.com/users/leonardloo",
       "contributions": [
         "code",
-        "tool",
-        "infra",
+        "bug",
         "doc",
-        "example",
         "design",
-        "fundingFinding",
         "review",
         "test"
       ]
     },
     {
-      "login": "lalop",
-      "name": "Samuel Laulhau",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/313117?v=3",
-      "profile": "https://samuellaulhau.fr",
+      "login": "abby-ng",
+      "name": "Abby Ng",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/23251306?v=4",
+      "url": "https://api.github.com/users/abby-ng",
       "contributions": [
         "code",
-        "translation"
-      ]
-    },
-    {
-      "login": "arunpattnaik",
-      "name": "Arun Pattnaik",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/313507?v=3",
-      "profile": "http://arun.co",
-      "contributions": [
-        "design"
-      ]
-    },
-    {
-      "login": "toanalien",
-      "name": "Thiên Toán",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/5405744?v=3",
-      "profile": "https://toanalien.com",
-      "contributions": [
         "bug",
+        "doc",
+        "design",
+        "review",
+        "test"
+      ]
+    },
+    {
+      "login": "arshadali172",
+      "name": "Arshad Ali",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10674085?v=4",
+      "url": "https://api.github.com/users/arshadali172",
+      "contributions": [
         "code",
-        "doc"
-      ]
-    },
-    {
-      "login": "AdrianP-",
-      "name": "Adrian Portabales",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/8615608?v=3",
-      "profile": "https://github.com/AdrianP-",
-      "contributions": [
         "bug",
-        "code"
+        "doc",
+        "design",
+        "review",
+        "test"
       ]
     },
     {
-      "login": "spekulatius",
-      "name": "Peter Thaleikis",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/8433587?v=3",
-      "profile": "https://github.com/spekulatius",
+      "login": "namnguyen08",
+      "name": "Nam Nguyen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/21514982?v=4",
+      "url": "https://api.github.com/users/namnguyen08",
       "contributions": [
-        "doc"
-      ]
-    },
-    {
-      "login": "mickaelandrieu",
-      "name": "Mickaël Andrieu",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/1247388?v=3",
-      "profile": "http://www.mickael-andrieu.com",
-      "contributions": [
-        "doc"
-      ]
-    },
-    {
-      "login": "ahmad-luqman",
-      "name": "Ahmad Luqman",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/1522464?v=3",
-      "profile": "https://github.com/ahmad-luqman",
-      "contributions": [
-        "doc"
-      ]
-    },
-    {
-      "login": "PeterDaveHello",
-      "name": "Peter Dave Hello",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/3691490?v=3",
-      "profile": "https://www.peterdavehello.org/",
-      "contributions": [
-        "doc"
+        "code",
+        "bug",
+        "doc",
+        "design",
+        "review",
+        "test"
       ]
     }
   ]

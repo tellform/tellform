@@ -73,18 +73,11 @@ module.exports.getBowerOtherAssets = function() {
 };
 
 /**
- * Helper Function for getJavascriptAssets and getFormJavaScriptAssets
+ * Get the modules JavaScript files
  */
-module.exports._getAssets = function(includeTests, isFormJS){
-	var unit_tests, js_assets;
-
-	if(isFormJS) {
-		js_assets = this.assets.form_js;
-		unit_tests = this.assets.form_unit_tests;
-	} else {
-		js_assets = this.assets.js;
-		unit_tests = this.assets.unit_tests;
-	}
+module.exports.getJavaScriptAssets = function(includeTests){
+	var js_assets = this.assets.js;
+	var unit_tests = this.assets.unit_tests;
 
 	var output = this.getGlobbedFiles(js_assets, 'public/', 'static/');
 
@@ -94,20 +87,6 @@ module.exports._getAssets = function(includeTests, isFormJS){
 	}
 
 	return output;
-};
-
-/**
- * Get the modules JavaScript files
- */
-module.exports.getJavaScriptAssets = function(includeTests) {
-	return this._getAssets(includeTests, false);
-};
-
-/**
- * Get the modules Form JavaScript files
- */
-module.exports.getFormJavaScriptAssets = function(includeTests) {
-	return this._getAssets(includeTests, true);
 };
 
 /**

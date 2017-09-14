@@ -7,7 +7,7 @@ var ApplicationConfiguration = (function() {
 	var applicationModuleVendorDependencies = [
 		'duScroll', 'ui.select', 'ui.grid', 'ui.grid.edit', 'ui.grid.pagination',
 		'ui.grid.selection', 'ngAnimate', 'ngSanitize', 'vButton', 'ngResource',
-		'TellForm.templates', 'ui.router', 'ui.bootstrap', 'ui.utils',
+		'formsg.templates', 'ui.router', 'ui.bootstrap', 'ui.utils',
 		'pascalprecht.translate', 'colorpicker.module', 'angularMoment'
 	];
 

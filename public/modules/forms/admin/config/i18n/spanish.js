@@ -50,10 +50,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LIVE: 'Online',
 		PREVIEW: 'Vista previa',
 		COPY: 'Copiar',
-		COPY_AND_PASTE: 'Copiar y pegar esto para agregar su TellForm a su sitio web',
+		COPY_AND_PASTE: 'Copiar y pegar esto para agregar su formulario a su sitio web',
 		CHANGE_WIDTH_AND_HEIGHT: 'Cambie los valores de ancho y altura para adaptar el formulario a sus necesidades',
 		POWERED_BY: 'Con la tecnlogía de',
-		SHARE_URL_TEXT: 'Tu TellForm está en esta URL permanente',
+		SHARE_URL_TEXT: 'Tu formulario está en esta URL permanente',
 
 		//Edit Form View
 		DISABLED: 'Deshabilitado',
