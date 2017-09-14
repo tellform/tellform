@@ -137,8 +137,8 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 						});
 				};
 
-				var startDateFilter = $( "#startDateFilter" );
-				var endDateFilter = $( "#endDateFilter" );
+				var startDateFilter = $( ".start-date-filter" );
+				var endDateFilter = $( ".end-date-filter" );
 
 				$scope.dateFilterChanged = function() {
 					if($scope.startDate) {
