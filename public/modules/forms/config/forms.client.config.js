@@ -29,7 +29,7 @@ angular.module('forms').run(['Menus',
 				var valid_count = fields.filter(function(field){
 					    return !!(field.fieldValue);
 				}).length;
-				return valid_count - formObj.form_fields.length;
+				return valid_count;
 			}
 			return 0;
         };

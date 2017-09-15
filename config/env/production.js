@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = {
-	baseUrl: process.env.BASE_URL || process.env.HEROKU_APP_NAME + '.herokuapp.com' || 'tellform.com',
+	baseUrl: process.env.BASE_URL || 'form.sg',
 	db: {
 		uri: process.env.MONGODB_URI || process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || '0.0.0.0') + '/formsg',
 	},
 	port: process.env.PORT || 5000,
-	socketUrl: process.env.SOCKET_URL || 'ws.tellform.com',
+	socketUrl: process.env.SOCKET_URL || 'ws.form.sg',
 	socketPort: process.env.SOCKET_PORT || 20523,
 	log: {
         // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
@@ -24,13 +24,12 @@ module.exports = {
     sessionCookie: {
 		secure: false,
 		maxAge:  24 * 60 * 60 * 1000, // 24 hours
-		domain: process.env.BASE_URL || '.tellform.com'
+		domain: process.env.BASE_URL || '.form.sg'
 	},
 	assets: {
 		bower_js: 'public/dist/vendor.min.js',
 		css: 'public/dist/application.min.css',
-		js: 'public/dist/application.min.js',
-		form_js: 'public/dist/form-application.min.js'
+		js: 'public/dist/application.min.js'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
@@ -58,7 +57,7 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'testing@'+process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
+		from: process.env.MAILER_FROM || 'testing@'+process.env.SPARKPOST_SANDBOX_DOMAIN || 'donotreply@form.sg',
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || '',
 			auth: {

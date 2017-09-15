@@ -2,9 +2,9 @@
 
 module.exports = {
 	app: {
-		title: process.env.APP_NAME || 'TellForm',
-		description: process.env.APP_DESC || 'Opensource form builder alternative to TypeForm',
-		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
+		title: process.env.APP_NAME || 'FormSG',
+		description: process.env.APP_DESC || 'Form Manager for Government',
+		keywords:  process.env.APP_KEYWORDS || 'forms, formbuilder, nodejs'
 	},
 	db: {
 		uri: 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR || process.env.DB_HOST || 'localhost')+'/formsg',
@@ -26,7 +26,7 @@ module.exports = {
 
 	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
 
-    signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
+	signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
 	enableClusterMode: (process.env.ENABLE_CLUSTER_MODE === 'TRUE'),
 	baseUrl: '',
 	tempUserCollection: 'temporary_users',
@@ -60,7 +60,7 @@ module.exports = {
 		maxAge:  24 * 60 * 60 * 1000 // 24 hours
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
-		//domain: process.env.COOKIE_SESSION_URL || process.env.BASE_URL || '.tellform.com'
+		//domain: process.env.COOKIE_SESSION_URL || process.env.BASE_URL || '.form.sg'
 	},
 
 	/*
@@ -90,63 +90,29 @@ module.exports = {
     },
 	assets: {
 		css: [
-			'public/modules/**/css/*.css',
-			'!public/modules/**/demo/**/*.css',
-			'!public/modules/**/dist/**/*.css',
-			'!public/modules/**/node_modules/**/*.css'
+			'public/modules/**/css/*.css'
 		],
 		js: [
 			'public/config.js',
-            'public/application.js',
+			'public/application.js',
 			'public/dist/populate_template_cache.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*/*/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/*/*/*/*.js',
 			'!public/modules/**/gruntfile.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/dist/**/*.js',
-			'!public/modules/**/node_modules/**/*.js',
 			'!public/modules/**/tests/**/*.js'
-		],
-		form_js: [
-			'public/form-config.js',
-			'public/form-application.js',
-			'public/dist/form_populate_template_cache.js',
-			'public/form_modules/forms/*.js',
-			'public/form_modules/forms/*/*/*/*.js',
-			'public/form_modules/forms/*/*.js',
-			'public/form_modules/forms/*/*/*.js',
-			'public/form_modules/forms/**.js'
 		],
 		views: [
 			'public/modules/**/*.html',
-			'!public/modules/**/demo/**/*.html',
-			'!public/modules/**/dist/**/*.html',
-			'!public/modules/**/node_modules/**/*.html',
 			'!public/modules/**/tests/**/*.html'
 		],
 		unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
-			'public/modules/*/tests/unit/**/*.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/node_modules/**/*.js'
+			'public/modules/*/tests/unit/**/*.js'
 		],
 		e2e_tests: [
-			'public/modules/*/tests/e2e/**.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/node_modules/**/*.js'
-		],
-		form_unit_tests: [
-			'public/lib/angular-mocks/angular-mocks.js',
-			'public/form_modules/*/tests/unit/**/*.js',
-			'!public/form_modules/**/demo/**/*.js',
-			'!public/form_modules/**/node_modules/**/*.js'
-		],
-		form_e2e_tests: [
-			'public/form_modules/*/tests/e2e/**.js',
-			'!public/form_modules/**/demo/**/*.js',
-			'!public/form_modules/**/node_modules/**/*.js'
+			'public/modules/*/tests/e2e/**.js'
 		]
 	}
 };

@@ -83,7 +83,7 @@ var questions = [
 	{
 		type: 'input',
 		name: 'APP_NAME',
-		message: 'What do you want to name your TellForm deployment?'
+		message: 'What do you want to name your deployment?'
 	},
 	{
 		type: 'input',
@@ -131,13 +131,13 @@ var questions = [
 	{
 		type: 'input',
 		name: 'BASE_URL',
-		message: 'What is the url your TellForm will be hosted at?',
+		message: 'What is the url your application will be hosted at?',
 		default: 'localhost'
 	},
 	{
 		type: 'input',
 		name: 'PORT',
-		message: 'What port should the TellForm server run on?',
+		message: 'What port should the application server run on?',
 		default: '3000'
 	},
 	{
@@ -178,9 +178,9 @@ var questions = [
 ];
 
 if(!fs.existsSync('./\.env')) {
-	console.log(chalk.green('\n\nHi, welcome to TellForm Setup'));
+	console.log(chalk.green('\n\nHi, welcome to FormSG Setup'));
 
-	console.log(chalk.green('You should only run this the first time you run TellForm\n--------------------------------------------------\n\n'));
+	console.log(chalk.green('You should only run this the first time you run FormSG\n--------------------------------------------------\n\n'));
 
 	inquirer.prompt([questions[0]]).then(function (confirmAns) {
 		if (confirmAns['shouldContinue']) {
@@ -220,13 +220,13 @@ if(!fs.existsSync('./\.env')) {
 
 						console.log(chalk.green('Successfully created user'));
 
-						console.log(chalk.green('Have fun using TellForm!'));
+						console.log(chalk.green('Have fun using FormSG!'));
 						process.exit(1);
 					});
 				});
 			});
 		} else {
-			console.log(chalk.green('Have fun using TellForm!'));
+			console.log(chalk.green('Have fun using FormSG!'));
       process.exit(1);
 		}
 	});

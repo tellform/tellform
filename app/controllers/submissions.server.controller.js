@@ -77,7 +77,7 @@ exports.create = function(req, res, next) {
 		function(emailHTML, submission, done) {
 			var mailOptions = {
 				to: form.emails,
-				from: 'Form.sg <donotreply@form.sg>',
+				from: 'FormSG <donotreply@form.sg>',
 				subject: 'formsg-auto: ' + form.title + ' (Ref: ' + submission.id + ')',
 				html: emailHTML
 			};

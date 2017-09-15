@@ -24,6 +24,4 @@ exclude_paths:
 - node_modules/**
 - public/lib/**
 - uploads/**
-- docs/**
-- public/populate_template_cache.js
 - scripts/**

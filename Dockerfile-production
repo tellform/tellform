@@ -28,7 +28,7 @@ RUN sudo apt-get install -yq nodejs \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install MEAN.JS Prerequisites
-RUN npm install --quiet -g grunt bower pm2 && npm cache clean
+RUN npm install --quiet -g grunt bower && npm cache clean
 
 RUN mkdir -p /opt/formsg/public/lib
 WORKDIR /opt/formsg
@@ -45,7 +45,7 @@ RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules
 # Add bower.json
 COPY bower.json /opt/formsg/bower.json
 COPY .bowerrc /opt/formsg/.bowerrc
-RUN bower install --allow-root --config.interactive=false
+RUN bower install
 
 COPY ./app /opt/formsg/app
 COPY ./public /opt/formsg/public
