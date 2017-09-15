@@ -94,6 +94,8 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 				};
 
 				var getPage = function() {
+					$scope.selectedRows = undefined;
+
 					$http.get('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id + '/submissions/count', { params: getPageOptions })
 						.success(function(response) {
 							$scope.gridOptions.totalItems = response;
