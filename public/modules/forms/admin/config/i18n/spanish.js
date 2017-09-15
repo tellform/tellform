@@ -144,7 +144,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		//Admin Tabs
 		CREATE_TAB: 'Crear',
 		DESIGN_TAB: 'Diseño',
-		CONFIGURE_TAB: 'Configuración',
+		CONFIGURE_TAB: 'Configuración del formulario',
 		ANALYZE_TAB: 'Análisis',
     SHARE_TAB: 'Compartir',
 

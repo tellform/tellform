@@ -141,11 +141,11 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
     EMBED_YOUR_FORM: 'Embed your form',
     SHARE_YOUR_FORM: 'Share your form',
 
-		//Admin Tabs
-		CREATE_TAB: 'Create',
-		DESIGN_TAB: 'Design',
-		CONFIGURE_TAB: 'Configure',
-		ANALYZE_TAB: 'Analyze',
+	//Admin Tabs
+	CREATE_TAB: 'Create',
+	DESIGN_TAB: 'Design',
+	CONFIGURE_TAB: 'Form Settings',
+	ANALYZE_TAB: 'Analyze',
     SHARE_TAB: 'Share',
 
     //Field Types
