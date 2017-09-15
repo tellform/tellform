@@ -1,5 +1,7 @@
 <header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
 
+<div class="container"></div>
+
 <section class="admin-form container-fluid">
 
 	<!-- Modal Delete Dialog Template -->
@@ -124,8 +126,8 @@
 										<h5>{{ 'BACKGROUND_COLOR' | translate }}</h5>
 									</div>
 									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text" 
-										ng-model="myform.design.colors.backgroundColor" 
+										<input class="form-control" colorpicker="hex" type="text"
+										ng-model="myform.design.colors.backgroundColor"
 										ng-pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/"
 										ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
 									</div>
