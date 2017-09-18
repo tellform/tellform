@@ -14,7 +14,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	COMPLETING_NEEDED: '{{questions_not_completed}} pregunta(s) obligatoria(s) a responder',
 	OPTIONAL: 'Opcional',
 	ERROR_EMAIL_INVALID: 'Favor de proporcionar un correo electrónico válido',
-	ERROR_NOT_A_NUMBER: 'Por favor, introduzca sólo números válidos',
 	ERROR_URL_INVALID: 'Favor de proporcionar un url válido',
 	OK: 'OK',
 	ENTER: 'pulse INTRO',

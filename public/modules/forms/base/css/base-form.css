@@ -257,21 +257,7 @@ form .accordion-edit {
     z-index: 99!important;
 }
 
-form .row.field .field-number {
-	margin-right: 0.5em;
-}
-
 /* Styles for form submission view (/forms/:formID) */
-form .row.field {
-    padding: 1em 0 0 0;
-    width: inherit;
-}
-    form .row.field > .field-title {
-        margin-top:0.5em;
-        font-size:1.2em;
-        padding-bottom: 1.8em;
-        width: inherit;
-    }
     form .row.field > .field-input,
     form .row.field > .field-input .selectize-input .ui-select-match,
     form .row.field > .field-input .selectize-input input.ui-select-search {
@@ -320,15 +306,8 @@ form .row.field {
         }
         form .field-input .selectize-input .ui-select-match,
         form .field-input .selectize-input input.ui-select-search,
-        form .field-input > input.text-field-input {
-            padding: 0.45em 0.9em !important;
-            width: 100%;
-            line-height: 160% !important;
-        }
-        form .required-error{
-            color: #ddd;
-            font-size:0.8em;
-        }
+        
+
 
 	   	form .dropdown > .field-input .selectize-input {
           border: inherit;

@@ -36,13 +36,11 @@ div.start-end-page .form-actions .btn {
 
 /* Form fields */
 .field-directive {
-  z-index: 9;
+  z-index: 11;
   padding: 10px;
   position: relative;
 }
-.activeField {
-  z-index: 11;
-}
+
 /* Form button panel */
 .form-button-panel {
   background-color: white;

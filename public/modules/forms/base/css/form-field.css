@@ -1,0 +1,34 @@
+form .row.field {
+  padding: 15px 0;
+  font-size: 1em;
+}
+form .row.field .field-title h3 {
+  padding: 0;
+}
+form .row.field .field-title .field-number {
+	margin-right: 15px;
+}
+form .row.field .field-title .optional-label {
+  color: #ccc;
+  margin-left: 15px;
+}
+
+/* Textfield (short text, email, number, link) */
+form .field-input > input.textfield-input {
+    padding: 0.45em 0.9em;
+    width: 100%;
+}
+
+
+*::-webkit-input-placeholder {
+  color: #ccc;
+}
+*:-moz-placeholder {
+  color: #ccc;  /* FF 4-18 */
+}
+*::-moz-placeholder {
+  color: #ccc;  /* FF 19+ */
+}
+*:-ms-input-placeholder {
+  color: #ccc;  /* IE 10+ */
+}
