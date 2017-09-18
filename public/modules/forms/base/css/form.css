@@ -11,6 +11,9 @@
 .public-form.submit-form .btn:hover {
   opacity: 0.65;
 }
+.public-form.submit-form .empty-div {
+  min-height: 20vh;
+}
 
 /* Start page & end page */
 div.start-end-page {
@@ -72,6 +75,9 @@ div.start-end-page .form-actions .btn {
 }
 .form-button-panel .btn.submit-btn {
   background-color: #33CC00;
+}
+.form-button-panel .btn.submit-btn[disabled] {
+  background-color: grey;
 }
 
 @media not all and (min-width: 768px) {
