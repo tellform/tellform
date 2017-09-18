@@ -6,6 +6,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope = $rootScope;
 		$scope.credentials = {};
 		$scope.error = '';
+		$scope.button_clicked = false;
 
 		$scope.getAgencies = function() {
 			$http.get('/agencies')
@@ -52,13 +53,14 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    $scope.signup = function() {
 			$scope.credentials.username = $scope.credentials.username.toLowerCase()
 			$scope.credentials.email = $scope.credentials.email.toLowerCase()
-			// console.log($scope.credentials)
+	  		$scope.button_clicked = true;
 	        User.signup($scope.credentials).then(
 		        function(response) {
 		        	$state.go('signup-success');
+		        	$scope.button_clicked = false;
 		        },
 		        function(error) {
-		        	console.error(error);
+		        	$scope.button_clicked = false;
 					if(error) {
 						$scope.error = error;
 						console.error(error);

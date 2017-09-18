@@ -60,7 +60,6 @@
 									 						ng-model="credentials.emailDomain"
 															theme="selectize"
 															search-enabled="false"
-															ng-required="true"
 															ng-disabled="!credentials.agency">
 		 								<ui-select-match class="public-form">
 		 									{{ $select.selected }}
@@ -78,7 +77,9 @@
 						</div>
 
 						<div class="text-center form-group">
-							<button type="submit" class="btn btn-signup btn-rounded btn-block" ng-click="preProcessForm()">{{ 'SIGNUP_BTN' | translate }}</button>
+							<button type="submit" class="btn btn-signup btn-rounded btn-block" ng-disabled="((!credentials.emailDomain) || (button_clicked))" ng-click="preProcessForm()">
+							<span ng-show="button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+							{{ 'SIGNUP_BTN' | translate }} </button>
 						</div>
 					</fieldset>
 				</form>
