@@ -182,7 +182,6 @@ input.form-control:not(.date-filter),
 }
 .form-group.email .email-name input.form-control {
 	padding-top: 6px !important;
-	text-align: right; 
 }
 
 .my-account {
