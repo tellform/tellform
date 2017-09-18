@@ -90,7 +90,7 @@
             tmp_scope.myform = sampleForm;
 
             //gotacha: Controller and link functions will execute.
-            var el = angular.element('<submit-form-directive myform=\'myform\'></submit-form-directive>');
+            var el = angular.element('<form-directive myform=\'myform\'></form-directive>');
             $compile(el)(tmp_scope);
             tmp_scope.$digest();
             $rootScope.$digest();
