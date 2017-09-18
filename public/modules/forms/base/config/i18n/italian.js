@@ -11,7 +11,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	ADVANCEMENT: '{{done}} su {{total}} completate',
 	CONTINUE_FORM: 'Vai al formulario',
 	REQUIRED: 'obbligatorio',
-	COMPLETING_NEEDED: '{{questions_not_completed}} domande da rispondere',
+	COMPLETING_NEEDED: '{{questions_not_completed}} domande obbligatorie da rispondere',
 	OPTIONAL: 'opzionale',
 	ERROR_EMAIL_INVALID: 'Si prega di inserire un indirizzo email valido',
 	ERROR_NOT_A_NUMBER: 'Si prega di inserire solo numeri',
