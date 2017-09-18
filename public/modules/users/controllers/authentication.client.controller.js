@@ -29,8 +29,10 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 	    $scope.signin = function() {
 	    	$scope.credentials.username = $scope.credentials.username.toLowerCase()
+	    	$scope.button_clicked = true;
 			User.login($scope.credentials).then(
 				function(response) {
+					$scope.button_clicked = false;
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
@@ -41,6 +43,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 					}
 				},
 				function(error) {
+					$scope.button_clicked = false;
 					$rootScope.user = Auth.ensureHasCurrentUser(User);
 					$scope.user = $rootScope.user;
 
