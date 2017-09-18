@@ -109,7 +109,7 @@ var FormSchema = new Schema({
 		},
 		buttonText:{
 			type: String,
-			default: 'Go back to Form'
+			default: 'Back to Form'
 		},
 		buttons:[ButtonSchema]
 	},

@@ -1,0 +1,128 @@
+<section ng-if="loading || (!myform.submitted && !myform.startPage.showStart)" class="overlay"></section>
+
+<!-- Start Page View -->
+<div ng-show="!myform.submitted && myform.startPage.showStart" class="start-end-page text-center">
+	<div class="row">
+		<div class="col-xs-12">
+			<h1>{{ myform.startPage.introTitle }}</h1>
+		</div>
+		<div class="col-xs-10 col-xs-offset-1 start-end-paragraph">
+			<p>{{ myform.startPage.introParagraph }}</p>
+		</div>
+	</div>
+	<div ng-if="myform.startPage.buttons.length > 0" class="row form-actions">
+		<p ng-repeat="button in myform.startPage.buttons">
+			<button type="button"
+							class="btn">
+				<a href="{{ button.url }}">{{ button.text }}</a>
+			</button>
+		</p>
+	</div>
+	<div class="row form-actions">
+		<button type="button"
+						class="btn"
+						ng-click="exitStartPage()">
+			<span>{{ myform.startPage.introButtonText }}</span>
+		</button>
+	</div>
+</div>
+
+<!-- Form Fields View -->
+<div ng-show="!myform.submitted && !myform.startPage.showStart" class="form-fields">
+	<div class="row">
+		<form name="forms.myForm" novalidate class="submission-form col-sm-12 col-md-offset-1 col-md-10">
+			<div ng-if="!field.deletePreserved"
+					 ng-repeat="field in myform.form_fields"
+					 data-index="{{$index}}"
+					 data-id="{{field._id}}"
+					 class="row field-directive"
+					 ng-class="{ activeField: selected._id == field._id }">
+				<field-directive field="field" design="myform.design" index="$index" forms="forms"></field-directive>
+			</div>
+		</form>
+	</div>
+
+	<section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom form-button-panel">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6 col-sm-6 col-xs-12" ng-show="!myform.submitted">
+					<p class="answered">{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p>
+					<p ng-if="forms.myForm.$invalid" class="need-complete">{{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}</p>
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-12">
+					<button class="btn btn-lg col-xs-3" id="focusDownButton"
+									ng-click="nextField()"
+									ng-disabled="selected.index > myform.form_fields.length-1">
+						<i class="fa fa-chevron-down"></i>
+					</button>
+					<button class="btn btn-lg col-xs-3" id="focusUpButton"
+									ng-click="prevField()"
+									ng-disabled="selected.index == 0">
+            <i class="fa fa-chevron-up"></i>
+					</button>
+
+					<button ng-if="!forms.myForm.$invalid"
+									class="btn btn-lg col-xs-5 focusOn submit-btn"
+									v-busy="loading"
+									v-busy-label="Please wait"
+									v-pressable
+									ng-click="submitForm()"
+									ng-disabled="loading || forms.myForm.$invalid || myform.isPreview"
+									on-enter-key="submitForm()"
+									on-enter-key-disabled="loading || forms.myForm.$invalid">
+						{{ 'SUBMIT' | translate }}
+					</button>
+
+					<button ng-if="forms.myForm.$invalid"
+									class="btn btn-lg col-xs-5 focusOn review-btn"
+									ng-click="goToInvalid()"
+									on-enter-key="goToInvalid()"
+									on-enter-key-disabled="!forms.myForm.$invalid">
+						{{ 'REVIEW' | translate }}
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<!-- Default End Page View -->
+<div ng-if="myform.submitted && !loading && !myform.endPage.showEnd" class="start-end-page text-center">
+	<div class="col-xs-12 text-center">
+		<h1>{{ 'FORM_SUCCESS' | translate }}</h1>
+	</div>
+	<div class="row form-actions">
+		<button type="button"
+						class="btn"
+						ng-click="reloadForm()">
+      <span>{{ 'BACK_TO_FORM' | translate }}</span>
+		</button>
+	</div>
+</div>
+
+<!-- Custom End Page View -->
+<div ng-if="myform.submitted && !loading && myform.endPage.showEnd" class="start-end-page text-center">
+	<div class="row">
+		<div class="col-xs-12">
+			<h1>{{ myform.endPage.title }}</h1>
+		</div>
+		<div class="col-xs-10 col-xs-offset-1 start-end-paragraph">
+			<p>{{ myform.endPage.paragraph }}</p>
+		</div>
+	</div>
+	<div ng-if="myform.endPage.buttons.length > 0" class="row form-actions">
+		<p ng-repeat="button in myform.endPage.buttons">
+			<button type="button"
+							class="btn">
+				<a href="{{ button.url }}">{{ button.text }}</a>
+			</button>
+		</p>
+	</div>
+	<div class="row form-actions">
+		<button type="button"
+						class="btn"
+						ng-click="reloadForm()">
+			<span>{{ myform.endPage.buttonText }}</span>
+		</button>
+	</div>
+</div>

@@ -1,5 +1,3 @@
-
-
-<section class="public-form" ng-style="{ 'background-color': myform.design.colors.backgroundColor }" ng-hide="!myform.isPreview && !myform.isLive">
-	<submit-form-directive myform="myform"></submit-form-directive>
+<section ng-hide="!myform.isPreview && !myform.isLive" class="public-form submit-form" ng-style="{ 'background-color': myform.design.colors.backgroundColor }">
+	<form-directive myform="myform"></form-directive>
 </section>
