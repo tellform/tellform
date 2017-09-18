@@ -23,11 +23,6 @@ module.exports = {
             json: false
         }
     },
-    sessionCookie: {
-		secure: false,
-		maxAge:  24 * 60 * 60 * 1000, // 24 hours
-		domain: process.env.BASE_URL || '.form.sg'
-	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
 		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
