@@ -93,7 +93,7 @@
             tmp_scope.user = sampleUser;
 
             //gotacha: Controller and link functions will execute.
-            el = angular.element('<edit-submissions-form-directive myform=\'myform\' user=\'user\'></edit-submissions-form-directive>');
+            el = angular.element('<edit-submissions-directive myform=\'myform\' user=\'user\'></edit-submissions-directive>');
             $compile(el)(tmp_scope);
             $rootScope.$digest();
 

@@ -3,15 +3,15 @@
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
   $translateProvider.translations('en', {
-    FORM_SUCCESS: 'Form entry successfully submitted!',
+    FORM_SUCCESS: 'Form successfully submitted!',
 	REVIEW: 'Review',
-    BACK_TO_FORM: 'Go back to Form',
+	BACK_TO_FORM: 'Back to Form',
 	EDIT_FORM: 'Edit this Form',
 	CREATE_FORM: 'Create this Form',
-	ADVANCEMENT: '{{done}} out of {{total}} answered',
+	ADVANCEMENT: '{{ done }} of {{ total }} answered',
 	CONTINUE_FORM: 'Continue to Form',
 	REQUIRED: 'required',
-	COMPLETING_NEEDED: '{{answers_not_completed}} answer(s) need completing',
+	COMPLETING_NEEDED: '{{ questions_not_completed }} question(s) to be answered',
 	OPTIONAL: 'optional',
 	ERROR_EMAIL_INVALID: 'Please enter a valid email address',
 	ERROR_NOT_A_NUMBER: 'Please enter valid numbers only',

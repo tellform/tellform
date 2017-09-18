@@ -1,10 +1,10 @@
 'use strict';
 
 
-angular.module('forms').directive('submitFormDirective', ['$http', '$filter', '$rootScope', 'Auth',
+angular.module('forms').directive('formDirective', ['$http', '$filter', '$rootScope', 'Auth',
     function ($http, $filter, $rootScope, Auth) {
         return {
-            templateUrl: 'modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
+            templateUrl: 'modules/forms/base/views/directiveViews/form/form.client.view.html',
 			restrict: 'E',
             scope: {
                 myform:'='
@@ -20,7 +20,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$filter', '$
 				$scope.translateAdvancementData = {
 					done: nb_valid,
 					total: form_fields_count,
-					answers_not_completed: form_fields_count - nb_valid
+					questions_not_completed: form_fields_count - nb_valid
 				};
 
                 $scope.reloadForm = function(){
@@ -119,7 +119,7 @@ angular.module('forms').directive('submitFormDirective', ['$http', '$filter', '$
 					$scope.translateAdvancementData = {
 						done: nb_valid,
 						total: form_fields_count,
-						answers_not_completed: form_fields_count - nb_valid
+						questions_not_completed: form_fields_count - nb_valid
 					};
 
                     if(animateScroll){

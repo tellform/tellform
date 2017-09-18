@@ -1,0 +1,774 @@
+/* Custom Tab CSS */
+@media all and (min-width: 768px) {
+    .nav.nav-pills.nav-stacked {
+        width: 16.66666667%;
+    }
+}
+@media not all and (min-width: 768px) {
+    .nav.nav-pills.nav-stacked {
+        width: 100%;
+    }
+}
+@media all and (min-width: 768px) {
+    .hidden-when-large {
+        display: none;
+    }
+}
+@media not all and (min-width: 768px) {
+    .hidden-when-small {
+        display: none;
+    }
+}
+.nav.nav-pills.nav-stacked {
+	float: left;
+	position: relative;
+	min-height: 1px;
+	background: #283c86;
+}
+.nav-pills>li>a {
+	border-radius: 0;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+ .nav-pills>li.active>a:hover {
+	 background-color: #fff;
+	 color: #283d86;
+	 font-weight: bold;
+	 border: 1px solid #283d86;
+	 border-right: none;
+ }
+ .nav-stacked>li+li {
+	 margin-top: 0;
+ }
+ .nav>li>a {
+	 color: #fff;
+ }
+ .nav>li>a:focus, .nav>li>a:hover {
+	 background-color: #41964e;
+	 color: white;
+ }
+
+ .mobile-tabs > .nav>li>a {
+  color: #fff;
+ }
+
+ .mobile-tabs > .nav {
+  background-color: #283d86;
+ }
+
+ .mobile-tabs > .nav-pills>li.active>a,
+ .mobile-tabs > .nav-pills>li.active>a:focus,
+ .mobile-tabs > .nav-pills>li.active>a:hover{
+  border:1px solid #283d86;
+  border-bottom:none;
+  color: #283d86;
+  background-color: #fff;
+ }
+
+ .mobile-tabs > .nav-pills>li.active>a.disabled{
+  color: #777;
+ }
+
+ .mobile-tabs .nav>li.disabled>a {
+  color: #777;
+  cursor: not-allowed;
+ }
+
+ .horizontal-tabs .nav {
+	 border-bottom: 1px solid #ccc;
+ }
+ .horizontal-tabs .nav>li>a{
+	 color: #333;
+ }
+ .horizontal-tabs .nav>li>a:hover{
+	color: #fff;
+ }
+ .horizontal-tabs .nav-pills>li.active>a,
+ .horizontal-tabs .nav-pills>li.active>a:focus,
+ .horizontal-tabs .nav-pills>li.active>a:hover{
+	 border: none;
+	 border-bottom: 5px solid #45a247;
+	 color: #333;
+ }
+ .admin-form .horizontal-tabs .tab-content {
+	 border: none;
+	 margin: 10px 0;
+ }
+.horizontal-tabs .tab-content {
+	width: 100%;
+}
+
+@media all and (min-width: 768px) {
+    div.tab-content {
+        width: 83.33333333%;
+    }
+}
+
+@media not all and (min-width: 768px) {
+    div.tab-content {
+        width: 100%;
+    }
+}
+
+div.tab-content {
+	position: relative;
+	min-height: 1px;
+	float:left;
+	padding-top: 0!important;
+}
+uib-tab-heading .glyphicon {
+	top: 3px;
+}
+
+.panel-default.startPage {
+    border-style: dashed;
+    border-color: #a9a9a9;
+    border-width:3px;
+}
+
+.busy-updating-wrapper {
+   text-align: center;
+   font-size: 20px;
+   position: fixed;
+   bottom: 0;
+   right: 55px;
+   z-index: 1;
+}
+
+.busy-submitting-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.dropzone h4.panel-title {
+    height: 17px;
+    overflow: hidden;
+}
+
+.public-form input:not(.ui-select-search), .public-form textarea, .public-form .selectize-input {
+	background-color: #000000;
+    background-color: rgba(0,0,0,0);
+    border: 2px dashed #ddd!important;
+}
+
+.public-form input:focus:not(.ui-select-search), .public-form textarea:focus {
+    border: 2px dashed #ddd!important;
+    outline: 0;
+}
+
+.public-form input.ng-valid:not(.ui-select-search), .public-form textarea.ng-valid {
+	border-color: #20FF20!important;
+	border-style: solid!important;
+	border-width: 3px!important;
+}
+
+.public-form input.ng-invalid.ng-dirty, .public-form textarea.ng-invalid.ng-dirty {
+	border-color: #FA787E!important;
+	border-style: solid!important;
+	border-width: 3px!important;
+}
+
+section.content p.breakwords {
+    word-break: break-all;
+}
+
+.public-form .btn {
+    border: 1px solid #c6c6c6;
+}
+
+.public-form .btn[type='submit'] {
+    font-size: 1.5em;
+    padding: 0.35em 1.2em 0.35em 1.2em;
+}
+
+section.content > section > section.container {
+    margin-top: 70px;
+}
+
+/*
+** Modal CSS Styles
+*/
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 18px;
+    font-weight: normal;
+}
+.public-form .input-block {
+    display: block;
+    width: 100%;
+}
+.modal-footer input[type='text'] {
+    min-height: 34px;
+    padding: 7px 8px;
+    font-size: 13px;
+    color: #333;
+    vertical-align: middle;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+.modal-body > .modal-body-alert {
+    color: #796620;
+    background-color: #f8eec7;
+    border-color: #f2e09a;
+    margin: -16px -15px 15px;
+    padding: 10px 15px;
+    border-style: solid;
+    border-width: 1px 0;
+}
+
+.public-form .letter {
+	position: relative;
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    width: 16px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 19px;
+    border: 1px solid #000;
+    border: 1px solid rgba(0,0,0,.2);
+    margin-right: 7px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+	text-align: center;
+    font-weight: 700;
+}
+
+
+
+/* Styles for accordion */
+form .accordion-edit {
+    width: inherit;
+}
+
+/*Styles for ui-datepicker*/
+.ui-datepicker.ui-widget {
+    z-index: 99!important;
+}
+
+form .row.field .field-number {
+	margin-right: 0.5em;
+}
+
+/* Styles for form submission view (/forms/:formID) */
+form .row.field {
+    padding: 1em 0 0 0;
+    width: inherit;
+}
+    form .row.field > .field-title {
+        margin-top:0.5em;
+        font-size:1.2em;
+        padding-bottom: 1.8em;
+        width: inherit;
+    }
+    form .row.field > .field-input,
+    form .row.field > .field-input .selectize-input .ui-select-match,
+    form .row.field > .field-input .selectize-input input.ui-select-search {
+        font-size: 1.4em;
+        color: #777;
+    }
+    form.submission-form .row.field.statement > .field-title {
+        font-size:1.7em;
+    }
+    form.submission-form .row.field.statement > .field-input {
+        font-size:1em;
+        color:#ddd;
+    }
+
+        form.submission-form .select.radio > .field-input input, form.submission-form .select > .field-input input {
+            width:20%;
+        }
+
+        form.submission-form .field.row.radio .btn.activeBtn {
+            background-color: #000!important;
+            background-color: rgba(0,0,0,0.7)!important;
+            color: white;
+        }
+        form.submission-form .field.row.radio .btn {
+            margin-right:1.2em;
+        }
+
+        form.submission-form .select > .field-input .btn {
+            text-align: left;
+            margin-bottom:0.7em;
+        }
+        form.submission-form .select > .field-input .btn > span {
+            font-size: 1.10em;
+        }
+
+        form .field-input > textarea{
+            padding: 0.45em 0.9em;
+            width: 100%;
+            line-height: 160%;
+        }
+
+        form .field-input > input.hasDatepicker{
+            padding: 0.45em 0.9em;
+            width: 50%;
+            line-height: 160%;
+        }
+        form .field-input .selectize-input .ui-select-match,
+        form .field-input .selectize-input input.ui-select-search,
+        form .field-input > input.text-field-input {
+            padding: 0.45em 0.9em !important;
+            width: 100%;
+            line-height: 160% !important;
+        }
+        form .required-error{
+            color: #ddd;
+            font-size:0.8em;
+        }
+
+	   	form .dropdown > .field-input .selectize-input {
+          border: inherit;
+          box-shadow: none;
+          padding: 0;
+	   	}
+	   	form .dropdown > .field-input .selectize-dropdown {
+          margin-top: 16px;
+	   	}
+	   	form .dropdown > .field-input .selectize-dropdown-content {
+          max-height: 220px;
+	   	}
+	   	form .dropdown > .field-input .ui-select-choices-row-inner {
+			border-radius: 3px;
+			margin: 5px;
+			padding: 10px;
+			background-color: #000000;
+			background-color: rgba(0,0,0,0.05);
+		}
+
+		form .dropdown > .field-input .ui-select-choices-row-inner.active, form .dropdown > .field-input .ui-select-choices-row-inner.active:focus {
+			background-color: #000000;
+			background-color: rgba(0,0,0,0.1);
+        }
+.config-form {
+    max-width: 100%;
+}
+
+.config-form > .row {
+    padding: 20px 30px;
+}
+
+@media all and (min-width: 768px) {
+    div.config-form .row.field {
+        padding-top:1.8em;
+    }
+}
+        div.config-form .row > .field-input {
+            padding-left:0.1em;
+        }
+            div.config-form .row > .field-input label {
+                padding-left:1.3em;
+                display: block;
+								min-width: 100px;
+            }
+/* Styles for form admin view (/forms/:formID/admin) */
+@media all and (min-width: 768px) {
+    .admin-form > .page-header {
+        padding-bottom: 0;
+        margin-bottom: 40px;
+    }
+}
+
+@media not all and (min-width: 768px) {
+    .admin-form > .page-header {
+        margin-bottom: 10px !important;
+        margin-top: 0px !important;
+    }
+}
+    .admin-form > .page-header h1 {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    .admin-form > .page-header h1,
+    .admin-form > .page-header h2 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .admin-form > .page-header div[uib-tooltip-popup] {
+        word-wrap: break-word;
+    }
+    .admin-form > .page-header > .col-xs-3 {
+        padding-top: 1.4em;
+    }
+.admin-form .form-controls .row {
+    padding: 5px;
+}
+.admin-form .page-header {
+    border: none;
+	margin-top: none;
+	margin-bottom: none;
+}
+
+/*Styles for admin view tabs */
+.admin-form .tab-content {
+  padding-top: 3em;
+  border: 1px solid #283d86;
+  background: #fff;
+  margin-bottom: 50px;
+}
+
+@media not all and (min-width: 768px) {
+    .admin-form .tab-content {
+        border-top: 0;
+    }
+}
+
+@media all and (min-width: 768px) {
+    .admin-form .tab-content {
+        border-left: 0;
+    }
+}
+
+.admin-form .panel-heading {
+    background-color: #f1f1f1;
+	position: relative!important;
+}
+
+@media all and (min-width: 768px) {
+    .admin-form .panel-heading {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media not all and (min-width: 768px) {
+    .admin-form .panel-heading {
+        text-align:center;
+    }
+}
+
+    .admin-form .panel-heading:hover {
+        background-color: #45a247;
+        cursor: pointer;
+				color: #fff;
+    }
+        .admin-form .panel-heading a:hover {
+            text-decoration: none;
+        }
+					.admin-form .panel-heading a.disabled {
+						pointer-events: none;
+ 						cursor: default;
+					}
+
+@media all and (min-width: 768px) {
+    .current-fields {
+        margin-top: 30px;
+        padding: 0 35px;
+    }
+}
+
+@media not all and (min-width: 768px) {
+    .current-fields {
+        margin-top: 8px;
+    }
+}
+
+.current-fields .panel-body .row.question input[type='text'], .current-fields .panel-body .row.description textarea{
+    width: 100%;
+}
+.current-fields .panel-body .row.options input[type='text'] {
+    width: 80%;
+}
+
+/*Override Select2 UI*/
+.ui-select-choices.ui-select-dropdown {
+	top:2.5em!important;
+}
+.ui-select-toggle {
+	box-shadow:none!important;
+	border:none!important;
+}
+
+.current-fields .panel-row {
+    margin-left: 0px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.current-fields .panel-row .panel-field{
+    padding-right:10px;
+}
+
+.current-fields .panel-row .panel-delete{
+    padding:0 5px;
+}
+
+.current-fields .tool-panel > .panel-default:hover {
+    cursor: pointer;
+}
+
+.current-fields .tool-panel > .panel-default .panel-heading {
+    background-color: #fff;
+    color: #9d9d9d;
+    padding: 10px 0px;
+}
+    .current-fields .tool-panel > .panel-default .panel-heading:hover {
+        background-color: #45a247;
+        color: #fff;
+        cursor: pointer;
+    }
+.current-fields .tool-panel > .panel-default .panel-heading a {
+    color: inherit;
+}
+.current-fields .tool-panel > .panel-default .panel-heading a:hover{
+    text-decoration: none;
+}
+
+/*Styles for submission table*/
+.submissions-table .table-outer.row {
+    margin: 1.5em 0 2em 0!important;
+}
+.submissions-table .table-outer .col-xs-12 {
+    padding-left: 0!important;
+    border:1px solid #ddd;
+    overflow-x: scroll;
+    border-radius:3px;
+}
+.submissions-table .table > thead > tr > th {
+    min-width:8em;
+}
+.submissions-table .table > tbody > tr.selected {
+    background-color:#efefef;
+}
+
+/*Styles for add fields tab*/
+.admin-form .add-field {
+    background-color: #fff;
+    border-right: 1px solid #e8e6e6;
+}
+
+@media all and (min-width: 768px) {
+    .admin-form .add-field {
+        padding: 0 25px;
+    }
+}
+
+.admin-form .add-field .col-xs-6 {
+    padding: 0.25em 0.4em;
+}
+
+.admin-form .add-field .col-xs-6 .panel-heading {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #bbb;
+    border-radius: 4px;
+}
+
+.admin-form .oscar-field-select {
+    margin: 10px 0 10px;
+}
+
+.view-form-btn {
+    border-color:#ddd;
+    float: right;
+    font-size: 16px;
+}
+
+.view-form-btn:hover {
+    background-color:#45a247 !important;
+    color:#fff !important;
+    border-color:#45a247 !important;
+}
+
+@media not all and (min-width:768px) {
+    .view-form-btn {
+        margin-top:17px;
+    }
+}
+
+.status-light.status-light-off {
+    color: #BE0000;
+}
+.status-light.status-light-on {
+    color: #33CC00;
+}
+
+/* Styles for form list view (/forms) */
+section.public-form {
+    padding: 0 10%;
+}
+
+section.public-form .btn {
+    border: 1px solid;
+}
+
+.form-item-toolbar {
+	padding: 10px 8px;
+}
+
+.form-item {
+	text-align: center;
+	/*border-bottom: 6px inset #ccc;*/
+	border: 1px solid #acacac;
+	border-radius: 5px;
+	background-color: #fcfdff;
+	width: 180px;
+	position: relative;
+	height: 215px;
+	margin: 25px;
+}
+
+
+.form-item.paused {
+	background-color: grey;
+	color: white;
+}
+
+.form-item.paused:hover {
+	background-color: #45a247;
+	color: white;
+}
+
+.form-item.create-new input[type='text']{
+    width: inherit;
+    color:black;
+    border:none;
+}
+
+.form-item.create-new {
+    background-color: #283c86;
+    color: white;
+}
+
+
+.form-item.create-new:hover {
+	transition: all 0.2s;
+	background-color: #45a247;
+	cursor: pointer;
+}
+
+/*CREATE-NEW FORM MODAL*/
+.form-item.create-new input{
+	width: 100%;
+}
+.form-item.create-new.new-form {
+    background-color: #283c86;
+    z-index: 11;
+}
+    .form-item.new-form input[type='text'] {``
+        margin-top:0.2em;
+        width: inherit;
+        color:black;
+        border:none;
+        padding: 0.3em 0.6em 0.3em 0.6em;
+    }
+    .form-item.new-form .custom-select {
+        margin-top: 0.2em
+    }
+        .form-item.new-form .custom-select select {
+            background-color: white;
+        }
+
+
+    .form-item.new-form .details-row {
+        margin-top: 1em;
+    }
+    .form-item.new-form .details-row.submit {
+        margin-top: 1.7em;
+    }
+        .form-item.new-form .details-row.submit .btn {
+            font-size: 0.95em;
+        }
+
+    .form-item.new-form .title-row {
+        margin-top: 1em;
+        top:0;
+    }
+
+/*Modal overlay (for lightbox effect)*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}
+h3.forms-list-title {
+	color: #3FA2F7;
+	font-weight: 600;
+	margin-bottom: 3em;
+}
+.form-item {
+	color: #71AADD;
+	background-color: #E4F1FD;
+}
+.form-item:hover {
+	background-color: #45a247;
+  cursor: pointer;
+  color: #f2f2f2;
+	transition: all 0.2s;
+}
+.form-item > .row.footer {
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+}
+
+.form-item .title-row {
+    position: relative;
+    padding-top:2em;
+    padding-bottom:1em;
+    top: 10px;
+}
+    .form-item .title-row h4 {
+        font-size: 1.3em;
+    }
+
+.form-item.create-new  .title-row{
+    padding: 0;
+}
+    .form-item.create-new  .title-row h4 {
+        font-size: 7em;
+    }
+
+.form-item .details-row{
+    margin-top: 23px;
+}
+    .form-item  .details-row small {
+        font-size: 0.6em;
+    }
+    .form-item.create-new  .details-row small {
+        font-size: 0.95em;
+    }
+
+.form-item-toolbar .form-item-icon {
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.empty-form {
+	display: flex;
+}
+
+.empty-form img{
+		width:300px;
+		height:230px;
+		margin: 0 auto;
+}
+
+.inactive-row {
+    margin-top:29px;
+}
+
+.inactive-row .list-group-item-text {
+    font-size:0.95em;
+}
