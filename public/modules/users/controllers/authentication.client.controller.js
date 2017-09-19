@@ -6,6 +6,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope = $rootScope;
 		$scope.credentials = {};
 		$scope.error = '';
+		$scope.button_clicked = false;
 
 		$scope.getAgencies = function() {
 			$http.get('/agencies')
@@ -28,8 +29,10 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 	    $scope.signin = function() {
 	    	$scope.credentials.username = $scope.credentials.username.toLowerCase()
+	    	$scope.button_clicked = true;
 			User.login($scope.credentials).then(
 				function(response) {
+					$scope.button_clicked = false;
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
@@ -40,6 +43,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 					}
 				},
 				function(error) {
+					$scope.button_clicked = false;
 					$rootScope.user = Auth.ensureHasCurrentUser(User);
 					$scope.user = $rootScope.user;
 
@@ -52,13 +56,14 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    $scope.signup = function() {
 			$scope.credentials.username = $scope.credentials.username.toLowerCase()
 			$scope.credentials.email = $scope.credentials.email.toLowerCase()
-			// console.log($scope.credentials)
+	  		$scope.button_clicked = true;
 	        User.signup($scope.credentials).then(
 		        function(response) {
 		        	$state.go('signup-success');
+		        	$scope.button_clicked = false;
 		        },
 		        function(error) {
-		        	console.error(error);
+		        	$scope.button_clicked = false;
 					if(error) {
 						$scope.error = error;
 						console.error(error);
