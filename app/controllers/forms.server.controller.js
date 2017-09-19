@@ -47,12 +47,10 @@ exports.read = function(req, res) {
 	// * client side should make sure that no other cases are let through
 
 	if (!req.user) {
-
 		// case (1)
 		readForRender(req, res);
 
 	} else {
-
 		// case (2)
 		if (req.form.admin.id !== req.user.id) {
 			return res.status(401).send({
