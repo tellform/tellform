@@ -1,13 +1,18 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
-    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', 'User',
+    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, user) {
 
         $scope.activePill = 0;
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
+
+        user.getCurrent().then(function(myUser) {
+            $scope.user = myUser;
+        });
+
         $rootScope.saveInProgress = false;
 
         CurrentForm.setForm($scope.myform);

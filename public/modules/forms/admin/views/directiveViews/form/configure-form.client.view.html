@@ -20,12 +20,12 @@
                         ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
                 </div>
             </div>
-						<div class="row field">
+			<div id="collab-email" class="row field" hidden>
                 <div class="field-title col-sm-12">
                     <h5>{{ 'FORM_EMAIL' | translate }}</h5>
                 </div>
 
-								<div class="col-sm-12">
+				<div class="col-sm-12">
                     <input class="form-control" type="text"
                         placeholder="Comma-separated list of emails"
                         ng-model="myform.emails"

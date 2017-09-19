@@ -18,7 +18,16 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 
-            }
+            },
+
+          link: function(scope, element, attrs, ctrl) {
+            scope.$watch("user", function(val) {
+                if (val !== undefined && val.email === scope.myform.admin.email) {
+                    $('#collab-email').show();
+                }
+            });
+          },
+
         };
     }
 ]);
