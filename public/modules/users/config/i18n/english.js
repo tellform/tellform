@@ -46,7 +46,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CHECK_YOUR_EMAIL: '',
 		CONTINUE: 'Continue',
 
-		PASSWORD_RESTORE_HEADER: 'Restore password',
+		PASSWORD_RESTORE_HEADER: 'Restore pass',
 		ENTER_YOUR_EMAIL: 'Enter your account email.',
 		SUBMIT_BTN: 'Submit',
 

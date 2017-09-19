@@ -167,10 +167,14 @@ input.form-control:not(.date-filter),
 .form-group.email > div {
 	padding: 0;
 }
-.form-group.email .email-domain {
-	margin-top: 27px;
-	margin-left: 3px;
+
+@media screen and (min-width: 768px) {
+	.form-group.email .email-domain {
+		margin-top: 27px;
+		margin-left: 3px;
+	}
 }
+
 .form-group.email .email-domain .ui-select-choices-row-inner {
 	word-break: break-all;
 }
