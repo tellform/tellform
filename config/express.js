@@ -207,10 +207,6 @@ module.exports = function(db) {
 	app.use(methodOverride());
 
 	// Use helmet to secure Express headers
-	app.use(helmet.frameguard({
-		action: 'allow-from',
-		domain: 'justsomeplaceholder'
-	}));
 	app.use(helmet.xssFilter());
 	app.use(helmet.noSniff());
 	app.use(helmet.ieNoOpen());

@@ -13,7 +13,6 @@ exports.index = function(req, res) {
 };
 
 exports.form = function(req, res) {
-
 	res.render('form', {
 		user: req.user || null,
 		request: req
