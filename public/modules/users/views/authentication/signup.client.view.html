@@ -78,7 +78,9 @@
 						</div>
 
 						<div class="text-center form-group">
-							<button type="submit" class="btn btn-signup btn-rounded btn-block" ng-click="preProcessForm()">{{ 'SIGNUP_BTN' | translate }}</button>
+							<button type="submit" class="btn btn-signup btn-rounded btn-block" ng-disabled="((!credentials.emailDomain)||(button_clicked)||(!credentials.password)|| (!credentials.emailName) )" ng-click="preProcessForm()">
+							<span ng-show="button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+							{{ 'SIGNUP_BTN' | translate }} </button>
 						</div>
 					</fieldset>
 				</form>

@@ -191,11 +191,11 @@ exports.reset = function(req, res, next) {
 			res.status(500).send({
 				message: err.message || err
 			});
+		} else {
+			return res.json({
+				message: 'Successfully changed your password!'
+			});
 		}
-
-		return res.json({
-			message: 'Successfully changed your password!'
-		});
 	});
 };
 

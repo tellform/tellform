@@ -63,17 +63,13 @@
 					</button>
 
 					<button ng-if="!forms.myForm.$invalid"
-									class="btn btn-lg col-xs-5 focusOn submit-btn"
-									v-busy="loading"
-									v-busy-label="Please wait"
-									v-pressable
-									ng-click="submitForm()"
-									ng-disabled="loading || forms.myForm.$invalid || myform.isPreview"
-									on-enter-key="submitForm()"
-									on-enter-key-disabled="loading || forms.myForm.$invalid">
+						class="btn btn-lg col-xs-5 focusOn submit-btn"
+						ng-click="submitForm()"
+						ng-disabled="button_clicked || forms.myForm.$invalid || myform.isPreview"
+						on-enter-key="submitForm()"
+						on-enter-key-disabled="button_clicked || forms.myForm.$invalid"><span ng-show="button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>
 						{{ 'SUBMIT' | translate }}
 					</button>
-
 					<button ng-if="forms.myForm.$invalid"
 									class="btn btn-lg col-xs-5 focusOn review-btn"
 									ng-click="goToInvalid()"

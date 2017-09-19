@@ -195,7 +195,7 @@ angular.module('forms').directive('formDirective', ['$http', '$filter', '$rootSc
 				};
 
 				$rootScope.submitForm = $scope.submitForm = function(cb) {
-					$scope.loading = true;
+					$scope.button_clicked = true;
 
 					var form = _.cloneDeep($scope.myform);
 
@@ -203,13 +203,13 @@ angular.module('forms').directive('formDirective', ['$http', '$filter', '$rootSc
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id + '/submissions', form)
 							.success(function (data, status, headers) {
 								$scope.myform.submitted = true;
-								$scope.loading = false;
+								$scope.button_clicked = false;
 								if(cb){
 									cb();
 								}
 							})
 							.error(function (error) {
-								$scope.loading = false;
+								$scope.button_clicked = false;
 								console.error(error);
 								$scope.error = error.message;
 								if(cb){
