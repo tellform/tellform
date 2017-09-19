@@ -1,4 +1,4 @@
-<div class="textfield field row">
+<div class="field row">
 	<div class="col-xs-12 field-title row-fluid">
 		<h3 class="col-xs-12">
 			<small class="field-number">
@@ -13,15 +13,14 @@
   		</small>
 		</h3>
 
-		<p class="col-xs-12">
+		<p class="col-xs-12 field-description">
 			<small>{{ field.description }}</small>
 		</p>
 	</div>
 	<div class="col-xs-12 field-input">
 		<input type="{{ input_type }}"
 			name="{{ field.fieldType }}{{ index }}"
-			class="focusOn textfield-input"
-			ng-class="{ 'no-border': !!field.fieldValue }"
+			class="textfield-input focusOn"
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
 			ng-required="field.required"

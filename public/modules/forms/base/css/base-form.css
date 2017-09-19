@@ -149,29 +149,6 @@ uib-tab-heading .glyphicon {
     overflow: hidden;
 }
 
-.public-form input:not(.ui-select-search), .public-form textarea, .public-form .selectize-input {
-	background-color: #000000;
-    background-color: rgba(0,0,0,0);
-    border: 2px dashed #ddd!important;
-}
-
-.public-form input:focus:not(.ui-select-search), .public-form textarea:focus {
-    border: 2px dashed #ddd!important;
-    outline: 0;
-}
-
-.public-form input.ng-valid:not(.ui-select-search), .public-form textarea.ng-valid {
-	border-color: #20FF20!important;
-	border-style: solid!important;
-	border-width: 3px!important;
-}
-
-.public-form input.ng-invalid.ng-dirty, .public-form textarea.ng-invalid.ng-dirty {
-	border-color: #FA787E!important;
-	border-style: solid!important;
-	border-width: 3px!important;
-}
-
 section.content p.breakwords {
     word-break: break-all;
 }
@@ -306,7 +283,7 @@ form .accordion-edit {
         }
         form .field-input .selectize-input .ui-select-match,
         form .field-input .selectize-input input.ui-select-search,
-        
+
 
 
 	   	form .dropdown > .field-input .selectize-input {

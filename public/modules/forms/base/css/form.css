@@ -4,12 +4,14 @@
   background-color: #fff;
 }
 .public-form.submit-form .btn {
-  background-color: white;
   color: inherit;
   font-size: 1.3em;
 }
 .public-form.submit-form .btn:hover {
   opacity: 0.65;
+}
+.public-form.submit-form .btn[disabled] {
+  opacity: 0.3;
 }
 .public-form.submit-form .empty-div {
   min-height: 20vh;
@@ -63,19 +65,16 @@ div.start-end-page .form-actions .btn {
   color: #BE0000;
   font-weight: bold;
 }
+.form-button-panel .btn.up-down-btn {
+  background-color: white;
+}
 .form-button-panel .btn.review-btn,
 .form-button-panel .btn.submit-btn {
-  color: white;
   float: right;
 }
 .form-button-panel .btn.review-btn {
   background-color: #BE0000;
-}
-.form-button-panel .btn.submit-btn {
-  background-color: #33CC00;
-}
-.form-button-panel .btn.submit-btn[disabled] {
-  background-color: grey;
+  color: white;
 }
 
 @media not all and (min-width: 768px) {
