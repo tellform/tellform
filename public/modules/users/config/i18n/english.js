@@ -20,6 +20,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 
 		SIGNUP_ACCOUNT_LINK: 'Don\'t have an account? Sign up here',
 		SIGN_IN_ACCOUNT_LINK: 'Already have an account? Sign in here',
+		SIGN_IN_FROM_FORGET: 'Back to Sign in',
 		SIGNUP_HEADER_TEXT: 'Sign up',
 		SIGNIN_HEADER_TEXT: 'Sign in',
 
@@ -45,7 +46,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CHECK_YOUR_EMAIL: '',
 		CONTINUE: 'Continue',
 
-		PASSWORD_RESTORE_HEADER: 'Restore your password',
+		PASSWORD_RESTORE_HEADER: 'Restore pass',
 		ENTER_YOUR_EMAIL: 'Enter your account email.',
 		SUBMIT_BTN: 'Submit',
 
