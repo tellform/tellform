@@ -30,6 +30,7 @@ exports.forgot = function(req, res, next) {
 		// Lookup user by username
 		function(token, done) {
 			if (req.body.username) {
+				req.body.username = req.body.username.toLowerCase();	
 				User.findOne({
 					$or: [
 						{'username': req.body.username},

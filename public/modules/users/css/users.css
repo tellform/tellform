@@ -61,6 +61,8 @@ section.auth {
 		padding: 12px 28px;
 		margin-top: 2em;
 		text-transform: uppercase;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.btn-rounded {

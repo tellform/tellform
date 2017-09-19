@@ -7,7 +7,6 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 
 		// Submit forgotten password account id
 		$scope.askForPasswordReset = function() {
-			$scope.credentials.username = $scope.credentials.username.toLowerCase()
 			User.askForPasswordReset($scope.credentials).then(
 				function(response){
 					$scope.success = response.message;
