@@ -1,3 +1,7 @@
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
 section.auth {
 	padding: 40px 0;
 	position: absolute;
