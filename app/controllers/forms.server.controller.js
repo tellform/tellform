@@ -47,12 +47,10 @@ exports.read = function(req, res) {
 	// * client side should make sure that no other cases are let through
 
 	if (!req.user) {
-		console.log('no user');
 		// case (1)
 		readForRender(req, res);
 
 	} else {
-		console.log('logged in user');
 		// case (2)
 		if (req.form.admin.id !== req.user.id) {
 			return res.status(401).send({
@@ -206,7 +204,6 @@ exports.duplicate = function(req, res) {
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
-
 	//Allow 'admin' user to view all forms
 	var searchObj = {admin: req.user};
 	var returnedFields = '_id title isLive';
@@ -228,7 +225,6 @@ exports.list = function(req, res) {
  * Form middleware
  */
 exports.formByID = function(req, res, next, id) {
-
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(400).send({
 			message: 'Form is invalid'
