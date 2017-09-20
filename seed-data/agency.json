@@ -2,21 +2,25 @@
   {
     "shortName": "ava",
     "fullName": "Agri-Food & Veterinary Authority of Singapore",
-    "emailDomain": "ava.gov.sg"
+    "emailDomain": "ava.gov.sg",
+    "logo": "/static/modules/core/img/agency/ava.jpg"
   },
   {
     "shortName": "pa",
     "fullName": "People's Association",
-    "emailDomain": "pa.gov.sg"
+    "emailDomain": "pa.gov.sg",
+    "logo": "/static/modules/core/img/agency/pa.png"
   },
   {
     "shortName": "smc",
     "fullName": "Singapore Medical Council",
-    "emailDomain": "smc.gov.sg"
+    "emailDomain": "smc.gov.sg",
+    "logo": "/static/modules/core/img/agency/smc.jpg"
   },
   {
     "shortName": "govtech",
     "fullName": "Government Technology Agency",
-    "emailDomain": "tech.gov.sg, data.gov.sg"
+    "emailDomain": "tech.gov.sg, data.gov.sg",
+    "logo": "/static/modules/core/img/agency/govtech.jpg"
   }
 ]

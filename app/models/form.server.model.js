@@ -122,6 +122,10 @@ var FormSchema = new Schema({
 		type: Boolean,
 		default: true
 	},
+	hasHeader: {
+		type: Boolean,
+		default: true
+	},
 	design: {
 		colors:{
 			backgroundColor: {
