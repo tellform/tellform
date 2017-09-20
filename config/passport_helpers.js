@@ -3,6 +3,7 @@
 var passport = require('passport');
 
 module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next) {
+
 	if (req.isAuthenticated()) {
 		return next();
 	}
@@ -17,7 +18,6 @@ module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next
 
 			req.login(user, function(loginErr) {
 				if (loginErr) return res.sendStatus(500);
-
 				req.user = user;
 				
 				return next();
