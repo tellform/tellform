@@ -269,7 +269,7 @@
 						<input ng-model="table.masterChecker" ng-change="toggleAllCheckers()" type="checkbox"/>
 					</th>
 					<th>#</th>
-					<th data-ng-repeat="(key, value) in myform.form_fields">
+					<th data-ng-repeat="(key, value) in myform.form_fields track by $index">
 						{{value.title}}
 					</th>
 					<th>

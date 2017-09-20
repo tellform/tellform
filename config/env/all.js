@@ -100,14 +100,13 @@ module.exports = {
 			'public/config.js',
             'public/application.js',
 			'public/dist/populate_template_cache.js',
+			'public/form_modules/forms/*.js',
+			'public/form_modules/forms/base/**/*.js',
+			'!public/modules/forms/base/**/*.js',
 			'public/modules/*/*.js',
-			'public/modules/*/*/*/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/*/*/*/*.js',
-			'!public/modules/**/gruntfile.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/dist/**/*.js',
-			'!public/modules/**/node_modules/**/*.js',
+			'public/modules/*/*/*/*/*.js',
 			'!public/modules/**/tests/**/*.js'
 		],
 		form_js: [
@@ -115,16 +114,17 @@ module.exports = {
 			'public/form-application.js',
 			'public/dist/form_populate_template_cache.js',
 			'public/form_modules/forms/*.js',
-			'public/form_modules/forms/*/*/*/*.js',
 			'public/form_modules/forms/*/*.js',
 			'public/form_modules/forms/*/*/*.js',
-			'public/form_modules/forms/**.js'
+			'public/form_modules/forms/*/*/*/*.js',
+			'public/form_modules/forms/**.js',
+			'!public/form_modules/**/tests/**/*.js'
 		],
 		views: [
 			'public/modules/**/*.html',
-			'!public/modules/**/demo/**/*.html',
+			'public/form_modules/forms/base/**/*.html',
+			'!public/modules/forms/base/**/*.html',
 			'!public/modules/**/dist/**/*.html',
-			'!public/modules/**/node_modules/**/*.html',
 			'!public/modules/**/tests/**/*.html'
 		],
 		unit_tests: [

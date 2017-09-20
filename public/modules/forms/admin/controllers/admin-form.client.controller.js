@@ -1,12 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$sce',
-    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $sce) {
-
-        $scope.trustSrc = function (src) {
-            return $sce.trustAsResourceUrl(src);
-        };
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
+    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
 
         //Set active tab to Create
         $scope.activePill = 0;
@@ -22,6 +18,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $rootScope.saveInProgress = false;
 
         CurrentForm.setForm($scope.myform);
+        console.log("$scope.myform");
+        console.log($scope.myform);
+
 
         $scope.formURL = '/#!/forms/' + $scope.myform._id;
 

@@ -59,7 +59,7 @@ module.exports = function(db) {
 	if(config.socketPort && process.env.NODE_ENV !== 'production'){
 		app.locals.socketPort = config.socketPort;
 	} else {
-		app.locals.socketPort = "";
+		app.locals.socketPort = '';
 	}
 
 	if(config.socketUrl){
@@ -80,7 +80,7 @@ module.exports = function(db) {
 			var User = mongoose.model('User');
 			var subdomainPath = '/subdomain/';
 			var subdomains = req.subdomains;
-
+			
 			if (subdomains.slice(0, 4).join('.') + '' === '1.0.0.127') {
 				subdomains = subdomains.slice(4);
 			}

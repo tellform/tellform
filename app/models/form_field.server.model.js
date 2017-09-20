@@ -200,7 +200,7 @@ FormFieldSchema.pre('save', function(next) {
 		if(this.logicJump.jumpTo === '') delete this.logicJump.jumpTo;
 	}
 	if(!this.globalId){
-		this.globalId = uidgen3.generateSync()
+		this.globalId = uidgen3.generateSync();
 	}
 	next();
 });

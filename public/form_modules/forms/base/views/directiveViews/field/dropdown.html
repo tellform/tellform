@@ -20,10 +20,9 @@
 			    search-by="option_value"
 			    set-search-to-answer="true"
 				ng-required="field.required"
-				ng-disabled="field.disabled"
 			    on-tab-and-shift-key="prevField()"
 			    on-tab-key="nextField()"
-				ng-change="$root.nextField()">
+				ng-change="nextField()">
 			<ui-select-match placeholder="Type or select an option">
 			</ui-select-match>
 			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"

@@ -30,6 +30,11 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    };
 
 	    $scope.signup = function() {
+	    	if($scope.credentials === 'admin'){
+	    		$scope.error = 'Username cannot be \'admin\'. Please pick another username.'
+	    		return;
+	    	}
+
 	        User.signup($scope.credentials).then(
 		        function(response) {
 		        	$state.go('signup-success');

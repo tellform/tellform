@@ -10,8 +10,7 @@ angular.module('forms').run(['Menus',
 	return function(seconds) {
 		return new Date(1970, 0, 1).setSeconds(seconds);
 	};
-}]).filter('formValidity',
-    function(){
+}]).filter('formValidity', [function(){
         return function(formObj){
         	if(formObj && formObj.form_fields && formObj.visible_form_fields){
 
@@ -37,7 +36,12 @@ angular.module('forms').run(['Menus',
 			}
 			return 0;
         };
-}).config(['$provide', function ($provide){
+}]).filter('trustSrc', ['$sce', function($sce){
+        return function(formUrl){
+        	console.log(' $sce.trustAsResourceUrl(formUrl): '+ $sce.trustAsResourceUrl(formUrl));
+        	return $sce.trustAsResourceUrl(formUrl);
+        };
+}]).config(['$provide', function ($provide){
     $provide.decorator('accordionDirective', function($delegate) {
         var directive = $delegate[0];
         directive.replace = true;

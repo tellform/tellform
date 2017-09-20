@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 		serverViews: ['app/views/**/*.*'],
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 
-		clientViews: ['public/modules/**/views/**.html'],
+		clientViews: ['public/modules/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html',],
 		clientJS: ['public/js/*.js', 'public/form_modules/**/*.js', 'public/modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css', 'public/form_modules/**/*.css', '!public/modules/**/demo/**/*.css', '!public/modules/**/dist/**/*.css'],
 
@@ -311,7 +311,7 @@ module.exports = function(grunt) {
 				options: {
 					module: 'TellForm.templates'
 				},
-				src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html'],
+				src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html'],
 				dest: 'public/dist/populate_template_cache.js'
 			}
 		},

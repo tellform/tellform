@@ -1,4 +1,5 @@
-<section class="overlay submitform" ng-if="loading || (!myform.submitted && !myform.startPage.showStart)"></section>
+<section class="overlay submitform" ng-if="!ispreview && (loading || (!myform.submitted && !myform.startPage.showStart))"></section>
+<section class="overlay previewform submitform" ng-if="ispreview && (loading || (!myform.submitted && !myform.startPage.showStart))"></section>
 
 <!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart"

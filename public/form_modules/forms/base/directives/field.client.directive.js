@@ -11,7 +11,7 @@ var __indexOf = [].indexOf || function(item) {
 angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$rootScope', '$templateCache', 'supportedFields',
 	function($http, $compile, $rootScope, $templateCache, supportedFields) {
 
-		var getTemplateUrl = function(fieldType) {
+		var getTemplateHtml = function(fieldType) {
 			var type = fieldType;
 
 			var supported_fields = [
@@ -101,7 +101,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 					fieldType = 'textfield';
 				}
 
-				var template = getTemplateUrl(fieldType);
+				var template = getTemplateHtml(fieldType);
 				element.html(template).show();
 				var output = $compile(element.contents())(scope);
 			}

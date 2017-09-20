@@ -380,20 +380,6 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-4 col-xs-12 field-input">{{ 'DISABLED' | translate }}</div>
-						<div class="col-md-8 col-xs-12 field-input">
-							<label class="switch-light switch-holo">
-								<input type="checkbox" ng-model="field.disabled">
-								<span>
-									<span> {{ 'OFF' | translate }}</span>
-									<span> {{ 'ON' | translate }}</span>
-									<a></a>
-								</span>
-							</label>
-						</div>
-					</div>
-
-					<div class="row">
 						<div class="col-md-4 col-xs-12 field-input">{{ 'LOGIC_JUMP' | translate }}</div>
 						<div class="col-md-8 col-xs-12 field-input">
 							<label class="switch-light switch-holo" onclick="">
@@ -558,7 +544,7 @@
 
                 <div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields"
+                    <div class="panel panel-default" ng-repeat="field in myform.form_fields track by $index"
 									 ng-if="!field.deletePreserved"
 									 ng-click="openEditModal(field)">
                         <div class="panel-heading">

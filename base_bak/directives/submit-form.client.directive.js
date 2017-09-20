@@ -4,15 +4,20 @@
 angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'Auth', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, Auth, SendVisitorData) {
         return {
-            templateUrl: 'modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
+            templateUrl: '/static/modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
             scope: {
-                myform:'='
+                myform:'=',
+                ispreview: '='
             },
             controller: function($document, $window, $scope){
-                $scope.authentication = $rootScope.authentication;
 		        $scope.noscroll = false;
                 $scope.forms = {};
+
+                //Don't start timer if we are looking at a design preview
+                if($scope.ispreview){
+                    TimeCounter.restartClock();
+                }
 
 				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
                     if(field.fieldType === 'statement' || field.fieldType === 'rating'){
@@ -45,9 +50,10 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
                     };
                     $scope.setActiveField($scope.myform.visible_form_fields[0]._id, 0, false);
 
-                    //console.log($scope.selected);
                     //Reset Timer
-                    TimeCounter.restartClock();
+                    if(!$scope.ispreview){
+                        TimeCounter.restartClock();
+                    }
                 };
 
 				//Fire event when window is scrolled
@@ -155,8 +161,6 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 							}
 						});
 					}
-
-
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
@@ -199,6 +203,16 @@ angular.module('forms').directive('submitFormDirective', ['$http', 'TimeCounter'
 				};
 
 				$rootScope.submitForm = $scope.submitForm = function(cb) {
+
+                    //Don't submit anything if we are looking at a design preview
+                    if ($scope.ispreview) {
+                        $scope.myform.submitted = true;
+                        $scope.loading = false;
+                        
+                        //Reload our form
+                        $scope.reloadForm();
+                        return;
+                    }
 
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;

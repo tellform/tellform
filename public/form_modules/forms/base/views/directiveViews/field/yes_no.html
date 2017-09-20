@@ -1,9 +1,10 @@
 <div class="field row radio"
 	 	ng-click="setActiveField(field._id, index, true)"
-	 	on-tab-and-shift-key="prevField()"
-	 	key-to-truthy key-char-truthy="y" key-char-falsey="n" field="field"
-        on-valid-key="nextField()"
-        ng-show="!field.disabled">
+	 	key-to-truthy key-char-truthy="y" key-char-falsey="n" 
+	 	field="field"
+        on-tab-key="nextField()"
+        on-tab-and-shift-key="prevField()"
+        on-valid-key="nextField()">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
         <h3 class="row">
 			<small class="field-number">

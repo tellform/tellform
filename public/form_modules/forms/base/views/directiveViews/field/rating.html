@@ -1,5 +1,4 @@
-<div class="textfield field row"
-	 on-enter-or-tab-key="nextField()">
+<div class="textfield field row">
     <div class="col-xs-12 field-title" ng-style="{'color': design.colors.questionColor}">
 	    <h3>
 			<small class="field-number">
@@ -25,7 +24,6 @@
 					 ng-model="field.fieldValue"
 					 ng-model-options="{ debounce: 250 }"
 					 ng-required="field.required"
-					 ng-disabled="field.disabled"
 					 on-enter-or-tab-key="nextField()"
 					 on-tab-and-shift-key="prevField()"
 					 class="angular-input-stars focusOn">

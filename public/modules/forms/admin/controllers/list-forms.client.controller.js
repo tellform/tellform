@@ -1,8 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal) {
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'GetForms', 'CurrentForm', '$http', '$uibModal',
+	function($rootScope, $scope, $stateParams, $state, GetForms, CurrentForm, $http, $uibModal) {
 
         $scope = $rootScope;
         $scope.forms = {};
@@ -51,7 +51,7 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         // Return all user's Forms
         $scope.findAll = function() {
-            Forms.query(function(_forms){
+            GetForms.query(function(_forms){
                 $scope.myforms = _forms;
             });
         };

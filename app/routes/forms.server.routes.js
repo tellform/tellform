@@ -4,10 +4,29 @@
  * Module dependencies.
  */
 var forms = require('../../app/controllers/forms.server.controller'),
-	auth = require('../../config/passport_helpers');
+	auth = require('../../config/passport_helpers'),
+	config = require('../../config/config'),
+	core = require('../../app/controllers/core.server.controller');
 
 module.exports = function(app) {
 	// Form Routes
+	if(!config.subdomainsDisabled) {
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/')
+		 .get(core.form);
+
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)')
+		 .post(forms.createSubmission);
+
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)/render')
+		 .get(forms.readForRender);
+
+		app.route('/forms/:formId([a-zA-Z0-9]+)/render')
+			.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.readForRender)
+			.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.readForRender);
+	} else {
+		app.route('/forms/:formId([a-zA-Z0-9]+)/render')
+			.get(forms.readForRender);
+	}
 	app.route('/forms')
 		.get(auth.isAuthenticatedOrApiKey, forms.list)
 		.post(auth.isAuthenticatedOrApiKey, forms.create);

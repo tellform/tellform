@@ -12,29 +12,34 @@ jsep.addBinaryOp('!ends', 10);
 angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
         return {
-            templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
+            templateUrl: '/static/form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
             scope: {
-                myform:'='
+                myform:'=',
+                ispreview: '='
             },
             controller: function($document, $window, $scope){
 		        $scope.noscroll = false;
                 $scope.forms = {};
-				TimeCounter.restartClock();
+                
+				//Don't start timer if we are looking at a design preview
+                if($scope.ispreview){
+                    TimeCounter.restartClock();
+                }
 
-		var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
-                    if(field.fieldType === 'statement'){
-                        return false;
-                    }
-                    return true;
-                }).length;
+				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
+		            if(field.fieldType === 'statement'){
+		                return false;
+		            }
+		            return true;
+		        }).length;
 
-		var nb_valid = $filter('formValidity')($scope.myform);
-		$scope.translateAdvancementData = {
-			done: nb_valid,
-			total: form_fields_count,
-			answers_not_completed: form_fields_count - nb_valid
-		};
+				var nb_valid = $filter('formValidity')($scope.myform);
+				$scope.translateAdvancementData = {
+					done: nb_valid,
+					total: form_fields_count,
+					answers_not_completed: form_fields_count - nb_valid
+				};
 
                 $scope.reloadForm = function(){
                     //Reset Form
@@ -330,7 +335,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					var geoData = getIpAndGeo();
 					form.ipAddr = geoData.ipAddr;
 					form.geoLocation = geoData.geoLocation;
-					console.log(geoData);
 
 					form.timeElapsed = _timeElapsed;
 					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
@@ -358,7 +362,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 };
 
                 //Reload our form
-		$scope.reloadForm();
+				$scope.reloadForm();
             }
         };
     }

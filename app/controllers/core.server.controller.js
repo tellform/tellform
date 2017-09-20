@@ -13,6 +13,8 @@ exports.index = function(req, res) {
 };
 
 exports.form = function(req, res) {
+	console.log('\n\n\nRENDERING FORM\n\n\n\n');
+
 	//Allow form to be embedded
 	res.set('X-Frame-Options', 'GOFORIT');
 

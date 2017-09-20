@@ -16,10 +16,15 @@ angular.module('forms').config(['$stateProvider',
 				hideNav: true
 			},
 			resolve: {
-				Forms: 'Forms',
-				myForm: function (Forms, $stateParams) {
-					return Forms.get({formId: $stateParams.formId}).$promise;
-				}
+				Forms: 'GetForms',
+				myForm: function (GetForms, $stateParams, $q) {
+		           	var deferred = $q.defer();
+		           	GetForms.get({formId: $stateParams.formId}, function(resolvedForm){
+		           		deferred.resolve(resolvedForm);
+					});
+
+					return deferred.promise;
+		        }
 			},
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
@@ -30,9 +35,14 @@ angular.module('forms').config(['$stateProvider',
 				permissions: [ 'editForm' ]
 			},
 			resolve: {
-				Forms: 'Forms',
-		        myForm: function (Forms, $stateParams) {
-		            return Forms.get({formId: $stateParams.formId}).$promise;
+				Forms: 'GetForms',
+		        myForm: function (GetForms, $stateParams, $q) {
+		            var deferred = $q.defer();
+		           	GetForms.get({formId: $stateParams.formId}, function(resolvedForm){
+		           		deferred.resolve(resolvedForm);
+					});
+
+					return deferred.promise;
 		        }
 			},
 			controller: 'AdminFormController'
