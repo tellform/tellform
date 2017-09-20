@@ -51,7 +51,7 @@
 							<div class="col-md-6 col-xs-12 email-name">
 								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
 								<input type="text" id="email" name="email" class="form-control" ng-model="credentials.emailName" pattern="[A-Za-z0-9-_.]+"
-								title="Special characters are not allowed." ng-required="true">
+								title="Special characters are not allowed." ng-required="true" --disable-ignore-autocomplete-off autocomplete="off">
 							</div>
 							<div class="col-md-6 col-xs-12">
 								 <div class="input-group email-domain">
@@ -74,7 +74,7 @@
 						</div>
 						<div class="form-group">
 							<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>
-							<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" ng-minlength="4" ng-required="true">
+							<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" ng-minlength="4" ng-required="true" autocomplete="new-password">
 						</div>
 
 						<div class="text-center form-group">
