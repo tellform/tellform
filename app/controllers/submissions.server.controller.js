@@ -45,7 +45,7 @@ exports.create = function(req, res, next) {
 
 		if (field.fieldType === 'statement' || field.fieldType === 'section') {
 		} else if (field.fieldType === 'yes_no') {
-			formData[field.title] = field.fieldValue == 'true' ? 'Yes' : 'No';
+			formData[field.title] = field.fieldValue == true ? 'Yes' : 'No';
 		} else if (field.fieldType === 'date') {
 			formData[field.title] = moment(field.fieldValue).tz('Asia/Singapore').format('DD MMM YYYY');
 		} else {

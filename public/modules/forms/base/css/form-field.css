@@ -81,6 +81,31 @@ form .row.field.section > .field-input {
   text-align: justify;
 }
 
+/* Yes-no fieled */
+form .yes-no .field-input .switch-light .alert {
+  padding: 0.45em 0.9em;
+  border: 2px solid #ddd;
+  color: inherit;
+  font-weight: normal;
+  line-height: inherit;
+}
+form .yes-no .field-input .switch-light i {
+  padding: 0 10px;
+  vertical-align: middle;
+}
+form .yes-no .field-input .switch-light a {
+  background-color: #283c86;
+}
+form .yes-no .field-input .switch-light span span,
+form .yes-no .field-input .switch-light input:checked ~ span span:first-child {
+  color: inherit;
+}
+
+form .yes-no .field-input .switch-light input ~ span span:first-child,
+form .yes-no .field-input .switch-light input:checked ~ span span:nth-child(2) {
+  color: #fff;
+}
+
 /* Placeholder */
 *::-webkit-input-placeholder {
   color: #ccc;
