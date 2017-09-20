@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('forms').config(['$translateProvider', function ($translateProvider) {
+angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('fr', {
+  $translateProvider.translations('french', {
     FORM_SUCCESS: 'Votre formulaire a été enregistré!',
 	REVIEW: 'Incomplet',
     BACK_TO_FORM: 'Retourner au formulaire',
@@ -29,7 +29,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	SUBMIT: 'Enregistrer',
 	UPLOAD_FILE: 'Envoyer un fichier',
 	Y: 'O',
-	N: 'N'
+	N: 'N',
   });
 
 }]);

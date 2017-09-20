@@ -543,7 +543,7 @@
 
             <div class="panel-group dropzone col-xs-12" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 
-            	<div class="col-xs-12 field-row" ng-repeat="field in myform.form_fields track by $index" ng-if="!field.deletePreserved">
+            	<div class="col-xs-12 field-row" ng-repeat="field in myform.form_fields track by $id($index)" ng-if="!field.deletePreserved">
 	            	<div class="col-xs-10">
 			            <div class="panel panel-default" ng-click="openEditModal(field)">
 			                <div class="panel-heading">

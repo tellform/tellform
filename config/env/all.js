@@ -96,17 +96,21 @@ module.exports = {
 			'!public/modules/**/dist/**/*.css',
 			'!public/modules/**/node_modules/**/*.css'
 		],
+		//Order matters here as some directives in form_modules override those in modules
 		js: [
 			'public/config.js',
             'public/application.js',
 			'public/dist/populate_template_cache.js',
-			'public/form_modules/forms/*.js',
-			'public/form_modules/forms/base/**/*.js',
-			'!public/modules/forms/base/**/*.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/*/*/*/*.js',
 			'public/modules/*/*/*/*/*.js',
+			'public/form_modules/forms/*.js',
+			'public/form_modules/forms/directives/*.js',
+			'public/form_modules/forms/base/config/*.js',
+			'public/form_modules/forms/base/config/*/*.js',
+			'public/form_modules/forms/base/**/*.js',
+			'!public/modules/forms/base/**/*.js',
 			'!public/modules/**/tests/**/*.js'
 		],
 		form_js: [

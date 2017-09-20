@@ -11,7 +11,7 @@ angular.module('forms').config(['$stateProvider',
 			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html'
   		}).state('submitForm', {
 			url: '/forms/:formId',
-			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
+			templateUrl: '/static/form_modules/forms/base/views/submit-form.client.view.html',
 			data: {
 				hideNav: true
 			},
@@ -35,7 +35,7 @@ angular.module('forms').config(['$stateProvider',
 				permissions: [ 'editForm' ]
 			},
 			resolve: {
-				Forms: 'GetForms',
+				GetForms: 'GetForms',
 		        myForm: function (GetForms, $stateParams, $q) {
 		            var deferred = $q.defer();
 		           	GetForms.get({formId: $stateParams.formId}, function(resolvedForm){

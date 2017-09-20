@@ -9,8 +9,8 @@ jsep.addBinaryOp('!begins', 10);
 jsep.addBinaryOp('ends', 10);
 jsep.addBinaryOp('!ends', 10);
 
-angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData',
-    function ($http, TimeCounter, $filter, $rootScope, SendVisitorData) {
+angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData', '$translate',
+    function ($http, TimeCounter, $filter, $rootScope, SendVisitorData, $translate) {
         return {
             templateUrl: '/static/form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
@@ -28,18 +28,22 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 }
 
 				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
-		            if(field.fieldType === 'statement'){
-		                return false;
-		            }
-		            return true;
+		            return field.fieldType !== 'statement';
 		        }).length;
 
 				var nb_valid = $filter('formValidity')($scope.myform);
+
 				$scope.translateAdvancementData = {
 					done: nb_valid,
 					total: form_fields_count,
 					answers_not_completed: form_fields_count - nb_valid
 				};
+
+				console.log('$scope.translateAdvancementData: ');
+				console.log($filter('translate')('CREATE_A_NEW_FORM'));
+				console.log( $translate('COMPLETING_NEEDED', {
+					answers_not_completed: $scope.translateAdvancementData.answers_not_completed 
+				} ) );
 
                 $scope.reloadForm = function(){
                     //Reset Form

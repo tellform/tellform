@@ -339,12 +339,12 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 };
 
                 $scope.duplicateField = function(field_index){
-                    var currField = _.cloneDeep($scope.myform.form_fields[field_index]);
+                    var currField = angular.copy($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
                     currField.title += ' copy';
 
                     //Insert field at selected index
-                    $scope.myform.form_fields.splice(field_index+1, 0, currField);
+                    $scope.myform.form_fields.push(currField);
 					$scope.update(false, $scope.myform, false, true, null);
                 };
 

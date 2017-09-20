@@ -71,6 +71,7 @@ module.exports = function(db) {
 	app.locals.bowerOtherFiles = config.getBowerOtherAssets();
 
 	app.locals.jsFiles = config.getJavaScriptAssets();
+	console.log(app.locals.jsFiles);
 	app.locals.formJSFiles = config.getFormJavaScriptAssets();
 	app.locals.cssFiles = config.getCSSAssets();
 

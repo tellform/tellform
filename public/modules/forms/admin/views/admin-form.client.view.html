@@ -171,8 +171,8 @@
 								</div>
 							</div>
 							<div class="col-sm-8 hidden-xs">
-								<div class="public-form preview" ng-style="{ 'background-color': myform.design.colors.backgroundColor }">
-									<submit-form-directive myform="myform" ispreview="true"></submit-form-directive>
+								<div class="public-form" ng-style="{ 'background-color': myform.design.colors.backgroundColor }">
+									<iframe id="iframe" ng-if="!!formURL" ng-src="{{formURL | trustSrc}}" style="border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute;"></iframe>
 								</div>
 							</div>
 						</div>

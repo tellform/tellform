@@ -346,11 +346,6 @@ section.public-form .btn {
     background-color: rgba(256,256,256,0.8);
 }
 
-/*Modal overlay for live preview in Design Tab of Admin Form page*/
-.overlay.previewform {
-    position: absolute;
-}
-
 .field-directive {
     z-index: 9;
     padding: 10% 10% 10% 0;
