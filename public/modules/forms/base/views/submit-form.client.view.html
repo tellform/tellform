@@ -1,3 +1,10 @@
 <section ng-hide="!myform.isPreview && !myform.isLive" class="public-form submit-form" ng-style="{ 'background-color': myform.design.colors.backgroundColor }">
-	<form-directive myform="myform"></form-directive>
+		<!-- Header View on all pages -->
+	<div class="form-header">
+		<img src="{{myform.admin.agency.logo}}">
+		<div class="form-header-title">{{myform.title}}</div>
+	</div>
+	<div class="padded-view">
+		<form-directive myform="myform"></form-directive>
+	</div>
 </section>

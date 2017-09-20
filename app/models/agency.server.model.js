@@ -32,6 +32,11 @@ var AgencySchema = new Schema({
 		get: v => v.join(),
 		set: v => _.isString(v) ? v.split(",") : v
 	},
+	logo: {
+		type: String,
+		required: true,
+		trim:true
+	},
 	lastModified: {
 		type: Date
 	},

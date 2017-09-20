@@ -599,7 +599,7 @@ form .row.field {
 }
 
 /* Styles for form list view (/forms) */
-section.public-form {
+section.public-form .padded-view {
     padding: 0 10%;
 }
 
@@ -693,7 +693,7 @@ section.public-form .btn {
 /*Modal overlay (for lightbox effect)*/
 .overlay {
     position: fixed;
-    top: 0;
+    top: 0px;
     left: 0;
     height: 100%;
     width: 100%;
