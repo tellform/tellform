@@ -7,7 +7,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		//Configure Form Tab View
 		ADVANCED_SETTINGS: 'Advanced Settings',
 		FORM_NAME: 'Form Name',
-		FORM_STATUS: 'Form Status',
+		FORM_STATUS: 'Status',
 		PUBLIC: 'Active',
 		PRIVATE: 'Inactive',
 		DISPLAY_FOOTER: 'Display Form Footer?',
