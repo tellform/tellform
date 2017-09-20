@@ -52,9 +52,9 @@ exports.read = function(req, res) {
 
 	} else {
 		// case (2)
-		if (req.form.admin.id !== req.user.id) {
+		if (req.form.admin.id !== req.user.id && req.form.emails.indexOf(req.user.email) < 0) {
 			return res.status(401).send({
-				message: 'User is not admin of form'
+				message: 'User has no rights to read form'
 			});
 		} else {
 			Submission.find({ form: req.form._id }).exec(function(err, _submissions) {
@@ -204,13 +204,12 @@ exports.duplicate = function(req, res) {
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
-	//Allow 'admin' user to view all forms
-	var searchObj = {admin: req.user};
+
+	// List forms when either the user is an admin or has email in form
+	var searchFields = [{emails: req.user.email}, {admin: req.user}];
 	var returnedFields = '_id title isLive';
 
-	if(req.user.isAdmin()) searchObj = {};
-
-	Form.find(searchObj, returnedFields).sort('title').populate('admin').exec(function(err, forms) {
+	Form.find({$or:  searchFields}, returnedFields).sort('title').populate('admin').exec(function(err, forms) {
 			if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -246,8 +245,17 @@ exports.formByID = function(req, res, next, id) {
 			});
 		}
 		else {
+			
 			//Remove sensitive information from User object
 			var _form = form;
+
+			if (!_form.admin) {
+				res.status(500).send({
+					message: 'Server error'
+				})
+				return;
+			}
+
 			_form.admin.password = null;
 			_form.admin.salt = null;
 			_form.provider = null;
@@ -257,7 +265,7 @@ exports.formByID = function(req, res, next, id) {
 				return next();
 			} else {
 				res.status(404).send({
-				message: 'Agency does not match'
+					message: 'Agency does not match'
 				})
 			}
 		}
