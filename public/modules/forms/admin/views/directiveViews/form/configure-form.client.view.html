@@ -43,15 +43,15 @@
 	    <div class="row">
 	        <div class="col-md-12 col-xs-12">
 				<div class="row field">
-	                <div id="collab-email" class="field-title col-md-12 field-title-bold" hidden>
+	                <div class="field-title col-md-12 field-title-bold">
 	                    {{ 'FORM_EMAIL' | translate }}
 	                </div>
 					<div class="col-md-12">
-	                    <input class="form-control" type="text"
+	                    <input id="collab-email" class="form-control" type="text"
 	                        placeholder="Comma-separated list of emails"
 	                        ng-model="myform.emails"
 	                        value="{{myform.emails}}"
-	                        style="width: 100%;">
+	                        style="width: 100%;" disabled>
 	                </div>
 	            </div>
 	        </div>
