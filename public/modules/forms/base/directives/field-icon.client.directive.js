@@ -24,6 +24,7 @@ angular.module('forms').directive('fieldIconDirective', function() {
 				'scale': 'fa fa-sliders',
 				'stripe': 'fa fa-credit-card',
 				'statement': 'fa fa-quote-left',
+				'section': 'fa fa-plus-square',
 				'yes_no': 'fa fa-toggle-on',
 				'number': 'fa fa-slack'
 			};

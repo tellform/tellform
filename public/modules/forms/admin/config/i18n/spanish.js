@@ -140,6 +140,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
     OPTION_SCALE: 'Escala',
     PAYMENT: 'Pago',
     STATEMENT: 'Declaración',
+    SECTION: 'Sección',
     LINK: 'Enlace'
 	});
 }]);

@@ -67,6 +67,10 @@ angular.module('forms').service('FormFields', [ '$filter',
 		    {
 		        name : 'statement',
 		        value : $filter('translate')('STATEMENT')
+		    },
+				{
+		        name : 'section',
+		        value : $filter('translate')('SECTION')
 		    }
 		];
 	}

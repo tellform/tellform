@@ -25,6 +25,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'radio',
             'legal',
             'statement',
+            'section',
             'rating',
             'yes_no',
             'number',

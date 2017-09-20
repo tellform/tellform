@@ -145,7 +145,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
     FILE_UPLOAD: 'File upload',
     OPTION_SCALE: 'Option Scale',
     PAYMENT: 'Payment',
-    STATEMENT: 'Instructions',
+    STATEMENT: 'Statement',
+    SECTION: 'Section',
     LINK: 'Link'
 	});
 }]);

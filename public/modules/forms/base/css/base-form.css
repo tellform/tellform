@@ -235,14 +235,6 @@ form .accordion-edit {
 }
 
 /* Styles for form submission view (/forms/:formID) */
-    form.submission-form .row.field.statement > .field-title {
-        font-size:1.7em;
-    }
-    form.submission-form .row.field.statement > .field-input {
-        font-size:1em;
-        color:#ddd;
-    }
-
         form.submission-form .select.radio > .field-input input, form.submission-form .select > .field-input input {
             width:20%;
         }
