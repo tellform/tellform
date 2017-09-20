@@ -361,6 +361,33 @@ form .row.field {
     padding: 20px 30px;
 }
 
+.config-form .configure-option {
+    display: inline-block;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.config-form .field-title-bold {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.config-form .display-header {
+    font-size: 18px;
+}
+
+.config-form .row-formname {
+    padding-bottom: 20px;
+}
+
+.config-form .row-with-no-top {
+    padding-top: 0px !important;
+}
+
+.config-form .row-with-no-bottom {
+    padding-bottom: 0px !important;
+}
+
 @media all and (min-width: 768px) {
     div.config-form .row.field {
         padding-top:1.8em;
