@@ -2,6 +2,8 @@ form .row.field {
   padding: 15px 0;
   font-size: 1em;
 }
+
+/* Field title */
 form .row.field .field-title h3 {
   padding: 0;
 }
@@ -17,34 +19,51 @@ form .row.field .field-title .optional-label {
   margin-left: 15px;
 }
 
-/* Textfield (short text, email, number, link) & textarea */
-form .row.field .field-input input.textfield-input {
-  padding: 0.45em 0.9em;
-  width: 100%;
+/* Field input */
+form .row.field > .field-input,
+form .row.field > .field-input .selectize-input .ui-select-match,
+form .row.field > .field-input .selectize-input input.ui-select-search {
+  font-size: 1.3em;
+  color: #777;
 }
 
+/* Textfield (short text, email, number, link) & textarea */
 form .row.field .field-input input:not(.ui-select-search),
 form .row.field .field-input textarea,
 form .row.field .field-input .selectize-input {
+  padding: 0.45em 0.9em;
+  width: 100%;
   border: 2px dashed #ddd;
   border-radius: 4px;
 }
-
 form .row.field .field-input input:focus:not(.ui-select-search),
 form .row.field .field-input textarea:focus {
   border: 2px solid #66afe9 !important;
   outline: 0;
   box-shadow: inset 0 2px 2px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
 }
-
 form .row.field .field-input input.ng-valid:not(.ui-select-search),
 form .row.field .field-input textarea.ng-valid {
   border: 2px solid #ddd;
 }
-
 form .row.field .field-input input.ng-invalid.ng-dirty,
 form .row.field .field-input textarea.ng-invalid.ng-dirty {
 	border: 2px solid #FA787E;
+}
+
+/* Date field */
+form .row.field.date-field .field-input input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+form .date-field .field-input .input-group-btn {
+  font-size: initial;
+}
+form .date-field .field-input .input-group-btn button {
+  background-color: white;
+  padding: 0.45em 0.9em;
+  border: 2px solid #ddd;
+  border-left: 0;
 }
 
 

@@ -235,12 +235,6 @@ form .accordion-edit {
 }
 
 /* Styles for form submission view (/forms/:formID) */
-    form .row.field > .field-input,
-    form .row.field > .field-input .selectize-input .ui-select-match,
-    form .row.field > .field-input .selectize-input input.ui-select-search {
-        font-size: 1.4em;
-        color: #777;
-    }
     form.submission-form .row.field.statement > .field-title {
         font-size:1.7em;
     }
@@ -270,17 +264,6 @@ form .accordion-edit {
             font-size: 1.10em;
         }
 
-        form .field-input > textarea{
-            padding: 0.45em 0.9em;
-            width: 100%;
-            line-height: 160%;
-        }
-
-        form .field-input > input.hasDatepicker{
-            padding: 0.45em 0.9em;
-            width: 50%;
-            line-height: 160%;
-        }
         form .field-input .selectize-input .ui-select-match,
         form .field-input .selectize-input input.ui-select-search,
 
