@@ -1,10 +1,10 @@
-<form class="row container" name="editForm" >
+<form class="row" name="editForm" >
 
 	<!-- Edit EndPage Modal Dialog Template -->
 	<script type="text/ng-template" id="editEndPageModal.html" class="edit-endpage-modal">
 		<div class="modal-body">
 			<div class="row">
-				<div class="edit-panel col-md-6 col-xs-12 col-sm-12 container">
+				<div class="edit-panel col-md-6 col-xs-12 col-sm-12">
 					<div class="row modal-header">
 						<h2 class="modal-title hidden-md hidden-lg">{{ 'EDIT_END_PAGE' | translate }}</h2>
 						<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_END_PAGE' | translate }}</h3>
@@ -105,7 +105,7 @@
 					</div>
 				</div>
 
-				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
+				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs">
 					<form class="public-form">
 
 						<div class="row">
@@ -154,7 +154,7 @@
 	<script type="text/ng-template" id="editStartPageModal.html" class="edit-startpage-modal">
 		<div class="modal-body">
 			<div class="row">
-				<div class="edit-panel col-md-6 col-xs-12 col-sm-12 container">
+				<div class="edit-panel col-md-6 col-xs-12 col-sm-12">
 					<div class="row modal-header">
 						<h2 class="modal-title hidden-md hidden-lg">{{ 'EDIT_START_PAGE' | translate }}</h2>
 						<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_START_PAGE' | translate }}</h3>
@@ -258,7 +258,7 @@
 					</div>
 				</div>
 
-				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
+				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs">
 					<form class="public-form">
 
 						<div class="field row">
@@ -299,7 +299,7 @@
 	<script type="text/ng-template" id="editFieldModal.html" class="edit-field-modal">
 		<div class="modal-body">
 			<div class="row">
-				<div class="edit-panel col-md-6 col-xs-12 col-sm-12 container">
+				<div class="edit-panel col-md-6 col-xs-12 col-sm-12">
 					<div class="row modal-header">
 						<h2 class="modal-title hidden-md hidden-lg">{{ 'EDIT_FIELD' | translate }}</h2>
 						<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_FIELD' | translate }}</h3>
@@ -496,7 +496,7 @@
 					</div>
 				</div>
 
-				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
+				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs">
 					<form class="public-form"ss>
 						<field-directive field="field" validate="false" class="preview-field">
 						</field-directive>
@@ -535,7 +535,7 @@
     </div>
 
 	<!-- Current Fields Element -->
-	<div class="col-xs-10 col-sm-8 current-fields container">
+	<div class="col-xs-10 col-sm-8 current-fields">
 		<!-- Start Page -->
         <div class="row" ng-if="myform.startPage.showStart">
             <div class="col-sm-12">
@@ -554,7 +554,7 @@
 
 		<!-- Form Fields -->
         <div class="row">
-            <div class="col-sm-12 col-md-10 dropzoneContainer">
+            <div class="col-md-10 col-sm-10 col-xs-10 dropzoneContainer">
 
                 <div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 
@@ -586,7 +586,7 @@
                 </div>
             </div>
 
-            <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;" >
+            <div class="col-md-1 col-sm-1 col-xs-1" style="padding:0 5px;" >
                 <div class="panel-group tool-panel text-center">
                     <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">
                         <div class="panel-heading" style="padding: 10px 10px;" ng-click="deleteField($index)">
@@ -597,7 +597,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-1 hidden-xs hidden-sm" style="padding:0 5px;">
+            <div class="col-md-1 col-sm-1 col-xs-1" style="padding:0 5px;">
                 <div class="panel-group tool-panel text-center">
                     <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">
                         <div class="panel-heading" style="padding: 10px 10px;" ng-click="duplicateField($index)">

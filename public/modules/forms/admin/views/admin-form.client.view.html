@@ -1,8 +1,6 @@
 <header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
 
-<div class="container"></div>
-
-<section class="admin-form">
+<section class="admin-form container-fluid">
 
 	<!-- Modal Delete Dialog Template -->
     <script type="text/ng-template" id="formDeleteModal.html">
@@ -27,7 +25,7 @@
         </div>
     </script>
 
-	<div class="page-header" style="padding-bottom: 1em;">
+	<div class="page-header row" style="padding-bottom: 1em;">
 		<div class="col-xs-10 col-sm-8">
 			<h1 class="hidden-sm hidden-xs" data-ng-bind="myform.title" style="margin-bottom: 0px;"></h1>
 			<h2 class="hidden-md hidden-lg" data-ng-bind="myform.title" style="margin-bottom: 0px;"></h2>
@@ -119,7 +117,7 @@
 				<uib-tab ng-if="tabData && myform.form_fields.length" heading="{{ 'DESIGN_TAB' | translate }}" index="{{tabData.length}}+1">
 					<div class="config-form design container">
 						<div class="row">
-							<div class="col-md-4 col-sm-12 container">
+							<div class="col-md-4 col-sm-12">
 								<div class="row field">
 									<div class="field-title col-sm-5">
 										<h5>{{ 'BACKGROUND_COLOR' | translate }}</h5>
