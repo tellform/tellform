@@ -539,62 +539,62 @@
         </div>
 
 		<!-- Form Fields -->
-        <div class="row">
-            <div class="col-md-10 col-sm-10 col-xs-10 dropzoneContainer">
+        <div class="row dropzoneContainer">
 
-                <div class="panel-group dropzone" ui-sortable="sortableOptions" ng-model="myform.form_fields">
+            <div class="panel-group dropzone col-xs-12" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields track by $index"
-									 ng-if="!field.deletePreserved"
-									 ng-click="openEditModal(field)">
-                        <div class="panel-heading">
-							<div class="row">
-								<span class="col-xs-1" ng-switch="field.fieldType">
-									<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
-								</span>
-								<span class="col-xs-11">
-									{{field.title}}
-									<span ng-show="field.required">*</span>
-								</span>
-							</div>
-                        </div>
-                    </div>
+            	<div class="col-xs-12 field-row" ng-repeat="field in myform.form_fields track by $index" ng-if="!field.deletePreserved">
+	            	<div class="col-xs-10">
+			            <div class="panel panel-default" ng-click="openEditModal(field)">
+			                <div class="panel-heading">
+								<div class="row">
+									<span class="col-xs-1" ng-switch="field.fieldType">
+										<field-icon-directive type-name="{{field.fieldType}}"></field-icon-directive>
+									</span>
+									<span class="col-xs-11">
+										{{field.title}}
+										<span ng-show="field.required">*</span>
+									</span>
+								</div>
+			                </div>
+			            </div>
+			        </div>
+		            <div class="col-xs-1 box">
+			            <div class="panel tool-panel panel-default">
+			                <div class="panel-heading" style="padding: 10px 10px;" ng-click="deleteField($index)">
+			                    <span class="text-center">
+			                        <a href="" class="fa fa-trash-o"></a>
+			                    </span>
+			                </div>
+			            </div>
+		            </div>
 
-                    <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
-                        <div class="panel-heading">
-                            <h4 class="panel-title text-center" style="color: #a9a9a9;">
-								{{ 'CLICK_FIELDS_FOOTER' | translate }}
-                            </h4>
-                        </div>
-                    </div>
+		            <div class="col-xs-1 box">
+			            <div class="panel tool-panel panel-default">
+		                    <div class="panel-heading" style="padding: 10px 10px;" ng-click="duplicateField($index)">
+		                        <span class="text-center">
+		                            <a href="" class="fa fa-files-o"></a>
+		                        </span>
+		                    </div>
+		                </div>
+	                </div>
+		        </div>
 
-                    <hr>
+		        <div class="col-xs-12 field-row">
+		        	<div class="col-xs-12" style="padding-right: 5px;">
+		                <div class="panel panel-default" style="border-style: dashed; border-color: #a9a9a9;">
+		                    <div class="panel-heading">
+		                        <h4 class="panel-title text-center" style="color: #a9a9a9;">
+									{{ 'CLICK_FIELDS_FOOTER' | translate }}
+		                        </h4>
+		                    </div>
+		                </div>
+	                </div>
                 </div>
-            </div>
 
-            <div class="col-md-1 col-sm-1 col-xs-1" style="padding:0 5px;" >
-                <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">
-                        <div class="panel-heading" style="padding: 10px 10px;" ng-click="deleteField($index)">
-                            <span class="text-center">
-                                <a href="" class="fa fa-trash-o"></a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                <hr>
             </div>
-            <div class="col-md-1 col-sm-1 col-xs-1" style="padding:0 5px;">
-                <div class="panel-group tool-panel text-center">
-                    <div class="panel panel-default" ng-repeat="field in myform.form_fields track by field._id" ng-if="!field.deletePreserved">
-                        <div class="panel-heading" style="padding: 10px 10px;" ng-click="duplicateField($index)">
-                            <span class="text-center">
-                                <a href="" class="fa fa-files-o"></a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-		</div>
+        </div>
 
 		<!-- End Page -->
 		<div class="row" ng-if="myform.endPage.showEnd">
