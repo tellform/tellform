@@ -50,6 +50,7 @@
     "forever": "~0.15.1",
     "fs-extra": "~0.26.2",
     "glob": "^7.0.3",
+    "google-cdn": "^1.1.0",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.13",
     "grunt-concurrent": "~2.3.0",
