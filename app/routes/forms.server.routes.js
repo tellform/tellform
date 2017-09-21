@@ -24,7 +24,10 @@ module.exports = function(app) {
 			.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.readForRender)
 			.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.readForRender);
 	} else {
-		app.route('/forms/:formId([a-zA-Z0-9]+)/render')
+	    app.route('/view/')
+            .get(core.form);
+    
+    	app.route('/forms/:formId([a-zA-Z0-9]+)/render')
 			.get(forms.readForRender);
 	}
 	app.route('/forms')
