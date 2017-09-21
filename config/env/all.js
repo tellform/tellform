@@ -91,10 +91,7 @@ module.exports = {
     },
 	assets: {
 		css: [
-			'public/modules/**/css/*.css',
-			'!public/modules/**/demo/**/*.css',
-			'!public/modules/**/dist/**/*.css',
-			'!public/modules/**/node_modules/**/*.css'
+			'public/modules/**/css/*.css'
 		],
 		//Order matters here as some directives in form_modules override those in modules
 		js: [
@@ -110,8 +107,9 @@ module.exports = {
 			'public/form_modules/forms/base/config/*.js',
 			'public/form_modules/forms/base/config/*/*.js',
 			'public/form_modules/forms/base/**/*.js',
-			'!public/modules/forms/base/**/*.js',
-			'!public/modules/**/tests/**/*.js'
+			'public/form_modules/forms/base/*/*.js',
+			'!public/modules/*/tests/**/*.js',
+			'!public/modules/*/tests/*.js'
 		],
 		form_js: [
 			'public/form-config.js',
@@ -126,32 +124,21 @@ module.exports = {
 		],
 		views: [
 			'public/modules/**/*.html',
-			'public/form_modules/forms/base/**/*.html',
-			'!public/modules/forms/base/**/*.html',
-			'!public/modules/**/dist/**/*.html',
-			'!public/modules/**/tests/**/*.html'
+			'public/form_modules/forms/base/**/*.html'
 		],
 		unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
-			'public/modules/*/tests/unit/**/*.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/node_modules/**/*.js'
+			'public/modules/*/tests/unit/**/*.js'
 		],
 		e2e_tests: [
-			'public/modules/*/tests/e2e/**.js',
-			'!public/modules/**/demo/**/*.js',
-			'!public/modules/**/node_modules/**/*.js'
+			'public/modules/*/tests/e2e/**.js'
 		],
 		form_unit_tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
-			'public/form_modules/*/tests/unit/**/*.js',
-			'!public/form_modules/**/demo/**/*.js',
-			'!public/form_modules/**/node_modules/**/*.js'
+			'public/form_modules/*/tests/unit/**/*.js'
 		],
 		form_e2e_tests: [
-			'public/form_modules/*/tests/e2e/**.js',
-			'!public/form_modules/**/demo/**/*.js',
-			'!public/form_modules/**/node_modules/**/*.js'
+			'public/form_modules/*/tests/e2e/**.js'
 		]
 	}
 };

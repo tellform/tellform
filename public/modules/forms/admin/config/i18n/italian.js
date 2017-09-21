@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
+angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
   $translateProvider.translations('italian', {
 	FORM_SUCCESS: 'Il formulario è stato inviato con successo!',

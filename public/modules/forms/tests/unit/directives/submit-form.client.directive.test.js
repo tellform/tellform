@@ -1,5 +1,23 @@
 'use strict';
 
+var MobileDetect = function(userAgentStr){
+    this.userAgentStr = userAgentStr;
+
+    return {
+        mobile: function(){
+            return 'iPhone';
+        },
+
+        tablet: function(){
+            return null;
+        },
+
+        is: function(str){
+            return str !== 'bot';
+        }
+    }
+};
+
 (function() {
     // Forms Controller Spec
     describe('SubmitForm Directive-Controller Tests', function() {
@@ -113,6 +131,7 @@
             $httpBackend = _$httpBackend_;
             $httpBackend.whenGET('/users/me/').respond('');
 
+
             //Instantiate directive.
             var tmp_scope = $rootScope.$new();
             tmp_scope.myform = sampleForm;
@@ -141,7 +160,6 @@
                 }
             };
         })();
-
 
         it('$scope.submitForm() should submit valid form', function(){
             //Initialize variables

@@ -137,9 +137,9 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		BTN_BACKGROUND_COLOR: 'Color de fondo del botón',
 		BTN_TEXT_COLOR: 'Color del texto del botón',
 
-    //Share View
-    EMBED_YOUR_FORM: 'Pone tu formulario',
-    SHARE_YOUR_FORM: 'Compartí tu formulario',
+	    //Share View
+	    EMBED_YOUR_FORM: 'Pone tu formulario',
+	    SHARE_YOUR_FORM: 'Compartí tu formulario',
 
 		//Admin Tabs
 		CREATE_TAB: 'Crear',
@@ -169,8 +169,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	    FORM_SUCCESS: '¡El formulario ha sido enviado con éxito!',
 		REVIEW: 'Revisar',
 		BACK_TO_FORM: 'Regresar al formulario',
-		EDIT_FORM: '',
-		CREATE_FORM: '',
 		ADVANCEMENT: '{{done}} de {{total}} contestadas',
 		CONTINUE_FORM: 'Continuar al formulario',
 		REQUIRED: 'Información requerida',
@@ -181,14 +179,10 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		ERROR_URL_INVALID: 'Favor de proporcionar un url válido',
 		OK: 'OK',
 		ENTER: 'pulse INTRO',
-		YES: 'Si',
-		NO: 'No',
 		NEWLINE: 'presione SHIFT+INTRO para crear una nueva línea',
 		CONTINUE: 'Continuar',
 		LEGAL_ACCEPT: 'Yo acepto',
 		LEGAL_NO_ACCEPT: 'Yo no acepto',
-		DELETE: 'Eliminar',
-		CANCEL: 'Cancelar',
 		SUBMIT: 'Registrar',
 		UPLOAD_FILE: 'Cargar el archivo',
 		Y: 'S',

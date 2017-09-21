@@ -140,9 +140,9 @@
 
 	            var originalField = _.cloneDeep(scope.myform.form_fields[0]);
 	            originalField.title += ' copy';
-
 	            delete originalField._id;
-	            var copyField = _.cloneDeep(scope.myform.form_fields[1]);
+
+	            var copyField = _.cloneDeep(scope.myform.form_fields[3]);
 	            delete copyField._id;
 
 				expect(scope.update).toHaveBeenCalled();

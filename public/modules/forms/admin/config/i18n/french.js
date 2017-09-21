@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
+angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
   $translateProvider.translations('french', {
     FORM_SUCCESS: 'Votre formulaire a été enregistré!',

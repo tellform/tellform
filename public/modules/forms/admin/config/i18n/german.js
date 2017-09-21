@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
+angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
   $translateProvider.translations('german', {
 	FORM_SUCCESS: 'Ihre Angaben wurden gespeichert.',

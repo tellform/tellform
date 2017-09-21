@@ -18,7 +18,7 @@ module.exports = function(config) {
 		frameworks: ['jasmine'],
 
 		// List of files / patterns to load in the browser
-		files: bowerDep.concat(['public/lib/socket.io-client/dist/socket.io.js'], applicationConfiguration.assets.js, applicationConfiguration.assets.unit_tests, applicationConfiguration.assets.views),
+		files: bowerDep.concat(['public/lib/socket.io-client/dist/socket.io.js', 'public/lib/mobile-detect/mobile-detect.js'], applicationConfiguration.assets.js, applicationConfiguration.assets.views, applicationConfiguration.assets.unit_tests),
 
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
@@ -26,14 +26,17 @@ module.exports = function(config) {
 
 
 		preprocessors: {
-		    'public/modules/*/views/**/**.html': ['ng-html2js'],
-		    'public/modules/*/views/*.html': ['ng-html2js']
+		    'public/modules/**/views/**/*.html': ['ng-html2js'],
+		    'public/modules/**/views/*.html': ['ng-html2js'],
+		    'public/form_modules/forms/base/views/**/*.html': ['ng-html2js'],
+		    'public/form_modules/forms/base/views/*.html': ['ng-html2js']
 		    //'public/modules/*/*.js': ['coverage'],
 			//'public/modules/*/*[!tests]*/*.js': ['coverage'],
 		},
 
 		ngHtml2JsPreprocessor: {
 		    stripPrefix: 'public/',
+		    prependPrefix: 'static/',
 
 		    // the name of the Angular module to create
     		moduleName: 'module-templates'

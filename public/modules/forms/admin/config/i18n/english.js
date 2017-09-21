@@ -171,7 +171,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		REVIEW: 'Review',
 	    BACK_TO_FORM: 'Go back to Form',
 		EDIT_FORM: 'Edit this TellForm',
-		CREATE_FORM: 'Create this TellForm',
 		ADVANCEMENT: '{{done}} out of {{total}} answered',
 		CONTINUE_FORM: 'Continue to Form',
 		REQUIRED: 'required',
@@ -182,15 +181,11 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		ERROR_URL_INVALID: 'Please a valid url',
 		OK: 'OK',
 		ENTER: 'press ENTER',
-		YES: 'Yes',
-		NO: 'No',
 		NEWLINE: 'press SHIFT+ENTER to create a newline',
 		CONTINUE: 'Continue',
 		LEGAL_ACCEPT: 'I accept',
 		LEGAL_NO_ACCEPT: 'I don’t accept',
-		DELETE: 'Delete',
-		CANCEL: 'Cancel',
 		SUBMIT: 'Submit',
-		UPLOAD_FILE: 'Upload your File',
+		UPLOAD_FILE: 'Upload your File'
 	});
 }]);

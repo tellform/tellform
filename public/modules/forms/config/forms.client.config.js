@@ -38,7 +38,7 @@ angular.module('forms').run(['Menus',
         };
 }]).filter('trustSrc', ['$sce', function($sce){
         return function(formUrl){
-        	console.log(' $sce.trustAsResourceUrl(formUrl): '+ $sce.trustAsResourceUrl(formUrl));
+        	(' $sce.trustAsResourceUrl(formUrl): '+ $sce.trustAsResourceUrl(formUrl));
         	return $sce.trustAsResourceUrl(formUrl);
         };
 }]).config(['$provide', function ($provide){
