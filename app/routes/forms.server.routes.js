@@ -44,6 +44,9 @@ module.exports = function(app) {
 		.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.listSubmissions)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.deleteSubmissions);
 
-	// Finish by binding the form middleware
+	// Slower formId middleware
 	app.param('formId', forms.formByID);
+
+	// Fast formId middleware
+	app.param('formIdFast', forms.formByIDFast);
 };
