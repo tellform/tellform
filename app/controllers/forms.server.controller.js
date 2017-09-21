@@ -102,7 +102,6 @@ exports.listSubmissions = function(req, res) {
 			});
 		}
 		res.json(_submissions);
-
 	});
 
 };
@@ -163,14 +162,6 @@ exports.read = function(req, res) {
 };
 
 /**
- * Upload temp file for submissions
- */
-exports.uploadTemp = function(req, res) {
-	//Send uploaded file data back to form
-	res.json(req.file);
-};
-
-/**
  * Show the current form for rendering form live
  */
 var readForRender = exports.readForRender = function(req, res) {
@@ -181,9 +172,6 @@ var readForRender = exports.readForRender = function(req, res) {
 		});
 	}
 
-	//Remove extraneous fields from form object
-	delete newForm.submissions;
-	delete newForm.analytics;
 	delete newForm.admin;
 
 	if(!newForm.startPage.showStart){
@@ -267,7 +255,12 @@ exports.list = function(req, res) {
 	var searchObj = {admin: req.user};
 	if(req.user.isAdmin()) searchObj = {};
 
-	Form.find(searchObj).sort('-created').populate('admin.username', 'admin._id').exec(function(err, forms) {
+	Form.find(searchObj)
+		.desc('created')
+		.select('title', 'language', 'submissions', 'admin', 'isLive')
+		.populate('admin.username', 'admin._id')
+		.lean()
+		.exec(function(err, forms) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -287,7 +280,45 @@ exports.formByID = function(req, res, next, id) {
 			message: 'Form is invalid'
 		});
 	}
-	Form.findById(id).populate('admin').populate('submissions').exec(function(err, form) {
+	Form.findById(id)
+		.populate('admin')
+		.populate('submissions')
+		.exec(function(err, form) {
+		if (err) {
+			return next(err);
+		} else if (!form || form === null) {
+			res.status(404).send({
+				message: 'Form not found'
+			});
+		}
+		else {
+			//Remove sensitive information from User object
+			var _form = form;
+			_form.admin.password = null;
+			_form.admin.salt = null;
+			_form.provider = null;
+
+			req.form = _form;
+			return next();
+		}
+	});
+};
+
+/**
+ * FastForm middleware
+ */
+exports.formByIDFast = function(req, res, next, id) {
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(400).send({
+			message: 'Form is invalid'
+		});
+	}
+	Form.findById(id)
+		.select('title', 'language', 'form_fields', 'startPage', 'endPage', 'hideFooter', 'isLive', 'design', 'admin', 'analytics.gaCode')
+		.populate()
+		.cache()
+		.lean()
+		.exec(function(err, form) {
 		if (err) {
 			return next(err);
 		} else if (!form || form === null) {

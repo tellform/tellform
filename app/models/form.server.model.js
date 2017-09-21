@@ -435,5 +435,7 @@ FormSchema.pre('save', function (next) {
 	});
 });
 
+FormSchema.index({created: 1});
+
 mongoose.model('Form', FormSchema);
 

@@ -26,6 +26,13 @@ var fs = require('fs-extra'),
 
 var mongoose = require('mongoose');
 
+var cacheOpts = {
+	max:1000,
+	maxAge:1000*60
+};
+
+require('mongoose-cache').install(mongoose, cacheOpts)
+
 /**
  * Configure Socket.io
  */
