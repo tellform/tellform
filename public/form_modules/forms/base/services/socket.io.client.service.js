@@ -44,14 +44,14 @@
 			socket: null
 		};
 
-		console.log($window.socketUrl);
+		console.log(window.socketUrl);
 		var url = '';
-		if($window.socketUrl && $window.socketPort){
-			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl){
-			url = window.location.protocol + '//' + $window.socketUrl;
-		} else if ($window.socketPort){
-			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
+		if(window.socketUrl && window.socketPort){
+			url = window.location.protocol + '//' + window.socketUrl + ':' + window.socketPort;
+		} else if (window.socketUrl){
+			url = window.location.protocol + '//' + window.socketUrl;
+		} else if (window.socketPort){
+			url = window.location.protocol + '//' + window.location.hostname + ':' + window.socketPort;
 		} else {
 			url = window.location.protocol + '//' + window.location.hostname;
 		}
