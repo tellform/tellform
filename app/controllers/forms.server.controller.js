@@ -256,7 +256,7 @@ exports.list = function(req, res) {
 	if(req.user.isAdmin()) searchObj = {};
 
 	Form.find(searchObj)
-		.desc('created')
+		.sort('-created')
 		.select('title language submissions admin isLive')
 		.populate('admin.username', 'admin._id')
 		.lean()
