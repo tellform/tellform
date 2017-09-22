@@ -97,8 +97,14 @@
     </div>
     <div class="row">
 		<div class="col-xs-12 col-sm-offset-4 col-sm-4">
-			<button class="btn btn-signup btn-rounded" type="button" ng-disabled="configureForm.$invalid || myform.title.length === 0" ng-click="update(false, myform, false, false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
+			<button class="btn btn-signup btn-rounded" ng-disabled="$parent.button_clicked || configureForm.$invalid || myform.title.length === 0 || configureForm.$pristine" ng-click="update(false, myform, false, false, null)"><span ng-show="$parent.button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>{{ $parent.button_clicked }}</button>
 			<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'RESET' | translate }}</button>
+<!-- 			<div data-ng-show="error" class="text-center text-danger">
+				<strong>{{error}}</strong>
+			</div>
+			<div data-ng-show="success" class="text-center text-success">
+				<strong>{{success}}</strong>
+			</div> -->
 		</div>
     </div>
 </div>

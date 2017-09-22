@@ -8,6 +8,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
+        $scope.button_clicked  = false;
         $rootScope.saveInProgress = false;
 
         CurrentForm.setForm($scope.myform);
@@ -34,6 +35,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
         // Update existing Form
         $scope.update = $rootScope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
+
+            $scope.button_clicked  = true;
+
             refreshFrame();
 
             var continueUpdate = true;
@@ -62,6 +66,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                             err = response.data;
                         }).finally(function () {
                             // console.log('finished updating');
+                            $scope.button_clicked  = false;
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
                             }
@@ -83,6 +88,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                             console.log('Error occured during form UPDATE.\n');
                             err = response.data;
                         }).finally(function () {
+                            $scope.button_clicked  = false;
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
                             }

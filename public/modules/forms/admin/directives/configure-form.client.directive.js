@@ -14,7 +14,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
             controller: function($scope){
                 $scope.log = '';
                 $scope.languages = $rootScope.languages;
-
+                
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 
