@@ -15,21 +15,18 @@
 .date-filter-panel div {
 	padding: 0;
 }
-
-.date-filter-panel .input-group-addon.transparent {
-	opacity: 1;
-}
-
 .date-filter-panel .input-group input {
-	padding: 0;
+	height: 34px;
 	border-left: 0;
+	font-size: 14px;
 }
-
 .date-filter-panel .input-group input:focus {
 	border-color: #ccc;
 	box-shadow: none;
 }
-
+.date-filter-panel .input-group-addon.transparent {
+	opacity: 1;
+}
 .date-filter-panel button[disabled] {
 	background-color: #eee;
 }

@@ -38,7 +38,6 @@ div.start-end-page .form-actions .btn {
 
 /* Form fields */
 .field-directive {
-  z-index: 11;
   padding: 10px;
   position: relative;
 }

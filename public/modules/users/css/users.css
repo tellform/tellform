@@ -51,10 +51,6 @@ section.auth {
 		min-height: 34px;
 	}
 
-	section.auth input {
-		color: #4c4c4c;
-	}
-
 	section.auth .btn {
 		border-radius: 100px;
 		font-size: 14px;
@@ -103,55 +99,6 @@ section.auth {
 	position: absolute;
 }
 
-section.auth input.form-control:not(.date-filter) {
-	min-height: 30px!important;
-}
-
-input.form-control:not(.date-filter), .form-control.ui-select-container {
-	height: 58px;
-}
-.form-control.ui-select-container {
-	display: table;
-	table-layout: fixed;
-	padding: 0;
-}
-.form-control.ui-select-container .selectize-input {
-	height: 51px;
-	border: none;
-	padding: 0;
-	line-height: 23px;
-}
-input.form-control:not(.date-filter),
-.form-control.ui-select-container .selectize-input .ui-select-match,
-.form-control.ui-select-container .selectize-input > input.ui-select-search {
-	font-size: 18px;
-	padding: 13px 10px !important;
-}
-.form-control.ui-select-container .selectize-input .ui-select-match {
-	margin: 3px;
-}
-.form-control.ui-select-container .selectize-input .ui-select-match,
-.form-control.ui-select-container .selectize-input > input.ui-select-search {
-	width: 100% !important;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding-right: 40px !important;
-}
-.form-control.ui-select-container .selectize-dropdown {
-	margin-top: 24px;
-}
-.form-control.ui-select-container .selectize-dropdown-content {
-	max-height: 220px;
-}
-.form-control.ui-select-container .ui-select-choices-row-inner {
-	border-radius: 3px;
-	margin: 5px;
-	padding: 10px;
-	background-color: #000000;
-	background-color: rgba(0,0,0,0.05);
-}
-
 .btn {
 	border: 1px solid #acacac;
 }
@@ -169,18 +116,13 @@ input.form-control:not(.date-filter),
 	margin-top: 27px;
 	margin-left: 3px;
 }
+.form-group.email .email-domain .input-group-btn button {
+	background-color: #eee;
+	margin-right: -1px;
+}
+.form-group.email .email-domain .ui-select-match,
 .form-group.email .email-domain .ui-select-choices-row-inner {
 	word-break: break-all;
-}
-.form-group.email .email-domain .ui-select-match {
-	display: block;
-	line-height: inherit;
-}
-.form-group.email .email-domain .input-group-addon {
-	padding-bottom: 13px;
-}
-.form-group.email .email-name input.form-control {
-	padding-top: 6px !important;
 }
 
 .my-account {

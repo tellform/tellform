@@ -229,15 +229,7 @@ form .accordion-edit {
     width: inherit;
 }
 
-/*Styles for ui-datepicker*/
-.ui-datepicker.ui-widget {
-    z-index: 99!important;
-}
-
 /* Styles for form submission view (/forms/:formID) */
-        form.submission-form .select.radio > .field-input input, form.submission-form .select > .field-input input {
-            width:20%;
-        }
 
         form.submission-form .field.row.radio .btn.activeBtn {
             background-color: #000!important;
@@ -248,42 +240,6 @@ form .accordion-edit {
             margin-right:1.2em;
         }
 
-        form.submission-form .select > .field-input .btn {
-            text-align: left;
-            margin-bottom:0.7em;
-        }
-        form.submission-form .select > .field-input .btn > span {
-            font-size: 1.10em;
-        }
-
-        form .field-input .selectize-input .ui-select-match,
-        form .field-input .selectize-input input.ui-select-search,
-
-
-
-	   	form .dropdown > .field-input .selectize-input {
-          border: inherit;
-          box-shadow: none;
-          padding: 0;
-	   	}
-	   	form .dropdown > .field-input .selectize-dropdown {
-          margin-top: 16px;
-	   	}
-	   	form .dropdown > .field-input .selectize-dropdown-content {
-          max-height: 220px;
-	   	}
-	   	form .dropdown > .field-input .ui-select-choices-row-inner {
-			border-radius: 3px;
-			margin: 5px;
-			padding: 10px;
-			background-color: #000000;
-			background-color: rgba(0,0,0,0.05);
-		}
-
-		form .dropdown > .field-input .ui-select-choices-row-inner.active, form .dropdown > .field-input .ui-select-choices-row-inner.active:focus {
-			background-color: #000000;
-			background-color: rgba(0,0,0,0.1);
-        }
 .config-form {
     max-width: 100%;
 }
@@ -416,15 +372,6 @@ form .accordion-edit {
     width: 80%;
 }
 
-/*Override Select2 UI*/
-.ui-select-choices.ui-select-dropdown {
-	top:2.5em!important;
-}
-.ui-select-toggle {
-	box-shadow:none!important;
-	border:none!important;
-}
-
 .current-fields .panel-row {
     margin-left: 0px;
     margin-right: 5px;
@@ -505,7 +452,7 @@ form .accordion-edit {
 }
 
 .view-form-btn {
-    border-color:#ddd;
+    border-color: #ccc;
     float: right;
     font-size: 16px;
 }
@@ -532,10 +479,6 @@ form .accordion-edit {
 /* Styles for form list view (/forms) */
 section.public-form {
     padding: 0 10%;
-}
-
-section.public-form .btn {
-    border: 1px solid;
 }
 
 .form-item-toolbar {
