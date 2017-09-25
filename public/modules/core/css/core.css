@@ -1,3 +1,6 @@
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
 
 .form-item .title-row > .list-group-item-heading {
 	color: #34628a;

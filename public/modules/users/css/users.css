@@ -57,6 +57,8 @@ section.auth {
 		padding: 12px 28px;
 		margin-top: 2em;
 		text-transform: uppercase;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.btn-rounded {
@@ -112,9 +114,12 @@ section.auth {
 .form-group.email > div {
 	padding: 0;
 }
-.form-group.email .email-domain {
-	margin-top: 27px;
-	margin-left: 3px;
+
+@media screen and (min-width: 768px) {
+	.form-group.email .email-domain {
+		margin-top: 27px;
+		margin-left: 3px;
+	}
 }
 .form-group.email .email-domain .input-group-btn button {
 	background-color: #eee;
@@ -143,4 +148,19 @@ section.auth {
 
 .my-account hr {
 	border-top: 1px solid #ccc !important;
+}
+
+.glyphicon.spinning {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
 }

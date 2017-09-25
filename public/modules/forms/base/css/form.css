@@ -1,3 +1,36 @@
+.public-form .form-header {
+  width:100%;
+  color:black !important;
+  padding: 20px 16.2222222%;
+  overflow-wrap:normal;
+  border-bottom:2px black solid;
+  z-index: 11;
+}
+
+.public-form .form-header>img {
+  display:block;
+  max-width:200px;
+  max-height:200px;
+  width:auto;
+  height:auto;
+}
+
+.public-form .form-header>.form-header-title {
+  padding-top: 10px;
+}
+
+@media all and (min-width: 768px) {
+  .public-form .form-header {
+    font-size:30px;
+  }
+}
+
+@media not all and (min-width: 768px) {
+  .public-form .form-header {
+    font-size:25px;
+  }
+}
+
 .public-form.submit-form,
 .public-form.submit-form .overlay {
   min-height: 100vh;

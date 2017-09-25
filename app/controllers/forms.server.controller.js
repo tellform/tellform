@@ -41,40 +41,15 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
 
-	// Server arrives at this route in 2 cases:
-	// (1) submitform page where authentication is not needed
-	// (2) viewform/preview page where authentication is needed
-	// * client side should make sure that no other cases are let through
-
-	if (!req.user) {
-
-		// case (1)
-		readForRender(req, res);
-
-	} else {
-
-		// case (2)
-		if (req.form.admin.id !== req.user.id) {
-			return res.status(401).send({
-				message: 'User is not admin of form'
-			});
-		} else {
-			Submission.find({ form: req.form._id }).exec(function(err, _submissions) {
-				if (err) {
-					res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				}
-
-				var currForm = req.form.toJSON();
-				currForm.submissions = _submissions;
-
-				return res.json(currForm);
-			});
-		}
-
+	// Can only get form information if form is live or user owns form
+	var currForm = req.form.toJSON();
+	if (req.form.isLive || (req.user && req.user.id == req.form.admin.id)) {
+		return res.json(req.form.toJSON());
 	}
-	
+	return res.status(403).send({
+		message: 'Forbidden Access to Form'
+	});
+		
 };
 
 /**
@@ -83,31 +58,6 @@ exports.read = function(req, res) {
 exports.uploadTemp = function(req, res) {
 	//Send uploaded file data back to form
 	res.json(req.file);
-};
-
-/**
- * Show the current form for rendering form live
- */
-var readForRender = exports.readForRender = function(req, res) {
-	
-	var currForm = req.form.toJSON();
-
-	if (!currForm.isLive) {
-
-		return res.status(401).send({
-			message: 'Form is Not Public'
-		});
-
-	} else {
-
-		if(!currForm.startPage.showStart){
-			delete currForm.startPage;
-		}
-		return res.json(currForm);
-
-	}
-	
-
 };
 
 /**

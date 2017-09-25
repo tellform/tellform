@@ -30,6 +30,7 @@ exports.forgot = function(req, res, next) {
 		// Lookup user by username
 		function(token, done) {
 			if (req.body.username) {
+				req.body.username = req.body.username.toLowerCase();	
 				User.findOne({
 					$or: [
 						{'username': req.body.username},
@@ -190,11 +191,11 @@ exports.reset = function(req, res, next) {
 			res.status(500).send({
 				message: err.message || err
 			});
+		} else {
+			return res.json({
+				message: 'Successfully changed your password!'
+			});
 		}
-
-		return res.json({
-			message: 'Successfully changed your password!'
-		});
 	});
 };
 

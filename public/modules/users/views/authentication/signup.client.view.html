@@ -21,7 +21,7 @@
 
 	<div class="valign">
 		<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 authen-wrapper">
-			<div class="col-md-12 text-center vcenter" style="padding-bottom: 50px;">
+			<div class="col-md-12 text-center" style="padding-bottom: 50px;">
 				<img src="/static/modules/core/img/logo-full.svg" height="100px">
 			</div>
 			<div class="col-xs-12">
@@ -50,7 +50,7 @@
 							<div class="col-md-6 col-xs-12 email-name">
 								<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>
 								<input type="text" id="email" name="email" class="form-control" ng-model="credentials.emailName" pattern="[A-Za-z0-9-_.]+"
-								title="Special characters are not allowed." ng-required="true">
+								title="Special characters are not allowed." ng-required="true" --disable-ignore-autocomplete-off autocomplete="off">
 							</div>
 							<div class="col-md-6 col-xs-12">
 								 <div class="input-group email-domain">
@@ -74,11 +74,13 @@
 						</div>
 						<div class="form-group">
 							<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>
-							<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" ng-minlength="4" ng-required="true">
+							<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" ng-minlength="4" ng-required="true" autocomplete="new-password">
 						</div>
 
 						<div class="text-center form-group">
-							<button type="submit" class="btn btn-signup btn-rounded btn-block" ng-click="preProcessForm()">{{ 'SIGNUP_BTN' | translate }}</button>
+							<button type="submit" class="btn btn-signup btn-rounded btn-block" ng-disabled="((!credentials.emailDomain)||(button_clicked)||(!credentials.password)|| (!credentials.emailName) )" ng-click="preProcessForm()">
+							<span ng-show="button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+							{{ 'SIGNUP_BTN' | translate }} </button>
 						</div>
 					</fieldset>
 				</form>

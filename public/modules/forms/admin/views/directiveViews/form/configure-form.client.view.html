@@ -1,90 +1,120 @@
 <div class="config-form container" ng-form="configureForm">
 	<!-- Settings -->
 	<div class="row">
-        <div class="col-sm-offset-2 col-sm-4">
-            <div class="row field">
-                <div class="field-title col-sm-12">
-                    <h5>{{ 'FORM_NAME' | translate }}</h5>
-                </div>
-
-                <div class="col-sm-12">
-                    <input class="form-control"
-					    type="text"
-					    ng-model="myform.title"
-						ng-model-options="{ allowInvalid: true }"
-                        value="{{myform.title}}"
-                        ng-minlength="4"
-                        ng-maxlength="200"
-                        maxlength="200"
-                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
-                </div>
-            </div>
-						<div class="row field">
-                <div class="field-title col-sm-12">
-                    <h5>{{ 'FORM_EMAIL' | translate }}</h5>
-                </div>
-
-								<div class="col-sm-12">
-                    <input class="form-control" type="text"
-                        placeholder="Comma-separated list of emails"
-                        ng-model="myform.emails"
-                        value="{{myform.emails}}">
-                </div>
-            </div>
-        </div>
-		<div class="col-sm-offset-1 col-sm-4">
-			<div class="row field">
-					<div class="field-title col-sm-12">
-							<h5>{{ 'FORM_STATUS' | translate }}</h5>
+		<div class="row row-formname">
+	        <div class="col-md-8 col-xs-8">
+	            <div class="row field">
+	                <div class="field-title col-md-12 field-title-bold">
+	                    {{ 'FORM_NAME' | translate }}
+	                </div>
+	                <div class="col-md-12">
+	                    <input class="form-control"
+						    type="text"
+						    ng-model="myform.title"
+							ng-model-options="{ allowInvalid: true }"
+	                        value="{{myform.title}}"
+	                        style="width: 100%;"
+	                        ng-minlength="4"
+	                        ng-maxlength="200"
+	                        maxlength="200"
+	                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-md-4 col-xs-4">
+				<div class="row field">
+					<div class="field-title col-md-12 field-title-bold">
+							{{ 'FORM_STATUS' | translate }}
 					</div>
-
-					<div class="field-input col-sm-12">
-
-							<label style="display: inline-block;">
+					<div class="field-input col-md-12">
+							<label class="configure-option">
 									<input type="radio" data-ng-value="true" ng-model="myform.isLive"  ng-required="true" style="background-color:#33CC00;"/>
 									&nbsp;<span>{{ 'PUBLIC' | translate }}</span>
 							</label>
 
-							<label style="display: inline-block;">
+							<label class="configure-option">
 									<input type="radio" data-ng-value="false" ng-model="myform.isLive"  ng-required="true" />
 									&nbsp;<span>{{ 'PRIVATE' | translate }}</span>
 							</label>
-
 					</div>
+				</div>
+	        </div>
+	    </div>
+	    <div class="row">
+	        <div class="col-md-12 col-xs-12">
+				<div class="row field">
+	                <div class="field-title col-md-12 field-title-bold">
+	                    {{ 'FORM_EMAIL' | translate }}
+	                </div>
+					<div class="col-md-12">
+	                    <input class="form-control" type="text"
+	                        placeholder="Comma-separated list of emails"
+	                        ng-model="myform.emails"
+	                        value="{{myform.emails}}"
+	                        style="width: 100%;">
+	                </div>
+	            </div>
+	        </div>
+        </div>
+    </div>
+    <div class="row row-with-no-bottom">
+    	<div class="display-header">Display Options</div>
+    	<hr>
+    </div>
+    <div class="row row-with-no-top">
+		<div class="col-md-4 col-xs-12">
+			<div class="row field row-with-no-top">
+				<div class="field-title col-md-12 field-title-bold">
+						{{ 'DISPLAY_FORM_HEADER' | translate }}
+				</div>
+				<div class="field-input col-md-12">
+						<label class="configure-option">
+								<input type="radio" data-ng-value="true" ng-model="myform.hasHeader"  ng-required="true" style="background-color:#33CC00;"/>
+								&nbsp;<span>{{ 'YES' | translate }}</span>
+						</label>
+
+						<label class="configure-option">
+								<input type="radio" data-ng-value="false" ng-model="myform.hasHeader"  ng-required="true" />
+								&nbsp;<span>{{ 'NO' | translate }}</span>
+						</label>
+				</div>
 			</div>
-			<div class="row field">
-				<div class="field-title col-sm-12">
-					<h5>{{ 'DISPLAY_START_PAGE' | translate }}</h5>
+		</div>
+		<div class="col-md-4 col-xs-12">
+			<div class="row field row-with-no-top">
+				<div class="field-title col-md-12 field-title-bold">
+					{{ 'DISPLAY_START_PAGE' | translate }}
 				</div>
 
-				<div class="field-input col-sm-12">
+				<div class="field-input col-md-12">
 
-					<label style="display: inline-block;">
+					<label class="configure-option">
 						<input type="radio" data-ng-value="true" ng-model="myform.startPage.showStart"  ng-required="true" style="background-color:#33CC00;"/>
 						&nbsp;<span>{{ 'YES' | translate }}</span>
 					</label>
 
-					<label style="display: inline-block;">
+					<label class="configure-option">
 						<input type="radio" data-ng-value="false" ng-model="myform.startPage.showStart"  ng-required="true" />
 						&nbsp;<span>{{ 'NO' | translate }}</span>
 					</label>
 
 				</div>
 			</div>
-
-			<div class="row field">
-				<div class="field-title col-sm-12">
-					<h5>{{ 'DISPLAY_END_PAGE' | translate }}</h5>
+		</div>
+		<div class="col-md-4 col-xs-12">
+			<div class="row field row-with-no-top">
+				<div class="field-title col-md-12 field-title-bold">
+					{{ 'DISPLAY_END_PAGE' | translate }}
 				</div>
 
-				<div class="field-input col-sm-12">
+				<div class="field-input col-md-12">
 
-					<label style="display: inline-block;">
+					<label class="configure-option">
 						<input type="radio" data-ng-value="true" ng-model="myform.endPage.showEnd"  ng-required="true" style="background-color:#33CC00;"/>
 						&nbsp;<span>{{ 'YES' | translate }}</span>
 					</label>
 
-					<label style="display: inline-block;">
+					<label class="configure-option">
 						<input type="radio" data-ng-value="false" ng-model="myform.endPage.showEnd"  ng-required="true" />
 						&nbsp;<span>{{ 'NO' | translate }}</span>
 					</label>
@@ -92,9 +122,9 @@
 				</div>
 			</div>
 		</div>
-    </div>
+	</div>
     <div class="row">
-		<div class="col-xs-12 col-sm-offset-4 col-sm-4">
+		<div class="col-xs-12 col-md-offset-4 col-md-4">
 			<button class="btn btn-signup btn-rounded" type="button" ng-disabled="configureForm.$invalid || myform.title.length === 0" ng-click="update(false, myform, false, false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
 			<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'RESET' | translate }}</button>
 		</div>
