@@ -49,12 +49,12 @@
 					<p ng-if="forms.myForm.$invalid" class="need-complete">{{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}</p>
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-12">
-					<button class="btn btn-lg col-xs-3" id="focusDownButton"
+					<button class="btn btn-lg col-xs-3 up-down-btn" id="focusDownButton"
 									ng-click="nextField()"
 									ng-disabled="selected.index > myform.form_fields.length-1">
 						<i class="fa fa-chevron-down"></i>
 					</button>
-					<button class="btn btn-lg col-xs-3" id="focusUpButton"
+					<button class="btn btn-lg col-xs-3 up-down-btn" id="focusUpButton"
 									ng-click="prevField()"
 									ng-disabled="selected.index == 0">
             <i class="fa fa-chevron-up"></i>
