@@ -1,8 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal) {
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', '$window',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, $window) {
 
         $scope = $rootScope;
         $scope.forms = {};
@@ -97,8 +97,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         	$http.post('/forms/' + $scope.user.agency.shortName + '/' + id + '/duplicate', {name: copy_index})
         		.success(function(data, status, headers) {
         			$scope.myforms.splice(form_index, 0, data);
-                    $state.reload();
-                    // $scope.myforms.$apply();
         		}).error(function(errorResponse) {
         			console.error(errorResponse);
         			if (errorResponse === null) {

@@ -53,8 +53,14 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         };
 
         $scope.validate_collaborators = function(emails, configureForm) {
+            if (emails.trim() === '') {
+                configureForm.collaborator_list.$setValidity("text", true);
+                return;    
+            }
+
             // In the future, check if collaborators are actual users in the database
             var emails_arr = emails.split(',');
+
             var re = /\S+@\S+\.\S+/;
             for (var i = 0; i < emails_arr.length; i++) { 
                 if (re.test(emails_arr[i]) == false) {
@@ -62,6 +68,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                     return
                 }
             }
+
             configureForm.collaborator_list.$setValidity("text", true);
         };
 

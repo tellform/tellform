@@ -11,6 +11,7 @@
             placeholder="e.g. collab1@data.gov.sg,collab2@ava.gov.sg"
             ng-model="myform.collaborators"
             name="collaborator_list"
+            ng-required="false"
             value="{{myform.collaborators}}"
             ng-change="validate_collaborators(myform.collaborators, configureForm)"
             style="width: 100%;">

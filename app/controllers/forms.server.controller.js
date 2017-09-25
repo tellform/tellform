@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Form = mongoose.model('Form'),
+	User = mongoose.model('User'),
 	Submission = mongoose.model('Submission'),
 	diff = require('deep-diff'),
 	_ = require('lodash');
@@ -128,12 +129,13 @@ exports.duplicate = function(req, res) {
 	var id = req.form._id;
 	var copy_num = req.body.name
 
-	Form.findById({_id: id}).exec(function(err, form) {
+	Form.findById({_id: id}).populate('admin').exec(function(err, form) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+
 			form._id = mongoose.Types.ObjectId();
 			form.admin = req.user.id; // Admin will be the user who duplicated the form
 			form.collaborators = []; // Empty collaborators upon copy
@@ -147,7 +149,18 @@ exports.duplicate = function(req, res) {
 					});
 				}
 
-				res.json(form.getMainFields());
+				User.findById({_id: req.user.id}, function(err, userObj) {
+					if (err) {
+						return res.status(405).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					}
+					var formFields = form.getMainFields();
+					// Only get id and email to pass down
+					formFields.admin = {'_id': userObj['_id'], 'email': userObj['email']};
+					res.json(formFields);	
+				})
+				
 			});
 		}
 	});

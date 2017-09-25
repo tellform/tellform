@@ -170,11 +170,11 @@ var FormSchema = new Schema({
 }, formSchemaOptions);
 
 FormSchema.methods.getMainFields = function () {
+	// This method is only used by duplicate
     var form = {
         _id: this._id,
         title: this.title,
-        isLive: this.isLive,
-        admin: this.admin
+        isLive: this.isLive
     };
     return form;
 };
