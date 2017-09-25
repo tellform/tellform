@@ -1,0 +1,128 @@
+form .row.field {
+  padding: 15px 0;
+  font-size: 1em;
+}
+
+/* Field title */
+form .row.field .field-title h1,
+form .row.field .field-title h3 {
+  margin-top: 0;
+  padding: 0;
+}
+form .row.field .field-title .field-number {
+	margin-right: 15px;
+}
+form .row.field .field-title .field-description {
+  margin-left: 25px;
+  color: #777;
+  white-space: pre-wrap;
+}
+form .row.field .field-title .optional-label {
+  color: #ccc;
+  margin-left: 15px;
+}
+
+/* Field input */
+form .row.field > .field-input {
+  font-size: 1.3em;
+  color: #777;
+}
+form .field-input .input-group-btn button {
+  background-color: white;
+}
+
+/* Textfield (short text, email, number, link) & textarea */
+form .row.field .field-input input:not(:focus),
+form .row.field .field-input textarea:not(:focus),
+form .row.field .field-input .selectize-input:not(.focus){
+  border: 2px dashed #ccc;
+}
+form .row.field .field-input input.ng-valid:not(:focus),
+form .row.field .field-input textarea.ng-valid:not(:focus),
+form .row.field .field-input .ng-valid > .selectize-input:not(.focus) {
+  border: 1px solid #ccc;
+}
+form .row.field .field-input input.ng-invalid.ng-dirty,
+form .row.field .field-input textarea.ng-invalid.ng-dirty,
+form .row.field .field-input .ng-invalid.ng-dirty > .selectize-input {
+	border: 1px solid #FA787E;
+}
+form .row.field .field-input input.ng-invalid.ng-dirty:focus,
+form .row.field .field-input textarea.ng-invalid.ng-dirty:focus,
+form .row.field .field-input .ng-invalid.ng-dirty > .selectize-input.focus {
+  border: 1px solid #FA787E !important;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(250, 120, 126,.6)
+}
+form .row.field .field-input .selectize-input.focus,
+form .row.field .field-input .ng-valid > .selectize-input.selectize-focus {
+  border: 1px solid #66afe9 !important;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+form .row.field .field-input textarea {
+  resize: vertical;
+}
+
+/* Date field */
+form .row.field.date-field .field-input input {
+  background-color: white;
+  z-index: 5;
+}
+
+/* Statement & section field */
+form .row.field.section .field-title {
+  margin: 15px 0;
+  padding-top: 15px;
+  background-color: lightgrey;
+  border-bottom: 2px solid #777;
+}
+form .row.field.statement > .field-input,
+form .row.field.section > .field-input {
+  font-size: 1em;
+  text-align: justify;
+}
+
+/* Yes-no fieled */
+form .yes-no .field-input .switch-light .alert {
+  padding: 13px 10px;
+  border: 1px solid #ccc;
+  color: inherit;
+  font-weight: normal;
+  line-height: inherit;
+}
+form .yes-no .field-input .switch-light i {
+  padding: 0 10px;
+  vertical-align: middle;
+}
+form .yes-no .field-input .switch-light a {
+  background-color: #283c86;
+}
+form .yes-no .field-input .switch-light a:hover {
+  opacity: inherit;
+}
+form .yes-no .field-input .switch-light span span,
+form .yes-no .field-input .switch-light input:checked ~ span span:first-child {
+  color: inherit;
+}
+form .yes-no .field-input .switch-light input ~ span span:first-child,
+form .yes-no .field-input .switch-light input:checked ~ span span:nth-child(2) {
+  color: #fff;
+}
+
+/* Dropdown */
+form .row.field.dropdown .field-input .selectize-input {
+  z-index: 5;
+}
+
+/* Placeholder */
+*::-webkit-input-placeholder {
+  color: #ccc;
+}
+*:-moz-placeholder {
+  color: #ccc;  /* FF 4-18 */
+}
+*::-moz-placeholder {
+  color: #ccc;  /* FF 19+ */
+}
+*:-ms-input-placeholder {
+  color: #ccc;  /* IE 10+ */
+}

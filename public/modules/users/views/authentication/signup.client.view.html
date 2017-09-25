@@ -25,7 +25,7 @@
 				<img src="/static/modules/core/img/logo-full.svg" height="100px">
 			</div>
 			<div class="col-xs-12">
-				<form ng-if="agencies" name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
+				<form ng-if="agencies" name="userForm" data-ng-submit="signup()" class="signup form-horizontal" autocomplete="off">
 					<fieldset>
 						<div data-ng-show="error" id="signup_errors" class="text-center text-danger">
 							{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
@@ -33,10 +33,9 @@
 						</div>
 						<div class="form-group">
 							<label for="agency">{{ 'AGENCY_LABEL' | translate }}</label>
-							<ui-select class="form-control"
-												 ng-model="credentials.agency"
-												 theme="selectize"
+							<ui-select theme="selectize"
 												 search-enabled="true"
+												 ng-model="credentials.agency"
 												 ng-required="true"
 												 ng-change="credentials.emailDomain = ''">
 								<ui-select-match class="public-form" placeholder="{{ 'TYPE_OR_SELECT_AGENCY' | translate }}">
@@ -55,11 +54,12 @@
 							</div>
 							<div class="col-md-6 col-xs-12">
 								 <div class="input-group email-domain">
-									 <div class="input-group-addon">@</div>
-									 <ui-select class="form-control"
-									 						ng-model="credentials.emailDomain"
-															theme="selectize"
+										<span class="input-group-btn">
+						 					<button disabled>@</button>
+						 				</span>
+									  <ui-select theme="selectize"
 															search-enabled="true"
+									 						ng-model="credentials.emailDomain"
 															ng-required="true"
 															ng-disabled="!credentials.agency">
 		 								<ui-select-match class="public-form">
@@ -69,8 +69,8 @@
 		 									<span ng-bind-html="emailDomain"></span>
 		 								</ui-select-choices>
 		 							</ui-select>
-								 </div>
-							 </div>
+								</div>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>

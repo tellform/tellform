@@ -11,6 +11,7 @@ angular.module('forms').value('supportedFields', [
 	'radio',
 	'legal',
 	'statement',
+	'section',
 	'rating',
 	'yes_no',
 	'number',

@@ -220,8 +220,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.addButton = function(){
 
 								var newButton = {};
-								newButton.bgColor = '#ddd';
-								newButton.color = '#ffffff';
+								newButton.bgColor = '#ccc';
+								newButton.color = 'white';
 								newButton.text = 'Button';
 								newButton._id = Math.floor(100000*Math.random());
 
