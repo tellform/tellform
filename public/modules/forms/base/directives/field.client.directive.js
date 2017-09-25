@@ -25,6 +25,7 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
             'radio',
             'legal',
             'statement',
+            'section',
             'rating',
             'yes_no',
             'number',
@@ -100,10 +101,9 @@ angular.module('forms').directive('fieldDirective', ['$http', '$compile', '$root
 						scope.placeholder = 'joesmith@example.com';
 						break;
 					case 'number':
-                        scope.input_type = 'text';
-						scope.validateRegex = /^-?\d+$/;
-                        break;
-                    default:
+						scope.input_type = 'number';
+						break;
+					default:
 						scope.input_type = 'url';
 						scope.placeholder = 'http://example.com';
 						break;

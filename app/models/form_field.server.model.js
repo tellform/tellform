@@ -101,6 +101,7 @@ function BaseFieldSchema(){
 				'url',
 				'textarea',
 				'statement',
+				'section',
 				'welcome',
 				'thankyou',
 				'file',
