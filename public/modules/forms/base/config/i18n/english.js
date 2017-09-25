@@ -14,6 +14,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	COMPLETING_NEEDED: '{{ questions_not_completed }} mandatory question(s) to be answered',
 	OPTIONAL: 'optional',
 	ERROR_EMAIL_INVALID: 'Please enter a valid email',
+	ERROR_TITLE_INVALID: 'Title should be alphanumeric and can contain dashes or spaces',
 	ERROR_URL_INVALID: 'Please enter a valid url',
 	OK: 'OK',
 	ENTER: 'press ENTER',
