@@ -8,6 +8,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		ADVANCED_SETTINGS: 'Advanced Settings',
 		FORM_NAME: 'Form Name',
 		FORM_STATUS: 'Status',
+		FORM_COLLABORATOR: "Collaborators (comma-separated)"
 		PUBLIC: 'Active',
 		PRIVATE: 'Inactive',
 		DISPLAY_FOOTER: 'Display Form Footer?',

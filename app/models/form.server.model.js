@@ -77,6 +77,17 @@ var FormSchema = new Schema({
 		set: v => _.isString(v)? v.split(",") : v
 	},
 
+	collaborators: {
+		type: [{
+			type: String,
+			trim: true,
+			match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		}],
+		required: false, // Could be empty if no collaborators
+		get: v => v.join(),
+		set: v => _.isString(v)? v.split(",") : v
+	},
+
 	startPage: {
 		showStart:{
 			type: Boolean,

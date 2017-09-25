@@ -43,7 +43,7 @@ exports.read = function(req, res) {
 	// Can only get form information if form is live or user owns form
 	var currForm = req.form.toJSON();
 	if (req.form.isLive || (req.user && req.user.id == req.form.admin.id) || 
-		(req.user && req.form.emails.indexOf(req.user.email) > -1)) {
+		(req.user && req.form.collaborators.indexOf(req.user.email) > -1)) {
 		return res.json(req.form.toJSON());
 	}
 	return res.status(403).send({
@@ -230,7 +230,7 @@ exports.formByID = function(req, res, next, id) {
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
 	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1 && 
-		req.form.emails.indexOf(req.user.email) < 0) {
+		req.form.collaborators.indexOf(req.user.email) < 0) {
 		res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});

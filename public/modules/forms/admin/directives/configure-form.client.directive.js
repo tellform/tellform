@@ -23,7 +23,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
           link: function(scope, element, attrs, ctrl) {
             scope.$watch("user", function(val) {
                 if (val !== undefined && val.email === scope.myform.admin.email) {
-                    $('#collab-email').prop('readonly', false);
+                    $('#collab-email').prop('hidden', false);
                 }
             });
           },

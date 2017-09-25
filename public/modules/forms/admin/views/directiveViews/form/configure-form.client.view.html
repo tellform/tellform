@@ -1,5 +1,16 @@
 <div class="config-form container" ng-form="configureForm">
-	<!-- Settings -->
+	<div id="collab-email" class="row" hidden>
+		<div class="field-title col-md-12 field-title-bold">
+			{{ 'FORM_COLLABORATOR' | translate }}
+		</div>
+		<div class="col-md-12">
+	        <input class="form-control" type="text"
+	            placeholder="Comma-separated list of emails of collaborators"
+	            ng-model="myform.collaborators"
+	            value="{{myform.collaborators}}"
+	            style="width: 100%;">
+	    </div>
+	</div>
 	<div class="row">
 		<div class="row row-formname">
 	        <div class="col-md-8 col-xs-8">
@@ -47,11 +58,11 @@
 	                    {{ 'FORM_EMAIL' | translate }}
 	                </div>
 					<div class="col-md-12">
-	                    <input id="collab-email" class="form-control" type="text"
-	                        placeholder="Comma-separated list of emails"
+	                    <input class="form-control" type="text"
+	                        placeholder="Comma-separated list of emails that receive form responses"
 	                        ng-model="myform.emails"
 	                        value="{{myform.emails}}"
-	                        style="width: 100%;" readonly>
+	                        style="width: 100%;">
 	                </div>
 	            </div>
 	        </div>
