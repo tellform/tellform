@@ -13,7 +13,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
             controller: function($scope){
                 $scope.log = '';
                 $scope.languages = $rootScope.languages;
-
+                $scope.validate_emails = $rootScope.validate_emails;
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 

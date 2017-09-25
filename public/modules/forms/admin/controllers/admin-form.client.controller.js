@@ -13,7 +13,10 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             $scope.user = myUser;
         });
 
+        $scope.button_clicked  = false;
         $rootScope.saveInProgress = false;
+        $scope.success = $scope.error = null;
+        $scope.show_msg = false;
 
         CurrentForm.setForm($scope.myform);
 
@@ -37,8 +40,23 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             });
         };
 
+        $scope.validate_emails = function(emails, configureForm) {
+            var emails_arr = emails.split(',')
+            var re = /\S+@\S+\.\S+/;
+            for (var i = 0; i < emails_arr.length; i++) { 
+                if (re.test(emails_arr[i]) == false) {
+                    configureForm.email_list.$setValidity("text", false);
+                    return
+                }
+            }
+            configureForm.email_list.$setValidity("text", true);
+        };
+
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, data, refreshAfterUpdate, cb, configureForm){
+
+            $scope.button_clicked  = true;
+
             refreshFrame();
 
             var continueUpdate = true;
@@ -54,49 +72,45 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                     $rootScope.saveInProgress = true;
                 }
 
+                $scope.success = $scope.error = null;
+            
+                var dataToSend = data;
 
-                if (isDiffed) {
+                $scope.updatePromise = $http.put('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id, {form: dataToSend})
+                    .then(function (response) {
+                        $scope.success = 'Changes Saved!'
+                        if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
 
-                    $scope.updatePromise = $http.put('/forms/' + $scope.myform.admin.agency.shortName +'/' + $scope.myform._id, {changes: data})
-                        .then(function (response) {
+                    }).catch(function (response) {
+                        console.log('Error occured during form UPDATE.\n');
+                        err = response.data.message;
+                        $scope.error = err 
+                    }).finally(function () { 
 
-                            if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+                        window.setTimeout(function() {
+                            $scope.$apply(function() {
+                                $scope.button_clicked  = false; 
+                                $scope.show_msg = true
+                                window.setTimeout(function() {
+                                    $scope.$apply(function() {
+                                        $scope.show_msg = false
+                                        if (!(configureForm === undefined)) {
+                                            configureForm.$setPristine();
+                                        }
+                                    });
+                                }, 2000);
+                            });
+                        }, 1000);
+                        
+                        if (!updateImmediately) {
+                            $rootScope.saveInProgress = false;
+                        }
 
-                        }).catch(function (response) {
-                            console.log('Error occured during form UPDATE.\n');
-                            err = response.data;
-                        }).finally(function () {
-                            // console.log('finished updating');
-                            if (!updateImmediately) {
-                                $rootScope.saveInProgress = false;
-                            }
+                        if ((typeof cb) === 'function') {
+                            return cb(err);
+                        }
+                    });
 
-                            if ((typeof cb) === 'function') {
-                                return cb(err);
-                            }
-                        });
-                } else {
-
-                    var dataToSend = data;
-
-                    $scope.updatePromise = $http.put('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id, {form: dataToSend})
-                        .then(function (response) {
-
-                            if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
-
-                        }).catch(function (response) {
-                            console.log('Error occured during form UPDATE.\n');
-                            err = response.data;
-                        }).finally(function () {
-                            if (!updateImmediately) {
-                                $rootScope.saveInProgress = false;
-                            }
-
-                            if ((typeof cb) === 'function') {
-                                return cb(err);
-                            }
-                        });
-                }
             }
         };
     }
