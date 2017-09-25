@@ -244,6 +244,14 @@ form .accordion-edit {
     max-width: 100%;
 }
 
+.config-form #collab-email {
+    background-color: #eee;
+}
+
+.config-form #collab-email hr {
+    border-top: 1px solid #ccc;
+}
+
 .config-form > .row {
     padding: 20px 30px;
 }
@@ -276,11 +284,11 @@ form .accordion-edit {
     padding-bottom: 0px !important;
 }
 
-@media all and (min-width: 768px) {
+/*@media all and (min-width: 768px) {
     div.config-form .row.field {
         padding-top:1.8em;
     }
-}
+}*/
         div.config-form .row > .field-input {
             padding-left:0.1em;
         }

@@ -1,15 +1,17 @@
 <div class="config-form container" ng-form="configureForm">
-	<div id="collab-email" class="row" hidden>
-		<div class="field-title col-md-12 field-title-bold">
-			{{ 'FORM_COLLABORATOR' | translate }}
-		</div>
-		<div class="col-md-12">
-	        <input class="form-control" type="text"
-	            placeholder="Comma-separated list of emails of collaborators"
-	            ng-model="myform.collaborators"
-	            value="{{myform.collaborators}}"
-	            style="width: 100%;">
+	<div id="collab-email" class="row" ng-hide="$parent.user == undefined || $parent.user.email != myform.admin.email">
+	    <div class="row-with-no-bottom">
+	    	<div class="display-header">Admin Options</div>
+	    	<hr>
 	    </div>
+		<div class="field-title field-title-bold">
+			{{ 'FORM_COLLABORATOR' | translate }}&nbsp;<i class="glyphicon glyphicon-question-sign" uib-tooltip="Collaborators are other users that can configure your form. Only you (the admin) can add collaborators."></i>
+		</div>
+        <input class="form-control" type="text"
+            placeholder="i.e. collab1@data.gov.sg,collab2@ava.gov.sg"
+            ng-model="myform.collaborators"
+            value="{{myform.collaborators}}"
+            style="width: 100%;">
 	</div>
 	<div class="row">
 		<div class="row row-formname">
@@ -59,7 +61,7 @@
 	                </div>
 					<div class="col-md-12">
 	                    <input class="form-control" type="text"
-	                        placeholder="Comma-separated list of emails that receive form responses"
+	                        placeholder="i.e. leo@data.gov.sg,john@data.gov.sg"
 	                        ng-model="myform.emails"
 	                        value="{{myform.emails}}"
 	                        style="width: 100%;">

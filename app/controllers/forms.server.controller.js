@@ -158,7 +158,7 @@ exports.duplicate = function(req, res) {
 exports.list = function(req, res) {
 
 	// List forms when either the user is an admin or has email in form
-	var searchFields = [{emails: req.user.email}, {admin: req.user}];
+	var searchFields = [{collaborators: req.user.email}, {admin: req.user}];
 	var returnedFields = '_id title isLive';
 
 	Form.find({$or:  searchFields}, returnedFields).sort('title').populate('admin').exec(function(err, forms) {
