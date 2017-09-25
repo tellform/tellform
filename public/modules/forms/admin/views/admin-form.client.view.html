@@ -6,8 +6,8 @@
 
 	<div class="page-header" style="padding-bottom: 1em;">
 		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="padding-left: 0px !important;">
-			<h1 class="hidden-xs" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h1>
-			<h2 class="hidden-sm hidden-md hidden-lg" style="margin-bottom: 10px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h2>
+			<h1 class="hidden-xs form-title" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h1>
+			<h2 class="hidden-sm hidden-md hidden-lg form-title" style="margin-bottom: 10px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h2>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-right: 0px !important">
 			<a class="btn btn-secondary view-form-btn" href="{{actualFormURL + '/preview'}}" ng-class="myform.form_fields.length? '' : 'disabled'" target="_blank">

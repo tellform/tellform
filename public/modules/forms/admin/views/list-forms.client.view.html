@@ -83,7 +83,7 @@
 
 			<div class="row form-item-toolbar">
 				<span class="pull-right">
-					<i style="cursor:pointer;" class="fa fa-trash-o form-item-icon" ng-click="openDeleteModal($index)"></i>
+					<i style="cursor:pointer;" class="fa fa-trash-o form-item-icon" ng-click="openDeleteModal($index)" ng-hide="user.email != form.admin.email"></i>
 					<i style="cursor:pointer;" class="fa fa-files-o form-item-icon" ng-click="duplicateForm($index)"></i>
 				</span>
 			</div>
@@ -92,7 +92,8 @@
 			<!-- :agency -->
 				<a data-ng-href="#!/forms/{{user.agency.shortName}}/{{form._id}}/admin/create"
 					class="title-row col-xs-12">
-					<h4 class="list-group-item-heading" data-ng-bind="form.title" uib-tooltip="{{ form.title }}"></h4>
+					<div class="form-admin" ng-if="user.email === form.admin.email">Admin</div>
+					<h4 class="list-group-item-heading" data-ng-bind="form.title" uib-tooltip="{{ form.title }}" tooltip-placement="bottom"></h4>
 				</a>
 				<div class="col-xs-12 inactive-row" ng-if="!form.isLive">
 					<small class="list-group-item-text">

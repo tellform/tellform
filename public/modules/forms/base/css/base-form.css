@@ -330,6 +330,7 @@ form .accordion-edit {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        padding-bottom: 10px;
     }
     .admin-form > .page-header div[uib-tooltip-popup] {
         word-wrap: break-word;
@@ -643,10 +644,17 @@ h3.forms-list-title {
 
 .form-item .title-row {
     position: relative;
-    padding-top:2em;
     padding-bottom:1em;
     top: 10px;
 }
+
+.form-item .form-admin {
+    position: absolute;
+    width: 83.3333%;
+    background-color: #fff;
+    color: #34628a;
+}
+
     .form-item .title-row h4 {
         font-size: 1.3em;
     }
@@ -685,7 +693,8 @@ h3.forms-list-title {
 }
 
 .inactive-row {
-    margin-top:29px;
+    position: absolute;
+    bottom: 38px;
 }
 
 .inactive-row .list-group-item-text {

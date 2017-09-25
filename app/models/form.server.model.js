@@ -173,7 +173,8 @@ FormSchema.methods.getMainFields = function () {
     var form = {
         _id: this._id,
         title: this.title,
-        isLive: this.isLive
+        isLive: this.isLive,
+        admin: this.admin
     };
     return form;
 };

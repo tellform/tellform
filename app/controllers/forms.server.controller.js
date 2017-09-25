@@ -135,7 +135,8 @@ exports.duplicate = function(req, res) {
 			});
 		} else {
 			form._id = mongoose.Types.ObjectId();
-
+			form.admin = req.user.id; // Admin will be the user who duplicated the form
+			form.collaborators = []; // Empty collaborators upon copy
 			form.isNew = true;
 			form.title = form.title + '_' + copy_num;
 
@@ -159,7 +160,7 @@ exports.list = function(req, res) {
 
 	// List forms when either the user is an admin or has email in form
 	var searchFields = [{collaborators: req.user.email}, {admin: req.user}];
-	var returnedFields = '_id title isLive';
+	var returnedFields = '_id title isLive admin';
 
 	Form.find({$or:  searchFields}, returnedFields).sort('title').populate('admin').exec(function(err, forms) {
 			if (err) {
