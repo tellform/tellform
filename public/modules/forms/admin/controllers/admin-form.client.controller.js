@@ -12,7 +12,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $rootScope.saveInProgress = false;
         $scope.success = $scope.error = null;
         $scope.show_msg = false;
-        $scope.invalid_email = false
 
         CurrentForm.setForm($scope.myform);
 
@@ -90,7 +89,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                                     window.setTimeout(function() {
                                         $scope.$apply(function() {
                                             $scope.show_msg = false
-                                            configureForm.$setPristine();
+                                            if (!(configureForm === undefined)) {
+                                                configureForm.$setPristine();
+                                            }
                                         });
                                     }, 1000);
                                 });
@@ -127,7 +128,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                                     window.setTimeout(function() {
                                         $scope.$apply(function() {
                                             $scope.show_msg = false
-                                            configureForm.$setPristine();
+                                            if (!(configureForm === undefined)) {
+                                                configureForm.$setPristine();
+                                            }
                                         });
                                     }, 1000);
                                 });
