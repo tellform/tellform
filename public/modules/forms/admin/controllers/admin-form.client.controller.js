@@ -41,7 +41,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         };
 
         $scope.validate_emails = function(emails, configureForm) {
-            var emails_arr = emails.split(',')
+            var emails_arr = emails.split(',');
             var re = /\S+@\S+\.\S+/;
             for (var i = 0; i < emails_arr.length; i++) { 
                 if (re.test(emails_arr[i]) == false) {
@@ -50,6 +50,19 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 }
             }
             configureForm.email_list.$setValidity("text", true);
+        };
+
+        $scope.validate_collaborators = function(emails, configureForm) {
+            // In the future, check if collaborators are actual users in the database
+            var emails_arr = emails.split(',');
+            var re = /\S+@\S+\.\S+/;
+            for (var i = 0; i < emails_arr.length; i++) { 
+                if (re.test(emails_arr[i]) == false) {
+                    configureForm.collaborator_list.$setValidity("text", false);
+                    return
+                }
+            }
+            configureForm.collaborator_list.$setValidity("text", true);
         };
 
         // Update existing Form

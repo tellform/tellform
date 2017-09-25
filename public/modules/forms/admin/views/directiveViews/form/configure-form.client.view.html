@@ -8,10 +8,16 @@
 			{{ 'FORM_COLLABORATOR' | translate }}&nbsp;<i class="glyphicon glyphicon-question-sign" uib-tooltip="Collaborators are other users that can configure your form. Only you (the admin) can add collaborators."></i>
 		</div>
         <input class="form-control" type="text"
-            placeholder="i.e. collab1@data.gov.sg,collab2@ava.gov.sg"
+            placeholder="e.g. collab1@data.gov.sg,collab2@ava.gov.sg"
             ng-model="myform.collaborators"
+            name="collaborator_list"
             value="{{myform.collaborators}}"
+            ng-change="validate_collaborators(myform.collaborators, configureForm)"
             style="width: 100%;">
+        <div ng-show="configureForm.collaborator_list.$invalid" class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign"></span>
+			<span> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
+		</div>
 	</div>
 	<div class="row">
 		<div class="row row-formname">
@@ -67,7 +73,7 @@
 	                </div>
 					<div class="col-md-12">
 	                    <input class="form-control" type="text"
-	                        placeholder="i.e. leo@data.gov.sg,john@data.gov.sg"
+	                        placeholder="e.g. leo@data.gov.sg,john@data.gov.sg"
 	                        ng-model="myform.emails"
 	                        name = email_list
 	                        ng-required="true"

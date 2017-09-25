@@ -14,6 +14,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$htt
                 $scope.log = '';
                 $scope.languages = $rootScope.languages;
                 $scope.validate_emails = $rootScope.validate_emails;
+                $scope.validate_collaborators = $rootScope.validate_collaborators;
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 
