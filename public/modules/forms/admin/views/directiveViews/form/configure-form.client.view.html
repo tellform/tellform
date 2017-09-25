@@ -10,14 +10,20 @@
 	                <div class="col-md-12">
 	                    <input class="form-control"
 						    type="text"
+						    name="title"
 						    ng-model="myform.title"
 							ng-model-options="{ allowInvalid: true }"
 	                        value="{{myform.title}}"
 	                        style="width: 100%;"
 	                        ng-minlength="4"
+	                        ng-required="true"
 	                        ng-maxlength="200"
 	                        maxlength="200"
 	                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
+						<div ng-show="configureForm.title.$invalid" class="alert alert-danger" role="alert">
+							<span class="glyphicon glyphicon-exclamation-sign"></span>
+							<span> {{ 'ERROR_TITLE_INVALID' | translate }} </span>
+						</div>
 	                </div>
 	            </div>
 	        </div>
@@ -50,8 +56,15 @@
 	                    <input class="form-control" type="text"
 	                        placeholder="Comma-separated list of emails"
 	                        ng-model="myform.emails"
+	                        name = email_list
+	                        ng-required="true"
+	                        ng-change="validate_emails(myform.emails, configureForm)"
 	                        value="{{myform.emails}}"
 	                        style="width: 100%;">
+                        <div ng-show="configureForm.email_list.$invalid" class="alert alert-danger" role="alert">
+							<span class="glyphicon glyphicon-exclamation-sign"></span>
+							<span> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
+						</div>
 	                </div>
 	            </div>
 	        </div>
@@ -123,9 +136,10 @@
 			</div>
 		</div>
 	</div>
-    <div class="row">
+    <div class="row text-center">
 		<div class="col-xs-12 col-sm-offset-4 col-sm-4">
-			<button class="btn btn-signup btn-rounded" ng-disabled="$parent.button_clicked || configureForm.$invalid || myform.title.length === 0 || configureForm.$pristine" ng-click="update(false, myform, false, false, null)"><span ng-show="$parent.button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>{{ 'SAVE_CHANGES' | translate }}</button>
+			<button class="btn btn-signup btn-rounded" ng-disabled="$parent.button_clicked || configureForm.$invalid || configureForm.$pristine" ng-click="update(false, myform, false, false, null, configureForm
+			)"><span ng-show="$parent.button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>{{ 'SAVE_CHANGES' | translate }}</button>
 			<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'RESET' | translate }}</button>
 		</div>
     </div>

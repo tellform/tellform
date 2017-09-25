@@ -12,6 +12,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $rootScope.saveInProgress = false;
         $scope.success = $scope.error = null;
         $scope.show_msg = false;
+        $scope.invalid_email = false
 
         CurrentForm.setForm($scope.myform);
 
@@ -35,8 +36,20 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             });
         };
 
+        $scope.validate_emails = function(emails, configureForm) {
+            var emails_arr = emails.split(',')
+            var re = /\S+@\S+\.\S+/;
+            for (var i = 0; i < emails_arr.length; i++) { 
+                if (re.test(emails_arr[i]) == false) {
+                    configureForm.email_list.$setValidity("text", false);
+                    return
+                }
+            }
+            configureForm.email_list.$setValidity("text", true);
+        };
+
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
+        $scope.update = $rootScope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb, configureForm){
 
             $scope.button_clicked  = true;
 
@@ -74,14 +87,14 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                                 $scope.$apply(function() {
                                     $scope.button_clicked  = false; 
                                     $scope.show_msg = true
-                                    $scope.startFade = true
                                     window.setTimeout(function() {
                                         $scope.$apply(function() {
                                             $scope.show_msg = false
+                                            configureForm.$setPristine();
                                         });
-                                    }, 2000);
+                                    }, 1000);
                                 });
-                            }, 2000);
+                            }, 1000);
 
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
@@ -111,14 +124,14 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                                 $scope.$apply(function() {
                                     $scope.button_clicked  = false; 
                                     $scope.show_msg = true
-                                    $scope.startFade = true
                                     window.setTimeout(function() {
                                         $scope.$apply(function() {
                                             $scope.show_msg = false
+                                            configureForm.$setPristine();
                                         });
-                                    }, 2000);
+                                    }, 1000);
                                 });
-                            }, 2000);
+                            }, 1000);
                             
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
