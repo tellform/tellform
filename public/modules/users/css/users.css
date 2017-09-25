@@ -73,6 +73,11 @@ section.auth {
 		color: #896D0B;
 	}
 
+	.btn-rounded.btn-signup.btn-pristine{
+		background-color: #47bbff;
+		color: #896D0B;
+	}
+
 	.btn-rounded.btn-signup:hover:not([disabled]) {
 		color: #FFD747;
 		background-color: #896D0B;
