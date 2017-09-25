@@ -18,7 +18,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DISPLAY_FORM_HEADER: 'Display Form Header?',
 		DISPLAY_START_PAGE: 'Display Start Page?',
 		DISPLAY_END_PAGE: 'Display End Page?',
-		FORM_EMAIL: 'Emails (comma-separated)', // Collaborator emails, only the admin views this on the front
+		FORM_EMAIL: 'Recipient Emails (comma-separated)', // Collaborator emails, only the admin views this on the front
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Create a new form',
@@ -129,7 +129,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CREATE_TAB: 'Create',
 		PREVIEW_TAB: 'Preview',
 		CONFIGURE_TAB: 'Configure',
-		RESPONSE_TAB: 'Response',
+		RESPONSE_TAB: 'Responses',
     SHARE_TAB: 'Share',
 
     //Field Types
