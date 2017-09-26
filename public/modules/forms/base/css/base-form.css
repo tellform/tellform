@@ -293,11 +293,6 @@ form .accordion-edit {
     padding-bottom: 0px !important;
 }
 
-/*@media all and (min-width: 768px) {
-    div.config-form .row.field {
-        padding-top:1.8em;
-    }
-}*/
         div.config-form .row > .field-input {
             padding-left:0.1em;
         }

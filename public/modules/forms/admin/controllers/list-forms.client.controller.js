@@ -1,16 +1,12 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', '$window',
-	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, $window) {
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal',
+	function($rootScope, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal) {
 
         $scope = $rootScope;
         $scope.forms = {};
         $scope.showCreateModal = false;
-
-        // user.getCurrent().then(function(myUser) {
-            // $scope.user = myUser;
-        // });
 
 		/*
 		 ** DeleteModal Functions
