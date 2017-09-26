@@ -31,10 +31,10 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 					enableVerticalScrollbar: uiGridConstants.scrollbars.ALWAYS,
 					enableHorizontalScrollbar: uiGridConstants.scrollbars.ALWAYS,
 
-					enableRowHeaderSelection: true,
-					enableFullRowSelection: true,
-					enableSelectAll: true,
-					multiSelect: true,
+					enableRowHeaderSelection: false,
+					enableFullRowSelection: false,
+					enableSelectAll: false,
+					multiSelect: false,
 
 					paginationPageSize: DEFAULT_PAGE_SIZE,
 					paginationPageSizes: [ DEFAULT_PAGE_SIZE ],
