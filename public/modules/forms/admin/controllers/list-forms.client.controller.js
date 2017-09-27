@@ -46,7 +46,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.findAll = function() {
             Forms.query(function(_forms){
                 $scope.myforms = _forms;
-                
             });
         };
 

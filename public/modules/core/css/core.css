@@ -7,6 +7,8 @@ input:-webkit-autofill {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	margin-top: 30px;
+	padding-bottom: 5px;
 }
 .form-item .title-row > div[uib-tooltip-popup] {
 	word-wrap: break-word;

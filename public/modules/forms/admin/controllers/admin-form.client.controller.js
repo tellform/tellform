@@ -1,13 +1,18 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
-    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', 'User',
+    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, user) {
 
         $scope.activePill = 0;
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
+
+        user.getCurrent().then(function(myUser) {
+            $scope.user = myUser;
+        });
+
         $scope.button_clicked  = false;
         $rootScope.saveInProgress = false;
         $scope.success = $scope.error = null;
@@ -36,7 +41,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         };
 
         $scope.validate_emails = function(emails, configureForm) {
-            var emails_arr = emails.split(',')
+            var emails_arr = emails.split(',');
             var re = /\S+@\S+\.\S+/;
             for (var i = 0; i < emails_arr.length; i++) { 
                 if (re.test(emails_arr[i]) == false) {
@@ -45,6 +50,26 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 }
             }
             configureForm.email_list.$setValidity("text", true);
+        };
+
+        $scope.validate_collaborators = function(emails, configureForm) {
+            if (emails.trim() === '') {
+                configureForm.collaborator_list.$setValidity("text", true);
+                return;    
+            }
+
+            // In the future, check if collaborators are actual users in the database
+            var emails_arr = emails.split(',');
+
+            var re = /\S+@\S+\.\S+/;
+            for (var i = 0; i < emails_arr.length; i++) { 
+                if (re.test(emails_arr[i]) == false) {
+                    configureForm.collaborator_list.$setValidity("text", false);
+                    return
+                }
+            }
+
+            configureForm.collaborator_list.$setValidity("text", true);
         };
 
         // Update existing Form

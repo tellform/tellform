@@ -40,10 +40,10 @@ exports.create = function(req, res) {
  * Show the current form
  */
 exports.read = function(req, res) {
-
 	// Can only get form information if form is live or user owns form
 	var currForm = req.form.toJSON();
-	if (req.form.isLive || (req.user && req.user.id == req.form.admin.id)) {
+	if (req.form.isLive || (req.user && req.user.id == req.form.admin.id) || 
+		(req.user && req.form.collaborators.indexOf(req.user.email) > -1)) {
 		return res.json(req.form.toJSON());
 	}
 	return res.status(403).send({
@@ -134,8 +134,10 @@ exports.duplicate = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			form._id = mongoose.Types.ObjectId();
 
+			form._id = mongoose.Types.ObjectId();
+			form.admin = req.user.id; // Admin will be the user who duplicated the form
+			form.collaborators = []; // Empty collaborators upon copy
 			form.isNew = true;
 			form.title = form.title + '_' + copy_num;
 
@@ -145,8 +147,11 @@ exports.duplicate = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-
-				res.json(form.getMainFields());
+				var formFields = form.getMainFields();
+				// Have to set admin here if not duplicated form will 
+				// not be admin before refresh
+				formFields.admin = {'_id': req.user.id};
+				res.json(formFields);
 			});
 		}
 	});
@@ -156,13 +161,12 @@ exports.duplicate = function(req, res) {
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
-	//Allow 'admin' user to view all forms
-	var searchObj = {admin: req.user};
-	var returnedFields = '_id title isLive';
 
-	if(req.user.isAdmin()) searchObj = {};
+	// List forms when either the user is an admin or has email in form
+	var searchFields = [{collaborators: req.user.email}, {admin: req.user}];
+	var returnedFields = '_id title isLive admin';
 
-	Form.find(searchObj, returnedFields).sort('title').populate('admin').exec(function(err, forms) {
+	Form.find({$or:  searchFields}, returnedFields).sort('title').populate('admin').exec(function(err, forms) {
 			if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -198,8 +202,17 @@ exports.formByID = function(req, res, next, id) {
 			});
 		}
 		else {
+			
 			//Remove sensitive information from User object
 			var _form = form;
+
+			if (!_form.admin) {
+				res.status(500).send({
+					message: 'Server error'
+				})
+				return;
+			}
+
 			_form.admin.password = null;
 			_form.admin.salt = null;
 			_form.provider = null;
@@ -209,7 +222,7 @@ exports.formByID = function(req, res, next, id) {
 				return next();
 			} else {
 				res.status(404).send({
-				message: 'Agency does not match'
+					message: 'Agency does not match'
 				})
 			}
 		}
@@ -221,7 +234,8 @@ exports.formByID = function(req, res, next, id) {
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
+	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1 && 
+		req.form.collaborators.indexOf(req.user.email) < 0) {
 		res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});

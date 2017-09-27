@@ -244,6 +244,14 @@ form .accordion-edit {
     max-width: 100%;
 }
 
+.config-form #collab-email {
+    background-color: #eee;
+}
+
+.config-form #collab-email hr {
+    border-top: 1px solid #ccc;
+}
+
 .config-form > .row {
     padding: 20px 30px;
 }
@@ -257,6 +265,16 @@ form .accordion-edit {
 .config-form .field-title-bold {
     font-weight: bold;
     font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.config-form .field-title-bold i {
+    opacity: 0.5;
+}
+
+.config-form .field-title-bold i:hover,
+.config-form .field-title-bold i:focus {
+    opacity: 1.0;
 }
 
 .config-form .display-header {
@@ -275,11 +293,6 @@ form .accordion-edit {
     padding-bottom: 0px !important;
 }
 
-@media all and (min-width: 768px) {
-    div.config-form .row.field {
-        padding-top:1.8em;
-    }
-}
         div.config-form .row > .field-input {
             padding-left:0.1em;
         }
@@ -312,6 +325,7 @@ form .accordion-edit {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        padding-bottom: 10px;
     }
     .admin-form > .page-header div[uib-tooltip-popup] {
         word-wrap: break-word;
@@ -625,10 +639,17 @@ h3.forms-list-title {
 
 .form-item .title-row {
     position: relative;
-    padding-top:2em;
     padding-bottom:1em;
     top: 10px;
 }
+
+.form-item .form-admin {
+    position: absolute;
+    width: 83.3333%;
+    background-color: #fff;
+    color: #34628a;
+}
+
     .form-item .title-row h4 {
         font-size: 1.3em;
     }
@@ -667,7 +688,8 @@ h3.forms-list-title {
 }
 
 .inactive-row {
-    margin-top:29px;
+    position: absolute;
+    bottom: 38px;
 }
 
 .inactive-row .list-group-item-text {
