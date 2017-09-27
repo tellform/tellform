@@ -54,7 +54,7 @@ angular.module('forms').directive('formDirective', ['$http', '$filter', '$rootSc
         var initFocus = function() {
           if ($scope.response_fields.length) {
             var active_field = $scope.response_fields[0]
-            $scope.setActiveField(active_field, false);
+            $scope.setActiveField(active_field, true);
             focusActiveField(active_field);
           }
         }

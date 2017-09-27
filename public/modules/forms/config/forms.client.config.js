@@ -29,8 +29,9 @@ angular.module('forms').run(['Menus',
 
       if (fields) {
         answered_fields = fields.filter(function(field) {
-          return (field.fieldType !== 'yes_no' && !!(field.fieldValue)) ||
-            (field.fieldType === 'yes_no' && field.fieldValue != undefined);
+          return (field.fieldType !== 'yes_no' && field.fieldType !== 'number' && !!(field.fieldValue)) ||
+            (field.fieldType === 'yes_no' && field.fieldValue != undefined) ||
+            (field.fieldType === 'number' && (!!(field.fieldValue) || field.fieldValue === 0));
         });
       }
       return answered_fields;
