@@ -35,7 +35,7 @@
 					 data-id="{{field._id}}"
 					 class="row field-directive"
 					 ng-class="{ activeField: selected._id == field._id }">
-				<field-directive field="field" design="myform.design" index="$index" forms="forms"></field-directive>
+				<field-directive field="field" forms="forms"></field-directive>
 			</div>
 			<div class="empty-div"></div>
 		</form>
@@ -45,18 +45,18 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6 col-sm-6 col-xs-12" ng-show="!myform.submitted">
-					<p class="answered">{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p>
-					<p ng-if="forms.myForm.$invalid" class="need-complete">{{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}</p>
+					<p class="answered">{{ 'ADVANCEMENT' | translate:calculateAdvancement }}</p>
+					<p ng-if="forms.myForm.$invalid" class="need-complete">{{ 'COMPLETING_NEEDED' | translate:calculateAdvancement }}</p>
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-12">
 					<button class="btn btn-lg col-xs-3 up-down-btn" id="focusDownButton"
 									ng-click="nextField()"
-									ng-disabled="selected.index > myform.form_fields.length-1">
+									ng-disabled="selected.index >= response_fields.length">
 						<i class="fa fa-chevron-down"></i>
 					</button>
 					<button class="btn btn-lg col-xs-3 up-down-btn" id="focusUpButton"
 									ng-click="prevField()"
-									ng-disabled="selected.index == 0">
+									ng-disabled="!selected.index || selected.index == 1">
             <i class="fa fa-chevron-up"></i>
 					</button>
 

@@ -2,7 +2,7 @@
 	<div class="col-xs-12 field-title row-fluid">
 		<h3 class="col-xs-12">
 			<small class="field-number">
-				{{ index+1  }}
+				{{ field.field_number }}
 				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 			</small>
 
@@ -18,17 +18,19 @@
 		</p>
 	</div>
 	<div class="col-xs-12 field-input">
-		<input type="{{ input_type }}"
-			name="{{ field.fieldType }}{{ index }}"
+		<input id="{{ field._id }}"
+			type="{{ input_type }}"
 			class="form-control focusOn"
 			ng-model="field.fieldValue"
-			ng-model-options="{ debounce: 250 }"
 			ng-required="field.required"
 			ng-disabled="field.disabled"
+			ng-click="setActiveField(field, false)"
 			placeholder="{{ placeholder }}">
 	</div>
 	<div class="col-xs-12">
-		<div ng-show="forms.myForm.{{ field.fieldType }}{{ index }}.$invalid && !!forms.myForm.{{ field.fieldType }}{{ index }}.$viewValue " class="alert alert-danger" role="alert">
+		<div ng-show="field.fieldType !== 'number' && forms.myForm.{{ field.fieldType }}{{ field.field_number }}.$invalid && !!forms.myForm.{{ field.fieldType }}{{ field.field_number }}.$viewValue "
+				 class="alert alert-danger"
+				 role="alert">
 			<span class="glyphicon glyphicon-exclamation-sign"></span>
 			<span ng-if="field.fieldType == 'email'"> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
 			<span ng-if="field.fieldType == 'link'"> {{ 'ERROR_URL_INVALID' | translate }} </span>

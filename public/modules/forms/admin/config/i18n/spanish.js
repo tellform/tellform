@@ -126,21 +126,19 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
     //Field Types
     SHORT_TEXT: 'Texto corto',
+		PARAGRAPH_TEXT: 'Párrafo',
     EMAIL: 'Email',
-    MULTIPLE_CHOICE: 'Opciones múltiples',
+		NUMBERS: 'Números',
     DROPDOWN: 'Desplegable',
     DATE: 'Fecha',
-    PARAGRAPH_T: 'Párrafo',
     YES_NO: 'Si/No',
-    LEGAL: 'Legal',
-    RATING: 'Puntaje',
-    NUMBERS: 'Números',
-    SIGNATURE: 'Firma',
-    FILE_UPLOAD: 'Subir archivo',
-    OPTION_SCALE: 'Escala',
-    PAYMENT: 'Pago',
-    STATEMENT: 'Declaración',
+		RATING: 'Puntaje',
+		STATEMENT: 'Declaración',
     SECTION: 'Sección',
-    LINK: 'Enlace'
+		LINK: 'Enlace',
+		FILE_UPLOAD: 'Subir archivo',
+		HIDDEN: 'Oculto',
+    LEGAL: 'Legal',
+    MULTIPLE_CHOICE: 'Opciones múltiples'
 	});
 }]);

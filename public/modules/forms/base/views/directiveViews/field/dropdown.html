@@ -2,7 +2,7 @@
   <div class="col-xs-12 field-title row-fluid">
 		<h3 class="col-xs-12">
 			<small class="field-number">
-				{{ index+1  }}
+				{{ field.field_number }}
 				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 			</small>
 
@@ -17,9 +17,11 @@
 			<small>{{ field.description }}</small>
 		</p>
 	</div>
-	<div class="col-xs-12 field-input">
+	<div class="col-xs-12 field-input" ng-click="setActiveField(field, false)">
     <div class="input-group">
-  		<ui-select theme="selectize"
+  		<ui-select id="{{ field._id }}"
+                 class="focusOn"
+                 theme="selectize"
   							 search-enabled="true"
   							 ng-model="field.fieldValue"
   							 ng-required="field.required"
