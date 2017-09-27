@@ -40,60 +40,6 @@
 
 					<div class="row"><br></div>
 
-					<div class="row">
-						<div class="col-md-4 col-xs-12 field-input">{{ 'SHOW_BUTTONS' | translate }}</div>
-						<div class="col-md-8 col-xs-12 field-input">
-							<label class="switch-light switch-holo" onclick="">
-								<input type="checkbox" ng-model="showButtons">
-								<span>
-									<span> {{ 'OFF' | translate }}</span>
-									<span> {{ 'ON' | translate }}</span>
-									<a></a>
-								</span>
-							</label>
-						</div>
-					</div>
-
-					<div class="row options buttons" ng-if="showButtons">
-						<div class="col-md-3 col-xs-12">{{ 'BUTTONS' | translate }}:</div>
-						<div class="col-md-9 col-xs-12">
-							<div ng-repeat="button in myform.endPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
-
-								<div class="col-xs-5">
-									<span>{{ 'BUTTON_TEXT' | translate }}</span>
-									<input type="text"
-										   name="{{button.text}}_buttonText_startPage"
-										   ng-model="button.text"
-										   value="{{button.text}}"
-										   placeholder="{{ 'BUTTON_TEXT' | translate }}">
-								</div>
-
-
-								<div class="col-xs-5">
-									<span>{{ 'BUTTON_LINK' | translate }}</span>
-									<input type="text"
-										   name="{{button.url}}_url_startPage"
-										   ng-model="button.url"
-										   value="{{button.url}}"
-										   placeholder="http://aeouaou.com/aoeuoa">
-								</div>
-
-								<div class="col-xs-2">
-									<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteButton(button)">
-										<i class="fa fa-trash-o"></i>
-									</a>
-								</div>
-							</div>
-
-							<div class="row"><br></div>
-							<div class="row">
-								<button class="btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8" type="button" ng-click="addButton()">
-									<i class="icon-plus icon-white"></i> {{ 'ADD_BUTTON' | translate }}
-								</button>
-							</div>
-						</div>
-					</div>
-
 					<div class="modal-footer row">
 						<button type="submit" ng-click="saveEndPage()" class="btn btn-signup btn-rounded">
 							{{ 'SAVE_START_PAGE' | translate }}
@@ -192,60 +138,6 @@
 					</div>
 
 					<div class="row"><br></div>
-
-					<div class="row">
-						<div class="col-md-4 col-xs-12 field-input">{{ 'SHOW_BUTTONS' | translate }}</div>
-						<div class="col-md-8 col-xs-12 field-input">
-							<label class="switch-light switch-holo" onclick="">
-								<input type="checkbox" ng-model="showButtons">
-								<span>
-									<span> {{ 'OFF' | translate }}</span>
-									<span> {{ 'ON' | translate }}</span>
-									<a></a>
-								</span>
-							</label>
-						</div>
-					</div>
-
-					<div class="row options buttons" ng-if="showButtons">
-						<div class="col-md-3 col-xs-12">{{ 'BUTTONS' | translate }}:</div>
-						<div class="col-md-9 col-xs-12">
-							<div ng-repeat="button in myform.startPage.buttons track by button._id" class="row" style="padding-bottom:1em;">
-
-								<div class="col-xs-5">
-									<span>{{ 'BUTTON_TEXT' | translate }}</span>
-									<input type="text"
-										   name="{{button.text}}_buttonText_startPage"
-										   ng-model="button.text"
-										   value="{{button.text}}"
-										   placeholder="{{ 'BUTTON_TEXT' | translate }}">
-								</div>
-
-
-								<div class="col-xs-5">
-									<span>{{ 'BUTTON_LINK' | translate }}</span>
-									<input type="text"
-										   name="{{button.url}}_url_startPage"
-										   ng-model="button.url"
-										   value="{{button.url}}"
-										   placeholder="http://aeouaou.com/aoeuoa">
-								</div>
-
-								<div class="col-xs-2">
-									<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteButton(button)">
-										<i class="fa fa-trash-o"></i>
-									</a>
-								</div>
-							</div>
-
-							<div class="row"><br></div>
-							<div class="row">
-								<button class="btn btn-primary btn-small col-md-offset-6 col-md-6 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8" type="button" ng-click="addButton()">
-									<i class="icon-plus icon-white"></i> {{ 'ADD_BUTTON' | translate }}
-								</button>
-							</div>
-						</div>
-					</div>
 
 					<div class="modal-footer row">
 						<button type="submit" ng-click="saveStartPage()" class="btn btn-signup btn-rounded">
