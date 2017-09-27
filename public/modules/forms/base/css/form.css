@@ -84,6 +84,9 @@ div.start-end-page .form-actions .btn {
 .form-button-panel .btn {
   margin: 10px auto;
 }
+.form-button-panel .btn:focus {
+  outline: 0;
+}
 .form-button-panel .btn:not(:first-child) {
   margin-left: 10px;
 }
@@ -107,6 +110,16 @@ div.start-end-page .form-actions .btn {
 .form-button-panel .btn.review-btn {
   background-color: #BE0000;
   color: white;
+}
+
+.form-button-panel .btn.up-down-btn:focus,
+.form-button-panel .btn.submit-btn:focus {
+  border: 1px solid #66afe9 !important;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+.form-button-panel .btn.review-btn:focus {
+  border: 1px solid #FA787E !important;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(250, 120, 126,.6)
 }
 
 @media not all and (min-width: 768px) {

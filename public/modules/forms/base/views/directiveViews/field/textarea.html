@@ -2,7 +2,7 @@
   <div class="col-xs-12 field-title row-fluid">
 		<h3 class="col-xs-12">
 			<small class="field-number">
-				{{ index+1  }}
+				{{ field.field_number }}
 				<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 			</small>
 
@@ -18,12 +18,13 @@
 		</p>
 	</div>
 	<div class="col-xs-12 field-input">
-		<textarea type="text"
+		<textarea id="{{ field._id }}"
+      type="text"
       class="form-control focusOn"
 			ng-model="field.fieldValue"
-			ng-model-options="{ debounce: 250 }"
 			ng-required="field.required"
-			ng-disabled="field.disabled">
+			ng-disabled="field.disabled"
+			ng-click="setActiveField(field, false)">
 		</textarea>
 	</div>
 </div>

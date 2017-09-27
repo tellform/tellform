@@ -229,20 +229,18 @@ form .input-group-btn button {
 }
 
 
-input.ng-valid:not(:focus){
+input:not(.ui-select-search).ng-valid:not(:focus){
   border: 1px solid #ccc;
 }
-input.ng-invalid.ng-dirty{
+input:not(.ui-select-search).ng-invalid.ng-dirty{
 	border: 1px solid #FA787E;
 }
-input.ng-invalid.ng-dirty:focus {
+input:not(.ui-select-search).ng-invalid.ng-dirty:focus {
   border: 1px solid #FA787E !important;
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(250, 120, 126,.6)
 }
 
-input.ng-valid.ng-dirty:focus {
-    border: 1px solid #66afe9 !important;
+input:not(.ui-select-search).ng-valid.ng-dirty:focus {
+  border: 1px solid #66afe9 !important;
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
 }
-
-
