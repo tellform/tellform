@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', '$uibModal', '$timeout',
-    function ($rootScope, FormFields, $uibModal, $timeout) {
+angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', 'Rating', '$uibModal', '$timeout',
+    function ($rootScope, FormFields, Rating, $uibModal, $timeout) {
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/edit-form.client.view.html',
             restrict: 'E',
@@ -59,22 +59,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 									return false;
 								}
 							};
-
-							$scope.validShapes =  [
-								'Heart',
-								'Star',
-								'thumbs-up',
-								'thumbs-down',
-								'Circle',
-								'Square',
-								'Check Circle',
-								'Smile Outlined',
-								'Hourglass',
-								'bell',
-								'Paper Plane',
-								'Comment',
-								'Trash'
-							];
 
 							// add new option to the field
 							$scope.addOption = function(currField){
@@ -135,22 +119,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
               	}
               };
 
-							//Populate Name to Font-awesomeName Conversion Map
-							$scope.select2FA = {
-								'Heart': 'Heart',
-								'Star': 'Star',
-								'thumbs-up': 'Thumbs Up',
-								'thumbs-down':'Thumbs Down',
-								'Circle': 'Circle',
-								'Square':'Square',
-								'Check Circle': 'Checkmark',
-								'Smile Outlined': 'Smile',
-								'Hourglass': 'Hourglass',
-								'bell': 'Bell',
-								'Paper Plane': 'Paper Plane',
-								'Comment': 'Chat Bubble',
-								'Trash': 'Trash Can'
-							};
+              $scope.rating_shapes = Rating.shapes;
 
 							// decides whether rating block will be shown
 							$scope.showRatingOptions = function (field){

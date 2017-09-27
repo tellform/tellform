@@ -13,7 +13,7 @@
 
 .edit-modal-window .edit-panel {
 	background-color: #F1F1F1;
-	padding: 0 35px 0 35px;
+	padding: 15px 35px;
 }
 
 .edit-modal-window .edit-panel .row.optionFrom {
@@ -72,6 +72,10 @@
 }
 
 .edit-modal-window .preview-field {
+	resize: vertical;
+}
+
+.edit-modal-window .edit-panel textarea {
 	resize: vertical;
 }
 

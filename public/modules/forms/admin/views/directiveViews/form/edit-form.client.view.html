@@ -305,6 +305,7 @@
 						<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_FIELD' | translate }}</h3>
 					</div>
 					<div class="row question">
+					<div ng-if="field.fieldType !== 'statement'" class="row question">
 						<div class="col-md-12 bold">{{ 'QUESTION_TITLE' | translate }}</div>
 						<div class="col-md-12">
 							<input type="text" class="form-control" ng-model="field.title" name="title{{field._id}}" value="{{field.title}}" required></div>
@@ -313,14 +314,15 @@
 					<div class="row"><br></div>
 
 					<div class="row description" ng-hide="showRatingOptions(field)">
-						<div class="col-md-12 bold">{{ 'QUESTION_DESCRIPTION' | translate }}</div>
+						<div ng-if="field.fieldType !== 'statement'" class="col-md-12 bold">{{ 'QUESTION_DESCRIPTION' | translate }}</div>
+						<div ng-if="field.fieldType === 'statement'" class="col-md-12 bold">{{ 'STATEMENT' | translate }}</div>
 						<div class="col-md-12">
 							<textarea type="text" class="form-control" ng-model="field.description" name="description{{field._id}}"value="{{field.description}}"></textarea>
 						</div>
 					</div>
 
 					<div class="row"><br></div>
-					<div class="row">
+					<div ng-if="field.fieldType !== 'yes_no' && field.fieldType !== 'statement' && field.fieldType !== 'section'" class="row">
 						<div class="col-md-4 col-xs-12 field-title">{{ 'REQUIRED_FIELD' | translate }}</div>
 						<div class="col-md-8 col-xs-12 field-input">
 							<label class="switch-light switch-holo" onclick="">
@@ -394,9 +396,9 @@
 							<select style="width:100%" ng-model="field.ratingOptions.shape"
 									value="{{field.ratingOptions.steps}}"
 									name="ratingOptions_shape{{field._id}}" required>
-								<option ng-repeat="shapeType in validShapes"
-										value="{{shapeType}}">
-									{{select2FA[shapeType]}}
+								<option ng-repeat="shape in rating_shapes"
+										value="{{ shape }}">
+									{{ shape }}
 								</option>
 							</select>
 						</div>
@@ -508,9 +510,10 @@
 						</button>
 					</div>
 				</div>
+				</div>
 
 				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
-					<form class="public-form"ss>
+					<form class="public-form">
 						<field-directive field="field" validate="false" class="preview-field">
 						</field-directive>
 					</form>
@@ -601,7 +604,7 @@
 						</div>
 
 					</div>
-				</div>	
+				</div>
 			</div>
 		</div>
 
