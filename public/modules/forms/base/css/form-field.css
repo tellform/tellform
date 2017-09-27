@@ -79,9 +79,10 @@ form .row.field.statement > .field-input,
 form .row.field.section > .field-input {
   font-size: 1em;
   text-align: justify;
+  white-space: pre-wrap;
 }
 
-/* Yes-no fieled */
+/* Yes-no field */
 form .yes-no .field-input .switch-light .alert {
   padding: 13px 10px;
   border: 1px solid #ccc;

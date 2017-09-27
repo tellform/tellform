@@ -3,7 +3,8 @@
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
 angular.module('forms').service('FormFields', ['$filter',
   function($filter) {
-    this.types = [{
+    this.types = [
+      {
         name: 'textfield',
         value: $filter('translate')('SHORT_TEXT'),
       },
@@ -42,7 +43,7 @@ angular.module('forms').service('FormFields', ['$filter',
       {
         name: 'section',
         value: $filter('translate')('SECTION')
-      },
+      }
       // {
       //   name: 'link',
       //   value: $filter('translate')('LINK'),
@@ -66,4 +67,11 @@ angular.module('forms').service('FormFields', ['$filter',
     ];
   }
 
+]).service('Rating', ['$filter',
+  function($filter) {
+    this.shapes = [
+      'Heart',
+			'Star'
+    ];
+  }
 ]);
