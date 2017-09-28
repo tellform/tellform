@@ -23,22 +23,8 @@ var RatingFieldSchema = new Schema({
 		type: String,
 		enum: [
 			'Heart',
-			'Star',
-			'thumbs-up',
-			'thumbs-down',
-			'Circle',
-			'Square',
-			'Check Circle',
-			'Smile Outlined',
-			'Hourglass',
-			'bell',
-			'Paper Plane',
-			'Comment',
-			'Trash'
+			'Star'
 		]
-	},
-	validShapes: {
-		type: [String]
 	}
 });
 
@@ -55,7 +41,7 @@ function BaseFieldSchema(){
 		title: {
 			type: String,
 			trim: true,
-			required: 'Field Title cannot be blank'
+			default: ''
 		},
 		description: {
 			type: String,
@@ -121,11 +107,6 @@ function BaseFieldSchema(){
 
 	this.pre('save', function (next) {
 		this.validFieldTypes = mongoose.model('Field').schema.path('fieldType').enumValues;
-
-		if(this.fieldType === 'rating' && this.ratingOptions.validShapes.length === 0){
-			this.ratingOptions.validShapes = mongoose.model('RatingOptions').schema.path('shape').enumValues;
-		}
-
 		next();
 	});
 }

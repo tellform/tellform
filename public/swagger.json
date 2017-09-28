@@ -429,12 +429,6 @@
 						"Comment",
 						"Trash"
 					]
-				},
-				"validShapes": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
 				}
 			}
 		},
