@@ -108,6 +108,9 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             form.title = $scope.forms.createForm.title.$modelValue;
             form.language = $scope.forms.createForm.language.$modelValue;
 
+            console.log('in create form')
+            console.log(form)
+
             if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
                 $http.post('/forms', {form: form})
                 .success(function(data, status, headers){

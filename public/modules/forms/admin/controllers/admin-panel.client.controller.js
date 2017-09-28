@@ -1,89 +1,70 @@
 'use strict';
 
 // Admin Panel controller
-angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScope', '$http', 'Forms', '$stateParams', '$interval', 'uiGridConstants', 'moment',
-    function($rootScope, $scope, $http, Forms, $stateParams, $interval, uiGridConstants, moment) {
-
-        var DEFAULT_PAGE_SIZE = 20;
-
-        // var getPageOptions = {
-        //     pageNumber: 1,
-        //     pageSize: DEFAULT_PAGE_SIZE,
-        //     sortField: 'created',
-        //     sortDirection: -1
-        // };
-
-        $scope.dateOptions = {
-            changeYear: true,
-            changeMonth: true,
-            dateFormat: 'dd M yy',
-            yearRange: '1900:+0'
-        };
+angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScope', '$http', 'Forms', '$stateParams',
+    function($rootScope, $scope, $http, Forms, $stateParams) {
 
         $scope.gridOptions = {
+            rowHeight:45,
+            enableSorting: true,
+            enableFiltering: false,
+            multiSelect: false,
             enableColumnMenus: false,
-            enableVerticalScrollbar: uiGridConstants.scrollbars.ALWAYS,
-            enableHorizontalScrollbar: uiGridConstants.scrollbars.ALWAYS,
-
+            enableCellEditOnFocus: true,
             enableRowHeaderSelection: true,
             enableFullRowSelection: true,
             enableSelectAll: true,
-            multiSelect: true,
+            multiSelect: true
+        };
 
-            paginationPageSize: DEFAULT_PAGE_SIZE,
-            paginationPageSizes: [ DEFAULT_PAGE_SIZE ],
-            useExternalPagination: true,
 
-            useExternalSorting: true,
+        $scope.msg = {};
 
+        $scope.gridOptions = {
+            
             columnDefs: [{
                     name: 'Reference Number',
                     field: '_id',
-                    enableCellEdit: false,
-                    enableSorting: true,
-                    sortDirectionCycle: [ uiGridConstants.ASC, uiGridConstants.DESC ],
-                    width: '50%',
-                    minWidth: 250
+                    enableCellEdit: false
                 },
                 {
-                    name: 'Agency Name',
-                    field: 'fullName',
-                    enableCellEdit: false,
-                    enableSorting: true,
-                    sort: { direction: uiGridConstants.DESC },
-                    defaultSort: { direction: uiGridConstants.DESC },
-                    sortDirectionCycle: [ uiGridConstants.ASC, uiGridConstants.DESC ],
-                    width: '50%',
-                    minWidth: 250
+                    name: 'Full Name',
+                    field: 'fullName'
+                },
+                {
+                    name: 'Short Name',
+                    field: 'shortName'
+                },
+                {
+                    name: 'Email Domain',
+                    field: 'emailDomain'
+                },
+                {
+                    name: 'Logo',
+                    field: 'logo',
                 }
             ],
             onRegisterApi: function(gridApi) {
                 $scope.gridApi = gridApi;
 
                 gridApi.core.on.sortChanged($scope, function(grid, sortColumns) {
-                    if (sortColumns.length == 0) {
-                        // getPageOptions.sortField = null;
-                        // getPageOptions.sortDirection = null;
-                    } else {
-                        // getPageOptions.sortField = sortColumns[0].field;
-                        // getPageOptions.sortDirection = sortColumns[0].sort.direction === 'asc' ? 1 : -1;
-                    }
+                    console.log('sorted on change')
                     getPage();
                 });
 
-                gridApi.pagination.on.paginationChanged($scope, function(newPage, pageSize) {
-                    // getPageOptions.pageNumber = newPage;
-                    // getPageOptions.pageSize = pageSize;
-                    getPage();
-                });
+                gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+                    $scope.msg.lastCellEdited = 'edited row id:' + rowEntity._id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
+                    $scope.$apply();
 
-                gridApi.selection.on.rowSelectionChanged($scope, function(row) {
-                    $scope.selectedRows = gridApi.selection.getSelectedRows();
-                });
+                    // $scope.updatePromise = $http.put('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id, {form: dataToSend})
+                    // .then(function (response) {
+                    //     $scope.success = 'Changes Saved!'
+                    //     if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
 
-                gridApi.selection.on.rowSelectionChangedBatch($scope, function(rows) {
-                    $scope.selectedRows = gridApi.selection.getSelectedRows();
-                });
+
+
+
+                  });
             }
         };
 
@@ -93,7 +74,7 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
             $http.get('/agencies')
                 .success(function(response) {
                     console.log('get page success')
-                    console.log('response')
+                    console.log(response)
                     $scope.gridOptions.data = response;
                 })
                 .error(function(err) {
@@ -101,6 +82,26 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
                     $scope.error = err.message;
                 });
         };
+
+        $scope.addAgency = function()
+        {
+            var _model = {
+                "fullName": "Organization",
+                "shortName": "org",
+                "emailDomain": ["org.gov.sg"],
+                "logo": "www.aws.com/org"
+            };
+
+            $http.post('/agencies', {agency: _model})
+            .success(function(data, status, headers){
+                _model["_id"] = data._id
+                $scope.gridOptions.data.unshift(_model);
+            }).error(function(errorResponse){
+                console.error(errorResponse);
+                $scope.error = errorResponse.data.message;
+            });
+        };
+
 
         $scope.deleteSubmissions = function() {
             var submission_ids = $scope.selectedRows.map(row => row._id);

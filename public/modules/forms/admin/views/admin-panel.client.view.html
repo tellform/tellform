@@ -3,12 +3,14 @@
 <section data-ng-controller="AdminPanelController as ctrl" class="container">
 
 <div class="submissions-table container">
+	<button class="btn btn-default" ng-click="addAgency()">Add Row</button>
+	<strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
 	<div>
 		<div ng-if="gridOptions.data"
 				 class="grid"
 				 ui-grid="gridOptions"
-				 ui-grid-pagination
-				 ui-grid-selection>
+				 ui-grid-edit 
+				 ui-grid-cellnav>
 		</div>
 	</div>
 </div>
