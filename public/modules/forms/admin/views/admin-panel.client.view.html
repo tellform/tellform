@@ -1,0 +1,15 @@
+<header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
+
+<section data-ng-controller="AdminPanelController as ctrl" class="container">
+
+<div class="submissions-table container">
+	<div>
+		<div ng-if="gridOptions.data"
+				 class="grid"
+				 ui-grid="gridOptions"
+				 ui-grid-pagination
+				 ui-grid-selection>
+		</div>
+	</div>
+</div>
+</section>

@@ -23,3 +23,48 @@ exports.list = function(req, res) {
 		}
 	});
 };
+
+/**
+ * Delete an agency
+ */
+exports.delete = function(req, res) {
+	var agency = req.agency;
+	Agency.remove({_id: agency._id}, function(err) {
+		if (err) {
+			res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(agency);
+		}
+	});
+};
+
+/**
+ * Create a new agency
+ */
+exports.create = function(req, res) {
+	if(!req.body.agency){
+		return res.status(400).send({
+			message: 'Invalid Input'
+		});
+	}
+	var agency = new Agency(req.body.agency);
+
+	agency.save(function(err) {
+		if (err) {
+			return res.status(405).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+
+		res.json(agency);
+	});
+};
+
+/**
+ * Update an agency
+ */
+exports.update = function(req, res) {
+	
+};
