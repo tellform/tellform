@@ -22,5 +22,11 @@
     "fullName": "Government Technology Agency",
     "emailDomain": "tech.gov.sg, data.gov.sg",
     "logo": "/static/modules/core/img/agency/govtech.jpg"
+  },
+  {
+    "shortName": "mnd",
+    "fullName": "Ministry of National Development",
+    "emailDomain": "mnd.gov.sg",
+    "logo": "/static/modules/core/img/agency/mnd.jpg"
   }
 ]
