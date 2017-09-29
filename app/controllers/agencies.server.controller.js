@@ -65,6 +65,24 @@ exports.create = function(req, res) {
 /**
  * Update an agency
  */
+
 exports.update = function(req, res) {
-	
+
+
+	console.log(req.body.agency_id)
+	console.log(req.body.agency_field)
+	var options = { multi: false }
+
+
+    Agency.update({shortName: 'ava'}, { $set:{ fullName: 'wowzers' }}, options, function(err, affected, resp) {
+	   console.log('agency updated')
+	   console.log(resp);
+	   console.log(err);
+	   console.log(affected)
+	})
+
+
 };
+
+
+

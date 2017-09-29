@@ -1,8 +1,8 @@
 'use strict';
 
 // Admin Panel controller
-angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScope', '$http', 'Forms', '$stateParams',
-    function($rootScope, $scope, $http, Forms, $stateParams) {
+angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScope', '$http', 'Forms', '$stateParams', '$uibModal',
+    function($rootScope, $scope, $http, Forms, $stateParams, $uibModal) {
 
         $scope.gridOptions = {
             rowHeight:45,
@@ -54,17 +54,22 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
 
                 gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
                     $scope.msg.lastCellEdited = 'edited row id:' + rowEntity._id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
+                    var fieldName = colDef.field
+
+                    $http.put('/agencies',{agency_id: rowEntity._id, agency_field: {fieldName  : newValue}} )
+                        .success(function(response) {
+                            console.log('agency update success')
+                            console.log(response)
+                        })
+                        .error(function(err) {
+                            console.log('agency update failure')
+                            console.error(err);
+                            $scope.error = err.message;
+                        });
+
                     $scope.$apply();
 
-                    // $scope.updatePromise = $http.put('/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id, {form: dataToSend})
-                    // .then(function (response) {
-                    //     $scope.success = 'Changes Saved!'
-                    //     if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
-
-
-
-
-                  });
+                });
             }
         };
 
@@ -102,58 +107,142 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
             });
         };
 
-
-        $scope.deleteSubmissions = function() {
-            var submission_ids = $scope.selectedRows.map(row => row._id);
-
-            $http({
-                    url: '/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id + '/submissions',
-                    method: 'DELETE',
-                    data: {
-                        submission_ids: submission_ids
-                    },
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    }
-                }).success(function(data, status) {
-                    getPage();
-                })
-                .error(function(err) {
-                    console.error(err);
-                    $scope.error = err.message;
-                });
-        };
-
-        // var startDateFilter = $( ".start-date-filter" );
-        // var endDateFilter = $( ".end-date-filter" );
-
-        // $scope.dateFilterChanged = function() {
-        //     if($scope.startDate) {
-        //         endDateFilter.datepicker( 'option', 'minDate', $scope.startDate );
-        //         // getPageOptions.startDate = $scope.startDate;
-        //     }
-
-        //     if($scope.endDate) {
-        //         startDateFilter.datepicker( 'option', 'maxDate', $scope.endDate );
-        //         // getPageOptions.endDate = $scope.endDate;
-        //     }
-        //     getPage();
-        // };
-
-        // $scope.clearStartDate = function() {
-        //     $scope.startDate = undefined;
-        //     endDateFilter.datepicker( 'option', 'minDate', null );
-        //     // delete getPageOptions.startDate;
-        //     getPage();
-        // }
-
-        // $scope.clearEndDate = function() {
-        //     $scope.endDate = undefined;
-        //     startDateFilter.datepicker( 'option', 'maxDate', null );
-        //     // delete getPageOptions.endDate;
-        //     getPage();
-        // }
-
         getPage();
+
+        $scope.openEditModal = function(){
+                    $scope.editFieldModal = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'editFieldModal.html',
+                        windowClass: 'edit-modal-window',
+                        controller:  function($uibModalInstance, $scope) {
+              var reader = new FileReader();
+              var curr_field = 'dropdown'
+                            $scope.field = curr_field;
+                            $scope.showLogicJump = false;
+
+              // if (curr_field.fieldOptionsFromFile) {
+              //   curr_field.fileOptions = curr_field.fieldOptions;
+
+              //   curr_field.manualOptions = [];
+              //   curr_field.manualOptions.push('Option 1');
+              // } else {
+              //   curr_field.manualOptions = curr_field.fieldOptions;
+              // }
+
+                            // decides whether field options block will be shown
+                            $scope.showAddOptions = function (field){
+                                if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            };
+
+                            // add new option to the field
+                            $scope.addOption = function(currField){
+                                if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+                                    if (!currField.manualOptions) {
+                                        currField.manualOptions = [];
+                                    }
+
+                                    var lastOptionID = currField.manualOptions.length + 1;
+                                    currField.manualOptions.push('Option ' + lastOptionID);
+                                }
+                            };
+
+                            // delete particular option
+                            $scope.deleteOption = function (currField, option){
+                                if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
+                                    for (var i = 0; i < currField.manualOptions.length; i++) {
+                                        if (currField.manualOptions[i] === option) {
+                                            currField.manualOptions.splice(i, 1);
+                                            break;
+                                        }
+                                    }
+                                }
+                            };
+
+              $scope.loadOptions = function(currField, files) {
+                if (currField.fieldType === 'dropdown') {
+                    var optionsFile = files[0];
+                    currField.fieldOptionsFile = optionsFile.name;
+                    currField.loadProgress = 0;
+
+                    reader.onload = function(e) {
+                        var fileContent = e.target.result;
+                        var options = fileContent.split('\n').map(option => option.trim());
+                        var uniq_options = [...new Set(options)];
+
+                        currField.fileOptions = [];
+
+                        for (let option of uniq_options) {
+                            if (option) {
+                                currField.fileOptions.push(option);
+                            }
+                        }
+
+                        var progress = document.querySelector('.load-file-progress');
+                        progress.classList.remove('active');
+                    }
+
+                    reader.onprogress = function(e) {
+                        $timeout(function() {
+                            if (e && e.lengthComputable) {
+                                currField.loadProgress = Math.round((e.loaded * 100) / e.total);
+                            }
+                        }, 10);
+                    };
+
+                    reader.readAsText(optionsFile);
+                }
+              };
+
+
+                            // decides whether rating block will be shown
+                            $scope.showRatingOptions = function (field){
+                                if(field.fieldType === 'rating'){
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            };
+
+                            $scope.saveField = function() {
+                                if (curr_field.fieldOptionsFromFile) {
+                                    curr_field.fieldOptions = curr_field.fileOptions;
+                                } else {
+                                    curr_field.fieldOptionsFile = '';
+                                    curr_field.fieldOptions = curr_field.manualOptions;
+                                }
+
+                                // Have to insert back at same spot if it is an edit
+                                var indexToInsert = -1;
+
+                                // Remove duplicate first
+                                if (curr_field.globalId != undefined) {
+                                    for (var i = 0; i < $scope.myform.form_fields.length; i++) {
+                                        var field = $scope.myform.form_fields[i];
+                                        if (field.globalId == curr_field.globalId) {
+                                            $scope.myform.form_fields.splice(i, 1);
+                                            indexToInsert = i;
+                                        }
+                                    }
+                                }
+                                if (indexToInsert >= 0) {
+                                    $scope.myform.form_fields.splice(indexToInsert, 0, curr_field);
+                                } else {
+                                    $scope.myform.form_fields.push(curr_field);
+                                }
+                                $scope.$parent.update(false, $scope.$parent.myform, true, function(){
+                                    $uibModalInstance.close();
+                                });
+
+                            };
+                            $scope.cancel = function(){
+                                $uibModalInstance.close();
+                            };
+                        }
+                    });
+                };
     }
 ]);

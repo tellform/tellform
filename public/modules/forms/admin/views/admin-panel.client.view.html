@@ -3,7 +3,7 @@
 <section data-ng-controller="AdminPanelController as ctrl" class="container">
 
 <div class="submissions-table container">
-	<button class="btn btn-default" ng-click="addAgency()">Add Row</button>
+	<button class="btn btn-default" ng-click="openEditModal()">Add Row</button>
 	<strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
 	<div>
 		<div ng-if="gridOptions.data"
@@ -15,3 +15,232 @@
 	</div>
 </div>
 </section>
+
+<!-- Edit Field Modal Dialog Template -->
+	<script type="text/ng-template" id="editFieldModal.html" class="edit-field-modal">
+		<div class="modal-body">
+			<div class="row">
+				<div class="edit-panel col-md-6 col-xs-12 col-sm-12 container">
+					<div class="row modal-header">
+						<h2 class="modal-title hidden-md hidden-lg">{{ 'EDIT_FIELD' | translate }}</h2>
+						<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_FIELD' | translate }}</h3>
+					</div>
+					<div class="row question">
+					<div class="row question">
+						<div class="col-md-12 bold">{{ 'QUESTION_TITLE' | translate }}</div>
+						<div class="col-md-12">
+							<input type="text" class="form-control" ng-model="field.fullName" value="{{field.fullName}}" required></div>
+					</div>
+
+					<div class="row"><br></div>
+
+					<div class="row question">
+						<div class="col-md-12 bold">Short Name</div>
+						<div class="col-md-12">
+							<input type="text" class="form-control" ng-model="field.shortName" value="{{field.shortName}}" required></div>
+					</div>
+
+					<div class="row"><br></div>
+					
+					<div ng-if="field.fieldType !== 'yes_no' && field.fieldType !== 'statement' && field.fieldType !== 'section'" class="row">
+						<div class="col-md-4 col-xs-12 field-title">{{ 'REQUIRED_FIELD' | translate }}</div>
+						<div class="col-md-8 col-xs-12 field-input">
+							<label class="switch-light switch-holo" onclick="">
+								<input type="checkbox" ng-model="field.required">
+								<span class="large-3 columns float-left">
+									<span> {{ 'OFF' | translate }}</span>
+									<span> {{ 'ON' | translate }}</span>
+									<a></a>
+								</span>
+							</label>
+						</div>
+					</div>
+
+					<div class="row" ng-show="showAddOptions(field)"><br></div>
+					<div class="row" ng-if="showAddOptions(field)">
+						<div class="col-md-4 col-xs-12 field-title">{{ 'OPTIONS' | translate }}</div>
+						<div class="col-md-8 col-xs-12 field-input">
+							<div ng-if="field.fieldType === 'dropdown'" class="row optionFrom">
+								<label class="col-md-6 col-xs-6">
+									<input type="radio" data-ng-value="false" ng-model="field.fieldOptionsFromFile"  ng-required="true" checked/>
+									<span>{{ 'ADD_OPTIONS_MANUAL' | translate }}</span>
+								</label>
+								<label class="col-md-6 col-xs-6">
+									<input type="radio" data-ng-value="true" ng-model="field.fieldOptionsFromFile"  ng-required="true" />
+									<span>{{ 'ADD_OPTIONS_FILE' | translate }}</span>
+								</label>
+							</div>
+							<div ng-if="!field.fieldOptionsFromFile" class="option-panel">
+								<div ng-repeat="option in field.manualOptions track by $index" class="option">
+									<a class="btn btn-danger btn-mini" type="button" ng-click="deleteOption(field, option)">
+										<i class="fa fa-trash-o"></i>
+									</a>
+									<span><input type="text" name="{{option}}{{field._id}}" ng-model="field.manualOptions[$index]"></span>
+								</div>
+								<div>
+									<button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption(field)">
+										<i class="icon-plus icon-white"></i>
+										{{ 'ADD' | translate }}
+									</button>
+								</div>
+							</div>
+							<div ng-if="field.fieldOptionsFromFile" class="option-panel">
+								<div>
+									<label type="button" class="btn btn-primary btn-small">
+										<span>{{ 'BROWSE' | translate }}</span>
+										<input type="file" on-file-select="loadOptions(currField, files)" curr-field="field"/>
+									</label>
+									<span><input type="text" ng-model="field.fieldOptionsFile" placeholder="{{ 'SELECT_OPTION_FILE' | translate }}" disabled></span>
+								</div>
+								<div ng-if="field.loadProgress >= 0">
+									<uib-progressbar class="load-file-progress progress-striped active" max="100" value="field.loadProgress" type="info">{{ field.loadProgress == 100? field.fileOptions.length + ' UNIQUE options loaded' : '' }}</uib-progressbar>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" ng-show="showRatingOptions(field)"><br></div>
+					<div class="row" ng-if="showRatingOptions(field)">
+						<div class="col-md-9 col-sm-9">{{ 'NUM_OF_STEPS' | translate }}</div>
+						<div class="col-md-3 col-sm-3">
+							<input style="width:100%" type="number"
+								   min="1" max="10"
+								   ng-model="field.ratingOptions.steps"
+								   name="ratingOptions_steps{{field._id}}"
+								   ng-value="{{field.ratingOptions.steps}}"
+								   required>
+						</div>
+						<br>
+						<div class="col-md-5 col-sm-9">{{ 'SHAPE' | translate }}:</div>
+						<div class="col-md-7 col-sm-3">
+							<select style="width:100%" ng-model="field.ratingOptions.shape"
+									value="{{field.ratingOptions.steps}}"
+									name="ratingOptions_shape{{field._id}}" required>
+								<option ng-repeat="shape in rating_shapes"
+										value="{{ shape }}">
+									{{ shape }}
+								</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="row"><br></div>
+
+<!--
+					<div class="row">
+						<div class="col-md-4 col-xs-12 field-input">{{ 'LOGIC_JUMP' | translate }}</div>
+						<div class="col-md-8 col-xs-12 field-input">
+							<label class="switch-light switch-holo" onclick="">
+								<input type="checkbox" ng-model="showLogicJump">
+								<span>
+									<span> {{ 'OFF' | translate }}</span>
+									<span> {{ 'ON' | translate }}</span>
+									<a></a>
+								</span>
+							</label>
+						</div>
+					</div>
+					<div class="row question" ng-if="!!showLogicJump">
+						<div class="col-md-4 col-sm-12">
+
+							<b> {{ 'IF_THIS_FIELD' | translate }} </b>
+						</div>
+						<div class="col-md-4 col-sm-12">
+							<select style="width:100%" ng-model="field.logicJump.expressionString"
+									value="{{field.logicJump.expressionString}}"
+									name="logicjump_expressionString{{field._id}}">
+								<option value="field == static">
+
+									{{ 'IS_EQUAL_TO' | translate }}
+								</option>
+								<option value="field != static">
+
+									{{ 'IS_NOT_EQUAL_TO' | translate }}
+								</option>
+
+								<option value="field > static" ng-if-start="field.fieldType === 'number' || field.fieldType === 'rating' || field.fieldType === 'number'">
+
+									{{ 'IS_GREATER_THAN' | translate }}
+								</option>
+								<option value="field >= static">
+
+									{{ 'IS_GREATER_OR_EQUAL_THAN' | translate }}
+								</option>
+								<option value="field < static">
+
+									{{ 'IS_SMALLER_THAN' | translate }}
+								</option>
+								<option value="field <= static" ng-if-end>
+
+									{{ 'IS_SMALLER_OR_EQUAL_THAN' | translate }}
+								</option>
+
+								<option value="field contains static" ng-if-start="field.fieldType !== 'number' && field.fieldType !== 'rating' && field.fieldType !== 'number'">
+
+									{{ 'CONTAINS' | translate }}
+								</option>
+								<option value="field !contains static">
+
+									{{ 'DOES_NOT_CONTAINS' | translate }}
+								</option>
+								<option value="field ends static">
+
+									{{ 'ENDS_WITH' | translate }}
+								</option>
+								<option value="field !ends static">
+
+									{{ 'DOES_NOT_END_WITH' | translate }}
+								</option>
+								<option value="field starts static">
+
+									{{ 'STARTS_WITH' | translate }}
+								</option>
+								<option value="field !starts static" ng-if-end>
+
+									{{ 'DOES_NOT_START_WITH' | translate }}
+								</option>
+							</select>
+						</div>
+						<div class="col-md-4 col-sm-12">
+							<input type="text" ng-model="field.logicJump.valueB"/>
+						</div>
+						<div class="col-md-2">
+
+							<b>{{ 'THEN_JUMP_TO' | translate }}</b>
+						</div>
+						<div class="col-md-10">
+							<select style="width:100%" ng-model="field.logicJump.jumpTo"
+									value="{{field.logicJump.jumpTo}}"
+									name="logicjump_jumpTo{{field._id}}">
+								<option ng-repeat="jump_field in myform.form_fields"
+										value="{{jump_field._id}}">
+									{{jump_field.title}}
+								</option>
+							</select>
+						</div>
+					</div>
+-->
+					<div class="modal-footer row">
+						<button type="submit" ng-click="saveField()" class="btn btn-signup btn-rounded">
+							{{ 'SAVE_FIELD' | translate }}
+						</button>
+
+						<button ng-click="cancel()" class="btn btn-secondary btn-rounded">
+							{{ 'CANCEL' | translate }}
+						</button>
+					</div>
+				</div>
+				</div>
+
+				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
+					<form class="public-form">
+						<field-directive field="field" validate="false" class="preview-field">
+						</field-directive>
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+
+	</script>
