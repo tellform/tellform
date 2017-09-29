@@ -10,22 +10,16 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
             enableFiltering: false,
             multiSelect: false,
             enableColumnMenus: false,
-            enableCellEditOnFocus: true,
             enableRowHeaderSelection: true,
             enableFullRowSelection: true,
             enableSelectAll: true,
-            multiSelect: true
         };
-
-
-        $scope.msg = {};
 
         $scope.gridOptions = {
             
             columnDefs: [{
                     name: 'Reference Number',
-                    field: '_id',
-                    enableCellEdit: false
+                    field: '_id'
                 },
                 {
                     name: 'Full Name',
@@ -52,34 +46,16 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
                     getPage();
                 });
 
-                gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
-                    $scope.msg.lastCellEdited = 'edited row id:' + rowEntity._id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
-                    var fieldName = colDef.field
-
-                    $http.put('/agencies',{agency_id: rowEntity._id, agency_field: {fieldName  : newValue}} )
-                        .success(function(response) {
-                            console.log('agency update success')
-                            console.log(response)
-                        })
-                        .error(function(err) {
-                            console.log('agency update failure')
-                            console.error(err);
-                            $scope.error = err.message;
-                        });
-
-                    $scope.$apply();
-
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                    $scope.agency = row.entity
+                    $scope.openEditModal(false)
                 });
             }
         };
 
         var getPage = function() {
-            $scope.selectedRows = undefined;
-            console.log('in admin panel - get page')
             $http.get('/agencies')
                 .success(function(response) {
-                    console.log('get page success')
-                    console.log(response)
                     $scope.gridOptions.data = response;
                 })
                 .error(function(err) {
@@ -88,28 +64,9 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
                 });
         };
 
-        $scope.addAgency = function()
-        {
-            var _model = {
-                "fullName": "Organization",
-                "shortName": "org",
-                "emailDomain": ["org.gov.sg"],
-                "logo": "www.aws.com/org"
-            };
-
-            $http.post('/agencies', {agency: _model})
-            .success(function(data, status, headers){
-                _model["_id"] = data._id
-                $scope.gridOptions.data.unshift(_model);
-            }).error(function(errorResponse){
-                console.error(errorResponse);
-                $scope.error = errorResponse.data.message;
-            });
-        };
-
         $scope.validate_emails = function(emails, agencyForm) {
             var emails_arr = emails.split(',');
-            var re = /^(?!:\/\/)(^[a-zA-Z0-9])?.[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?$/i;
+            var re = /[a-zA-Z0-9-]+.[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?$/i;
             for (var i = 0; i < emails_arr.length; i++) { 
                 if (re.test(emails_arr[i]) == false) {
                     agencyForm.emailDomain.$setValidity("text", false);
@@ -121,64 +78,36 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
 
         getPage();
 
-        $scope.openEditModal = function(){$scope.editFieldModal = $uibModal.open({
+        $scope.openEditModal = function(createNew){$scope.editFieldModal = $uibModal.open({
             animation: true,
             templateUrl: 'editFieldModal.html',
             windowClass: 'edit-modal-window',
                 controller:  function($uibModalInstance, $scope) {
-                    var reader = new FileReader();
-
-                    $scope.loadOptions = function(currField, files) {
-                        // if (currField.fieldType === 'dropdown') {
-                        //     var optionsFile = files[0];
-                        //     currField.fieldOptionsFile = optionsFile.name;
-                        //     currField.loadProgress = 0;
-
-                        //     reader.onload = function(e) {
-                        //         var fileContent = e.target.result;
-                        //         var options = fileContent.split('\n').map(option => option.trim());
-                        //         var uniq_options = [...new Set(options)];
-
-                        //         currField.fileOptions = [];
-
-                        //         for (let option of uniq_options) {
-                        //             if (option) {
-                        //                 currField.fileOptions.push(option);
-                        //             }
-                        //         }
-
-                        //         var progress = document.querySelector('.load-file-progress');
-                        //         progress.classList.remove('active');
-                        //     }
-
-                            
-
-                        //     reader.readAsText(optionsFile);
-                        // }
-                    };
 
                     $scope.saveField = function() {
-                        console.log('in save field')
-                        console.log($scope.agency)
 
-                        var _model = {
-                            "fullName": "Organization",
-                            "shortName": "org",
-                            "emailDomain": ["org.gov.sg"],
-                            "logo": "www.aws.com/org"
-                        };
+                        if (createNew) {
+                            $http.post('/agencies', {agency: $scope.agency})
+                                .success(function(data, status, headers){
+                                    $scope.agency._id = data._id
+                                    $scope.gridOptions.data.unshift($scope.agency);
+                                    $uibModalInstance.close();
+                                }).error(function(errorResponse){
+                                    console.error(errorResponse);
+                                    $scope.error = errorResponse.data.message;
+                                });
+                        } else {
 
-                        $http.post('/agencies', {agency: _model})
-                            .success(function(data, status, headers){
-                                _model["_id"] = data._id
-                                $scope.gridOptions.data.unshift(_model);
-                                $uibModalInstance.close();
-                            }).error(function(errorResponse){
-                                console.error(errorResponse);
-                                $scope.error = errorResponse.data.message;
-                            });
+                            $http.put('/agencies', {agency_id: $scope.agency._id, agency_field: $scope.agency})
+                                .success(function(data, status, headers){
+                                    $uibModalInstance.close();
+                                }).error(function(errorResponse){
+                                    console.error(errorResponse);
+                                    $scope.error = errorResponse.data.message;
+                                });
+                        }
 
-                    };
+                                            };
                     $scope.cancel = function(){
                         $uibModalInstance.close();
                     };

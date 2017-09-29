@@ -3,13 +3,13 @@
 <section data-ng-controller="AdminPanelController as ctrl" class="container">
 
 	<div class="submissions-table container">
-		<button class="btn btn-default" ng-click="openEditModal()">Add Row</button>
-		<strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
+		<button class="btn btn-default" ng-click="openEditModal(true)">Add Row</button>
 		<div>
 			<div ng-if="gridOptions.data"
 			class="grid"
 			ui-grid="gridOptions"
 			ui-grid-edit 
+			ui-grid-selection 
 			ui-grid-cellnav>
 		</div>
 	</div>
@@ -25,6 +25,7 @@
 				<h3 class="modal-title hidden-xs hidden-sm">Agency Details</h3>
 			</div>
 
+			<div class="row"><br></div>
 
 			<div class="row field">
                 <div class="field-title col-md-12 field-title-bold">Full Name</div>
@@ -41,12 +42,14 @@
                         ng-maxlength="200"
                         maxlength="200"
                         ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
-					<div ng-show="agencyForm.fullName.$invalid" class="alert alert-danger" role="alert">
+					<div ng-show="agencyForm.fullName.$invalid && agency.fullName.length > 0" class="alert alert-danger" role="alert">
 						<span class="glyphicon glyphicon-exclamation-sign"></span>
-						<span> Please enter a valid name </span>
+						<span> Please enter a valid full name </span>
 					</div>
                 </div>
             </div>
+
+            <div class="row"><br></div>
 
 			<div class="row field">
                 <div class="field-title col-md-12 field-title-bold">Short Name</div>
@@ -63,12 +66,14 @@
                         ng-maxlength="5"
                         maxlength="5"
                         ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
-					<div ng-show="agencyForm.shortName.$invalid" class="alert alert-danger" role="alert">
+					<div ng-show="agencyForm.shortName.$invalid && agency.shortName.length > 0" class="alert alert-danger" role="alert">
 						<span class="glyphicon glyphicon-exclamation-sign"></span>
-						<span> Please enter a valid name </span>
+						<span> Please enter a valid short name </span>
 					</div>
                 </div>
             </div>
+
+            <div class="row"><br></div>
 
             <div class="row field">
                 <div class="field-title col-md-12 field-title-bold">Email Domains</div>
@@ -81,33 +86,41 @@
                         ng-change="validate_emails(agency.emailDomain, agencyForm)"
                         value="{{agency.emailDomain}}"
                         style="width: 100%;">
-                    <div ng-show="agencyForm.emailDomain.$invalid" class="alert alert-danger" role="alert">
+                    <div ng-show="agencyForm.emailDomain.$invalid && agency.emailDomain.length > 0" class="alert alert-danger" role="alert">
 						<span class="glyphicon glyphicon-exclamation-sign"></span>
 						<span> Please enter a valid email domain </span>
 					</div>
                 </div>
             </div>
 
-			<div class="row"><br></div>
+            <div class="row"><br></div>
 
-				<div class="col-md-4 col-xs-12 field-title">Upload Logo</div>
-				<div class="col-md-8 col-xs-12 field-input">
-					<div class="option-panel">
-						<div>
-							<label type="button" class="btn btn-primary btn-small">
-								<span>{{ 'BROWSE' | translate }}</span>
-								<input type="file" on-file-select="loadOptions(currField, files)" curr-field="field"/>
-							</label>
-						</div>
+			<div class="row field">
+                <div class="field-title col-md-12 field-title-bold">Logo URL</div>
+                <div class="col-md-12">
+                    <input class="form-control"
+					    type="text"
+					    name="logo"
+					    ng-model="agency.logo"
+						ng-model-options="{ allowInvalid: true }"
+                        value="{{agency.logo}}"
+                        style="width: 100%;"
+                        ng-minlength="4"
+                        ng-required="true"
+                        ng-maxlength="4"
+                        maxlength="200"
+                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
+					<div ng-show="agencyForm.logo.$invalid && agency.logo.length > 0" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> Please enter a valid URL </span>
 					</div>
-				</div>
-
-			</div>
+                </div>
+            </div>
 
 			<div class="row"><br></div>
 
 			<div class="modal-footer row">
-				<button type="submit" ng-click="saveField()" class="btn btn-signup btn-rounded">
+				<button type="submit" ng-click="saveField()" class="btn btn-signup btn-rounded" ng-disabled="agencyForm.$invalid || agencyForm.$pristine">
 					{{ 'SAVE_FIELD' | translate }}
 				</button>
 

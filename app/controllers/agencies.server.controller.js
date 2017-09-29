@@ -70,15 +70,17 @@ exports.update = function(req, res) {
 
 
 	console.log(req.body.agency_id)
+	delete req.body.agency_field._id;
+	delete req.body.agency_field.emailDomain;
 	console.log(req.body.agency_field)
 	var options = { multi: false }
 
-
-    Agency.update({shortName: 'ava'}, { $set:{ fullName: 'wowzers' }}, options, function(err, affected, resp) {
-	   console.log('agency updated')
-	   console.log(resp);
-	   console.log(err);
-	   console.log(affected)
+    Agency.update(req.body.agency_id, { $set: req.body.agency_field}, options, function(err, affected, resp) {
+	   if (err) {
+			return res.status(405).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
 	})
 
 
