@@ -19,34 +19,76 @@
 <!-- Edit Field Modal Dialog Template -->
 <script type="text/ng-template" id="editFieldModal.html" class="edit-field-modal">
 	<div class="modal-body">
-		<div class="edit-panel col-md-12 col-xs-12 col-sm-12 container">
+		<div class="edit-panel col-md-12 col-xs-12 col-sm-12 container" ng-form="agencyForm">
 			<div class="row modal-header">
-				<h2 class="modal-title hidden-md hidden-lg">{{ 'EDIT_FIELD' | translate }}</h2>
-				<h3 class="modal-title hidden-xs hidden-sm">{{ 'EDIT_FIELD' | translate }}</h3>
+				<h2 class="modal-title hidden-md hidden-lg">Agency Details</h2>
+				<h3 class="modal-title hidden-xs hidden-sm">Agency Details</h3>
 			</div>
 
-			<div class="row question">
-				
-				<div class="col-md-12 bold">{{ 'QUESTION_TITLE' | translate }}</div>
+
+			<div class="row field">
+                <div class="field-title col-md-12 field-title-bold">Full Name</div>
+                <div class="col-md-12">
+                    <input class="form-control"
+					    type="text"
+					    name="fullName"
+					    ng-model="agency.fullName"
+						ng-model-options="{ allowInvalid: true }"
+                        value="{{agency.fullName}}"
+                        style="width: 100%;"
+                        ng-minlength="4"
+                        ng-required="true"
+                        ng-maxlength="200"
+                        maxlength="200"
+                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
+					<div ng-show="agencyForm.fullName.$invalid" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> Please enter a valid name </span>
+					</div>
+                </div>
+            </div>
+
+			<div class="row field">
+                <div class="field-title col-md-12 field-title-bold">Short Name</div>
+                <div class="col-md-12">
+                    <input class="form-control"
+					    type="text"
+					    name="shortName"
+					    ng-model="agency.shortName"
+						ng-model-options="{ allowInvalid: true }"
+                        value="{{agency.shortName}}"
+                        style="width: 100%;"
+                        ng-minlength="2"
+                        ng-required="true"
+                        ng-maxlength="5"
+                        maxlength="5"
+                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
+					<div ng-show="agencyForm.shortName.$invalid" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> Please enter a valid name </span>
+					</div>
+                </div>
+            </div>
+
+            <div class="row field">
+                <div class="field-title col-md-12 field-title-bold">Email Domains</div>
 				<div class="col-md-12">
-					<input type="text" class="form-control" ng-model="field.fullName" value="{{field.fullName}}" required></div>
-				</div>
+                    <input class="form-control" type="text"
+                        placeholder="e.g. data.gov.sg,tech.gov.sg"
+                        ng-model="agency.emailDomain"
+                        name = emailDomain
+                        ng-required="true"
+                        ng-change="validate_emails(agency.emailDomain, agencyForm)"
+                        value="{{agency.emailDomain}}"
+                        style="width: 100%;">
+                    <div ng-show="agencyForm.emailDomain.$invalid" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> Please enter a valid email domain </span>
+					</div>
+                </div>
+            </div>
 
-				<div class="row"><br></div>
-
-				<div class="col-md-12 bold">Short Name</div>
-				<div class="col-md-12">
-					<input type="text" class="form-control" ng-model="field.shortName" value="{{field.shortName}}" required></div>
-				</div>
-
-				<div class="row"><br></div>
-
-				<div class="col-md-12 bold">Email Domain</div>
-				<div class="col-md-12">
-					<input type="text" class="form-control" ng-model="field.emailDomain" value="{{field.emailDomain}}" required></div>
-				</div>
-
-				<div class="row"><br></div>
+			<div class="row"><br></div>
 
 				<div class="col-md-4 col-xs-12 field-title">Upload Logo</div>
 				<div class="col-md-8 col-xs-12 field-input">
@@ -56,7 +98,6 @@
 								<span>{{ 'BROWSE' | translate }}</span>
 								<input type="file" on-file-select="loadOptions(currField, files)" curr-field="field"/>
 							</label>
-							<span><input type="text" ng-model="field.fieldOptionsFile" placeholder="{{ 'SELECT_OPTION_FILE' | translate }}" disabled></span>
 						</div>
 					</div>
 				</div>

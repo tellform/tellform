@@ -107,10 +107,21 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
             });
         };
 
+        $scope.validate_emails = function(emails, agencyForm) {
+            var emails_arr = emails.split(',');
+            var re = /^(?!:\/\/)(^[a-zA-Z0-9])?.[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?$/i;
+            for (var i = 0; i < emails_arr.length; i++) { 
+                if (re.test(emails_arr[i]) == false) {
+                    agencyForm.emailDomain.$setValidity("text", false);
+                    return
+                }
+            }
+            agencyForm.emailDomain.$setValidity("text", true);
+        };
+
         getPage();
 
-        $scope.openEditModal = function(){
-            $scope.editFieldModal = $uibModal.open({
+        $scope.openEditModal = function(){$scope.editFieldModal = $uibModal.open({
             animation: true,
             templateUrl: 'editFieldModal.html',
             windowClass: 'edit-modal-window',
@@ -118,75 +129,54 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
                     var reader = new FileReader();
 
                     $scope.loadOptions = function(currField, files) {
-                        if (currField.fieldType === 'dropdown') {
-                            var optionsFile = files[0];
-                            currField.fieldOptionsFile = optionsFile.name;
-                            currField.loadProgress = 0;
+                        // if (currField.fieldType === 'dropdown') {
+                        //     var optionsFile = files[0];
+                        //     currField.fieldOptionsFile = optionsFile.name;
+                        //     currField.loadProgress = 0;
 
-                            reader.onload = function(e) {
-                                var fileContent = e.target.result;
-                                var options = fileContent.split('\n').map(option => option.trim());
-                                var uniq_options = [...new Set(options)];
+                        //     reader.onload = function(e) {
+                        //         var fileContent = e.target.result;
+                        //         var options = fileContent.split('\n').map(option => option.trim());
+                        //         var uniq_options = [...new Set(options)];
 
-                                currField.fileOptions = [];
+                        //         currField.fileOptions = [];
 
-                                for (let option of uniq_options) {
-                                    if (option) {
-                                        currField.fileOptions.push(option);
-                                    }
-                                }
+                        //         for (let option of uniq_options) {
+                        //             if (option) {
+                        //                 currField.fileOptions.push(option);
+                        //             }
+                        //         }
 
-                                var progress = document.querySelector('.load-file-progress');
-                                progress.classList.remove('active');
-                            }
+                        //         var progress = document.querySelector('.load-file-progress');
+                        //         progress.classList.remove('active');
+                        //     }
 
-                            reader.onprogress = function(e) {
-                                $timeout(function() {
-                                    if (e && e.lengthComputable) {
-                                        currField.loadProgress = Math.round((e.loaded * 100) / e.total);
-                                    }
-                                }, 10);
-                            };
+                            
 
-                            reader.readAsText(optionsFile);
-                        }
+                        //     reader.readAsText(optionsFile);
+                        // }
                     };
-
-
 
                     $scope.saveField = function() {
                         console.log('in save field')
-                        console.log($scope.field)
+                        console.log($scope.agency)
 
+                        var _model = {
+                            "fullName": "Organization",
+                            "shortName": "org",
+                            "emailDomain": ["org.gov.sg"],
+                            "logo": "www.aws.com/org"
+                        };
 
-                        if (curr_field.fieldOptionsFromFile) {
-                            curr_field.fieldOptions = curr_field.fileOptions;
-                        } else {
-                            curr_field.fieldOptionsFile = '';
-                            curr_field.fieldOptions = curr_field.manualOptions;
-                        }
-
-                        // Have to insert back at same spot if it is an edit
-                        var indexToInsert = -1;
-
-                        // Remove duplicate first
-                        if (curr_field.globalId != undefined) {
-                            for (var i = 0; i < $scope.myform.form_fields.length; i++) {
-                                var field = $scope.myform.form_fields[i];
-                                if (field.globalId == curr_field.globalId) {
-                                    $scope.myform.form_fields.splice(i, 1);
-                                    indexToInsert = i;
-                                }
-                            }
-                        }
-                        if (indexToInsert >= 0) {
-                            $scope.myform.form_fields.splice(indexToInsert, 0, curr_field);
-                        } else {
-                            $scope.myform.form_fields.push(curr_field);
-                        }
-                        $scope.$parent.update(false, $scope.$parent.myform, true, function(){
-                            $uibModalInstance.close();
-                        });
+                        $http.post('/agencies', {agency: _model})
+                            .success(function(data, status, headers){
+                                _model["_id"] = data._id
+                                $scope.gridOptions.data.unshift(_model);
+                                $uibModalInstance.close();
+                            }).error(function(errorResponse){
+                                console.error(errorResponse);
+                                $scope.error = errorResponse.data.message;
+                            });
 
                     };
                     $scope.cancel = function(){
