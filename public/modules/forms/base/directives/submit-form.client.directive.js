@@ -10,6 +10,20 @@ angular.module('forms').directive('formDirective', ['$http', '$filter', '$rootSc
         myform: '='
       },
       controller: function($document, $window, $scope) {
+
+        // Dismiss keyboard on clicking outside
+        function isTextInput(node) {
+            return ['INPUT', 'TEXTAREA'].indexOf(node.nodeName) !== -1;
+        }
+
+        angular.element($document[0]).on('touchstart', function(e) {
+          console.log('touch screen');
+          var activeElement = angular.element($document[0].activeElement)[0];
+          if(!isTextInput(e.target) && isTextInput(activeElement)) {
+            activeElement.blur();
+          }
+        });
+
         $scope.authentication = $rootScope.authentication;
         $scope.myform.form_fields = $filter('addFieldNumber')($scope.myform.form_fields);
 

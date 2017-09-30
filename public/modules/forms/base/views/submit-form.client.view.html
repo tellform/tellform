@@ -1,10 +1,5 @@
 <section ng-hide="!myform.isPreview && !myform.isLive" class="public-form submit-form">
 		<!-- Header View on all pages -->
-	<script>
-		$(document).click(function() {
-		    document.activeElement.blur();
-		});
-	</script>
 	<div class="form-header" ng-hide="!myform.hasHeader">
 		<img src="{{myform.admin.agency.logo}}">
 		<div class="form-header-title">{{myform.title}}</div>
