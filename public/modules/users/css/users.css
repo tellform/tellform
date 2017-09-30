@@ -61,6 +61,10 @@ section.auth {
 		text-overflow: ellipsis;
 	}
 
+	section.auth .btn-no-top {
+		margin-top: 10px !important;
+	}
+
 	.btn-rounded {
 	  min-width: 100px;
 	}

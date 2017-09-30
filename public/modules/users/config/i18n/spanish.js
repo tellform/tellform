@@ -23,7 +23,6 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 
 		SIGNUP_ERROR_TEXT: 'No se pudo terminar la registración por errores',
 		ENTER_ACCOUNT_EMAIL: 'Ingresá tu correo electrónico.',
-		RESEND_VERIFICATION_EMAIL: 'Reenviar email de verificación',
 		SAVE_CHANGES: 'Grabar cambios',
 		CANCEL_BTN: 'Cancelar',
 
