@@ -19,6 +19,8 @@ ENV BASE_URL tellform.com
 RUN apt-get update -q  \
  && apt-get install -yqq \
  curl \
+ ant \
+ default-jdk \
  git \
  gcc \
  make \

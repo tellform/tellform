@@ -40,6 +40,9 @@ var ButtonSchema = new Schema({
 });
 
 var VisitorDataSchema = new Schema({
+	socketId: {
+		type: String
+	},
 	referrer: {
 		type: String
 	},

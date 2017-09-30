@@ -55,6 +55,8 @@
 					country: geoData.country_name
 				}
 			};
+
+			console.log('sending form-visitor-data');
 			Socket.emit('form-visitor-data', visitorData);
 		}
 
@@ -63,6 +65,11 @@
 			if (!Socket.socket) {
 				Socket.connect();
 			}
+			
+			Socket.on('disconnect', function(){
+				console.log("reconnected to socket");
+				Socket.connect();
+			});
 		}
 
 		var service = {

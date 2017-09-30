@@ -4,10 +4,22 @@
 	// Create the Socket.io wrapper service
 	function Socket($timeout, $window) {
 
-		var service;
+		var service = {
+			socket: null
+		};
 
-		// Connect to Socket.io server
-		function connect(url) {
+		// Connect to TellForm Socket.io server
+		function connect() {
+			var url = '';
+			if($window.socketUrl && $window.socketPort){
+				url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
+			} else if ($window.socketUrl){
+				url = window.location.protocol + '//' + $window.socketUrl;
+			} else if ($window.socketPort){
+				url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
+			} else {
+				url = window.location.protocol + '//' + window.location.hostname;
+			}
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
 		}
 
@@ -36,6 +48,8 @@
 			}
 		}
 
+		connect();
+
 		service = {
 			connect: connect,
 			emit: emit,
@@ -43,19 +57,6 @@
 			removeListener: removeListener,
 			socket: null
 		};
-
-		console.log($window.socketUrl);
-		var url = '';
-		if($window.socketUrl && $window.socketPort){
-			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl){
-			url = window.location.protocol + '//' + $window.socketUrl;
-		} else if ($window.socketPort){
-			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
-		} else {
-			url = window.location.protocol + '//' + window.location.hostname;
-		}
-		connect(url);
 
 		return service;
 	}

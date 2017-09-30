@@ -123,7 +123,10 @@
 										<h5>{{ 'BACKGROUND_COLOR' | translate }}</h5>
 									</div>
 									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.backgroundColor" ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
+										<input class="form-control" colorpicker="hex" type="text" 
+										ng-model="myform.design.colors.backgroundColor" 
+										ng-pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/"
+										ng-style="{ 'background-color': myform.design.colors.backgroundColor }"/>
 									</div>
 								</div>
 
@@ -133,7 +136,7 @@
 									</div>
 
 									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.questionColor" ng-style="{ 'background-color': myform.design.colors.questionColor }"/>
+										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.questionColor" ng-pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/"ng-style="{ 'background-color': myform.design.colors.questionColor }"/>
 									</div>
 								</div>
 
@@ -143,7 +146,7 @@
 									</div>
 
 									<div class="field-input col-sm-6">
-										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
+										<input class="form-control" colorpicker="hex" type="text" ng-model="myform.design.colors.answerColor" ng-pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/" ng-style="{ 'background-color': myform.design.colors.answerColor }"/>
 									</div>
 								</div>
 
@@ -155,6 +158,7 @@
 									<div class="field-input col-sm-6">
 										<input class="form-control" colorpicker="hex" type="text"
 											   ng-model="myform.design.colors.buttonColor"
+											   ng-pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/"
 											   ng-style="{ 'background-color': myform.design.colors.buttonColor }"/>
 									</div>
 								</div>
@@ -166,6 +170,7 @@
 									<div class="field-input col-sm-6">
 										<input class="form-control" colorpicker="hex" type="text"
 											   ng-model="myform.design.colors.buttonTextColor"
+											   ng-pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/"
 											   ng-style="{ 'background-color': myform.design.colors.buttonTextColor }"/>
 									</div>
 								</div>

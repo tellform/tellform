@@ -18,6 +18,8 @@ ENV PORT 3000
 RUN apt-get update -q \
  && apt-get install -yqq \
  curl \
+ ant \
+ default-jdk \
  git \
  gcc \
  make \
@@ -47,8 +49,7 @@ WORKDIR /opt/tellform
 # when the local package.json file changes.
 # Add npm package.json
 COPY package.json /opt/tellform/package.json
-RUN npm install --production
-RUN mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm install
+RUN npm install
 
 # Add bower.json
 COPY bower.json /opt/tellform/bower.json
@@ -62,5 +63,8 @@ COPY ./server.js /opt/tellform/server.js
 COPY ./.env /opt/tellform/.env
 COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 
-# Run TellForm server
-CMD npm start
+# Run Development TellForm server
+COPY ./dev_entrypoint.sh /dev_entrypoint.sh
+RUN chmod +x /dev_entrypoint.sh
+
+ENTRYPOINT ["/dev_entrypoint.sh"]

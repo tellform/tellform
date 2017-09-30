@@ -61,7 +61,6 @@ module.exports = {
 		maxAge:  24 * 60 * 60 * 1000 // 24 hours
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
-		//domain: process.env.COOKIE_SESSION_URL || process.env.BASE_URL || '.tellform.com'
 	},
 
 	/*

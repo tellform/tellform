@@ -12,16 +12,13 @@ angular.module('view-form').config(['$stateProvider',
 				Forms: 'Forms',
 				myForm: function (Forms, $q, $state, $stateParams) {
                     var deferred = $q.defer();
-					console.log(Forms.get({formId: $stateParams.formId}).$promise);
                     return Forms.get({formId: $stateParams.formId}).$promise.then(function(data) {
-                        console.log(data);
                         return data;
                     },  function(reason) {
-                        console.log(reason);
+                        console.error(reason);
                         $state.go('unauthorizedFormAccess');
                         return deferred.reject({redirectTo: 'unauthorizedFormAccess'});
                     });
-                    //return Forms.get({formId: $stateParams.formId}).$promise;
 				}
 			},
 			controller: 'SubmitFormController',

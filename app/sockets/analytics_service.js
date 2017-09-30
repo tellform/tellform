@@ -12,14 +12,14 @@ module.exports = function (io, socket) {
 	var visitorsData = {};
 
 	var saveVisitorData = function (data, cb){
-
 		Form.findById(data.formId, function(err, form) {
 			if (err) {
-				console.log(err);
+				console.error(err);
 				throw new Error(errorHandler.getErrorMessage(err));
 			}
 
 			var newVisitor = {
+				socketId: data.socketId,
 				referrer: data.referrer,
 				lastActiveField: data.lastActiveField,
 				timeElapsed: data.timeElapsed,
@@ -37,35 +37,37 @@ module.exports = function (io, socket) {
 					throw new Error(errorHandler.getErrorMessage(formSaveErr));
 				}
 
-				delete visitorsData[socket.id];
-
 				if(cb){
 					return cb();
 				}
 			});
 		});
-
 	};
 
 	io.on('connection', function(current_socket) {
-
 		// a user has visited our page - add them to the visitorsData object
 		current_socket.on('form-visitor-data', function(data) {
-				current_socket.id = data.formId;
-				visitorsData[current_socket.id] = data;
-				visitorsData[current_socket.id].isSaved = false;
-				if (data.isSubmitted) {
-					saveVisitorData(data, function () {
-						visitorsData[current_socket.id].isSaved = true;
-					});
-				}
+			visitorsData[current_socket.id] = data;
+			visitorsData[current_socket.id].socketId = current_socket.id;
+			visitorsData[current_socket.id].isSaved = false;
+			if (data.isSubmitted && !data.isSaved) {
+				visitorsData[current_socket.id].isSaved = true;
+				saveVisitorData(data, function() {
+					console.log("\n\n\n\n\ncurrent_socket.id: "+current_socket.id);
+					current_socket.disconnect(true);
+				});
+			}
 		});
 
 		current_socket.on('disconnect', function() {
 			var data = visitorsData[current_socket.id];
 			if(data && !data.isSubmitted && !data.isSaved) {
 				data.isSaved = true;
-				saveVisitorData(data);
+				saveVisitorData(data, function() {
+					delete visitorsData[current_socket.id];
+				});
+			} else {
+				delete visitorsData[current_socket.id];
 			}
 		});
 	});
