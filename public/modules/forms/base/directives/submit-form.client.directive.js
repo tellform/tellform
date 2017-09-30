@@ -17,7 +17,6 @@ angular.module('forms').directive('formDirective', ['$http', '$filter', '$rootSc
         }
 
         angular.element($document[0]).on('touchstart', function(e) {
-          console.log('touch screen');
           var activeElement = angular.element($document[0].activeElement)[0];
           if(!isTextInput(e.target) && isTextInput(activeElement)) {
             activeElement.blur();
