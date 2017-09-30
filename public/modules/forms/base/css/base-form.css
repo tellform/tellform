@@ -169,11 +169,23 @@ section.content > section > section.container {
 /*
 ** Modal CSS Styles
 */
+.ui-datepicker { 
+    /* This is necessary to prevent date picker 
+    from being blocked in preview in Create tab */
+    z-index: 9999 !important; 
+}
 .modal-header {
     padding: 15px;
     border-bottom: 1px solid #e5e5e5;
     font-size: 18px;
     font-weight: normal;
+    margin-bottom: 15px;
+}
+.preview-field-panel .modal-header {
+    margin-right: 20px;
+}
+.preview-field-panel .preview-header {
+    padding-top: 15px;
 }
 .public-form .input-block {
     display: block;

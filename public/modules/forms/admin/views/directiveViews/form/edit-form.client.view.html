@@ -239,7 +239,7 @@
 								</label>
 								<label class="col-md-6 col-xs-6">
 									<input type="radio" data-ng-value="true" ng-model="field.fieldOptionsFromFile"  ng-required="true" />
-									<span>{{ 'ADD_OPTIONS_FILE' | translate }}</span>
+									<span>{{ 'ADD_OPTIONS_FILE' | translate }}&nbsp;<i class="glyphicon glyphicon-question-sign" uib-tooltip=".txt files are supported. Include one option per line. Do not exceed 2000 options, or there will be significant lag." tooltip-trigger="click mouseenter"></i></span> 
 								</label>
 							</div>
 							<div ng-if="!field.fieldOptionsFromFile" class="option-panel">
@@ -405,6 +405,9 @@
 				</div>
 
 				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs container">
+					<div class="modal-header">
+						<h3 class="modal-title preview-header">{{ 'PREVIEW' | translate }}</h3>
+					</div>
 					<form class="public-form">
 						<field-directive field="field" validate="false" class="preview-field">
 						</field-directive>
