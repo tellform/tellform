@@ -9,6 +9,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_NAME: 'Form Name',
 		FORM_STATUS: 'Status',
 		FORM_COLLABORATOR: "Collaborator Emails (comma-separated)",
+		FORM_COLLABORATOR_DESCRIPTION: "Collaborators are other users that can configure your form, but not delete it. Only you (the admin) can add collaborators.",
 		PUBLIC: 'Active',
 		PRIVATE: 'Inactive',
 		DISPLAY_FOOTER: 'Display Form Footer?',

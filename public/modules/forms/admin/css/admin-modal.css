@@ -1,0 +1,131 @@
+/*
+** Admin Modal
+*/
+.admin-modal-window .modal-dialog {
+	width: 90%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.admin-modal-window .modal-body {
+	
+}
+
+.admin-modal-window .display-header {
+	font-size: 25px;
+}
+
+.admin-modal-window .field-title {
+    font-weight: bold;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.admin-modal-window .field-description {
+	font-size: 16px;
+	padding-bottom: 10px;
+}
+
+.admin-modal-window .action-buttons {
+	padding-top: 10px;
+	text-align: center;
+}
+
+.admin-modal-window .action-buttons .btn-cancel {
+	margin-left: 8px;
+}
+
+.admin-modal-window .alert {
+	margin-bottom: 0px;
+}
+
+/*.admin-modal-window #collab-email {
+    background-color: #eee;
+}
+
+.admin-modal-window #collab-email hr {
+    border-top: 1px solid #ccc;
+}*/
+/*.edit-modal-window .edit-panel {
+	background-color: #F1F1F1;
+	padding: 15px 35px;
+}
+
+.edit-modal-window .edit-panel .row.optionFrom {
+	margin-bottom: 15px;
+}
+
+.edit-modal-window .edit-panel .row.optionFrom label {
+	display: inline-block;
+}
+
+.edit-modal-window .edit-panel .option-panel span {
+	display: block;
+	overflow: hidden;
+}
+
+.edit-modal-window .edit-panel .option-panel input {
+	min-height: 34px;
+	width: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.edit-modal-window .edit-panel .option-panel input[type="file"] {
+	display: none;
+}
+
+.edit-modal-window .edit-panel .option-panel .btn {
+	float: right;
+	margin-left: 10px;
+	text-transform: uppercase;
+}
+
+.edit-modal-window .edit-panel .option {
+	margin-bottom: 10px;
+}
+
+.edit-modal-window .edit-panel .load-file-progress {
+	min-height: 32px;
+	margin-top: 10px;
+}
+
+.edit-modal-window .edit-panel .load-file-progress .progress-bar span {
+	height: 100%;
+	font-size: 14px;
+	line-height: 32px;
+}
+
+.edit-modal-window .preview-field-panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.edit-modal-window .preview-field-panel form {
+	padding-right: 20px;
+}
+
+.edit-modal-window .preview-field {
+	resize: vertical;
+}
+
+.edit-modal-window .edit-panel textarea {
+	resize: vertical;
+}
+
+.admin-form .ui-sortable-placeholder {
+	visibility: visible !important;
+	border: none;
+	padding:1px;
+  background: #000;
+	background:rgba(0, 0, 0, 0.5) !important;
+}
+
+.admin-form iframe {
+	border: 2px dashed #333;
+	margin-top: 23px;
+	overflow-x: hidden;
+	height: 400px;
+	width: 100%;
+}*/

@@ -244,14 +244,6 @@ form .accordion-edit {
     max-width: 100%;
 }
 
-.config-form #collab-email {
-    background-color: #eee;
-}
-
-.config-form #collab-email hr {
-    border-top: 1px solid #ccc;
-}
-
 .config-form > .row {
     padding: 20px 30px;
 }

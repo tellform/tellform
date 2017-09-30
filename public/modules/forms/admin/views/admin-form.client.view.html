@@ -16,14 +16,51 @@
 					&nbsp; {{ 'PREVIEW' | translate }}
 				</span>
 			</a>
-			<a class="btn btn-secondary view-form-btn" href="{{actualFormURL + '/preview'}}" ng-class="myform.form_fields.length? '' : 'disabled'" target="_blank">
+			<button class="btn btn-secondary view-form-btn" ng-click="openAdminModal();" ng-hide="user == undefined || user.email != myform.admin.email">
 				<i class="glyphicon glyphicon-sunglasses"></i>
 				<span class="hidden-xs">
 					&nbsp; {{ 'ADMIN' | translate }}
 				</span>
-			</a>
+			</button>
 		</div>
 	</div>
+
+	<script type="text/ng-template" id="adminModal.html" class="admin-modal">
+		<div class="modal-body">
+			<div class="container" ng-form="adminForm">
+				<div id="collab-email">
+				    <div class="row-with-no-bottom">
+				    	<div class="display-header">Admin Options</div>
+				    	<hr>
+				    </div>
+					<div class="field-title">
+						{{ 'FORM_COLLABORATOR' | translate }}
+					</div>
+					<div class="field-description">
+						{{ 'FORM_COLLABORATOR_DESCRIPTION' | translate }}
+					</div>
+			        <input class="form-control" type="text"
+			            placeholder="e.g. collab1@data.gov.sg,collab2@ava.gov.sg"
+			            ng-model="myform.collaborators"
+			            name="collaborator_list"
+			            ng-required="false"
+			            value="{{myform.collaborators}}"
+			            ng-change="validate_collaborators(myform.collaborators, adminForm)"
+			            style="width: 100%;"
+			            ng-disabled="user == undefined || user.email != myform.admin.email"
+			            >
+			        <div ng-show="adminForm.collaborator_list.$invalid" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
+					</div>
+				</div>
+				<div class="action-buttons">
+					<button class="btn btn-signup btn-rounded" ng-disabled="admin_button_clicked || adminForm.$invalid || adminForm.$pristine" ng-click="saveAdminModal(myform, adminForm);"><span ng-show="button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>{{ 'SAVE_CHANGES' | translate }}</button>
+					<button class="btn btn-rounded btn-cancel" ng-click="closeAdminModal();">{{ 'CANCEL' | translate }}</button>
+				</div>
+			</div>
+		</div>
+	</script>
 
 	<div class="row">
 		<div class="col-xs-12">
