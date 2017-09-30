@@ -32,7 +32,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         };
 
         $scope.openAdminModal = function() {
-            console.log('opening admin modal');
             $uibModal.open({
                         animation: true,
                         templateUrl: 'adminModal.html',
