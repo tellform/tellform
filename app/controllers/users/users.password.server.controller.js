@@ -10,10 +10,11 @@ var _ = require('lodash'),
 	User = mongoose.model('User'),
 	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
+	sendmail = require('nodemailer-sendmail-transport'),
 	async = require('async'),
 	crypto = require('crypto');
 
-var smtpTransport = nodemailer.createTransport(config.mailer.options);
+var smtpTransport = nodemailer.createTransport(sendmail());
 
 /**
  * Forgot for reset password (forgot POST)
