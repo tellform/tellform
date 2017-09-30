@@ -493,6 +493,7 @@ form .accordion-edit {
 }
 
 .view-form-btn {
+    margin-left: 10px;
     border-color: #ccc;
     float: right;
     font-size: 16px;

@@ -53,6 +53,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		VIEW: 'View',
 		LIVE: 'Live',
 		PREVIEW: 'Preview',
+		ADMIN: 'Admin',
 		COPY: 'Copy',
 		COPY_AND_PASTE: 'Copy and Paste this to add your form to your website',
 		CHANGE_WIDTH_AND_HEIGHT: 'Change the width and height values to suit you best',
