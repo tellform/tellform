@@ -93,7 +93,7 @@
 				<a data-ng-href="#!/forms/{{user.agency.shortName}}/{{form._id}}/admin/create"
 					class="title-row col-xs-12">
 					<div class="form-admin" ng-if="user._id === form.admin._id">Admin</div>
-					<h4 class="list-group-item-heading" data-ng-bind="form.title" uib-tooltip="{{ form.title }}" tooltip-placement="bottom"></h4>
+					<h4 class="list-group-item-heading" data-ng-bind="form.title" uib-tooltip="{{ form.title }}" tooltip-placement="bottom" tooltip-trigger="click mouseenter"></h4>
 				</a>
 				<div class="col-xs-12 inactive-row" ng-if="!form.isLive">
 					<small class="list-group-item-text">
