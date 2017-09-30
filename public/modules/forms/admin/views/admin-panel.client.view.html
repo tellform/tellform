@@ -63,8 +63,8 @@
                         style="width: 100%;"
                         ng-minlength="2"
                         ng-required="true"
-                        ng-maxlength="5"
-                        maxlength="5"
+                        ng-maxlength="10"
+                        maxlength="10"
                         ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
 					<div ng-show="agencyForm.shortName.$invalid && agency.shortName.length > 0" class="alert alert-danger" role="alert">
 						<span class="glyphicon glyphicon-exclamation-sign"></span>
@@ -107,9 +107,8 @@
                         style="width: 100%;"
                         ng-minlength="4"
                         ng-required="true"
-                        ng-maxlength="4"
-                        maxlength="200"
-                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
+                        ng-maxlength="200"
+                        maxlength="200">
 					<div ng-show="agencyForm.logo.$invalid && agency.logo.length > 0" class="alert alert-danger" role="alert">
 						<span class="glyphicon glyphicon-exclamation-sign"></span>
 						<span> Please enter a valid URL </span>

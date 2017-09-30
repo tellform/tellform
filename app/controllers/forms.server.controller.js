@@ -141,6 +141,9 @@ exports.duplicate = function(req, res) {
 			form.isNew = true;
 			form.title = form.title + '_' + copy_num;
 
+			console.log('form to be duplicated')
+			console.log(form)
+
 			form.save(function(err, form) {
 				if (err) {
 					return res.status(405).send({

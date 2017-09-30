@@ -100,10 +100,11 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
 
                             $http.put('/agencies', {agency_id: $scope.agency._id, agency_field: $scope.agency})
                                 .success(function(data, status, headers){
+                                    console.log('agency update was a success')
                                     $uibModalInstance.close();
                                 }).error(function(errorResponse){
+                                    console.log('agency update was a failure')
                                     console.error(errorResponse);
-                                    $scope.error = errorResponse.data.message;
                                 });
                         }
 
