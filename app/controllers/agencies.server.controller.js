@@ -28,19 +28,18 @@ exports.list = function(req, res) {
  * Delete an agency
  */
 exports.delete = function(req, res) {
-	console.log('in delete server call')
-	console.log(req.body.agency)
-	console.log(req.agency)
-	console.log(req)
 
-	Agency.remove({_id: req.body.agency._id}, function(err) {
+	Agency.remove({
+		_id: { $in: req.body.agency_ids }
+	})
+	.exec(function(err) {
 		if (err) {
+			console.error(err);
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.json(req.body.agency);
 		}
+		res.status(200).send('Agencies successfully deleted');
 	});
 };
 

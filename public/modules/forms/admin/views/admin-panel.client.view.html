@@ -4,22 +4,22 @@
 
 	<div class="submissions-table container">
 		<div class="button-filter-bar row">
-			<div class="button-panel col-md-2">
+			<div class="button-panel">
 				<small>
-					<button class="btn btn-default" ng-click="openEditModal(true)">
+					<button class="btn btn-default" ng-click="createAgency()">
 						<i class="glyphicon glyphicon-plus"></i>
 						<span class="hidden-xs hidden-sm">Add Row</span>
 					</button>
-					<button class="btn btn-default" ng-click="openEditModal(false)" ng-disabled="!selectedRows || selectedRows.length !== 1">
-						<i class="glyphicon glyphicon-pencil"></i>
-						<span class="hidden-xs hidden-sm">Edit Row</span>
-					</button>
-					<button class="btn btn-danger" ng-click="deleteAgency()" ng-disabled="!selectedRows || selectedRows.length !== 1">
+				</small>
+			</div>
+			<div class="button-panel">
+				<small>
+					<button class="btn btn-danger" ng-click="deleteAgency()" ng-disabled="!selectedRows">
 						<i class="glyphicon glyphicon-trash"></i>
 						<span class="hidden-xs hidden-sm">{{ 'DELETE' | translate }}</span>
 					</button>
 				</small>
-			</div>
+			</div>					
 		</div>
 		
 		<div>

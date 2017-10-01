@@ -5,67 +5,100 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
     function($rootScope, $scope, $http, Forms, $stateParams, $uibModal) {
 
         $scope.gridOptions = {
-            rowHeight:45
+            enableRowSelection: true,
+            enableSelectAll: true,
+            selectionRowHeaderWidth: 35,
+            rowHeight: 35,
+            showGridFooter:true
         };
 
-          // multiSelect: false,
-          //   noUnselect: true,
-          //   enableSelectAll: false
-    //       ,
-          
-    //             enableFullRowSelection: true,
-    // enableRowHeaderSelection: true
+        $scope.editAgency = function(row){$scope.editFieldModal = $uibModal.open({
+            animation: true,
+            templateUrl: 'editFieldModal.html',
+            windowClass: 'edit-modal-window',
+            controller:  function($uibModalInstance, $scope) {
 
-        $scope.gridOptions = {
-            
-            columnDefs: [{
-                    name: 'Reference Number',
-                    field: '_id',
-                    enableCellEdit: false,
-                    enableColumnMenu: false,
-                    visible: false
-                },
-                {
-                    name: 'Full Name',
-                    field: 'fullName',
-                    enableColumnMenu: false,
-                    enableCellEdit: false
-                },
-                {
-                    name: 'Short Name',
-                    field: 'shortName',
-                    enableColumnMenu: false,
-                    enableCellEdit: false
-                },
-                {
-                    name: 'Email Domain',
-                    field: 'emailDomain',
-                    enableColumnMenu: false,
-                    enableCellEdit: false
-                },
-                {
-                    name: 'Logo',
-                    field: 'logo',
-                    enableColumnMenu: false,
-                    enableCellEdit: false
-                }
-            ],
-            onRegisterApi: function(gridApi) {
-                $scope.gridApi = gridApi;
+                $scope.agency = row.entity
 
-                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                    console.log('rows selected')
-                    console.log(row)
-                    $scope.selectedRows = $scope.gridApi.selection.getSelectedRows();
-                    console.log($scope.selectedRows)
-                    if ($scope.selectedRows.length === 1){
-                        $scope.agency = row.entity;
-                    } else {
-                        $scope.agency = null;
-                    }
-                });
+                $scope.saveAgency = function() {
+
+                    $http.put('/agencies', {agency: $scope.agency})
+                    .success(function(data, status, headers){
+                        $uibModalInstance.close();
+                    }).error(function(errorResponse){
+                        console.error(errorResponse);
+                    });
+
+                };
+                $scope.cancel = function(){
+                    $uibModalInstance.close();
+                };
             }
-        };
+        })};
+
+        $scope.createAgency = function(){$scope.editFieldModal = $uibModal.open({
+            animation: true,
+            templateUrl: 'editFieldModal.html',
+            windowClass: 'edit-modal-window',
+            controller:  function($uibModalInstance, $scope) {
+
+                $scope.agency = null;
+
+                $scope.saveAgency = function() {
+
+                    $http.post('/agencies', {agency: $scope.agency})
+                        .success(function(data, status, headers){
+                            $scope.agency._id = data._id
+                            $scope.gridOptions.data.unshift($scope.agency);
+                            $uibModalInstance.close();
+                        }).error(function(errorResponse){
+                            console.error(errorResponse);
+                        });
+
+                };
+                $scope.cancel = function(){
+                    $uibModalInstance.close();
+                };
+            }
+        })};
+
+        $scope.gridOptions.columnDefs = [{
+            name: 'Reference Number',
+            field: '_id',
+            enableCellEdit: false,
+            enableColumnMenu: false,
+            visible: false        },
+        {
+            name: 'Full Name',
+            field: 'fullName',
+            enableColumnMenu: false,
+            enableCellEdit: false,
+            cellTemplate: '<div ng-click="grid.appScope.editAgency(row)" onmouseover="" style="cursor: pointer;" class="ui-grid-cell-contents">{{row.entity.fullName}}</div>'
+        },
+        {
+            name: 'Short Name',
+            field: 'shortName',
+            enableColumnMenu: false,
+            enableCellEdit: false,
+            cellTemplate: '<div ng-click="grid.appScope.editAgency(row)" onmouseover="" style="cursor: pointer;" class="ui-grid-cell-contents">{{row.entity.shortName}}</div>'
+        },
+        {
+            name: 'Email Domain',
+            field: 'emailDomain',
+            enableColumnMenu: false,
+            enableCellEdit: false,
+            cellTemplate: '<div ng-click="grid.appScope.editAgency(row)" onmouseover="" style="cursor: pointer;" class="ui-grid-cell-contents">{{row.entity.emailDomain}}</div>'
+        },
+        {
+            name: 'Logo',
+            field: 'logo',
+            enableColumnMenu: false,
+            enableCellEdit: false,
+            cellTemplate: '<div ng-click="grid.appScope.editAgency(row)" onmouseover="" style="cursor: pointer;" class="ui-grid-cell-contents">{{row.entity.logo}}</div>'
+        }
+        ];
+
+        $scope.gridOptions.multiSelect = true;
 
         var getPage = function() {
             $http.get('/agencies')
@@ -74,9 +107,16 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
                 })
                 .error(function(err) {
                     console.error(err);
-                    $scope.error = err.message;
                 });
         };
+        getPage();      
+
+        $scope.gridOptions.onRegisterApi = function(gridApi){
+            $scope.gridApi = gridApi;
+            gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+                $scope.selectedRows = gridApi.selection.getSelectedRows();
+            });
+        }
 
         $scope.validate_emails = function(emails, agencyForm) {
             var emails_arr = emails.split(',');
@@ -90,57 +130,23 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
             agencyForm.emailDomain.$setValidity("text", true);
         };
 
-        getPage();
-
-        $scope.openEditModal = function(createNew){$scope.editFieldModal = $uibModal.open({
-            animation: true,
-            templateUrl: 'editFieldModal.html',
-            windowClass: 'edit-modal-window',
-                controller:  function($uibModalInstance, $scope) {
-
-                    if (createNew) {
-                        $scope.agency = null;
-                    }
-
-                    $scope.saveAgency = function() {
-
-                        if (createNew) {
-                            $http.post('/agencies', {agency: $scope.agency})
-                                .success(function(data, status, headers){
-                                    $scope.agency._id = data._id
-                                    $scope.gridOptions.data.unshift($scope.agency);
-                                    $uibModalInstance.close();
-                                }).error(function(errorResponse){
-                                    console.error(errorResponse);
-                                    $scope.error = errorResponse.data.message;
-                                });
-                        } else {
-
-                            $http.put('/agencies', {agency: $scope.agency})
-                                .success(function(data, status, headers){
-                                    $uibModalInstance.close();
-                                }).error(function(errorResponse){
-                                    console.error(errorResponse);
-                                });
-                        }
-
-                                            };
-                    $scope.cancel = function(){
-                        $uibModalInstance.close();
-                    };
-                }
-        })};
-
         $scope.deleteAgency = function() {
 
-            console.log('in delete agency client call')
-            console.log($scope.agency)
-
-            $http.delete('/agencies', {agency: $scope.agency})
-                .success(function(data, status, headers){
-                }).error(function(errorResponse){
-                    console.error(errorResponse);
+            $http({
+                    url: '/agencies',
+                    method: 'DELETE',
+                    data: {
+                        agency_ids: $scope.selectedRows.map(row => row._id)
+                    },
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    }
+                }).success(function(data, status) {
+                    getPage();   
+                })
+                .error(function(err) {
+                    console.error(err);
                 });
+
         }
-    }
-]);
+    }]);
