@@ -18,6 +18,12 @@ var transport = nodemailer.createTransport(sendmail());
  * Delete form submissions
  */
 exports.delete = function(req, res) {
+
+	console.log('in delete submissions')
+	console.log(req.form._id)
+	console.log(req.body.submission_ids)
+	console.log({$in: req.body.submission_id})
+
 	Submission.remove({
 			form: req.form._id,
 			_id: { $in: req.body.submission_ids }

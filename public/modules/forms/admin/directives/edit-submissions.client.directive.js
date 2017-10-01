@@ -121,6 +121,10 @@ angular.module('forms').directive('editSubmissionsDirective', ['$rootScope', '$h
 				$scope.deleteSubmissions = function() {
 					var submission_ids = $scope.selectedRows.map(row => row._id);
 
+					console.log('deleteSubmissions')
+					console.log($scope.myform._id)
+					console.log(submission_ids)
+
 					$http({
 							url: '/forms/' + $scope.myform.admin.agency.shortName + '/' + $scope.myform._id + '/submissions',
 							method: 'DELETE',

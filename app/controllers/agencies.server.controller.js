@@ -68,33 +68,13 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
 
-
-	// console.log(req.body.agency_id)
-	// delete req.body.agency_field._id;
-	// delete req.body.agency_field.emailDomain;
-	console.log(req.body.agency_field)
-	var agency = req.body.agency_field
-	// var options = { multi: false }
-
-	agency.save(function(err, agency) {
+    Agency.findByIdAndUpdate(req.body.agency._id, { $set: req.body.agency}, function(err, affected, resp) {
 		if (err) {
 			return res.status(405).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		res.json(agency);
-	});
-
-
-
- //    Agency.update({_id: req.body.agency_id}, { $set: req.body.agency_field}, options, function(err, affected, resp) {
-	//    if (err) {
-	// 		return res.status(405).send({
-	// 			message: errorHandler.getErrorMessage(err)
-	// 		});
-	// 	}
-	// })
-
+	})
 
 };
 

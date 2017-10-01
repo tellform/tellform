@@ -57,6 +57,8 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
             $http.get('/agencies')
                 .success(function(response) {
                     $scope.gridOptions.data = response;
+                    console.log('getting agencies')
+                    console.log(response)
                 })
                 .error(function(err) {
                     console.error(err);
@@ -98,7 +100,7 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
                                 });
                         } else {
 
-                            $http.put('/agencies', {agency_id: $scope.agency._id, agency_field: $scope.agency})
+                            $http.put('/agencies', {agency: $scope.agency})
                                 .success(function(data, status, headers){
                                     console.log('agency update was a success')
                                     $uibModalInstance.close();

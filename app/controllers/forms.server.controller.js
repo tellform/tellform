@@ -67,6 +67,11 @@ exports.update = function(req, res) {
 	var form = req.form;
     var updatedForm = req.body.form;
 
+    console.log('form')
+    console.log(form)
+    console.log('updated form')
+    console.log(updatedForm)
+
     delete updatedForm.__v;
     delete updatedForm.created;
 
@@ -76,6 +81,11 @@ exports.update = function(req, res) {
 		formChanges.forEach(function (change) {
 			diff.applyChange(form, true, change);
 		});
+
+		console.log('in changes')
+		console.log(formChanges)
+		console.log('trying to update form - first')
+		console.log(form)
 	} else {
 		//Unless we have 'admin' privileges, updating form admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
@@ -91,7 +101,12 @@ exports.update = function(req, res) {
 			}
 		}
 		form = _.extend(form, updatedForm);
+		console.log('trying to update form - second')
+		console.log(form)
+
 	}
+
+
 
 	form.save(function(err, savedForm) {
 		if (err) {
@@ -141,9 +156,6 @@ exports.duplicate = function(req, res) {
 			form.isNew = true;
 			form.title = form.title + '_' + copy_num;
 
-			console.log('form to be duplicated')
-			console.log(form)
-
 			form.save(function(err, form) {
 				if (err) {
 					return res.status(405).send({
@@ -184,6 +196,9 @@ exports.list = function(req, res) {
  * Form middleware
  */
 exports.formByID = function(req, res, next, id) {
+
+	console.log('in form middleware')
+	console.log(id)
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(400).send({
 			message: 'Form is invalid'
