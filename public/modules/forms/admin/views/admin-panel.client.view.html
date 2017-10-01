@@ -3,7 +3,25 @@
 <section data-ng-controller="AdminPanelController as ctrl" class="container">
 
 	<div class="submissions-table container">
-		<button class="btn btn-default" ng-click="openEditModal(true)">Add Row</button>
+		<div class="button-filter-bar row">
+			<div class="button-panel col-md-2">
+				<small>
+					<button class="btn btn-default" ng-click="openEditModal(true)">
+						<i class="glyphicon glyphicon-plus"></i>
+						<span class="hidden-xs hidden-sm">Add Row</span>
+					</button>
+					<button class="btn btn-default" ng-click="openEditModal(false)" ng-disabled="!selectedRows || selectedRows.length !== 1">
+						<i class="glyphicon glyphicon-pencil"></i>
+						<span class="hidden-xs hidden-sm">Edit Row</span>
+					</button>
+					<button class="btn btn-danger" ng-click="deleteAgency()" ng-disabled="!selectedRows || selectedRows.length !== 1">
+						<i class="glyphicon glyphicon-trash"></i>
+						<span class="hidden-xs hidden-sm">{{ 'DELETE' | translate }}</span>
+					</button>
+				</small>
+			</div>
+		</div>
+		
 		<div>
 			<div ng-if="gridOptions.data"
 			class="grid"
@@ -13,7 +31,7 @@
 			ui-grid-cellnav>
 		</div>
 	</div>
-</div>
+
 </section>
 
 <!-- Edit Field Modal Dialog Template -->
@@ -40,8 +58,7 @@
                         ng-minlength="4"
                         ng-required="true"
                         ng-maxlength="200"
-                        maxlength="200"
-                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
+                        maxlength="200">
 					<div ng-show="agencyForm.fullName.$invalid && agency.fullName.length > 0" class="alert alert-danger" role="alert">
 						<span class="glyphicon glyphicon-exclamation-sign"></span>
 						<span> Please enter a valid full name </span>
@@ -119,7 +136,7 @@
 			<div class="row"><br></div>
 
 			<div class="modal-footer row">
-				<button type="submit" ng-click="saveField()" class="btn btn-signup btn-rounded" ng-disabled="agencyForm.$invalid || agencyForm.$pristine">
+				<button type="submit" ng-click="saveAgency()" class="btn btn-signup btn-rounded" ng-disabled="agencyForm.$invalid || agencyForm.$pristine">
 					{{ 'SAVE_FIELD' | translate }}
 				</button>
 

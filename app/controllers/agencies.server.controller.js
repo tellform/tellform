@@ -28,14 +28,18 @@ exports.list = function(req, res) {
  * Delete an agency
  */
 exports.delete = function(req, res) {
-	var agency = req.agency;
-	Agency.remove({_id: agency._id}, function(err) {
+	console.log('in delete server call')
+	console.log(req.body.agency)
+	console.log(req.agency)
+	console.log(req)
+
+	Agency.remove({_id: req.body.agency._id}, function(err) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(agency);
+			res.json(req.body.agency);
 		}
 	});
 };
@@ -74,8 +78,24 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
+		res.json(affected);
 	})
 
+};
+
+/**
+ * Agency submission authorization middleware
+ */
+exports.hasAuthorization = function(req, res, next) {
+
+	if (req.user.username === 'arshad@data.gov.sg' || req.user.username === 'leonard@data.gov.sg') {
+		return next();
+	} else {
+		res.status(403).send({
+			message: 'User does not have global admin rights'
+		});
+	}
+	
 };
 
 

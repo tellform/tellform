@@ -8,8 +8,8 @@ var agencies = require('../../app/controllers/agencies.server.controller');
 module.exports = function(app) {
 	// Agency Routes
 	app.route('/agencies')
-		.get(agencies.list)
-		.put(agencies.update)
-		.delete(agencies.delete)
-		.post(agencies.create);
+		.get(agencies.hasAuthorization, agencies.list)
+		.put(agencies.hasAuthorization, agencies.update)
+		.delete(agencies.hasAuthorization, agencies.delete)
+		.post(agencies.hasAuthorization, agencies.create);
 };
