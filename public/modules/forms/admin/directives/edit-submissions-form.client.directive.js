@@ -183,7 +183,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
                 //Export selected submissions of Form
                 $scope.exportSubmissions = function(type){
-                    angular.element('#table-submission-data').tableExport({type: type, escape:false});
+                    angular.element('#table-submission-data').tableExport({type: type, escape:false, ignoreColumn: [0]});
                 };
 
             }
