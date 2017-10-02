@@ -256,8 +256,8 @@ exports.list = function(req, res) {
 	if(req.user.isAdmin()) searchObj = {};
 
 	Form.find(searchObj)
-		.desc('created')
-		.select('title', 'language', 'submissions', 'admin', 'isLive')
+		.sort('-created')
+		.select('title language submissions admin isLive')
 		.populate('admin.username', 'admin._id')
 		.lean()
 		.exec(function(err, forms) {
@@ -266,6 +266,13 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			for(var i=0; i<forms.length; i++){
+				forms[i].numberOfResponses = 0;
+				if(forms[i].submissions){
+					forms[i].numberOfResponses = forms[i].submissions.length;
+					delete forms[i].submissions;
+				}
+			}
 			res.json(forms);
 		}
 	});

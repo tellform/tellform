@@ -121,16 +121,13 @@ angular.module('view-form').config(['$stateProvider',
 				Forms: 'Forms',
 				myForm: ["Forms", "$q", "$state", "$stateParams", function (Forms, $q, $state, $stateParams) {
                     var deferred = $q.defer();
-					console.log(Forms.get({formId: $stateParams.formId}).$promise);
                     return Forms.get({formId: $stateParams.formId}).$promise.then(function(data) {
-                        console.log(data);
                         return data;
                     },  function(reason) {
-                        console.log(reason);
+                        console.error(reason);
                         $state.go('unauthorizedFormAccess');
                         return deferred.reject({redirectTo: 'unauthorizedFormAccess'});
                     });
-                    //return Forms.get({formId: $stateParams.formId}).$promise;
 				}]
 			},
 			controller: 'SubmitFormController',
@@ -200,6 +197,8 @@ angular.module('view-form').config(['$stateProvider',
 					country: geoData.country_name
 				}
 			};
+
+			console.log('sending form-visitor-data');
 			Socket.emit('form-visitor-data', visitorData);
 		}
 
@@ -208,6 +207,11 @@ angular.module('view-form').config(['$stateProvider',
 			if (!Socket.socket) {
 				Socket.connect();
 			}
+			
+			Socket.on('disconnect', function(){
+				console.log("reconnected to socket");
+				Socket.connect();
+			});
 		}
 
 		var service = {
@@ -820,7 +824,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								});
                             });
                         });
-                    }else {
+                    } else {
 						setTimeout(function() {
 							if (document.querySelectorAll('.activeField .focusOn')[0]) {
 								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
@@ -831,7 +835,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						});
 					}
 
-					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
+					//Only send analytics data if form has not been submitted
+					if(!$scope.myform.submitted){
+						SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
+					}
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
@@ -1017,10 +1024,22 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 	// Create the Socket.io wrapper service
 	function Socket($timeout, $window) {
 
-		var service;
+		var service = {
+			socket: null
+		};
 
-		// Connect to Socket.io server
-		function connect(url) {
+		// Connect to TellForm Socket.io server
+		function connect() {
+			var url = '';
+			if($window.socketUrl && $window.socketPort){
+				url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
+			} else if ($window.socketUrl){
+				url = window.location.protocol + '//' + $window.socketUrl;
+			} else if ($window.socketPort){
+				url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
+			} else {
+				url = window.location.protocol + '//' + window.location.hostname;
+			}
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
 		}
 
@@ -1049,6 +1068,8 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			}
 		}
 
+		connect();
+
 		service = {
 			connect: connect,
 			emit: emit,
@@ -1056,19 +1077,6 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			removeListener: removeListener,
 			socket: null
 		};
-
-		console.log($window.socketUrl);
-		var url = '';
-		if($window.socketUrl && $window.socketPort){
-			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl){
-			url = window.location.protocol + '//' + $window.socketUrl;
-		} else if ($window.socketPort){
-			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
-		} else {
-			url = window.location.protocol + '//' + window.location.hostname;
-		}
-		connect(url);
 
 		return service;
 	}

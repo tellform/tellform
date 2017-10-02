@@ -88,7 +88,7 @@ angular.module('TellForm.templates', []).run(['$templateCache', function($templa
     "														&lt;!-- {{ 'CHANGE_WIDTH_AND_HEIGHT' | translate }} --&gt;\n" +
     "														<iframe id=iframe src={{actualFormURL}} style=width:100%;height:500px></iframe>\n" +
     "														<div style=\"font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px\">{{ 'POWERED_BY' | translate }} <a href=https://www.tellform.com style=\"color: #999\" target=_blank>TellForm</a></div>\n" +
-    "													</textarea></span></div><div class=col-sm-4><button class=\"btn btn btn-secondary view-form-btn\" ngclipboard data-clipboard-target=#copyEmbedded>{{ 'COPY' | translate }} <i class=\"fa fa-clipboard\" aria-hidden=true></i></button></div></div></uib-tab></uib-tabset></div></div></div></uib-tab><uib-tab ng-if=\"tabData && myform.form_fields.length\" heading=\"{{ 'DESIGN_TAB' | translate }}\" index={{tabData.length}}+1><div class=\"config-form design container\"><div class=row><div class=\"col-sm-4 col-xs-12\"><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.backgroundColor ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.questionColor ng-style=\"{ 'background-color': myform.design.colors.questionColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.answerColor ng-style=\"{ 'background-color': myform.design.colors.answerColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonColor ng-style=\"{ 'background-color': myform.design.colors.buttonColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonTextColor ng-style=\"{ 'background-color': myform.design.colors.buttonTextColor }\"></div></div></div><div class=\"col-sm-8 hidden-xs\"><div class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><iframe id=iframe ng-if=!!formURL ng-src=\"{{formURL | trustSrc}}\" style=\"border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute\"></iframe></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div></uib-tab></uib-tabset></div></div></section>");
+    "													</textarea></span></div><div class=col-sm-4><button class=\"btn btn btn-secondary view-form-btn\" ngclipboard data-clipboard-target=#copyEmbedded>{{ 'COPY' | translate }} <i class=\"fa fa-clipboard\" aria-hidden=true></i></button></div></div></uib-tab></uib-tabset></div></div></div></uib-tab><uib-tab ng-if=\"tabData && myform.form_fields.length\" heading=\"{{ 'DESIGN_TAB' | translate }}\" index={{tabData.length}}+1><div class=\"config-form design container\"><div class=row><div class=\"col-sm-4 col-xs-12\"><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.backgroundColor ng-pattern=\"/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/\" ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'QUESTION_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.questionColor ng-pattern=\"/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/\" ng-style=\"{ 'background-color': myform.design.colors.questionColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'ANSWER_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.answerColor ng-pattern=\"/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/\" ng-style=\"{ 'background-color': myform.design.colors.answerColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_BACKGROUND_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonColor ng-pattern=\"/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/\" ng-style=\"{ 'background-color': myform.design.colors.buttonColor }\"></div></div><div class=\"row field\"><div class=\"field-title col-sm-5\"><h5>{{ 'BTN_TEXT_COLOR' | translate }}</h5></div><div class=\"field-input col-sm-6\"><input class=form-control colorpicker=hex ng-model=myform.design.colors.buttonTextColor ng-pattern=\"/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/\" ng-style=\"{ 'background-color': myform.design.colors.buttonTextColor }\"></div></div></div><div class=\"col-sm-8 hidden-xs\"><div class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><iframe id=iframe ng-if=!!formURL ng-src=\"{{formURL | trustSrc}}\" style=\"border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute\"></iframe></div></div></div><div class=row><div class=\"col-sm-offset-4 col-sm-2\"><button class=\"btn btn-signup btn-rounded\" type=button ng-click=\"update(false, myform, false, false, null)\"><i class=\"icon-arrow-left icon-white\"></i>{{ 'SAVE_CHANGES' | translate }}</button></div><div class=col-sm-1><button class=\"btn btn-secondary btn-rounded\" type=button ng-click=resetForm()><i class=\"icon-eye-open icon-white\"></i>{{ 'CANCEL' | translate }}</button></div></div></div></uib-tab></uib-tabset></div></div></section>");
   $templateCache.put("modules/forms/admin/views/list-forms.client.view.html",
     "<header data-ng-include=\"'/static/modules/core/views/header.client.view.html'\"></header><section class=overlay ng-if=showCreateModal ng-click=closeCreateModal()></section><script type=text/ng-template id=deleteModalListForms.html><div class=\"modal-header\">\n" +
     "		<h2 class=\"modal-title hidden-md hidden-lg\">{{ 'ARE_YOU_SURE' | translate }}</h2>\n" +
@@ -108,7 +108,7 @@ angular.module('TellForm.templates', []).run(['$templateCache', function($templa
     "		<button type=\"submit\" ng-click=\"deleteForm()\" class=\"btn btn-block btn-danger\" ng-disabled=\"content.currFormTitle != deleteConfirm\">\n" +
     "			{{ 'I_UNDERSTAND' | translate }}\n" +
     "		</button>\n" +
-    "	</div></script><section data-ng-controller=\"ListFormsController as ctrl\" data-ng-init=findAll() class=container><br><div class=row><div ng-click=openCreateModal() class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new\"><div class=\"title-row col-xs-12\"><h4 class=\"fa fa-plus fa-6\"></h4></div><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>{{ 'CREATE_A_NEW_FORM' | translate }}</small></div></div><form name=forms.createForm class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form\" ng-if=showCreateModal><div class=\"title-row row\"><div class=\"col-xs-5 field-title text-left\">{{ 'NAME' | translate }}</div><div class=\"col-xs-12 field-input\"><input name=title required ng-model=formTitle ng-pattern=languageRegExp ng-minlength=4 style=\"color:black\"></div></div><div class=\"details-row row\"><div class=\"col-xs-5 field-title text-left\">{{ 'LANGUAGE' | translate }}</div><div class=\"col-xs-12 field-input\"><div class=\"button custom-select\"><select style=color:black name=language required ng-model=formLanguage ng-init=\"formLanguage = user.language\"><option ng-repeat=\"language in languages\" value={{language}}>{{language}}</option></select></div></div></div><div class=\"details-row submit row\"><div class=\"col-xs-12 field-title text-center\"><button class=\"btn btn-primary\" ng-disabled=forms.createForm.$invalid ng-click=createNewForm()>{{ 'CREATE_FORM' | translate }}</button></div></div></form><div data-ng-repeat=\"form in myforms\" class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container\" ng-class=\"{'paused': !form.isLive}\"><div class=row><span class=pull-right><i style=cursor:pointer class=\"fa fa-trash-o\" ng-click=openDeleteModal($index)></i> <i style=cursor:pointer class=\"fa fa-files-o\" ng-click=duplicateForm($index)></i></span></div><div class=row><a data-ng-href=#!/forms/{{form._id}}/admin/create class=\"title-row col-xs-12\"><h4 class=list-group-item-heading data-ng-bind=form.title></h4></a><div class=\"col-xs-12 responses-row\"><small class=list-group-item-text><span>{{ form.submissions.length }} {{ 'RESPONSES' | translate }}</span></small><br><br><small ng-if=!form.isLive class=list-group-item-text><span>{{ 'FORM_PAUSED' | translate }}</span></small></div></div></div></div></section>");
+    "	</div></script><section data-ng-controller=\"ListFormsController as ctrl\" data-ng-init=findAll() class=container><br><div class=row><div ng-click=openCreateModal() class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new\"><div class=\"title-row col-xs-12\"><h4 class=\"fa fa-plus fa-6\"></h4></div><div class=\"col-xs-12 details-row\"><small class=list-group-item-text>{{ 'CREATE_A_NEW_FORM' | translate }}</small></div></div><form name=forms.createForm class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new new-form\" ng-if=showCreateModal><div class=\"title-row row\"><div class=\"col-xs-5 field-title text-left\">{{ 'NAME' | translate }}</div><div class=\"col-xs-12 field-input\"><input name=title required ng-model=formTitle ng-pattern=languageRegExp ng-minlength=4 style=\"color:black\"></div></div><div class=\"details-row row\"><div class=\"col-xs-5 field-title text-left\">{{ 'LANGUAGE' | translate }}</div><div class=\"col-xs-12 field-input\"><div class=\"button custom-select\"><select style=color:black name=language required ng-model=formLanguage ng-init=\"formLanguage = user.language\"><option ng-repeat=\"language in languages\" value={{language}}>{{language}}</option></select></div></div></div><div class=\"details-row submit row\"><div class=\"col-xs-12 field-title text-center\"><button class=\"btn btn-primary\" ng-disabled=forms.createForm.$invalid ng-click=createNewForm()>{{ 'CREATE_FORM' | translate }}</button></div></div></form><div data-ng-repeat=\"form in myforms\" class=\"col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item container\" ng-class=\"{'paused': !form.isLive}\"><div class=row><span class=pull-right><i style=cursor:pointer class=\"fa fa-trash-o\" ng-click=openDeleteModal($index)></i> <i style=cursor:pointer class=\"fa fa-files-o\" ng-click=duplicateForm($index)></i></span></div><div class=row><a data-ng-href=#!/forms/{{form._id}}/admin/create class=\"title-row col-xs-12\"><h4 class=list-group-item-heading data-ng-bind=form.title></h4></a><div class=\"col-xs-12 responses-row\"><small class=list-group-item-text><span>{{ form.numberOfResponses }} {{ 'RESPONSES' | translate }}</span></small><br><br><small ng-if=!form.isLive class=list-group-item-text><span>{{ 'FORM_PAUSED' | translate }}</span></small></div></div></div></div></section>");
   $templateCache.put("modules/forms/admin/views/adminTabs/analyze.html",
     "<edit-submissions-form-directive myform=myform user=user></edit-submissions-form-directive>");
   $templateCache.put("modules/forms/admin/views/adminTabs/configure.html",
@@ -966,62 +966,6 @@ angular.module('core').service('Menus', [
 		this.addMenu('bottombar', false, ['*']);
 	}
 ]);
-
-(function () {
-	'use strict';
-
-	// Create the Socket.io wrapper service
-	angular
-		.module('core')
-		.factory('Socket', Socket);
-
-	Socket.$inject = ['$timeout', '$window'];
-
-	function Socket($timeout, $window) {
-		// Connect to Socket.io server
-		function connect(url) {
-			service.socket = io(url, {'transports': ['websocket', 'polling']});
-		}
-
-		// Wrap the Socket.io 'emit' method
-		function emit(eventName, data) {
-			if (service.socket) {
-				service.socket.emit(eventName, data);
-			}
-		}
-
-		// Wrap the Socket.io 'on' method
-		function on(eventName, callback) {
-			if (service.socket) {
-				service.socket.on(eventName, function (data) {
-					$timeout(function () {
-						callback(data);
-					});
-				});
-			}
-		}
-
-		// Wrap the Socket.io 'removeListener' method
-		function removeListener(eventName) {
-			if (service.socket) {
-				service.socket.removeListener(eventName);
-			}
-		}
-
-		var service = {
-			connect: connect,
-			emit: emit,
-			on: on,
-			removeListener: removeListener,
-			socket: null
-		};
-
-		connect(window.location.protocol+'//'+window.location.hostname);
-
-		return service;
-
-	}
-}());
 
 'use strict';
 
@@ -3589,6 +3533,8 @@ ApplicationConfiguration.registerModule('view-form', [
 					country: geoData.country_name
 				}
 			};
+
+			console.log('sending form-visitor-data');
 			Socket.emit('form-visitor-data', visitorData);
 		}
 
@@ -3597,6 +3543,11 @@ ApplicationConfiguration.registerModule('view-form', [
 			if (!Socket.socket) {
 				Socket.connect();
 			}
+			
+			Socket.on('disconnect', function(){
+				console.log("reconnected to socket");
+				Socket.connect();
+			});
 		}
 
 		var service = {
@@ -4391,7 +4342,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								});
                             });
                         });
-                    }else {
+                    } else {
 						setTimeout(function() {
 							if (document.querySelectorAll('.activeField .focusOn')[0]) {
 								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
@@ -4402,7 +4353,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						});
 					}
 
-					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
+					//Only send analytics data if form has not been submitted
+					if(!$scope.myform.submitted){
+						SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
+					}
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
@@ -4588,10 +4542,22 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 	// Create the Socket.io wrapper service
 	function Socket($timeout, $window) {
 
-		var service;
+		var service = {
+			socket: null
+		};
 
-		// Connect to Socket.io server
-		function connect(url) {
+		// Connect to TellForm Socket.io server
+		function connect() {
+			var url = '';
+			if($window.socketUrl && $window.socketPort){
+				url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
+			} else if ($window.socketUrl){
+				url = window.location.protocol + '//' + $window.socketUrl;
+			} else if ($window.socketPort){
+				url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
+			} else {
+				url = window.location.protocol + '//' + window.location.hostname;
+			}
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
 		}
 
@@ -4620,6 +4586,8 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			}
 		}
 
+		connect();
+
 		service = {
 			connect: connect,
 			emit: emit,
@@ -4627,19 +4595,6 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			removeListener: removeListener,
 			socket: null
 		};
-
-		console.log($window.socketUrl);
-		var url = '';
-		if($window.socketUrl && $window.socketPort){
-			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl){
-			url = window.location.protocol + '//' + $window.socketUrl;
-		} else if ($window.socketPort){
-			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
-		} else {
-			url = window.location.protocol + '//' + window.location.hostname;
-		}
-		connect(url);
 
 		return service;
 	}
