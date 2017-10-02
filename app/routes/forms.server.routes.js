@@ -17,14 +17,16 @@ module.exports = function(app) {
 		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)')
 		 .post(forms.createSubmission);
 
-		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)/render')
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formIdFast([a-zA-Z0-9]+)/render')
 		 .get(forms.readForRender);
 
-		app.route('/forms/:formId([a-zA-Z0-9]+)/render')
-			.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.readForRender)
+		app.route('/forms/:formIdFast([a-zA-Z0-9]+)/render')
 			.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.readForRender);
 	} else {
-		app.route('/forms/:formId([a-zA-Z0-9]+)/render')
+	    app.route('/view/')
+            .get(core.form);
+    
+    	app.route('/forms/:formIdFast([a-zA-Z0-9]+)/render')
 			.get(forms.readForRender);
 	}
 	app.route('/forms')

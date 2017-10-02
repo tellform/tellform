@@ -2,61 +2,62 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>{{title}}</title>
+<title>{{title}}</title>
 
-	<!-- General META -->
-	<meta charset="utf-8">
-	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!-- General META -->
+<meta charset="utf-8">
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-	<!-- Semantic META -->
-	<meta name="keywords" content="{{keywords}}">
-	<meta name="description" content="{{description}}">
+<!-- Semantic META -->
+<meta name="keywords" content="{{keywords}}">
+<meta name="description" content="{{description}}">
 
-	<!-- Facebook META -->
-	<meta property="og:site_name" content="{{title}}">
-	<meta property="og:title" content="{{title}}">
-	<meta property="og:description" content="{{description}}">
-	<meta property="og:url" content="{{url}}">
-	<meta property="og:image" content="/img/brand/logo.png">
-	<meta property="og:type" content="website">
+<!-- Facebook META -->
+<meta property="og:site_name" content="{{title}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:url" content="{{url}}">
+<meta property="og:image" content="/img/brand/logo.png">
+<meta property="og:type" content="website">
 
-	<!-- Twitter META -->
-	<meta name="twitter:title" content="{{title}}">
-	<meta name="twitter:description" content="{{description}}">
-	<meta name="twitter:url" content="{{url}}">
-	<meta name="twitter:image" content="/img/brand/logo.png">
+<!-- Twitter META -->
+<meta name="twitter:title" content="{{title}}">
+<meta name="twitter:description" content="{{description}}">
+<meta name="twitter:url" content="{{url}}">
+<meta name="twitter:image" content="/img/brand/logo.png">
 
-	<!-- Fav Icon -->
-	<link href="/static/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css">
-	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900'>
+<!-- Fav Icon -->
+<link href="/static/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-
-	<!--Bower CSS dependencies-->
-	{% for bowerCssFile in bowerCssFiles %}
-		<link rel="stylesheet" href="{{bowerCssFile}}">
-	{% endfor %}
-	<link rel="stylesheet" href="/static/lib/angular-input-stars/angular-input-stars.css">
-	<link rel="stylesheet" href="/static/lib/jquery-ui/themes/flick/jquery-ui.css"/>
-	<link rel="stylesheet" href="/static/modules/core/css/github-fork-ribbon.css"/>
-
-	<!-- end Bower CSS dependencies-->
-
-	<!--Application CSS Files-->
-	{% for cssFile in cssFiles %}
-		<link rel="stylesheet" href="{{cssFile}}">
-	{% endfor %}
-	<!-- end Application CSS Files-->
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900'>
 
 
-	<!-- HTML5 Shim -->
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<!--Bower CSS dependencies-->
+{% for bowerCssFile in bowerCssFiles %}
+	<link rel="stylesheet" href="{{bowerCssFile}}">
+{% endfor %}
+<link rel="stylesheet" href="/static/lib/angular-input-stars/angular-input-stars.css">
+<link rel="stylesheet" href="/static/lib/jquery-ui/themes/flick/jquery-ui.css"/>
+<link rel="stylesheet" href="/static/modules/core/css/github-fork-ribbon.css"/>
+
+<!-- end Bower CSS dependencies-->
+
+<!--Application CSS Files-->
+{% for cssFile in cssFiles %}
+	<link rel="stylesheet" href="{{cssFile}}">
+{% endfor %}
+<!-- end Application CSS Files-->
+
+
+<!-- HTML5 Shim -->
+<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 </head>
 
@@ -72,10 +73,15 @@
 	<!--Embedding The signupDisabled Boolean-->
 	<script type="text/javascript">
 		var signupDisabled = {{signupDisabled | safe}};
-		var socketPort = {{socketPort | safe}} || false;
+		var socketPort = false;
+		{% if socketPort %}
+			socketPort = {{socketPort | safe}};
+		{% endif %}
 		var socketUrl = "{{socketUrl | safe}}" || false;
 		var subdomainsDisabled = {{subdomainsDisabled | safe}};
 	</script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	<!--Socket.io Client Dependency-->
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
@@ -114,15 +120,12 @@
 	<![endif] -->
 
 	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        	window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+                ga('create','{{google_analytics_id}}','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
-	  ga('create', '{{google_analytics_id}}', 'auto');
-	  ga('send', 'pageview');
-	</script>
-
+	
 </body>
 
 </html>

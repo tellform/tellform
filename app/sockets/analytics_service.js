@@ -53,7 +53,6 @@ module.exports = function (io, socket) {
 			if (data.isSubmitted && !data.isSaved) {
 				visitorsData[current_socket.id].isSaved = true;
 				saveVisitorData(data, function() {
-					console.log("\n\n\n\n\ncurrent_socket.id: "+current_socket.id);
 					current_socket.disconnect(true);
 				});
 			}

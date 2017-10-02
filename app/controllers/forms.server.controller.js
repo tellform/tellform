@@ -165,7 +165,7 @@ exports.read = function(req, res) {
  * Show the current form for rendering form live
  */
 var readForRender = exports.readForRender = function(req, res) {
-	var newForm = req.form.toJSON();
+	var newForm = req.form;
 	if (!newForm.isLive && !req.user) {
 		return res.status(401).send({
 			message: 'Form is Not Public'
@@ -221,7 +221,6 @@ exports.update = function(req, res) {
 
 	form.save(function(err, savedForm) {
 		if (err) {
-			console.log(err);
             res.status(405).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -251,16 +250,19 @@ exports.delete = function(req, res) {
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
-	//Allow 'admin' user to view all forms
-	var searchObj = {admin: req.user};
-	if(req.user.isAdmin()) searchObj = {};
-
-	Form.find(searchObj)
-		.desc('created')
-		.select('title', 'language', 'submissions', 'admin', 'isLive')
-		.populate('admin.username', 'admin._id')
-		.lean()
-		.exec(function(err, forms) {
+	Form.aggregate([
+			{ $match: { admin: req.user._id } },
+			{ 
+				$project: {
+					admin: 1,
+					_id: 1,
+					language: 1, 
+					isLive: 1,
+					title: 1,
+		            numberOfResponses: { $size: "$submissions" }
+		        } 
+	    	}
+		]).exec(function(err, forms) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -293,12 +295,12 @@ exports.formByID = function(req, res, next, id) {
 		}
 		else {
 			//Remove sensitive information from User object
-			var _form = form;
-			_form.admin.password = null;
-			_form.admin.salt = null;
-			_form.provider = null;
+			 var _form = form;
+                        _form.admin.password = null;
+                        _form.admin.salt = null;
+                        _form.provider = null;
 
-			req.form = _form;
+                        req.form = _form;
 			return next();
 		}
 	});
@@ -314,10 +316,10 @@ exports.formByIDFast = function(req, res, next, id) {
 		});
 	}
 	Form.findById(id)
-		.select('title', 'language', 'form_fields', 'startPage', 'endPage', 'hideFooter', 'isLive', 'design', 'admin', 'analytics.gaCode')
-		.populate()
-		.cache()
+		.select('title language form_fields startPage endPage hideFooter isLive design admin analytics.gaCode')
+		.populate('admin.roles', 'admin.id')
 		.lean()
+		.cache()
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);
@@ -327,13 +329,7 @@ exports.formByIDFast = function(req, res, next, id) {
 			});
 		}
 		else {
-			//Remove sensitive information from User object
-			var _form = form;
-			_form.admin.password = null;
-			_form.admin.salt = null;
-			_form.provider = null;
-
-			req.form = _form;
+			req.form = form;
 			return next();
 		}
 	});

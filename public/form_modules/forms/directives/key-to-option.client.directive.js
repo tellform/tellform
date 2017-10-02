@@ -11,7 +11,6 @@ angular.module('view-form').directive('keyToOption', function(){
 
 				var keyCode = event.which || event.keyCode;
 				var index = parseInt(String.fromCharCode(keyCode))-1;
-				//console.log($scope.field);
 
 				if (index < $scope.field.fieldOptions.length) {
 					event.preventDefault();

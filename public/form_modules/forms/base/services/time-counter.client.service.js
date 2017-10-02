@@ -9,7 +9,6 @@ angular.module('view-form').service('TimeCounter', [
 		this.restartClock = function(){
 			_startTime = Date.now();
 			_endTime = null;
-			// console.log('Clock Started');
 		};
 
 		this.getTimeElapsed = function(){

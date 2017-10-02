@@ -109,9 +109,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 
 			myForm.save(function(err, form){
 				if(err){
-					console.log(err.errors);
-					done(err);
-					return;
+					return done(err);
 				}
 
 				var submissionFields = _.clone(myForm.form_fields);

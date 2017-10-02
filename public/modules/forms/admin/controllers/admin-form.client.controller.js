@@ -18,9 +18,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $rootScope.saveInProgress = false;
 
         CurrentForm.setForm($scope.myform);
-        console.log("$scope.myform");
-        console.log($scope.myform);
-
 
         $scope.formURL = '/#!/forms/' + $scope.myform._id;
 
@@ -49,11 +46,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
                 templateName:   'configure'
-            },
-            /*{
-                heading: $filter('translate')('ANALYZE_TAB'),
-                templateName:   'analyze'
-            }*/
+            }
         ];
 
         $scope.setForm = function(form){
@@ -82,8 +75,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             });
             $scope.deleteModal.result.then(function (selectedItem) {
                 $scope.selected = selectedItem;
-            }, function () {
-                console.log('Modal dismissed at: ' + new Date());
             });
         };
 
@@ -104,12 +95,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                 $http.delete('/forms/'+form_id)
                     .then(function(response){
-                        console.log('form deleted successfully');
-
-                        $state.go('listForms', {}, {reload: true});
-
+                        $state.go('listForms', {}, {reload: true})
                     }, function(error){
-                        console.log('ERROR: Form could not be deleted.');
                         console.error(error);
                     });
             }
@@ -135,15 +122,13 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 if (isDiffed) {
                     $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
                         .then(function (response) {
-
-                            if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
-                            // console.log(response.data);
+                            if (refreshAfterUpdate) {
+                                $rootScope.myform = $scope.myform = response.data;
+                            }
                         }).catch(function (response) {
-                            console.log('Error occured during form UPDATE.\n');
-                            // console.log(response.data);
                             err = response.data;
+                            console.error(err);
                         }).finally(function () {
-                            // console.log('finished updating');
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
                             }
@@ -163,15 +148,14 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                     $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
                         .then(function (response) {
-
-                            if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+                            if (refreshAfterUpdate) {
+                                $rootScope.myform = $scope.myform = response.data;
+                            }
 
                         }).catch(function (response) {
-                            console.log('Error occured during form UPDATE.\n');
-                            // console.log(response.data);
                             err = response.data;
+                            console.error(err);
                         }).finally(function () {
-                            // console.log('finished updating');
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
                             }

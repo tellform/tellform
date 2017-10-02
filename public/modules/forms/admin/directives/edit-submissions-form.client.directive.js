@@ -175,9 +175,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             $scope.table.rows = tmpArray;
                         })
                         .error(function(err){
-                            console.log('Could not delete form submissions.\nError: ');
-                            console.log(err);
-                            console.error = err;
+                            console.error(err);
                         });
                 };
 

@@ -18,18 +18,11 @@ angular.module('users').factory('Auth', ['$window',
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
         if (service._currentUser && service._currentUser.username) {
-          //console.log('Using local current user.');
-          //console.log(service._currentUser);
           return service._currentUser;
-        }
-        else if ($window.user){
-          //console.log('Using cached current user.');
-          //console.log($window.user);
+        } else if ($window.user){
           service._currentUser = $window.user;
           return service._currentUser;
-        }
-        else{
-          //console.log('Fetching current user from the server.');
+        } else{
           User.getCurrent().then(function(user) {
             // success
             service._currentUser = user;
@@ -41,7 +34,6 @@ angular.module('users').factory('Auth', ['$window',
             userState.isLoggedIn = false;
             service._currentUser = null;
             $window.user = null;
-            console.log('User.getCurrent() err', response);
             return null;
           });
         }

@@ -66,7 +66,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					$scope.fieldTop = elemBox.top;
 					$scope.fieldBottom = elemBox.bottom;
 
-                    //console.log($scope.forms.myForm);
 					var field_id;
 					var field_index;
 
@@ -84,18 +83,16 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                                 field_id = $scope.myform.visible_form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
-                        }else if( $scope.fieldBottom < 0){
+                        } else if( $scope.fieldBottom < 0){
                             field_index = $scope.selected.index+1;
                             field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
-                        }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
+                        } else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
                             field_index = $scope.selected.index-1;
                             field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
-                        //console.log('$scope.selected.index: '+$scope.selected.index);
-					    //console.log('scroll pos: '+$scope.scrollPos+' fieldTop: '+$scope.fieldTop+' fieldBottom: '+$scope.fieldBottom);
-            		    $scope.$apply();
+                        $scope.$apply();
                     }
         		};
 

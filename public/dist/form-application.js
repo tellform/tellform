@@ -66,13 +66,8 @@ angular.module('TellForm-Form.form_templates', []).run(['$templateCache', functi
   $templateCache.put("form_modules/forms/base/views/form-unauthorized.client.view.html",
     "<section class=\"auth sigin-view valign-wrapper\"><div class=\"row valign\"><h3 class=\"col-md-12 text-center\">Not Authorized to Access Form</h3><div class=\"col-md-4 col-md-offset-4\"><div class=\"col-md-12 text-center\" style=\"padding-bottom: 50px\">The form you are trying to access is currently private and not accesible publically.<br>If you are the owner of the form, you can set it to \"Public\" in the \"Configuration\" panel in the form admin.</div></div></div></section>");
   $templateCache.put("form_modules/forms/base/views/submit-form.client.view.html",
-    "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n" +
-    "				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n" +
-    "			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n" +
-    "	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');\n" +
-    "\n" +
-    "	ga('create', '{{myform.analytics.gaCode}}', 'auto');\n" +
-    "	ga('send', 'pageview');</script>");
+    "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;\n" +
+    "	ga('create', '{{myform.analytics.gaCode}}', 'auto'); ga('send', 'pageview');</script><script ng-if=myform.analytics.gaCode src=https://www.google-analytics.com/analytics.js async defer></script>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/entryPage/startPage.html",
     "<div class=\"field row text-center\"><div class=\"col-xs-12 text-center\"><h1>{{pageData.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\"><p style=color:#ddd>{{pageData.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in pageData.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><p class=\"col-xs-3 col-xs-offset-3 text-center\"><button class=\"btn btn-info\" type=button><a ng-click=exitpageData() style=\"color:white; font-size: 1.6em; text-decoration: none\">{{ 'CONTINUE_FORM' | translate }}</a></button></p></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/date.html",
@@ -121,16 +116,14 @@ angular.module('view-form').config(['$stateProvider',
 				Forms: 'Forms',
 				myForm: ["Forms", "$q", "$state", "$stateParams", function (Forms, $q, $state, $stateParams) {
                     var deferred = $q.defer();
-					console.log(Forms.get({formId: $stateParams.formId}).$promise);
-                    return Forms.get({formId: $stateParams.formId}).$promise.then(function(data) {
-                        console.log(data);
-                        return data;
-                    },  function(reason) {
-                        console.log(reason);
+
+                    Forms.get({formId: $stateParams.formId}).$promise.then(function(data) {
+                    	deferred.resolve(data);
+				    },  function(reason) {
                         $state.go('unauthorizedFormAccess');
-                        return deferred.reject({redirectTo: 'unauthorizedFormAccess'});
+                        deferred.reject({redirectTo: 'unauthorizedFormAccess'});
                     });
-                    //return Forms.get({formId: $stateParams.formId}).$promise;
+				    return deferred.promise;
 				}]
 			},
 			controller: 'SubmitFormController',
@@ -200,6 +193,7 @@ angular.module('view-form').config(['$stateProvider',
 					country: geoData.country_name
 				}
 			};
+
 			Socket.emit('form-visitor-data', visitorData);
 		}
 
@@ -208,6 +202,10 @@ angular.module('view-form').config(['$stateProvider',
 			if (!Socket.socket) {
 				Socket.connect();
 			}
+			
+			Socket.on('disconnect', function(){
+				Socket.connect();
+			});
 		}
 
 		var service = {
@@ -234,7 +232,6 @@ angular.module('view-form').directive('keyToOption', function(){
 
 				var keyCode = event.which || event.keyCode;
 				var index = parseInt(String.fromCharCode(keyCode))-1;
-				//console.log($scope.field);
 
 				if (index < $scope.field.fieldOptions.length) {
 					event.preventDefault();
@@ -262,7 +259,7 @@ angular.module('view-form').directive('keyToTruthy', ['$rootScope', function($ro
 				var keyCode = event.which || event.keyCode;
 				var truthyKeyCode = $attrs.keyCharTruthy.charCodeAt(0) - 32;
 				var falseyKeyCode = $attrs.keyCharFalsey.charCodeAt(0) - 32;
-				console.log($scope);
+
                 if(keyCode === truthyKeyCode ) {
 					event.preventDefault();
 					$scope.$apply(function() {
@@ -440,9 +437,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 					}else if(type === 'rating'){
 						scope.field.fieldValue = 0;
 					}else if(scope.field.fieldType === 'radio'){
-						console.log(scope.field);
 						scope.field.fieldValue = scope.field.fieldOptions[0].option_value;
-						console.log(scope.field.fieldValue);
 					}else if(type === 'legal'){
 						scope.field.fieldValue = 'true';
 						$rootScope.nextField();
@@ -589,7 +584,6 @@ angular.module('view-form').directive('onFinishRender', ["$rootScope", "$timeout
                 });
             }else if(scope.$last) {
             	scope.$evalAsync(function () {
-                    // console.log(broadcastMessage+'Finished');
             	    $rootScope.$broadcast(broadcastMessage+' Finished');
                 });
             }
@@ -665,7 +659,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					$scope.fieldTop = elemBox.top;
 					$scope.fieldBottom = elemBox.bottom;
 
-                    //console.log($scope.forms.myForm);
 					var field_id;
 					var field_index;
 
@@ -683,18 +676,16 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                                 field_id = $scope.myform.visible_form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
-                        }else if( $scope.fieldBottom < 0){
+                        } else if( $scope.fieldBottom < 0){
                             field_index = $scope.selected.index+1;
                             field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
-                        }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
+                        } else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
                             field_index = $scope.selected.index-1;
                             field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
-                        //console.log('$scope.selected.index: '+$scope.selected.index);
-					    //console.log('scroll pos: '+$scope.scrollPos+' fieldTop: '+$scope.fieldTop+' fieldBottom: '+$scope.fieldBottom);
-            		    $scope.$apply();
+                        $scope.$apply();
                     }
         		};
 
@@ -820,7 +811,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								});
                             });
                         });
-                    }else {
+                    } else {
 						setTimeout(function() {
 							if (document.querySelectorAll('.activeField .focusOn')[0]) {
 								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
@@ -831,7 +822,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						});
 					}
 
-					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
+					//Only send analytics data if form has not been submitted
+					if(!$scope.myform.submitted){
+						SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
+					}
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
@@ -1017,10 +1011,22 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 	// Create the Socket.io wrapper service
 	function Socket($timeout, $window) {
 
-		var service;
+		var service = {
+			socket: null
+		};
 
-		// Connect to Socket.io server
-		function connect(url) {
+		// Connect to TellForm Socket.io server
+		function connect() {
+			var url = '';
+			if($window.socketUrl && $window.socketPort){
+				url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
+			} else if ($window.socketUrl){
+				url = window.location.protocol + '//' + $window.socketUrl;
+			} else if ($window.socketPort){
+				url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
+			} else {
+				url = window.location.protocol + '//' + window.location.hostname;
+			}
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
 		}
 
@@ -1049,6 +1055,8 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			}
 		}
 
+		connect();
+
 		service = {
 			connect: connect,
 			emit: emit,
@@ -1056,19 +1064,6 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			removeListener: removeListener,
 			socket: null
 		};
-
-		console.log($window.socketUrl);
-		var url = '';
-		if($window.socketUrl && $window.socketPort){
-			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl){
-			url = window.location.protocol + '//' + $window.socketUrl;
-		} else if ($window.socketPort){
-			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
-		} else {
-			url = window.location.protocol + '//' + window.location.hostname;
-		}
-		connect(url);
 
 		return service;
 	}
@@ -1092,7 +1087,6 @@ angular.module('view-form').service('TimeCounter', [
 		this.restartClock = function(){
 			_startTime = Date.now();
 			_endTime = null;
-			// console.log('Clock Started');
 		};
 
 		this.getTimeElapsed = function(){

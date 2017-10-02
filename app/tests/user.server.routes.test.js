@@ -45,7 +45,6 @@ describe('User CRUD tests', function() {
 				.send(_User)
 				.expect(200)
 				.end(function(FormSaveErr) {
-					console.log('CREATING USER');
 					// Handle error
 					should.not.exist(FormSaveErr);
 

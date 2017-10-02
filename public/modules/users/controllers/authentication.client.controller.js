@@ -13,9 +13,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-					if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== ''){
+					if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== '') {
 						$state.go($state.previous.name);
-					}else{
+					} else {
 						$state.go('listForms');
 					}
 				},
@@ -31,7 +31,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 	    $scope.signup = function() {
 	    	if($scope.credentials === 'admin'){
-	    		$scope.error = 'Username cannot be \'admin\'. Please pick another username.'
+	    		$scope.error = 'Username cannot be \'admin\'. Please pick another username.';
 	    		return;
 	    	}
 

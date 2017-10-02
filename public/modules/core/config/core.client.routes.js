@@ -17,7 +17,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 		// add previous state property
 		$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
 			$state.previous = fromState;
-			//console.log('toState: '+toState.name);
 
 			var statesToIgnore = ['home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
 
@@ -51,12 +50,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 
 			if(user){
 				authenticator = new Authorizer(user);
-				//console.log('access denied: '+!authenticator.canAccess(permissions));
-				//console.log(permissions);
+
 				if( (permissions !== null) ){
 					if( !authenticator.canAccess(permissions) ){
 						event.preventDefault();
-						//console.log('access denied');
 						$state.go('access_denied');
 					}
 				}

@@ -23,15 +23,15 @@
     border-color: none;
 }*/
 .public-form input.ng-valid, .public-form textarea.ng-valid {
-	border-color: #20FF20!important;
+	/*border-color: #20FF20!important;
 	border-style: solid!important;
-	border-width: 3px!important;
+	border-width: 3px!important;*/
 }
 
 .public-form input.ng-invalid.ng-dirty, .public-form textarea.ng-invalid.ng-dirty {
-	border-color: #FA787E!important;
+	/*border-color: #FA787E!important;
 	border-style: solid!important;
-	border-width: 3px!important;
+	border-width: 3px!important;*/
 }
 
 section.content p.breakwords {
@@ -247,7 +247,7 @@ section.public-form {
     padding: 0 10% 0 10%;
 }
 section.public-form .form-submitted {
-    height: 100%;
+    height: 100vh;
 }
 
 section.public-form .btn {

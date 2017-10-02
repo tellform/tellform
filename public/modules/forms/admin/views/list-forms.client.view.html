@@ -27,13 +27,6 @@
 
 <section data-ng-controller="ListFormsController as ctrl" data-ng-init="findAll()" class="container">
 	<br>
-	<!--<div class="row">
-		<div class="col-xs-4 col-xs-offset-4">
-			<h3 class="text-center forms-list-title">
-				{{ 'MY_FORMS' | translate }}
-			</h3>
-		</div>
-	</div>-->
 	<div class="row">
 		<div ng-click="openCreateModal()" class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-item create-new">
 			<div class="title-row col-xs-12">
@@ -94,7 +87,7 @@
 				</a>
 				<div class="col-xs-12 responses-row">
 					<small class="list-group-item-text">
-						<span> {{ form.submissions.length }} {{ 'RESPONSES' | translate }} </span>
+						<span> {{ form.numberOfResponses }} {{ 'RESPONSES' | translate }} </span>
 					</small>
 					<br>
 					<br>

@@ -649,13 +649,8 @@ angular.module('TellForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("form_modules/forms/base/views/form-unauthorized.client.view.html",
     "<section class=\"auth sigin-view valign-wrapper\"><div class=\"row valign\"><h3 class=\"col-md-12 text-center\">Not Authorized to Access Form</h3><div class=\"col-md-4 col-md-offset-4\"><div class=\"col-md-12 text-center\" style=\"padding-bottom: 50px\">The form you are trying to access is currently private and not accesible publically.<br>If you are the owner of the form, you can set it to \"Public\" in the \"Configuration\" panel in the form admin.</div></div></div></section>");
   $templateCache.put("form_modules/forms/base/views/submit-form.client.view.html",
-    "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n" +
-    "				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n" +
-    "			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n" +
-    "	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');\n" +
-    "\n" +
-    "	ga('create', '{{myform.analytics.gaCode}}', 'auto');\n" +
-    "	ga('send', 'pageview');</script>");
+    "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;\n" +
+    "	ga('create', '{{myform.analytics.gaCode}}', 'auto'); ga('send', 'pageview');</script><script ng-if=myform.analytics.gaCode src=https://www.google-analytics.com/analytics.js async defer></script>");
 }]);
 
 'use strict';
@@ -694,7 +689,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 		// add previous state property
 		$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
 			$state.previous = fromState;
-			//console.log('toState: '+toState.name);
 
 			var statesToIgnore = ['home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
 
@@ -728,12 +722,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 
 			if(user){
 				authenticator = new Authorizer(user);
-				//console.log('access denied: '+!authenticator.canAccess(permissions));
-				//console.log(permissions);
+
 				if( (permissions !== null) ){
 					if( !authenticator.canAccess(permissions) ){
 						event.preventDefault();
-						//console.log('access denied');
 						$state.go('access_denied');
 					}
 				}
@@ -967,62 +959,6 @@ angular.module('core').service('Menus', [
 	}
 ]);
 
-(function () {
-	'use strict';
-
-	// Create the Socket.io wrapper service
-	angular
-		.module('core')
-		.factory('Socket', Socket);
-
-	Socket.$inject = ['$timeout', '$window'];
-
-	function Socket($timeout, $window) {
-		// Connect to Socket.io server
-		function connect(url) {
-			service.socket = io(url, {'transports': ['websocket', 'polling']});
-		}
-
-		// Wrap the Socket.io 'emit' method
-		function emit(eventName, data) {
-			if (service.socket) {
-				service.socket.emit(eventName, data);
-			}
-		}
-
-		// Wrap the Socket.io 'on' method
-		function on(eventName, callback) {
-			if (service.socket) {
-				service.socket.on(eventName, function (data) {
-					$timeout(function () {
-						callback(data);
-					});
-				});
-			}
-		}
-
-		// Wrap the Socket.io 'removeListener' method
-		function removeListener(eventName) {
-			if (service.socket) {
-				service.socket.removeListener(eventName);
-			}
-		}
-
-		var service = {
-			connect: connect,
-			emit: emit,
-			on: on,
-			removeListener: removeListener,
-			socket: null
-		};
-
-		connect(window.location.protocol+'//'+window.location.hostname);
-
-		return service;
-
-	}
-}());
-
 'use strict';
 
 angular.module('core').factory('subdomain', ['$location', function ($location) {
@@ -1073,7 +1009,6 @@ angular.module('forms').run(['Menus',
         };
 }]).filter('trustSrc', ['$sce', function($sce){
         return function(formUrl){
-        	(' $sce.trustAsResourceUrl(formUrl): '+ $sce.trustAsResourceUrl(formUrl));
         	return $sce.trustAsResourceUrl(formUrl);
         };
 }]).config(['$provide', function ($provide){
@@ -1191,9 +1126,7 @@ angular.module('users').config(['$httpProvider',
         responseError: function(response) {
           if( $location.path() !== '/users/me' && response.config){
             if(response.config.url !== '/users/me'){
-              console.log('intercepted rejection of ', response.config.url, response.status);
               if (response.status === 401) {
-				  console.log($location.path());
                 // save the current location so that login can redirect back
                 $location.nextAfterLogin = $location.path();
                 $location.path('/signin');
@@ -1342,9 +1275,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 					Auth.login(response);
 					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-					if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== ''){
+					if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== '') {
 						$state.go($state.previous.name);
-					}else{
+					} else {
 						$state.go('listForms');
 					}
 				},
@@ -1360,7 +1293,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 	    $scope.signup = function() {
 	    	if($scope.credentials === 'admin'){
-	    		$scope.error = 'Username cannot be \'admin\'. Please pick another username.'
+	    		$scope.error = 'Username cannot be \'admin\'. Please pick another username.';
 	    		return;
 	    	}
 
@@ -1410,7 +1343,6 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 			User.resetPassword($scope.passwordDetails, $stateParams.token).then(
 				function(response){
 					// If successful show success message and clear form
-					console.log(response);
 					$scope.success = response.message;
 					$scope.passwordDetails = null;
 
@@ -1511,11 +1443,8 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 
 		// Submit forgotten password account id
 		$scope.resendVerifyEmail = function() {
-			// console.log($scope.credentials);
-			// console.log($scope.credentials.email);
 			User.resendVerifyEmail($scope.credentials.email).then(
 				function(response){
-					console.log(response);
 					$scope.success = response.message;
 					$scope.credentials = null;
 					$scope.isResetSent = true;
@@ -1534,13 +1463,11 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 				console.log($stateParams.token);
 				User.validateVerifyToken($stateParams.token).then(
 					function(response){
-						console.log('Success: '+response.message);
 						$scope.success = response.message;
 						$scope.isResetSent = true;
 						$scope.credentials.email = null;
 					},
 					function(error){
-						console.log('Error: '+error.message);
 						$scope.isResetSent = false;
 						$scope.error = error;
 						$scope.credentials.email = null;
@@ -1570,18 +1497,11 @@ angular.module('users').factory('Auth', ['$window',
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
       ensureHasCurrentUser: function(User) {
         if (service._currentUser && service._currentUser.username) {
-          //console.log('Using local current user.');
-          //console.log(service._currentUser);
           return service._currentUser;
-        }
-        else if ($window.user){
-          //console.log('Using cached current user.');
-          //console.log($window.user);
+        } else if ($window.user){
           service._currentUser = $window.user;
           return service._currentUser;
-        }
-        else{
-          //console.log('Fetching current user from the server.');
+        } else{
           User.getCurrent().then(function(user) {
             // success
             service._currentUser = user;
@@ -1593,7 +1513,6 @@ angular.module('users').factory('Auth', ['$window',
             userState.isLoggedIn = false;
             service._currentUser = null;
             $window.user = null;
-            console.log('User.getCurrent() err', response);
             return null;
           });
         }
@@ -1860,9 +1779,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $rootScope.saveInProgress = false;
 
         CurrentForm.setForm($scope.myform);
-        console.log("$scope.myform");
-        console.log($scope.myform);
-
 
         $scope.formURL = '/#!/forms/' + $scope.myform._id;
 
@@ -1891,11 +1807,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
                 templateName:   'configure'
-            },
-            /*{
-                heading: $filter('translate')('ANALYZE_TAB'),
-                templateName:   'analyze'
-            }*/
+            }
         ];
 
         $scope.setForm = function(form){
@@ -1924,8 +1836,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             });
             $scope.deleteModal.result.then(function (selectedItem) {
                 $scope.selected = selectedItem;
-            }, function () {
-                console.log('Modal dismissed at: ' + new Date());
             });
         };
 
@@ -1946,12 +1856,8 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                 $http.delete('/forms/'+form_id)
                     .then(function(response){
-                        console.log('form deleted successfully');
-
-                        $state.go('listForms', {}, {reload: true});
-
+                        $state.go('listForms', {}, {reload: true})
                     }, function(error){
-                        console.log('ERROR: Form could not be deleted.');
                         console.error(error);
                     });
             }
@@ -1977,15 +1883,13 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 if (isDiffed) {
                     $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
                         .then(function (response) {
-
-                            if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
-                            // console.log(response.data);
+                            if (refreshAfterUpdate) {
+                                $rootScope.myform = $scope.myform = response.data;
+                            }
                         }).catch(function (response) {
-                            console.log('Error occured during form UPDATE.\n');
-                            // console.log(response.data);
                             err = response.data;
+                            console.error(err);
                         }).finally(function () {
-                            // console.log('finished updating');
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
                             }
@@ -2005,15 +1909,14 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                     $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
                         .then(function (response) {
-
-                            if (refreshAfterUpdate) $rootScope.myform = $scope.myform = response.data;
+                            if (refreshAfterUpdate) {
+                                $rootScope.myform = $scope.myform = response.data;
+                            }
 
                         }).catch(function (response) {
-                            console.log('Error occured during form UPDATE.\n');
-                            // console.log(response.data);
                             err = response.data;
+                            console.error(err);
                         }).finally(function () {
-                            // console.log('finished updating');
                             if (!updateImmediately) {
                                 $rootScope.saveInProgress = false;
                             }
@@ -2722,9 +2625,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             $scope.table.rows = tmpArray;
                         })
                         .error(function(err){
-                            console.log('Could not delete form submissions.\nError: ');
-                            console.log(err);
-                            console.error = err;
+                            console.error(err);
                         });
                 };
 
@@ -3589,6 +3490,7 @@ ApplicationConfiguration.registerModule('view-form', [
 					country: geoData.country_name
 				}
 			};
+
 			Socket.emit('form-visitor-data', visitorData);
 		}
 
@@ -3597,6 +3499,10 @@ ApplicationConfiguration.registerModule('view-form', [
 			if (!Socket.socket) {
 				Socket.connect();
 			}
+			
+			Socket.on('disconnect', function(){
+				Socket.connect();
+			});
 		}
 
 		var service = {
@@ -3623,7 +3529,6 @@ angular.module('view-form').directive('keyToOption', function(){
 
 				var keyCode = event.which || event.keyCode;
 				var index = parseInt(String.fromCharCode(keyCode))-1;
-				//console.log($scope.field);
 
 				if (index < $scope.field.fieldOptions.length) {
 					event.preventDefault();
@@ -3651,7 +3556,7 @@ angular.module('view-form').directive('keyToTruthy', ['$rootScope', function($ro
 				var keyCode = event.which || event.keyCode;
 				var truthyKeyCode = $attrs.keyCharTruthy.charCodeAt(0) - 32;
 				var falseyKeyCode = $attrs.keyCharFalsey.charCodeAt(0) - 32;
-				console.log($scope);
+
                 if(keyCode === truthyKeyCode ) {
 					event.preventDefault();
 					$scope.$apply(function() {
@@ -4011,9 +3916,7 @@ angular.module('view-form').directive('fieldDirective', ['$http', '$compile', '$
 					}else if(type === 'rating'){
 						scope.field.fieldValue = 0;
 					}else if(scope.field.fieldType === 'radio'){
-						console.log(scope.field);
 						scope.field.fieldValue = scope.field.fieldOptions[0].option_value;
-						console.log(scope.field.fieldValue);
 					}else if(type === 'legal'){
 						scope.field.fieldValue = 'true';
 						$rootScope.nextField();
@@ -4160,7 +4063,6 @@ angular.module('view-form').directive('onFinishRender', ["$rootScope", "$timeout
                 });
             }else if(scope.$last) {
             	scope.$evalAsync(function () {
-                    // console.log(broadcastMessage+'Finished');
             	    $rootScope.$broadcast(broadcastMessage+' Finished');
                 });
             }
@@ -4236,7 +4138,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					$scope.fieldTop = elemBox.top;
 					$scope.fieldBottom = elemBox.bottom;
 
-                    //console.log($scope.forms.myForm);
 					var field_id;
 					var field_index;
 
@@ -4254,18 +4155,16 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                                 field_id = $scope.myform.visible_form_fields[field_index]._id;
                                 $scope.setActiveField(field_id, field_index, false);
                             }
-                        }else if( $scope.fieldBottom < 0){
+                        } else if( $scope.fieldBottom < 0){
                             field_index = $scope.selected.index+1;
                             field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
-                        }else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
+                        } else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
                             field_index = $scope.selected.index-1;
                             field_id = $scope.myform.visible_form_fields[field_index]._id;
                             $scope.setActiveField(field_id, field_index, false);
                         }
-                        //console.log('$scope.selected.index: '+$scope.selected.index);
-					    //console.log('scroll pos: '+$scope.scrollPos+' fieldTop: '+$scope.fieldTop+' fieldBottom: '+$scope.fieldBottom);
-            		    $scope.$apply();
+                        $scope.$apply();
                     }
         		};
 
@@ -4391,7 +4290,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								});
                             });
                         });
-                    }else {
+                    } else {
 						setTimeout(function() {
 							if (document.querySelectorAll('.activeField .focusOn')[0]) {
 								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
@@ -4402,7 +4301,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						});
 					}
 
-					SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
+					//Only send analytics data if form has not been submitted
+					if(!$scope.myform.submitted){
+						SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
+					}
                 };
 
                 $rootScope.nextField = $scope.nextField = function(){
@@ -4588,10 +4490,22 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 	// Create the Socket.io wrapper service
 	function Socket($timeout, $window) {
 
-		var service;
+		var service = {
+			socket: null
+		};
 
-		// Connect to Socket.io server
-		function connect(url) {
+		// Connect to TellForm Socket.io server
+		function connect() {
+			var url = '';
+			if($window.socketUrl && $window.socketPort){
+				url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
+			} else if ($window.socketUrl){
+				url = window.location.protocol + '//' + $window.socketUrl;
+			} else if ($window.socketPort){
+				url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
+			} else {
+				url = window.location.protocol + '//' + window.location.hostname;
+			}
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
 		}
 
@@ -4620,6 +4534,8 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			}
 		}
 
+		connect();
+
 		service = {
 			connect: connect,
 			emit: emit,
@@ -4627,19 +4543,6 @@ angular.module('view-form').factory('Forms', ['$resource', 'VIEW_FORM_URL',
 			removeListener: removeListener,
 			socket: null
 		};
-
-		console.log($window.socketUrl);
-		var url = '';
-		if($window.socketUrl && $window.socketPort){
-			url = window.location.protocol + '//' + $window.socketUrl + ':' + $window.socketPort;
-		} else if ($window.socketUrl){
-			url = window.location.protocol + '//' + $window.socketUrl;
-		} else if ($window.socketPort){
-			url = window.location.protocol + '//' + window.location.hostname + ':' + $window.socketPort;
-		} else {
-			url = window.location.protocol + '//' + window.location.hostname;
-		}
-		connect(url);
 
 		return service;
 	}
@@ -4663,7 +4566,6 @@ angular.module('view-form').service('TimeCounter', [
 		this.restartClock = function(){
 			_startTime = Date.now();
 			_endTime = null;
-			// console.log('Clock Started');
 		};
 
 		this.getTimeElapsed = function(){

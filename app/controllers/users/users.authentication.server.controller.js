@@ -61,24 +61,22 @@ var config_nev = function () {
 config_nev();
 
 exports.validateVerificationToken = function(req, res){
-	console.log(req.user);
 	nev.confirmTempUser(req.params.token, function(err, user) {
-	    console.log(err);
 	    if(err) {
-		return res.status(500).send( {message: err } );
-	    }
-	    else if (user){
+			return res.status(500).send( {message: err } );
+	    } else if (user){
 	        return res.status(200).send('User successfully verified');
 	    }
 	    // redirect to resend verification email
-	    else return res.status(400).send( {message: 'Verification token is invalid or has expired'} );
+	    else {
+	    	return res.status(400).send( {message: 'Verification token is invalid or has expired'} );
+	    } 
 	});
 };
 
 exports.resendVerificationEmail = function(req, res, next){
 	nev.resendVerificationEmail(req.body.email, function(err, userFound) {
 		if(err) {
-			console.log(errorHandler.getErrorMessage(err));
 			return res.status(500).send( {message: errorHandler.getErrorMessage(err)  } );
 	    }
 
@@ -125,7 +123,6 @@ exports.signup = function(req, res) {
 				return res.status(200).send('An email has been sent to you. Please check it to verify your account.');
 			});
 		} else {
-            console.log(err);
 			return res.status(400).send({message: 'Error: User already exists!'});
 		}
 	});

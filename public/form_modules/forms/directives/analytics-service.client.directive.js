@@ -56,7 +56,6 @@
 				}
 			};
 
-			console.log('sending form-visitor-data');
 			Socket.emit('form-visitor-data', visitorData);
 		}
 
@@ -67,7 +66,6 @@
 			}
 			
 			Socket.on('disconnect', function(){
-				console.log("reconnected to socket");
 				Socket.connect();
 			});
 		}

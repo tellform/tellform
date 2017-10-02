@@ -74,6 +74,9 @@ FormSubmissionSchema.path('form_fields', {
 			form_fields[i].isSubmission = true;
 			form_fields[i].submissionId = form_fields[i]._id;
 			form_fields[i]._id = new mongoose.mongo.ObjectID();
+
+			delete form_fields[i].deletePreserved;
+
 		}
 		return form_fields;
 	}

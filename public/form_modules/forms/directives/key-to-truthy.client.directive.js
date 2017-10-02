@@ -12,7 +12,7 @@ angular.module('view-form').directive('keyToTruthy', ['$rootScope', function($ro
 				var keyCode = event.which || event.keyCode;
 				var truthyKeyCode = $attrs.keyCharTruthy.charCodeAt(0) - 32;
 				var falseyKeyCode = $attrs.keyCharFalsey.charCodeAt(0) - 32;
-				console.log($scope);
+
                 if(keyCode === truthyKeyCode ) {
 					event.preventDefault();
 					$scope.$apply(function() {

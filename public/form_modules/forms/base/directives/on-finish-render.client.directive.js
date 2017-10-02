@@ -18,7 +18,6 @@ angular.module('view-form').directive('onFinishRender', function ($rootScope, $t
                 });
             }else if(scope.$last) {
             	scope.$evalAsync(function () {
-                    // console.log(broadcastMessage+'Finished');
             	    $rootScope.$broadcast(broadcastMessage+' Finished');
                 });
             }
