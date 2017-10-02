@@ -4,17 +4,17 @@
 
 	<div class="submissions-table container">
 		<div class="button-filter-bar row">
-			<div class="button-panel">
+			<div class="button-panel col-md-2">
 				<small>
 					<button class="btn btn-default" ng-click="createAgency()">
 						<i class="glyphicon glyphicon-plus"></i>
-						<span class="hidden-xs hidden-sm">Add Row</span>
+						<span class="hidden-xs hidden-sm">Add Agency</span>
 					</button>
 				</small>
 			</div>
-			<div class="button-panel">
+			<div class="button-panel col-md-1">
 				<small>
-					<button class="btn btn-danger" ng-click="deleteAgency()" ng-disabled="!selectedRows">
+					<button class="btn btn-danger" ng-click="deleteAgency()" ng-disabled="selectedRows.length === 0">
 						<i class="glyphicon glyphicon-trash"></i>
 						<span class="hidden-xs hidden-sm">{{ 'DELETE' | translate }}</span>
 					</button>

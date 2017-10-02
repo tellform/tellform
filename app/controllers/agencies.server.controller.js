@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
  * Get all agencies
  */
 exports.list = function(req, res) {
-	var returnedFields = '_id shortName fullName emailDomain';
+	var returnedFields = '_id shortName fullName emailDomain logo';
 
 	Agency.find({}, returnedFields).sort('fullName').exec(function(err, agencies) {
 		if (err) {
