@@ -8,6 +8,7 @@ var errorHandler = require('../errors.server.controller'),
 	passport = require('passport'),
 	config = require('../../../config/config'),
 	User = mongoose.model('User'),
+	sendmail = require('nodemailer-sendmail-transport'),
 	tokgen = require('../../libs/tokenGenerator');
 
 
@@ -23,7 +24,7 @@ var config_nev = function () {
 	    expirationTime: 86400,  // 24 hours
 
 	    verificationURL: config.baseUrl+'/#!/verify/${URL}',
-	    transportOptions: config.mailer.options,
+	    transportOptions: sendmail(),
 	    verifyMailOptions: {
 	        from: config.mailer.from,
 	        subject: 'Confirm your account',

@@ -1,37 +1,24 @@
-<section class="auth signup-view success" data-ng-controller="AuthenticationController">
-<!-- 	<h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
-	<div class="col-md-12 text-center">
-		<a href="/auth/facebook" class="undecorated-link">
-			<img src="/modules/users/img/buttons/facebook.png">
-		</a>
-		<a href="/auth/twitter" class="undecorated-link">
-			<img src="/modules/users/img/buttons/twitter.png">
-		</a>
-		<a href="/auth/google" class="undecorated-link">
-			<img src="/modules/users/img/buttons/google.png">
-		</a>
-		<a href="/auth/linkedin" class="undecorated-link">
-			<img src="/modules/users/img/buttons/linkedin.png">
-		</a>
-		<a href="/auth/github" class="undecorated-link">
-			<img src="/modules/users/img/buttons/github.png">
-		</a>
-	</div> -->
-	<h3 class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6 text-center">{{ 'SUCCESS_HEADER' | translate }}</h3>
-	<div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
-		<h2>
-			{{ 'SUCCESS_TEXT' | translate }}
-			<br><br>
-			{{ 'NOT_ACTIVATED_YET' | translate }}
-		</h2>
-		<br><br>
-
-		<p>
-			<strong>{{ 'BEFORE_YOU_CONTINUE' | translate }}</strong> <a href="mail:leonard@data.gov.sg ">leonard@data.gov.sg</a></p>
-		<div class="text-center form-group">
-				<button type="submit" class="btn btn-primary btn-rounded">
-					<a href="/#!/" style="color: white; text-decoration: none;">{{ 'CONTINUE' | translate }}</a>
-				</button>
+<section class="auth signup-view valign-wrapper" data-ng-controller="AuthenticationController">
+	<div class="valign">
+	<div class="row">
+		<div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
+			<h3>{{ 'SUCCESS_TEXT' | translate }}</h3>		
 		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
+			<strong>{{ 'BEFORE_YOU_CONTINUE' | translate }} <a href="mail:leonard@data.gov.sg ">leonard@data.gov.sg</a>.</strong>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
+			<input type="button" class="btn btn-rounded btn-default btn-block ng-binding" onclick="location.href='/#!/verify';" value="{{ 'REVERIFY_ACCOUNT_LINK' | translate }}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
+			<input type="button" class="btn btn-rounded btn-signup btn-block btn-no-top ng-binding" onclick="location.href='/#!/';" value="{{ 'SIGNIN_BTN' | translate }}">
+		</div>
+	</div>
 	</div>
 </section>

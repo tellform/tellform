@@ -26,23 +26,22 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 
 		SIGNUP_ERROR_TEXT: 'Couldn\'t complete registration due to errors',
 		ENTER_ACCOUNT_EMAIL: 'Enter your email',
-		RESEND_VERIFICATION_EMAIL: 'Resend Verification Email',
 		SAVE_CHANGES: 'Save',
 		CANCEL_BTN: 'Cancel',
 
 		FORGOT_PASSWORD_LINK: 'Forgot your password?',
-		REVERIFY_ACCOUNT_LINK: 'Resend your verification email',
+		REVERIFY_ACCOUNT_LINK: 'Resend verification email',
 
 		SIGNIN_BTN: 'Sign in',
 		SIGNUP_BTN: 'Sign up',
 		SAVE_PASSWORD_BTN: 'Change Password',
 
-		SUCCESS_HEADER: 'Almost there... Just one more step!',
-		SUCCESS_TEXT: 'Please verify your account by clicking the activation link sent to your email inbox. Then you will be all set!',
+		SUCCESS_TEXT: 'Please verify your account by clicking the activation link sent to your email inbox.',
 		VERIFICATION_EMAIL_SENT: 'Verification email has been sent!',
 		VERIFICATION_EMAIL_SENT_TO: 'A verification email has been sent to',
 		NOT_ACTIVATED_YET: '',
-		BEFORE_YOU_CONTINUE: 'If you do not receive the activation email within 24 hrs, please contact the FormSG team at',
+		RESEND_VERIFY_TEXT: 'If you want to resend the verification email, go ',
+		BEFORE_YOU_CONTINUE: 'If you any issues with sign up, please contact the FormSG team at',
 		CHECK_YOUR_EMAIL: '',
 		CONTINUE: 'Continue',
 
