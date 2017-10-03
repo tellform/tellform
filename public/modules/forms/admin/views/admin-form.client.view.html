@@ -5,19 +5,62 @@
 <section class="admin-form container">
 
 	<div class="page-header" style="padding-bottom: 1em;">
-		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="padding-left: 0px !important;">
-			<h1 class="hidden-xs form-title" style="margin-bottom: 0px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h1>
-			<h2 class="hidden-sm hidden-md hidden-lg form-title" style="margin-bottom: 10px;" uib-tooltip="{{ myform.title }}">{{ myform.title }}</h2>
+		<div class="col-xs-7 col-sm-7 col-md-8 col-lg-8" style="padding-left: 0px !important;">
+			<h1 class="hidden-xs form-title" uib-tooltip="{{ myform.title }}" tooltip-trigger="click mouseenter">{{ myform.title }}</h1>
+			<h3 class="hidden-sm hidden-md hidden-lg form-title" uib-tooltip="{{ myform.title }}" tooltip-trigger="click mouseenter">{{ myform.title }}</h3>
 		</div>
-		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-right: 0px !important">
+		<div class="col-xs-5 col-sm-5 col-md-4 col-lg-4" style="padding-right: 0px !important; margin-bottom: 5px !important;">
 			<a class="btn btn-secondary view-form-btn" href="{{actualFormURL + '/preview'}}" ng-class="myform.form_fields.length? '' : 'disabled'" target="_blank">
 				<i class="glyphicon glyphicon-eye-open"></i>
 				<span class="hidden-xs">
 					&nbsp; {{ 'PREVIEW' | translate }}
 				</span>
 			</a>
+			<button class="btn btn-secondary view-form-btn" ng-click="openAdminModal();" ng-hide="user == undefined || user.email != myform.admin.email">
+				<i class="glyphicon glyphicon-sunglasses"></i>
+				<span class="hidden-xs">
+					&nbsp; {{ 'ADMIN' | translate }}
+				</span>
+			</button>
 		</div>
 	</div>
+
+	<script type="text/ng-template" id="adminModal.html" class="admin-modal">
+		<div class="modal-body">
+			<div ng-form="adminForm">
+				<div id="collab-email">
+				    <div class="row-with-no-bottom">
+				    	<div class="display-header">Admin Options</div>
+				    	<hr>
+				    </div>
+					<div class="field-title">
+						{{ 'FORM_COLLABORATOR' | translate }}
+					</div>
+					<div class="field-description">
+						{{ 'FORM_COLLABORATOR_DESCRIPTION' | translate }}
+					</div>
+			        <input class="form-control" type="text"
+			            placeholder="e.g. collab1@data.gov.sg,collab2@ava.gov.sg"
+			            ng-model="myform.collaborators"
+			            name="collaborator_list"
+			            ng-required="false"
+			            value="{{myform.collaborators}}"
+			            ng-change="validate_collaborators(myform.collaborators, adminForm)"
+			            style="width: 100%;"
+			            ng-disabled="user == undefined || user.email != myform.admin.email"
+			            >
+			        <div ng-show="adminForm.collaborator_list.$invalid" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
+					</div>
+				</div>
+				<div class="action-buttons">
+					<button class="btn btn-signup btn-rounded" ng-disabled="admin_button_clicked || adminForm.$invalid || adminForm.$pristine" ng-click="saveAdminModal(myform, adminForm);"><span ng-show="admin_button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>{{ 'SAVE_CHANGES' | translate }}</button>
+					<button class="btn btn-rounded btn-cancel" ng-click="closeAdminModal();">{{ 'CANCEL' | translate }}</button>
+				</div>
+			</div>
+		</div>
+	</script>
 
 	<div class="row">
 		<div class="col-xs-12">

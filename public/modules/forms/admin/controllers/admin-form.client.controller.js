@@ -14,6 +14,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         });
 
         $scope.button_clicked  = false;
+        $scope.admin_button_clicked  = false;
         $rootScope.saveInProgress = false;
         $scope.success = $scope.error = null;
         $scope.show_msg = false;
@@ -29,6 +30,24 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                 document.getElementById('iframe').contentWindow.location.reload();
             }
         };
+
+        $scope.openAdminModal = function() {
+            $uibModal.open({
+                        animation: true,
+                        templateUrl: 'adminModal.html',
+                        windowClass: 'admin-modal-window',
+                        controller:  function($uibModalInstance, $scope) {
+
+                $scope.saveAdminModal = function(myform, adminForm) {
+                    $scope.update(false, myform, false, function() { $uibModalInstance.close(); }, adminForm);
+                }
+
+                $scope.closeAdminModal = function() {
+                    $uibModalInstance.close();
+                }
+
+            }});
+        }
 
         $scope.setForm = function(form){
             $scope.myform = form;
@@ -52,9 +71,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             configureForm.email_list.$setValidity("text", true);
         };
 
-        $scope.validate_collaborators = function(emails, configureForm) {
+        $scope.validate_collaborators = function(emails, adminForm) {
             if (emails.trim() === '') {
-                configureForm.collaborator_list.$setValidity("text", true);
+                adminForm.collaborator_list.$setValidity("text", true);
                 return;    
             }
 
@@ -64,18 +83,22 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             var re = /\S+@\S+\.\S+/;
             for (var i = 0; i < emails_arr.length; i++) { 
                 if (re.test(emails_arr[i]) == false) {
-                    configureForm.collaborator_list.$setValidity("text", false);
+                    adminForm.collaborator_list.$setValidity("text", false);
                     return
                 }
             }
 
-            configureForm.collaborator_list.$setValidity("text", true);
+            adminForm.collaborator_list.$setValidity("text", true);
         };
 
         // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, data, refreshAfterUpdate, cb, configureForm){
+        $scope.update = $rootScope.update = function(updateImmediately, data, refreshAfterUpdate, cb, configureForm) {
 
-            $scope.button_clicked  = true;
+            if (cb === null) { // null callback applies outside of admin panel
+                $scope.button_clicked  = true;
+            } else {
+                $scope.admin_button_clicked = true;    
+            }
 
             refreshFrame();
 
@@ -109,8 +132,13 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
                         window.setTimeout(function() {
                             $scope.$apply(function() {
-                                $scope.button_clicked  = false; 
-                                $scope.show_msg = true
+                                if (cb === null) {
+                                    $scope.button_clicked  = false;     
+                                    $scope.show_msg = true
+                                } else {
+                                    $scope.admin_button_clicked = false;    
+                                }
+                                
                                 window.setTimeout(function() {
                                     $scope.$apply(function() {
                                         $scope.show_msg = false

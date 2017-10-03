@@ -9,6 +9,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_NAME: 'Form Name',
 		FORM_STATUS: 'Status',
 		FORM_COLLABORATOR: "Collaborator Emails (comma-separated)",
+		FORM_COLLABORATOR_DESCRIPTION: "Collaborators are other users that can configure your form, but not delete it. Only you (the admin) can add collaborators.",
 		PUBLIC: 'Active',
 		PRIVATE: 'Inactive',
 		DISPLAY_FOOTER: 'Display Form Footer?',
@@ -30,7 +31,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_INACTIVE: 'Form inactive',
 
 		//Edit Field Modal
-		EDIT_FIELD: 'Edit this Field',
+		EDIT_FIELD: 'Edit',
 		SAVE_FIELD: 'Save',
 		ON: 'ON',
 		OFF: 'OFF',
@@ -53,6 +54,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		VIEW: 'View',
 		LIVE: 'Live',
 		PREVIEW: 'Preview',
+		ADMIN: 'Admin',
 		COPY: 'Copy',
 		COPY_AND_PASTE: 'Copy and Paste this to add your form to your website',
 		CHANGE_WIDTH_AND_HEIGHT: 'Change the width and height values to suit you best',

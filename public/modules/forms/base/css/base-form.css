@@ -169,11 +169,23 @@ section.content > section > section.container {
 /*
 ** Modal CSS Styles
 */
+.ui-datepicker { 
+    /* This is necessary to prevent date picker 
+    from being blocked in preview in Create tab */
+    z-index: 9999 !important; 
+}
 .modal-header {
     padding: 15px;
     border-bottom: 1px solid #e5e5e5;
     font-size: 18px;
     font-weight: normal;
+    margin-bottom: 15px;
+}
+.preview-field-panel .modal-header {
+    margin-right: 20px;
+}
+.preview-field-panel .preview-header {
+    padding-top: 15px;
 }
 .public-form .input-block {
     display: block;
@@ -242,14 +254,6 @@ form .accordion-edit {
 
 .config-form {
     max-width: 100%;
-}
-
-.config-form #collab-email {
-    background-color: #eee;
-}
-
-.config-form #collab-email hr {
-    border-top: 1px solid #ccc;
 }
 
 .config-form > .row {
@@ -493,6 +497,7 @@ form .accordion-edit {
 }
 
 .view-form-btn {
+    margin-left: 10px;
     border-color: #ccc;
     float: right;
     font-size: 16px;

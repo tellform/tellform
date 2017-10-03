@@ -26,7 +26,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_INACTIVE: 'Formulario inactivo',
 
 		//Edit Field Modal
-		EDIT_FIELD: 'Editar este campo',
+		EDIT_FIELD: 'Editar',
 		SAVE_FIELD: 'Grabar',
 		ON: 'ON',
 		OFF: 'OFF',
@@ -49,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		VIEW: 'Vista',
 		LIVE: 'Online',
 		PREVIEW: 'Vista previa',
+		ADMIN: 'Admin',
 		COPY: 'Copiar',
 		COPY_AND_PASTE: 'Copiar y pegar esto para agregar su formulario a su sitio web',
 		CHANGE_WIDTH_AND_HEIGHT: 'Cambie los valores de ancho y altura para adaptar el formulario a sus necesidades',
