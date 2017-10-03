@@ -80,9 +80,8 @@
                         style="width: 100%;"
                         ng-minlength="2"
                         ng-required="true"
-                        ng-maxlength="10"
-                        maxlength="10"
-                        ng-pattern="/^[a-zA-Z0-9_\-. ]*$/">
+                        ng-maxlength="200"
+                        maxlength="200">
 					<div ng-show="agencyForm.shortName.$invalid && agency.shortName.length > 0" class="alert alert-danger" role="alert">
 						<span class="glyphicon glyphicon-exclamation-sign"></span>
 						<span> Please enter a valid short name </span>

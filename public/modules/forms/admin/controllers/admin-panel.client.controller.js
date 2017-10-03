@@ -120,7 +120,7 @@ angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScop
 
         $scope.validate_emails = function(emails, agencyForm) {
             var emails_arr = emails.split(',');
-            var re = /[a-zA-Z0-9-]+.[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?$/i;
+            var re = /.+\..+/;
             for (var i = 0; i < emails_arr.length; i++) { 
                 if (re.test(emails_arr[i]) == false) {
                     agencyForm.emailDomain.$setValidity("text", false);
