@@ -31,7 +31,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_INACTIVE: 'Form inactive',
 
 		//Edit Field Modal
-		EDIT_FIELD: 'Edit this Field',
+		EDIT_FIELD: 'Edit',
 		SAVE_FIELD: 'Save',
 		ON: 'ON',
 		OFF: 'OFF',
