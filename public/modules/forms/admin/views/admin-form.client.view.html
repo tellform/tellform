@@ -55,7 +55,7 @@
 					</div>
 				</div>
 				<div class="action-buttons">
-					<button class="btn btn-signup btn-rounded" ng-disabled="admin_button_clicked || adminForm.$invalid || adminForm.$pristine" ng-click="saveAdminModal(myform, adminForm);"><span ng-show="button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>{{ 'SAVE_CHANGES' | translate }}</button>
+					<button class="btn btn-signup btn-rounded" ng-disabled="admin_button_clicked || adminForm.$invalid || adminForm.$pristine" ng-click="saveAdminModal(myform, adminForm);"><span ng-show="admin_button_clicked"><i class="glyphicon glyphicon-refresh spinning"></i></span>{{ 'SAVE_CHANGES' | translate }}</button>
 					<button class="btn btn-rounded btn-cancel" ng-click="closeAdminModal();">{{ 'CANCEL' | translate }}</button>
 				</div>
 			</div>
