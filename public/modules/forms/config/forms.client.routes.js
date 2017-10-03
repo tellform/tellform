@@ -9,10 +9,7 @@ angular.module('forms').config(['$stateProvider',
 		state('listForms', {
 			url: '/forms',
 			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html'
-  		}).state('adminPanel', {
-			url: '/adminpanel',
-			templateUrl: 'modules/forms/admin/views/admin-panel.client.view.html',
-		}).state('submitForm', {
+  		}).state('submitForm', {
 			url: '/forms/:agency/:formId',
 			templateUrl: 'modules/forms/base/views/submit-form.client.view.html',
 			data: {

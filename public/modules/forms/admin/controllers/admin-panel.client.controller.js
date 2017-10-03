@@ -1,8 +1,8 @@
 'use strict';
 
 // Admin Panel controller
-angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScope', '$http', 'Forms', '$stateParams', '$uibModal', 'User',
-    function($rootScope, $scope, $http, Forms, $stateParams, $uibModal, User) {
+angular.module('users').controller('AdminPanelController', ['$scope', '$rootScope', '$http', '$uibModal', 'User',
+    function($rootScope, $scope, $http, $uibModal, User) {
 
         User.getCurrent().then(function(myUser) {
             $scope.isSuperAdmin = false
