@@ -4,8 +4,8 @@
 angular.module('users').controller('AdminPanelController', ['$scope', '$rootScope', '$http', '$uibModal', 'User',
     function($rootScope, $scope, $http, $uibModal, User) {
 
+        $scope.isSuperAdmin = false
         User.getCurrent().then(function(myUser) {
-            $scope.isSuperAdmin = false
             if (myUser.roles.includes('superAdmin')) {
                 $scope.isSuperAdmin = true;
             }
