@@ -185,7 +185,7 @@ var getSearchCriteria = function(req) {
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1 && 
+	if (req.form.admin.id !== req.user.id && 
 		req.form.collaborators.indexOf(req.user.email) < 0) {
 		res.status(403).send({
 			message: 'User ' + req.user.username + ' is not authorized to edit Form: ' + form.title
