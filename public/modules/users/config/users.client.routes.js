@@ -44,8 +44,10 @@ angular.module('users').config(['$stateProvider',
         	},
 			url: '/settings/account',
 			templateUrl: 'modules/users/views/settings/edit-account.client.view.html'
-		}).
-		state('signup', {
+		}).state('adminPanel', {
+			url: '/adminpanel',
+			templateUrl: 'modules/users/views/admin-panel/admin-panel.client.view.html'
+		}).state('signup', {
 			resolve: {
 				isDisabled: checkSignupDisabled
 			},

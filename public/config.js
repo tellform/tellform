@@ -6,7 +6,7 @@ var ApplicationConfiguration = (function() {
 	var applicationModuleName = 'NodeForm';
 	var applicationModuleVendorDependencies = [
 		'duScroll', 'ui.select', 'ui.grid', 'ui.grid.edit', 'ui.grid.pagination',
-		'ui.grid.selection', 'ngAnimate', 'ngSanitize', 'vButton', 'ngResource',
+		'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ngSanitize', 'vButton', 'ngResource',
 		'formsg.templates', 'ui.router', 'ui.bootstrap', 'ui.utils',
 		'pascalprecht.translate', 'colorpicker.module', 'angularMoment'
 	];

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth',
-	function($scope, $rootScope, $http, $state, Users, Auth) {
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'User', 'Auth',
+	function($scope, $rootScope, $http, $state, User, Auth) {
 
 		$scope.user = Auth.currentUser;
 

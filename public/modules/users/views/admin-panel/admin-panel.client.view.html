@@ -1,0 +1,148 @@
+<header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
+
+<section data-ng-controller="AdminPanelController as ctrl" class="container">
+
+	<div class="submissions-table container" ng-if="isSuperAdmin">
+		<div class="button-filter-bar row">
+			<div class="button-panel col-md-2">
+				<small>
+					<button class="btn btn-default" ng-click="createAgency()">
+						<i class="glyphicon glyphicon-plus"></i>
+						<span class="hidden-xs hidden-sm">Add Agency</span>
+					</button>
+				</small>
+			</div>
+			<!-- <div class="button-panel col-md-1">
+				<small>
+					<button class="btn btn-danger" ng-click="deleteAgency()" ng-disabled="selectedRows.length === 0">
+						<i class="glyphicon glyphicon-trash"></i>
+						<span class="hidden-xs hidden-sm">{{ 'DELETE' | translate }}</span>
+					</button>
+				</small>
+			</div>	 -->				
+		</div>
+		
+		<div>
+			<div ng-if="gridOptions.data"
+			class="grid"
+			ui-grid="gridOptions"
+			ui-grid-edit 
+			ui-grid-selection 
+			ui-grid-cellnav>
+		</div>
+	</div>
+
+</section>
+
+<!-- Edit Field Modal Dialog Template -->
+<script type="text/ng-template" id="editFieldModal.html" class="edit-field-modal">
+	<div class="modal-body">
+		<div class="edit-panel col-md-12 col-xs-12 col-sm-12 container" ng-form="agencyForm">
+			<div class="row modal-header">
+				<h2 class="modal-title hidden-md hidden-lg">Agency Details</h2>
+				<h3 class="modal-title hidden-xs hidden-sm">Agency Details</h3>
+			</div>
+
+			<div class="row"><br></div>
+
+			<div class="row field">
+                <div class="field-title col-md-12 field-title-bold">Full Name</div>
+                <div class="col-md-12">
+                    <input class="form-control"
+					    type="text"
+					    name="fullName"
+					    ng-model="agency.fullName"
+						ng-model-options="{ allowInvalid: true }"
+                        value="{{agency.fullName}}"
+                        style="width: 100%;"
+                        ng-minlength="4"
+                        ng-required="true"
+                        ng-maxlength="200"
+                        maxlength="200">
+					<div ng-show="agencyForm.fullName.$invalid && agency.fullName.length > 0" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> Please enter a valid full name </span>
+					</div>
+                </div>
+            </div>
+
+            <div class="row"><br></div>
+
+			<div class="row field">
+                <div class="field-title col-md-12 field-title-bold">Short Name</div>
+                <div class="col-md-12">
+                    <input class="form-control"
+					    type="text"
+					    name="shortName"
+					    ng-model="agency.shortName"
+						ng-model-options="{ allowInvalid: true }"
+                        value="{{agency.shortName}}"
+                        style="width: 100%;"
+                        ng-minlength="2"
+                        ng-required="true"
+                        ng-maxlength="200"
+                        maxlength="200">
+					<div ng-show="agencyForm.shortName.$invalid && agency.shortName.length > 0" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> Please enter a valid short name </span>
+					</div>
+                </div>
+            </div>
+
+            <div class="row"><br></div>
+
+            <div class="row field">
+                <div class="field-title col-md-12 field-title-bold">Email Domains</div>
+				<div class="col-md-12">
+                    <input class="form-control" type="text"
+                        placeholder="e.g. data.gov.sg,tech.gov.sg"
+                        ng-model="agency.emailDomain"
+                        name = emailDomain
+                        ng-required="true"
+                        ng-change="validate_emails(agency.emailDomain, agencyForm)"
+                        value="{{agency.emailDomain}}"
+                        style="width: 100%;">
+                    <div ng-show="agencyForm.emailDomain.$invalid && agency.emailDomain.length > 0" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> Please enter a valid email domain </span>
+					</div>
+                </div>
+            </div>
+
+            <div class="row"><br></div>
+
+			<div class="row field">
+                <div class="field-title col-md-12 field-title-bold">Logo URL</div>
+                <div class="col-md-12">
+                    <input class="form-control"
+					    type="text"
+					    name="logo"
+					    ng-model="agency.logo"
+						ng-model-options="{ allowInvalid: true }"
+                        value="{{agency.logo}}"
+                        style="width: 100%;"
+                        ng-minlength="4"
+                        ng-required="true"
+                        ng-maxlength="200"
+                        maxlength="200">
+					<div ng-show="agencyForm.logo.$invalid && agency.logo.length > 0" class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>
+						<span> Please enter a valid URL </span>
+					</div>
+                </div>
+            </div>
+
+			<div class="row"><br></div>
+
+			<div class="modal-footer row">
+				<button type="submit" ng-click="saveAgency()" class="btn btn-signup btn-rounded" ng-disabled="agencyForm.$invalid || agencyForm.$pristine">
+					{{ 'SAVE_FIELD' | translate }}
+				</button>
+
+				<button ng-click="cancel()" class="btn btn-secondary btn-rounded">
+					{{ 'CANCEL' | translate }}
+				</button>
+			</div>
+		</div>
+	</div>
+</script>
