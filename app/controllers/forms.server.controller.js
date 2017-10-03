@@ -67,11 +67,6 @@ exports.update = function(req, res) {
 	var form = req.form;
     var updatedForm = req.body.form;
 
-    console.log('form')
-    console.log(form)
-    console.log('updated form')
-    console.log(updatedForm)
-
     delete updatedForm.__v;
     delete updatedForm.created;
 
@@ -82,10 +77,6 @@ exports.update = function(req, res) {
 			diff.applyChange(form, true, change);
 		});
 
-		console.log('in changes')
-		console.log(formChanges)
-		console.log('trying to update form - first')
-		console.log(form)
 	} else {
 		//Unless we have 'admin' privileges, updating form admin is disabled
 		if(updatedForm) {
@@ -101,8 +92,6 @@ exports.update = function(req, res) {
 			}
 		}
 		form = _.extend(form, updatedForm);
-		console.log('trying to update form - second')
-		console.log(form)
 
 	}
 
