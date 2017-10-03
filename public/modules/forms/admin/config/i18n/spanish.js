@@ -26,7 +26,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_INACTIVE: 'Formulario inactivo',
 
 		//Edit Field Modal
-		EDIT_FIELD: 'Editar este campo',
+		EDIT_FIELD: 'Editar',
 		SAVE_FIELD: 'Grabar',
 		ON: 'ON',
 		OFF: 'OFF',
