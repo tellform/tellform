@@ -2,7 +2,7 @@
 
 <section data-ng-controller="AdminPanelController as ctrl" class="container">
 
-	<div class="submissions-table container">
+	<div class="submissions-table container" ng-if="isSuperAdmin">
 		<div class="button-filter-bar row">
 			<div class="button-panel col-md-2">
 				<small>

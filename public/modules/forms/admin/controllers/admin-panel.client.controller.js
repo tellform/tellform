@@ -1,8 +1,15 @@
 'use strict';
 
 // Admin Panel controller
-angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScope', '$http', 'Forms', '$stateParams', '$uibModal',
-    function($rootScope, $scope, $http, Forms, $stateParams, $uibModal) {
+angular.module('forms').controller('AdminPanelController', ['$scope', '$rootScope', '$http', 'Forms', '$stateParams', '$uibModal', 'User',
+    function($rootScope, $scope, $http, Forms, $stateParams, $uibModal, User) {
+
+        User.getCurrent().then(function(myUser) {
+            $scope.isSuperAdmin = false
+            if (myUser.roles.includes('superAdmin')) {
+                $scope.isSuperAdmin = true;
+            }
+        });
 
         $scope.gridOptions = {
             enableRowSelection: true,
