@@ -197,8 +197,6 @@ exports.list = function(req, res) {
  */
 exports.formByID = function(req, res, next, id) {
 
-	console.log('in form middleware')
-	console.log(id)
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(400).send({
 			message: 'Form is invalid'
