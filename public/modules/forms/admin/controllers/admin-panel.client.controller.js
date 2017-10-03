@@ -149,6 +149,7 @@ angular.module('users').controller('AdminPanelController', ['$scope', '$rootScop
                         'Content-Type': 'application/json;charset=utf-8'
                     }
                 }).success(function(data, status) {
+                    $scope.gridApi.selection.clearSelectedRows();
                     getPage();   
                 })
                 .error(function(err) {
