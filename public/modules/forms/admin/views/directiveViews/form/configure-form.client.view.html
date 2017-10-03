@@ -1,25 +1,4 @@
 <div class="config-form container" ng-form="configureForm">
-	<div id="collab-email" class="row" ng-hide="$parent.user == undefined || $parent.user.email != myform.admin.email">
-	    <div class="row-with-no-bottom">
-	    	<div class="display-header">Admin Options</div>
-	    	<hr>
-	    </div>
-		<div class="field-title field-title-bold">
-			{{ 'FORM_COLLABORATOR' | translate }}&nbsp;<i class="glyphicon glyphicon-question-sign" uib-tooltip="Collaborators are other users that can configure your form. Only you (the admin) can add collaborators." tooltip-trigger="click mouseenter"></i>
-		</div>
-        <input class="form-control" type="text"
-            placeholder="e.g. collab1@data.gov.sg,collab2@ava.gov.sg"
-            ng-model="myform.collaborators"
-            name="collaborator_list"
-            ng-required="false"
-            value="{{myform.collaborators}}"
-            ng-change="validate_collaborators(myform.collaborators, configureForm)"
-            style="width: 100%;">
-        <div ng-show="configureForm.collaborator_list.$invalid" class="alert alert-danger" role="alert">
-			<span class="glyphicon glyphicon-exclamation-sign"></span>
-			<span> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
-		</div>
-	</div>
 	<div class="row">
 		<div class="row row-formname">
 	        <div class="col-md-8 col-xs-8">

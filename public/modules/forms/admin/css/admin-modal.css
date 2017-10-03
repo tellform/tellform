@@ -1,0 +1,36 @@
+/*
+** Admin Modal
+*/
+.admin-modal-window .modal-dialog {
+	width: 90%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.admin-modal-window .display-header {
+	font-size: 25px;
+}
+
+.admin-modal-window .field-title {
+    font-weight: bold;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.admin-modal-window .field-description {
+	font-size: 16px;
+	padding-bottom: 10px;
+}
+
+.admin-modal-window .action-buttons {
+	padding-top: 10px;
+	text-align: center;
+}
+
+.admin-modal-window .action-buttons .btn-cancel {
+	margin-left: 8px;
+}
+
+.admin-modal-window .alert {
+	margin-bottom: 0px;
+}
