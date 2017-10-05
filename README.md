@@ -18,7 +18,6 @@ TellForm 2.0.0
 - [Quickstart](#quickstart)
 - [Deploying with Docker](#deploying-with-docker)
 - [Testing your Application](#testing-your-application)
-- [FORMA](#forma)
 - [Where to Get Help](#where-to-get-help)
 - [Sponsors](#sponsors)
 - [Backers](#backers)
