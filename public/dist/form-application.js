@@ -942,7 +942,9 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					form.timeElapsed = _timeElapsed;
 					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
 					delete form.visible_form_fields;
-
+					delete form.analytics;
+					delete form.design;
+					delete form.submissions;
 					for(var i=0; i < $scope.myform.form_fields.length; i++){
 						if($scope.myform.form_fields[i].fieldType === 'dropdown' && !$scope.myform.form_fields[i].deletePreserved){
 							$scope.myform.form_fields[i].fieldValue = $scope.myform.form_fields[i].fieldValue.option_value;
@@ -954,7 +956,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 							.success(function (data, status) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
-								SendVisitorData.send($scope.myform, getActiveField(), _timeElapsed);
+								SendVisitorData.send(form, getActiveField(), _timeElapsed);
 							})
 							.error(function (error) {
 								$scope.loading = false;

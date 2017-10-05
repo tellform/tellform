@@ -184,8 +184,6 @@ module.exports = function(db) {
 		level: 9
 	}));
 
-	// Showing stack errors
-	app.set('showStackError', true);
 
 	// Set swig as the template engine
 	app.engine('server.view.html', consolidate[config.templateEngine]);
@@ -296,10 +294,16 @@ module.exports = function(db) {
 		// Log it
 		client.captureError(err);
 
-		// Error page
-		res.status(500).render('500', {
-			error: err.stack
-		});
+		if(process.env.NODE_ENV === 'production'){
+			res.status(500).render('500', {
+                	        error: 'Internal Server Error'
+                	});
+		} else { 
+			// Error page
+			res.status(500).render('500', {
+				error: err.stack
+			});
+		}
 	});
 
 	// Assume 404 since no middleware responded

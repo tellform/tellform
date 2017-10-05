@@ -165,14 +165,19 @@ exports.read = function(req, res) {
  * Show the current form for rendering form live
  */
 var readForRender = exports.readForRender = function(req, res) {
-	var newForm = req.form.toJSON();
+	var newForm = req.form;
 	if (!newForm.isLive && !req.user) {
 		return res.status(401).send({
 			message: 'Form is Not Public'
 		});
 	}
 
+	delete newForm.submissions;
+	//delete newForm.analytics;
 	delete newForm.admin;
+	delete newForm.lastModified;
+	delete newForm.__v;
+	delete newForm.created;
 
 	if(!newForm.startPage.showStart){
 		delete newForm.startPage;
@@ -321,8 +326,8 @@ exports.formByIDFast = function(req, res, next, id) {
 		});
 	}
 	Form.findById(id)
-		.select('title', 'language', 'form_fields', 'startPage', 'endPage', 'hideFooter', 'isLive', 'design', 'admin', 'analytics.gaCode')
-		.populate()
+		.select('title language form_fields startPage endPage hideFooter isLive design admin analytics.gaCode')
+		.populate('admin')
 		.cache()
 		.lean()
 		.exec(function(err, form) {
@@ -336,10 +341,11 @@ exports.formByIDFast = function(req, res, next, id) {
 		else {
 			//Remove sensitive information from User object
 			var _form = form;
+			if(_form.admin){
 			_form.admin.password = null;
 			_form.admin.salt = null;
 			_form.provider = null;
-
+			}
 			req.form = _form;
 			return next();
 		}
