@@ -46,17 +46,16 @@ exports.deleteSubmissions = function(req, res) {
  * Submit a form entry
  */
 exports.createSubmission = function(req, res) {
-	var form = req.form;
 
 	var timeElapsed = 0;
-
+	
+	console.log(req.body);
 	if(typeof req.body.timeElapsed === 'number'){
 		timeElapsed = req.body.timeElapsed;
 	}
 	var submission = new FormSubmission({
-		admin: form.admin._id,
-		form: form._id,
-		title: form.title,
+		form: req.body._id,
+		title: req.body.title,
 		form_fields: req.body.form_fields,
 		timeElapsed: timeElapsed,
 		percentageComplete: req.body.percentageComplete,
@@ -73,8 +72,8 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-
-		form.submissions.push(submission);
+		res.status(200).send('Form submission successfully saved');
+		/*form.submissions.push(submission);
 
 		form.save(function (err) {
 			if (err) {
@@ -84,7 +83,7 @@ exports.createSubmission = function(req, res) {
 				});
 			}
 			res.status(200).send('Form submission successfully saved');
-		});
+		});*/
 	});
 };
 
@@ -94,10 +93,10 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 
-	FormSubmission.find({ form: _form._id }).exec(function(err, _submissions) {
+	FormSubmission.find({ form: _form._id }).sort('-created').lean().exec(function(err, _submissions) {
 		if (err) {
 			console.error(err);
-			res.status(400).send({
+			res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
@@ -172,9 +171,6 @@ var readForRender = exports.readForRender = function(req, res) {
 		});
 	}
 
-	delete newForm.submissions;
-	//delete newForm.analytics;
-	delete newForm.admin;
 	delete newForm.lastModified;
 	delete newForm.__v;
 	delete newForm.created;
@@ -190,7 +186,7 @@ var readForRender = exports.readForRender = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
-	var form = req.form;
+    var form = req.form;
     var updatedForm = req.body.form;
 
     delete updatedForm.__v;
@@ -326,10 +322,9 @@ exports.formByIDFast = function(req, res, next, id) {
 		});
 	}
 	Form.findById(id)
-		.select('title language form_fields startPage endPage hideFooter isLive design admin analytics.gaCode')
-		.populate('admin')
-		.cache()
 		.lean()
+		.cache()
+		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);

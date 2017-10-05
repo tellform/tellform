@@ -14,19 +14,22 @@ module.exports = function(app) {
 		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/')
 		 .get(core.form);
 
-		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formId([a-zA-Z0-9]+)')
+		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/([a-zA-Z0-9]+)')
 		 .post(forms.createSubmission);
 
 		app.route('/subdomain/:userSubdomain((?!api$)[A-Za-z0-9]+)/forms/:formIdFast([a-zA-Z0-9]+)/render')
 		 .get(forms.readForRender);
 
 		app.route('/forms/:formId([a-zA-Z0-9]+)/render')
-			.put(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.readForRender)
 			.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.readForRender);
 	} else {
 		app.route('/forms/:formIdFast([a-zA-Z0-9]+)/render')
 			.get(forms.readForRender);
 	}
+
+   	app.route('/forms/:formIdFast([a-zA-Z0-9]+)')
+                .post(forms.createSubmission)
+	
 	app.route('/forms')
 		.get(auth.isAuthenticatedOrApiKey, forms.list)
 		.post(auth.isAuthenticatedOrApiKey, forms.create);
@@ -46,4 +49,5 @@ module.exports = function(app) {
 
 	// Fast formId middleware
 	app.param('formIdFast', forms.formByIDFast);
+
 };

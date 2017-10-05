@@ -16,7 +16,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     rows: []
                 };
 
-		       var submissions = $scope.myform.submissions || [];
+		var submissions = $scope.myform.submissions || [];
 
                 //Iterate through form's submissions
                 for(var i = 0; i < submissions.length; i++){

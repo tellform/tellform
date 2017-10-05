@@ -338,14 +338,30 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 					form.timeElapsed = _timeElapsed;
 					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
+					delete form.endPage
+					delete form.isLive
+					delete form.provider
+					delete form.startPage
 					delete form.visible_form_fields;
 					delete form.analytics;
 					delete form.design;
 					delete form.submissions;
+					delete form.submitted;
 					for(var i=0; i < $scope.myform.form_fields.length; i++){
 						if($scope.myform.form_fields[i].fieldType === 'dropdown' && !$scope.myform.form_fields[i].deletePreserved){
 							$scope.myform.form_fields[i].fieldValue = $scope.myform.form_fields[i].fieldValue.option_value;
 						}
+						
+						//Get rid of unnessecary attributes for each form field
+						delete form.form_fields[i].submissionId;
+                        			delete form.form_fields[i].disabled;
+                        			delete form.form_fields[i].ratingOptions;
+                       				delete form.form_fields[i].fieldOptions;
+                        			delete form.form_fields[i].logicJump;
+                        			delete form.form_fields[i].description;
+                        			delete form.form_fields[i].validFieldTypes;
+                        			delete form.form_fields[i].fieldType;	
+					 
 					}
 
 					setTimeout(function () {

@@ -14,11 +14,6 @@ module.exports = {
 			pass: ''
 		}
 	},
-	aws: {
-		'accessKeyId': process.env.AWS_ACCESS_ID,
-		'secretAccessKey': process.env.AWS_SECRET_KEY,
-		'region': process.env.AWS_REGION
-	},
 
 	port: process.env.PORT || 3000,
 	socketPort: process.env.SOCKET_PORT || 20523,
@@ -32,11 +27,6 @@ module.exports = {
 	baseUrl: '',
 	tempUserCollection: 'temporary_users',
 
-	mailosaur: {
-		key: process.env.MAILOSAUR_KEY || '',
-		mailbox_id: process.env.MAILOSAUR_MAILBOX || ''
-	},
-
 	subdomainsDisabled: (process.env.SUBDOMAINS_DISABLED === 'TRUE'),
 
 	//Sentry DSN Client Key
@@ -44,7 +34,7 @@ module.exports = {
 
 	// The secret should be set to a non-guessable string that
 	// is used to compute a session hash
-	sessionSecret: 'MEAN',
+	sessionSecret: process.env.SESSION_SECRET || 'CHANGE_ME_PLEASE',
 	// The name of the MongoDB collection to store sessions in
 	sessionCollection: 'sessions',
 	// The session cookie settings
