@@ -18,7 +18,7 @@ var smtpTransport = nodemailer.createTransport(config.mailer.options);
 /**
  * Forgot for reset password (forgot POST)
  */
-exports.forgot = function(req, res, next) {
+exports.forgot = function(req, res) {
 	async.waterfall([
 		// Generate random token
 		function(done) {
@@ -81,22 +81,33 @@ exports.forgot = function(req, res, next) {
 				subject: 'Password Reset',
 				html: emailHTML
 			};
-			smtpTransport.sendMail(mailOptions, function(err) {
-				if (!err) {
-					res.send({
-						message: 'An email has been sent to ' + user.email + ' with further instructions.'
-					});
-				} else {
-					return res.status(400).send({
-						message: 'Failure sending email'
-					});
-				}
 
-				done(err);
+            var userEmail = user.email;
+			var user = userEmail.split('@')[0];
+			var domain = userEmail.split('@')[1];
+
+			var obfuscatedUser = user.substring(0, 1) + user.substring(1).replace(/./g, '*');
+			var domainName = domain.split('.')[0];
+			var tld = domain.split('.')[1];
+
+			var obfuscatedDomainName = domainName.replace(/./g, '*');
+			var obfuscatedEmail = obfuscatedUser + '@' + obfuscatedDomainName + '.' + tld;
+
+			smtpTransport.sendMail(mailOptions, function(err) {
+				done(err, obfuscatedEmail);
 			});
 		}
-	], function(err) {
-		if (err) return next(err);
+	], function(err, obfuscatedEmail) {
+		if (err) {
+			console.log(err);
+			return res.status(400).send({
+				message: 'Couldn\'t send reset password email due to internal server errors. Please contact support at team@tellform.com.'
+			});
+		} else {
+			return res.send({
+				message: 'An email has been sent to ' + obfuscatedEmail + ' with further instructions.'
+			});
+		}
 	});
 };
 
