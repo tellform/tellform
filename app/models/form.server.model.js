@@ -155,7 +155,9 @@ var FormSchema = new Schema({
 			type: Boolean,
 			default: false
 		},
-		emailRecipients: [String]
+		recipients: {
+			type: String
+		}
 	},
 	hideFooter: {
 		type: Boolean,

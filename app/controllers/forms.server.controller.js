@@ -9,7 +9,10 @@ var mongoose = require('mongoose'),
 	FormSubmission = mongoose.model('FormSubmission'),
 	config = require('../../config/config'),
 	diff = require('deep-diff'),
-	_ = require('lodash');
+	_ = require('lodash'),
+	nodemailer = require('nodemailer');
+
+var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 /**
  * Delete a forms submissions
@@ -49,7 +52,6 @@ exports.createSubmission = function(req, res) {
 
 	var timeElapsed = 0;
 	
-	console.log(req.body);
 	if(typeof req.body.timeElapsed === 'number'){
 		timeElapsed = req.body.timeElapsed;
 	}
@@ -72,7 +74,27 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		res.status(200).send('Form submission successfully saved');
+
+		if (req.body.emailNotifications && req.body.emailNotifications.enabled && req.body.emailNotifications.recipients) {
+				 var mailOptions = {
+					from: config.mailer.from,
+					cc: req.body.emailNotifications.recipients,
+					subject: 'TellForm ' + submission.title + 'Submitted',
+					body: 'Your form ' + submission.title + 'was submitted.'
+				}
+
+				smtpTransport.sendMail(mailOptions, function(err) {
+					if (!err) {
+						return res.status(200).send('Form submission successfully saved');
+					} 
+					return res.status(400).send({
+						message: 'Failure sending submission email'
+					});
+				});
+		} else {
+			res.status(200).send('Form submission successfully saved');
+		}
+
 	});
 };
 
@@ -312,7 +334,7 @@ exports.formByIDFast = function(req, res, next, id) {
 	Form.findById(id)
 		.lean()
 		.cache()
-		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
+		.select('emailNotifications title language form_fields startPage endPage hideFooter isLive design analytics.gaCode emailNotifications')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);
