@@ -150,6 +150,13 @@ var FormSchema = new Schema({
 		buttons:[ButtonSchema]
 	},
 
+	emailNotifications: {
+		enabled: {
+			type: Boolean,
+			default: false
+		},
+		emailRecipients: [String]
+	},
 	hideFooter: {
 		type: Boolean,
 		default: false
