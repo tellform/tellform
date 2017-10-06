@@ -120,10 +120,10 @@ module.exports = function(grunt) {
 			productionForms: {
 				options: {
 					mangled: true,
-					beautify: true
+					compress: true
 				},
 				files: {
-					'public/dist/vendor_forms_uglified.js': bowerArray
+					'public/dist/vendor.min.js': bowerArray
 				}
 			}
 		},
@@ -367,7 +367,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'cssmin', 'ngAnnotate', 'uglify', 'closure-compiler', 'html2js:main', 'html2js:forms']);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'cssmin', 'ngAnnotate', 'uglify', 'html2js:main', 'html2js:forms']);
 
 	//Setup task(s).
 	grunt.registerTask('setup', ['execute']);

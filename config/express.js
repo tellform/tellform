@@ -27,8 +27,8 @@ var fs = require('fs-extra'),
 var mongoose = require('mongoose');
 
 var cacheOpts = {
-	max:10000,
-	maxAge:1000*60*2
+	max:100000,
+	maxAge:1000*60
 };
 
 require('mongoose-cache').install(mongoose, cacheOpts);
@@ -184,8 +184,6 @@ module.exports = function(db) {
 		level: 9
 	}));
 
-	// Showing stack errors
-	app.set('showStackError', true);
 
 	// Set swig as the template engine
 	app.engine('server.view.html', consolidate[config.templateEngine]);
@@ -203,6 +201,7 @@ module.exports = function(db) {
 		app.set('view cache', false);
 	} else if (process.env.NODE_ENV === 'production') {
 		app.locals.cache = 'memory';
+		app.set('view cache', true);
 	}
 
 	// Request body parsing middleware should be above methodOverride
@@ -296,10 +295,16 @@ module.exports = function(db) {
 		// Log it
 		client.captureError(err);
 
-		// Error page
-		res.status(500).render('500', {
-			error: err.stack
-		});
+		/*if(process.env.NODE_ENV === 'production'){
+			res.status(500).render('500', {
+                	        error: 'Internal Server Error'
+                	});
+		} else {*/ 
+			// Error page
+			res.status(500).render('500', {
+				error: err.stack
+			});
+		//}
 	});
 
 	// Assume 404 since no middleware responded

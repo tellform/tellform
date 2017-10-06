@@ -16,7 +16,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     rows: []
                 };
 
-		       var submissions = $scope.myform.submissions || [];
+		var submissions = $scope.myform.submissions || [];
 
                 //Iterate through form's submissions
                 for(var i = 0; i < submissions.length; i++){
@@ -181,7 +181,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
                 //Export selected submissions of Form
                 $scope.exportSubmissions = function(type){
-                    angular.element('#table-submission-data').tableExport({type: type, escape:false});
+                    angular.element('#table-submission-data').tableExport({type: type, escape:false, ignoreColumn: [0]});
                 };
 
             }
