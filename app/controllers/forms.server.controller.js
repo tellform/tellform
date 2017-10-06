@@ -46,17 +46,16 @@ exports.deleteSubmissions = function(req, res) {
  * Submit a form entry
  */
 exports.createSubmission = function(req, res) {
-	var form = req.form;
 
 	var timeElapsed = 0;
-
+	
+	console.log(req.body);
 	if(typeof req.body.timeElapsed === 'number'){
 		timeElapsed = req.body.timeElapsed;
 	}
 	var submission = new FormSubmission({
-		admin: form.admin._id,
-		form: form._id,
-		title: form.title,
+		form: req.body._id,
+		title: req.body.title,
 		form_fields: req.body.form_fields,
 		timeElapsed: timeElapsed,
 		percentageComplete: req.body.percentageComplete,
@@ -73,18 +72,7 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-
-		form.submissions.push(submission);
-
-		form.save(function (err) {
-			if (err) {
-				console.error(err);
-				return res.status(500).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
-			res.status(200).send('Form submission successfully saved');
-		});
+		res.status(200).send('Form submission successfully saved');
 	});
 };
 
@@ -94,10 +82,10 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 
-	FormSubmission.find({ form: _form._id }).exec(function(err, _submissions) {
+	FormSubmission.find({ form: _form._id }).sort('-created').lean().exec(function(err, _submissions) {
 		if (err) {
 			console.error(err);
-			res.status(400).send({
+			res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
@@ -172,7 +160,9 @@ var readForRender = exports.readForRender = function(req, res) {
 		});
 	}
 
-	delete newForm.admin;
+	delete newForm.lastModified;
+	delete newForm.__v;
+	delete newForm.created;
 
 	if(!newForm.startPage.showStart){
 		delete newForm.startPage;
@@ -185,7 +175,7 @@ var readForRender = exports.readForRender = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
-	var form = req.form;
+    var form = req.form;
     var updatedForm = req.body.form;
 
     delete updatedForm.__v;
@@ -250,24 +240,28 @@ exports.delete = function(req, res) {
  * Get All of Users' Forms
  */
 exports.list = function(req, res) {
-	Form.aggregate([
-			{ $match: { admin: req.user._id } },
-			{ 
-				$project: {
-					admin: 1,
-					_id: 1,
-					language: 1, 
-					isLive: 1,
-					title: 1,
-		            numberOfResponses: { $size: "$submissions" }
-		        } 
-	    	}
-		]).exec(function(err, forms) {
+	//Allow 'admin' user to view all forms
+	var searchObj = {admin: req.user};
+	if(req.user.isAdmin()) searchObj = {};
+
+	Form.find(searchObj)
+		.sort('-created')
+		.select('title language submissions admin isLive')
+		.populate('admin.username', 'admin._id')
+		.lean()
+		.exec(function(err, forms) {
 		if (err) {
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			for(var i=0; i<forms.length; i++){
+				forms[i].numberOfResponses = 0;
+				if(forms[i].submissions){
+					forms[i].numberOfResponses = forms[i].submissions.length;
+					delete forms[i].submissions;
+				}
+			}
 			res.json(forms);
 		}
 	});
@@ -316,10 +310,9 @@ exports.formByIDFast = function(req, res, next, id) {
 		});
 	}
 	Form.findById(id)
-		.select('title language form_fields startPage endPage hideFooter isLive design admin analytics.gaCode')
-		.populate('admin.roles', 'admin.id')
 		.lean()
 		.cache()
+		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);
@@ -329,7 +322,14 @@ exports.formByIDFast = function(req, res, next, id) {
 			});
 		}
 		else {
-			req.form = form;
+			//Remove sensitive information from User object
+			var _form = form;
+			if(_form.admin){
+			_form.admin.password = null;
+			_form.admin.salt = null;
+			_form.provider = null;
+			}
+			req.form = _form;
 			return next();
 		}
 	});
