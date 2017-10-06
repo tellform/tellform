@@ -247,7 +247,7 @@ section.public-form {
     padding: 0 10% 0 10%;
 }
 section.public-form .form-submitted {
-    height: 100%;
+    height: 100vh;
 }
 
 section.public-form .btn {

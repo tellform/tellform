@@ -5,12 +5,12 @@
 <div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted" style="padding-top: 35vh;">
     <div class="row">
         <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
-            <h1 style="font-weight: 400; nont-size: 25px;">
+            <h1 style="font-weight: 400; nont-size: 25px;" ng-style="{'color': form.design.colors.questionColor}">
                 {{myform.startPage.introTitle}}
             </h1>
         </div>
         <div class="col-xs-10 col-xs-offset-1 text-center" style="overflow-wrap: break-word;">
-            <p style="color: grey; font-weight: 100; font-size: 16px;">
+            <p style="font-weight: 100; font-size: 16px;" ng-style="{'color': form.design.colors.questionColor}">
                 {{myform.startPage.introParagraph}}
             </p>
         </div>
@@ -102,7 +102,7 @@
 <!-- Default End Page View -->
 <div ng-if="myform.submitted && !loading && !myform.endPage.showEnd" class="form-submitted" ng-style="{'color':myform.design.colors.buttonTextColor}" style="padding-top: 5vh;">
 
-    <div class="field row text-center">
+    <div class="field row text-center" ng-style="{'color': myform.design.colors.questionColor}">
         <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center">{{ 'FORM_SUCCESS' | translate }}</div>
     </div>
     <div class="row form-actions">
@@ -118,12 +118,12 @@
 <div ng-if="myform.submitted && !loading && myform.endPage.showEnd" class="form-submitted" ng-style="{'color':myform.design.colors.buttonTextColor}" style="padding-top: 5vh;">
     <div class="row">
         <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
-            <h1 style="font-weight: 400; nont-size: 25px;">
+            <h1 style="font-weight: 400; font-size: 25px;" ng-style="{'color': myform.design.colors.questionColor}">
                 {{myform.endPage.title}}
             </h1>
         </div>
         <div class="col-xs-10 col-xs-offset-1 text-center" style="overflow-wrap: break-word;">
-            <p style="color: grey; font-weight: 100; font-size: 16px;">
+            <p style="font-weight: 100; font-size: 16px;" ng-style="{'color': myform.design.colors.questionColor}">
                 {{myform.endPage.paragraph}}
             </p>
         </div>
