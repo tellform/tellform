@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
 	mUtilities = require('mongoose-utilities'),
 	FieldSchema = require('./form_field.server.model.js');
 
+var shortid = require('shortid');
+
 /**
  * Form Submission Schema
  */
@@ -19,9 +21,9 @@ var FormSubmissionSchema = new Schema({
 	form_fields: [FieldSchema],
 
 	form: {
-		type: Schema.Types.ObjectId,
 		ref: 'Form',
-		required: true
+		type: String,
+    default: shortid.generate
 	},
 
 	ipAddr: {

@@ -48,13 +48,12 @@ exports.deleteSubmissions = function(req, res) {
 exports.createSubmission = function(req, res) {
 
 	var timeElapsed = 0;
-	
+
 	console.log(req.body);
 	if(typeof req.body.timeElapsed === 'number'){
 		timeElapsed = req.body.timeElapsed;
 	}
 	var submission = new FormSubmission({
-		form: req.body._id,
 		title: req.body.title,
 		form_fields: req.body.form_fields,
 		timeElapsed: timeElapsed,
@@ -179,7 +178,7 @@ exports.update = function(req, res) {
     var updatedForm = req.body.form;
 
     delete updatedForm.__v;
-    delete updatedForm.created; 
+    delete updatedForm.created;
 
 	if (req.body.changes) {
 		var formChanges = req.body.changes;
