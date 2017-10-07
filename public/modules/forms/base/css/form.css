@@ -11,35 +11,32 @@
 .public-form input, .public-form textarea {
 	background-color: #000000;
     background-color: rgba(0,0,0,0);
-    border: 2px dashed #ddd!important;
+    border-width: 0px;
 }
 
-.public-form input:focus, .public-form textarea:focus {
-    border: 2px dashed #ddd!important;
+.public-form input.ng-untouched, .public-form textarea.ng-untouched {
+    border-width: 0 0 2px 0;
+    border-color: rgba(246, 255, 181, 0.4);
     outline: 0;
 }
 
-/*.public-form input.no-border.ng-invalid, .public-form textarea.no-border {
-    border-color: none;
-}*/
-.public-form input.ng-valid, .public-form textarea.ng-valid {
-	/*border-color: #20FF20!important;
-	border-style: solid!important;
-	border-width: 3px!important;*/
+.public-form input:focus, .public-form textarea:focus {
+    border-width: 0 0 2px 0;
+    border-color: rgba(246, 255, 181, 0.4);
+    outline: 0;
 }
 
-.public-form input.ng-invalid.ng-dirty, .public-form textarea.ng-invalid.ng-dirty {
-	/*border-color: #FA787E!important;
-	border-style: solid!important;
-	border-width: 3px!important;*/
+.public-form input.ng-dirty, .public-form textarea.ng-dirty {
+    border-width: 0;
+}
+
+.public-form input.empty, .public-form textarea.empty {
+    border-width: 0 0 2px 0;
+    border-color: rgba(246, 255, 181, 0.4);
 }
 
 section.content p.breakwords {
     word-break: break-all;
-}
-
-.public-form .btn {
-    border: 1px solid #c6c6c6;
 }
 
 .public-form .btn[type='submit'] {
@@ -142,7 +139,7 @@ form .row.field {
     form .row.field > .field-title {
         margin-top:0.5em;
         font-size:1.2em;
-        padding-bottom: 1.8em;
+        padding-bottom: 0.5em;
         width: inherit;
     }
     form .row.field > .field-input {
@@ -243,15 +240,12 @@ form .row.field {
 }
 
 /* Styles for form list view (/forms) */
-section.public-form {
-    padding: 0 10% 0 10%;
-}
-section.public-form .form-submitted {
-    height: 100vh;
+section.public-form field-directive .btn.btn-lg.btn-default {
+    background: none;
 }
 
-section.public-form .btn {
-    border: 1px solid;
+section.public-form field-directive .btn[disabled]{
+    display: none;
 }
 
 .form-item {
@@ -330,42 +324,16 @@ section.public-form .btn {
         top:0;
     }
 
-/*Modal overlay (for lightbox effect)*/
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #000;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 10;
-}
-.overlay.submitform {
-    background-color: #fff;
-    background-color: rgba(256,256,256,0.8);
+.field-directive {
+    opacity: 0.2;
+    padding: 2.5% 10% 2.5% 10%;
 }
 
-.field-directive {
-    z-index: 9;
-    padding: 10% 10% 10% 0;
-    border: 25px transparent solid;
-    position: relative;
+.form-field-wrapper .form-actions.activeField, .field-directive.activeField {
+    opacity: 1;
 }
-.activeField {
-    z-index: 11;
-    position: relative;
-    background-color: transparent;
-}
-.activeField.field-directive {
-    display: inline-block;
-    border-radius: 7px;
-    width: 100%;
-    border: 25px transparent solid;
-}
-	.activeField input {
-		background-color: transparent;
-	}
+
+
 h3.forms-list-title {
 	color: #3FA2F7;
 	font-weight: 600;

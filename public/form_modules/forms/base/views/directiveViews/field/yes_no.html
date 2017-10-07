@@ -28,6 +28,7 @@
                 <input type="radio" value="true"
 					class="focusOn"
                     style="opacity: 0; margin-left: 0px;"
+                    ng-focus="setActiveField(field._id, null, false)"
 					ng-model="field.fieldValue"
 					ng-model-options="{ debounce: 250 }"
 					ng-required="field.required"
@@ -46,6 +47,7 @@
 
                 <input type="radio" value="false"
 			        style="opacity:0; margin-left:0px;"
+			        ng-focus="setActiveField(field._id, null, false)"
 			        ng-model="field.fieldValue"
 			        ng-model-options="{ debounce: 250 }"
 			        ng-required="field.required"

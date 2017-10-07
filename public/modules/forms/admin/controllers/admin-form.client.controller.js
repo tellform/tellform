@@ -16,6 +16,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
         $rootScope.saveInProgress = false;
+        $scope.oldForm = _.cloneDeep($scope.myform);
 
         CurrentForm.setForm($scope.myform);
 
@@ -42,12 +43,22 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             }
         };
 
-        $scope.tabData   = [
+        $scope.tabData = [
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
                 templateName:   'configure'
             }
         ];
+
+        $scope.designTabActive = false
+
+        $scope.deactivateDesignTab = function(){
+            $scope.designTabActive = false
+        }
+
+        $scope.activateDesignTab = function(){
+            $scope.designTabActive = true
+        }
 
         $scope.setForm = function(form){
             $scope.myform = form;
@@ -102,16 +113,20 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             }
         };
 
-        // Update existing Form
-        $scope.update = $rootScope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
-            refreshFrame();
+        $scope.updateDesign = function(updateImmediately, data, shouldDiff, refreshAfterUpdate){
+            $scope.update(updateImmediately, data, shouldDiff, refreshAfterUpdate, function(){
+                refreshFrame();
+            });
+        }
 
+        // Update existing Form
+        $scope.update = $rootScope.update = function(updateImmediately, data, shouldDiff, refreshAfterUpdate, cb){
             var continueUpdate = true;
             if(!updateImmediately){
                 continueUpdate = !$rootScope.saveInProgress;
             }
 
-            //Update form **if we are not currently updating** or if **shouldUpdateNow flag is set**
+            //Update form **if we are not in the middle of an update** or if **shouldUpdateNow flag is set**
             if(continueUpdate) {
                 var err = null;
 
@@ -119,11 +134,24 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                     $rootScope.saveInProgress = true;
                 }
 
-                if (isDiffed) {
+                if (shouldDiff) {
+                    //Do this so we can create duplicate fields
+                    var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
+                    for(var i=0; i < $scope.myform.form_fields.length; i++){
+                        var field = $scope.myform.form_fields[i];
+                        if(!checkForValidId.exec(field._id+'')){
+                            delete $scope.myform.form_fields[i]._id;
+                            delete $scope.myform.form_fields[i].id;
+                        }
+                    }
+
+                    var data = DeepDiff.diff($scope.oldForm, $scope.myform);
+
                     $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
                         .then(function (response) {
                             if (refreshAfterUpdate) {
                                 $rootScope.myform = $scope.myform = response.data;
+                                $scope.oldForm = _.cloneDeep($scope.myform);
                             }
                         }).catch(function (response) {
                             err = response.data;
@@ -145,6 +173,22 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                     if(dataToSend.submissions){
                         delete dataToSend.submissions;
                     }
+
+                    if(dataToSend.visible_form_fields){
+                        delete dataToSend.visible_form_fields;
+                    }
+
+                     if(dataToSend.analytics){
+                        delete dataToSend.analytics.visitors;
+                        delete dataToSend.analytics.fields;
+                        delete dataToSend.analytics.submissions;
+                        delete dataToSend.analytics.views;
+                        delete dataToSend.analytics.conversionRate;
+                    }
+
+                    delete dataToSend.created;
+                    delete dataToSend.lastModified;
+                    delete dataToSend.__v;
 
                     $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
                         .then(function (response) {

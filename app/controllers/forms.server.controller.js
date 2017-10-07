@@ -164,7 +164,7 @@ var readForRender = exports.readForRender = function(req, res) {
 	delete newForm.__v;
 	delete newForm.created;
 
-	if(!newForm.startPage.showStart){
+	if(newForm.startPage && !newForm.startPage.showStart){
 		delete newForm.startPage;
 	}
 
@@ -175,20 +175,31 @@ var readForRender = exports.readForRender = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
+
     var form = req.form;
     var updatedForm = req.body.form;
+    if(form.form_fields === undefined){
+    	form.form_fields = [];
+    }
 
-    delete updatedForm.__v;
-    delete updatedForm.created; 
+    if(form.analytics === undefined){
+    	form.analytics = {
+    		visitors: [],
+    		gaCode: ''
+    	}
+    }
 
 	if (req.body.changes) {
 		var formChanges = req.body.changes;
 
 		formChanges.forEach(function (change) {
-			diff.applyChange(form, true, change);
+			diff.applyChange(form._doc, true, change);
 		});
 	} else {
-		//Unless we have 'admin' privileges, updating form admin is disabled
+
+	    delete updatedForm.__v;
+	    delete updatedForm.created; 
+		//Unless we have 'admin' privileges, updating the form's admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
 		}
@@ -200,7 +211,7 @@ exports.update = function(req, res) {
 
 		//Do this so we can create duplicate fields
 		var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
-		for(var i=0; i<req.body.form.form_fields.length; i++){
+		for(var i=0; i < req.body.form.form_fields.length; i++){
 			var field = req.body.form.form_fields[i];
 			if(!checkForValidId.exec(field._id+'')){
 				delete field._id;
