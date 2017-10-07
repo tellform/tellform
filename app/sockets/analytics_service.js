@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
 module.exports = function (io, socket) {
 	var visitorsData = {};
 
-	var saveVisitorData = function (data, cb){
+	var saveVisitorData = function (data, socket, cb){
 		Form.findById(data.formId, function(err, form) {
 			if (err) {
 				console.error(err);
@@ -32,15 +32,22 @@ module.exports = function (io, socket) {
 
 			form.analytics.visitors.push(newVisitor);
 
-			form.save(function (formSaveErr) {
-				if (err) {
-					console.error(err);
-					throw new Error(errorHandler.getErrorMessage(formSaveErr));
+			request('https://freegeoip.net/json/'+socket.conn.transport.socket._socket.remoteAddress, (error, response, body)=> {
+		        var geoData = body;
+				data.geoLocation = {
+					city: geoData.city,
+					country: geoData.country_name
 				}
+				form.save(function (formSaveErr) {
+					if (err) {
+						console.error(err);
+						throw new Error(errorHandler.getErrorMessage(formSaveErr));
+					}
 
-				if(cb){
-					return cb();
-				}
+					if(cb){
+						return cb();
+					}
+				});
 			});
 		});
 	};
@@ -54,22 +61,12 @@ module.exports = function (io, socket) {
 
 			visitorsData[current_socket.id].ipAddr = current_socket.conn.transport.socket._socket.remoteAddress;
 
-			console.log(current_socket);
-			request('https://freegeoip.net/json/'+current_socket.conn.transport.socket._socket.remoteAddress, (error, response, body)=> {
-				console.log(body);
-		        var geoData = body;
-				visitorsData[current_socket.id].geoLocation = {
-					city: geoData.city,
-					country: geoData.country_name
-				}
-
-				if (data.isSubmitted && !data.isSaved) {
-					visitorsData[current_socket.id].isSaved = true;
-					saveVisitorData(data, function() {
-						current_socket.disconnect(true);
-					});
-				}
-			});
+			if (data.isSubmitted && !data.isSaved) {
+				visitorsData[current_socket.id].isSaved = true;
+				saveVisitorData(data, function() {
+					current_socket.disconnect(true);
+				});
+			}
 		});
 
 		current_socket.on('disconnect', function() {
@@ -85,3 +82,4 @@ module.exports = function (io, socket) {
 		});
 	});
 };
+
