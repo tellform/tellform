@@ -5,6 +5,8 @@ angular.module('view-form').controller('SubmitFormController', [
 	'$scope', '$rootScope', '$state', '$translate', 'myForm',
 	function($scope, $rootScope, $state, $translate, myForm) {
 		$scope.myform = myForm;
+
+		document.body.style.background = myForm.design.colors.backgroundColor;
         $translate.use(myForm.language);
 	}
 ]);
