@@ -9,8 +9,8 @@ jsep.addBinaryOp('!begins', 10);
 jsep.addBinaryOp('ends', 10);
 jsep.addBinaryOp('!ends', 10);
 
-angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData', '$translate',
-    function ($http, TimeCounter, $filter, $rootScope, SendVisitorData, $translate) {
+angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData', '$translate', '$timeout',
+    function ($http, TimeCounter, $filter, $rootScope, SendVisitorData, $translate, $timeout) {
         return {
             templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
@@ -19,7 +19,8 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 ispreview: '='
             },
             controller: function($document, $window, $scope){
-		        $scope.noscroll = false;
+		        var NOSCROLL = false;
+		        var FORM_ACTION_ID = 'submit_field';
                 $scope.forms = {};
                 
 				//Don't start timer if we are looking at a design preview
@@ -58,43 +59,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     //Reset Timer
                     TimeCounter.restartClock();
                 };
-
-				//Fire event when window is scrolled
-				$window.onscroll = function(){
-            		$scope.scrollPos = document.body.scrollTop || document.documentElement.scrollTop || 0;
-					var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
-					$scope.fieldTop = elemBox.top;
-					$scope.fieldBottom = elemBox.bottom;
-
-					var field_id;
-					var field_index;
-
-                    if(!$scope.noscroll){
-                        //Focus on submit button
-                        if( $scope.selected.index === $scope.myform.visible_form_fields.length-1 && $scope.fieldBottom < 200){
-                            field_index = $scope.selected.index+1;
-                            field_id = 'submit_field';
-                            $scope.setActiveField(field_id, field_index, false);
-                        }
-                        //Focus on field above submit button
-                        else if($scope.selected.index === $scope.myform.visible_form_fields.length){
-                            if($scope.fieldTop > 200){
-                                field_index = $scope.selected.index-1;
-                                field_id = $scope.myform.visible_form_fields[field_index]._id;
-                                $scope.setActiveField(field_id, field_index, false);
-                            }
-                        } else if( $scope.fieldBottom < 0){
-                            field_index = $scope.selected.index+1;
-                            field_id = $scope.myform.visible_form_fields[field_index]._id;
-                            $scope.setActiveField(field_id, field_index, false);
-                        } else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
-                            field_index = $scope.selected.index-1;
-                            field_id = $scope.myform.visible_form_fields[field_index]._id;
-                            $scope.setActiveField(field_id, field_index, false);
-                        }
-                        $scope.$apply();
-                    }
-        		};
 
                 /*
                 ** Field Controls
@@ -163,34 +127,45 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						throw new Error('current active field is null');
 					}
 
-					if($scope.selected._id === 'submit_field') {
+					if($scope.selected._id === FORM_ACTION_ID) {
 						return $scope.myform.form_fields.length - 1;
 					}
 					return $scope.selected.index;
+				};
 
+				$scope.isActiveField = function(field){
+					if($scope.selected._id === field._id) {
+						return true
+					}
+					return false;
 				};
 
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index, animateScroll) {
-                    if($scope.selected === null || $scope.selected._id === field_id){
-						//console.log('not scrolling');
-						//console.log($scope.selected);
-						return;
-		    		}
-                    //console.log('field_id: '+field_id);
-                    //console.log('field_index: '+field_index);
-                    //console.log($scope.selected);
+                    if($scope.selected === null || (!field_id && field_index === null) )  {
+                    	return;
+                    }
+	    			
+	    			if(!field_id){
+	    				field_id = $scope.myform.visible_form_fields[field_index]._id;
+					} else if(field_index === null){
+						field_index = $scope.myform.visible_form_fields.length
 
-                    $scope.selected._id = field_id;
-                    $scope.selected.index = field_index;
-					if(!field_index){
-						for(var i=0; i<$scope.myform.visible_form_fields.length; i++){
+						for(var i=0; i < $scope.myform.visible_form_fields.length; i++){
 							var currField = $scope.myform.visible_form_fields[i];
-							if(field_id === currField._id){
-								$scope.selected.index = i;
+							if(currField['_id'] == field_id){
+								field_index = i;
 								break;
 							}
 						}
 					}
+
+					if($scope.selected._id === field_id){
+						return;
+		    		}
+
+                    $scope.selected._id = field_id;
+                    $scope.selected.index = field_index;
+
 
 					var nb_valid = $filter('formValidity')($scope.myform);
 					$scope.translateAdvancementData = {
@@ -200,10 +175,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					};
 
                     if(animateScroll){
-                        $scope.noscroll=true;
+                        NOSCROLL=true;
                         setTimeout(function() {
                             $document.scrollToElement(angular.element('.activeField'), -10, 200).then(function() {
-								$scope.noscroll = false;
+								NOSCROLL = false;
 								setTimeout(function() {
 									if (document.querySelectorAll('.activeField .focusOn').length) {
 										//Handle default case
@@ -218,53 +193,98 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								});
                             });
                         });
-                    } else {
-						setTimeout(function() {
-							if (document.querySelectorAll('.activeField .focusOn')[0]) {
-								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
-								document.querySelectorAll('.activeField .focusOn')[0].focus();
-							} else if (document.querySelectorAll('.activeField input')[0]){
-								document.querySelectorAll('.activeField input')[0].focus();
-							}
-						});
-					}
-
-					//Only send analytics data if form has not been submitted
-					if(!$scope.myform.submitted){
-						SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
-					}
+                    }
                 };
 
+                //Fire event when window is scrolled
+				$window.onscroll = function(){
+                    if(!NOSCROLL){
+
+						var scrollTop = $(window).scrollTop();
+						var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
+						var fieldTop = elemBox.top;
+						var fieldBottom = elemBox.bottom;
+
+						var field_id, field_index;
+						var elemHeight = $('.activeField').height();
+
+						var submitSectionHeight = $('.form-actions').height();
+						var maxScrollTop = $(document).height() - $(window).height();
+						var fieldWrapperHeight = $('form_fields').height();
+
+						var selector = 'form > .field-directive:nth-of-type(' + String($scope.myform.visible_form_fields.length - 1)+ ')'
+						var fieldDirectiveHeight = $(selector).height()
+						var scrollPosition = maxScrollTop - submitSectionHeight - fieldDirectiveHeight*1.2;
+
+						var fractionToJump = 0.9;
+
+                    	//Focus on field above submit form button
+                        if($scope.selected.index === $scope.myform.visible_form_fields.length){
+                            if(scrollTop < scrollPosition){
+                                field_index = $scope.selected.index-1;
+                                $scope.setActiveField(null, field_index, false);
+                            }
+                        }
+
+                        //Focus on submit form button
+                        else if($scope.selected.index === $scope.myform.visible_form_fields.length-1 && scrollTop > scrollPosition){
+                            field_index = $scope.selected.index+1;
+                            $scope.setActiveField(FORM_ACTION_ID, field_index, false);
+                        }
+                        
+                        //If we scrolled bellow the current field, move to next field
+                        else if(fieldBottom < elemHeight * fractionToJump && $scope.selected.index < $scope.myform.visible_form_fields.length-1 ){
+                            field_index = $scope.selected.index+1;
+                            $scope.setActiveField(null, field_index, false);
+                        } 
+                        //If we scrolled above the current field, move to prev field
+                        else if ( $scope.selected.index !== 0 && fieldTop > elemHeight * fractionToJump) {
+                            field_index = $scope.selected.index-1;
+                            $scope.setActiveField(null, field_index, false);
+                        }
+                    }
+
+                    $scope.$apply();
+        		};
+
                 $rootScope.nextField = $scope.nextField = function(){
-					var currField = $scope.myform.visible_form_fields[$scope.selected.index];
-
 					if($scope.selected && $scope.selected.index > -1){
-						//Jump to logicJump's destination if it is true
-						if(currField.logicJump && evaluateLogicJump(currField)){
-							$rootScope.setActiveField(currField.logicJump.jumpTo, null, true);
-						} else {
-							var selected_index, selected_id;
-							if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
-								selected_index = $scope.selected.index+1;
-								selected_id = $scope.myform.visible_form_fields[selected_index]._id;
-								$rootScope.setActiveField(selected_id, selected_index, true);
-							} else if($scope.selected.index === $scope.myform.visible_form_fields.length-1) {
-								selected_index = $scope.selected.index+1;
-								selected_id = 'submit_field';
-								$rootScope.setActiveField(selected_id, selected_index, true);
-							}
-						}
-					}
 
+						if($scope.selected._id !== FORM_ACTION_ID){
+							var currField = $scope.myform.visible_form_fields[$scope.selected.index];
+						
+							//Jump to logicJump's destination if it is true
+							if(currField.logicJump && currField.logicJump.jumpTo && evaluateLogicJump(currField)){
+								$scope.setActiveField(currField.logicJump.jumpTo, null, true);
+							} else if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
+								$scope.setActiveField(null, $scope.selected.index+1, true);
+							} else {
+								$scope.setActiveField(FORM_ACTION_ID, null, true);
+							}
+						} else {
+							//If we are at the submit actions page, go to the first field
+							$rootScope.setActiveField(null, 0, true);
+						}
+					} else {
+						//If selected is not defined go to the first field
+						$rootScope.setActiveField(null, 0, true);
+					}
+	
                 };
 
                 $rootScope.prevField = $scope.prevField = function(){
+                	console.log('prevField');
+                	console.log($scope.selected);
+                	var selected_index = $scope.selected.index - 1;
                     if($scope.selected.index > 0){
-                        var selected_index = $scope.selected.index - 1;
-                        var selected_id = $scope.myform.visible_form_fields[selected_index]._id;
-                        $scope.setActiveField(selected_id, selected_index, true);
+                        $scope.setActiveField(null, selected_index, true);
                     }
                 };
+
+                $rootScope.goToInvalid = $scope.goToInvalid = function() {
+					var field_id = $('.row.field-directive .ng-invalid.focusOn, .row.field-directive .ng-untouched.focusOn:not(.ng-valid)').first().parents('.row.field-directive').first().attr('data-id');
+					$scope.setActiveField(field_id, null, true);
+				};
 
                 /*
                 ** Form Display Functions
@@ -275,10 +295,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                         $scope.selected._id = $scope.myform.visible_form_fields[0]._id;
                     }
                 };
-
-				$rootScope.goToInvalid = $scope.goToInvalid = function() {
-					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
-				};
 
 				var getDeviceData = function(){
 					var md = new MobileDetect(window.navigator.userAgent);
@@ -320,6 +336,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 				};
 
 				$rootScope.submitForm = $scope.submitForm = function() {
+					if($scope.forms.myForm.$invalid){
+						$scope.goToInvalid();
+						return;
+					}
 
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;

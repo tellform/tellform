@@ -76,8 +76,7 @@ function BaseFieldSchema(){
 		},
 		title: {
 			type: String,
-			trim: true,
-			required: 'Field Title cannot be blank'
+			trim: true
 		},
 		description: {
 			type: String,
@@ -106,7 +105,6 @@ function BaseFieldSchema(){
 		},
 		fieldType: {
 			type: String,
-			required: true,
 			enum: [
 				'textfield',
 				'date',
