@@ -26,7 +26,7 @@ module.exports = function (io, socket) {
 				timeElapsed: data.timeElapsed,
 				isSubmitted: data.isSubmitted,
 				language: data.language,
-				ipAddr: data.ipAddr,
+				ipAddr: '',
 				deviceType: data.deviceType
 			};
 

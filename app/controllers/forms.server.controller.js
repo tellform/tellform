@@ -322,7 +322,6 @@ exports.formByIDFast = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.lean()
-		.cache()
 		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
 		.exec(function(err, form) {
 		if (err) {
