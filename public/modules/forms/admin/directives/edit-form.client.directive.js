@@ -24,7 +24,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
 					update: function(e, ui) {
-                        $rootScope.update(false, $scope.myform, true, false, function(err){
+                        $scope.update(false, $scope.myform, true, false, function(err){
 						});
 					},
 				};
@@ -336,7 +336,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index) {
                     $scope.myform.form_fields.splice(field_index, 1);
-					$rootScope.update(false, $scope.myform, false, true, null);
+					$scope.update(false, $scope.myform, false, true, null);
                 };
 
                 $scope.duplicateField = function(field_index){
@@ -346,7 +346,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                     //Insert field at selected index
                     $scope.myform.form_fields.push(currField);
-					$rootScope.update(false, $scope.myform, false, true, null);
+					$scope.update(false, $scope.myform, false, true, null);
                 };
 
 				//Populate AddField with all available form field types
