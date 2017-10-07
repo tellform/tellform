@@ -1,16 +1,13 @@
-<section class="overlay submitform" ng-if="!ispreview && (loading || (!myform.submitted && !myform.startPage.showStart))"></section>
-<section class="overlay previewform submitform" ng-if="ispreview && (loading || (!myform.submitted && !myform.startPage.showStart))"></section>
-
 <!-- Start Page View -->
 <div ng-show="!myform.submitted && myform.startPage.showStart" class="form-submitted" style="padding-top: 35vh;">
     <div class="row">
         <div class="col-xs-12 text-center" style="overflow-wrap: break-word;">
-            <h1 style="font-weight: 400; nont-size: 25px;" ng-style="{'color': form.design.colors.questionColor}">
+            <h1 style="font-weight: 400; nont-size: 25px;" ng-style="{'color': myform.design.colors.questionColor}">
                 {{myform.startPage.introTitle}}
             </h1>
         </div>
         <div class="col-xs-10 col-xs-offset-1 text-center" style="overflow-wrap: break-word;">
-            <p style="font-weight: 100; font-size: 16px;" ng-style="{'color': form.design.colors.questionColor}">
+            <p style="font-weight: 100; font-size: 16px;" ng-style="{'color': myform.design.colors.questionColor}">
                 {{myform.startPage.introParagraph}}
             </p>
         </div>
@@ -37,40 +34,44 @@
 </div>
 
 <!-- Form Fields View -->
-<div class="form-fields" ng-show="!myform.submitted && !myform.startPage.showStart" ng-style="{ 'border-color': myform.design.colors.buttonTextColor }">
+<div class="form-fields" 
+    ng-show="!myform.submitted && !myform.startPage.showStart" 
+    ng-style="{ 'border-color': myform.design.colors.buttonTextColor }">
 
-    <div class="row">
-        <form name="forms.myForm" novalidate class="submission-form col-sm-12 col-md-offset-1 col-md-10">
+    <div class="row form-field-wrapper">
+        <form name="forms.myForm" novalidate class="submission-form">
 
             <div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved" data-index="{{$index}}" data-id="{{field._id}}" ng-class="{activeField: selected._id == field._id }" class="row field-directive">
 
                 <field-directive field="field" design="myform.design" index="$index" forms="forms">
                 </field-directive>
             </div>
+            <div class="row form-actions" id="submit_field" ng-class="{activeField: selected._id == 'submit_field' }" 
+            ng-style="{ 'background-color':myform.design.colors.buttonColor}" style="border-top: 1px solid #ddd; margin-top: 30vh; height: 100vh; margin-left: 1%; margin-right: 1%;"
+                on-tab-and-shift-key="prevField()"
+                on-tab-key="nextField()"
+                on-enter-key="submitForm()">
 
+                <div class="col-xs-12 text-left" style="background-color:#990000; color:white;" ng-if="forms.myForm.$invalid">
+                    {{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}
+                </div>
+
+                <button ng-if="!forms.myForm.$invalid" class="Button btn col-sm-2 col-xs-8 focusOn" v-busy="loading" v-busy-label="Please wait" v-pressable ng-disabled="loading || forms.myForm.$invalid" ng-click="submitForm()" on-enter-key-disabled="loading || forms.myForm.$invalid" ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}" style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
+
+                    {{ 'SUBMIT' | translate }}
+                </button>
+
+                <button ng-if="forms.myForm.$invalid" class="Button btn col-sm-2 col-xs-8 focusOn" ng-click="goToInvalid()" on-enter-key="goToInvalid()" on-enter-key-disabled="!forms.myForm.$invalid" style="font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white">
+                    {{ 'REVIEW' | translate }}
+                </button>
+
+                <div class="col-sm-2 hidden-xs" style="font-size: 75%; margin-top:3.25em">
+                    <small>
+                        {{ 'ENTER' | translate }}
+                    </small>
+                </div>
+            </div>
         </form>
-    </div>
-
-    <div class="row form-actions" id="submit_field" ng-class="{activeField: selected._id == 'submit_field' }" ng-style="{ 'background-color':myform.design.colors.buttonColor}" style="border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; margin-top: 30vh; height: 100vh">
-
-        <div class="col-xs-12 text-left" style="background-color:#990000; color:white;" ng-if="forms.myForm.$invalid">
-            {{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}
-        </div>
-
-        <button ng-if="!forms.myForm.$invalid" class="Button btn col-sm-2 col-xs-8 focusOn" v-busy="loading" v-busy-label="Please wait" v-pressable ng-disabled="loading || forms.myForm.$invalid" ng-click="submitForm()" on-enter-key="submitForm()" on-enter-key-disabled="loading || forms.myForm.$invalid" ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}" style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
-
-		{{ 'SUBMIT' | translate }}
-	</button>
-
-        <button ng-if="forms.myForm.$invalid" class="Button btn col-sm-2 col-xs-8 focusOn" ng-click="goToInvalid()" on-enter-key="goToInvalid()" on-enter-key-disabled="!forms.myForm.$invalid" style="font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white">
-		{{ 'REVIEW' | translate }}
-	</button>
-
-        <div class="col-sm-2 hidden-xs" style="font-size: 75%; margin-top:3.25em">
-            <small>
-			{{ 'ENTER' | translate }}
-		</small>
-        </div>
     </div>
 
     <section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" ng-style="{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}">

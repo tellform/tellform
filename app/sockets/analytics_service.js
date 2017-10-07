@@ -5,13 +5,14 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('../controllers/errors.server.controller'),
-	Form = mongoose.model('Form');
+	Form = mongoose.model('Form'),
+	request = require('request');
 
 // Create the chat configuration
 module.exports = function (io, socket) {
 	var visitorsData = {};
 
-	var saveVisitorData = function (data, cb){
+	var saveVisitorData = function (data, socket, cb){
 		Form.findById(data.formId, function(err, form) {
 			if (err) {
 				console.error(err);
@@ -25,22 +26,25 @@ module.exports = function (io, socket) {
 				timeElapsed: data.timeElapsed,
 				isSubmitted: data.isSubmitted,
 				language: data.language,
-				ipAddr: data.ipAddr,
+				ipAddr: '',
 				deviceType: data.deviceType
 			};
 
 			form.analytics.visitors.push(newVisitor);
 
-			form.save(function (formSaveErr) {
-				if (err) {
-					console.error(err);
-					throw new Error(errorHandler.getErrorMessage(formSaveErr));
-				}
 
-				if(cb){
-					return cb();
-				}
-			});
+				form.form_fields = form.form_fields.map(v => Object.assign({}, v, { fieldValue: null }));
+
+				form.save(function (formSaveErr) {
+					if (err) {
+						console.error(err);
+						throw new Error(errorHandler.getErrorMessage(formSaveErr));
+					}
+
+					if(cb){
+						return cb();
+					}
+				});
 		});
 	};
 
@@ -50,6 +54,8 @@ module.exports = function (io, socket) {
 			visitorsData[current_socket.id] = data;
 			visitorsData[current_socket.id].socketId = current_socket.id;
 			visitorsData[current_socket.id].isSaved = false;
+
+
 			if (data.isSubmitted && !data.isSaved) {
 				visitorsData[current_socket.id].isSaved = true;
 				saveVisitorData(data, function() {
@@ -71,3 +77,4 @@ module.exports = function (io, socket) {
 		});
 	});
 };
+

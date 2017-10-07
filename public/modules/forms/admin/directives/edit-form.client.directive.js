@@ -1,3 +1,4 @@
+
 'use strict';
 
 angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', '$uibModal',
@@ -23,7 +24,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
 					update: function(e, ui) {
-                        $scope.update(false, $scope.myform, false, false, function(err){
+                        $scope.update(false, $scope.myform, true, false, function(err){
 						});
 					},
 				};
@@ -129,7 +130,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							$scope.saveField = function(){
 
 								$scope.myform.form_fields.push(curr_field);
-								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+								$scope.$parent.update(false, $scope.$parent.myform, true, true, function(){
 									$uibModalInstance.close();
 								});
 							};
@@ -184,7 +185,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							};
 
 							$scope.saveStartPage = function(){
-								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+								$scope.$parent.update(false, $scope.$parent.myform, true, true, function(){
 									$uibModalInstance.close();
 								});
 							};
@@ -196,7 +197,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				};
 
 				/*
-				 ** EditStartPageModal Functions
+				 ** EditEndPageModal Functions
 				 */
 				$scope.openEditEndPageModal = function(){
 					$scope.editEndPageModal = $uibModal.open({
@@ -239,7 +240,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							};
 
 							$scope.saveEndPage = function(){
-								$scope.$parent.update(false, $scope.$parent.myform, false, true, function(){
+								$scope.$parent.update(false, $scope.$parent.myform, true, true, function(){
 									$uibModalInstance.close();
 								});
 							};

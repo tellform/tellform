@@ -1,7 +1,7 @@
 {
   "name": "TellForm",
   "description": "Opensource alternative to TypeForm",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "homepage": "https://github.com/whitef0x0/tellform",
   "authors": [
     "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
@@ -95,6 +95,7 @@
     "random-js": "^1.0.8",
     "raven": "^0.9.0",
     "shortid": "^2.2.8",
+    "request": "^2.83.0",
     "socket.io": "^1.4.6",
     "socket.io-redis": "^1.0.0",
     "swig": "~1.4.1",

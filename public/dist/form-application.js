@@ -63,36 +63,38 @@ angular.element(document).ready(function() {
 
 angular.module('TellForm-Form.form_templates', []).run(['$templateCache', function($templateCache) {
   "use strict";
+  $templateCache.put("form_modules/forms/base/views/form-not-found.client.view.html",
+    "<script>$(\".loader\").fadeOut(\"slow\");</script><section class=\"public-form auth sigin-view valign-wrapper\"><div class=\"row valign\"><h3 class=\"col-md-12 text-center\">404 - Form Does not Exist</h3><div class=\"col-md-4 col-md-offset-4\"><div class=\"col-md-12 text-center\" style=\"padding-bottom: 50px\">The form you are trying to access does not exist. Sorry about that!</div></div></div></section>");
   $templateCache.put("form_modules/forms/base/views/form-unauthorized.client.view.html",
-    "<section class=\"auth sigin-view valign-wrapper\"><div class=\"row valign\"><h3 class=\"col-md-12 text-center\">Not Authorized to Access Form</h3><div class=\"col-md-4 col-md-offset-4\"><div class=\"col-md-12 text-center\" style=\"padding-bottom: 50px\">The form you are trying to access is currently private and not accesible publically.<br>If you are the owner of the form, you can set it to \"Public\" in the \"Configuration\" panel in the form admin.</div></div></div></section>");
+    "<script>$(\".loader\").fadeOut(\"slow\");</script><section class=\"public-form auth sigin-view valign-wrapper\"><div class=\"row valign\"><h3 class=\"col-md-12 text-center\">Not Authorized to Access Form</h3><div class=\"col-md-4 col-md-offset-4\"><div class=\"col-md-12 text-center\" style=\"padding-bottom: 50px\">The form you are trying to access is currently private and not accesible publically.<br>If you are the owner of the form, you can set it to \"Public\" in the \"Configuration\" panel in the form admin.</div></div></div></section>");
   $templateCache.put("form_modules/forms/base/views/submit-form.client.view.html",
-    "<section class=public-form ng-style=\"{ 'background-color': myform.design.colors.backgroundColor }\"><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;\n" +
+    "<section class=public-form><submit-form-directive myform=myform></submit-form-directive></section><script ng-if=myform.analytics.gaCode>window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;\n" +
     "	ga('create', '{{myform.analytics.gaCode}}', 'auto'); ga('send', 'pageview');</script><script ng-if=myform.analytics.gaCode src=https://www.google-analytics.com/analytics.js async defer></script>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/entryPage/startPage.html",
     "<div class=\"field row text-center\"><div class=\"col-xs-12 text-center\"><h1>{{pageData.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-left\"><p style=color:#ddd>{{pageData.introParagraph}}</p></div></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in pageData.buttons\" class=text-center style=display:inline><button class=\"btn btn-info\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none; color: inherit\">{{button.text}}</a></button></p></div><div class=\"row form-actions\"><p class=\"col-xs-3 col-xs-offset-3 text-center\"><button class=\"btn btn-info\" type=button><a ng-click=exitpageData() style=\"color:white; font-size: 1.6em; text-decoration: none\">{{ 'CONTINUE_FORM' | translate }}</a></button></p></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/date.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=\"!field.required && !field.fieldValue\">{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><div class=\"control-group input-append\"><input class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-class=\"{ 'no-border': !!field.fieldValue }\" ui-date=dateOptions ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required placeholder=MM/DD/YYYY on-tab-key=nextField() on-tab-and-shift-key=prevField() ng-change=nextField()></div></div></div>");
+    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=\"!field.required && !field.fieldValue\">{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><div class=\"control-group input-append\"><input class=focusOn ng-focus=\"setActiveField(field._id, null, false)\" ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-class=\"{ 'no-border': !!field.fieldValue }\" ui-date=dateOptions ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required placeholder=MM/DD/YYYY on-tab-key=nextField() on-tab-and-shift-key=prevField() ng-change=nextField()></div></div></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/dropdown.html",
-    "<div class=\"field row dropdown\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue theme=selectize search-enabled=true search-by=option_value set-search-to-answer=true ng-required=field.required on-tab-and-shift-key=prevField() on-tab-key=nextField() ng-change=nextField()><ui-select-match placeholder=\"Type or select an option\"></ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-class=\"{'active': option.option_value === field.fieldValue }\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
+    "<div class=\"field row dropdown\" ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><ui-select ng-model=field.fieldValue ng-focus=\"setActiveField(field._id, null, false)\" theme=selectize search-enabled=true search-by=option_value set-search-to-answer=true ng-required=field.required on-tab-and-shift-key=prevField() on-tab-key=nextField() ng-change=nextField()><ui-select-match placeholder=\"Type or select an option\"></ui-select-match><ui-select-choices repeat=\"option in field.fieldOptions | filter: $select.search\" ng-class=\"{'active': option.option_value === field.fieldValue }\"><span ng-bind-html=\"option.option_value | highlight: $select.search\"></span></ui-select-choices></ui-select></div></div><br>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/hidden.html",
     "<input type=hidden>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/legal.html",
     "<div class=\"field row radio legal\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() key-to-truthy key-char-truthy=y key-char-falsey=n field=field on-valid-key=nextField()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><br><p class=col-xs-12>{{field.description}}</p></div><div class=\"col-xs-12 field-input container\"><div class=row-fluid><label class=\"btn col-md-5 col-xs-12\" ng-class=\"{activeBtn: field.fieldValue == 'true'}\"><input class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=true ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=\"nextField()\"><div class=letter style=float:left>Y</div><span>{{ 'LEGAL_ACCEPT' | translate }}</span></label><label class=\"btn col-md-5 col-md-offset-1 col-xs-12\" ng-class=\"{activeBtn: field.fieldValue == 'false'}\"><input class=focusOn ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio value=false ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=\"nextField()\"><div class=letter style=float:left>N</div><span>{{ 'LEGAL_NO_ACCEPT' | translate }}</span></label></div></div></div><br>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/radio.html",
-    "<div class=\"field row radio\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() key-to-option field=field ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=\"btn col-md-4 col-xs-12 col-sm-12\" style=\"margin: 0.5em; padding-left:30px\" ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}\"><div class=letter style=float:left>{{$index+1}}</div><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" type=radio class=focusOn value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=\"$root.nextField()\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
+    "<div class=\"field row radio\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() key-to-option field=field ng-if=\"field.fieldOptions.length > 0\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><div ng-repeat=\"option in field.fieldOptions\" class=row-fluid><label class=\"btn col-md-4 col-xs-12 col-sm-12\" style=\"margin: 0.5em; padding-left:30px\" ng-class=\"{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}\"><div class=letter style=float:left>{{$index+1}}</div><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" ng-focus=\"setActiveField(field._id, null, false)\" type=radio class=focusOn value={{option.option_value}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=\"$root.nextField()\"> <span ng-bind=option.option_value></span></label></div></div></div><br>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/rating.html",
     "<div class=\"textfield field row\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input-stars max={{field.ratingOptions.steps}} ng-init=\"field.fieldValue = 1\" on-shape-click=true on-star-click=nextField() icon-full={{field.ratingOptions.shape}} icon-base=\"fa fa-3x\" icon-empty={{field.ratingOptions.shape}} ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() class=\"angular-input-stars focusOn\"></input-stars></div></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/statement.html",
-    "<div class=\"statement field row\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField()><div class=\"row field-title field-title\"><div class=col-xs-1><i class=\"fa fa-quote-left fa-1\"></i></div><h2 class=\"text-left col-xs-9\">{{field.title}}</h2><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"row field-title field-input\"><p class=col-xs-12 ng-if=field.description.length>{{field.description}}</p><br><div class=\"col-xs-offset-1 col-xs-11\"><button class=\"btn focusOn\">ng-style=\"{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=\"nextField()\"> {{ 'CONTINUE' | translate }}</button></div></div></div>");
+    "<div class=\"statement field row\" on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField()><div class=\"row field-title field-title\"><div class=col-xs-1><i class=\"fa fa-quote-left fa-1\"></i></div><h2 class=\"text-left col-xs-9\">{{field.title}}</h2><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"row field-title field-input\"><p class=col-xs-12 ng-if=field.description.length>{{field.description}}</p><br><div class=\"col-xs-offset-1 col-xs-11\"><button class=\"btn focusOn\" ng-style=\"{'font-size': '1.3em', 'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=nextField()>{{ 'CONTINUE' | translate }}</button></div></div></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/textarea.html",
-    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><small>{{ 'NEWLINE' | translate }}</small><p><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><small style=font-size:0.6em>Press SHIFT+ENTER to add a newline</small><textarea class=\"textarea focusOn\" type=text ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-class=\"{ 'no-border': !!field.fieldValue }\" value={{field.fieldValue}} ng-required=field.required on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() style=\"border: none; border-left: lightgrey dashed 2px\">\n" +
+    "<div class=\"field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><small>{{ 'NEWLINE' | translate }}</small><p><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><small style=font-size:0.6em>Press SHIFT+ENTER to add a newline</small><textarea class=\"textarea focusOn\" type=text ng-focus=\"setActiveField(field._id, null, false)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-class=\"{ 'no-border': !!field.fieldValue }\" value={{field.fieldValue}} ng-required=field.required on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() style=\"border: none; border-left: lightgrey dashed 2px\">\n" +
     "		</textarea></div></div><div><div class=\"btn btn-lg btn-default\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || forms.myForm.{{field.fieldType}}{{$index}}.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=$root.nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-sm-3 col-xs-6\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/textfield.html",
-    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title row-fluid\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=col-xs-12><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>({{ 'OPTIONAL' | translate }})</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" name={{field.fieldType}}{{index}} type={{input_type}} ng-pattern=validateRegex placeholder={{placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-required=field.required aria-describedby=\"inputError2Status\"></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">{{ 'ERROR_EMAIL_INVALID' | translate }}</span> <span ng-if=\"field.fieldType == 'number'\">{{ 'ERROR_NOT_A_NUMBER' | translate }}</span> <span ng-if=\"field.fieldType == 'link'\">{{ 'ERROR_URL_INVALID' | translate }}</span></div></div></div><div><div class=\"btn btn-lg btn-default\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || field.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-xs-6 col-sm-3\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
+    "<div class=\"textfield field row\" ng-click=\"setActiveField(field._id, index, true)\"><div class=\"col-xs-12 field-title row-fluid\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=col-xs-12><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>({{ 'OPTIONAL' | translate }})</span></h3><p class=col-xs-12><small>{{field.description}}</small></p></div><div class=\"col-xs-12 field-input\"><input ng-style=\"{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}\" name={{field.fieldType}}{{index}} type={{input_type}} ng-pattern=validateRegex placeholder={{placeholder}} ng-class=\"{ 'no-border': !!field.fieldValue }\" class=\"focusOn text-field-input\" ng-focus=\"setActiveField(field._id, null, false)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" value=field.fieldValue on-enter-or-tab-key=nextField() on-tab-and-shift-key=prevField() ng-required=field.required aria-describedby=\"inputError2Status\"></div><div class=col-xs-12><div ng-show=\"forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue \" class=\"alert alert-danger\" role=alert><span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=true></span> <span class=sr-only>Error:</span> <span ng-if=\"field.fieldType == 'email'\">{{ 'ERROR_EMAIL_INVALID' | translate }}</span> <span ng-if=\"field.fieldType == 'number'\">{{ 'ERROR_NOT_A_NUMBER' | translate }}</span> <span ng-if=\"field.fieldType == 'link'\">{{ 'ERROR_URL_INVALID' | translate }}</span></div></div></div><div><div class=\"btn btn-lg btn-default\" ng-disabled=\"!field.fieldValue || field.$invalid\" style=\"padding: 4px; margin-top:8px; background: rgba(255,255,255,0.5)\"><button ng-disabled=\"!field.fieldValue || field.$invalid\" ng-style=\"{'background-color':design.colors.buttonColor, 'color':design.colors.buttonTextColor}\" ng-click=nextField() class=\"btn col-sm-5 col-xs-5\">{{ 'OK' | translate }} <i class=\"fa fa-check\"></i></button><div class=\"col-xs-6 col-sm-3\" style=margin-top:0.2em><small style=\"color:#ddd; font-size:70%\">{{ 'ENTER' | translate }}</small></div></div></div>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/field/yes_no.html",
-    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" key-to-truthy key-char-truthy=y key-char-falsey=n field=field on-tab-key=nextField() on-tab-and-shift-key=prevField() on-valid-key=nextField()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=\"nextField()\"><div class=letter>{{ 'Y' | translate }}</div><span>{{ 'YES' | translate }}</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=\"nextField()\"><div class=letter>{{ 'N' | translate }}</div><span>{{ 'NO' | translate }}</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
+    "<div class=\"field row radio\" ng-click=\"setActiveField(field._id, index, true)\" key-to-truthy key-char-truthy=y key-char-falsey=n field=field on-tab-key=nextField() on-tab-and-shift-key=prevField() on-valid-key=nextField()><div class=\"col-xs-12 field-title\" ng-style=\"{'color': design.colors.questionColor}\"><h3 class=row><small class=field-number>{{index+1}} <i class=\"fa fa-angle-double-right\" aria-hidden=true></i></small> {{field.title}} <span class=required-error ng-show=!field.required>{{ 'OPTIONAL' | translate }}</span></h3><p class=row>{{field.description}}</p></div><div class=\"col-xs-12 field-input\"><div class=row><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=true class=focusOn style=\"opacity: 0; margin-left: 0px\" ng-focus=\"setActiveField(field._id, null, false)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=\"nextField()\"><div class=letter>{{ 'Y' | translate }}</div><span>{{ 'YES' | translate }}</span> <i ng-show=\"field.fieldValue === 'true'\" class=\"fa fa-check\" aria-hidden=true></i></label></div><div class=row style=\"margin-top: 10px\"><label class=\"btn btn-default col-md-2 col-sm-3 col-xs-7\" style=\"background: rgba(0,0,0,0.1); text-align:left\"><input type=radio value=false style=\"opacity:0; margin-left:0px\" ng-focus=\"setActiveField(field._id, null, false)\" ng-model=field.fieldValue ng-model-options=\"{ debounce: 250 }\" ng-required=field.required ng-change=\"nextField()\"><div class=letter>{{ 'N' | translate }}</div><span>{{ 'NO' | translate }}</span> <i ng-show=\"field.fieldValue === 'false'\" class=\"fa fa-check\" aria-hidden=true></i></label></div></div></div><br>");
   $templateCache.put("form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html",
-    "<section class=\"overlay submitform\" ng-if=\"!ispreview && (loading || (!myform.submitted && !myform.startPage.showStart))\"></section><section class=\"overlay previewform submitform\" ng-if=\"ispreview && (loading || (!myform.submitted && !myform.startPage.showStart))\"></section><div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted style=\"padding-top: 35vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; nont-size: 25px\" ng-style=\"{'color': form.design.colors.questionColor}\">{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"font-weight: 100; font-size: 16px\" ng-style=\"{'color': form.design.colors.questionColor}\">{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=exitStartPage() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{myform.startPage.introButtonText}}</span></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div><div class=form-fields ng-show=\"!myform.submitted && !myform.startPage.showStart\" ng-style=\"{ 'border-color': myform.design.colors.buttonTextColor }\"><div class=row><form name=forms.myForm novalidate class=\"submission-form col-sm-12 col-md-offset-1 col-md-10\"><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved data-index={{$index}} data-id={{field._id}} ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index forms=forms></field-directive></div></form></div><div class=\"row form-actions\" id=submit_field ng-class=\"{activeField: selected._id == 'submit_field' }\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor}\" style=\"border-top: 1px solid #ddd; margin-right: -13%; margin-left: -13%; margin-top: 30vh; height: 100vh\"><div class=\"col-xs-12 text-left\" style=\"background-color:#990000; color:white\" ng-if=forms.myForm.$invalid>{{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}</div><button ng-if=!forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" v-busy=loading v-busy-label=\"Please wait\" v-pressable ng-disabled=\"loading || forms.myForm.$invalid\" ng-click=submitForm() on-enter-key=submitForm() on-enter-key-disabled=\"loading || forms.myForm.$invalid\" ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em\">{{ 'SUBMIT' | translate }}</button> <button ng-if=forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" ng-click=goToInvalid() on-enter-key=goToInvalid() on-enter-key-disabled=!forms.myForm.$invalid style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white\">{{ 'REVIEW' | translate }}</button><div class=\"col-sm-2 hidden-xs\" style=\"font-size: 75%; margin-top:3.25em\"><small>{{ 'ENTER' | translate }}</small></div></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}\"><div class=container-fluid><div class=row><div class=\"col-sm-5 col-md-6 col-xs-5\" ng-show=!myform.submitted><p class=lead>{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p></div><div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 col-xs-offset-1 col-xs-6 row\"><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\"><a href=/#!/forms class=btn ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">{{ 'CREATE_FORM' | translate }}</a></div><div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12 row\"><button class=\"btn btn-lg col-xs-6\" id=focusDownButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=nextField() ng-disabled=\"selected.index > myform.form_fields.length-1\"><i class=\"fa fa-chevron-down\"></i></button> <button class=\"btn btn-lg col-xs-6\" id=focusUpButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=prevField() ng-disabled=\"selected.index == 0\"><i class=\"fa fa-chevron-up\"></i></button></div></div></div></div></section></div><div ng-if=\"myform.submitted && !loading && !myform.endPage.showEnd\" class=form-submitted ng-style=\"{'color':myform.design.colors.buttonTextColor}\" style=\"padding-top: 5vh\"><div class=\"field row text-center\" ng-style=\"{'color': myform.design.colors.questionColor}\"><div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center\">{{ 'FORM_SUCCESS' | translate }}</div></div><div class=\"row form-actions\"><p class=text-center><button ng-click=reloadForm() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{ 'BACK_TO_FORM' | translate }}</span></button></p></div></div><div ng-if=\"myform.submitted && !loading && myform.endPage.showEnd\" class=form-submitted ng-style=\"{'color':myform.design.colors.buttonTextColor}\" style=\"padding-top: 5vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; font-size: 25px\" ng-style=\"{'color': myform.design.colors.questionColor}\">{{myform.endPage.title}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"font-weight: 100; font-size: 16px\" ng-style=\"{'color': myform.design.colors.questionColor}\">{{myform.endPage.paragraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=reloadForm() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{myform.endPage.buttonText}}</span></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.endPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div>");
+    "<div ng-show=\"!myform.submitted && myform.startPage.showStart\" class=form-submitted style=\"padding-top: 35vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; nont-size: 25px\" ng-style=\"{'color': myform.design.colors.questionColor}\">{{myform.startPage.introTitle}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"font-weight: 100; font-size: 16px\" ng-style=\"{'color': myform.design.colors.questionColor}\">{{myform.startPage.introParagraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=exitStartPage() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{myform.startPage.introButtonText}}</span></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.startPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div><div class=form-fields ng-show=\"!myform.submitted && !myform.startPage.showStart\" ng-style=\"{ 'border-color': myform.design.colors.buttonTextColor }\"><div class=\"row form-field-wrapper\"><form name=forms.myForm novalidate class=submission-form><div ng-repeat=\"field in myform.form_fields\" ng-if=!field.deletePreserved data-index={{$index}} data-id={{field._id}} ng-class=\"{activeField: selected._id == field._id }\" class=\"row field-directive\"><field-directive field=field design=myform.design index=$index forms=forms></field-directive></div><div class=\"row form-actions\" id=submit_field ng-class=\"{activeField: selected._id == 'submit_field' }\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor}\" style=\"border-top: 1px solid #ddd; margin-top: 30vh; height: 100vh; margin-left: 1%; margin-right: 1%\" on-tab-and-shift-key=prevField() on-tab-key=nextField() on-enter-key=submitForm()><div class=\"col-xs-12 text-left\" style=\"background-color:#990000; color:white\" ng-if=forms.myForm.$invalid>{{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}</div><button ng-if=!forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" v-busy=loading v-busy-label=\"Please wait\" v-pressable ng-disabled=\"loading || forms.myForm.$invalid\" ng-click=submitForm() on-enter-key-disabled=\"loading || forms.myForm.$invalid\" ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em\">{{ 'SUBMIT' | translate }}</button> <button ng-if=forms.myForm.$invalid class=\"Button btn col-sm-2 col-xs-8 focusOn\" ng-click=goToInvalid() on-enter-key=goToInvalid() on-enter-key-disabled=!forms.myForm.$invalid style=\"font-size: 1.6em; margin-left: 1em; margin-top: 1em; background-color:#990000; color:white\">{{ 'REVIEW' | translate }}</button><div class=\"col-sm-2 hidden-xs\" style=\"font-size: 75%; margin-top:3.25em\"><small>{{ 'ENTER' | translate }}</small></div></div></form></div><section ng-if=!myform.hideFooter class=\"navbar navbar-fixed-bottom\" ng-style=\"{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}\"><div class=container-fluid><div class=row><div class=\"col-sm-5 col-md-6 col-xs-5\" ng-show=!myform.submitted><p class=lead>{{ 'ADVANCEMENT' | translate:translateAdvancementData }}</p></div><div class=\"col-md-6 col-md-offset-0 col-sm-offset-2 col-sm-3 col-xs-offset-1 col-xs-6 row\"><div class=\"col-md-4 col-md-offset-2 hidden-sm hidden-xs\"><a href=/#!/forms class=btn ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\">{{ 'CREATE_FORM' | translate }}</a></div><div class=\"col-md-4 col-sm-10 col-md-offset-0 col-sm-offset-2 col-xs-12 row\"><button class=\"btn btn-lg col-xs-6\" id=focusDownButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=nextField() ng-disabled=\"selected.index > myform.form_fields.length-1\"><i class=\"fa fa-chevron-down\"></i></button> <button class=\"btn btn-lg col-xs-6\" id=focusUpButton ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\" ng-click=prevField() ng-disabled=\"selected.index == 0\"><i class=\"fa fa-chevron-up\"></i></button></div></div></div></div></section></div><div ng-if=\"myform.submitted && !loading && !myform.endPage.showEnd\" class=form-submitted ng-style=\"{'color':myform.design.colors.buttonTextColor}\" style=\"padding-top: 5vh\"><div class=\"field row text-center\" ng-style=\"{'color': myform.design.colors.questionColor}\"><div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center\">{{ 'FORM_SUCCESS' | translate }}</div></div><div class=\"row form-actions\"><p class=text-center><button ng-click=reloadForm() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{ 'BACK_TO_FORM' | translate }}</span></button></p></div></div><div ng-if=\"myform.submitted && !loading && myform.endPage.showEnd\" class=form-submitted ng-style=\"{'color':myform.design.colors.buttonTextColor}\" style=\"padding-top: 5vh\"><div class=row><div class=\"col-xs-12 text-center\" style=\"overflow-wrap: break-word\"><h1 style=\"font-weight: 400; font-size: 25px\" ng-style=\"{'color': myform.design.colors.questionColor}\">{{myform.endPage.title}}</h1></div><div class=\"col-xs-10 col-xs-offset-1 text-center\" style=\"overflow-wrap: break-word\"><p style=\"font-weight: 100; font-size: 16px\" ng-style=\"{'color': myform.design.colors.questionColor}\">{{myform.endPage.paragraph}}</p></div></div><div class=\"row form-actions text-center\" style=\"padding: 5px 25px 5px 25px\"><button ng-click=reloadForm() class=btn type=button ng-style=\"{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}\"><span style=\"font-size: 1.6em\">{{myform.endPage.buttonText}}</span></button></div><div class=\"row form-actions\" style=\"padding-bottom:3em; padding-left: 1em; padding-right: 1em\"><p ng-repeat=\"button in myform.endPage.buttons\" class=text-center style=display:inline><button class=btn style=\"background-color:rgb(156, 226, 235)\" type=button ng-style=\"{'background-color':button.bgColor, 'color':button.color}\"><a href={{button.url}} style=\"font-size: 1.6em; text-decoration: none\" ng-style=\"{'color':button.color}\">{{button.text}}</a></button></p></div></div>");
 }]);
 
 'use strict';
@@ -131,7 +133,11 @@ angular.module('view-form').config(['$stateProvider',
 		}).
         state('unauthorizedFormAccess', {
             url: '/forms/unauthorized',
-            templateUrl: '/static/form_modules/forms/base/views/form-unauthorized.client.view.html',
+            templateUrl: '/static/form_modules/forms/base/views/form-unauthorized.client.view.html'
+	    })
+	    .state('formNotFound', {
+            url: '*path',
+            templateUrl: '/static/form_modules/forms/base/views/form-not-found.client.view.html'
 	    });
     }
 ]);
@@ -166,18 +172,6 @@ angular.module('view-form').config(['$stateProvider',
 				deviceType = 'desktop';
 			}
 
-			$.ajaxSetup( { 'async': false } );
-			var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
-			$.ajaxSetup( { 'async': true } );
-
-			if(!geoData){
-				geoData = {
-					ip: '',
-					city: '',
-					country_name: ''
-				};
-			}
-
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,
@@ -187,11 +181,8 @@ angular.module('view-form').config(['$stateProvider',
 				timeElapsed: timeElapsed,
 				language: lang,
 				deviceType: deviceType,
-				ipAddr: geoData.ip,
-				geoLocation: {
-					city: geoData.city,
-					country: geoData.country_name
-				}
+				ipAddr: null,
+				geoLocation: null
 			};
 
 			Socket.emit('form-visitor-data', visitorData);
@@ -341,6 +332,9 @@ angular.module('view-form').controller('SubmitFormController', [
 	'$scope', '$rootScope', '$state', '$translate', 'myForm',
 	function($scope, $rootScope, $state, $translate, myForm) {
 		$scope.myform = myForm;
+
+		$(".loader").fadeOut("slow");
+		document.body.style.background = myForm.design.colors.backgroundColor;
         $translate.use(myForm.language);
 	}
 ]);
@@ -514,7 +508,7 @@ angular.module('view-form').directive('onEnterKey', ['$rootScope', function($roo
 	return {
 		restrict: 'A',
 		link: function($scope, $element, $attrs) {
-			$element.bind('keydown keypress', function(event) {
+			$element.bind('keyup keypress', function(event) {
 
 				var keyCode = event.which || event.keyCode;
 
@@ -554,6 +548,8 @@ angular.module('view-form').directive('onEnterKey', ['$rootScope', function($roo
 				var keyCode = event.which || event.keyCode;
 
 				if(keyCode === 9 && event.shiftKey) {
+
+					console.log('onTabAndShiftKey');
 					event.preventDefault();
 					$rootScope.$apply(function() {
 						$rootScope.$eval($attrs.onTabAndShiftKey);
@@ -602,8 +598,8 @@ jsep.addBinaryOp('!begins', 10);
 jsep.addBinaryOp('ends', 10);
 jsep.addBinaryOp('!ends', 10);
 
-angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData', '$translate',
-    function ($http, TimeCounter, $filter, $rootScope, SendVisitorData, $translate) {
+angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCounter', '$filter', '$rootScope', 'SendVisitorData', '$translate', '$timeout',
+    function ($http, TimeCounter, $filter, $rootScope, SendVisitorData, $translate, $timeout) {
         return {
             templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
@@ -612,7 +608,8 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 ispreview: '='
             },
             controller: ["$document", "$window", "$scope", function($document, $window, $scope){
-		        $scope.noscroll = false;
+		        var NOSCROLL = false;
+		        var FORM_ACTION_ID = 'submit_field';
                 $scope.forms = {};
                 
 				//Don't start timer if we are looking at a design preview
@@ -651,43 +648,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     //Reset Timer
                     TimeCounter.restartClock();
                 };
-
-				//Fire event when window is scrolled
-				$window.onscroll = function(){
-            		$scope.scrollPos = document.body.scrollTop || document.documentElement.scrollTop || 0;
-					var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
-					$scope.fieldTop = elemBox.top;
-					$scope.fieldBottom = elemBox.bottom;
-
-					var field_id;
-					var field_index;
-
-                    if(!$scope.noscroll){
-                        //Focus on submit button
-                        if( $scope.selected.index === $scope.myform.visible_form_fields.length-1 && $scope.fieldBottom < 200){
-                            field_index = $scope.selected.index+1;
-                            field_id = 'submit_field';
-                            $scope.setActiveField(field_id, field_index, false);
-                        }
-                        //Focus on field above submit button
-                        else if($scope.selected.index === $scope.myform.visible_form_fields.length){
-                            if($scope.fieldTop > 200){
-                                field_index = $scope.selected.index-1;
-                                field_id = $scope.myform.visible_form_fields[field_index]._id;
-                                $scope.setActiveField(field_id, field_index, false);
-                            }
-                        } else if( $scope.fieldBottom < 0){
-                            field_index = $scope.selected.index+1;
-                            field_id = $scope.myform.visible_form_fields[field_index]._id;
-                            $scope.setActiveField(field_id, field_index, false);
-                        } else if ( $scope.selected.index !== 0 && $scope.fieldTop > 0) {
-                            field_index = $scope.selected.index-1;
-                            field_id = $scope.myform.visible_form_fields[field_index]._id;
-                            $scope.setActiveField(field_id, field_index, false);
-                        }
-                        $scope.$apply();
-                    }
-        		};
 
                 /*
                 ** Field Controls
@@ -756,34 +716,45 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						throw new Error('current active field is null');
 					}
 
-					if($scope.selected._id === 'submit_field') {
+					if($scope.selected._id === FORM_ACTION_ID) {
 						return $scope.myform.form_fields.length - 1;
 					}
 					return $scope.selected.index;
+				};
 
+				$scope.isActiveField = function(field){
+					if($scope.selected._id === field._id) {
+						return true
+					}
+					return false;
 				};
 
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index, animateScroll) {
-                    if($scope.selected === null || $scope.selected._id === field_id){
-						//console.log('not scrolling');
-						//console.log($scope.selected);
-						return;
-		    		}
-                    //console.log('field_id: '+field_id);
-                    //console.log('field_index: '+field_index);
-                    //console.log($scope.selected);
+                    if($scope.selected === null || (!field_id && field_index === null) )  {
+                    	return;
+                    }
+	    			
+	    			if(!field_id){
+	    				field_id = $scope.myform.visible_form_fields[field_index]._id;
+					} else if(field_index === null){
+						field_index = $scope.myform.visible_form_fields.length
 
-                    $scope.selected._id = field_id;
-                    $scope.selected.index = field_index;
-					if(!field_index){
-						for(var i=0; i<$scope.myform.visible_form_fields.length; i++){
+						for(var i=0; i < $scope.myform.visible_form_fields.length; i++){
 							var currField = $scope.myform.visible_form_fields[i];
-							if(field_id === currField._id){
-								$scope.selected.index = i;
+							if(currField['_id'] == field_id){
+								field_index = i;
 								break;
 							}
 						}
 					}
+
+					if($scope.selected._id === field_id){
+						return;
+		    		}
+
+                    $scope.selected._id = field_id;
+                    $scope.selected.index = field_index;
+
 
 					var nb_valid = $filter('formValidity')($scope.myform);
 					$scope.translateAdvancementData = {
@@ -793,10 +764,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					};
 
                     if(animateScroll){
-                        $scope.noscroll=true;
+                        NOSCROLL=true;
                         setTimeout(function() {
                             $document.scrollToElement(angular.element('.activeField'), -10, 200).then(function() {
-								$scope.noscroll = false;
+								NOSCROLL = false;
 								setTimeout(function() {
 									if (document.querySelectorAll('.activeField .focusOn').length) {
 										//Handle default case
@@ -811,53 +782,108 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								});
                             });
                         });
-                    } else {
-						setTimeout(function() {
-							if (document.querySelectorAll('.activeField .focusOn')[0]) {
-								//FIXME: DAVID: Figure out how to set focus without scroll movement in HTML Dom
-								document.querySelectorAll('.activeField .focusOn')[0].focus();
-							} else if (document.querySelectorAll('.activeField input')[0]){
-								document.querySelectorAll('.activeField input')[0].focus();
-							}
-						});
-					}
-
-					//Only send analytics data if form has not been submitted
-					if(!$scope.myform.submitted){
-						SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
-					}
+                    }
                 };
 
-                $rootScope.nextField = $scope.nextField = function(){
-					var currField = $scope.myform.visible_form_fields[$scope.selected.index];
-
-					if($scope.selected && $scope.selected.index > -1){
-						//Jump to logicJump's destination if it is true
-						if(currField.logicJump && evaluateLogicJump(currField)){
-							$rootScope.setActiveField(currField.logicJump.jumpTo, null, true);
-						} else {
-							var selected_index, selected_id;
-							if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
-								selected_index = $scope.selected.index+1;
-								selected_id = $scope.myform.visible_form_fields[selected_index]._id;
-								$rootScope.setActiveField(selected_id, selected_index, true);
-							} else if($scope.selected.index === $scope.myform.visible_form_fields.length-1) {
-								selected_index = $scope.selected.index+1;
-								selected_id = 'submit_field';
-								$rootScope.setActiveField(selected_id, selected_index, true);
-							}
+                $scope.$watch('selected.index', function(oldValue, newValue){
+                	if(oldValue !== newValue && newValue < $scope.myform.form_fields.length){
+        		        //Only send analytics data if form has not been submitted
+						if(!$scope.myform.submitted){
+							console.log('SendVisitorData.send()');
+							SendVisitorData.send($scope.myform, newValue, TimeCounter.getTimeElapsed());
 						}
-					}
+                	}
+                });
 
+                //Fire event when window is scrolled
+				$window.onscroll = function(){
+                    if(!NOSCROLL){
+
+						var scrollTop = $(window).scrollTop();
+						var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
+						var fieldTop = elemBox.top;
+						var fieldBottom = elemBox.bottom;
+
+						var field_id, field_index;
+						var elemHeight = $('.activeField').height();
+
+						var submitSectionHeight = $('.form-actions').height();
+						var maxScrollTop = $(document).height() - $(window).height();
+						var fieldWrapperHeight = $('form_fields').height();
+
+						var selector = 'form > .field-directive:nth-of-type(' + String($scope.myform.visible_form_fields.length - 1)+ ')'
+						var fieldDirectiveHeight = $(selector).height()
+						var scrollPosition = maxScrollTop - submitSectionHeight - fieldDirectiveHeight*1.2;
+
+						var fractionToJump = 0.9;
+
+                    	//Focus on field above submit form button
+                        if($scope.selected.index === $scope.myform.visible_form_fields.length){
+                            if(scrollTop < scrollPosition){
+                                field_index = $scope.selected.index-1;
+                                $scope.setActiveField(null, field_index, false);
+                            }
+                        }
+
+                        //Focus on submit form button
+                        else if($scope.selected.index === $scope.myform.visible_form_fields.length-1 && scrollTop > scrollPosition){
+                            field_index = $scope.selected.index+1;
+                            $scope.setActiveField(FORM_ACTION_ID, field_index, false);
+                        }
+                        
+                        //If we scrolled bellow the current field, move to next field
+                        else if(fieldBottom < elemHeight * fractionToJump && $scope.selected.index < $scope.myform.visible_form_fields.length-1 ){
+                            field_index = $scope.selected.index+1;
+                            $scope.setActiveField(null, field_index, false);
+                        } 
+                        //If we scrolled above the current field, move to prev field
+                        else if ( $scope.selected.index !== 0 && fieldTop > elemHeight * fractionToJump) {
+                            field_index = $scope.selected.index-1;
+                            $scope.setActiveField(null, field_index, false);
+                        }
+                    }
+
+                    $scope.$apply();
+        		};
+
+                $rootScope.nextField = $scope.nextField = function(){
+					if($scope.selected && $scope.selected.index > -1){
+
+						if($scope.selected._id !== FORM_ACTION_ID){
+							var currField = $scope.myform.visible_form_fields[$scope.selected.index];
+						
+							//Jump to logicJump's destination if it is true
+							if(currField.logicJump && currField.logicJump.jumpTo && evaluateLogicJump(currField)){
+								$scope.setActiveField(currField.logicJump.jumpTo, null, true);
+							} else if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
+								$scope.setActiveField(null, $scope.selected.index+1, true);
+							} else {
+								$scope.setActiveField(FORM_ACTION_ID, null, true);
+							}
+						} else {
+							//If we are at the submit actions page, go to the first field
+							$rootScope.setActiveField(null, 0, true);
+						}
+					} else {
+						//If selected is not defined go to the first field
+						$rootScope.setActiveField(null, 0, true);
+					}
+	
                 };
 
                 $rootScope.prevField = $scope.prevField = function(){
+                	console.log('prevField');
+                	console.log($scope.selected);
+                	var selected_index = $scope.selected.index - 1;
                     if($scope.selected.index > 0){
-                        var selected_index = $scope.selected.index - 1;
-                        var selected_id = $scope.myform.visible_form_fields[selected_index]._id;
-                        $scope.setActiveField(selected_id, selected_index, true);
+                        $scope.setActiveField(null, selected_index, true);
                     }
                 };
+
+                $rootScope.goToInvalid = $scope.goToInvalid = function() {
+					var field_id = $('.row.field-directive .ng-invalid.focusOn, .row.field-directive .ng-untouched.focusOn:not(.ng-valid)').first().parents('.row.field-directive').first().attr('data-id');
+					$scope.setActiveField(field_id, null, true);
+				};
 
                 /*
                 ** Form Display Functions
@@ -868,10 +894,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                         $scope.selected._id = $scope.myform.visible_form_fields[0]._id;
                     }
                 };
-
-				$rootScope.goToInvalid = $scope.goToInvalid = function() {
-					document.querySelectorAll('.ng-invalid.focusOn')[0].focus();
-				};
 
 				var getDeviceData = function(){
 					var md = new MobileDetect(window.navigator.userAgent);
@@ -913,6 +935,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 				};
 
 				$rootScope.submitForm = $scope.submitForm = function() {
+					if($scope.forms.myForm.$invalid){
+						$scope.goToInvalid();
+						return;
+					}
 
 					var _timeElapsed = TimeCounter.stopClock();
 					$scope.loading = true;

@@ -16,6 +16,7 @@
 	<div class="col-xs-12 field-input">
 		<small style="font-size:0.6em;">Press SHIFT+ENTER to add a newline</small>
 		<textarea class="textarea focusOn" type="text"
+		 	ng-focus="setActiveField(field._id, null, false)"
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
 			ng-class="{ 'no-border': !!field.fieldValue }"
