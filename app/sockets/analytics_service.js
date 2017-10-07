@@ -32,12 +32,6 @@ module.exports = function (io, socket) {
 
 			form.analytics.visitors.push(newVisitor);
 
-			request('https://freegeoip.net/json/'+socket.conn.transport.socket._socket.remoteAddress, (error, response, body)=> {
-		        var geoData = body;
-				data.geoLocation = {
-					city: geoData.city,
-					country: geoData.country_name
-				}
 				form.save(function (formSaveErr) {
 					if (err) {
 						console.error(err);
@@ -48,7 +42,6 @@ module.exports = function (io, socket) {
 						return cb();
 					}
 				});
-			});
 		});
 	};
 
