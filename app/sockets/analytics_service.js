@@ -38,6 +38,11 @@ module.exports = function (io, socket) {
 					city: geoData.city,
 					country: geoData.country_name
 				}
+				form.save(function (formSaveErr) {
+					if (err) {
+						console.error(err);
+						throw new Error(errorHandler.getErrorMessage(formSaveErr));
+					}
 
 				form.form_fields = form.form_fields.map(v => Object.assign({}, v, { fieldValue: null }));
 
@@ -85,3 +90,4 @@ module.exports = function (io, socket) {
 		});
 	});
 };
+
