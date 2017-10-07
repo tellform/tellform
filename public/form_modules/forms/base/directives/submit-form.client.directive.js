@@ -196,6 +196,16 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     }
                 };
 
+                $scope.$watch('selected.index', function(oldValue, newValue){
+                	if(oldValue !== newValue && newValue < $scope.myform.form_fields.length){
+        		        //Only send analytics data if form has not been submitted
+						if(!$scope.myform.submitted){
+							console.log('SendVisitorData.send()');
+							SendVisitorData.send($scope.myform, newValue, TimeCounter.getTimeElapsed());
+						}
+                	}
+                });
+
                 //Fire event when window is scrolled
 				$window.onscroll = function(){
                     if(!NOSCROLL){

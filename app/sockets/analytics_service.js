@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('../controllers/errors.server.controller'),
-	Form = mongoose.model('Form');
+	Form = mongoose.model('Form'),
+	request = require('request');
 
 // Create the chat configuration
 module.exports = function (io, socket) {
@@ -50,12 +51,25 @@ module.exports = function (io, socket) {
 			visitorsData[current_socket.id] = data;
 			visitorsData[current_socket.id].socketId = current_socket.id;
 			visitorsData[current_socket.id].isSaved = false;
-			if (data.isSubmitted && !data.isSaved) {
-				visitorsData[current_socket.id].isSaved = true;
-				saveVisitorData(data, function() {
-					current_socket.disconnect(true);
-				});
-			}
+
+			visitorsData[current_socket.id].ipAddr = current_socket.conn.transport.socket._socket.remoteAddress;
+
+			console.log(current_socket);
+			request('https://freegeoip.net/json/'+current_socket.conn.transport.socket._socket.remoteAddress, (error, response, body)=> {
+				console.log(body);
+		        var geoData = body;
+				visitorsData[current_socket.id].geoLocation = {
+					city: geoData.city,
+					country: geoData.country_name
+				}
+
+				if (data.isSubmitted && !data.isSaved) {
+					visitorsData[current_socket.id].isSaved = true;
+					saveVisitorData(data, function() {
+						current_socket.disconnect(true);
+					});
+				}
+			});
 		});
 
 		current_socket.on('disconnect', function() {
