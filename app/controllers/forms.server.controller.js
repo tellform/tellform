@@ -54,6 +54,7 @@ exports.createSubmission = function(req, res) {
 		timeElapsed = req.body.timeElapsed;
 	}
 	var submission = new FormSubmission({
+		form: req.body._id,
 		title: req.body.title,
 		form_fields: req.body.form_fields,
 		timeElapsed: timeElapsed,

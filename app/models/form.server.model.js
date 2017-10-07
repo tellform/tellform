@@ -11,6 +11,8 @@ var mongoose = require('mongoose'),
 	Random = require('random-js'),
 	mt = Random.engines.mt19937();
 
+var shortid = require('shortid');
+
 
 mt.autoSeed();
 
@@ -84,6 +86,10 @@ var formSchemaOptions = {
  * Form Schema
  */
 var FormSchema = new Schema({
+	_id: {
+		type: String,
+		default: shortid.generate
+	},
 	title: {
 		type: String,
 		trim: true,
@@ -262,12 +268,12 @@ FormSchema.virtual('analytics.fields').get(function () {
 			var totalViews = dropoffViews+continueViews;
 			var continueRate = 0;
 			var dropoffRate = 0;
-			
+
 			if(totalViews > 0){
 				continueRate = (continueViews/totalViews*100).toFixed(0);
 				dropoffRate = (dropoffViews/totalViews*100).toFixed(0);
 			}
-			
+
 			fieldDropoffs[i] = {
 				dropoffViews: dropoffViews,
 				responses: continueViews,
@@ -442,4 +448,3 @@ FormSchema.pre('save', function (next) {
 FormSchema.index({created: 1});
 
 mongoose.model('Form', FormSchema);
-
