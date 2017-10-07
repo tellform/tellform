@@ -8,7 +8,16 @@ var errorHandler = require('../errors.server.controller'),
 	passport = require('passport'),
 	config = require('../../../config/config'),
 	User = mongoose.model('User'),
-	tokgen = require('../../libs/tokenGenerator');
+	tokgen = require('../../libs/tokenGenerator'),
+	fs = require('fs');
+
+require.extensions['.html'] = function (module, filename) {
+    module.exports = fs.readFileSync(filename, 'utf8');
+};
+
+var welcomeEmail = require("../../views/welcome.email.view.html");
+var verificationEmail = require("../../views/verification.email.view.html");
+
 
 
 var nev = require('email-verification')(mongoose);
@@ -26,16 +35,15 @@ var config_nev = function () {
 	    transportOptions: config.mailer.options,
 	    verifyMailOptions: {
 	        from: config.mailer.from,
-	        subject: 'Confirm your account',
-	        html: '<p>Please verify your account by clicking <a href="http://${URL}">this link</a>. If you are unable to do so, copy and ' +
-	                'paste the following link into your browser:</p><p>${URL}</p>',
+	        subject: '✔ Activate your new TellForm account!',
+	        html: welcomeEmail,
 	        text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
 	    },
 
 	    confirmMailOptions: {
 	        from: config.mailer.from,
-	        subject: 'Account successfully verified!',
-	        html: '<p>Your account has been successfully verified.</p>',
+	        subject: '✔ Welcome to {{app.title}}!',
+	        html: verificationEmail,
 	        text: 'Your account has been successfully verified.'
 	    },
 	    verifySendMailCallback: function(err, info) {

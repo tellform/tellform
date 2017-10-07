@@ -14,6 +14,10 @@
     border-width: 0px;
 }
 
+form .btn {
+    border-color: grey;
+}
+
 .public-form input.ng-untouched, .public-form textarea.ng-untouched {
     border-width: 0 0 2px 0;
     border-color: rgba(246, 255, 181, 0.4);
