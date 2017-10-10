@@ -6,9 +6,9 @@ exports.run = function(app, db, cb) {
 
 	var User = mongoose.model('User');
 
-	var email = config.ADMIN_EMAIL || 'admin@admin.com';
-	var username = config.ADMIN_USERNAME || 'root';
-	var password = config.ADMIN_PASSWORD || 'root';
+	var email = process.env.ADMIN_EMAIL || 'admin@admin.com';
+	var username = process.env.ADMIN_USERNAME || 'root';
+	var password = process.env.ADMIN_PASSWORD || 'root';
 
 	var newUser = new User({
 		firstName: 'Admin',
