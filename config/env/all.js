@@ -20,11 +20,9 @@ module.exports = {
 
 	templateEngine: 'swig',
 
-	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
-
-    signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
+ 	signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
 	enableClusterMode: (process.env.ENABLE_CLUSTER_MODE === 'TRUE'),
-	baseUrl: '',
+	baseUrl: process.env.BASE_URL || 'localhost:3000',
 	tempUserCollection: 'temporary_users',
 
 	subdomainsDisabled: (process.env.SUBDOMAINS_DISABLED === 'TRUE'),
@@ -52,17 +50,6 @@ module.exports = {
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
 	},
-
-	/*
-	 * Upload Configuration
-	 */
-	//Global upload path
-	uploadPath : 'uploads/',
-	//PDF storage path
-	pdfUploadPath: 'uploads/pdfs/',
-	//Temp files storage path
-	tmpUploadPath: 'uploads/tmp/',
-
 	// The session cookie name
 	sessionName: 'connect.sid',
 	log: {
