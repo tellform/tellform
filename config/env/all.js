@@ -14,6 +14,8 @@ module.exports = {
 			pass: ''
 		}
 	},
+	
+	redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
 
 	port: process.env.PORT || 3000,
 	socketPort: process.env.SOCKET_PORT || 20523,
