@@ -26,7 +26,7 @@ module.exports = {
 
 	port: process.env.PORT || 3000,
 	socketPort: process.env.SOCKET_PORT || 20523,
-	socketPortExternallyVisible: (process.env.SIGNUP_DISABLED === 'TRUE'),
+	socketPortExternallyVisible: (process.env.SOCKET_PORT_EXTERN_VISIBLE === 'TRUE'),
 
 	templateEngine: 'swig',
 
