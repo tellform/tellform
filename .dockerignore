@@ -1,0 +1,8 @@
+.git
+.idea
+.vagrant
+coverage
+design
+e2e_coverage
+Vagrantfile
+Procfile

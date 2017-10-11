@@ -4,8 +4,11 @@
  */
 
 //Load ENV vars from .env
-if ((process.env.NODE_ENV || 'development') === 'development') {
-	require('dotenv').config();
+var old_NODE_ENV = process.env.NODE_ENV;
+require('dotenv').config();
+
+if(!old_NODE_ENV){
+	process.env.NODE_ENV = old_NODE_ENV;
 }
 
 require('events').EventEmitter.prototype._maxListeners = 0;

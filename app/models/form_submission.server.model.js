@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	mUtilities = require('mongoose-utilities'),
+	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	FieldSchema = require('./form_field.server.model.js');
 
 /**
@@ -75,7 +75,7 @@ FormSubmissionSchema.path('form_fields', {
 	}
 });
 
-FormSubmissionSchema.plugin(mUtilities.timestamp, {
+FormSubmissionSchema.plugin(timeStampPlugin, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
 	useVirtual: false

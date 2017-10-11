@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	_ = require('lodash'),
-	mUtilities = require('mongoose-utilities'),
+	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	async = require('async'),
 	Random = require('random-js'),
 	mt = Random.engines.mt19937();
@@ -283,7 +283,7 @@ FormSchema.virtual('analytics.fields').get(function () {
 	return fieldDropoffs;
 });
 
-FormSchema.plugin(mUtilities.timestamp, {
+FormSchema.plugin(timeStampPlugin, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
 	useVirtual: false
@@ -304,7 +304,6 @@ FormSchema.pre('save', function (next) {
 			this.language = 'de';
 			break;
 		default:
-			this.language = 'en';
 			break;
 	}
 	next();
@@ -336,54 +335,55 @@ FormSchema.pre('save', function (next) {
 	var that = this;
 	var _original;
 
-	async.series([function(cb) {
-		that.constructor
-			.findOne({_id: that._id}).exec(function (err, original) {
-			if (err) {
-				return cb(err);
-			} else if (!original){
-				return next();
-			} else {
-				_original = original;
-				return cb(null);
-			}
-		});
-	},
-	function(cb) {
-		if(that.form_fields && that.isModified('form_fields') && formFieldsAllHaveIds(that.toObject().form_fields)){
+	async.series([
+		function(cb) {
+			that.constructor
+				.findOne({_id: that._id}).exec(function (err, original) {
+				if (err) {
+					return cb(err);
+				} else if (!original){
+					return next();
+				} else {
+					_original = original;
+					return cb(null);
+				}
+			});
+		},
+		function(cb) {
+			if(that.form_fields && that.isModified('form_fields') && formFieldsAllHaveIds(that.toObject().form_fields)){
 
-			var current_form = that.toObject(),
-				old_form_fields = _original.toObject().form_fields,
-				new_ids = _.map(_.map(current_form.form_fields, 'globalId'), function(id){ return ''+id;}),
-				old_ids = _.map(_.map(old_form_fields, 'globalId'), function(id){ return ''+id;}),
-				deletedIds = getDeletedIndexes(old_ids, new_ids);
+				var current_form = that.toObject(),
+					old_form_fields = _original.toObject().form_fields,
+					new_ids = _.map(_.map(current_form.form_fields, 'globalId'), function(id){ return ''+id;}),
+					old_ids = _.map(_.map(old_form_fields, 'globalId'), function(id){ return ''+id;}),
+					deletedIds = getDeletedIndexes(old_ids, new_ids);
 
-			//Check if any form_fileds were deleted
-			if( deletedIds.length > 0 ){
+				//Check if any form_fileds were deleted
+				if( deletedIds.length > 0 ){
 
-				var modifiedSubmissions = [];
+					var modifiedSubmissions = [];
 
-				async.forEachOfSeries(deletedIds,
-					function (deletedIdIndex, key, cb_id) {
+					async.forEachOfSeries(deletedIds,
+						function (deletedIdIndex, key, cb_id) {
 
-						var deleted_id = old_ids[deletedIdIndex];
-						//Find FormSubmissions that contain field with _id equal to 'deleted_id'
-						FormSubmission.
-						find({ form: that, form_fields: {$elemMatch: {globalId: deleted_id} }  }).
-						exec(function(err, submissions){
-							if(err) {
-								return cb_id(err);
-							}
+							var deleted_id = old_ids[deletedIdIndex];
+							//Find FormSubmissions that contain field with _id equal to 'deleted_id'
+							FormSubmission.
+							find({ form: that, form_fields: {$elemMatch: {globalId: deleted_id} }  }).
+							exec(function(err, submissions){
+								if(err) {
+									return cb_id(err);
+								}
 
-							//Preserve fields that have at least one submission
-							if (submissions.length) {
-								//Add submissions
-								modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
-							}
+								//Preserve fields that have at least one submission
+								if (submissions.length) {
+									//Add submissions
+									modifiedSubmissions.push.apply(modifiedSubmissions, submissions);
+								}
 
-							return cb_id(null);
-						});
-					},
+								return cb_id(null);
+							});
+						},
 					function (err) {
 						if(err){
 							console.error(err.message);
@@ -425,17 +425,20 @@ FormSchema.pre('save', function (next) {
 						}, function (err) {
 							return cb(err);
 						});
-					}
-				);
+					});
+				} else {
+					return cb(null);
+				}
 			} else {
 				return cb(null);
 			}
-		} else {
-			return cb(null);
 		}
-	}],
-	function(err, results){
-		next(err);
+	],
+	function(err){
+		if(err){
+			return next(err);
+		}
+		next();
 	});
 });
 

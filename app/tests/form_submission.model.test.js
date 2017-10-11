@@ -168,7 +168,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 		});
 
 		it('should be able to find FormSubmission by $elemMatch on form_fields id', function(done){
-			 FormSubmission.findOne({ form: myForm._id, admin: user, form_fields: {$elemMatch: {_id: myForm.form_fields[0]._id} }  })
+			 FormSubmission.findOne({ form: myForm._id, form_fields: {$elemMatch: {globalId: myForm.form_fields[0].globalId} }  })
 				.exec(function(err, submission){
 					should.not.exist(err);
 					should.exist(submission);

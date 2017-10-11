@@ -49,7 +49,6 @@ exports.createSubmission = function(req, res) {
 
 	var timeElapsed = 0;
 	
-	console.log(req.body);
 	if(typeof req.body.timeElapsed === 'number'){
 		timeElapsed = req.body.timeElapsed;
 	}
@@ -63,7 +62,6 @@ exports.createSubmission = function(req, res) {
 		geoLocation: req.body.geoLocation,
 		device: req.body.device
 	});
-
 
 	submission.save(function(err, submission){
 		if (err) {
@@ -100,7 +98,7 @@ exports.listSubmissions = function(req, res) {
 exports.create = function(req, res) {
 
 	if(!req.body.form){
-		return res.status(400).send({
+		return res.status(401).send({
 			message: 'Invalid Input'
 		});
 	}
@@ -110,7 +108,7 @@ exports.create = function(req, res) {
 
 	form.save(function(err) {
 		if (err) {
-			return res.status(405).send({
+			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
@@ -222,7 +220,7 @@ exports.update = function(req, res) {
 
 	form.save(function(err, savedForm) {
 		if (err) {
-            res.status(405).send({
+            res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {

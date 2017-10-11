@@ -4,7 +4,7 @@ module.exports = {
 	baseUrl: 'https://forms.polydaic.com',
 	port: 8443,
 	db: {
-		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/mean',
+		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://127.0.0.1/mean',
 		options: {
 			user: '',
 			pass: ''
@@ -38,31 +38,6 @@ module.exports = {
 	assets: {
 		css: 'public/dist/application.min.css',
 		js: 'public/dist/application.min.js'
-	},
-	facebook: {
-		clientID: process.env.FACEBOOK_ID || 'APP_ID',
-		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
-		callbackURL: 'https://localhost:443/auth/facebook/callback'
-	},
-	twitter: {
-		clientID: process.env.TWITTER_KEY || 'CONSUMER_KEY',
-		clientSecret: process.env.TWITTER_SECRET || 'CONSUMER_SECRET',
-		callbackURL: 'https://localhost:443/auth/twitter/callback'
-	},
-	google: {
-		clientID: process.env.GOOGLE_ID || 'APP_ID',
-		clientSecret: process.env.GOOGLE_SECRET || 'APP_SECRET',
-		callbackURL: 'https://localhost:443/auth/google/callback'
-	},
-	linkedin: {
-		clientID: process.env.LINKEDIN_ID || 'APP_ID',
-		clientSecret: process.env.LINKEDIN_SECRET || 'APP_SECRET',
-		callbackURL: 'https://localhost:443/auth/linkedin/callback'
-	},
-	github: {
-		clientID: process.env.GITHUB_ID || 'APP_ID',
-		clientSecret: process.env.GITHUB_SECRET || 'APP_SECRET',
-		callbackURL: 'https://localhost:443/auth/github/callback'
 	},
 	mailer: {
 		from: process.env.MAILER_FROM || '',
