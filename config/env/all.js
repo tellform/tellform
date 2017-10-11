@@ -17,9 +17,9 @@ module.exports = {
 	
 	
 	admin:{
-		email: process.env.ADMIN_EMAIL || 'admin@admin.com';
-		username: process.env.ADMIN_USERNAME || 'root';
-		password: process.env.ADMIN_PASSWORD || 'root';
+		email: process.env.ADMIN_EMAIL || 'admin@admin.com',
+		username: process.env.ADMIN_USERNAME || 'root',
+		password: process.env.ADMIN_PASSWORD || 'root',
 	},
 	
 	redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
