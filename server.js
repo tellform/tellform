@@ -3,13 +3,6 @@
  * Module dependencies.
  */
 
-//Load ENV vars from .env
-var old_NODE_ENV = process.env.NODE_ENV;
-require('dotenv').config();
-
-if(!old_NODE_ENV){
-	process.env.NODE_ENV = old_NODE_ENV;
-}
 
 require('events').EventEmitter.prototype._maxListeners = 0;
 

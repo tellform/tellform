@@ -161,6 +161,8 @@ module.exports = function(grunt) {
 	    	}
 	    },
 		env: {
+			src: '.env',
+
 			test: {
 				NODE_ENV: 'test',
 			},
