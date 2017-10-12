@@ -48,7 +48,7 @@ exports.deleteSubmissions = function(req, res) {
 exports.createSubmission = function(req, res) {
 
 	var timeElapsed = 0;
-	
+
 	console.log(req.body);
 	if(typeof req.body.timeElapsed === 'number'){
 		timeElapsed = req.body.timeElapsed;
@@ -182,6 +182,8 @@ exports.update = function(req, res) {
     	form.form_fields = [];
     }
 
+    delete updatedForm.__v;
+    delete updatedForm.created;
     if(form.analytics === undefined){
     	form.analytics = {
     		visitors: [],
