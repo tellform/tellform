@@ -52,7 +52,6 @@ module.exports = function (io, socket) {
 			visitorsData[current_socket.id].socketId = current_socket.id;
 			visitorsData[current_socket.id].isSaved = false;
 
-			visitorsData[current_socket.id].ipAddr = current_socket.conn.transport.socket._socket.remoteAddress;
 
 			if (data.isSubmitted && !data.isSaved) {
 				visitorsData[current_socket.id].isSaved = true;
