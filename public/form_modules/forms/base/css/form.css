@@ -1,3 +1,19 @@
+/*Modal overlay (for lightbox effect)*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}
+.overlay.submitform {
+    background-color: rgb(256,256,256);
+    background-color: rgba(256,256,256,0.8);
+}
+
 .panel-default.startPage {
     border-style: dashed;
     border-color: #a9a9a9;
