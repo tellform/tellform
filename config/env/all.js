@@ -8,23 +8,31 @@ module.exports = {
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
 	db: {
-		uri: 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR || process.env.DB_HOST || 'localhost')+'/mean',
+		uri: 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR || process.env.MONGODB_URI || 'localhost')+'/mean',
 		options: {
 			user: '',
 			pass: ''
 		}
 	},
+	
+	
+	admin:{
+		email: process.env.ADMIN_EMAIL || 'admin@admin.com',
+		username: process.env.ADMIN_USERNAME || 'root',
+		password: process.env.ADMIN_PASSWORD || 'root',
+	},
+	
+	redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
 
 	port: process.env.PORT || 3000,
 	socketPort: process.env.SOCKET_PORT || 20523,
+	socketPortExternallyVisible: (process.env.SOCKET_PORT_EXTERN_VISIBLE === 'TRUE'),
 
 	templateEngine: 'swig',
 
-	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
-
-    signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
+ 	signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
 	enableClusterMode: (process.env.ENABLE_CLUSTER_MODE === 'TRUE'),
-	baseUrl: '',
+	baseUrl: process.env.BASE_URL || 'localhost:3000',
 	tempUserCollection: 'temporary_users',
 
 	subdomainsDisabled: (process.env.SUBDOMAINS_DISABLED === 'TRUE'),
@@ -52,17 +60,6 @@ module.exports = {
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
 	},
-
-	/*
-	 * Upload Configuration
-	 */
-	//Global upload path
-	uploadPath : 'uploads/',
-	//PDF storage path
-	pdfUploadPath: 'uploads/pdfs/',
-	//Temp files storage path
-	tmpUploadPath: 'uploads/tmp/',
-
 	// The session cookie name
 	sessionName: 'connect.sid',
 	log: {

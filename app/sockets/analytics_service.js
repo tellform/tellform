@@ -26,11 +26,14 @@ module.exports = function (io, socket) {
 				timeElapsed: data.timeElapsed,
 				isSubmitted: data.isSubmitted,
 				language: data.language,
-				ipAddr: data.ipAddr,
+				ipAddr: '',
 				deviceType: data.deviceType
 			};
 
 			form.analytics.visitors.push(newVisitor);
+
+
+				form.form_fields = form.form_fields.map(v => Object.assign({}, v, { fieldValue: null }));
 
 				form.save(function (formSaveErr) {
 					if (err) {

@@ -1,3 +1,18 @@
+/*Modal overlay (for lightbox effect)*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}
+.overlay.submitform {
+    background-color: rgb(256,256,256);
+    background-color: rgba(256,256,256,0.8);
+}
 
 form .btn {
     border-color: grey;
@@ -17,6 +32,10 @@ form .btn {
 	background-color: #000000;
     background-color: rgba(0,0,0,0);
     border-width: 0px;
+}
+
+form .btn {
+    border-color: grey;
 }
 
 .public-form input.ng-untouched, .public-form textarea.ng-untouched {
