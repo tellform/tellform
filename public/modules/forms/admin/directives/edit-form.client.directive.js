@@ -45,7 +45,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 							// decides whether field options block will be shown (true for dropdown and radio fields)
 							$scope.showAddOptions = function (field){
-								if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
+								if($scope.field.fieldType === 'dropdown' || $scope.field.fieldType === 'checkbox' || $scope.field.fieldType === 'radio'){
 									return true;
 								} else {
 									return false;
