@@ -44,6 +44,10 @@ var LogicJumpSchema = new Schema({
 	jumpTo: {
 		type: Schema.Types.ObjectId,
 		ref: 'FormField'
+	},
+	enabled: {
+		type: Schema.Types.Boolean,
+		default: false
 	}
 }, schemaOptions);
 

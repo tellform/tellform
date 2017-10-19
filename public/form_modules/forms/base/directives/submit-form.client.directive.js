@@ -66,56 +66,58 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 				var evaluateLogicJump = function(field){
 					var logicJump = field.logicJump;
 
-					if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
-						var parse_tree = jsep(logicJump.expressionString);
-						var left, right;
+					if(logicJump.enabled){
+						if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
+							var parse_tree = jsep(logicJump.expressionString);
+							var left, right;
 
-						if(parse_tree.left.name === 'field'){
-							left = field.fieldValue;
-							right = logicJump.valueB;
-						} else {
-							left = logicJump.valueB;
-							right = field.fieldValue;
-						}
-
-						if(field.fieldType === 'number' || field.fieldType === 'scale' || field.fieldType === 'rating'){
-							switch(parse_tree.operator) {
-								case '==':
-									return (parseInt(left) === parseInt(right));
-								case '!==':
-									return (parseInt(left) !== parseInt(right));
-								case '>':
-									return (parseInt(left) > parseInt(right));
-								case '>=':
-									return (parseInt(left) > parseInt(right));
-								case '<':
-									return (parseInt(left) < parseInt(right));
-								case '<=':
-									return (parseInt(left) <= parseInt(right));
-								default:
-									return false;
+							if(parse_tree.left.name === 'field'){
+								left = field.fieldValue;
+								right = logicJump.valueB;
+							} else {
+								left = logicJump.valueB;
+								right = field.fieldValue;
 							}
-						} else {
-							switch(parse_tree.operator) {
-								case '==':
-									return (left === right);
-								case '!==':
-									return (left !== right);
-								case 'contains':
-									return (left.indexOf(right) > -1);
-								case '!contains':
-                  /* jshint -W018 */
-									return !(left.indexOf(right) > -1);
-								case 'begins':
-									return left.startsWith(right);
-								case '!begins':
-									return !left.startsWith(right);
-								case 'ends':
-									return left.endsWith(right);
-								case '!ends':
-									return left.endsWith(right);
-								default:
-									return false;
+
+							if(field.fieldType === 'number' || field.fieldType === 'scale' || field.fieldType === 'rating'){
+								switch(parse_tree.operator) {
+									case '==':
+										return (parseInt(left) === parseInt(right));
+									case '!==':
+										return (parseInt(left) !== parseInt(right));
+									case '>':
+										return (parseInt(left) > parseInt(right));
+									case '>=':
+										return (parseInt(left) > parseInt(right));
+									case '<':
+										return (parseInt(left) < parseInt(right));
+									case '<=':
+										return (parseInt(left) <= parseInt(right));
+									default:
+										return false;
+								}
+							} else {
+								switch(parse_tree.operator) {
+									case '==':
+										return (left === right);
+									case '!==':
+										return (left !== right);
+									case 'contains':
+										return (left.indexOf(right) > -1);
+									case '!contains':
+	                  				/* jshint -W018 */
+										return !(left.indexOf(right) > -1);
+									case 'begins':
+										return left.startsWith(right);
+									case '!begins':
+										return !left.startsWith(right);
+									case 'ends':
+										return left.endsWith(right);
+									case '!ends':
+										return left.endsWith(right);
+									default:
+										return false;
+								}
 							}
 						}
 					}

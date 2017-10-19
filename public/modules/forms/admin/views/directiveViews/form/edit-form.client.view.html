@@ -379,7 +379,7 @@
 						<div class="col-md-4 col-xs-12 field-input">{{ 'LOGIC_JUMP' | translate }}</div>
 						<div class="col-md-8 col-xs-12 field-input">
 							<label class="switch-light switch-holo" onclick="">
-								<input type="checkbox" ng-model="showLogicJump">
+								<input type="checkbox" ng-model="field.logicJump.enabled">
 								<span>
 									<span> {{ 'OFF' | translate }}</span>
 									<span> {{ 'ON' | translate }}</span>
@@ -388,7 +388,7 @@
 							</label>
 						</div>
 					</div>
-					<div class="row question" ng-if="!!showLogicJump">
+					<div class="row question" ng-if="field.logicJump.enabled"">
 						<div class="col-md-4 col-sm-12">
 
 							<b> {{ 'IF_THIS_FIELD' | translate }} </b>

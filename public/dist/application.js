@@ -485,7 +485,7 @@ angular.module('TellForm.templates', []).run(['$templateCache', function($templa
     "						<div class=\"col-md-4 col-xs-12 field-input\">{{ 'LOGIC_JUMP' | translate }}</div>\n" +
     "						<div class=\"col-md-8 col-xs-12 field-input\">\n" +
     "							<label class=\"switch-light switch-holo\" onclick=\"\">\n" +
-    "								<input type=\"checkbox\" ng-model=\"showLogicJump\">\n" +
+    "								<input type=\"checkbox\" ng-model=\"field.logicJump.enabled\">\n" +
     "								<span>\n" +
     "									<span> {{ 'OFF' | translate }}</span>\n" +
     "									<span> {{ 'ON' | translate }}</span>\n" +
@@ -494,7 +494,7 @@ angular.module('TellForm.templates', []).run(['$templateCache', function($templa
     "							</label>\n" +
     "						</div>\n" +
     "					</div>\n" +
-    "					<div class=\"row question\" ng-if=\"!!showLogicJump\">\n" +
+    "					<div class=\"row question\" ng-if=\"field.logicJump.enabled\"\">\n" +
     "						<div class=\"col-md-4 col-sm-12\">\n" +
     "\n" +
     "							<b> {{ 'IF_THIS_FIELD' | translate }} </b>\n" +
@@ -4170,56 +4170,58 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 				var evaluateLogicJump = function(field){
 					var logicJump = field.logicJump;
 
-					if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
-						var parse_tree = jsep(logicJump.expressionString);
-						var left, right;
+					if(logicJump.enabled){
+						if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
+							var parse_tree = jsep(logicJump.expressionString);
+							var left, right;
 
-						if(parse_tree.left.name === 'field'){
-							left = field.fieldValue;
-							right = logicJump.valueB;
-						} else {
-							left = logicJump.valueB;
-							right = field.fieldValue;
-						}
-
-						if(field.fieldType === 'number' || field.fieldType === 'scale' || field.fieldType === 'rating'){
-							switch(parse_tree.operator) {
-								case '==':
-									return (parseInt(left) === parseInt(right));
-								case '!==':
-									return (parseInt(left) !== parseInt(right));
-								case '>':
-									return (parseInt(left) > parseInt(right));
-								case '>=':
-									return (parseInt(left) > parseInt(right));
-								case '<':
-									return (parseInt(left) < parseInt(right));
-								case '<=':
-									return (parseInt(left) <= parseInt(right));
-								default:
-									return false;
+							if(parse_tree.left.name === 'field'){
+								left = field.fieldValue;
+								right = logicJump.valueB;
+							} else {
+								left = logicJump.valueB;
+								right = field.fieldValue;
 							}
-						} else {
-							switch(parse_tree.operator) {
-								case '==':
-									return (left === right);
-								case '!==':
-									return (left !== right);
-								case 'contains':
-									return (left.indexOf(right) > -1);
-								case '!contains':
-                  /* jshint -W018 */
-									return !(left.indexOf(right) > -1);
-								case 'begins':
-									return left.startsWith(right);
-								case '!begins':
-									return !left.startsWith(right);
-								case 'ends':
-									return left.endsWith(right);
-								case '!ends':
-									return left.endsWith(right);
-								default:
-									return false;
+
+							if(field.fieldType === 'number' || field.fieldType === 'scale' || field.fieldType === 'rating'){
+								switch(parse_tree.operator) {
+									case '==':
+										return (parseInt(left) === parseInt(right));
+									case '!==':
+										return (parseInt(left) !== parseInt(right));
+									case '>':
+										return (parseInt(left) > parseInt(right));
+									case '>=':
+										return (parseInt(left) > parseInt(right));
+									case '<':
+										return (parseInt(left) < parseInt(right));
+									case '<=':
+										return (parseInt(left) <= parseInt(right));
+									default:
+										return false;
+								}
+							} else {
+								switch(parse_tree.operator) {
+									case '==':
+										return (left === right);
+									case '!==':
+										return (left !== right);
+									case 'contains':
+										return (left.indexOf(right) > -1);
+									case '!contains':
+	                  				/* jshint -W018 */
+										return !(left.indexOf(right) > -1);
+									case 'begins':
+										return left.startsWith(right);
+									case '!begins':
+										return !left.startsWith(right);
+									case 'ends':
+										return left.endsWith(right);
+									case '!ends':
+										return left.endsWith(right);
+									default:
+										return false;
+								}
 							}
 						}
 					}
