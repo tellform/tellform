@@ -28,10 +28,10 @@ module.exports = function(grunt) {
 
 		clientViews: ['public/modules/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html',],
 		clientJS: ['public/js/*.js', 'public/form_modules/**/*.js', 'public/modules/**/*.js'],
-		clientCSS: ['public/modules/**/*.css', 'public/form_modules/**/*.css', '!public/modules/**/demo/**/*.css', '!public/modules/**/dist/**/*.css'],
+		clientCSS: ['public/modules/**/*.css'],
 
 		serverTests: ['app/tests/**/*.js'],
-		clientTests: ['public/modules/**/tests/*.js', '!public/modules/**/demo/**/*.js', '!public/modules/**/dist/**/*.js', '!public/modules/**/node_modules/**/*.js']
+		clientTests: ['public/modules/**/tests/*.js']
 	};
 
 	watchFiles.allTests = watchFiles.serverTests.concat(watchFiles.clientTests);
@@ -127,19 +127,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		'closure-compiler': {
-			vendor_file: {
-				closurePath: './scripts',
-				js: 'public/dist/vendor_forms_uglified.js',
-				jsOutputFile: 'public/dist/vendor.min.js',
-				maxBuffer: 10000000000,
-				options: {
-					warning_level: 'QUIET',
-					compilation_level: 'SIMPLE_OPTIMIZATIONS',
-					language_in: 'ECMASCRIPT5'
-				}
-			}
-		},
 		cssmin: {
 			combine: {
 				files: {
@@ -157,19 +144,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		'node-inspector': {
-			custom: {
-				options: {
-					'web-port': 1337,
-					'web-host': 'localhost',
-					'debug-port': 5858,
-					'save-live-edit': true,
-					'no-preload': true,
-					'stack-trace-limit': 50,
-					'hidden': []
-				}
-			}
-		},
 		ngAnnotate: {
 			production: {
 				files: {
@@ -180,28 +154,26 @@ module.exports = function(grunt) {
 		},
 		concurrent: {
 		    default: ['nodemon', 'watch'],
-			debug: ['nodemon', 'watch', 'node-inspector'],
+			debug: ['nodemon', 'watch'],
 	    	options: {
 				logConcurrentOutput: true,
 		    	limit: 10
 	    	}
 	    },
 		env: {
+			src: '.env',
+
 			test: {
 				NODE_ENV: 'test',
-				src: '.env'
 			},
 			secure: {
 				NODE_ENV: 'secure',
-				src: '/opt/deploy/.env'
 			},
 			production: {
 				NODE_ENV: 'production',
-				src: '/opt/deploy/.env'
 			},
 			dev: {
 				NODE_ENV: 'development',
-				src: '.env'
 			}
 		},
 		mochaTest: {
@@ -211,7 +183,7 @@ module.exports = function(grunt) {
 				quiet: false,
 				require: 'server.js',
 				ui: 'bdd',
-				debug: true
+				debug: false
 			}
 		},
 		karma: {

@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-var fs = require('fs-extra'),
+var fs = require('fs'),
 	https = require('https'),
 	express = require('express'),
 	morgan = require('morgan'),
@@ -17,21 +17,12 @@ var fs = require('fs-extra'),
 	passport = require('passport'),
 	raven = require('raven'),
 	MongoStore = require('connect-mongo')(session),
-	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
 	path = require('path'),
-	device = require('express-device'),
 	client = new raven.Client(config.DSN);
 
 var mongoose = require('mongoose');
-
-var cacheOpts = {
-	max:100000,
-	maxAge:1000*60
-};
-
-require('mongoose-cache').install(mongoose, cacheOpts);
 
 /**
  * Configure Socket.io
@@ -246,12 +237,6 @@ module.exports = function(db) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	// setup express-device
-	app.use(device.capture({ parseUserAgent: true }));
-
-	// connect flash for flash messages
-	app.use(flash());
-
 	// Globbing routing files
 	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
 		require(path.resolve(routePath))(app);
@@ -295,16 +280,16 @@ module.exports = function(db) {
 		// Log it
 		client.captureError(err);
 
-		/*if(process.env.NODE_ENV === 'production'){
+		if(process.env.NODE_ENV === 'production'){
 			res.status(500).render('500', {
-                	        error: 'Internal Server Error'
-                	});
-		} else {*/ 
+	   		    error: 'Internal Server Error'
+        	});
+		} else { 
 			// Error page
 			res.status(500).render('500', {
 				error: err.stack
 			});
-		//}
+		}
 	});
 
 	// Assume 404 since no middleware responded

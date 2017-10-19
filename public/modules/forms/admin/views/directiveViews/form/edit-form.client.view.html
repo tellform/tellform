@@ -146,8 +146,6 @@
 			</div>
 
 		</div>
-
-
 	</script>
 
 	<!-- Edit StartPage Modal Dialog Template -->
@@ -291,8 +289,6 @@
 			</div>
 
 		</div>
-
-
 	</script>
 
 	<!-- Edit Field Modal Dialog Template -->
@@ -312,34 +308,34 @@
 
 					<div class="row"><br></div>
 
-					<div class="row description" ng-hide="showRatingOptions(field)">
+					<div class="row description" ng-hide="showRatingOptions()">
 						<div class="col-md-12 bold">{{ 'QUESTION_DESCRIPTION' | translate }}</div>
 						<div class="col-md-12">
 							<textarea type="text" class="form-control" ng-model="field.description" name="description{{field._id}}"value="{{field.description}}"></textarea>
 						</div>
 					</div>
 
-					<div class="row" ng-show="showAddOptions(field)"><br></div>
-					<div class="row options" ng-if="showAddOptions(field)">
+					<div class="row" ng-show="showAddOptions()"><br></div>
+					<div class="row options" ng-if="showAddOptions()">
 						<div class="col-md-4 col-xs-12">{{ 'OPTIONS' | translate }}</div>
 						<div class="col-md-8 col-xs-12">
 							<div ng-repeat="option in field.fieldOptions track by option.option_id" class="row">
 								<input type="text" name="{{option.option_value}}{{field._id}}" ng-model="option.option_value" class="col-xs-5">
 
-								<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)" class="col-xs-3">
+								<a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(option)" class="col-xs-3">
 									<i class="fa fa-trash-o"></i>
 								</a>
 							</div>
 							<div class="row">
-								<button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption(field)">
+								<button class="btn btn-primary btn-small col-md-offset-0 col-md-6 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-6" type="button" ng-click="addOption()">
 									<i class="icon-plus icon-white"></i> {{ 'ADD_OPTION' | translate }}
 								</button>
 							</div>
 						</div>
 					</div>
 
-					<div class="row" ng-show="showRatingOptions(field)"><br></div>
-					<div class="row" ng-if="showRatingOptions(field)">
+					<div class="row" ng-show="showRatingOptions()"><br></div>
+					<div class="row" ng-if="showRatingOptions()">
 						<div class="col-md-9 col-sm-9">{{ 'NUM_OF_STEPS' | translate }}</div>
 						<div class="col-md-3 col-sm-3">
 							<input style="width:100%" type="number"
@@ -483,7 +479,7 @@
 				</div>
 
 				<div class="preview-field-panel col-md-6 hidden-sm hidden-xs">
-					<form class="public-form"ss>
+					<form class="public-form">
 						<field-directive field="field" validate="false" class="preview-field">
 						</field-directive>
 					</form>
@@ -545,7 +541,7 @@
 
             	<div class="col-xs-12 field-row" ng-repeat="field in myform.form_fields track by $id($index)" ng-if="!field.deletePreserved">
 	            	<div class="col-xs-10">
-			            <div class="panel panel-default" ng-click="openEditModal(field)">
+			            <div class="panel panel-default" ng-click="openEditModal(field, true, $index)">
 			                <div class="panel-heading">
 								<div class="row">
 									<span class="col-xs-1" ng-switch="field.fieldType">

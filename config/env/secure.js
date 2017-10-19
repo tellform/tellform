@@ -4,7 +4,7 @@ module.exports = {
 	baseUrl: 'https://forms.polydaic.com',
 	port: 8443,
 	db: {
-		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/mean',
+		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://127.0.0.1/mean',
 		options: {
 			user: '',
 			pass: ''

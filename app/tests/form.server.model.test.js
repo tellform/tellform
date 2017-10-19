@@ -1,5 +1,7 @@
 'use strict';
 
+require('../../server.js');
+
 /**
  * Module dependencies.
  */

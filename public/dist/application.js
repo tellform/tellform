@@ -1995,6 +1995,14 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 			}
 		};
 
+        // Return all user's Forms
+        $scope.findAll = function() {
+            GetForms.query(function(_forms){
+                $scope.myforms = _forms;
+            });
+        };
+
+
 		/*
 		 ** DeleteModal Functions
 		 */
@@ -2028,13 +2036,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 				$scope.deleteModal.dismiss('cancel');
 			}
 		};
-
-        // Return all user's Forms
-        $scope.findAll = function() {
-            GetForms.query(function(_forms){
-                $scope.myforms = _forms;
-            });
-        };
 
         //Modal functions
         $scope.openCreateModal = function(){
@@ -2513,27 +2514,10 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     rows: []
                 };
 
-		var submissions = $scope.myform.submissions || [];
-
-                //Iterate through form's submissions
-                for(var i = 0; i < submissions.length; i++){
-                    for(var x = 0; x < submissions[i].form_fields.length; x++){
-                        if(submissions[i].form_fields[x].fieldType === 'dropdown'){
-                            submissions[i].form_fields[x].fieldValue = submissions[i].form_fields[x].fieldValue.option_value;
-                        }
-                        //var oldValue = submissions[i].form_fields[x].fieldValue || '';
-                        //submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
-                        //submissions[i].form_fields[x].fieldValue = oldValue;
-                    }
-                    submissions[i].selected = false;
-                }
-
-                $scope.table.rows = submissions;		
-
                 var initController = function(){
                     $http({
                       method: 'GET',
-                      url: '/someUrl'
+                      url: '/forms'+$scope.myform._id+'/submissions'
                     }).then(function successCallback(response) {
                         var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
@@ -2555,6 +2539,8 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         $scope.table.rows = submissions;
                     });
                 };
+
+                initController();
 
 
                 /*

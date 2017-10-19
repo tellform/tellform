@@ -1,12 +1,13 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'GetForms', 'CurrentForm', '$http', '$uibModal',
-	function($rootScope, $scope, $stateParams, $state, GetForms, CurrentForm, $http, $uibModal) {
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'GetForms', 'CurrentForm', '$http', '$uibModal', 'myForms',
+	function($rootScope, $scope, $stateParams, $state, GetForms, CurrentForm, $http, $uibModal, myForms) {
 
         $scope = $rootScope;
         $scope.forms = {};
         $scope.showCreateModal = false;
+        $scope.myforms = myForms
 
 		$rootScope.languageRegExp = {
 			regExp: /[@!#$%^&*()\-+={}\[\]|\\/'";:`.,~№?<>]+/i,
@@ -48,13 +49,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 				$scope.deleteModal.dismiss('cancel');
 			}
 		};
-
-        // Return all user's Forms
-        $scope.findAll = function() {
-            GetForms.query(function(_forms){
-                $scope.myforms = _forms;
-            });
-        };
 
         //Modal functions
         $scope.openCreateModal = function(){

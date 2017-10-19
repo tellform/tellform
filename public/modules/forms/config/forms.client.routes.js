@@ -8,7 +8,21 @@ angular.module('forms').config(['$stateProvider',
 		$stateProvider.
 		state('listForms', {
 			url: '/forms',
-			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html'
+			templateUrl: 'modules/forms/admin/views/list-forms.client.view.html',
+			resolve: {
+				Forms: 'GetForms',
+				myForms: function (GetForms, $q) {
+		           	var deferred = $q.defer();
+
+		           	GetForms.query(function(forms){
+		            	deferred.resolve(forms);
+		            });
+
+					return deferred.promise;
+		        }
+			},
+			controller: 'ListFormsController',
+			controllerAs: 'ctrl'
   		}).state('submitForm', {
 			url: '/forms/:formId',
 			templateUrl: '/static/form_modules/forms/base/views/submit-form.client.view.html',
