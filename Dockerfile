@@ -7,8 +7,6 @@
 FROM  phusion/baseimage:0.9.19
 MAINTAINER David Baldwynn <team@tellform.com>
 
-#FROM node:6.11.4-alpine
-
 # Install Utilities
 RUN apt-get update -q  \
  && apt-get install -yqq \
@@ -55,9 +53,7 @@ COPY ./scripts/create_admin.js /opt/tellform/scripts/create_admin.js
 # when the local package.json file changes.
 # Add npm package.json
 COPY ./package.json /opt/tellform/package.json
-RUN npm install --quiet
-
-COPY ./start.sh /start.sh
+RUN npm install --only=production --quiet
 
 # Run TellForm server
-CMD ["/start.sh"]
+CMD ["node", "server.js"]

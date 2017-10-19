@@ -280,16 +280,16 @@ module.exports = function(db) {
 		// Log it
 		client.captureError(err);
 
-		/*if(process.env.NODE_ENV === 'production'){
+		if(process.env.NODE_ENV === 'production'){
 			res.status(500).render('500', {
-                	        error: 'Internal Server Error'
-                	});
-		} else {*/ 
+	   		    error: 'Internal Server Error'
+        	});
+		} else { 
 			// Error page
 			res.status(500).render('500', {
 				error: err.stack
 			});
-		//}
+		}
 	});
 
 	// Assume 404 since no middleware responded

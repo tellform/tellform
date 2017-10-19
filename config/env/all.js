@@ -22,8 +22,27 @@ module.exports = {
 
     signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
 	enableClusterMode: (process.env.ENABLE_CLUSTER_MODE === 'TRUE'),
-	baseUrl: '',
+	baseUrl: process.env.BASE_URL || 'localhost',
 	tempUserCollection: 'temporary_users',
+
+	mailer: {
+		from: process.env.MAILER_FROM || 'testing@'+process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
+		options: process.env.MAILER_SMTP_HOST ? { //Uses custom SMTP if MAILER_SMTP_HOST is set
+			host: process.env.MAILER_SMTP_HOST || '',
+			port: process.env.MAILER_SMTP_PORT || 465,
+			secure: process.env.MAILER_SMTP_SECURE || true,
+			auth: {
+				user: process.env.MAILER_EMAIL_ID || '',
+				pass: process.env.MAILER_PASSWORD || ''
+			}
+		} : {
+			service: process.env.MAILER_SERVICE_PROVIDER || '',
+			auth: {
+				user: process.env.MAILER_EMAIL_ID || '',
+				pass: process.env.MAILER_PASSWORD || ''
+			}
+		}
+	},
 
 	subdomainsDisabled: (process.env.SUBDOMAINS_DISABLED === 'TRUE'),
 

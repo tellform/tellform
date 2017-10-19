@@ -54,7 +54,6 @@ exports.createSubmission = function(req, res) {
 	}
 	var submission = new FormSubmission({
 		form: req.body._id,
-		title: req.body.title,
 		form_fields: req.body.form_fields,
 		timeElapsed: timeElapsed,
 		percentageComplete: req.body.percentageComplete,
@@ -96,6 +95,7 @@ exports.listSubmissions = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
+	debugger;
 
 	if(!req.body.form){
 		return res.status(401).send({
@@ -107,13 +107,14 @@ exports.create = function(req, res) {
 	form.admin = req.user._id;
 
 	form.save(function(err) {
+		debugger;
 		if (err) {
 			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
 
-		res.json(form);
+		return res.json(form);
 	});
 };
 

@@ -12,10 +12,6 @@ var mongoose = require('mongoose'),
  * Form Submission Schema
  */
 var FormSubmissionSchema = new Schema({
-	title: {
-		type: String
-	},
-
 	form_fields: [FieldSchema],
 
 	form: {
@@ -58,6 +54,19 @@ FormSubmissionSchema.pre('save', function (next) {
         if(this.form_fields[i].fieldType === 'dropdown'){
             this.form_fields[i].fieldValue = this.form_fields[i].fieldValue.option_value;
         }
+
+    	delete form_fields[i].validFieldTypes;
+		delete form_fields[i].disabled;
+		delete form_fields[i].required;
+		delete form_fields[i].isSubmission;
+		delete form_fields[i].title;
+		delete form_fields[i].fieldOptions;
+		delete form_fields[i].ratingOptions;
+		delete form_fields[i].logicJump;
+		delete form_fields[i].description;
+		delete form_fields[i].created;
+		delete form_fields[i].lastModified;
+		delete form_fields[i].deletePreserved;
     }
     next();
 });
@@ -68,6 +77,17 @@ FormSubmissionSchema.path('form_fields', {
 			form_fields[i].isSubmission = true;
 			form_fields[i]._id = new mongoose.mongo.ObjectID();
 
+			delete form_fields[i].validFieldTypes;
+			delete form_fields[i].disabled;
+			delete form_fields[i].required;
+			delete form_fields[i].isSubmission;
+			delete form_fields[i].title;
+			delete form_fields[i].fieldOptions;
+			delete form_fields[i].ratingOptions;
+			delete form_fields[i].logicJump;
+			delete form_fields[i].description;
+			delete form_fields[i].created;
+			delete form_fields[i].lastModified;
 			delete form_fields[i].deletePreserved;
 
 		}

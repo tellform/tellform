@@ -32,7 +32,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				/*
 				 ** EditModal Functions
 				 */
-				$scope.openEditModal = function(curr_field){
+				$scope.openEditModal = function(curr_field, isEdit, field_index){
 					$scope.editFieldModal = $uibModal.open({
 						animation: true,
 						templateUrl: 'editFieldModal.html',
@@ -40,6 +40,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						controller:  function($uibModalInstance, $scope) {
 							$scope.field = curr_field;
 							$scope.showLogicJump = false;
+
+							$scope.isEdit = isEdit;
 
 							// decides whether field options block will be shown (true for dropdown and radio fields)
 							$scope.showAddOptions = function (field){
@@ -67,13 +69,13 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							];
 
 							// add new option to the field
-							$scope.addOption = function(currField){
-								if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
-									if(!currField.fieldOptions){
-										currField.fieldOptions = [];
+							$scope.addOption = function(){
+								if($scope.field.fieldType === 'checkbox' || $scope.field.fieldType === 'dropdown' || $scope.field.fieldType === 'radio'){
+									if(!$scope.field.fieldOptions){
+										$scope.field.fieldOptions = [];
 									}
 
-									var lastOptionID = currField.fieldOptions.length+1;
+									var lastOptionID = $scope.field.fieldOptions.length+1;
 
 									// new option's id
 
@@ -84,17 +86,17 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 									};
 
 									// put new option into fieldOptions array
-									currField.fieldOptions.push(newOption);
+									$scope.field.fieldOptions.push(newOption);
 								}
 							};
 
 							// delete particular option
-							$scope.deleteOption = function (currField, option){
-								if(currField.fieldType === 'checkbox' || currField.fieldType === 'dropdown' || currField.fieldType === 'radio'){
-									for(var i = 0; i < currField.fieldOptions.length; i++){
-										if(currField.fieldOptions[i].option_id === option.option_id){
+							$scope.deleteOption = function (option){
+								if($scope.field.fieldType === 'checkbox' || $scope.field.fieldType === 'dropdown' || $scope.field.fieldType === 'radio'){
+									for(var i = 0; i < $scope.field.fieldOptions.length; i++){
+										if($scope.field.fieldOptions[i].option_id === option.option_id){
 
-											currField.fieldOptions.splice(i, 1);
+											$scope.field.fieldOptions.splice(i, 1);
 											break;
 										}
 									}
@@ -119,8 +121,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							};
 
 							// decides whether field options block will be shown (true for dropdown and radio fields)
-							$scope.showRatingOptions = function (field){
-								if(field.fieldType === 'rating'){
+							$scope.showRatingOptions = function (){
+								if($scope.field.fieldType === 'rating'){
 									return true;
 								} else {
 									return false;
@@ -128,11 +130,16 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 							};
 
 							$scope.saveField = function(){
+								if($scope.isEdit){
+									$scope.myform.form_fields[field_index] = $scope.field;
+								} else {
+									$scope.myform.form_fields.push(curr_field);
+								}
 
-								$scope.myform.form_fields.push(curr_field);
 								$scope.$parent.update(false, $scope.$parent.myform, true, true, function(){
 									$uibModalInstance.close();
 								});
+								
 							};
 							$scope.cancel = function(){
 								$uibModalInstance.close();
@@ -268,7 +275,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 **  Field CRUD Methods
                 */
                 // Add a new field
-                $scope.addNewField = function(modifyForm, fieldType){
+                $scope.addNewField = function(fieldType){
                     // increment lastAddedID counter
                     $scope.addField.lastAddedID++;
                     var fieldTitle = fieldType;
@@ -307,12 +314,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						});
 					}
 
-                    if(modifyForm){
-						//Add newField to form_fields array
-                        $scope.myform.form_fields.push(newField);
-                    }
-
-					$scope.openEditModal(newField);
+					$scope.openEditModal(newField, false,  $scope.myform.form_fields.length);
                 };
 
 				// decides whether field options block will be shown (true for dropdown and radio fields)
