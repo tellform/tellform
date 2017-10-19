@@ -8,8 +8,7 @@ module.exports = {
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
 	db: {
-		uri: 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR || process.env.MONGODB_URI || 'localhost')+'/mean',
-		uri: process.env.MONGODB_URI || 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR  || '127.0.0.1') + '/mean',
+		uri: process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR  || '127.0.0.1') + '/mean',
 		options: {
 			user: '',
 			pass: ''
