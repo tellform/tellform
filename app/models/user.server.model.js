@@ -7,8 +7,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	crypto = require('crypto'),
 	config = require('../../config/config'),
-	fs = require('fs-extra'),
-	mUtilities = require('mongoose-utilities'),
+	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	path = require('path'),
 	querystring = require('querystring'),
 	nodemailer = require('nodemailer');
@@ -143,7 +142,7 @@ UserSchema.virtual('displayName').get(function () {
   	return this.firstName + ' ' + this.lastName;
 });
 
-UserSchema.plugin(mUtilities.timestamp, {
+UserSchema.plugin(timeStampPlugin, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
 	useVirtual: false

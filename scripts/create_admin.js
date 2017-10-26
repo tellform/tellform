@@ -5,17 +5,14 @@ var config = require('../config/config'),
 exports.run = function(app, db, cb) {
 
 	var User = mongoose.model('User');
-
-	var email = config.ADMIN_EMAIL || 'admin@admin.com';
-	var username = config.ADMIN_USERNAME || 'root';
-	var password = config.ADMIN_PASSWORD || 'root';
-
+	var email = 'admin@admin.com' || config.admin.email;
+	
 	var newUser = new User({
 		firstName: 'Admin',
 		lastName: 'Account',
 		email: email,
-		username: username,
-		password: password,
+		username: 'root' || config.admin.username,
+		password: 'root' || config.admin.password,
 		provider: 'local',
 		roles: ['admin', 'user']
 	});

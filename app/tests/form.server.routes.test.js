@@ -1,5 +1,4 @@
 'use strict';
-process.env.NODE_ENV = 'test';
 
 var should = require('should'),
 	lodash = require('lodash'),
@@ -19,8 +18,8 @@ var user, myForm, userSession;
 
 // Create user credentials
 var credentials = {
-	username: 'test1234',
-	email: 'test1234@test.com',
+	username: 'aeokjqjqkqaeoaoe',
+	email: 'aeoaekjqjqqjkoeoa@test.com',
 	password: 'password'
 };
 
@@ -30,17 +29,16 @@ var credentials = {
 describe('Form Routes Unit tests', function() {
 
 	beforeEach(function(done) {
-
 		// Create a new user
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
 			email: credentials.email,
 			username: credentials.username,
 			password: credentials.password,
 			provider: 'local'
 		});
+
 
 		// Save a user to the test db and create new Form
 		user.save(function(err) {
@@ -65,10 +63,12 @@ describe('Form Routes Unit tests', function() {
 	});
 
 	it(' > should not be able to create a Form if not logged in', function(done) {
+
 		userSession.post('/forms')
 			.send({form: myForm})
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
+
 				// Call the assertion callback
 				done(FormSaveErr);
 			});
@@ -153,7 +153,7 @@ describe('Form Routes Unit tests', function() {
 			// Save a new Form
 			authenticatedSession.post('/forms')
 				.send({form: myForm})
-				.expect(405)
+				.expect(500)
 				.end(function(FormSaveErr, FormSaveRes) {
 					// Handle Form save error
 					if (FormSaveErr) {

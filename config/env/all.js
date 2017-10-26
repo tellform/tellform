@@ -8,24 +8,51 @@ module.exports = {
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
 	db: {
-		uri: 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR || process.env.DB_HOST || 'localhost')+'/mean',
+		uri: process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR  || '127.0.0.1') + '/mean',
 		options: {
 			user: '',
 			pass: ''
 		}
 	},
+	
+	
+	admin:{
+		email: process.env.ADMIN_EMAIL || 'admin@admin.com',
+		username: process.env.ADMIN_USERNAME || 'root',
+		password: process.env.ADMIN_PASSWORD || 'root',
+	},
+	
+	redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
 
 	port: process.env.PORT || 3000,
 	socketPort: process.env.SOCKET_PORT || 20523,
+	socketPortExternallyVisible: (process.env.SOCKET_PORT_EXTERN_VISIBLE === 'TRUE'),
 
 	templateEngine: 'swig',
 
-	reCAPTCHA_Key: process.env.reCAPTCHA_KEY || '',
-
-    signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
+ 	signupDisabled: (process.env.SIGNUP_DISABLED === 'TRUE'),
 	enableClusterMode: (process.env.ENABLE_CLUSTER_MODE === 'TRUE'),
-	baseUrl: '',
+	baseUrl: process.env.BASE_URL || 'localhost:3000',
 	tempUserCollection: 'temporary_users',
+
+	mailer: {
+		from: process.env.MAILER_FROM || 'testing@'+process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
+		options: process.env.MAILER_SMTP_HOST ? { //Uses custom SMTP if MAILER_SMTP_HOST is set
+			host: process.env.MAILER_SMTP_HOST || '',
+			port: process.env.MAILER_SMTP_PORT || 465,
+			secure: process.env.MAILER_SMTP_SECURE || true,
+			auth: {
+				user: process.env.MAILER_EMAIL_ID || '',
+				pass: process.env.MAILER_PASSWORD || ''
+			}
+		} : {
+			service: process.env.MAILER_SERVICE_PROVIDER || '',
+			auth: {
+				user: process.env.MAILER_EMAIL_ID || '',
+				pass: process.env.MAILER_PASSWORD || ''
+			}
+		}
+	},
 
 	subdomainsDisabled: (process.env.SUBDOMAINS_DISABLED === 'TRUE'),
 
@@ -52,17 +79,6 @@ module.exports = {
 		// To set the cookie in a specific domain uncomment the following
 		// setting:
 	},
-
-	/*
-	 * Upload Configuration
-	 */
-	//Global upload path
-	uploadPath : 'uploads/',
-	//PDF storage path
-	pdfUploadPath: 'uploads/pdfs/',
-	//Temp files storage path
-	tmpUploadPath: 'uploads/tmp/',
-
 	// The session cookie name
 	sessionName: 'connect.sid',
 	log: {

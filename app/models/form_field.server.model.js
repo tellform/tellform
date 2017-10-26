@@ -5,13 +5,11 @@
  */
 var mongoose = require('mongoose'),
 	util = require('util'),
-	mUtilities = require('mongoose-utilities'),
+	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	_ = require('lodash'),
 	Schema = mongoose.Schema,
-	LogicJumpSchema = require('./logic_jump.server.model');
-
-const UIDGenerator = require('uid-generator');
-const uidgen3 = new UIDGenerator(256, UIDGenerator.BASE62);
+	LogicJumpSchema = require('./logic_jump.server.model'),
+	tokgen = require('../libs/tokenGenerator');
 
 var FieldOptionSchema = new Schema({
 	option_id: {
@@ -76,8 +74,7 @@ function BaseFieldSchema(){
 		},
 		title: {
 			type: String,
-			trim: true,
-			required: 'Field Title cannot be blank'
+			trim: true
 		},
 		description: {
 			type: String,
@@ -106,7 +103,6 @@ function BaseFieldSchema(){
 		},
 		fieldType: {
 			type: String,
-			required: true,
 			enum: [
 				'textfield',
 				'date',
@@ -134,7 +130,7 @@ function BaseFieldSchema(){
 		fieldValue: Schema.Types.Mixed
 	});
 
-	this.plugin(mUtilities.timestamp, {
+	this.plugin(timeStampPlugin, {
 		createdPath: 'created',
 		modifiedPath: 'lastModified',
 		useVirtual: false
@@ -196,11 +192,8 @@ FormFieldSchema.pre('validate', function(next) {
 
 //LogicJump Save
 FormFieldSchema.pre('save', function(next) {
-	if(this.logicJump && this.logicJump.fieldA) {
-		if(this.logicJump.jumpTo === '') delete this.logicJump.jumpTo;
-	}
 	if(!this.globalId){
-		this.globalId = uidgen3.generateSync();
+		this.globalId = tokgen();
 	}
 	next();
 });

@@ -28,18 +28,6 @@
 				deviceType = 'desktop';
 			}
 
-			$.ajaxSetup( { 'async': false } );
-			var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
-			$.ajaxSetup( { 'async': true } );
-
-			if(!geoData){
-				geoData = {
-					ip: '',
-					city: '',
-					country_name: ''
-				};
-			}
-
 			// Create a new message object
 			var visitorData = {
 				referrer: document.referrer,
@@ -49,11 +37,8 @@
 				timeElapsed: timeElapsed,
 				language: lang,
 				deviceType: deviceType,
-				ipAddr: geoData.ip,
-				geoLocation: {
-					city: geoData.city,
-					country: geoData.country_name
-				}
+				ipAddr: null,
+				geoLocation: null
 			};
 
 			Socket.emit('form-visitor-data', visitorData);

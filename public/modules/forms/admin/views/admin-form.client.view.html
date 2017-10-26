@@ -59,16 +59,16 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<uib-tabset active="activePill" vertical="true" type="pills">
-				<uib-tab index="0" heading="{{ 'CREATE_TAB' | translate }}">
+				<uib-tab index="0" heading="{{ 'CREATE_TAB' | translate }}" select="deactivateDesignTab()">
 					<edit-form-directive myform="myform"></edit-form-directive>
 				</uib-tab>
-				<uib-tab ng-repeat="tab in tabData" index="{{$index+1}}" heading="{{tab.heading}}">
+				<uib-tab ng-repeat="tab in tabData" index="{{$index+1}}" heading="{{tab.heading}}" select="deactivateDesignTab()">
 					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'"></div>
 				</uib-tab>
-				<uib-tab index="2" heading="{{ 'ANALYZE_TAB' | translate }}">
+				<uib-tab index="2" heading="{{ 'ANALYZE_TAB' | translate }}" select="deactivateDesignTab()">
 					<edit-submissions-form-directive myform="myform" user="myform.admin"></edit-submissions-form-directive>
 				</uib-tab>
-				<uib-tab ng-if="tabData" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length}}">
+				<uib-tab ng-if="tabData" heading="{{ 'SHARE_TAB' | translate }}" index="{{tabData.length}}" select="deactivateDesignTab()">
 					<div class="config-form">
 						<div class="row">
 							<div class="col-sm-12">
@@ -114,7 +114,8 @@
 						</div>
 					</div>
 				</uib-tab>
-				<uib-tab ng-if="tabData && myform.form_fields.length" heading="{{ 'DESIGN_TAB' | translate }}" index="{{tabData.length}}+1">
+				<uib-tab class="design-tab" ng-if="tabData && myform.form_fields.length" heading="{{ 'DESIGN_TAB' | translate }}" index="{{tabData.length}}+1"
+					select="activateDesignTab()">
 					<div class="config-form design container">
 						<div class="row">
 							<div class="col-sm-4 col-xs-12">
@@ -175,7 +176,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-8 hidden-xs">
+							<div class="col-sm-8 hidden-xs" ng-if="designTabActive">
 								<div class="public-form" ng-style="{ 'background-color': myform.design.colors.backgroundColor }">
 									<iframe id="iframe" ng-if="!!formURL" ng-src="{{formURL | trustSrc}}" style="border: none; box-shadow: 0px 0px 10px 0px grey; overflow: hidden; height: 400px; width: 90%; position: absolute;"></iframe>
 								</div>
@@ -184,7 +185,7 @@
 
 						<div class="row">
 							<div class="col-sm-offset-4 col-sm-2">
-								<button class="btn btn-signup btn-rounded" type="button" ng-click="update(false, myform, false, false, null)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
+								<button class="btn btn-signup btn-rounded" type="button" ng-click="updateDesign(false, myform, false, false)"><i class="icon-arrow-left icon-white"></i>{{ 'SAVE_CHANGES' | translate }}</button>
 							</div>
 							<div class="col-sm-1">
 								<button class="btn btn-secondary btn-rounded" type="button" ng-click="resetForm()"><i class="icon-eye-open icon-white"></i>{{ 'CANCEL' | translate }}</button>

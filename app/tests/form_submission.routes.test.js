@@ -21,7 +21,8 @@ var credentials, user;
  * Form routes tests
  */
 describe('Form Submission Routes Unit tests', function() {
-	var FormObj, _Submission, submissionSession;
+	var FormObj, _Submission, submissionSession, _SubmissionBody
+
 
 	beforeEach(function(done) {
 
@@ -60,15 +61,43 @@ describe('Form Submission Routes Unit tests', function() {
 				if (formSaveErr) done(formSaveErr);
 
 				_Submission = {
-					form_fields: [
-						{'fieldType':'textfield', 'title':'First Name', 'fieldValue': 'David'},
-						{'fieldType':'checkbox', 'title':'nascar',      'fieldValue': true},
-						{'fieldType':'checkbox', 'title':'hockey',      'fieldValue': false}
-					],
 					form: form._id,
-					admin: user._id,
+					form_fields: [
+						{'fieldType':'textfield', 	'title':'First Name', 	'fieldValue': 'David', 	_id: '', isSubmission: false, deletePreserved: false},
+						{'fieldType':'checkbox', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
+						{'fieldType':'checkbox', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
+					],
 					percentageComplete: 100,
-					timeElapsed: 11.55
+					timeElapsed: 11.55,
+					ipAddr: '123.233.232.232',
+					geoLocation: {
+						Country: 'Canada',
+						City: 'Vancouver'
+					},
+					device:{
+						type: 'Mobile',
+						name: 'iPhone'
+					}
+				};
+
+				_SubmissionBody ={
+					_id: form._id,
+					form_fields: [
+						{'fieldType':'textfield', 	'title':'First Name', 	'fieldValue': 'David', 	_id: '', isSubmission: false, deletePreserved: false},
+						{'fieldType':'checkbox', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
+						{'fieldType':'checkbox', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
+					],
+					percentageComplete: 100,
+					timeElapsed: 11.55,
+					ipAddr: '123.233.232.232',
+					geoLocation: {
+						Country: 'Canada',
+						City: 'Vancouver'
+					},
+					device:{
+						type: 'Mobile',
+						name: 'iPhone'
+					}
 				};
 
 				FormObj = form;
@@ -86,12 +115,11 @@ describe('Form Submission Routes Unit tests', function() {
 
 		//Create Submission
 		submissionSession.post('/forms/' + FormObj._id)
-			.send(_Submission)
+			.send(_SubmissionBody)
 			.expect(200)
 			.end(function(err, res) {
 
 				should.not.exist(err);
-
 				done();
 			});
 	});
@@ -99,7 +127,7 @@ describe('Form Submission Routes Unit tests', function() {
 	it(' > should be able to get Form Submissions if signed in', function(done) {
 		//Create Submission
 		submissionSession.post('/forms/' + FormObj._id)
-			.send(_Submission)
+			.send(_SubmissionBody)
 			.expect(200)
 			.end(function(err, res) {
 

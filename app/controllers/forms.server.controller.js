@@ -57,7 +57,6 @@ exports.createSubmission = function(req, res) {
 	}
 	var submission = new FormSubmission({
 		form: req.body._id,
-		title: req.body.title,
 		form_fields: req.body.form_fields,
 		timeElapsed: timeElapsed,
 		percentageComplete: req.body.percentageComplete,
@@ -65,7 +64,6 @@ exports.createSubmission = function(req, res) {
 		geoLocation: req.body.geoLocation,
 		device: req.body.device
 	});
-
 
 	submission.save(function(err, submission){
 		if (err) {
@@ -120,9 +118,10 @@ exports.listSubmissions = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
+	debugger;
 
 	if(!req.body.form){
-		return res.status(400).send({
+		return res.status(401).send({
 			message: 'Invalid Input'
 		});
 	}
@@ -131,13 +130,14 @@ exports.create = function(req, res) {
 	form.admin = req.user._id;
 
 	form.save(function(err) {
+		debugger;
 		if (err) {
-			return res.status(405).send({
+			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
 
-		res.json(form);
+		return res.json(form);
 	});
 };
 
@@ -186,7 +186,7 @@ var readForRender = exports.readForRender = function(req, res) {
 	delete newForm.__v;
 	delete newForm.created;
 
-	if(!newForm.startPage.showStart){
+	if(newForm.startPage && !newForm.startPage.showStart){
 		delete newForm.startPage;
 	}
 
@@ -197,20 +197,31 @@ var readForRender = exports.readForRender = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
+
     var form = req.form;
     var updatedForm = req.body.form;
+    if(form.form_fields === undefined){
+    	form.form_fields = [];
+    }
 
-    delete updatedForm.__v;
-    delete updatedForm.created; 
+    if(form.analytics === undefined){
+    	form.analytics = {
+    		visitors: [],
+    		gaCode: ''
+    	}
+    }
 
 	if (req.body.changes) {
 		var formChanges = req.body.changes;
 
 		formChanges.forEach(function (change) {
-			diff.applyChange(form, true, change);
+			diff.applyChange(form._doc, true, change);
 		});
 	} else {
-		//Unless we have 'admin' privileges, updating form admin is disabled
+
+	    delete updatedForm.__v;
+	    delete updatedForm.created; 
+		//Unless we have 'admin' privileges, updating the form's admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
 		}
@@ -222,7 +233,7 @@ exports.update = function(req, res) {
 
 		//Do this so we can create duplicate fields
 		var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
-		for(var i=0; i<req.body.form.form_fields.length; i++){
+		for(var i=0; i < req.body.form.form_fields.length; i++){
 			var field = req.body.form.form_fields[i];
 			if(!checkForValidId.exec(field._id+'')){
 				delete field._id;
@@ -233,7 +244,7 @@ exports.update = function(req, res) {
 
 	form.save(function(err, savedForm) {
 		if (err) {
-            res.status(405).send({
+            res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
@@ -333,8 +344,7 @@ exports.formByIDFast = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.lean()
-		.cache()
-		.select('emailNotifications title language form_fields startPage endPage hideFooter isLive design analytics.gaCode emailNotifications')
+		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);
