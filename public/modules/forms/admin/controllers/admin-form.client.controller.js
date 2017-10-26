@@ -121,94 +121,86 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
         // Update existing Form
         $scope.update = $rootScope.update = function(updateImmediately, data, shouldDiff, refreshAfterUpdate, cb){
-            var continueUpdate = true;
-            if(!updateImmediately){
-                continueUpdate = !$rootScope.saveInProgress;
-            }
-
-            //Update form **if we are not in the middle of an update** or if **shouldUpdateNow flag is set**
-            if(continueUpdate) {
-                var err = null;
-
-                if (!updateImmediately) {
-                    $rootScope.saveInProgress = true;
+            if (shouldDiff) {
+                //Do this so we can create duplicate fields
+                var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
+                for(var i=0; i < $scope.myform.form_fields.length; i++){
+                    var field = $scope.myform.form_fields[i];
+                    if(!checkForValidId.exec(field._id+'')){
+                        delete $scope.myform.form_fields[i]._id;
+                        delete $scope.myform.form_fields[i].id;
+                    }
                 }
 
-                if (shouldDiff) {
-                    //Do this so we can create duplicate fields
-                    var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
-                    for(var i=0; i < $scope.myform.form_fields.length; i++){
-                        var field = $scope.myform.form_fields[i];
-                        if(!checkForValidId.exec(field._id+'')){
-                            delete $scope.myform.form_fields[i]._id;
-                            delete $scope.myform.form_fields[i].id;
+                var data = DeepDiff.diff($scope.oldForm, $scope.myform);
+
+                $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
+                    .then(function (response) {
+                        if (refreshAfterUpdate) {
+                            $rootScope.myform = $scope.myform = response.data;
+                            $scope.oldForm = _.cloneDeep($scope.myform);
                         }
-                    }
+                    }).catch(function (response) {
+                        var err = response.data;
+                        console.error(err);
+                        if ((typeof cb) === 'function') {
+                            return cb(err);
+                        }
+                    }).finally(function () {
+                        if (!updateImmediately) {
+                            $rootScope.saveInProgress = false;
+                        }
 
-                    var data = DeepDiff.diff($scope.oldForm, $scope.myform);
-
-                    $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {changes: data})
-                        .then(function (response) {
-                            if (refreshAfterUpdate) {
-                                $rootScope.myform = $scope.myform = response.data;
-                                $scope.oldForm = _.cloneDeep($scope.myform);
-                            }
-                        }).catch(function (response) {
-                            err = response.data;
-                            console.error(err);
-                        }).finally(function () {
-                            if (!updateImmediately) {
-                                $rootScope.saveInProgress = false;
-                            }
-
-                            if ((typeof cb) === 'function') {
-                                return cb(err);
-                            }
-                        });
-                } else {
-                    var dataToSend = data;
-                    if(dataToSend.analytics && dataToSend.analytics.visitors){
-                        delete dataToSend.analytics.visitors;
-                    }
-                    if(dataToSend.submissions){
-                        delete dataToSend.submissions;
-                    }
-
-                    if(dataToSend.visible_form_fields){
-                        delete dataToSend.visible_form_fields;
-                    }
-
-                     if(dataToSend.analytics){
-                        delete dataToSend.analytics.visitors;
-                        delete dataToSend.analytics.fields;
-                        delete dataToSend.analytics.submissions;
-                        delete dataToSend.analytics.views;
-                        delete dataToSend.analytics.conversionRate;
-                    }
-
-                    delete dataToSend.created;
-                    delete dataToSend.lastModified;
-                    delete dataToSend.__v;
-
-                    $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
-                        .then(function (response) {
-                            if (refreshAfterUpdate) {
-                                $rootScope.myform = $scope.myform = response.data;
-                            }
-
-                        }).catch(function (response) {
-                            err = response.data;
-                            console.error(err);
-                        }).finally(function () {
-                            if (!updateImmediately) {
-                                $rootScope.saveInProgress = false;
-                            }
-
-                            if ((typeof cb) === 'function') {
-                                return cb(err);
-                            }
-                        });
+                        if ((typeof cb) === 'function') {
+                            return cb();
+                        }
+                    });
+            } else {
+                var dataToSend = data;
+                if(dataToSend.analytics && dataToSend.analytics.visitors){
+                    delete dataToSend.analytics.visitors;
                 }
+                if(dataToSend.submissions){
+                    delete dataToSend.submissions;
+                }
+
+                if(dataToSend.visible_form_fields){
+                    delete dataToSend.visible_form_fields;
+                }
+
+                 if(dataToSend.analytics){
+                    delete dataToSend.analytics.visitors;
+                    delete dataToSend.analytics.fields;
+                    delete dataToSend.analytics.submissions;
+                    delete dataToSend.analytics.views;
+                    delete dataToSend.analytics.conversionRate;
+                }
+
+                delete dataToSend.created;
+                delete dataToSend.lastModified;
+                delete dataToSend.__v;
+
+                $scope.updatePromise = $http.put('/forms/' + $scope.myform._id, {form: dataToSend})
+                    .then(function (response) {
+                        if (refreshAfterUpdate) {
+                            $rootScope.myform = $scope.myform = response.data;
+                        }
+
+                    }).catch(function (response) {
+                        var err = response.data;
+                        console.error(err);
+                        if ((typeof cb) === 'function') {
+                            return cb(err);
+                        }
+                    }).finally(function () {
+                        if (!updateImmediately) {
+                            $rootScope.saveInProgress = false;
+                        }
+
+                        if ((typeof cb) === 'function') {
+                            return cb();
+                        }
+                    });
             }
         };
 
