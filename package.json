@@ -19,8 +19,8 @@
   "scripts": {
     "addcontrib": "all-contributors add",
     "generate": "all-contributors generate",
-    "start": "npm run version && grunt",
-    "test": "npm run version && grunt test",
+    "start": "grunt",
+    "test": "grunt test",
     "postinstall": "bower install --config.interactive=false; grunt build;",
     "init": "node scripts/setup.js"
   },
