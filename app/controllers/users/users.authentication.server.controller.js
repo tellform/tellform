@@ -36,14 +36,14 @@ var config_nev = function () {
 	    verifyMailOptions: {
 	        from: config.mailer.from,
 	        subject: '✔ Activate your new TellForm account!',
-	        html: welcomeEmail,
+	        html: verificationEmail,
 	        text: 'Please verify your account by clicking the following link, or by copying and pasting it into your browser: ${URL}'
 	    },
 
 	    confirmMailOptions: {
 	        from: config.mailer.from,
 	        subject: '✔ Welcome to {{app.title}}!',
-	        html: verificationEmail,
+	        html: welcomeEmail,
 	        text: 'Your account has been successfully verified.'
 	    },
 	    verifySendMailCallback: function(err, info) {
