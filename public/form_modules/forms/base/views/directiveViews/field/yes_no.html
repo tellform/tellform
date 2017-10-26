@@ -27,6 +27,7 @@
 		style="background: rgba(0,0,0,0.1); text-align:left;">
                 <input type="radio" value="true"
 					class="focusOn"
+					name="{{field.fieldType}}{{index}}"
                     style="opacity: 0; margin-left: 0px;"
                     ng-focus="setActiveField(field._id, null, false)"
 					ng-model="field.fieldValue"
@@ -46,6 +47,7 @@
 		        style="background: rgba(0,0,0,0.1); text-align:left;">
 
                 <input type="radio" value="false"
+                	name="{{field.fieldType}}{{index}}"
 			        style="opacity:0; margin-left:0px;"
 			        ng-focus="setActiveField(field._id, null, false)"
 			        ng-model="field.fieldValue"

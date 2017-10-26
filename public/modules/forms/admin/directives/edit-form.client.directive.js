@@ -131,12 +131,15 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
 							$scope.saveField = function(){
 								if($scope.isEdit){
-									$scope.myform.form_fields[field_index] = $scope.field;
+									$scope.$parent.myform.form_fields[field_index] = $scope.field;
 								} else {
-									$scope.myform.form_fields.push(curr_field);
+									$scope.$parent.myform.form_fields.push($scope.field);
 								}
 
-								$scope.$parent.update(false, $scope.$parent.myform, true, true, function(){
+								$scope.$parent.update(false, $scope.$parent.myform, true, true, function(err){
+									if(err){
+										console.error(err);
+									}
 									$uibModalInstance.close();
 								});
 								
@@ -344,6 +347,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 $scope.duplicateField = function(field_index){
                     var currField = angular.copy($scope.myform.form_fields[field_index]);
                     currField._id = 'cloned'+_.uniqueId();
+                    currField.globalId = 'cloned'+_.uniqueId();
                     currField.title += ' copy';
 
                     //Insert field at selected index

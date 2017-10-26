@@ -15,7 +15,8 @@
     </div>
     <div class="col-xs-12 field-input">
         <div class="control-group input-append">
-            <input class="focusOn"
+            <input class="focusOn inputElem"
+            	   name="{{field.fieldType}}{{index}}"
             	   ng-focus="setActiveField(field._id, null, false)"
 				   ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
 				   ng-class="{ 'no-border': !!field.fieldValue }"
