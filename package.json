@@ -2,7 +2,7 @@
   "name": "TellForm",
   "description": "Opensource alternative to TypeForm",
   "version": "2.1.0",
-  "homepage": "https://github.com/whitef0x0/tellform",
+  "homepage": "https://github.com/tellform/tellform",
   "authors": [
     "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
   ],
@@ -10,7 +10,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/whitef0x0/tellform.git"
+    "url": "https://github.com/tellform/tellform.git"
   },
   "engines": {
     "node": "6.x.x",
