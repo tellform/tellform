@@ -23,7 +23,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 
 		SIGNUP_ERROR_TEXT: 'Konnte die Registrierung aufgrund von Fehlern nicht abschließen',
 		ENTER_ACCOUNT_EMAIL: 'Geben Sie Ihre Konto-E-Mail ein.',
-		RESEND_VERIFICATION_EMAIL: Bestätigungs-E-Mail erneut senden
+		RESEND_VERIFICATION_EMAIL: 'Bestätigungs-E-Mail erneut senden',
 		SAVE_CHANGES: 'Änderungen speichern',
 		CANCEL_BTN: 'Abbrechen',
 
@@ -47,7 +47,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		VERIFICATION_EMAIL_SENT_TO: 'Es wurde eine Bestätigungs-E-Mail gesendet.',
 		NOT_ACTIVATED_YET: 'Dein Account ist noch nicht aktiviert',
 		BEFORE_YOU_CONTINUE: 'Bevor Sie fortfahren, überprüfen Sie bitte Ihre E-Mail-Adresse auf Überprüfung. Wenn Sie nicht innerhalb von 24 Stunden erhalten Sie uns eine Zeile bei ',
-		CHECK_YOUR_EMAIL: 'Überprüfe deine E-Mail und klicke auf den Aktivierungslink, um deinen Account zu aktivieren. Wenn Sie irgendwelche Fragen haben, lassen Sie uns eine Zeile bei '
+		CHECK_YOUR_EMAIL: 'Überprüfe deine E-Mail und klicke auf den Aktivierungslink, um deinen Account zu aktivieren. Wenn Sie irgendwelche Fragen haben, lassen Sie uns eine Zeile bei ',
 		WEITER: 'Weiter',
 
 		PASSWORD_RESTORE_HEADER: 'Wiederherstellen Ihres Passworts',

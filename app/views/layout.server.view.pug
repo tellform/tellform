@@ -1,0 +1,106 @@
+doctype html
+html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
+  head
+    title=title
+    
+    // General META 
+    meta(charset='utf-8')
+    meta(http-equiv='Content-type', content='text/html;charset=UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='viewport', content='width=device-width,initial-scale=1,maximum-scale=1')
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style', content='black')
+
+    // Semantic META 
+    meta(name='keywords', content=keywords)
+    meta(name='description', content=description)
+
+    // Facebook META 
+    meta(property='og:site_name', content=title)
+    meta(property='og:title', content=title)
+    meta(property='og:description', content=description)
+    meta(property='og:url', content=url)
+    meta(property='og:image', content='/img/brand/logo.png')
+    meta(property='og:type', content='website')
+
+    // Twitter META 
+    meta(name='twitter:title', content=title)
+    meta(name='twitter:description', content=description)
+    meta(name='twitter:url', content=url)
+    meta(name='twitter:image', content='/img/brand/logo.png')
+
+    // Fav Icon 
+    link(href='/static/modules/core/img/brand/favicon.ico', rel='shortcut icon', type='image/x-icon')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900')
+
+    //Bower CSS dependencies  
+    each bowerCssFile in bowerCssFiles
+      link(rel='stylesheet', href=bowerCssFile)
+    link(rel='stylesheet', href='/static/lib/angular-input-stars/angular-input-stars.css')
+    link(rel='stylesheet', href='/static/lib/jquery-ui/themes/flick/jquery-ui.css')
+    link(rel='stylesheet', href='/static/modules/core/css/github-fork-ribbon.css')
+    // end Bower CSS dependencies
+
+    //Application CSS Files
+    each cssFile in cssFiles
+      link(rel='stylesheet', href=cssFile)
+    // end Application CSS Files
+
+  body(ng-cloak='')
+
+    block content
+
+    script(src='/static/lib/file-saver.js/FileSaver.js', type='text/javascript')
+
+    //Embedding The User Object
+    script(type='text/javascript') var user = null;
+
+    //Embedding The signupDisabled Boolean
+    script(type='text/javascript').
+      var signupDisabled = !{signupDisabled};
+      var socketPort = false;     
+      var socketUrl = false;
+      var subdomainsDisabled = !{subdomainsDisabled};
+
+    //Embedding socketPort
+    if socketPort
+      script(type='text/javascript').
+        socketPort = !{socketPort}
+
+    //Embedding socketUrl
+    if socketUrl
+      script(type='text/javascript').
+        socketUrl = !{socketUrl}
+
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+
+    //Socket.io Client Dependency
+    script(src='https://cdn.socket.io/socket.io-1.4.5.js')
+
+    //Bower JS dependencies
+    each bowerJSFile in bowerJSFiles
+      script(type='text/javascript', src=bowerJSFile)
+    // end Bower JS dependencies
+
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js')
+
+    //Application JavaScript Files
+    each jsFile in jsFiles
+      script(type='text/javascript', src=jsFile)
+    // end Application Javascript dependencies
+
+    if process.env.NODE_ENV === 'development'
+      script(type='text/javascript', src='http://#{request.hostname}:35729/livereload.js')
+       script(src='https://cdn.ravenjs.com/2.3.0/angular/raven.min.js')
+    script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
+
+    script window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;ga('create','{{google_analytics_id}}','auto');ga('send','pageview')
+    
+    script(src='https://www.google-analytics.com/analytics.js', async='', defer='')
+
+    script(type="text/javascript").
+      window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+      heap.load("2213510609");

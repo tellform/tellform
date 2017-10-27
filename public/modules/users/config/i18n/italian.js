@@ -51,7 +51,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CONTINUA: 'Continua',
 
 		PASSWORD_RESTORE_HEADER: 'Ripristina password',
-		ENTER_YOUR_EMAIL: 'Inserisci l\'email del tuo account'.
+		ENTER_YOUR_EMAIL: 'Inserisci l\'email del tuo account',
 		SUBMIT_BTN: 'Invia',
 
 		ASK_FOR_NEW_PASSWORD: 'Richiedi nuova password reimpostata',

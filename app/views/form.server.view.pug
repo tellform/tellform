@@ -1,0 +1,110 @@
+doctype html
+html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
+  head
+    title #{title} Form
+    // General META 
+    meta(charset='utf-8')
+    meta(http-equiv='Content-type', content='text/html;charset=UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='viewport', content='width=device-width,initial-scale=1,maximum-scale=1')
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style', content='black')
+    // Semantic META 
+    meta(name='keywords', content='#{keywords}')
+    meta(name='description', content='#{description}')
+    // Facebook META 
+    meta(property='og:site_name', content='#{title}')
+    meta(property='og:title', content='#{title}')
+    meta(property='og:description', content='#{description}')
+    meta(property='og:url', content='#{url}')
+    meta(property='og:image', content='/img/brand/logo.png')
+    meta(property='og:type', content='website')
+    // Twitter META 
+    meta(name='twitter:title', content='#{title}')
+    meta(name='twitter:description', content='#{description}')
+    meta(name='twitter:url', content='#{url}')
+    meta(name='twitter:image', content='/img/brand/logo.png')
+    style.
+      .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/static/dist/page-loader.gif') 50% 35% no-repeat rgb(249,249,249);
+        background-size: 50px 50px;
+      }
+    // Fav Icon 
+    link(href='/static/modules/core/img/brand/favicon.ico', rel='shortcut icon', type='image/x-icon')
+
+  body(ng-cloak='')
+    .loader
+    section.content
+      section(ui-view='')
+    //Embedding The User Object signupDisabled, socketPort and socketUrl Boolean 
+    script(type='text/javascript').
+      var signupDisabled = !{signupDisabled};
+      var socketPort = false;     
+      var socketUrl = false;
+      var subdomainsDisabled = !{subdomainsDisabled};
+
+    //Embedding socketPort
+    if socketPort
+      script(type='text/javascript').
+        socketPort = !{socketPort}
+
+    //Embedding socketUrl
+    if socketUrl
+      script(type='text/javascript').
+        socketUrl = !{socketUrl}
+    script(src='/static/lib/jquery/dist/jquery.min.js', type='text/javascript')
+    link(rel='stylesheet', href='/static/lib/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/static/lib/bootstrap/dist/css/bootstrap.min.css')
+
+    //Bower CSS dependencies
+    each bowerCssFile in bowerCssFiles
+      link(rel='stylesheet', href='#{bowerCssFile}')
+
+    link(rel='stylesheet', href='/static/lib/angular-input-stars/angular-input-stars.css')
+    link(rel='stylesheet', href='/static/lib/jquery-ui/themes/flick/jquery-ui.min.css')
+    // end Bower CSS dependencies
+
+    //Application CSS Files
+    each cssFile in cssFiles
+      link(rel='stylesheet', href=cssFile)
+    // end Application CSS Files
+
+    //Socket.io Client Dependency
+    script(src='/static/lib/socket.io-client/dist/socket.io.min.js')
+    script(src='/static/lib/jquery-ui/jquery-ui.js', type='text/javascript')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+
+    //Minified Bower Dependencies
+    script(src='/static/dist/vendor.min.js')
+    script(src='/static/lib/angular-ui-date/src/date.js', type='text/javascript')
+
+    //Application JavaScript Files
+    each jsFile in formJSFiles
+      script(type='text/javascript', src=jsFile)
+    // end Application Javascript dependencies
+
+    if process.env.NODE_ENV === 'development'
+      //Livereload script rendered 
+      script(async='', type='text/javascript', src='http://#{request.hostname}:35729/livereload.js')
+
+    script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
+    
+    if google_analytics_id
+      script(type='text/javascript'). 
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '{{google_analytics_id}}', 'auto');
+        ga('send', 'pageview');
+
+    script(type="text/javascript").
+      window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+      heap.load("2213510609");

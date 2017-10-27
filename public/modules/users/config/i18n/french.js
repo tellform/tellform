@@ -45,7 +45,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CONTINUE_TO_LOGIN: 'Allez à la page de connexion',
 
 		VERIFY_SUCCESS: 'Votre compte est activé !',
-		VERIFY_ERROR: 'Le lien de vérification est invalide ou à expiré'
+		VERIFY_ERROR: 'Le lien de vérification est invalide ou à expiré',
 		ERROR: 'Erreur'
 	});
 

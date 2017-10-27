@@ -20,7 +20,8 @@ var fs = require('fs'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
 	path = require('path'),
-	client = new raven.Client(config.DSN);
+	client = new raven.Client(config.DSN),
+	i18n = require('i18n');
 
 var mongoose = require('mongoose');
 
@@ -152,6 +153,23 @@ module.exports = function(db) {
 		}
 	});
 
+	//Setup i18n
+	i18n.configure({
+		locales: ['en', 'es', 'fr', 'de', 'it'],
+		cookie: 'i18n_cookie',
+		directory: __dirname + '/locales'
+	});
+	app.use(function(req, res, next) {
+	    // express helper for natively supported engines
+	    res.locals.__ = res.__ = function() {
+	    	console.log('res.locals.__');
+	    	console.log(arguments);
+	        return i18n.__.apply(req, arguments);
+	    };
+
+	    next();
+	});
+
     //Setup Prerender.io
     app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
 
@@ -176,11 +194,11 @@ module.exports = function(db) {
 	}));
 
 
-	// Set swig as the template engine
-	app.engine('server.view.html', consolidate[config.templateEngine]);
+	// Set template engine as defined in the config files
+	app.engine('server.view.pug', consolidate.pug);
 
 	// Set views path and view engine
-	app.set('view engine', 'server.view.html');
+	app.set('view engine', 'server.view.pug');
 	app.set('views', './app/views');
 
 	// Enable logger (morgan)
