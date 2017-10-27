@@ -2,12 +2,12 @@
 
 angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('italian', {
+  $translateProvider.translations('it', {
 	FORM_SUCCESS: 'Il formulario è stato inviato con successo!',
 	REVIEW: 'Incompleto',
 	BACK_TO_FORM: 'Ritorna al formulario',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
+	EDIT_FORM: 'Modifica questo TellForm',
+	CREATE_FORM: 'Crea questo TellForm',
 	ADVANCEMENT: '{{done}} su {{total}} completate',
 	CONTINUE_FORM: 'Vai al formulario',
 	REQUIRED: 'obbligatorio',
@@ -30,6 +30,16 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	UPLOAD_FILE: 'Invia un file',
 	Y: 'S',
 	N: 'N',
+	OPTION_PLACEHOLDER: 'Digitare o selezionare un\'opzione',
+	ADD_NEW_LINE_INSTR: 'Premere SHIFT + INVIO per aggiungere una nuova riga',
+  	ERROR: 'Errore',
+  	
+  	FORM_404_HEADER: '404 - Il modulo non esiste',
+  	FORM_404_BODY: 'La forma che stai cercando di accedere non esiste. Ci dispiace!',
+  
+  	FORM_UNAUTHORIZED_HEADER: 'Non autorizzato per accedere al modulo',
+   	FORM_UNAUTHORIZED_BODY1: 'Il modulo che si sta tentando di accedere è attualmente privato e non accessibile in pubblico.',
+   	FORM_UNAUTHORIZED_BODY2: 'Se sei il proprietario del modulo, puoi impostarlo su "Pubblico" nel pannello "Configurazione" nell\'amministratore di moduli.',
   });
 
 }]);

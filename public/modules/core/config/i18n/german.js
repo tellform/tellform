@@ -8,8 +8,8 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 		SIGNIN_TAB: 'Anmeldung',
 		SIGNOUT_TAB: 'Abmelden',
 		EDIT_PROFILE: 'Profil bearbeiten',
-		MY_FORMS: 'Meine Formulare',
 		MY_SETTINGS: 'Meine Einstellungen',
-		CHANGE_PASSWORD: 'Passwort ändern'
+		CHANGE_PASSWORD: 'Passwort ändern',
+		TOGGLE_NAVIGATION: 'Navigation umschalten'
 	});
 }]);

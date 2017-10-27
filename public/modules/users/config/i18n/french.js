@@ -46,6 +46,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 
 		VERIFY_SUCCESS: 'Votre compte est activé !',
 		VERIFY_ERROR: 'Le lien de vérification est invalide ou à expiré'
+		ERROR: 'Erreur'
 	});
 
 }]);

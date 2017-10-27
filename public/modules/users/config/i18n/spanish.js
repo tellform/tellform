@@ -64,6 +64,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CONTINUE_TO_LOGIN: 'Ir a la página de ingreso',
 
 		VERIFY_SUCCESS: 'Cuenta activada exitosamente',
-		VERIFY_ERROR: 'El link de verificación es inválido o inexistente'
+		VERIFY_ERROR: 'El link de verificación es inválido o inexistente',
+		ERROR: 'Error'
 	});
 }]);

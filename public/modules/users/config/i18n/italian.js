@@ -64,6 +64,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CONTINUE_TO_LOGIN: 'Continua alla pagina di login',
 
 		VERIFY_SUCCESS: 'Account attivato correttamente',
-		VERIFY_ERROR: 'Il collegamento di verifica non è valido o è scaduto'
+		VERIFY_ERROR: 'Il collegamento di verifica non è valido o è scaduto',
+		ERROR: 'Errore'
 	});
 }]);

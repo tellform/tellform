@@ -291,7 +291,14 @@ module.exports = function(grunt) {
 			target: {
 				src: ['./scripts/setup.js']
 			}
-		}
+		},
+		i18nlint: {
+		    options: {
+		    	templateDelimiters: ['{', '}'],
+		    	ignoreTags: ['head', 'script', 'style', '{%']
+		    },
+		    src: watchFiles.clientViews.concat(watchFiles.serverViews)
+	  	},
 	});
 
 	grunt.event.on('coverage', function(lcov, done){
@@ -335,7 +342,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'html2js:forms', 'concurrent:default']);
 
 	// Lint task(s).
-	grunt.registerTask('lint', ['jshint', 'csslint']);
+	grunt.registerTask('lint', ['jshint', 'csslint', 'i18nlint']);
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).

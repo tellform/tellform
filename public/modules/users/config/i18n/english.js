@@ -64,7 +64,8 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CONTINUE_TO_LOGIN: 'Continue to login page',
 
 		VERIFY_SUCCESS: 'Account successfully activated',
-		VERIFY_ERROR: 'Verification link is invalid or has expired'
+		VERIFY_ERROR: 'Verification link is invalid or has expired',
+		ERROR: 'Error'
 	});
 
 	$translateProvider.preferredLanguage('en')

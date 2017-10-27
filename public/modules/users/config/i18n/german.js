@@ -64,6 +64,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CONTINUE_TO_LOGIN: 'Weiter zur Anmeldeseite',
 
 		VERIFY_SUCCESS: 'Konto erfolgreich aktiviert',
-		VERIFY_ERROR: 'Überprüfungslink ist ungültig oder abgelaufen'
+		VERIFY_ERROR: 'Überprüfungslink ist ungültig oder abgelaufen',
+		ERROR: 'Fehler'
 	});
 }]);

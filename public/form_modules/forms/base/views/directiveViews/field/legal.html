@@ -29,7 +29,7 @@
                     ng-required="field.required"
 					ng-change="nextField()"/>
 				<div class="letter" style="float:left">
-					Y
+					{{ 'Y' | translate }}
 				</div>
                 <span>{{ 'LEGAL_ACCEPT' | translate }}</span>
             </label>
@@ -43,7 +43,7 @@
                     ng-required="field.required"
 					ng-change="nextField()"/>
 				<div class="letter" style="float:left">
-					N
+					{{ 'N' | translate }}
 				</div>
                 <span>{{ 'LEGAL_NO_ACCEPT' | translate }}</span>
             </label>
