@@ -2,7 +2,7 @@
 
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('french', {
+  $translateProvider.translations('fr', {
     FORM_SUCCESS: 'Votre formulaire a été enregistré!',
 	REVIEW: 'Incomplet',
     BACK_TO_FORM: 'Retourner au formulaire',
