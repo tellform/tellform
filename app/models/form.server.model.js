@@ -201,29 +201,59 @@ FormSchema.virtual('analytics.views').get(function () {
 	}
 });
 
-FormSchema.virtual('analytics.submissions').get(function () {
-	return this.submissions.length;
-});
+function getDeviceStatistics(visitors){
+    var newStatItem = function(){
+        return {
+            visits: 0,
+            responses: 0,
+            completion: 0,
+            average_time: 0,
+            total_time: 0
+        };
+    };
 
-FormSchema.virtual('analytics.conversionRate').get(function () {
-	if(this.analytics && this.analytics.visitors && this.analytics.visitors.length > 0){
-		return this.submissions.length/this.analytics.visitors.length*100;
-	} else {
-		return 0;
-	}
-});
+    var stats = {
+        desktop: newStatItem(),
+        tablet: newStatItem(),
+        phone: newStatItem(),
+        other: newStatItem()
+    };
 
-FormSchema.virtual('analytics.fields').get(function () {
+    if(visitors) {
+        for (var i = 0; i < visitors.length; i++) {
+            var visitor = visitors[i];
+            var deviceType = visitor.deviceType;
+
+            stats[deviceType].visits++;
+
+            if (visitor.isSubmitted) {
+                stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
+                stats[deviceType].responses++;
+            }
+
+            if(stats[deviceType].visits) {
+                stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
+            }
+
+            if(stats[deviceType].responses){
+                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
+            }
+        }
+    }
+    return stats;
+}
+
+function getFieldAnalytics(form){
 	var fieldDropoffs = [];
-	var visitors = this.analytics.visitors;
-	var that = this;
+	var visitors = form.analytics.visitors;
+	var that = form;
 
-	if(!this.form_fields || this.form_fields.length === 0) {
+	if(!form.form_fields || form.form_fields.length === 0) {
 		return null;
 	}
 
-	for(var i=0; i<this.form_fields.length; i++){
-		var field = this.form_fields[i];
+	for(var i=0; i<form.form_fields.length; i++){
+		var field = form.form_fields[i];
 
 		if(field && !field.deletePreserved){
 
@@ -237,7 +267,7 @@ FormSchema.virtual('analytics.fields').get(function () {
 
 			var continueViews, nextIndex;
 
-			if(i !== this.form_fields.length-1){
+			if(i !== form.form_fields.length-1){
 				continueViews =  _.reduce(visitors, function(sum, visitorObj){
 					nextIndex = that.form_fields.indexOf(_.find(that.form_fields, function(o) {
 						return o._id+'' === visitorObj.lastActiveField+'';
@@ -261,12 +291,12 @@ FormSchema.virtual('analytics.fields').get(function () {
 			var totalViews = dropoffViews+continueViews;
 			var continueRate = 0;
 			var dropoffRate = 0;
-			
+
 			if(totalViews > 0){
 				continueRate = (continueViews/totalViews*100).toFixed(0);
 				dropoffRate = (dropoffViews/totalViews*100).toFixed(0);
 			}
-			
+
 			fieldDropoffs[i] = {
 				dropoffViews: dropoffViews,
 				responses: continueViews,
@@ -280,6 +310,36 @@ FormSchema.virtual('analytics.fields').get(function () {
 	}
 
 	return fieldDropoffs;
+}
+
+function getConversionRate(form, numSubmissions){
+	if(form.analytics && form.analytics.visitors && form.analytics.visitors.length > 0){
+		return numSubmissions.length/form.analytics.visitors.length*100;
+	} else {
+		return 0;
+	}
+}
+
+FormSchema.virtual('formAnalytics').get(function () {
+	var that = this;
+	mongoose.model('FormSubmission').find({ form: that._id })
+		.select("id")
+		.lean()
+		.exec(function(err, results){
+			if(err){
+				return null;
+			}
+
+			var submissionCount = results.count;
+
+			return {
+				fields: getFieldAnalytics(that),
+				submissions: submissionCount,
+				conversionRate: getConversionRate(that),
+				deviceStatistics: getDeviceStatistics(that.analytics.visitors)
+			}
+		});
+
 });
 
 FormSchema.plugin(timeStampPlugin, {

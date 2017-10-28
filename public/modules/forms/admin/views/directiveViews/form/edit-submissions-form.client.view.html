@@ -1,5 +1,5 @@
 <div class="submissions-table container">
-	<div class="row text-center analytics">
+	<div class="row text-center formAnalytics">
 		<div class="col-xs-12 header-title">
 			<div class="col-xs-3">
 				{{ 'TOTAL_VIEWS' | translate }}
@@ -19,15 +19,15 @@
 		</div>
 		<div class="col-xs-12 header-numbers">
 			<div class="col-xs-3">
-				{{myform.analytics.visitors.length}}
+				{{myform.formAnalytics.visitors.length}}
 			</div>
 
 			<div class="col-xs-3">
-				{{myform.analytics.submissions}}
+				{{table.rows.length}}
 			</div>
 
 			<div class="col-xs-3">
-				{{myform.analytics.conversionRate | number:0}}%
+				{{myform.formAnalytics.conversionRate | number:0}}%
 			</div>
 
 			<div class="col-xs-3">
@@ -58,7 +58,7 @@
 					{{ 'UNIQUE_VISITS' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.desktop.visits}}
+					{{myform.formformAnalytics.deviceStatistics.desktop.visits}}
 				</div>
 			</div>
 
@@ -67,7 +67,7 @@
 					{{ 'UNIQUE_VISITS' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.tablet.visits}}
+					{{myform.formformAnalytics.deviceStatistics.tablet.visits}}
 				</div>
 			</div>
 
@@ -76,7 +76,7 @@
 					{{ 'UNIQUE_VISITS' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.tablet.visits}}
+					{{myform.formformAnalytics.deviceStatistics.tablet.visits}}
 				</div>
 			</div>
 
@@ -85,7 +85,7 @@
 					{{ 'UNIQUE_VISITS' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.other.visits}}
+					{{myform.formformAnalytics.deviceStatistics.other.visits}}
 				</div>
 			</div>
 		</div>
@@ -96,7 +96,7 @@
 					{{ 'RESPONSES' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.desktop.responses}}
+					{{myform.formformAnalytics.deviceStatistics.desktop.responses}}
 				</div>
 			</div>
 
@@ -105,7 +105,7 @@
 					{{ 'RESPONSES' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.tablet.responses}}
+					{{myform.formformAnalytics.deviceStatistics.tablet.responses}}
 				</div>
 			</div>
 
@@ -114,7 +114,7 @@
 					{{ 'RESPONSES' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.phone.responses}}
+					{{myform.formformAnalytics.deviceStatistics.phone.responses}}
 				</div>
 			</div>
 
@@ -123,7 +123,7 @@
 					{{ 'RESPONSES' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.other.responses}}
+					{{myform.formformAnalytics.deviceStatistics.other.responses}}
 				</div>
 			</div>
 		</div>
@@ -134,7 +134,7 @@
 					{{ 'COMPLETION_RATE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.desktop.completion}}%
+					{{myform.formformAnalytics.deviceStatistics.desktop.completion}}%
 				</div>
 			</div>
 
@@ -143,7 +143,7 @@
 					{{ 'COMPLETION_RATE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.tablet.completion}}%
+					{{myform.formformAnalytics.deviceStatistics.tablet.completion}}%
 				</div>
 			</div>
 
@@ -152,7 +152,7 @@
 					{{ 'COMPLETION_RATE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.phone.completion}}%
+					{{myform.formformAnalytics.deviceStatistics.phone.completion}}%
 				</div>
 			</div>
 
@@ -161,7 +161,7 @@
 					{{ 'COMPLETION_RATE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.other.completion}}%
+					{{myform.formformAnalytics.deviceStatistics.other.completion}}%
 				</div>
 			</div>
 		</div>
@@ -172,7 +172,7 @@
 					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.desktop.average_time | secondsToDateTime | date:'mm:ss'}}
+					{{myform.formformAnalytics.deviceStatistics.desktop.average_time | secondsToDateTime | date:'mm:ss'}}
 				</div>
 			</div>
 
@@ -181,7 +181,7 @@
 					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.tablet.average_time | secondsToDateTime | date:'mm:ss'}}
+					{{myform.formformAnalytics.deviceStatistics.tablet.average_time | secondsToDateTime | date:'mm:ss'}}
 				</div>
 			</div>
 
@@ -190,7 +190,7 @@
 					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.phone.average_time | secondsToDateTime | date:'mm:ss'}}
+					{{myform.formformAnalytics.deviceStatistics.phone.average_time | secondsToDateTime | date:'mm:ss'}}
 				</div>
 			</div>
 
@@ -199,7 +199,7 @@
 					{{ 'AVERAGE_TIME_TO_COMPLETE' | translate }}
 				</div>
 				<div class="row">
-					{{DeviceStatistics.other.average_time | secondsToDateTime | date:'mm:ss'}}
+					{{myform.formformAnalytics.deviceStatistics.other.average_time | secondsToDateTime | date:'mm:ss'}}
 				</div>
 			</div>
 		</div>
@@ -221,7 +221,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 field-detailed-row" ng-repeat="fieldStats in myform.analytics.fields">
+		<div class="col-xs-12 field-detailed-row" ng-repeat="fieldStats in myform.formAnalytics.fields">
 
 			<div class="col-xs-3">
 				{{fieldStats.field.title}}
