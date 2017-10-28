@@ -1,4 +1,13 @@
 {
-	"404_Header": "404 - Page non trouvée",
-	"500_Header": "500 - Erreur interne du serveur",
+	"404_HEADER": "404 - Page non trouvée",
+	"500_HEADER": "500 - Erreur interne du serveur",
+	"404_BODY": "%s n'est pas un chemin valide.",
+	"500_BODY": "Une erreur inattendue semble s'être produite, pourquoi ne pas essayer d'actualiser votre page? Ou vous pouvez nous contacter si le problème persiste.",
+	"EMAIL_GREETING": "Bonjour!",
+	"VERIFICATION_EMAIL_PARAGRAPH_1": "Bienvenue sur TellForm! Voici un lien spécial pour activer votre nouveau compte:",
+	"VERIFICATION_EMAIL_LINK_TEXT": "Activer mon compte",
+	"VERIFICATION_EMAIL_PARAGRAPH_2": "Merci beaucoup pour l'utilisation de nos services! Si vous avez des questions ou des suggestions, n'hésitez pas à nous envoyer un courriel ici",
+	"EMAIL_SIGNATURE": "- L'équipe TellForm",
+	"WELCOME_EMAIL_PARAGRAPH_1": "Nous aimerions vous accueillir en tant que nouveau membre!",
+	"WELCOME_EMAIL_PARAGRAPH_2": "Nous espérons que vous apprécierez l'utilisation de TellForm! Si vous avez des problèmes, n'hésitez pas à nous envoyer un e-mail ici"
 }

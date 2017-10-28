@@ -1,13 +1,15 @@
 doctype html
 html
   head
-  body(style='padding: 0; width: 100% !important; -webkit-text-size-adjust: 100%; margin: 0; -ms-text-size-adjust: 100%', marginheight='0', marginwidth='0')
-    | @import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,latin-ext);
-    style a {
-      color: #007ee6;
-      text-decoration: none;
+    style.
+      @import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,latin-ext);
+      a {
+        color: #007ee6;
+        text-decoration: none;
       }
     meta(content='text/html; charset=utf-8', http-equiv='Content-Type')
+
+  body(style='padding: 0; width: 100% !important; -webkit-text-size-adjust: 100%; margin: 0; -ms-text-size-adjust: 100%', marginheight='0', marginwidth='0')
     center
       table(cellpadding='8', cellspacing='0', style='*width: 540px; padding: 0; width: 100% !important; background: #ffffff; margin: 0; background-color: #ffffff', border='0')
         tbody
@@ -26,13 +28,12 @@ html
                           tr
                             td(width='36')
                             td(width='454', align='left', style='color: #444444; border-collapse: collapse; font-size: 11pt; font-family: 'Open Sans', 'Lucida Grande', 'Segoe UI', Arial, Verdana, 'Lucida Sans Unicode', Tahoma, 'Sans Serif'; max-width: 454px', valign='top')
-                              p Hello there!
-                              p We would like to welcome you as our newest member!
-                              p
-                                | Thanks so much for using TellForm! If you have any questions, or suggestions, please feel free to email us here at 
-                                a(href='mailto:team@tellform.com') team@tellform.com
-                                | .
-                              p - The TellForm team
+                              p=__('EMAIL_GREETING')
+                              p=__('WELCOME_EMAIL_PARAGRAPH_1')
+                              p=__('WELCOME_EMAIL_PARAGRAPH_2')
+                                a(href='mailto:team@tellform.com') 
+                                  | team@tellform.com
+                              p=__('EMAIL_SIGNATURE')
                             td(width='36')
                           tr
                             td(colspan='3', height='36')

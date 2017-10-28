@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 
 	// Unified Watch Object
 	var watchFiles = {
-		serverViews: ['app/views/**/*.*'],
+		serverViews: ['app/views/**/*.pug'],
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 
 		clientViews: ['public/modules/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html',],
@@ -292,13 +292,6 @@ module.exports = function(grunt) {
 				src: ['./scripts/setup.js']
 			}
 		},
-		i18nlint: {
-		    options: {
-		    	templateDelimiters: ['{', '}'],
-		    	ignoreTags: ['head', 'script', 'style', '{%']
-		    },
-		    src: watchFiles.clientViews.concat(watchFiles.serverViews)
-	  	},
 	});
 
 	grunt.event.on('coverage', function(lcov, done){
@@ -342,7 +335,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'html2js:forms', 'concurrent:default']);
 
 	// Lint task(s).
-	grunt.registerTask('lint', ['jshint', 'csslint', 'i18nlint']);
+	grunt.registerTask('lint', ['jshint', 'csslint', 'i18nlint:client', 'i18nlint:server']);
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).

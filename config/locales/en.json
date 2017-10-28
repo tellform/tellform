@@ -1,4 +1,13 @@
 {
-	"404_Header": "404 - Page not found",
-	"500_Header": "500 - Internal Server Error"
+	"500_HEADER": "500 - Internal Server Error",
+	"404_HEADER": "404 - Page not found",
+	"404_BODY": "%s is not a valid path",
+	"500_BODY": "An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.",
+	"EMAIL_GREETING": "Hello there!",
+	"VERIFICATION_EMAIL_PARAGRAPH_1": "Welcome to TellForm! Here is a special link to activate your new account:",
+	"VERIFICATION_EMAIL_LINK_TEXT": "Activate my account",
+	"VERIFICATION_EMAIL_PARAGRAPH_2": "Thanks so much for using our services! If you have any questions, or suggestions, please feel free to email us here at",
+	"EMAIL_SIGNATURE": "- The TellForm team",
+	"WELCOME_EMAIL_PARAGRAPH_1": "We would like to welcome you as our newest member!",
+	"WELCOME_EMAIL_PARAGRAPH_2": "We hope you enjoy using TellForm! If you have any trouble please feel free to email us here at"
 }

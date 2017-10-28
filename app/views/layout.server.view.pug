@@ -48,54 +48,9 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
       link(rel='stylesheet', href=cssFile)
     // end Application CSS Files
 
-  body(ng-cloak='')
+  body
 
     block content
-
-    script(src='/static/lib/file-saver.js/FileSaver.js', type='text/javascript')
-
-    //Embedding The User Object
-    script(type='text/javascript') var user = null;
-
-    //Embedding The signupDisabled Boolean
-    script(type='text/javascript').
-      var signupDisabled = !{signupDisabled};
-      var socketPort = false;     
-      var socketUrl = false;
-      var subdomainsDisabled = !{subdomainsDisabled};
-
-    //Embedding socketPort
-    if socketPort
-      script(type='text/javascript').
-        socketPort = !{socketPort}
-
-    //Embedding socketUrl
-    if socketUrl
-      script(type='text/javascript').
-        socketUrl = !{socketUrl}
-
-    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
-
-    //Socket.io Client Dependency
-    script(src='https://cdn.socket.io/socket.io-1.4.5.js')
-
-    //Bower JS dependencies
-    each bowerJSFile in bowerJSFiles
-      script(type='text/javascript', src=bowerJSFile)
-    // end Bower JS dependencies
-
-    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js')
-
-    //Application JavaScript Files
-    each jsFile in jsFiles
-      script(type='text/javascript', src=jsFile)
-    // end Application Javascript dependencies
-
-    if process.env.NODE_ENV === 'development'
-      script(type='text/javascript', src='http://#{request.hostname}:35729/livereload.js')
-       script(src='https://cdn.ravenjs.com/2.3.0/angular/raven.min.js')
-    script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
 
     script window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;ga('create','{{google_analytics_id}}','auto');ga('send','pageview')
     

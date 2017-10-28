@@ -155,14 +155,14 @@ module.exports = function(db) {
 
 	//Setup i18n
 	i18n.configure({
-		locales: ['en', 'es', 'fr', 'de', 'it'],
-		cookie: 'i18n_cookie',
-		directory: __dirname + '/locales'
+		directory: __dirname + '/locales',
+		defaultLocale: 'en'
 	});
+
 	app.use(function(req, res, next) {
 	    // express helper for natively supported engines
 	    res.locals.__ = res.__ = function() {
-	    	console.log('res.locals.__');
+	    	console.log('\n\n\n\n\n\nres.locals.__');
 	    	console.log(arguments);
 	        return i18n.__.apply(req, arguments);
 	    };
