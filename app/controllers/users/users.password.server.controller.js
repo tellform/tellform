@@ -11,7 +11,8 @@ var _ = require('lodash'),
 	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
 	async = require('async'),
-	crypto = require('crypto');
+	crypto = require('crypto'),
+	pug = require('pug');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
@@ -32,7 +33,7 @@ exports.forgot = function(req, res) {
 			if (req.body.username) {
 				User.findOne({
 					$or: [
-						{'username': req.body.username},
+						{'username': req.body.username.toLowerCase()},
 						{'email': req.body.username}
 					]
 				}, '-salt -password', function(err, user) {
@@ -45,7 +46,7 @@ exports.forgot = function(req, res) {
 						var tempUserModel = mongoose.model(config.tempUserCollection);
 						tempUserModel.findOne({
 							$or: [
-								{'username': req.body.username},
+								{'username': req.body.username.toLowerCase()},
 								{'email': req.body.username}
 							]
 						}).lean().exec(function(err, user) {
@@ -80,13 +81,12 @@ exports.forgot = function(req, res) {
 			}
 		},
 		function(token, user, done) {
-			res.render('templates/reset-password-email', {
-				name: user.displayName || 'TellForm User',
-				appName: config.app.title,
-				url: 'http://' + req.headers.host + '/auth/reset/' + token
-			}, function(err, emailHTML) {
-				done(err, emailHTML, user);
-			});
+			const fn = pug.compileFile(__dirname + "/../../views/templates/reset-password-email.server.view.pug");
+			res.locals['url'] = 'http://' + req.headers.host + '/auth/reset/' + token;
+			
+			console.log(res.locals);
+			var renderedHtml = fn(res.locals);
+			done(null, renderedHtml, user);
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
@@ -153,10 +153,21 @@ exports.validateResetToken = function(req, res) {
  * Reset password POST from email token
  */
 exports.reset = function(req, res, next) {
+	if(req.body.newPassword.length < 4){
+		return res.status(400).send({
+			message: 'Password must be at least 4 characters long'
+		});
+	}
+
+	if(req.body.newPassword !== req.body.verifyPassword){
+		return res.status(400).send({
+			message: 'Passwords do not match'
+		});
+	}
+
 	// Init Variables
 	var passwordDetails = req.body;
 	async.waterfall([
-
 		function(done) {
 			User.findOne({
 				resetPasswordToken: req.params.token,
@@ -165,32 +176,25 @@ exports.reset = function(req, res, next) {
 				}
 			}, function(err, user) {
 				if (!err && user) {
-					if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
-						user.password = passwordDetails.newPassword;
-						user.resetPasswordToken = null;
-						user.resetPasswordExpires = null;
+					user.password = passwordDetails.newPassword;
+					user.resetPasswordToken = null;
+					user.resetPasswordExpires = null;
 
-						user.save(function(err) {
-							if (err) {
-								done(err, null);
-							}
-							done(null, user);
-						});
-					} else {
-						done('Passwords do not match', null);
-					}
+					user.save(function(err, savedUser) {
+						if (err) {
+							done(err, null);
+						}
+						done(null, savedUser);
+					});
 				} else {
 					done('Password reset token is invalid or has expired.', null);
 				}
 			});
 		},
 		function(user, done) {
-			res.render('templates/reset-password-confirm-email', {
-				name: user.displayName,
-				appName: config.app.title
-			}, function(err, emailHTML) {
-				done(err, emailHTML, user);
-			});
+			const fn = pug.compileFile(__dirname + "/../../views/templates/reset-password-confirm-email.server.view.pug");
+			var renderedHtml = fn(res.locals);
+			done(null, renderedHtml, user);
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {

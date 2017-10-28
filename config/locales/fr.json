@@ -13,5 +13,9 @@
 	"WELCOME_EMAIL_PARAGRAPH_1": "Nous aimerions vous accueillir en tant que nouveau membre!",
 	"WELCOME_EMAIL_PARAGRAPH_2": "Nous espérons que vous apprécierez l'utilisation de TellForm! Si vous avez des problèmes, n'hésitez pas à nous envoyer un e-mail ici",
 	"WELCOME_EMAIL_SUBJECT": "Bienvenue dans %s!",
-	"WELCOME_EMAIL_TEXT": "Votre compte a été vérifié avec succès."
+	"WELCOME_EMAIL_TEXT": "Votre compte a été vérifié avec succès.",
+	"RESET_PASSWORD_CONFIRMATION_EMAIL_PARAGRAPH_1": "Ceci est un message de courtoisie pour confirmer que votre mot de passe a été modifié.",
+	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_1": "Voici un lien spécial qui vous permettra de réinitialiser votre mot de passe Veuillez noter qu'il expirera dans une heure pour votre protection:",
+	"RESET_PASSWORD_REQUEST_EMAIL_LINK_TEXT": "Réinitialiser votre mot de passe",
+	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_2": "Si vous ne l'avez pas demandé, veuillez ignorer cet e-mail et votre mot de passe restera inchangé."
 }

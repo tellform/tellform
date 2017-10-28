@@ -6,18 +6,18 @@
 				<img src="/static/modules/core/img/logo_white.svg" height="100px">
 			</div>
 			<div class="col-md-12">
-				<form class="signin form-horizontal" autocomplete="off">
+				<form name="forms.signinForm" class="signin form-horizontal" autocomplete="off">
 					<fieldset>
 						<div data-ng-show="error" class="text-center text-danger">
 							{{ 'ERROR' | translate }}: <strong data-ng-bind="error"></strong>
 						</div>
 						<div class="form-group">
 							<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
-							<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="{{ 'USERNAME_OR_EMAIL_LABEL' | translate }}" ng-minlength="4">
+							<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="{{ 'USERNAME_OR_EMAIL_LABEL' | translate }}" required pattern=".{4,}" title="Username/Email must be at least 4 characters">
 						</div>
 						<div class="form-group">
 							<!--<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>-->
-							<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" ng-minlength="4">
+							<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" pattern=".{4,}" required title="Passwords must be at least 4 characters">
 						</div>
 						<div class="form-group">
 							<button class="btn btn-signup btn-rounded btn-block" ng-click="signin()">{{ 'SIGNIN_BTN' | translate }}</button>

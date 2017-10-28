@@ -33,8 +33,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 			}).success(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
+				$scope.error = null;
 				$scope.user = response;
 			}).error(function(response) {
+				$scope.success = null;
 				$scope.error = response.message;
 			});
 		};
@@ -47,8 +49,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 
 				user.$update(function(response) {
 					$scope.success = true;
+					$scope.error = null;
 					$scope.user = response;
 				}, function(response) {
+					$scope.success = null;
 					$scope.error = response.data.message;
 				});
 			} else {
@@ -63,8 +67,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
+				$scope.error = null;
 				$scope.passwordDetails = null;
 			}).error(function(response) {
+				$scope.success = null;
 				$scope.error = response.message;
 			});
 		};

@@ -55,7 +55,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SUBMIT_BTN: 'Invia',
 
 		ASK_FOR_NEW_PASSWORD: 'Richiedi nuova password reimpostata',
-		PASSWORD_RESET_INVALID: 'Il reset della password non è valido',
+		PASSWORD_RESET_INVALID: 'Questo collegamento per la reimpostazione della password è già scaduto',
 		PASSWORD_RESET_SUCCESS: 'Passaporto resettato con successo',
 		PASSWORD_CHANGE_SUCCESS: 'Passaporto modificato con successo',
 		RESET_PASSWORD: 'Ripristina la tua password',

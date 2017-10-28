@@ -121,6 +121,12 @@ exports.signup = function(req, res) {
 
 	// Add missing user fields
 	user.provider = 'local';
+
+	if(req.body.password.length < 4){
+		return res.status(400).send({
+			message: 'Password must be at least 4 characters long'
+		});
+	}
 	
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
@@ -161,6 +167,13 @@ exports.signup = function(req, res) {
  * Signin after passport authentication
  */
 exports.signin = function(req, res, next) {
+	console.log(req.body);
+	if(req.body.password.length < 4){
+		return res.status(400).send({
+			message: 'Password must be at least 4 characters long'
+		});
+	}
+
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
 			res.status(400).send(info);
@@ -188,7 +201,9 @@ exports.signin = function(req, res, next) {
  * Signout
  */
 exports.signout = function(req, res) {
-	res.destroyCookie('langCookie');
+	if(req.cookies.hasOwnProperty('userLang')){
+		res.destroyCookie('userLang');
+	}
 	req.logout();
 	return res.status(200).send('You have successfully logged out.');
 };

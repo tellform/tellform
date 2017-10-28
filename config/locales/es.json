@@ -13,5 +13,9 @@
 	"WELCOME_EMAIL_PARAGRAPH_1": "¡Nos gustaría darle la bienvenida como nuestro miembro más nuevo!",
 	"WELCOME_EMAIL_PARAGRAPH_2": "Esperamos que disfrute utilizando TellForm. Si tiene algún problema, no dude en enviarnos un correo electrónico aquí",
 	"WELCOME_EMAIL_SUBJECT": "¡Bienvenido a %s!",
-	"WELCOME_EMAIL_TEXT": "Su cuenta ha sido verificada con éxito"
+	"WELCOME_EMAIL_TEXT": "Su cuenta ha sido verificada con éxito",
+	"RESET_PASSWORD_CONFIRMATION_EMAIL_PARAGRAPH_1": "Este es un mensaje de cortesía para confirmar que su contraseña acaba de cambiarse",
+	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_1": "Aquí hay un enlace especial que le permitirá restablecer su contraseña. Tenga en cuenta que caducará en una hora para su protección:",
+	"RESET_PASSWORD_REQUEST_EMAIL_LINK_TEXT": "Restablecer su contraseña",
+	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_2": "Si no lo solicitó, ignore este correo electrónico y su contraseña no cambiará".
 }

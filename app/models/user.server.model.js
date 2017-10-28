@@ -69,6 +69,7 @@ var UserSchema = new Schema({
 	email: {
 		type: String,
 		trim: true,
+		lowercase: true,
 		unique: 'Account already exists with this email',
 		match: [/.+\@.+\..+/, 'Please fill a valid email address'],
 		required: [true, 'Email is required']
@@ -77,7 +78,7 @@ var UserSchema = new Schema({
 		type: String,
 		unique: true,
 		lowercase: true,
-		match: [/^[a-zA-Z0-9\.\-\_]+$/, 'Username can only contain alphanumeric characters and \'_\', \'-\' and \'.\''],
+		match: [/^[a-zA-Z0-9\-]+$/, 'Username can only contain alphanumeric characters and \'-\''],
 		required: [true, 'Username is required']
 	},
 	passwordHash: {

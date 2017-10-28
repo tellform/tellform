@@ -55,7 +55,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SUBMIT_BTN: 'Senden',
 
 		ASK_FOR_NEW_PASSWORD: 'Neues Passwort zurücksetzen',
-		PASSWORD_RESET_INVALID: 'Passwort-Reset ist ungültig',
+		PASSWORD_RESET_INVALID: 'Dieser Link zum Zurücksetzen des Passworts ist bereits abgelaufen',
 		PASSWORD_RESET_SUCCESS: 'Passport erfolgreich zurückgesetzt',
 		PASSWORD_CHANGE_SUCCESS: 'Pass wurde erfolgreich geändert',
 		RESET_PASSWORD: 'Passwort zurücksetzen',

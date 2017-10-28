@@ -2,7 +2,7 @@
 
 angular.module('core').config(['$translateProvider', function ($translateProvider) {
 
-	$translateProvider.translations('de', {
+	$translateProvider.translations('it', {
 		MENU: 'MENÜ',
 		SIGNUP_TAB: 'Vi Phrasal',
 		SIGNIN_TAB: 'Accedi',

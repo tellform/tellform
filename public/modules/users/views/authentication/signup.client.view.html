@@ -12,15 +12,15 @@
 					</div>
 					<div class="form-group">
 						<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
-						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}" ng-minlength="4">
+						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}" required pattern=".{4,}" title="Username/Email must be at least 4 characters">
 					</div>
 					<div class="form-group">
 						<!--<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>-->
-						<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="{{ 'EMAIL_LABEL' | translate }}">
+						<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="{{ 'EMAIL_LABEL' | translate }}" required pattern=".{4,}" title="Email must be at least 4 characters">
 					</div>
 					<div class="form-group">
 						<!--<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>-->
-						<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" ng-minlength="4">
+						<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" pattern=".{4,}" required title="Passwords must be at least 4 characters">
 					</div>
 					<div class="text-center form-group">
 						<button type="submit" class="btn btn-signup btn-rounded btn-block">{{ 'SIGNUP_BTN' | translate }}</button>

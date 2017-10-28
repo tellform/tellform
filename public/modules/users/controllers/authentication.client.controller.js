@@ -7,8 +7,10 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope = $rootScope;
 		$scope.credentials = {};
 		$scope.error = '';
+		$scope.forms = [];
 
 	    $scope.signin = function() {
+	    	console.log($scope.forms.signinForm);
 			User.login($scope.credentials).then(
 				function(response) {
 					Auth.login(response);
