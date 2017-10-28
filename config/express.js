@@ -162,8 +162,6 @@ module.exports = function(db) {
 	app.use(function(req, res, next) {
 	    // express helper for natively supported engines
 	    res.locals.__ = res.__ = function() {
-	    	console.log('\n\n\n\n\n\nres.locals.__');
-	    	console.log(arguments);
 	        return i18n.__.apply(req, arguments);
 	    };
 

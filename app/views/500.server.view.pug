@@ -5,4 +5,8 @@ block content
         div.row.valign
             h3.col-md-12.text-center=__('500_HEADER')
             div.col-md-4.col-md-offset-4
-                div.col-md-12.text-center(style="padding-bottom: 50px;")=__('500_BODY')
+                if process.env.NODE_ENV == 'development'
+                    div.col-md-12.text-center(style="padding-bottom: 50px;")
+                        | #{error}
+                else
+                    div.col-md-12.text-center(style="padding-bottom: 50px;")=__('500_BODY')
