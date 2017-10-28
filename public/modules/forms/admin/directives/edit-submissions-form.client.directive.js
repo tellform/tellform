@@ -19,7 +19,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 var initController = function(){
                     $http({
                       method: 'GET',
-                      url: '/forms'+$scope.myform._id+'/submissions'
+                      url: '/forms/'+$scope.myform._id+'/submissions'
                     }).then(function successCallback(response) {
                         var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 

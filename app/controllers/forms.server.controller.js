@@ -125,15 +125,7 @@ exports.read = function(req, res) {
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
-		FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
-			if (err) {
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
-
 			var newForm = req.form.toJSON();
-			newForm.submissions = _submissions;
 
 			if (req.userId) {
 				if(req.form.admin._id+'' === req.userId+''){
@@ -144,7 +136,6 @@ exports.read = function(req, res) {
 				});
 			}
 			return res.json(newForm);
-		});
 	}
 };
 
