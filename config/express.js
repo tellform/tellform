@@ -36,6 +36,18 @@ var configureSocketIO = function (app, db) {
 	return server;
 };
 
+var supportedLanguages = ['en', 'de', 'fr', 'it', 'es'];
+
+function containsAnySupportedLanguages(preferredLanguages){
+	for (var i = 0; i < preferredLanguages.length; i++) {
+		var currIndex = supportedLanguages.indexOf(preferredLanguages[i]);
+	    if (currIndex > -1) {
+	        return supportedLanguages[currIndex];
+	    }
+	}
+	return null;
+}
+
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
@@ -153,21 +165,6 @@ module.exports = function(db) {
 		}
 	});
 
-	//Setup i18n
-	i18n.configure({
-		directory: __dirname + '/locales',
-		defaultLocale: 'en'
-	});
-
-	app.use(function(req, res, next) {
-	    // express helper for natively supported engines
-	    res.locals.__ = res.__ = function() {
-	        return i18n.__.apply(req, arguments);
-	    };
-
-	    next();
-	});
-
     //Setup Prerender.io
     app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
 
@@ -216,6 +213,7 @@ module.exports = function(db) {
 		extended: true,
 		limit: '100mb'
 	}));
+
 	app.use(bodyParser.json({ limit: '100mb' }));
 	app.use(methodOverride());
 
@@ -236,7 +234,6 @@ module.exports = function(db) {
 	app.use(cookieParser());
 
 	// Express MongoDB session storage
-
 	app.use(session({
 		saveUninitialized: true,
 		resave: true,
@@ -253,14 +250,39 @@ module.exports = function(db) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
+	//Setup i18n
+	i18n.configure({
+		locales: supportedLanguages,
+		directory: __dirname + '/locales',
+		defaultLocale: 'en',
+		cookie: 'userLang'
+	});
+
+	app.use(i18n.init);
+
+	//Visitor Language Detection
+	app.use(function(req, res, next) {
+		var acceptLanguage = req.headers['accept-language'];
+		var languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
+
+		var supportedLanguage = containsAnySupportedLanguages(languages);
+		if(!req.user && supportedLanguage !== null){
+			var currLanguage = res.cookie('userLang');
+
+			if(currLanguage && currLanguage !== supportedLanguage || !currLanguage){
+				res.clearCookie('userLang');
+				res.cookie('userLang', supportedLanguage, { maxAge: 90000, httpOnly: true });
+			}
+		}
+		next();
+	});
+
 	// Globbing routing files
 	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
 		require(path.resolve(routePath))(app);
 	});
 
-
 	// Add headers for Sentry
-
 	app.use(function (req, res, next) {
 
 	    // Website you wish to allow to connect

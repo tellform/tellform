@@ -15,6 +15,12 @@ block content
 		var socketPort = false;     
 		var socketUrl = false;
 		var subdomainsDisabled = !{subdomainsDisabled};
+		var locale = "en";
+
+	//Embedding locale
+	if locale
+		script(type='text/javascript').
+			locale = "!{locale}";
 
 	//Embedding socketPort
 	if socketPort
@@ -24,7 +30,7 @@ block content
 	//Embedding socketUrl
 	if socketUrl
 		script(type='text/javascript').
-			socketUrl = !{socketUrl}
+			socketUrl = "!{socketUrl}"
 
 	//Socket.io Client Dependency
 	script(src='https://cdn.socket.io/socket.io-1.4.5.js')

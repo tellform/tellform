@@ -116,8 +116,12 @@ exports.signup = function(req, res) {
 	// Init Variables
 	var user = new User(req.body);
 
+	// Set language to visitor's language
+	user.language = req.cookies['userLang'];
+
 	// Add missing user fields
 	user.provider = 'local';
+	
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
 		if (err) {
@@ -126,7 +130,6 @@ exports.signup = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-
 
 		// new user created
 		if (newTempUser) {
@@ -173,6 +176,8 @@ exports.signin = function(req, res, next) {
 						message: errorHandler.getErrorMessage(loginErr)
 					});
 				}
+
+				res.cookie('langCookie', user.language, { maxAge: 90000, httpOnly: true });
 				return res.json(user);
 			});
 		}
@@ -183,9 +188,9 @@ exports.signin = function(req, res, next) {
  * Signout
  */
 exports.signout = function(req, res) {
+	res.destroyCookie('langCookie');
 	req.logout();
 	return res.status(200).send('You have successfully logged out.');
-
 };
 
 /**

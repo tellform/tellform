@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
-	function($scope, $stateParams, $state, User) {
+angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User', '$translate', '$window',
+	function($scope, $stateParams, $state, User, $translate, $window) {
+		$translate.use($window.locale);
 
 		$scope.error = '';
 

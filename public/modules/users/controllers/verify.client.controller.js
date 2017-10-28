@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams',
-	function($scope, $state, $rootScope, User, Auth, $stateParams) {
+angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams', '$translate', '$window',
+	function($scope, $state, $rootScope, User, Auth, $stateParams, $translate, $window) {
+		$translate.use($window.locale);
 
 		$scope.isResetSent = false;
 		$scope.credentials = {};

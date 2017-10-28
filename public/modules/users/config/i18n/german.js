@@ -16,9 +16,9 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		LANGUAGE_LABEL: 'Sprache',
 		EMAIL_LABEL: 'Email',
 
-		SIGNUP_ACCOUNT_LINK: 'Haben Sie kein Konto? Hier anmelden',
+		SIGNUP_ACCOUNT_LINK: 'Haben Sie kein Konto? Hier registrieren',
 		SIGN_IN_ACCOUNT_LINK: 'Haben Sie bereits ein Konto? Hier anmelden',
-		SIGNUP_HEADER_TEXT: 'Anmelden',
+		SIGNUP_HEADER_TEXT: 'Registrieren',
 		SIGNIN_HEADER_TEXT: 'Anmelden',
 
 		SIGNUP_ERROR_TEXT: 'Konnte die Registrierung aufgrund von Fehlern nicht abschließen',

@@ -7,7 +7,11 @@
 	"VERIFICATION_EMAIL_PARAGRAPH_1": "Bienvenido a TellForm. Aquí hay un enlace especial para activar su nueva cuenta:",
 	"VERIFICATION_EMAIL_LINK_TEXT": "Activar mi cuenta",
 	"VERIFICATION_EMAIL_PARAGRAPH_2": "¡Muchas gracias por utilizar nuestros servicios! Si tiene alguna pregunta o sugerencia, no dude en enviarnos un correo electrónico aquí",
+	"VERIFICATION_EMAIL_SUBJECT": "¡Active su nueva cuenta TellForm!",
+	"VERIFICATION_EMAIL_TEXT": "Verifique su cuenta haciendo clic en el siguiente enlace, o copiándolo y pegándolo en su navegador: $ {URL}",
 	"EMAIL_SIGNATURE": "- El equipo de TellForm",
 	"WELCOME_EMAIL_PARAGRAPH_1": "¡Nos gustaría darle la bienvenida como nuestro miembro más nuevo!",
-	"WELCOME_EMAIL_PARAGRAPH_2": "Esperamos que disfrute utilizando TellForm. Si tiene algún problema, no dude en enviarnos un correo electrónico aquí"
+	"WELCOME_EMAIL_PARAGRAPH_2": "Esperamos que disfrute utilizando TellForm. Si tiene algún problema, no dude en enviarnos un correo electrónico aquí",
+	"WELCOME_EMAIL_SUBJECT": "¡Bienvenido a %s!",
+	"WELCOME_EMAIL_TEXT": "Su cuenta ha sido verificada con éxito"
 }
