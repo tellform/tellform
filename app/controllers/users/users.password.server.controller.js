@@ -42,12 +42,27 @@ exports.forgot = function(req, res) {
 						});
 					}
 					if (!user) {
-						return res.status(400).send({
-							message: 'No account with that username or email has been found'
-						});
-					} else if (user.provider !== 'local') {
-						return res.status(400).send({
-							message: 'It seems like you signed up using your ' + user.provider + ' account'
+						var tempUserModel = mongoose.model(config.tempUserCollection);
+						tempUserModel.findOne({
+							$or: [
+								{'username': req.body.username},
+								{'email': req.body.username}
+							]
+						}).lean().exec(function(err, user) {
+							if(err){
+								return res.status(500).send({
+									message: err.message
+								});
+							}
+							if(!user){
+								return res.status(400).send({
+									message: 'No account with that username or email has been found'
+								});	
+							}
+
+							return res.status(400).send({
+								message: 'The account associated with this email has not been activated yet'
+							});
 						});
 					} else {
 						user.resetPasswordToken = token;
