@@ -438,11 +438,11 @@ section.public-form .btn {
 }
 
 /*CREATE-NEW FORM MODAL*/
-.form-item.create-new.new-form {
+.form-item.new-form {
     background-color: rgb(300,131,131);
     z-index: 11;
 }
-.form-item.create-new.new-form:hover {
+.form-item.new-form:hover {
     background-color: rgb(300,100,100);
 }
     .form-item.new-form input[type='text'] {

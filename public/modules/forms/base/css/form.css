@@ -310,12 +310,12 @@ section.public-form field-directive .btn[disabled]{
 }
 
 /*CREATE-NEW FORM MODAL*/
-.form-item.create-new.new-form {
+.form-item.new-form {
     background-color: #832383;
     background-color: rgb(300,131,131);
     z-index: 11;
 }
-.form-item.create-new.new-form:hover {
+.form-item.new-form:hover {
     background-color: #3079b5;
 }
     .form-item.new-form input[type='text'] {
@@ -398,19 +398,23 @@ h3.forms-list-title {
         font-size: 1.3em;
     }
 
-.form-item.create-new  .title-row{
+.form-item.create-new .title-row {
     padding: 0;
 }
     .form-item.create-new  .title-row h4 {
         font-size: 7em;
     }
 
-.form-item .details-row{
-    margin-top: 3.2em;
+.form-item.create-new.new-button .details-row {
+    padding-top: 20%;
 }
-    .form-item  .details-row small {
+    .form-item .details-row small {
         font-size: 0.6em;
     }
-    .form-item.create-new  .details-row small {
+    .form-item.create-new .details-row small {
         font-size: 0.95em;
+    }
+
+    .form-item.create-new input {
+        max-width: 100%
     }

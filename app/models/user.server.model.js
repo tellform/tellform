@@ -38,13 +38,6 @@ var validateLocalStrategyProperty = function(property) {
 };
 
 /**
- * A Validation function for local strategy password
- */
-var validateLocalStrategyPassword = function(password) {
-	return (this.provider !== 'local' || (password && password.length > 6));
-};
-
-/**
  * A Validation function for username
  */
 var validateUsername = function(username) {
