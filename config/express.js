@@ -273,6 +273,8 @@ module.exports = function(db) {
 				res.clearCookie('userLang');
 				res.cookie('userLang', supportedLanguage, { maxAge: 90000, httpOnly: true });
 			}
+		} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies['userLang'] !== req.user.language) ){
+			res.cookie('userLang', req.user.language, { maxAge: 90000, httpOnly: true });
 		}
 		next();
 	});

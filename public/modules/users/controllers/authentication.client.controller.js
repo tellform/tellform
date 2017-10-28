@@ -2,8 +2,7 @@
 
 angular.module('users').controller('AuthenticationController', ['$scope', '$location', '$state', '$rootScope', 'User', 'Auth', '$translate', '$window',
 	function($scope, $location, $state, $rootScope, User, Auth, $translate, $window) {
-		$translate.use($window.locale);
-
+		
 		$scope = $rootScope;
 		$scope.credentials = {};
 		$scope.error = '';
