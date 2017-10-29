@@ -85,8 +85,6 @@ var UserSchema = new Schema({
 		type: String,
 		default: 'local'
 	},
-	providerData: {},
-	additionalProvidersData: {},
 	roles: {
 		type: [{
 			type: String,

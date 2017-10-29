@@ -5,7 +5,8 @@
  */
 var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller.js'),
-	mongoose = require('mongoose');
+	mongoose = require('mongoose'),
+	helpers = require('../helpers.server.controller');
 
 /**
  * Update user details
@@ -32,6 +33,7 @@ exports.update = function(req, res) {
 				if (err) {
 					res.status(500).send(loginErr);
 				} else {
+					user = helpers.removeSensitiveModelData('private_user', user);
 					res.json(user);
 				}
 			});
@@ -48,13 +50,9 @@ exports.update = function(req, res) {
  * Send User
  */
 exports.getUser = function(req, res) {
-	var _user = req.user;
-	delete _user.password;
-	delete _user.salt;
-	delete _user.provider;
-	delete _user.__v;
+	var _user = helpers.removeSensitiveModelData('private_user', req.user);
 
-	res.json(req.user || null);
+	res.json(_user);
 
 	res.end();
 };

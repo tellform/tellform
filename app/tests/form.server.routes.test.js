@@ -82,7 +82,7 @@ describe('Form Routes Unit tests', function() {
 			});
 	});
 
-	it(' > should be able to read/get a Form if not signed in', function(done) {
+	it(' > should be able to read/get a live Form if not signed in', function(done) {
 		// Create new Form model instance
 		var FormObj = new Form(myForm);
 
@@ -100,6 +100,23 @@ describe('Form Routes Unit tests', function() {
 
 					// Call the assertion callback
 					done();
+				});
+		});
+	});
+
+	it(' > should be able to read/get a non-live Form if not signed in', function(done) {
+		// Create new Form model instance
+		var FormObj = new Form(myForm);
+		FormObj.isLive = false;
+
+		// Save the Form
+		FormObj.save(function(err, form) {
+			if(err) return done(err);
+
+			userSession.get('/subdomain/' + credentials.username + '/forms/' + form._id + '/render')
+				.expect(401, {message: 'Form is Not Public'})
+				.end(function(err, res) {
+					done(err);
 				});
 		});
 	});
@@ -145,6 +162,16 @@ describe('Form Routes Unit tests', function() {
 				});
 		});
 
+		it(' > should not be able to create a Form if body is empty', function(done) {
+			loginSession.post('/forms')
+				.send({form: null})
+				.expect(400, {"message":"Invalid Input"})
+				.end(function(FormSaveErr, FormSaveRes) {
+					// Call the assertion callback
+					done(FormSaveErr);
+				});
+		});
+
 		it(' > should not be able to save a Form if no title is provided', function(done) {
 			// Set Form with a invalid title field
 			myForm.title = '';
@@ -167,7 +194,20 @@ describe('Form Routes Unit tests', function() {
 
 		});
 
-		it(' > should be able to update a Form if signed in', function(done) {
+		it(' > should be able to create a Form if form_fields are undefined', function(done) {
+			myForm.analytics = null;
+			myForm.form_fields = null;
+
+			loginSession.post('/forms')
+				.send({form: myForm})
+				.expect(200)
+				.end(function(FormSaveErr, FormSaveRes) {
+					// Call the assertion callback
+					done(FormSaveErr);
+				});
+		});
+
+		it(' > should be able to update a Form if signed in and Form is valid', function(done) {
 
 			// Save a new Form
 			loginSession.post('/forms')
@@ -181,7 +221,7 @@ describe('Form Routes Unit tests', function() {
 					}
 
 					// Update Form title
-					myForm.title = 'WHY YOU GOTTA BE SO MEAN?';
+					myForm.title = 'WHY YOU GOTTA BE SO FORMULAIC?';
 
 					// Update an existing Form
 					loginSession.put('/forms/' + FormSaveRes.body._id)
@@ -196,7 +236,7 @@ describe('Form Routes Unit tests', function() {
 
 							// Set assertions
 							(FormUpdateRes.body._id).should.equal(FormSaveRes.body._id);
-							(FormUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
+							(FormUpdateRes.body.title).should.match(myForm.title);
 
 							// Call the assertion callback
 							done();

@@ -12,7 +12,8 @@ var errorHandler = require('../errors.server.controller'),
 	fs = require('fs'),
 	i18n = require('i18n'),
 	async = require('async'),
-	pug = require('pug');
+	pug = require('pug'),
+	helpers = require('../helpers.server.controller');
 
 var nev = require('email-verification')(mongoose);
 
@@ -179,6 +180,8 @@ exports.signin = function(req, res, next) {
 				}
 
 				res.cookie('langCookie', user.language, { maxAge: 90000, httpOnly: true });
+				
+				user = helpers.removeSensitiveModelData('private_user', user);
 				return res.json(user);
 			});
 		}
@@ -199,7 +202,7 @@ exports.signout = function(req, res) {
 /* Generate API Key for User */
 exports.generateAPIKey = function(req, res) {
 	if (!req.isAuthenticated()){
-		return res.status(400).send({
+		return res.status(401).send({
 			message: 'User is not Authorized'
 		});
 	}
@@ -226,11 +229,8 @@ exports.generateAPIKey = function(req, res) {
 				}
 
 				var newUser = _user.toObject();
-				delete newUser.salt;
-				delete newUser.__v;
-				delete newUser.passwordHash;
-				delete newUser.provider;
 
+				newUser = helpers.removeSensitiveModelData('private_user', newUser);
 				return res.json(newUser);
 			});
 
