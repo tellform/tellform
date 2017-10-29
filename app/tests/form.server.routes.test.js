@@ -68,7 +68,6 @@ describe('Form Routes Unit tests', function() {
 			.send({form: myForm})
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
-
 				// Call the assertion callback
 				done(FormSaveErr);
 			});
@@ -275,6 +274,8 @@ describe('Form Routes Unit tests', function() {
 			authenticatedSession.get('/auth/signout')
 				.expect(200)
 				.end(function(signoutErr, signoutRes) {
+					console.log(signoutRes.error.text);
+
 					// Handle signout error
 					if (signoutErr) return done(signoutErr);
 					authenticatedSession.destroy();

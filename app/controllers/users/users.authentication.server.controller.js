@@ -190,7 +190,7 @@ exports.signin = function(req, res, next) {
  */
 exports.signout = function(req, res) {
 	if(req.cookies.hasOwnProperty('userLang')){
-		res.destroyCookie('userLang');
+		res.clearCookie('userLang');
 	}
 	req.logout();
 	return res.status(200).send('You have successfully logged out.');

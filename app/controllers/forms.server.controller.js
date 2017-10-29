@@ -88,15 +88,13 @@ exports.listSubmissions = function(req, res) {
 		}
 		res.json(_submissions);
 	});
-
 };
 
 /**
  * Create a new form
  */
 exports.create = function(req, res) {
-	debugger;
-
+	
 	if(!req.body.form){
 		return res.status(401).send({
 			message: 'Invalid Input'
@@ -107,7 +105,6 @@ exports.create = function(req, res) {
 	form.admin = req.user._id;
 
 	form.save(function(err) {
-		debugger;
 		if (err) {
 			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)

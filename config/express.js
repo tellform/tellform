@@ -263,9 +263,13 @@ module.exports = function(db) {
 	//Visitor Language Detection
 	app.use(function(req, res, next) {
 		var acceptLanguage = req.headers['accept-language'];
-		var languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
+		var languages, supportedLanguage;
 
-		var supportedLanguage = containsAnySupportedLanguages(languages);
+		if(acceptLanguage){
+			languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
+			supportedLanguage = containsAnySupportedLanguages(languages);
+		}
+
 		if(!req.user && supportedLanguage !== null){
 			var currLanguage = res.cookie('userLang');
 
@@ -320,16 +324,10 @@ module.exports = function(db) {
 		// Log it
 		client.captureError(err);
 
-		if(process.env.NODE_ENV === 'production'){
-			res.status(500).render('500', {
-	   		    error: 'Internal Server Error'
-        	});
-		} else { 
-			// Error page
-			res.status(500).render('500', {
-				error: err.stack
-			});
-		}
+		// Error page
+		res.status(500).render('500', {
+			error: err.stack
+		});
 	});
 
 	// Assume 404 since no middleware responded
