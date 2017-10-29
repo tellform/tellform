@@ -80,7 +80,7 @@
 
 		// Load the main application module
 		beforeEach(module(ApplicationConfiguration.applicationModuleName));
-
+		beforeEach(module('module-templates'));
 		beforeEach(module('stateMock'));
 
 		// Mock Users Service
