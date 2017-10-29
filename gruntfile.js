@@ -204,18 +204,6 @@ module.exports = function(grunt) {
 			    singleRun: true
             }
 		},
-		protractor: {
-			options: {
-				configFile: 'protractor.conf.js',
-				keepAlive: true,
-				noColor: false
-			},
-			e2e: {
-				options: {
-					args: {} // Target-specific arguments
-				}
-			}
-	    },
 	    mocha_istanbul: {
             coverage: {
                 src: watchFiles.allTests, // a folder works nicely
@@ -349,9 +337,11 @@ module.exports = function(grunt) {
 	grunt.registerTask('setup', ['execute']);
 
 	// Test task(s).
-	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);
+	grunt.registerTask('test', ['test:server', 'test:client']);
 	grunt.registerTask('test:server', ['lint:tests', 'env:test', 'mochaTest']);
 	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit']);
+	grunt.registerTask('test:travis', ['env:test', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit', 'mochaTest', 'coveralls']);
+
 
 	grunt.registerTask('testdebug', ['env:test', 'karma:debug']);
 };
