@@ -9,7 +9,8 @@ var should = require('should'),
 	User = mongoose.model('User'),
 	Form = mongoose.model('Form'),
 	Field = mongoose.model('Field'),
-	FormSubmission = mongoose.model('FormSubmission');
+	FormSubmission = mongoose.model('FormSubmission'),
+	async = require('async');
 
 /**
  * Globals
@@ -191,7 +192,6 @@ describe('Form Routes Unit tests', function() {
 
 					done();
 				});
-
 		});
 
 		it(' > should be able to create a Form if form_fields are undefined', function(done) {
@@ -242,7 +242,6 @@ describe('Form Routes Unit tests', function() {
 							done();
 						});
 				});
-
 		});
 
 		it(' > should be able to delete a Form if signed in', function(done) {
@@ -277,7 +276,6 @@ describe('Form Routes Unit tests', function() {
 							done();
 						});
 				});
-
 		});
 
 		it('should be able to save new form while logged in', function(done){
@@ -310,14 +308,70 @@ describe('Form Routes Unit tests', function() {
 				});
 		});
 
+		it(' > should be able to get list of users\' forms sorted by date created while logged in', function(done) {
+			var myForm1 = {
+				title: 'First Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var myForm2 = {
+				title: 'Second Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'formula one',      'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'football',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var FormObj1 = new Form(myForm1);
+			var FormObj2 = new Form(myForm2);
+
+			async.waterfall([
+			    function(callback) {
+			        FormObj1.save(function(err){
+			        	callback(err);
+			        });
+			    },
+			    function(callback) {
+			        FormObj2.save(function(err){
+			        	callback(err);
+			        });
+			    },
+			    function(callback) {
+			        loginSession.get('/forms')
+					.expect(200)
+					.end(function(err, res) {
+						res.body.length.should.equal(2);
+						res.body[0].title.should.equal('Second Form');
+						res.body[1].title.should.equal('First Form');
+
+						// Call the assertion callback
+						callback(err);
+					});
+			    }
+			], function (err) {
+			    done(err);
+			});
+		});
+
 		afterEach('should be able to signout user', function(done){
 			authenticatedSession.get('/auth/signout')
 				.expect(200)
 				.end(function(signoutErr, signoutRes) {
-					console.log(signoutRes.error.text);
-
 					// Handle signout error
-					if (signoutErr) return done(signoutErr);
+					if (signoutErr) {
+						return done(signoutErr);
+					}
 					authenticatedSession.destroy();
 					done();
 				});
