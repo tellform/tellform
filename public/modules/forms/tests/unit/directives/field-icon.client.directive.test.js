@@ -5,7 +5,6 @@
     describe('FieldIcon Directive Tests', function() {
         // Initialize global variables
         var scope,
-            FormFields,
             faClasses = {
                 'textfield': 'fa fa-pencil-square-o',
                 'dropdown': 'fa fa-th-list',
@@ -25,6 +24,10 @@
                 'number': 'fa fa-slack'
             };
 
+        // Load the main application module
+        beforeEach(module(ApplicationConfiguration.applicationModuleName));
+
+        //Mock FormFields Service
         var FormFields = {
             types: [
                 {
@@ -77,11 +80,6 @@
                 }
             ]
         };
-
-        // Load the main application module
-        beforeEach(module(ApplicationConfiguration.applicationModuleName));
-
-        //Mock FormFields Service
         beforeEach(module(function($provide) {
             $provide.service('FormFields', function() {
                 return FormFields;
