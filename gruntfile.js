@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 
 		clientViews: ['public/modules/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html',],
-		clientJS: ['public/js/*.js', 'public/form_modules/**/*.js', 'public/modules/**/*.js'],
+		clientJS: ['public/form_modules/**/*.js', 'public/modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
 
 		serverTests: ['app/tests/**/*.js'],
@@ -145,10 +145,14 @@ module.exports = function(grunt) {
 			}
 		},
 		ngAnnotate: {
+			options:{
+				add: true,
+				remove: true
+			},
 			production: {
 				files: {
-					'public/dist/application.js': '<%= applicationJavaScriptFiles %>',
-					'public/dist/form-application.js': '<%= formApplicationJavaScriptFiles %>'
+					'public/dist/application.js': ['public/application.js', 'public/config.js', 'public/form_modules/**/*.js'],
+					'public/dist/form_application.js': ['public/form-application.js', 'public/form-config.js', 'public/form_modules/**/*.js']
 				}
 			}
 		},

@@ -16,7 +16,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     rows: []
                 };
 
-                var initController = function(){
+                var getSubmissions = function(){
                     $http({
                       method: 'GET',
                       url: '/forms/'+$scope.myform._id+'/submissions'
@@ -31,9 +31,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                                 if(submissions[i].form_fields[x].fieldType === 'dropdown'){
                                     submissions[i].form_fields[x].fieldValue = submissions[i].form_fields[x].fieldValue.option_value;
                                 }
-                                //var oldValue = submissions[i].form_fields[x].fieldValue || '';
-                                //submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
-                                //submissions[i].form_fields[x].fieldValue = oldValue;
                             }
                             submissions[i].selected = false;
                         }
@@ -42,8 +39,21 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     });
                 };
 
-                initController();
+                var getVisitors = function(){
+                    $http({
+                      method: 'GET',
+                      url: '/forms/'+$scope.myform._id+'/visitors'
+                    }).then(function successCallback(response) {
+                        var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
+                        var visitors = response.data || [];
+
+                        $scope.visitors = visitors;
+                    });
+                };
+
+                getSubmissions();
+                getVisitors();
 
                 /*
                 ** Analytics Functions
@@ -62,50 +72,8 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     return (totalTime/numSubmissions).toFixed(0);
                 })();
 
-                $scope.DeviceStatistics = (function(){
-                    var newStatItem = function(){
-                        return {
-                            visits: 0,
-                            responses: 0,
-                            completion: 0,
-                            average_time: 0,
-                            total_time: 0
-                        };
-                    };
-
-                    var stats = {
-                        desktop: newStatItem(),
-                        tablet: newStatItem(),
-                        phone: newStatItem(),
-                        other: newStatItem()
-                    };
-
-                    if($scope.myform.analytics && $scope.myform.analytics.visitors) {
-                        var visitors = $scope.myform.analytics.visitors;
-                        for (var i = 0; i < visitors.length; i++) {
-                            var visitor = visitors[i];
-                            var deviceType = visitor.deviceType;
-
-                            stats[deviceType].visits++;
-
-                            if (visitor.isSubmitted) {
-                                stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
-                                stats[deviceType].responses++;
-                            }
-
-                            if(stats[deviceType].visits) {
-                                stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
-                            }
-
-                            if(stats[deviceType].responses){
-                                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
-                            }
-                        }
-                    }
-                    return stats;
-                })();
-
-                var updateFields = $interval(initController, 1000000);
+                var updateFields = $interval(getSubmissions, 100000);
+                var updateFields = $interval(getVisitors, 1000000);
 
                 $scope.$on('$destroy', function() {
                     if (updateFields) {
@@ -173,3 +141,4 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
         };
     }
 ]);
+
