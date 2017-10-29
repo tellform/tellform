@@ -4,7 +4,6 @@
 angular.module('forms').service('FormFields', [ '$rootScope', '$translate', '$window',
 	function($rootScope, $translate, $window) {
 		$translate.use($window.user.language);
-		console.log($translate.instant('SHORT_TEXT'));
 
 		this.types = [
 		    {

@@ -71,7 +71,6 @@ var VisitorDataSchema = new Schema({
 	userAgent: {
 		type: String
 	}
-
 });
 
 var formSchemaOptions = {

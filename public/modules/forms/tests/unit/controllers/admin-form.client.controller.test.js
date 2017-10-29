@@ -58,7 +58,7 @@
 		};
 
 		var newFakeModal = function(){
-			var result = {
+			var modal = {
 				opened: true,
 			    close: function( item ) {
 			        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
@@ -67,12 +67,19 @@
 			    dismiss: function( type ) {
 			        //The user clicked cancel on the modal dialog, call the stored cancel callback
 			        this.opened = false;
+			    }, 
+			    result: {
+				    then: function (cb) {
+				    	if(cb && typeof cb === 'function'){
+				    		cb();
+				    	}
+				    }
 			    }
 			};
-			return result;
+			return modal;
 		};
 
-		//Mock Users Service
+		//Mock myForm Service
         beforeEach(module(function($provide) {
             $provide.service('myForm', function($q) {
                 return sampleForm;
@@ -159,7 +166,6 @@
 			});
 		}));
 
-
 		//Mock $uibModal
 		beforeEach(inject(function($uibModal) {
 			var modal = newFakeModal();
@@ -199,7 +205,7 @@
 			expect(scope.myform).toEqualData(sampleForm);
 		});
 
-		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', function() {
+		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', inject(function($uibModal) {
 			var controller = createAdminFormController();
 
 			//Set $state transition
@@ -214,7 +220,7 @@
 
 			$httpBackend.flush();
 			$state.ensureAllTransitionsHappened();
-		});
+		}));
 
 		it('$scope.update() should send a PUT request with the id of form', function() {
 			var controller = createAdminFormController();

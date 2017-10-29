@@ -100,7 +100,7 @@
     "grunt-usemin": "^3.1.1",
     "grunt-wiredep": "^3.0.1",
     "istanbul": "^0.4.0",
-    "jasmine-core": "^2.4.1",
+    "jasmine-core": "^2.6",
     "karma": "~0.13.14",
     "karma-chrome-launcher": "~0.2.1",
     "karma-coverage": "~0.5.3",

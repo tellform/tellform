@@ -62,6 +62,24 @@
         beforeEach(module('module-templates'));
         beforeEach(module('stateMock'));
 
+        //Mock FormFields Service
+        beforeEach(module(function($provide) {
+            $provide.service('FormFields', function() {
+                return {
+                    types: [
+                        {
+                            name : 'textfield',
+                            value : 'Short Text'
+                        },
+                        {
+                            name : 'email',
+                            value : 'Email'
+                        }
+                    ]
+                };
+            });
+        }));
+
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
             //Instantiate directive.
             var tmp_scope = $rootScope.$new();
