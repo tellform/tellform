@@ -151,7 +151,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		MULTIPLE_CHOICE: 'Mehrfachauswahl',
 		DROPDOWN: 'Dropdown-Liste',
 		DATE: 'Datum',
-		PARAGRAPH_T: "Absatz",
+		PARAGRAPH_FIELD: "Absatz",
 		YES_NO: 'Ja / Nein',
 		LEGAL: "Rechtliche",
 		RATING: 'Bewertung',

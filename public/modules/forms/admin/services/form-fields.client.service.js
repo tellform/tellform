@@ -28,7 +28,7 @@ angular.module('forms').service('FormFields', [ '$rootScope', '$translate', '$wi
 		    },
 		    {
 		        name : 'textarea',
-		        value : $translate.instant('PARAGRAPH'),
+		        value : $translate.instant('PARAGRAPH_FIELD'),
 		    },
 		    {
 		        name : 'yes_no',

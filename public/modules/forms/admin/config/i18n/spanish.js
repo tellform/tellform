@@ -153,7 +153,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	    MULTIPLE_CHOICE: 'Opciones múltiples',
 	    DROPDOWN: 'Desplegable',
 	    DATE: 'Fecha',
-	    PARAGRAPH_T: 'Párrafo',
+	    PARAGRAPH_FIELD: 'Párrafo',
 	    YES_NO: 'Si/No',
 	    LEGAL: 'Legal',
 	    RATING: 'Puntaje',
