@@ -114,7 +114,7 @@
     "mocha": "^3.1.2",
     "mocha-lcov-reporter": "^1.0.0",
     "nightwatch": "^0.9.8",
-    "phantomjs": "^1.9.18",
+    "phantomjs-prebuilt": "^2.1.15",
     "selenium-server": "^3.0.1",
     "should": "~7.1.1",
     "supertest": "~1.2.0",
