@@ -219,7 +219,7 @@ module.exports = function(grunt) {
 	      options: {
 	          emitters: ['event'],
 	      },
-	      src: ['./coverageServerg/*.info', './clientCoverage/lcov-report/*.info']
+	      src: ['/home/travis/build/tellform/tellform/coverageServerg/*.info', '/home/travis/build/tellform/tellform/clientCoverage/lcov-report/*.info']
 	    },
 		html2js: {
 			options: {
