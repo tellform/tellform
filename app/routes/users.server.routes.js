@@ -33,7 +33,4 @@ module.exports = function(app) {
 	app.route('/auth/signout').get(users.signout);
 
 	app.route('/auth/genkey').get(users.requiresLogin, users.generateAPIKey);
-	
-	// Finish by binding the user middleware
-	app.param('userId', users.userByID);
 };

@@ -124,17 +124,18 @@ exports.read = function(req, res) {
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
-			var newForm = req.form.toJSON();
-
-			if (req.userId) {
-				if(req.form.admin._id+'' === req.userId+''){
-					return res.json(newForm);
-				}
+			if(!req.form){
 				return res.status(404).send({
 					message: 'Form Does Not Exist'
 				});
 			}
 
+			var newForm = req.form.toJSON();
+
+			if(newForm.admin._id === req.user._id){
+				return res.json(newForm);
+			}
+		
 			newForm = helpers.removeSensitiveModelData('private_form', newForm);
 			return res.json(newForm);
 	}

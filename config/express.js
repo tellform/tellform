@@ -148,8 +148,6 @@ module.exports = function(db) {
 				// reassign url
 				req.url = subdomainPath;
 
-				req.userId = user._id;
-
 				// Q.E.D.
 				return next();
 			});
