@@ -272,6 +272,79 @@ describe('User CRUD tests', function() {
 			});
 		});
 
+		it('should be able to update user when logged in', function(done) {
+			var newUser = {};
+	    	newUser.firstName = 'goodnight';
+	    	newUser.lastName = 'everyone';
+
+	    	newUser.email = 'grcg@gcrc.com';
+	    	newUser.username = 'grcg';
+
+			async.waterfall([
+			    function(callback) {
+			        userSession.post('/auth/signin')
+						.send({
+							username: _User.username,
+							password: _User.password
+						})
+						.expect(200)
+						.end(function(err, res) {
+							callback(err);
+						});
+			    },
+			    function(callback) {
+			        userSession.put('/users')
+			        	.send(newUser)
+						.expect(200)
+						.end(function(err, res) {
+							callback(err);
+						});
+			    },
+			    function(callback) {
+			    	User.findOne({ username: newUser.username })
+			    		.exec(function(err, user){
+			    			user.firstName.should.equal(newUser.firstName);
+			    			user.lastName.should.equal(newUser.lastName);
+			    			user.email.should.equal(newUser.email);
+			    			user.username.should.equal(newUser.username);
+			    			callback(err);
+			    		});
+			    }
+			], function (err) {
+				done(err);
+			});
+		});
+
+		it('should be able to fetch user when logged in', function(done) {
+			async.waterfall([
+			    function(callback) {
+			        userSession.post('/auth/signin')
+						.send({
+							username: _User.username,
+							password: _User.password
+						})
+						.expect(200)
+						.end(function(err, res) {
+							callback(err);
+						});
+			    },
+			    function(callback) {
+			        userSession.get('/users/me')
+						.expect(200)
+						.end(function(err, res) {
+							var user = res.body;
+							user.firstName.should.equal(_User.firstName);
+			    			user.lastName.should.equal(_User.lastName);
+			    			user.email.should.equal(_User.email);
+			    			user.username.should.equal(_User.username);
+							callback(err);
+						});
+			    }
+			], function (err) {
+				done(err);
+			});
+		});
+
 		afterEach(function(done){
 			userSession.get('/auth/signout')
                 .end(function(err, res) {
