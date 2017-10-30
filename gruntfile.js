@@ -297,7 +297,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'html2js:forms', 'concurrent:default']);
 
 	// Lint task(s).
-	grunt.registerTask('lint', ['jshint', 'csslint', 'i18nlint:client', 'i18nlint:server']);
+	grunt.registerTask('lint', ['jshint', 'csslint']);
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).
