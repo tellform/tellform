@@ -21,8 +21,8 @@ describe('User CRUD tests', function() {
 	before(function() {
 		// Create user credentials
 		credentials = {
-			email: 'test732@test.com',
-			username: 'test732',
+			email: 'test099@test.com',
+			username: 'test099',
 			password: 'password3223'
 		};
 
@@ -40,8 +40,7 @@ describe('User CRUD tests', function() {
 	});
 
 	describe(' > Create, Verify and Activate a User > ', function() {
-		this.timeout(5000);
-
+		this.timeout(10000);
 		it('should be able to create and activate a User', function(done) {
 			async.waterfall([
 			    function(callback) {
@@ -103,6 +102,20 @@ describe('User CRUD tests', function() {
 			});         
 		});
 
+		after(function(done){
+			User.remove().exec(done);
+		});
+	});
+
+	describe(' > Reset Password > ', function(){
+		this.timeout(10000);
+		beforeEach(function(done){
+			var UserObj = new User(_User);
+			UserObj.save(function(err){
+				done(err);
+			})
+		});
+
 		it('should be able to reset password of a created User with a valid passwordResetToken', function(done) {
 			var changedPassword = 'password1234';
 			var resetPasswordToken;
@@ -155,6 +168,7 @@ describe('User CRUD tests', function() {
 			    		});
 			    }
 			], function (err, result) {
+				credentials.password = changedPassword;
 				done(err);
 			});
 		});
@@ -203,6 +217,67 @@ describe('User CRUD tests', function() {
 			});
 		});
 
+		afterEach(function(done){
+			User.remove({ username: credentials.username }).exec(done);
+		});
+	});
+
+	describe(' > User Profile Changes > ', function(){
+		var profileSession = new Session(app);
+
+		this.timeout(10000);
+		beforeEach(function(done){
+			var UserObj = new User(_User);
+			UserObj.save(function(err, user){
+				done(err);
+			})
+		})
+
+		it('should be able to change password when logged in', function(done) {
+			var changedPassword = 'aVeryBadPassword';
+
+			async.waterfall([
+			    function(callback) {
+			        userSession.post('/auth/signin')
+						.send({
+							username: _User.username,
+							password: _User.password
+						})
+						.expect(200)
+						.end(function(err, res) {
+							callback(err);
+						});
+			    },
+			    function(callback) {
+			        userSession.post('/users/password')
+			        	.send({
+			        		currentPassword: _User.password,
+			    			newPassword: changedPassword,
+			    			verifyPassword: changedPassword
+			    		})
+						.expect(200)
+						.end(function(err, res) {
+							callback(err);
+						});
+			    },
+			    function(callback) {
+			    	User.findOne({ username: _User.username })
+			    		.exec(function(err, user){
+			    			user.authenticate(changedPassword).should.be.true();
+			    			callback(err);
+			    		});
+			    }
+			], function (err) {
+				done(err);
+			});
+		});
+
+		afterEach(function(done){
+			userSession.get('/auth/signout')
+                .end(function(err, res) {
+        			User.remove().exec(done);
+                });
+		})
 	});
 
 	after(function(done) {

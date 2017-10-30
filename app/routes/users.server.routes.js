@@ -12,6 +12,7 @@ module.exports = function(app) {
 	var users = require('../../app/controllers/users.server.controller');
 
 	// Setting up the users profile api
+	app.route('/users/password').post(users.requiresLogin, users.changePassword);
 	app.route('/users/me').get(auth.isAuthenticatedOrApiKey, users.getUser);
 	app.route('/users').put(auth.isAuthenticatedOrApiKey, users.update);
 
@@ -19,8 +20,7 @@ module.exports = function(app) {
 	app.route('/auth/verify/:token').get(users.validateVerificationToken);
 	app.route('/auth/verify').post(users.resendVerificationEmail);
 
-	// Setting up the users password api
-	app.route('/users/password').post(users.requiresLogin, users.changePassword);
+	// Setting up the password reset api
 	app.route('/auth/forgot').post(users.forgot);
 	app.route('/auth/reset/:token').get(users.validateResetToken);
 	app.route('/auth/reset/:token').post(users.reset);
