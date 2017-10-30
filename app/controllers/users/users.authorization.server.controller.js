@@ -5,7 +5,8 @@
  */
 var _ = require('lodash'),
 	mongoose = require('mongoose'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	auth = require('../../config/passport_helpers');
 
 /**
  * User middleware
@@ -53,7 +54,7 @@ exports.hasAuthorization = function(roles) {
 	var _this = this;
 
 	return function(req, res, next) {
-		_this.requiresLogin(req, res, function() {
+		auth.isAuthenticatedOrApiKey(req, res, function() {
 			if (_.intersection(req.user.roles, roles).length) {
 				return next();
 			} else {
