@@ -16,6 +16,11 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Cancelar',
 		DISPLAY_START_PAGE: '¿Mostrar página de inicio?',
 		DISPLAY_END_PAGE: '¿Mostrar paǵina de fin?',
+		ENABLE_EMAIL_NOTIFICATIONS: 'Habilitar notificaciones por correo electrónico',
+		EMAIL_NOTIFICATION_RECIPIENTS: 'Destinatarios de notificación de correo electrónico',
+		GENERAL_TAB: 'General',
+		SELF_NOTIFICATIONS_TAB: 'Auto notificaciones',
+		RESPONDANT_NOTIFICATIONS_TAB: 'Notificaciones de los demandados',
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Crear formulario',

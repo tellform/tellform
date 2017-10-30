@@ -15,6 +15,11 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Annuler',
 		DISPLAY_START_PAGE: "Afficher la page de démarrage?",
 		DISPLAY_END_PAGE: "Afficher la page de fin personnalisée?",
+		ENABLE_EMAIL_NOTIFICATIONS: 'Enable Email Notifications',
+		EMAIL_NOTIFICATION_RECIPIENTS: 'Email Notification Recipients',
+		GENERAL_TAB: 'General',
+		SELF_NOTIFICATIONS_TAB: 'Self notifications',
+		RESPONDANT_NOTIFICATIONS_TAB: 'Respondent notifications',
 
 		// Afficher les formulaires
 		CREATE_A_NEW_FORM: "Créer un nouveau formulaire",

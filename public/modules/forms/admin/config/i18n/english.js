@@ -18,6 +18,9 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DISPLAY_END_PAGE: 'Display Custom End Page?',
 		ENABLE_EMAIL_NOTIFICATIONS: 'Enable Email Notifications',
 		EMAIL_NOTIFICATION_RECIPIENTS: 'Email Notification Recipients',
+		GENERAL_TAB: 'General',
+		SELF_NOTIFICATIONS_TAB: 'Self notifications',
+		RESPONDANT_NOTIFICATIONS_TAB: 'Respondent notifications',
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Create a new form',

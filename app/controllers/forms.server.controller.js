@@ -118,19 +118,17 @@ exports.listSubmissions = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
-	debugger;
 
 	if(!req.body.form){
 		return res.status(401).send({
 			message: 'Invalid Input'
 		});
 	}
+	
 	var form = new Form(req.body.form);
-
 	form.admin = req.user._id;
 
 	form.save(function(err) {
-		debugger;
 		if (err) {
 			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)

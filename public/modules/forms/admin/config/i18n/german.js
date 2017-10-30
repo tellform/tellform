@@ -15,6 +15,11 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Abbrechen',
 		DISPLAY_START_PAGE: 'Startseite anzeigen?',
 		DISPLAY_END_PAGE: 'Benutzerdefinierte Endseite anzeigen?',
+		ENABLE_EMAIL_NOTIFICATIONS: 'E-Mail-Benachrichtigungen aktivieren',
+		EMAIL_NOTIFICATION_RECIPIENTS: 'E-Mail-Benachrichtigungsempfänger',
+		GENERAL_TAB: 'Allgemein',
+		SELF_NOTIFICATIONS_TAB: 'Selbstbenachrichtigungen',
+		RESPONDANT_NOTIFICATIONS_TAB: 'Beantwortungsbenachrichtigungen',
 
 		// Listenformularansicht
 		CREATE_A_NEW_FORM: 'Erstelle ein neues Formular',
