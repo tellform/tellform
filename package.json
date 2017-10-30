@@ -21,7 +21,7 @@
     "generate": "all-contributors generate",
     "start": "grunt",
     "test": "grunt test",
-    "travis": "grunt travis",
+    "travis": "grunt test:travis",
     "postinstall": "bower install --config.interactive=false; grunt build;",
     "init": "node scripts/setup.js"
   },

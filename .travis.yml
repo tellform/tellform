@@ -12,6 +12,4 @@ addons:
   code_climate:
     repo_token: 6c3a1b81a09b2338d6f30913c1bcad115026689752cbb499a0a25061cda6fbcf
 script:
-  - npm travis
-after_script:
-  - grunt coveralls
+  - npm run travis

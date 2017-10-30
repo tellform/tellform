@@ -219,7 +219,7 @@ module.exports = function(grunt) {
 	      options: {
 	          emitters: ['event'],
 	      },
-	      src: ['/home/travis/build/tellform/tellform/coverageServerg/*.info', '/home/travis/build/tellform/tellform/clientCoverage/lcov-report/*.info']
+	      src: ['./coverageServer/*.info', './coverageClient/lcov-report/*.info']
 	    },
 		html2js: {
 			options: {
@@ -247,7 +247,7 @@ module.exports = function(grunt) {
 				options: {
 					module: 'TellForm.templates'
 				},
-				src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html'],
+				src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html', 'public/form_modules/forms/base/**/*.html'],
 				dest: 'public/dist/populate_template_cache.js'
 			}
 		},
@@ -310,7 +310,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('test', ['test:server', 'test:client']);
 	grunt.registerTask('test:server', ['lint:tests', 'env:test', 'mochaTest']);
 	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit']);
-	grunt.registerTask('test:travis', ['env:test', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit', 'mochaTest']);
+	grunt.registerTask('test:travis', ['coverage:server', 'test:client', 'lcovMerge']);
 
 
 	grunt.registerTask('testdebug', ['env:test', 'karma:debug']);
