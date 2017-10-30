@@ -11,13 +11,15 @@ module.exports = function() {
 		return User.findOne({
 			'apiKey': apiKey
 		}, function(err, user) {
-			if (err)
+			if (err) {
 				return done(err);
+			}
 
-			if (!user)
+			if (!user){
 				return done(null, false, {
 					message: 'Unknown API Key'
 				});
+			}
 
 			return done(null, user);
 		});

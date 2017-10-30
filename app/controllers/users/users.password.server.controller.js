@@ -84,7 +84,6 @@ exports.forgot = function(req, res) {
 			const fn = pug.compileFile(__dirname + "/../../views/templates/reset-password-email.server.view.pug");
 			res.locals['url'] = 'http://' + req.headers.host + '/auth/reset/' + token;
 			
-			console.log(res.locals);
 			var renderedHtml = fn(res.locals);
 			done(null, renderedHtml, user);
 		},
@@ -142,9 +141,9 @@ exports.validateResetToken = function(req, res) {
 			});
 		}
 		if (!user) {
-			return res.redirect('/#!/password/reset/invalid');
+			return res.redirect(400, '/#!/password/reset/invalid');
 		}
-
+		
 		res.redirect('/#!/password/reset/' + req.params.token);
 	});
 };
@@ -187,7 +186,7 @@ exports.reset = function(req, res, next) {
 						done(null, savedUser);
 					});
 				} else {
-					done('Password reset token is invalid or has expired.', null);
+					done('invalid_reset_token', null);
 				}
 			});
 		},
@@ -211,12 +210,18 @@ exports.reset = function(req, res, next) {
 		}
 	], function(err) {
 		if (err) {
-			res.status(500).send({
+			if(err === 'invalid_reset_token'){
+				return res.status(400).send({
+					message: 'Password reset token is invalid or has expired.'
+				});
+			}
+
+			return res.status(500).send({
 				message: err.message || err
 			});
 		}
 
-		return res.json({
+		res.json({
 			message: 'Successfully changed your password!'
 		});
 	});

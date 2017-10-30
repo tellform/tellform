@@ -29,10 +29,19 @@ module.exports = function(config) {
 		    'public/modules/**/views/**/*.html': ['ng-html2js'],
 		    'public/modules/**/views/*.html': ['ng-html2js'],
 		    'public/form_modules/forms/base/views/**/*.html': ['ng-html2js'],
-		    'public/form_modules/forms/base/views/*.html': ['ng-html2js']
-		    //'public/modules/*/*.js': ['coverage'],
-			//'public/modules/*/*[!tests]*/*.js': ['coverage'],
+		    'public/form_modules/forms/base/views/*.html': ['ng-html2js'],
+		    'public/modules/*/*.js': ['coverage'],
+			'public/modules/*/*[!tests]*/*.js': ['coverage']
 		},
+
+		// configure coverage reporter
+	    coverageReporter: {
+	      	reporters: [
+	      		{ type: 'html', subdir: 'report-html' },
+        		{ type: 'lcov', subdir: 'report-lcov' },
+          	],
+	      	dir : 'coverageClient/'
+	    },
 
 		ngHtml2JsPreprocessor: {
 		    stripPrefix: 'public/',
