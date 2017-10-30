@@ -198,7 +198,7 @@ module.exports = function(db) {
 	app.use(morgan(logger.getLogFormat(), logger.getMorganOptions()));
 
 	// Environment dependent middleware
-	if (process.env.NODE_ENV === 'development') {
+	if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
 		// Disable views cache
 		app.set('view cache', false);
 	} else if (process.env.NODE_ENV === 'production') {
@@ -290,7 +290,7 @@ module.exports = function(db) {
 	app.use(function (req, res, next) {
 
 	    // Website you wish to allow to connect
-	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.polydaic.com');
+	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.io');
 
 	    // Request methods you wish to allow
 	    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -336,22 +336,6 @@ module.exports = function(db) {
 			error: 'Not Found'
 		});
 	});
-
-	if (process.env.NODE_ENV === 'secure') {
-		// Load SSL key and certificate
-		var privateKey = fs.readFileSync('./config/sslcerts/key.pem', 'utf8');
-		var certificate = fs.readFileSync('./config/sslcerts/cert.pem', 'utf8');
-
-		// Create HTTPS Server
-		var httpsServer = https.createServer({
-			key: privateKey,
-			cert: certificate
-		}, app);
-
-		// Return HTTPS server instance
-		return httpsServer;
-	}
-
 
 	app = configureSocketIO(app, db);
 

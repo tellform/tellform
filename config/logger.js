@@ -63,7 +63,6 @@ logger.setupFileLogger = function setupFileLogger() {
 
     return false;
   }
-
 };
 
 /**
@@ -97,7 +96,6 @@ logger.getLogOptions = function getLogOptions() {
     handleExceptions: true,
     humanReadableUnhandledException: true
   };
-
 };
 
 /**
