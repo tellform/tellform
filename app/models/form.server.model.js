@@ -294,26 +294,6 @@ FormSchema.plugin(timeStampPlugin, {
 	useVirtual: false
 });
 
-FormSchema.pre('save', function (next) {
-	switch(this.language){
-		case 'spanish':
-			this.language = 'es';
-			break;
-		case 'french':
-			this.language = 'fr';
-			break;
-		case 'italian':
-			this.language = 'it';
-			break;
-		case 'german':
-			this.language = 'de';
-			break;
-		default:
-			break;
-	}
-	next();
-});
-
 function getDeletedIndexes(needle, haystack){
 	var deletedIndexes = [];
 

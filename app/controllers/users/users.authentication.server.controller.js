@@ -201,16 +201,12 @@ exports.signout = function(req, res) {
 
 /* Generate API Key for User */
 exports.generateAPIKey = function(req, res) {
-	if (!req.isAuthenticated()){
-		return res.status(401).send({
-			message: 'User is not Authorized'
-		});
-	}
-
 	User.findById(req.user.id)
 		.exec( function(err, user) {
 			if (err) {
-				return res.status(400).send(err);
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
 			}
 
 			if (!user) {
@@ -230,8 +226,7 @@ exports.generateAPIKey = function(req, res) {
 
 				var newUser = _user.toObject();
 
-				newUser = helpers.removeSensitiveModelData('private_user', newUser);
-				return res.json(newUser);
+				return res.json({ id: newUser._id, apiKey: newUser.apiKey });
 			});
 
 		});

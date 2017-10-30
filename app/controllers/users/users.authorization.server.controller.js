@@ -6,7 +6,7 @@
 var _ = require('lodash'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
-	auth = require('../../config/passport_helpers');
+	auth = require('../../../config/passport_helpers');
 
 /**
  * User middleware

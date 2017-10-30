@@ -6,6 +6,7 @@ module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next
 	if (req.isAuthenticated()) {
 		return next();
 	}
+	
 	// Try authenticate with API KEY
 	if (req.headers.apikey || req.query.apikey || req.body.apikey) {
 		passport.authenticate('localapikey', function (err, user, info) {
