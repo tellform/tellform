@@ -14,4 +14,4 @@ addons:
 script:
   - npm travis
 after_script:
-  - grunt coverage
+  - grunt coveralls

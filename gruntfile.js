@@ -211,7 +211,7 @@ module.exports = function(grunt) {
                     coverageFolder: 'coverageServer',
                     mask: '*.test.js',
                     require: ['server.js'],
-                    reportFormats: ['cobertura','lcovonly']
+                    reportFormats: ['html','lcovonly']
                 }
             }
         },
@@ -219,7 +219,7 @@ module.exports = function(grunt) {
 	      options: {
 	          emitters: ['event'],
 	      },
-	      src: ['./coverageServer/*.info', './clientCoverage/lcov-report/*.info']
+	      src: ['./coverageServerg/*.info', './clientCoverage/lcov-report/*.info']
 	    },
 		html2js: {
 			options: {
@@ -283,7 +283,7 @@ module.exports = function(grunt) {
 	});
 
 	// Code coverage tasks.
-	grunt.registerTask('coveralls', ['env:test','lcovMerge']);
+	grunt.registerTask('coveralls', ['test:client', 'karma:unit', 'mocha_istanbul:coverageServer', 'lcovMerge']);
     grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
@@ -310,7 +310,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('test', ['test:server', 'test:client']);
 	grunt.registerTask('test:server', ['lint:tests', 'env:test', 'mochaTest']);
 	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit']);
-	grunt.registerTask('test:travis', ['env:test', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit', 'mochaTest', 'coveralls']);
+	grunt.registerTask('test:travis', ['env:test', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit', 'mochaTest']);
 
 
 	grunt.registerTask('testdebug', ['env:test', 'karma:debug']);

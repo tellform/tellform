@@ -113,7 +113,7 @@ describe('User CRUD tests', function() {
 			var UserObj = new User(_User);
 			UserObj.save(function(err){
 				done(err);
-			})
+			});
 		});
 
 		it('should be able to reset password of a created User with a valid passwordResetToken', function(done) {
@@ -230,8 +230,8 @@ describe('User CRUD tests', function() {
 			var UserObj = new User(_User);
 			UserObj.save(function(err, user){
 				done(err);
-			})
-		})
+			});
+		});
 
 		it('should be able to change password when logged in', function(done) {
 			var changedPassword = 'aVeryBadPassword';
@@ -350,7 +350,7 @@ describe('User CRUD tests', function() {
                 .end(function(err, res) {
         			User.remove().exec(done);
                 });
-		})
+		});
 	});
 
 	describe(' > User API > ', function(){
@@ -361,8 +361,8 @@ describe('User CRUD tests', function() {
 			var UserObj = new User(_User);
 			UserObj.save(function(err, user){
 				done(err);
-			})
-		})
+			});
+		});
 
 		it('should be able to request API Key', function(done) {
 			async.waterfall([
@@ -396,8 +396,8 @@ describe('User CRUD tests', function() {
 			        userSession.get('/users/me?apikey=' + apiKey)
 						.expect(200)
 						.end(function(err, res) {
-							console.log(res.body);
 							var user = res.body;
+
 							user.firstName.should.equal(_User.firstName);
 			    			user.lastName.should.equal(_User.lastName);
 			    			user.email.should.equal(_User.email);
@@ -442,9 +442,9 @@ describe('User CRUD tests', function() {
 			});
 		});
 
-		afterEach(function(done){
+		after(function(done){
 			User.remove().exec(done);
-		})
+		});
 	});
 
 	after(function(done) {

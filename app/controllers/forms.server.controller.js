@@ -191,11 +191,6 @@ exports.update = function(req, res) {
 			delete updatedForm.admin;
 		}
 
-		if(form.analytics === null){
-			form.analytics.visitors = [];
-			form.analytics.gaCode = '';
-		}
-
 		//Do this so we can create duplicate fields
 		var checkForValidId = new RegExp('^[0-9a-fA-F]{24}$');
 		for(var i=0; i < req.body.form.form_fields.length; i++){

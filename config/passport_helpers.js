@@ -9,12 +9,21 @@ module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next
 
 	// Try authenticate with API KEY
 	if (req.headers.apikey || req.query.apikey || req.body.apikey) {
-		passport.authenticate('localapikey', function (err, user, info) {
-			if (err)
-				return res.sendStatus(500);
+		if(!req.body.apikey && req.headers.apikey){
+			req.body.apikey = req.headers.apikey;
+		} else if(!req.query.apikey && req.headers.apikey){
+			req.query.apikey = req.headers.apikey;
+		}
 
-			if (!user)
+		passport.authenticate('localapikey', function (err, user, info) {
+			if (err) {
+				return res.status(500).send('Internal Server Error with API. Sorry about that!');
+			}
+
+			if (!user) {
+				console.log('no user for apikey');
 				return res.status(401).send(info.message || '');
+			}
 
 			req.login(user, function(loginErr) {
 				if (loginErr) return res.sendStatus(500);
