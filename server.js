@@ -3,10 +3,13 @@
  * Module dependencies.
  */
 
-require('dotenv').config({path: './.env'});
-
 if(!process.env.NODE_ENV){
     process.env.NODE_ENV = 'development';
+}
+
+//Don't check .env file if we are in travis-ci
+if(!process.env.TRAVIS){
+	require('dotenv').config({path: './.env'});
 }
 
 
