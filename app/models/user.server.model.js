@@ -24,28 +24,6 @@ smtpTransport.verify(function(error, success) {
 });
 
 /**
- * A Validation function for local strategy properties
- */
-var validateLocalStrategyProperty = function(property) {
-	var propHasLength;
-	if (property) {
-		propHasLength = !!property.length;
-	} else {
-		propHasLength = false;
-	}
-
-	return ((this.provider !== 'local' && !this.updated) || propHasLength);
-};
-
-/**
- * A Validation function for username
- */
-var validateUsername = function(username) {
-	return (username.match(/^[a-zA-Z0-9.-_]+$/) !== null);
-};
-
-
-/**
  * User Schema
  */
 var UserSchema = new Schema({
@@ -85,8 +63,6 @@ var UserSchema = new Schema({
 		type: String,
 		default: 'local'
 	},
-	providerData: {},
-	additionalProvidersData: {},
 	roles: {
 		type: [{
 			type: String,
@@ -121,10 +97,6 @@ var UserSchema = new Schema({
 		index: true,
 		sparse: true
 	}
-});
-
-UserSchema.virtual('displayName').get(function () {
-  	return this.firstName + ' ' + this.lastName;
 });
 
 UserSchema.plugin(timeStampPlugin, {

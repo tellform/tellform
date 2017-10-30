@@ -17,7 +17,6 @@ var exampleDemo = {
 	address: '880-9650 Velit. St.',
 	city: '',
 	dateOfBirth: '10',
-	displayName: 'Test User',
 	email: 'polydaic@gmail.com',
 	firstName: 'Test User',
 	hin: '',
@@ -82,7 +81,6 @@ describe('FormSubmission Model Unit Tests:', function() {
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
 			email: 'test1@test.com'+Date.now(),
 			username: 'test1'+Date.now(),
 			password: 'password',
@@ -199,6 +197,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 
         it('should preserve deleted form_fields that have submissions without any problems', function(done) {
 
+        	var fieldPropertiesToOmit = ['deletePreserved', 'globalId', 'lastModified', 'created', '_id', 'submissionId', 'isSubmission', 'validFieldTypes', 'title'];
 			var old_fields = myForm.toObject().form_fields;
 			var new_form_fields = _.clone(myForm.toObject().form_fields);
 			new_form_fields.splice(0, 1);
@@ -210,8 +209,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 				should.not.exist(err);
 				should.exist(_form.form_fields);
 
-				var actual_fields = _.deepOmit(_form.toObject().form_fields, ['deletePreserved', 'globalId', 'lastModified', 'created', '_id', 'submissionId']);
-				old_fields = _.deepOmit(old_fields, ['deletePreserved', 'globalId', 'lastModified', 'created', '_id', 'submissionId']);
+				var actual_fields = _.deepOmit(_form.toObject().form_fields, fieldPropertiesToOmit);
+				old_fields = _.deepOmit(old_fields, fieldPropertiesToOmit);
 
 				should.deepEqual(actual_fields, old_fields, 'old form_fields not equal to newly saved form_fields');
 				done();

@@ -9,7 +9,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope.forms = {};
 
 	    $scope.signin = function() {
-	    	if(!$scope.forms.signinForm.$invalid){
+	    	if($scope.forms && $scope.forms.hasOwnProperty('siginForm') && !$scope.forms.signinForm.$invalid){
 				User.login($scope.credentials).then(
 					function(response) {
 						Auth.login(response);

@@ -71,7 +71,6 @@ var VisitorDataSchema = new Schema({
 	userAgent: {
 		type: String
 	}
-
 });
 
 var formSchemaOptions = {
@@ -102,12 +101,17 @@ var FormSchema = new Schema({
 		visitors: [VisitorDataSchema]
 	},
 
-	form_fields: [FieldSchema],
-	submissions: [{
-		type: Schema.Types.ObjectId,
-		ref: 'FormSubmission'
-	}],
-
+	form_fields: {
+		type: [FieldSchema],
+		default: []
+	},
+	submissions: {
+		type: [{
+			type: Schema.Types.ObjectId,
+			ref: 'FormSubmission'
+		}],
+		dfeault: []
+	},
 	admin: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
@@ -154,6 +158,7 @@ var FormSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
+	
 	isLive: {
 		type: Boolean,
 		default: true
@@ -219,7 +224,7 @@ FormSchema.virtual('analytics.fields').get(function () {
 	var visitors = this.analytics.visitors;
 	var that = this;
 
-	if(this.form_fields.length === 0) {
+	if(!this.form_fields || this.form_fields.length === 0) {
 		return null;
 	}
 
@@ -287,26 +292,6 @@ FormSchema.plugin(timeStampPlugin, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
 	useVirtual: false
-});
-
-FormSchema.pre('save', function (next) {
-	switch(this.language){
-		case 'spanish':
-			this.language = 'es';
-			break;
-		case 'french':
-			this.language = 'fr';
-			break;
-		case 'italian':
-			this.language = 'it';
-			break;
-		case 'german':
-			this.language = 'de';
-			break;
-		default:
-			break;
-	}
-	next();
 });
 
 function getDeletedIndexes(needle, haystack){

@@ -10,13 +10,33 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 myform: '='
             },
             controller: function($scope){
-
                 $scope.table = {
                     masterChecker: false,
                     rows: []
                 };
 
-                var initController = function(){
+                $scope.deletionInProgress = false; 
+                $scope.waitingForDeletion = false;
+
+                //Waits until deletionInProgress is false before running getSubmissions
+                $scope.$watch("deletionInProgress",function(newVal, oldVal){
+                    if(newVal === oldVal) return;
+
+                    if(newVal === false && $scope.waitingForDeletion) {
+                        $scope.getSubmissions();
+                        $scope.waitingForDeletion = false;
+                    }
+                });
+
+                $scope.handleSubmissionsRefresh = function(){
+                    if(!$scope.deletionInProgress) {
+                        $scope.getSubmissions();
+                    } else {
+                        $scope.waitingForDeletion = true;
+                    }
+                };
+
+                $scope.getSubmissions = function(cb){
                     $http({
                       method: 'GET',
                       url: '/forms/'+$scope.myform._id+'/submissions'
@@ -31,19 +51,53 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                                 if(submissions[i].form_fields[x].fieldType === 'dropdown'){
                                     submissions[i].form_fields[x].fieldValue = submissions[i].form_fields[x].fieldValue.option_value;
                                 }
-                                //var oldValue = submissions[i].form_fields[x].fieldValue || '';
-                                //submissions[i].form_fields[x] =  _.merge(defaultFormFields, submissions[i].form_fields);
-                                //submissions[i].form_fields[x].fieldValue = oldValue;
                             }
                             submissions[i].selected = false;
                         }
 
                         $scope.table.rows = submissions;
+
+                        if(cb && typeof cb === 'function'){
+                            cb();
+                        }
+                    }, function errorCallback(err){
+                        console.error(err);
+                        if(cb && typeof cb === 'function'){
+                            cb(err);
+                        }
+                    });       
+                };
+
+                $scope.getVisitors = function(){
+                    $http({
+                      method: 'GET',
+                      url: '/forms/'+$scope.myform._id+'/visitors'
+                    }).then(function successCallback(response) {
+                        var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+
+                        var visitors = response.data || [];
+
+                        $scope.visitors = visitors;
                     });
                 };
 
-                initController();
+                $scope.handleSubmissionsRefresh();
+                $scope.getVisitors();
 
+                //Fetch submissions and visitor data every 1.67 min
+                var updateSubmissions = $interval($scope.handleSubmissionsRefresh, 100000);
+                var updateVisitors = $interval($scope.getVisitors, 1000000);
+
+                //Prevent $intervals from running after directive is destroyed
+                $scope.$on('$destroy', function() {
+                    if (updateSubmissions) {
+                        $interval.cancel($scope.updateSubmissions);
+                    }
+
+                    if (updateVisitors) {
+                        $interval.cancel($scope.updateVisitors);
+                    }
+                });
 
                 /*
                 ** Analytics Functions
@@ -105,14 +159,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     return stats;
                 })();
 
-                var updateFields = $interval(initController, 1000000);
-
-                $scope.$on('$destroy', function() {
-                    if (updateFields) {
-                        $interval.cancel($scope.updateFields);
-                    }
-                });
-
                 /*
                 ** Table Functions
                 */
@@ -141,25 +187,24 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
 
+                    $scope.deletionInProgress = true;
                     var delete_ids = _.chain($scope.table.rows).filter(function(row){
                         return !!row.selected;
                     }).pluck('_id').value();
 
-                    $http({ url: '/forms/'+$scope.myform._id+'/submissions',
+                    return $http({ url: '/forms/'+$scope.myform._id+'/submissions',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
                         }).success(function(data, status){
+                            $scope.deletionInProgress = true;
                             //Remove deleted ids from table
-                            var tmpArray = [];
-                            for(var i=0; i<$scope.table.rows.length; i++){
-                                if(!$scope.table.rows[i].selected){
-                                    tmpArray.push($scope.table.rows[i]);
-                                }
-                            }
-                            $scope.table.rows = tmpArray;
+                            $scope.table.rows =  $scope.table.rows.filter(function(field){
+                                return !field.selected;
+                            });
                         })
                         .error(function(err){
+                            $scope.deletionInProgress = true;
                             console.error(err);
                         });
                 };
@@ -173,3 +218,4 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
         };
     }
 ]);
+

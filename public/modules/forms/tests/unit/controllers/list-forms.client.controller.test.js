@@ -86,7 +86,6 @@
             });
         }));
 
-
         // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
         // This allows us to inject a service but then attach it to a variable
         // with the same name as the service.
@@ -106,23 +105,11 @@
 
             // Initialize the Forms controller.
             createListFormsController = function(){
-                return $controller('ListFormsController', { $scope: scope });
+                return $controller('ListFormsController', { 
+                    $scope: scope,
+                    myForms: sampleFormList
+                });
             };
-        }));
-
-        it('$scope.findAll() should query all User\'s Forms', inject(function() {
-
-            var controller = createListFormsController();
-
-            // Set GET response
-            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList);
-
-            // Run controller functionality
-            scope.findAll();
-            $httpBackend.flush();
-
-            // Test scope value
-            expect( scope.myforms ).toEqualData(sampleFormList);
         }));
 
         it('$scope.duplicateForm() should duplicate a Form', inject(function() {
@@ -134,12 +121,6 @@
             newSampleFormList.splice(3, 0, dupSampleForm);
 
             var controller = createListFormsController();
-
-            // Set GET response
-            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList);
-            // Run controller functionality
-            scope.findAll();
-            $httpBackend.flush();
 
             // Set GET response
             $httpBackend.expect('POST', '/forms').respond(200, dupSampleForm);
@@ -163,13 +144,6 @@
             delSampleFormList.splice(delIndex, 1);
 
             var controller = createListFormsController();
-
-            // Set GET response
-            $httpBackend.expectGET(/^(\/forms)$/).respond(200, sampleFormList);
-
-            // Run controller functionality
-            scope.findAll();
-            $httpBackend.flush();
 
             // Set GET response
             $httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, delSampleForm);
