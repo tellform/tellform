@@ -12,8 +12,8 @@ addons:
   code_climate:
     repo_token: 6c3a1b81a09b2338d6f30913c1bcad115026689752cbb499a0a25061cda6fbcf
 install:
-  - yarn add phantomjs-prebuilt
-  - yarn global add grunt
-  - yarn install
+  - npm install phantomjs
+  - npm install -g grunt
+  - npm install
 script:
   - yarn run travis
