@@ -1,72 +1,75 @@
 'use strict';
 
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
-angular.module('forms').service('FormFields', [ '$filter',
-	function($filter) {
+angular.module('forms').service('FormFields', [ '$rootScope', '$translate', '$window',
+	function($rootScope, $translate, $window) {
+		$translate.use($window.user.language);
+		console.log($translate.instant('SHORT_TEXT'));
+
 		this.types = [
 		    {
 		        name : 'textfield',
-		        value : $filter('translate')('SHORT_TEXT'),
+		        value : $translate.instant('SHORT_TEXT'),
 		    },
 		    {
 		        name : 'email',
-		        value : $filter('translate')('EMAIL'),
+		        value : $translate.instant('EMAIL'),
 		    },
 		    {
 		        name : 'radio',
-		        value : $filter('translate')('MULTIPLE_CHOICE'),
+		        value : $translate.instant('MULTIPLE_CHOICE'),
 		    },
 		    {
 		        name : 'dropdown',
-		        value : $filter('translate')('DROPDOWN'),
+		        value : $translate.instant('DROPDOWN'),
 		    },
 		    {
 		        name : 'date',
-		        value : $filter('translate')('DATE'),
+		        value : $translate.instant('DATE'),
 		    },
 		    {
 		        name : 'textarea',
-		        value : $filter('translate')('PARAGRAPH'),
+		        value : $translate.instant('PARAGRAPH'),
 		    },
 		    {
 		        name : 'yes_no',
-		        value : $filter('translate')('YES_NO'),
+		        value : $translate.instant('YES_NO'),
 		    },
 		    {
 		        name : 'legal',
-		        value : $filter('translate')('LEGAL'),
+		        value : $translate.instant('LEGAL'),
 		    },
 		    // {
 		    //     name : 'sig',
-		    //     value : $filter('translate')('SIGNATURE'),
+		    //     value : $translate.instant('SIGNATURE'),
 		    // },
 			// {
 		    //     name : 'file',
-		    //     value : $filter('translate')('FILE_UPLOAD'),
+		    //     value : $translate.instant('FILE_UPLOAD'),
 		    // },
 		    {
 		        name : 'rating',
-		        value : $filter('translate')('RATING'),
+		        value : $translate.instant('RATING'),
 		    },
 		    {
 		        name : 'link',
-		        value : $filter('translate')('LINK'),
+		        value : $translate.instant('LINK'),
 		    },
 		    {
 		        name : 'number',
-		        value : $filter('translate')('NUMBERS'),
+		        value : $translate.instant('NUMBERS'),
 		    },
 		    // {
 		    //     name : 'scale',
-		    //     value : $filter('translate')('OPINION SCALE'),
+		    //     value : $translate.instant('OPINION SCALE'),
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : $filter('translate')('PAYMENT'),
+		    //     value : $translate.instant('PAYMENT'),
 		    // },
 		    {
 		        name : 'statement',
-		        value : $filter('translate')('STATEMENT')
+		        value : $translate.instant('STATEMENT')
 		    }
 		];
 	}

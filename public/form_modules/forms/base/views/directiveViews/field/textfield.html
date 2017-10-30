@@ -38,7 +38,7 @@
     <div class="col-xs-12">
         <div ng-show="forms.myForm.{{field.fieldType}}{{index}}.$invalid && !!forms.myForm.{{field.fieldType}}{{index}}.$viewValue " class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span>
+            <span class="sr-only">{{ 'ERROR' | translate }}:</span>
 			<span ng-if="field.fieldType == 'email'"> {{ 'ERROR_EMAIL_INVALID' | translate }} </span>
 			<span ng-if="field.fieldType == 'number'"> {{ 'ERROR_NOT_A_NUMBER' | translate }} </span>
 			<span ng-if="field.fieldType == 'link'"> {{ 'ERROR_URL_INVALID' | translate }} </span>

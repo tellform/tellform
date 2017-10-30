@@ -1,0 +1,62 @@
+doctype html
+html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
+  head
+    title #{title}
+
+    // General META 
+    meta(charset='utf-8')
+    meta(http-equiv='Content-type', content='text/html;charset=UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='viewport', content='width=device-width,initial-scale=1,maximum-scale=1')
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style', content='black')
+
+    // Semantic META 
+    meta(name='keywords', content='#{keywords}')
+    meta(name='description', content='#{description}')
+
+    // Facebook META 
+    meta(property='og:site_name', content='#{title}')
+    meta(property='og:title', content='#{title}')
+    meta(property='og:description', content='#{description}')
+    meta(property='og:url', content='{{url}}')
+    meta(property='og:image', content='/img/brand/logo.png')
+    meta(property='og:type', content='website')
+
+    // Twitter META 
+    meta(name='twitter:title', content='#{title}')
+    meta(name='twitter:description', content='#{description}')
+    meta(name='twitter:url', content='{{url}}')
+    meta(name='twitter:image', content='/img/brand/logo.png')
+
+    // Fav Icon 
+    link(href='/static/modules/core/img/brand/favicon.ico', rel='shortcut icon', type='image/x-icon')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900')
+
+    //Application CSS Files
+    each cssFile in cssFiles
+      link(rel='stylesheet', href='#{cssFile}')
+    // end Application CSS Files
+  body
+    redoc(spec-url='/static/swagger.json')
+    script(src='https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js')
+    
+    //Bower JS dependencies
+    each bowerJSFile in bowerJSFiles
+      script(type='text/javascript', src='#{bowerJSFile}')
+    // end Bower JS dependencies
+    
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js')
+    
+    if process.env.NODE_ENV === 'development'
+      script(src='https://cdn.ravenjs.com/2.3.0/angular/raven.min.js')
+    
+    script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
+   
+    script window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;ga('create','{{google_analytics_id}}','auto');ga('send','pageview')
+    
+    script(src='https://www.google-analytics.com/analytics.js', async='', defer='')
+
+    script(type="text/javascript").
+      window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+      heap.load("2213510609");

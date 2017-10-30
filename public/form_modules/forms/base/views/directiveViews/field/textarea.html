@@ -14,7 +14,9 @@
 		</p>
 	</div>
 	<div class="col-xs-12 field-input">
-		<small style="font-size:0.6em;">Press SHIFT+ENTER to add a newline</small>
+		<small style="font-size:0.6em;">
+			{{ 'ADD_NEW_LINE_INSTR' | translate }}
+		</small>
 		<textarea class="textarea focusOn" type="text"
 		 	ng-focus="setActiveField(field._id, null, false)"
 			ng-model="field.fieldValue"

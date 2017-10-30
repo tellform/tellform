@@ -600,7 +600,7 @@ angular.module('TellForm.templates', []).run(['$templateCache', function($templa
   $templateCache.put("modules/users/views/authentication/signin.client.view.html",
     "<section class=\"auth sigin-view valign-wrapper\" data-ng-controller=AuthenticationController><div class=\"row valign\"><div class=\"col-md-4 col-md-offset-4\"><div class=\"col-md-12 text-center\" style=\"padding-bottom: 50px\"><img src=/static/modules/core/img/logo_white.svg height=100px></div><div class=col-md-12><form class=\"signin form-horizontal\" autocomplete=off><fieldset><div data-ng-show=error class=\"text-center text-danger\">Error: <strong data-ng-bind=error></strong></div><div class=form-group><input id=username name=username class=form-control data-ng-model=credentials.username placeholder=\"{{ 'USERNAME_OR_EMAIL_LABEL' | translate }}\" ng-minlength=4></div><div class=form-group><input type=password id=password name=password class=form-control data-ng-model=credentials.password placeholder=\"{{ 'PASSWORD_LABEL' | translate }}\" ng-minlength=4></div><div class=form-group><button class=\"btn btn-signup btn-rounded btn-block\" ng-click=signin()>{{ 'SIGNIN_BTN' | translate }}</button></div><div class=\"text-center forgot-password\"><a ui-sref=forgot>{{ 'FORGOT_PASSWORD_LINK' | translate }}</a></div></fieldset></form></div></div><div class=\"text-center forgot-password col-md-12\"><a ui-sref=signup>{{ 'SIGNUP_ACCOUNT_LINK' | translate }}</a></div></div></section>");
   $templateCache.put("modules/users/views/authentication/signup-success.client.view.html",
-    "<section class=\"auth signup-view success\" data-ng-controller=AuthenticationController><h3 class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6 text-center\">{{ 'SUCCESS_HEADER' | translate }}</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><h2>{{ 'SUCCESS_TEXT' | translate }}<br><br>{{ 'NOT_ACTIVATED_YET' | translate }}</h2><br><br><p><strong>{{ 'BEFORE_YOU_CONTINUE' | translate }}</strong> <a href=mail:polydaic@gmail.com>polydaic@gmail.com</a></p><div class=\"text-center form-group\"><button type=submit class=\"btn btn-primary btn-rounded\"><a href=\"/#!/\" style=\"color: white; text-decoration: none\">{{ 'CONTINUE' | translate }}</a></button></div></div></section>");
+    "<section class=\"auth signup-view success\" data-ng-controller=AuthenticationController><h3 class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6 text-center\">{{ 'SUCCESS_HEADER' | translate }}</h3><div class=\"col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6\"><h2>{{ 'SUCCESS_TEXT' | translate }}<br><br>{{ 'NOT_ACTIVATED_YET' | translate }}</h2><br><br><p><strong>{{ 'BEFORE_YOU_CONTINUE' | translate }}</strong> <a href=mail:team@tellform.com>team@tellform.com</a></p><div class=\"text-center form-group\"><button type=submit class=\"btn btn-primary btn-rounded\"><a href=\"/#!/\" style=\"color: white; text-decoration: none\">{{ 'CONTINUE' | translate }}</a></button></div></div></section>");
   $templateCache.put("modules/users/views/authentication/signup.client.view.html",
     "<section class=\"auth signup-view valign-wrapper\" data-ng-controller=AuthenticationController><div class=\"row valign\"><div class=\"col-md-12 text-center vcenter\" style=\"padding-bottom: 50px\"><img src=/static/modules/core/img/logo_white.svg height=100px></div><div class=\"col-xs-offset-3 col-xs-6 col-sm-offset-4 col-sm-4\"><form name=userForm data-ng-submit=signup() class=\"signin form-horizontal\" autocomplete=off><fieldset><div data-ng-show=error id=signup_errors class=text-center>{{'SIGNUP_ERROR_TEXT' | translate}}:<br><strong data-ng-bind=error></strong></div><div class=form-group><input id=username name=username class=form-control ng-pattern=languageRegExp ng-minlength=4 ng-model=credentials.username placeholder=\"{{ 'USERNAME_LABEL' | translate }}\" ng-minlength=4></div><div class=form-group><input type=email id=email name=email class=form-control ng-model=credentials.email placeholder=\"{{ 'EMAIL_LABEL' | translate }}\"></div><div class=form-group><input type=password id=password name=password class=form-control ng-model=credentials.password placeholder=\"{{ 'PASSWORD_LABEL' | translate }}\" ng-minlength=4></div><div class=\"text-center form-group\"><button type=submit class=\"btn btn-signup btn-rounded btn-block\">{{ 'SIGNUP_BTN' | translate }}</button></div></fieldset></form><div class=\"text-center forgot-password\"><a ui-sref=signin>{{ 'SIGN_IN_ACCOUNT_LINK' | translate }}</a></div></div></div></section>");
   $templateCache.put("modules/users/views/password/forgot-password.client.view.html",
@@ -737,8 +737,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window', '$translate', '$locale',
-	function ($rootScope, $scope, Menus, $state, Auth, User, $window, $translate, $locale) {
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', 'Menus', '$state', 'Auth', 'User', '$window', '$translate',
+	function ($rootScope, $scope, Menus, $state, Auth, User, $window, $translate) {
 
 		$rootScope.signupDisabled = $window.signupDisabled;
 
@@ -749,12 +749,8 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		$rootScope.languages = $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
 
 		//Set global app language
-		if($scope.authentication.isAuthenticated()){
-			$rootScope.language = $scope.user.language;
-		}else {
-			$rootScope.language = $locale.id.substring(0,2);
-		}
-		$translate.use($rootScope.language);
+		$rootScope.language = $scope.user.language;
+		$translate.use($scope.user.language);
 
 		$scope.isCollapsed = false;
 		$rootScope.hideNav = false;
@@ -1278,33 +1274,36 @@ angular.module('users').config(['$stateProvider',
 
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$location', '$state', '$rootScope', 'User', 'Auth',
-	function($scope, $location, $state, $rootScope, User, Auth) {
-
+angular.module('users').controller('AuthenticationController', ['$scope', '$location', '$state', '$rootScope', 'User', 'Auth', '$translate', '$window',
+	function($scope, $location, $state, $rootScope, User, Auth, $translate, $window) {
+		
 		$scope = $rootScope;
 		$scope.credentials = {};
 		$scope.error = '';
+		$scope.forms = {};
 
 	    $scope.signin = function() {
-			User.login($scope.credentials).then(
-				function(response) {
-					Auth.login(response);
-					$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
+	    	if(!$scope.forms.signinForm.$invalid){
+				User.login($scope.credentials).then(
+					function(response) {
+						Auth.login(response);
+						$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-					if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== '') {
-						$state.go($state.previous.name);
-					} else {
-						$state.go('listForms');
+						if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== '') {
+							$state.go($state.previous.name);
+						} else {
+							$state.go('listForms');
+						}
+					},
+					function(error) {
+						$rootScope.user = Auth.ensureHasCurrentUser(User);
+						$scope.user = $rootScope.user;
+
+						$scope.error = error;
+						console.error('loginError: '+error);
 					}
-				},
-				function(error) {
-					$rootScope.user = Auth.ensureHasCurrentUser(User);
-					$scope.user = $rootScope.user;
-
-					$scope.error = error;
-					console.error('loginError: '+error);
-				}
-			);
+				);
+		}
 	    };
 
 	    $scope.signup = function() {
@@ -1313,20 +1312,22 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    		return;
 	    	}
 
-	        User.signup($scope.credentials).then(
-		        function(response) {
-		        	$state.go('signup-success');
-		        },
-		        function(error) {
-		        	console.error(error);
-					if(error) {
-						$scope.error = error;
-						console.error(error);
-					} else {
-						console.error('No response received');
-					}
-		        }
-		    );
+	    	if(!$scope.forms.signupForm.$invalid){
+		        User.signup($scope.credentials).then(
+			        function(response) {
+			        	$state.go('signup-success');
+			        },
+			        function(error) {
+			        	console.error(error);
+						if(error) {
+							$scope.error = error;
+							console.error(error);
+						} else {
+							console.error('No response received');
+						}
+			        }
+			    );
+		    }
 	    };
 
  	}
@@ -1334,20 +1335,24 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 
 'use strict';
 
-angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
-	function($scope, $stateParams, $state, User) {
+angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User', '$translate', '$window',
+	function($scope, $stateParams, $state, User, $translate, $window) {
+		$translate.use($window.locale);
 
 		$scope.error = '';
+		$scope.forms = {};
 
 		// Submit forgotten password account id
 		$scope.askForPasswordReset = function() {
 			User.askForPasswordReset($scope.credentials).then(
 				function(response){
 					$scope.success = response.message;
+					$scope.error = null;
 					$scope.credentials = null;
 				},
 				function(error){
 					$scope.error = error;
+					$scope.success = null;
 					$scope.credentials = null;
 				}
 			);
@@ -1355,21 +1360,25 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 
 		// Change user password
 		$scope.resetUserPassword = function() {
-			$scope.success = $scope.error = null;
-			User.resetPassword($scope.passwordDetails, $stateParams.token).then(
-				function(response){
-					// If successful show success message and clear form
-					$scope.success = response.message;
-					$scope.passwordDetails = null;
+			if(!$scope.forms.resetPasswordForm.$invalid){
+				$scope.success = $scope.error = null;
+				User.resetPassword($scope.passwordDetails, $stateParams.token).then(
+					function(response){
+						// If successful show success message and clear form
+						$scope.success = response.message;
+						$scope.error = null;
+						$scope.passwordDetails = null;
 
-					// And redirect to the index page
-					$state.go('reset-success');
-				},
-				function(error){
-					$scope.error = error.message || error;
-					$scope.passwordDetails = null;
-				}
-			);
+						// And redirect to the index page
+						$state.go('reset-success');
+					},
+					function(error){
+						$scope.error = error.message || error;
+						$scope.success = null;
+						$scope.passwordDetails = null;
+					}
+				);
+			}
 		};
 	}
 ]);
@@ -1409,8 +1418,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 			}).success(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
+				$scope.error = null;
 				$scope.user = response;
 			}).error(function(response) {
+				$scope.success = null;
 				$scope.error = response.message;
 			});
 		};
@@ -1423,8 +1434,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 
 				user.$update(function(response) {
 					$scope.success = true;
+					$scope.error = null;
 					$scope.user = response;
 				}, function(response) {
+					$scope.success = null;
 					$scope.error = response.data.message;
 				});
 			} else {
@@ -1439,8 +1452,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
+				$scope.error = null;
 				$scope.passwordDetails = null;
 			}).error(function(response) {
+				$scope.success = null;
 				$scope.error = response.message;
 			});
 		};
@@ -1450,8 +1465,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 
 'use strict';
 
-angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams',
-	function($scope, $state, $rootScope, User, Auth, $stateParams) {
+angular.module('users').controller('VerifyController', ['$scope', '$state', '$rootScope', 'User', 'Auth', '$stateParams', '$translate', '$window',
+	function($scope, $state, $rootScope, User, Auth, $stateParams, $translate, $window) {
+		$translate.use($window.locale);
 
 		$scope.isResetSent = false;
 		$scope.credentials = {};
@@ -1462,11 +1478,13 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 			User.resendVerifyEmail($scope.credentials.email).then(
 				function(response){
 					$scope.success = response.message;
+					$scope.error = null;
 					$scope.credentials = null;
 					$scope.isResetSent = true;
 				},
 				function(error){
 					$scope.error = error;
+					$scope.success = null;
 					$scope.credentials.email = null;
 					$scope.isResetSent = false;
 				}
@@ -1480,11 +1498,13 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 				User.validateVerifyToken($stateParams.token).then(
 					function(response){
 						$scope.success = response.message;
+						$scope.error = null;
 						$scope.isResetSent = true;
 						$scope.credentials.email = null;
 					},
 					function(error){
 						$scope.isResetSent = false;
+						$scope.success = null;
 						$scope.error = error;
 						$scope.credentials.email = null;
 					}
@@ -1731,9 +1751,9 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 		SIGNIN_TAB: 'Sign In',
 		SIGNOUT_TAB: 'Signout',
 		EDIT_PROFILE: 'Edit Profile',
-		MY_FORMS: 'My Forms',
 		MY_SETTINGS: 'My Settings',
-		CHANGE_PASSWORD: 'Change Password'
+		CHANGE_PASSWORD: 'Change Password',
+		TOGGLE_NAVIGATION: 'Toggle navigation'
 	});
 
 	$translateProvider.preferredLanguage('en')
@@ -1752,9 +1772,41 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 		SIGNIN_TAB: 'Connexion',
 		SIGNOUT_TAB: 'Créer un compte',
 		EDIT_PROFILE: 'Modifier Mon Profil',
-		MY_FORMS: 'Mes Formulaires',
 		MY_SETTINGS: 'Mes Paramètres',
-		CHANGE_PASSWORD: 'Changer mon Mot de Pass'
+		CHANGE_PASSWORD: 'Changer mon Mot de Pass',
+		TOGGLE_NAVIGATION: 'Basculer la navigation',
+	});
+}]);
+
+'use strict';
+
+angular.module('core').config(['$translateProvider', function ($translateProvider) {
+
+	$translateProvider.translations('de', {
+		MENU: 'MENÜ',
+		SIGNUP_TAB: 'Anmelden',
+		SIGNIN_TAB: 'Anmeldung',
+		SIGNOUT_TAB: 'Abmelden',
+		EDIT_PROFILE: 'Profil bearbeiten',
+		MY_SETTINGS: 'Meine Einstellungen',
+		CHANGE_PASSWORD: 'Passwort ändern',
+		TOGGLE_NAVIGATION: 'Navigation umschalten'
+	});
+}]);
+
+'use strict';
+
+angular.module('core').config(['$translateProvider', function ($translateProvider) {
+
+	$translateProvider.translations('it', {
+		MENU: 'MENÜ',
+		SIGNUP_TAB: 'Vi Phrasal',
+		SIGNIN_TAB: 'Accedi',
+		SIGNOUT_TAB: 'Esci',
+		EDIT_PROFILE: 'Modifica Profilo',
+		MY_SETTINGS: 'Mie Impostazioni',
+		CHANGE_PASSWORD: 'Cambia la password',
+		TOGGLE_NAVIGATION: 'Attiva la navigazione'
 	});
 }]);
 
@@ -1768,9 +1820,9 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 		SIGNIN_TAB: 'Entrar',
 		SIGNOUT_TAB: 'Salir',
 		EDIT_PROFILE: 'Editar Perfil',
-		MY_FORMS: 'Mis formularios',
 		MY_SETTINGS: 'Mis configuraciones',
-		CHANGE_PASSWORD: 'Cambiar contraseña'
+		CHANGE_PASSWORD: 'Cambiar contraseña',
+		TOGGLE_NAVIGATION: 'Navegación de palanca'
 	});
 
 }]);
@@ -1778,8 +1830,8 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter',
-    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter) {
+angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$translate',
+    function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $translate) {
 
         //Set active tab to Create
         $scope.activePill = 0;
@@ -2526,7 +2578,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 var initController = function(){
                     $http({
                       method: 'GET',
-                      url: '/forms'+$scope.myform._id+'/submissions'
+                      url: '/forms/'+$scope.myform._id+'/submissions'
                     }).then(function successCallback(response) {
                         var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
 
@@ -2684,72 +2736,75 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 'use strict';
 
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
-angular.module('forms').service('FormFields', [ '$filter',
-	function($filter) {
+angular.module('forms').service('FormFields', [ '$rootScope', '$translate', '$window',
+	function($rootScope, $translate, $window) {
+		$translate.use($window.user.language);
+		console.log($translate.instant('SHORT_TEXT'));
+
 		this.types = [
 		    {
 		        name : 'textfield',
-		        value : $filter('translate')('SHORT_TEXT'),
+		        value : $translate.instant('SHORT_TEXT'),
 		    },
 		    {
 		        name : 'email',
-		        value : $filter('translate')('EMAIL'),
+		        value : $translate.instant('EMAIL'),
 		    },
 		    {
 		        name : 'radio',
-		        value : $filter('translate')('MULTIPLE_CHOICE'),
+		        value : $translate.instant('MULTIPLE_CHOICE'),
 		    },
 		    {
 		        name : 'dropdown',
-		        value : $filter('translate')('DROPDOWN'),
+		        value : $translate.instant('DROPDOWN'),
 		    },
 		    {
 		        name : 'date',
-		        value : $filter('translate')('DATE'),
+		        value : $translate.instant('DATE'),
 		    },
 		    {
 		        name : 'textarea',
-		        value : $filter('translate')('PARAGRAPH'),
+		        value : $translate.instant('PARAGRAPH'),
 		    },
 		    {
 		        name : 'yes_no',
-		        value : $filter('translate')('YES_NO'),
+		        value : $translate.instant('YES_NO'),
 		    },
 		    {
 		        name : 'legal',
-		        value : $filter('translate')('LEGAL'),
+		        value : $translate.instant('LEGAL'),
 		    },
 		    // {
 		    //     name : 'sig',
-		    //     value : $filter('translate')('SIGNATURE'),
+		    //     value : $translate.instant('SIGNATURE'),
 		    // },
 			// {
 		    //     name : 'file',
-		    //     value : $filter('translate')('FILE_UPLOAD'),
+		    //     value : $translate.instant('FILE_UPLOAD'),
 		    // },
 		    {
 		        name : 'rating',
-		        value : $filter('translate')('RATING'),
+		        value : $translate.instant('RATING'),
 		    },
 		    {
 		        name : 'link',
-		        value : $filter('translate')('LINK'),
+		        value : $translate.instant('LINK'),
 		    },
 		    {
 		        name : 'number',
-		        value : $filter('translate')('NUMBERS'),
+		        value : $translate.instant('NUMBERS'),
 		    },
 		    // {
 		    //     name : 'scale',
-		    //     value : $filter('translate')('OPINION SCALE'),
+		    //     value : $translate.instant('OPINION SCALE'),
 		    // },
 		    // {
 		    //     name : 'stripe',
-		    //     value : $filter('translate')('PAYMENT'),
+		    //     value : $translate.instant('PAYMENT'),
 		    // },
 		    {
 		        name : 'statement',
-		        value : $filter('translate')('STATEMENT')
+		        value : $translate.instant('STATEMENT')
 		    }
 		];
 	}
@@ -2836,16 +2891,17 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SUBMIT_BTN: 'Submit',
 
 		ASK_FOR_NEW_PASSWORD: 'Ask for new password reset',
-		PASSWORD_RESET_INVALID: 'Password reset is invalid',
-		PASSWORD_RESET_SUCCESS: 'Passport successfully reset',
-		PASSWORD_CHANGE_SUCCESS: 'Passport successfully changed',
+		PASSWORD_RESET_INVALID: 'Password reset link is invalid',
+		PASSWORD_RESET_SUCCESS: 'Password successfully reset',
+		PASSWORD_CHANGE_SUCCESS: 'Password successfully changed',
 		RESET_PASSWORD: 'Reset your password',
 		CHANGE_PASSWORD: 'Change your password',
 
 		CONTINUE_TO_LOGIN: 'Continue to login page',
 
 		VERIFY_SUCCESS: 'Account successfully activated',
-		VERIFY_ERROR: 'Verification link is invalid or has expired'
+		VERIFY_ERROR: 'Verification link is invalid or has expired',
+		ERROR: 'Error'
 	});
 
 	$translateProvider.preferredLanguage('en')
@@ -2894,16 +2950,159 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SUBMIT_BTN: 'Enregistrer',
 
 		ASK_FOR_NEW_PASSWORD: 'Demander un nouveau mot de pass ',
-		PASSWORD_RESET_INVALID: 'Le nouveau mot de passe est invalid',
+		PASSWORD_RESET_INVALID: 'Ce lien de réinitialisation de mot de passe a déjà expiré',
 		PASSWORD_RESET_SUCCESS: 'Mot de passe réinitialisé avec succès',
 		PASSWORD_CHANGE_SUCCESS: 'Mot de passe enregistré avec succès',
 
 		CONTINUE_TO_LOGIN: 'Allez à la page de connexion',
 
 		VERIFY_SUCCESS: 'Votre compte est activé !',
-		VERIFY_ERROR: 'Le lien de vérification est invalide ou à expiré'
+		VERIFY_ERROR: 'Le lien de vérification est invalide ou à expiré',
+		ERROR: 'Erreur'
 	});
 
+}]);
+
+'use strict';
+
+angular.module('users').config(['$translateProvider', function ($translateProvider) {
+
+	$translateProvider.translations('de', {
+		ACCESS_DENIED_TEXT: 'Sie müssen eingeloggt sein, um auf diese Seite zugreifen zu können',
+		USERNAME_OR_EMAIL_LABEL: 'Benutzername oder E-Mail',
+		USERNAME_LABEL: 'Benutzername',
+		PASSWORD_LABEL: 'Passwort',
+		CURRENT_PASSWORD_LABEL: 'Aktuelles Passwort',
+		NEW_PASSWORD_LABEL: 'Neues Passwort',
+		VERIFY_PASSWORD_LABEL: 'Passwort bestätigen',
+		UPDATE_PASSWORD_LABEL: 'Passwort aktualisieren',
+		FIRST_NAME_LABEL: 'Vorname',
+		LAST_NAME_LABEL: 'Nachname',
+		LANGUAGE_LABEL: 'Sprache',
+		EMAIL_LABEL: 'Email',
+
+		SIGNUP_ACCOUNT_LINK: 'Haben Sie kein Konto? Hier registrieren',
+		SIGN_IN_ACCOUNT_LINK: 'Haben Sie bereits ein Konto? Hier anmelden',
+		SIGNUP_HEADER_TEXT: 'Registrieren',
+		SIGNIN_HEADER_TEXT: 'Anmelden',
+
+		SIGNUP_ERROR_TEXT: 'Konnte die Registrierung aufgrund von Fehlern nicht abschließen',
+		ENTER_ACCOUNT_EMAIL: 'Geben Sie Ihre Konto-E-Mail ein.',
+		RESEND_VERIFICATION_EMAIL: 'Bestätigungs-E-Mail erneut senden',
+		SAVE_CHANGES: 'Änderungen speichern',
+		CANCEL_BTN: 'Abbrechen',
+
+		EDIT_PROFILE: 'Bearbeiten Sie Ihr Profil',
+		UPDATE_PROFILE_BTN: 'Profil aktualisieren',
+		PROFILE_SAVE_SUCCESS: 'Profil wurde erfolgreich gespeichert',
+		PROFILE_SAVE_ERROR: 'Könnte Ihr Profil nicht speichern.',
+		CONNECTED_SOCIAL_ACCOUNTS: 'Verbundene Sozialkonten',
+		CONNECT_OTHER_SOCIAL_ACCOUNTS: 'Andere soziale Konten verbinden',
+
+		FORGOT_PASSWORD_LINK: 'Passwort vergessen?',
+		REVERIFY_ACCOUNT_LINK: 'Bestätige deine Bestätigungs-E-Mail erneut',
+
+		SIGNIN_BTN: "Anmelden",
+		SIGNUP_BTN: 'Registrieren',
+		SAVE_PASSWORD_BTN: 'Passwort speichern',
+
+		SUCCESS_HEADER: 'Anmeldung erfolgreich',
+		SUCCESS_TEXT: 'Sie haben ein Konto erfolgreich bei TellForm registriert.',
+		VERIFICATION_EMAIL_SENT: 'Bestätigungs-E-Mail wurde gesendet',
+		VERIFICATION_EMAIL_SENT_TO: 'Es wurde eine Bestätigungs-E-Mail gesendet.',
+		NOT_ACTIVATED_YET: 'Dein Account ist noch nicht aktiviert',
+		BEFORE_YOU_CONTINUE: 'Bevor Sie fortfahren, überprüfen Sie bitte Ihre E-Mail-Adresse auf Überprüfung. Wenn Sie nicht innerhalb von 24 Stunden erhalten Sie uns eine Zeile bei ',
+		CHECK_YOUR_EMAIL: 'Überprüfe deine E-Mail und klicke auf den Aktivierungslink, um deinen Account zu aktivieren. Wenn Sie irgendwelche Fragen haben, lassen Sie uns eine Zeile bei ',
+		WEITER: 'Weiter',
+
+		PASSWORD_RESTORE_HEADER: 'Wiederherstellen Ihres Passworts',
+		ENTER_YOUR_EMAIL: 'Geben Sie Ihre E-Mail-Adresse ein.',
+		SUBMIT_BTN: 'Senden',
+
+		ASK_FOR_NEW_PASSWORD: 'Neues Passwort zurücksetzen',
+		PASSWORD_RESET_INVALID: 'Dieser Link zum Zurücksetzen des Passworts ist bereits abgelaufen',
+		PASSWORD_RESET_SUCCESS: 'Passport erfolgreich zurückgesetzt',
+		PASSWORD_CHANGE_SUCCESS: 'Pass wurde erfolgreich geändert',
+		RESET_PASSWORD: 'Passwort zurücksetzen',
+		CHANGE_PASSWORD: 'Ändern Sie Ihr Passwort',
+
+		CONTINUE_TO_LOGIN: 'Weiter zur Anmeldeseite',
+
+		VERIFY_SUCCESS: 'Konto erfolgreich aktiviert',
+		VERIFY_ERROR: 'Überprüfungslink ist ungültig oder abgelaufen',
+		ERROR: 'Fehler'
+	});
+}]);
+
+'use strict';
+
+angular.module('users').config(['$translateProvider', function ($translateProvider) {
+
+	$translateProvider.translations('it', {
+		ACCESS_DENIED_TEXT: 'Devi aver effettuato l\'accesso per accedere a questa pagina',
+		USERNAME_OR_EMAIL_LABEL: 'Nome utente o posta elettronica',
+		USERNAME_LABEL: 'Nome utente',
+		PASSWORD_LABEL: 'Password',
+		CURRENT_PASSWORD_LABEL: 'Current Password',
+		NEW_PASSWORD_LABEL: 'Nuova password',
+		VERIFY_PASSWORD_LABEL: 'Verifica password',
+		UPDATE_PASSWORD_LABEL: 'Aggiorna password',
+		FIRST_NAME_LABEL: 'Nome',
+		LAST_NAME_LABEL: 'Cognome',
+		LANGUAGE_LABEL: 'Lingua',
+		EMAIL_LABEL: 'Email',
+
+		SIGNUP_ACCOUNT_LINK: 'Non hai un account? Iscriviti qui ',
+		SIGN_IN_ACCOUNT_LINK: 'Hai già un account? Accedi qui ',
+		SIGNUP_HEADER_TEXT: 'Iscriviti',
+		SIGNIN_HEADER_TEXT: 'Accedi',
+
+		SIGNUP_ERROR_TEXT: 'Impossibile completare la registrazione a causa di errori',
+		ENTER_ACCOUNT_EMAIL: "Inserisci l'email del tuo account.",
+		RESEND_VERIFICATION_EMAIL: 'Ripeti l\'email di verifica',
+		SAVE_CHANGES: 'Salva modifiche',
+		CANCEL_BTN: 'Annulla',
+
+		EDIT_PROFILE: 'Modifica il tuo profilo',
+		UPDATE_PROFILE_BTN: 'Aggiorna profilo',
+		PROFILE_SAVE_SUCCESS: 'Profilo salvato con successo',
+		PROFILE_SAVE_ERROR: 'Impossibile salvare il tuo profilo.',
+		CONNECTED_SOCIAL_ACCOUNTS: 'Conti sociali connessi',
+		CONNECT_OTHER_SOCIAL_ACCOUNTS: 'Connetti altri account sociali',
+
+		FORGOT_PASSWORD_LINK: 'Hai dimenticato la password?',
+		REVERIFY_ACCOUNT_LINK: 'Ripeti la tua email di verifica',
+
+		SIGNIN_BTN: 'Accedi',
+		SIGNUP_BTN: 'Iscriviti',
+		SAVE_PASSWORD_BTN: 'Salva password',
+
+		SUCCESS_HEADER: 'Registra il successo',
+		SUCCESS_TEXT: 'Hai registrato un account con TellForm.',
+		VERIFICATION_EMAIL_SENT: 'L\'email di verifica è stata inviata',
+		VERIFICATION_EMAIL_SENT_TO: 'E\' stata inviata un\'email di verifica a ',
+		NOT_ACTIVATED_YET: 'Ma il tuo account non è ancora attivato',
+		BEFORE_YOU_CONTINUE: 'Prima di continuare, assicurati di controllare la tua email per la nostra verifica. Se non lo ricevi entro 24 ore ci cali una linea a ',
+		CHECK_YOUR_EMAIL: 'Controlla la tua email e fai clic sul link di attivazione per attivare il tuo account. Se hai domande, fai una linea a ',
+		CONTINUA: 'Continua',
+
+		PASSWORD_RESTORE_HEADER: 'Ripristina password',
+		ENTER_YOUR_EMAIL: 'Inserisci l\'email del tuo account',
+		SUBMIT_BTN: 'Invia',
+
+		ASK_FOR_NEW_PASSWORD: 'Richiedi nuova password reimpostata',
+		PASSWORD_RESET_INVALID: 'Questo collegamento per la reimpostazione della password è già scaduto',
+		PASSWORD_RESET_SUCCESS: 'Passaporto resettato con successo',
+		PASSWORD_CHANGE_SUCCESS: 'Passaporto modificato con successo',
+		RESET_PASSWORD: 'Ripristina la tua password',
+		CHANGE_PASSWORD: 'Modifica password',
+
+		CONTINUE_TO_LOGIN: 'Continua alla pagina di login',
+
+		VERIFY_SUCCESS: 'Account attivato correttamente',
+		VERIFY_ERROR: 'Il collegamento di verifica non è valido o è scaduto',
+		ERROR: 'Errore'
+	});
 }]);
 
 'use strict';
@@ -2963,7 +3162,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SUBMIT_BTN: 'Enviar',
 
 		ASK_FOR_NEW_PASSWORD: 'Pedir reseteo de contraseña',
-		PASSWORD_RESET_INVALID: 'El reseteo de la contraseña es inválido',
+		PASSWORD_RESET_INVALID: 'Este enlace de restablecimiento de contraseña ya ha caducado',
 		PASSWORD_RESET_SUCCESS: 'Contraseña exitosamente reseteada',
 		PASSWORD_CHANGE_SUCCESS: 'Contraseña exitosamente cambiada',
 		RESET_PASSWORD: 'Resetear contraseña',
@@ -2972,7 +3171,8 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		CONTINUE_TO_LOGIN: 'Ir a la página de ingreso',
 
 		VERIFY_SUCCESS: 'Cuenta activada exitosamente',
-		VERIFY_ERROR: 'El link de verificación es inválido o inexistente'
+		VERIFY_ERROR: 'El link de verificación es inválido o inexistente',
+		ERROR: 'Error'
 	});
 }]);
 
@@ -3071,7 +3271,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		IS_NOT_EQUAL_TO: 'is not equal to',
 		IS_GREATER_THAN: 'is greater than',
 		IS_GREATER_OR_EQUAL_THAN: 'is greater or equal than',
-		IS_SMALLER_THAN: 'is_smaller_than',
+		IS_SMALLER_THAN: 'is smaller than',
 		IS_SMALLER_OR_EQUAL_THAN: 'is smaller or equal than',
 		CONTAINS: 'contains',
 		DOES_NOT_CONTAINS: 'does not contain',
@@ -3107,7 +3307,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOCATION: 'Location',
 		IP_ADDRESS: 'IP Address',
 		DATE_SUBMITTED: 'Date Submitted',
-		GENERATED_PDF: 'Generated PDF',
 
 		//Design View
 		BACKGROUND_COLOR: 'Background Color',
@@ -3174,35 +3373,380 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('french', {
-    FORM_SUCCESS: 'Votre formulaire a été enregistré!',
-	REVIEW: 'Incomplet',
-    BACK_TO_FORM: 'Retourner au formulaire',
-	EDIT_FORM: 'Éditer le Tellform',
-	CREATE_FORM: 'Créer un TellForm',
-	ADVANCEMENT: '{{done}} complétés sur {{total}}',
-	CONTINUE_FORM: 'Aller au formulaire',
-	REQUIRED: 'obligatoire',
-	COMPLETING_NEEDED: '{{answers_not_completed}} réponse(s) doive(nt) être complétée(s)',
-	OPTIONAL: 'facultatif',
-	ERROR_EMAIL_INVALID: 'Merci de rentrer une adresse mail valide',
-	ERROR_NOT_A_NUMBER: 'Merce de ne rentrer que des nombres',
-	ERROR_URL_INVALID: 'Merci de rentrer une url valide',
-	OK: 'OK',
-	ENTER: 'presser ENTRÉE',
-	YES: 'Oui',
-	NO: 'Non',
-	NEWLINE: 'presser SHIFT+ENTER pour créer une nouvelle ligne',
-	CONTINUE: 'Continuer',
-	LEGAL_ACCEPT: 'J’accepte',
-	LEGAL_NO_ACCEPT: 'Je n’accepte pas',
-	DELETE: 'Supprimer',
-	CANCEL: 'Réinitialiser',
-	SUBMIT: 'Enregistrer',
-	UPLOAD_FILE: 'Envoyer un fichier',
-	Y: 'O',
-	N: 'N',
-  });
+  	$translateProvider.translations('fr', {
+    	// Configurer la vue de l'onglet Formulaire
+		ADVANCED_SETTINGS: 'Paramètres avancés',
+		FORM_NAME: "Nom du formulaire",
+		FORM_STATUS: 'Statut du formulaire',
+		PUBLIC: 'Public',
+		PRIVATE: "Privé",
+		GA_TRACKING_CODE: "Code de suivi Google Analytics",
+		DISPLAY_FOOTER: "Afficher le pied de formulaire?",
+		SAVE_CHANGES: 'Enregistrer les modifications',
+		CANCEL: 'Annuler',
+		DISPLAY_START_PAGE: "Afficher la page de démarrage?",
+		DISPLAY_END_PAGE: "Afficher la page de fin personnalisée?",
+
+		// Afficher les formulaires
+		CREATE_A_NEW_FORM: "Créer un nouveau formulaire",
+		CREATE_FORM: "Créer un formulaire",
+		CREATED_ON: 'Créé le',
+		MY_FORMS: 'Mes formes',
+		NAME: "Nom",
+		LANGUE: 'Langue',
+		FORM_PAUSED: 'Formulaire en pause',
+
+		// Modifier le modal de champ
+		EDIT_FIELD: "Modifier ce champ",
+		SAVE_FIELD: 'Enregistrer',
+		ON: 'ON',
+		OFF: "OFF",
+		REQUIRED_FIELD: "Obligatoire",
+		LOGIC_JUMP: 'Saut logique',
+		SHOW_BUTTONS: 'Boutons supplémentaires',
+		SAVE_START_PAGE: "Enregistrer",
+
+		// Affichage du formulaire d'administration
+		ARE_YOU_SURE: 'Es-tu ABSOLUMENT sûr?',
+		READ_WARNING: "De mauvaises choses inattendues se produiront si vous ne lisez pas ceci!",
+		DELETE_WARNING1: 'Cette action NE PEUT PAS être annulée. Cela supprimera définitivement le "',
+		DELETE_WARNING2: '" forme et supprime toutes les soumissions de formulaire associées. ',
+		DELETE_CONFIRM: "Veuillez taper le nom du formulaire pour confirmer.",
+		I_UNDERSTAND: 'Je comprends les conséquences, efface ce formulaire.',
+		DELETE_FORM_SM: 'Supprimer',
+		DELETE_FORM_MD: "Supprimer le formulaire",
+		DELETE: "Supprimer",
+		FORM: 'Formulaire',
+		VIEW: "Afficher",
+		LIVE: "Live",
+		PREVIEW: 'Aperçu',
+		COPY: "Copier",
+		COPY_AND_PASTE: "Copiez et collez ceci pour ajouter votre TellForm à votre site Web",
+		CHANGE_WIDTH_AND_HEIGHT: "Changez les valeurs de largeur et de hauteur pour mieux vous convenir",
+		POWERED_BY: "Alimenté par",
+		TELLFORM_URL: "Votre TellForm est en permanence sur cette URL",
+
+		// Modifier la vue de formulaire
+		DISABLED: "Désactivé",
+		OUI: 'OUI',
+		NO: 'NON',
+		ADD_LOGIC_JUMP: 'Ajouter un saut de logique',
+		ADD_FIELD_LG: "Cliquez pour ajouter un nouveau champ",
+		ADD_FIELD_MD: "Ajouter un nouveau champ",
+		ADD_FIELD_SM: "Ajouter un champ",
+		EDIT_START_PAGE: "Modifier la page de démarrage",
+		EDIT_END_PAGE: "Modifier la page de fin",
+		WELCOME_SCREEN: 'Page de démarrage',
+		END_SCREEN: 'Fin de page',
+		INTRO_TITLE: "Titre",
+		INTRO_PARAGRAPH: 'Paragraphe',
+		INTRO_BTN: 'Bouton de démarrage',
+		TITLE: "Titre",
+		PARAGRAPHE: 'Paragraphe',
+		BTN_TEXT: "Bouton Retour",
+		BOUTONS: 'Boutons',
+		BUTTON_TEXT: "Texte",
+		BUTTON_LINK: "Lien",
+		ADD_BUTTON: 'Ajouter un bouton',
+		PREVIEW_FIELD: 'Question d\'aperçu',
+		QUESTION_TITLE: "Titre",
+		QUESTION_DESCRIPTION: 'Description',
+		OPTIONS: 'Options',
+		ADD_OPTION: 'Ajouter une option',
+		NUM_OF_STEPS: "Nombre d'étapes",
+		CLICK_FIELDS_FOOTER: 'Cliquez sur les champs pour les ajouter ici',
+		SHAPE: 'Forme',
+		IF_THIS_FIELD: "Si ce champ",
+		IS_EQUAL_TO: 'est égal à',
+		IS_NOT_EQUAL_TO: 'n\'est pas égal à',
+		IS_GREATER_THAN: 'est supérieur à',
+		IS_GREATER_OR_EQUAL_THAN: 'est supérieur ou égal à',
+		IS_SMALLER_THAN: 'est plus petit que',
+		IS_SMALLER_OR_EQUAL_THAN: 'est plus petit ou égal à',
+		CONTAINS: 'contient',
+		DOES_NOT_CONTAINS: 'ne contient pas',
+		ENDS_WITH: "se termine par",
+		DOES_NOT_END_WITH: "ne finit pas avec",
+		STARTS_WITH: 'commence par',
+		DOES_NOT_START_WITH: "ne commence pas par",
+		THEN_JUMP_TO: 'alors saute à',
+
+		// Modifier la vue des soumissions
+		TOTAL_VIEWS: 'total des visites uniques',
+		RESPONSES: "réponses",
+		COMPLETION_RATE: "taux d'achèvement",
+		AVERAGE_TIME_TO_COMPLETE: 'moy. le temps d\'achèvement',
+
+		DESKTOP_AND_LAPTOP: 'Desktops',
+		TABLETS: 'Tablettes',
+		PHONES: 'Téléphones',
+		OTHER: 'Autre',
+		UNIQUE_VISITS: 'Visites uniques',
+
+		FIELD_TITLE: 'Titre du champ',
+		FIELD_VIEWS: 'Vues de champ',
+		FIELD_DROPOFF: "Achèvement du champ",
+		FIELD_RESPONSES: 'Réponses sur le terrain',
+		DELETE_SELECTED: 'Supprimer la sélection',
+		EXPORT_TO_EXCEL: 'Exporter vers Excel',
+		EXPORT_TO_CSV: 'Export vers CSV',
+		EXPORT_TO_JSON: "Exporter vers JSON",
+		PERCENTAGE_COMPLETE: 'Pourcentage terminé',
+		TIME_ELAPSED: 'Temps écoulé',
+		DEVICE: "Dispositif",
+		LOCATION: "Emplacement",
+		IP_ADDRESS: 'Adresse IP',
+		DATE_SUBMITTED: 'Date de soumission',
+
+		// Vue de conception
+		BACKGROUND_COLOR: "Couleur d'arrière-plan",
+		DESIGN_HEADER: "Changez l'apparence de votre formulaire",
+		QUESTION_TEXT_COLOR: "Couleur du texte de la question",
+		ANSWER_TEXT_COLOR: "Couleur du texte de la réponse",
+		BTN_BACKGROUND_COLOR: "Couleur d'arrière-plan du bouton",
+		BTN_TEXT_COLOR: "Couleur du texte du bouton",
+
+		// Vue de partage
+		EMBED_YOUR_FORM: "Intégrez votre formulaire",
+		SHARE_YOUR_FORM: "Partager votre formulaire",
+
+		// Onglets d'administration
+		CREATE_TAB: "Créer",
+		DESIGN_TAB: 'Design',
+		CONFIGURE_TAB: 'Configurer',
+		ANALYZE_TAB: "Analyser",
+		SHARE_TAB: "Partager",
+
+		// Types de champs
+		SHORT_TEXT: "Texte court",
+		EMAIL: "E-mail",
+		MULTIPLE_CHOICE: 'Choix multiple',
+		DROPDOWN: 'Menu Déroulant',
+		DATE: 'Date',
+		PARAGRAPH_T: "Paragraphe",
+		OUI_NON: 'Oui / Non',
+		LEGAL: 'Légal',
+		RATING: "Évaluation",
+		NUMBERS: "Chiffres",
+		SIGNATURE: 'Signature',
+		FILE_UPLOAD: 'Téléchargement de fichier',
+		OPTION_SCALE: 'Option Scale',
+		PAYMENT: 'Paiement',
+		STATEMENT: 'Déclaration',
+		LINK: "Lien",
+
+		// Aperçu du formulaire
+		FORM_SUCCESS: 'Entrée de formulaire soumise avec succès!',
+		REVIEW: 'Réviser',
+		BACK_TO_FORM: "Revenir au formulaire",
+		EDIT_FORM: "Modifier ce TellForm",
+		ADVANCEMENT: '{{done}} sur {{total}} a répondu',
+		CONTINUE_FORM: "Continuer à se former",
+		REQUIRED: 'requis',
+		COMPLETING_NEEDED: '{{answers_not_completed}} réponse (s) doivent être complétées',
+		OPTIONAL: 'optionnel',
+		ERROR_EMAIL_INVALID: "Veuillez entrer une adresse email valide",
+		ERROR_NOT_A_NUMBER: "Veuillez entrer uniquement des numéros valides",
+		ERROR_URL_INVALID: "S'il vous plaît une adresse valide",
+		OK: 'OK',
+		ENTER: 'appuyez sur ENTRER',
+		NEWLINE: 'appuyez sur MAJ + ENTRÉE pour créer une nouvelle ligne',
+		CONTINUE: "Continuer",
+		LEGAL_ACCEPT: 'J\'accepte',
+		LEGAL_NO_ACCEPT: "Je n'accepte pas",
+		SUBMIT: "Soumettre",
+		UPLOAD_FILE: "Télécharger votre fichier"
+  	});
+}]);
+
+'use strict';
+
+angular.module('forms').config(['$translateProvider', function ($translateProvider) {
+
+	$translateProvider.translations('de', {
+		// Konfigurieren der Formularregisterkarte
+		ADVANCED_SETTINGS: 'Erweiterte Einstellungen',
+		FORM_NAME: 'Formularname',
+		FORM_STATUS: 'Formularstatus',
+		PUBLIC: 'Öffentlich',
+		PRIVATE: 'Privat',
+		GA_TRACKING_CODE: 'Google Analytics Tracking-Code',
+		DISPLAY_FOOTER: 'Formularfußzeile anzeigen?',
+		SAVE_CHANGES: 'Änderungen speichern',
+		CANCEL: 'Abbrechen',
+		DISPLAY_START_PAGE: 'Startseite anzeigen?',
+		DISPLAY_END_PAGE: 'Benutzerdefinierte Endseite anzeigen?',
+
+		// Listenformularansicht
+		CREATE_A_NEW_FORM: 'Erstelle ein neues Formular',
+		CREATE_FORM: 'Formular erstellen',
+		CREATED_ON: 'Erstellt am',
+		MY_FORMS: 'Meine Formulare',
+		NAME: 'Name',
+		SPRACHE: 'Sprache',
+		FORM_PAUSED: 'Formular pausiert',
+
+		// Feld Modal bearbeiten
+		EDIT_FIELD: 'Dieses Feld bearbeiten',
+		SAVE_FIELD: 'Speichern',
+		ON: 'ON',
+		AUS: 'AUS',
+		REQUIRED_FIELD: 'Erforderlich',
+		LOGIC_JUMP: 'Logischer Sprung',
+		SHOW_BUTTONS: 'Zusätzliche Schaltflächen',
+		SAVE_START_PAGE: 'Speichern',
+
+		// Admin-Formularansicht
+		ARE_YOU_SURE: "Bist du ABSOLUT sicher?",
+		READ_WARNING: 'Unerwartete schlimme Dinge werden passieren, wenn Sie das nicht lesen!',
+		DELETE_WARNING1: 'Diese Aktion kann NICHT rückgängig gemacht werden. Dies wird dauerhaft die "',
+		DELETE_WARNING2: '"Formular und entferne alle verknüpften Formulareinreichungen.',
+		DELETE_CONFIRM: 'Bitte geben Sie den Namen des zu bestätigenden Formulars ein.',
+		I_UNDERSTAND: "Ich verstehe die Konsequenzen, lösche dieses Formular.",
+		DELETE_FORM_SM: 'Löschen',
+		DELETE_FORM_MD: 'Formular löschen',
+		DELETE: 'Löschen',
+		FORM: 'Formular',
+		VIEW: 'Ansicht',
+		LIVE: 'Leben',
+		PREVIEW: 'Vorschau',
+		COPY: 'Kopieren',
+		COPY_AND_PASTE: 'Kopieren und einfügen, um Ihre TellForm auf Ihrer Website hinzuzufügen',
+		CHANGE_WIDTH_AND_HEIGHT: 'Ändern Sie die Werte für Breite und Höhe, um Ihnen am besten zu entsprechen',
+		POWERED_BY: 'Unterstützt von',
+		TELLFORM_URL: "Ihr TellForm ist dauerhaft unter dieser URL",
+
+		// Formularansicht bearbeiten
+		DISABLED: 'Deaktiviert',
+		JA: 'JA',
+		NO: 'NEIN',
+		ADD_LOGIC_JUMP: 'Logic Jump hinzufügen',
+		ADD_FIELD_LG: 'Klicken Sie auf Neues Feld hinzufügen',
+		ADD_FIELD_MD: 'Neues Feld hinzufügen',
+		ADD_FIELD_SM: 'Feld hinzufügen',
+		EDIT_START_PAGE: 'Startseite bearbeiten',
+		EDIT_END_PAGE: 'Endseite bearbeiten',
+		WELCOME_SCREEN: 'Startseite',
+		END_SCREEN: 'Ende Seite',
+		INTRO_TITLE: 'Titel',
+		INTRO_PARAGRAPH: "Absatz",
+		INTRO_BTN: 'Start Knopf',
+		TITLE: "Titel",
+		PARAGRAPH: "Absatz",
+		BTN_TEXT: 'Zurück Button',
+		TASTEN: 'Knöpfe',
+		BUTTON_TEXT: 'Text',
+		BUTTON_LINK: 'Link',
+		ADD_BUTTON: 'Schaltfläche hinzufügen',
+		PREVIEW_FIELD: 'Vorschaufrage',
+		QUESTION_TITLE: 'Titel',
+		QUESTION_DESCRIPTION: 'Beschreibung',
+		OPTIONS: 'Optionen',
+		ADD_OPTION: 'Option hinzufügen',
+		NUM_OF_STEPS: 'Anzahl der Schritte',
+		CLICK_FIELDS_FOOTER: 'Klicken Sie auf Felder, um sie hier hinzuzufügen',
+		FORM: 'Formular',
+		IF_THIS_FIELD: 'Wenn dieses Feld',
+		IS_EQUAL_TO: 'ist gleich',
+		IS_NOT_EQUAL_TO: 'ist nicht gleich',
+		IS_GREATER_THAN: 'ist größer als',
+		IS_GREATER_OR_EQUAL_THAN: 'ist größer oder gleich',
+		IS_SMALLER_THAN: 'ist kleiner als',
+		IS_SMALLER_OR_EQUAL_THAN: 'ist kleiner oder gleich',
+		CONTAINS: 'enthält',
+		DOES_NOT_CONTAINS: 'enthält nicht',
+		ENDS_WITH: 'endet mit',
+		DOES_NOT_END_WITH: 'endet nicht mit',
+		STARTS_WITH: 'beginnt mit',
+		DOES_NOT_START_WITH: 'beginnt nicht mit',
+		THEN_JUMP_TO: 'Springe dann zu',
+
+		// Bearbeiten der Einreichungsansicht
+		TOTAL_VIEWS: 'Gesamtzahl eindeutiger Besuche',
+		RESPONSES: 'Antworten',
+		COMPLETION_RATE: 'Abschlussrate',
+		AVERAGE_TIME_TO_COMPLETE: 'avg. Fertigstellungszeit',
+
+		DESKTOP_AND_LAPTOP: 'Desktops',
+		TABLETS: "Tabletten",
+		PHONES: 'Telefone',
+		OTHER: 'Andere',
+		UNIQUE_VISITS: 'Eindeutige Besuche',
+
+		FIELD_TITLE: 'Feldtitel',
+		FIELD_VIEWS: 'Feld Ansichten',
+		FIELD_DROPOFF: 'Feldabschluss',
+		FIELD_RESPONSES: 'Feldantworten',
+		DELETE_SELECTED: 'Ausgewählte löschen',
+		EXPORT_TO_EXCEL: 'Export nach Excel',
+		EXPORT_TO_CSV: 'In CSV exportieren',
+		EXPORT_TO_JSON: 'Export nach JSON',
+		PERCENTAGE_COMPLETE: 'Prozent abgeschlossen',
+		TIME_ELAPSED: 'Zeit verstrichen',
+		DEVICE: 'Gerät',
+		LOCATION: 'Ort',
+		IP_ADDRESS: 'IP-Adresse',
+		DATE_SUBMITTED: 'Eingereichtes Datum',
+
+		// Entwurfsansicht
+		BACKGROUND_COLOR: 'Hintergrundfarbe',
+		DESIGN_HEADER: 'Ändern Sie, wie Ihr Formular aussieht',
+		QUESTION_TEXT_COLOR: 'Fragetextfarbe',
+		ANSWER_TEXT_COLOR: 'Textfarbe beantworten',
+		BTN_BACKGROUND_COLOR: 'Schaltfläche Hintergrundfarbe',
+		BTN_TEXT_COLOR: 'Schaltfläche Textfarbe',
+
+		// Freigabeansicht
+		EMBED_YOUR_FORM: 'Einbetten Ihres Formulars',
+		SHARE_YOUR_FORM: 'Teilen Sie Ihr Formular',
+
+		// Admin-Registerkarten
+		CREATE_TAB: 'Erstellen',
+		DESIGN_TAB: 'Entwurf',
+		CONFIGURE_TAB: 'Konfigurieren',
+		ANALYZE_TAB: 'Analysieren',
+		SHARE_TAB: 'Freigeben',
+
+		// Feldtypen
+		SHORT_TEXT: 'Kurztext',
+		EMAIL: 'Email',
+		MULTIPLE_CHOICE: 'Mehrfachauswahl',
+		DROPDOWN: 'Dropdown-Liste',
+		DATE: 'Datum',
+		PARAGRAPH_T: "Absatz",
+		YES_NO: 'Ja / Nein',
+		LEGAL: "Rechtliche",
+		RATING: 'Bewertung',
+		NUMBERS: 'Zahlen',
+		SIGNATURE: "Unterschrift",
+		FILE_UPLOAD: 'Datei-Upload',
+		OPTION_SCALE: 'Optionsskala',
+		ZAHLUNG: "Zahlung",
+		STATEMENT: 'Anweisung',
+		LINK: 'Link',
+
+		// Formularvorschau
+		FORM_SUCCESS: 'Formulareintrag erfolgreich gesendet!',
+		REVIEW: 'Überprüfung',
+		BACK_TO_FORM: 'Gehe zurück zu Formular',
+		EDIT_FORM: 'Bearbeiten Sie diese TellForm',
+		ADVANCEMENT: '{{done}} von {{total}} wurde beantwortet',
+		CONTINUE_FORM: 'Weiter zum Formular',
+		REQUIRED: 'erforderlich',
+		COMPLETING_NEEDED: '{{answers_not_completed}} Antwort (en) müssen ausgefüllt werden',
+		OPTIONAL: 'optional',
+		ERROR_EMAIL_INVALID: 'Geben Sie eine gültige E-Mail-Adresse ein',
+		ERROR_NOT_A_NUMBER: 'Bitte nur gültige Nummern eingeben',
+		ERROR_URL_INVALID: 'Bitte eine gültige URL',
+		OK: 'OK',
+		ENTER: 'ENTER drücken',
+		NEWLINE: 'Drücken Sie UMSCHALT + EINGABETASTE, um eine neue Zeile zu erstellen',
+		CONTINUE: 'Weiter',
+		LEGAL_ACCEPT: "Ich akzeptiere",
+		LEGAL_NO_ACCEPT: "Ich akzeptiere nicht",
+		SUBMIT: 'Senden',
+		UPLOAD_FILE: 'Hochladen Ihrer Datei'
+	});
 
 }]);
 
@@ -3210,71 +3754,190 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('german', {
-	FORM_SUCCESS: 'Ihre Angaben wurden gespeichert.',
-	REVIEW: 'Unvollständig',
-	BACK_TO_FORM: 'Zurück zum Formular',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
-	ADVANCEMENT: '{{done}} von {{total}} beantwortet',
-	CONTINUE_FORM: 'Zum Formular',
-	REQUIRED: 'verpflichtend',
-	COMPLETING_NEEDED: 'Es fehlen/fehtl noch {{answers_not_completed}} Antwort(en)',
-	OPTIONAL: 'fakultativ',
-	ERROR_EMAIL_INVALID: 'Bitte gültige Mailadresse eingeben',
-	ERROR_NOT_A_NUMBER: 'Bitte nur Zahlen eingeben',
-	ERROR_URL_INVALID: 'Bitte eine gültige URL eingeben',
-	OK: 'Okay',
-	ENTER: 'Eingabetaste drücken',
-	YES: 'Ja',
-	NO: 'Nein',
-	NEWLINE: 'Für eine neue Zeile SHIFT+ENTER drücken',
-	CONTINUE: 'Weiter',
-	LEGAL_ACCEPT: 'I accept',
-	LEGAL_NO_ACCEPT: 'I don’t accept',
-	DELETE: 'Entfernen',
-	CANCEL: 'Canceln',
-	SUBMIT: 'Speichern',
-	UPLOAD_FILE: 'Datei versenden',
-	Y: 'J',
-	N: 'N',
-  });
+  	$translateProvider.translations('it', {
+		// Configura la visualizzazione scheda modulo
+		ADVANCED_SETTINGS: 'Impostazioni avanzate',
+		FORM_NAME: 'Nome modulo',
+		FORM_STATUS: 'Stato modulo',
+		PUBLIC: 'pubblico',
+		PRIVATE: 'Privato',
+		GA_TRACKING_CODE: 'Codice di monitoraggio di Google Analytics',
+		DISPLAY_FOOTER: 'Visualizza piè di pagina?',
+		SAVE_CHANGES: 'Salva modifiche',
+		CANCEL: 'Annulla',
+		DISPLAY_START_PAGE: 'Visualizza pagina iniziale?',
+		DISPLAY_END_PAGE: 'Mostra pagina finale personalizzata?',
 
-}]);
+		// Visualizzazione dei moduli di elenco
+		CREATE_A_NEW_FORM: 'Crea un nuovo modulo',
+		CREATE_FORM: 'Crea modulo',
+		CREATED_ON: 'Creato su',
+		MY_FORMS: 'Le mie forme',
+		NAME: 'Nome',
+		LINGUA: 'Lingua',
+		FORM_PAUSED: 'Forme in pausa',
 
-'use strict';
+		// Modifica campo modale
+		EDIT_FIELD: 'Modifica questo campo',
+		SAVE_FIELD: 'Salva',
+		ON: 'ON',
+		OFF: 'OFF',
+		REQUIRED_FIELD: 'Obbligatorio',
+		LOGIC_JUMP: 'Jump Logic',
+		SHOW_BUTTONS: 'Pulsanti aggiuntivi',
+		SAVE_START_PAGE: 'Salva',
 
-angular.module('forms').config(['$translateProvider', function ($translateProvider) {
+		// Visualizzazione modulo di amministrazione
+		ARE_YOU_SURE: 'Sei ASSOLUTAMENTE sicuro?',
+		READ_WARNING: 'Le cose cattive impreviste avverranno se non lo leggi!',
+		DELETE_WARNING1: 'Questa azione NON può essere annullata. Ciò eliminerà in modo permanente il "',
+		DELETE_WARNING2: '" forma e rimuovi tutti i moduli di modulo associati. ',
+		DELETE_CONFIRM: 'Inserisci il nome del modulo per confermare',
+		I_UNDERSTAND: "Capisco le conseguenze, elimina questa forma",
+		DELETE_FORM_SM: 'Elimina',
+		DELETE_FORM_MD: 'Elimina modulo',
+		DELETE: 'Elimina',
+		FORM: 'Forma',
+		VIEW: 'Visualizza',
+		LIVE: 'Live',
+		PREVIEW: 'Anteprima',
+		COPY: 'Copia',
+		COPY_AND_PASTE: 'Copia e incolla questo per aggiungere il tuo TellForm al tuo sito web',
+		CHANGE_WIDTH_AND_HEIGHT: 'Modifica i valori di larghezza e di altezza per adattarti al meglio',
+		POWERED_BY: 'Offerto da',
+		TELLFORM_URL: 'Il tuo TellForm è permanente in questo URL',
 
-  $translateProvider.translations('italian', {
-	FORM_SUCCESS: 'Il formulario è stato inviato con successo!',
-	REVIEW: 'Incompleto',
-	BACK_TO_FORM: 'Ritorna al formulario',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
-	ADVANCEMENT: '{{done}} su {{total}} completate',
-	CONTINUE_FORM: 'Vai al formulario',
-	REQUIRED: 'obbligatorio',
-	COMPLETING_NEEDED: '{{answers_not_completed}} risposta/e deve/ono essere completata/e',
-	OPTIONAL: 'opzionale',
-	ERROR_EMAIL_INVALID: 'Si prega di inserire un indirizzo email valido',
-	ERROR_NOT_A_NUMBER: 'Si prega di inserire solo numeri',
-	ERROR_URL_INVALID: 'Grazie per inserire un URL valido',
-	OK: 'OK',
-	ENTER: 'premere INVIO',
-	YES: 'Sì',
-	NO: 'No',
-	NEWLINE: 'premere SHIFT+INVIO per creare una nuova linea',
-	CONTINUE: 'Continua',
-	LEGAL_ACCEPT: 'I accept',
-	LEGAL_NO_ACCEPT: 'I don’t accept',
-	DELETE: 'Cancella',
-	CANCEL: 'Reset',
-	SUBMIT: 'Registra',
-	UPLOAD_FILE: 'Invia un file',
-	Y: 'S',
-	N: 'N',
-  });
+		// Modifica vista modulo
+		DISABLED: 'disabilitato',
+		YES: 'SI',
+		NO: 'NO',
+		ADD_LOGIC_JUMP: 'Aggiungi logico salto',
+		ADD_FIELD_LG: 'Clicca per aggiungere nuovo campo',
+		ADD_FIELD_MD: 'Aggiungi nuovo campo',
+		ADD_FIELD_SM: 'Aggiungi campo',
+		EDIT_START_PAGE: 'Modifica pagina iniziale',
+		EDIT_END_PAGE: 'Modifica pagina finale',
+		WELCOME_SCREEN: 'Pagina iniziale',
+		END_SCREEN: 'Fine pagina',
+		INTRO_TITLE: 'Titolo',
+		INTRO_PARAGRAPH: 'Paragrafo',
+		INTRO_BTN: 'Pulsante Start',
+		TITLE: 'Titolo',
+		PARAGRAFO: 'Paragrafo',
+		BTN_TEXT: 'Tornare indietro',
+		TASTI: 'Pulsanti',
+		BUTTON_TEXT: 'Testo',
+		BUTTON_LINK: 'Link',
+		ADD_BUTTON: 'Aggiungi pulsante',
+		PREVIEW_FIELD: 'Anteprima domanda',
+		QUESTION_TITLE: 'Titolo',
+		QUESTION_DESCRIPTION: 'Descrizione',
+		OPTIONS: 'Opzioni',
+		ADD_OPTION: 'Aggiungi opzione',
+		NUM_OF_STEPS: 'Numero di passi',
+		CLICK_FIELDS_FOOTER: 'Clicca sui campi per aggiungerli qui',
+		FORMA: 'Forma',
+		IF_THIS_FIELD: 'Se questo campo',
+		IS_EQUAL_TO: 'è uguale a',
+		IS_NOT_EQUAL_TO: 'non è uguale a',
+		IS_GREATER_THAN: 'è maggiore di',
+		IS_GREATER_OR_EQUAL_THAN: 'è maggiore o uguale a',
+		IS_SMALLER_THAN: 'è inferiore a',
+		IS_SMALLER_OR_EQUAL_THAN: 'è più piccolo o uguale a quello',
+		CONTAINS: 'contiene',
+		DOES_NOT_CONTAINS: 'non contiene',
+		ENDS_WITH: 'finisce con',
+		DOES_NOT_END_WITH: 'non finisce con',
+		STARTS_WITH: 'inizia con',
+		DOES_NOT_START_WITH: 'non inizia con',
+		THEN_JUMP_TO: 'poi salta a',
+
+		// Modifica visualizzazione presentazioni
+		TOTAL_VIEWS: 'visite totali totali',
+		RESPONSES: 'risposte',
+		COMPLETION_RATE: 'tasso di completamento',
+		AVERAGE_TIME_TO_COMPLETE: 'avg. tempo di completamento',
+
+		DESKTOP_AND_LAPTOP: 'Desktop',
+		TABLETS: 'compresse',
+		PHONES: 'Telefoni',
+		OTHER: 'Altro',
+		UNIQUE_VISITS: 'Visite Uniche',
+
+		FIELD_TITLE: 'Titolo del campo',
+		FIELD_VIEWS: 'Viste sul campo',
+		FIELD_DROPOFF: 'Completamento del campo',
+		FIELD_RESPONSES: 'Risposte sul campo',
+		DELETE_SELECTED: 'Elimina selezionata',
+		EXPORT_TO_EXCEL: 'Esporta in Excel',
+		EXPORT_TO_CSV: 'Esporta in CSV',
+		EXPORT_TO_JSON: 'Esporta in JSON',
+		PERCENTAGE_COMPLETE: 'Percentuale completa',
+		TIME_ELAPSED: 'Tempo trascorso',
+		DEVICE: 'Dispositivo',
+		LOCATION: 'Posizione',
+		IP_ADDRESS: 'Indirizzo IP',
+		DATE_SUBMITTED: 'Data trasmessa',
+
+		// Vista di progettazione
+		BACKGROUND_COLOR: 'Colore di sfondo',
+		DESIGN_HEADER: 'Modifica il tuo aspetto forma',
+		QUESTION_TEXT_COLOR: 'Colore del testo di domanda',
+		ANSWER_TEXT_COLOR: 'Rispondere al colore del testo',
+		BTN_BACKGROUND_COLOR: 'Colore di sfondo del pulsante',
+		BTN_TEXT_COLOR: 'Colore del testo pulsante',
+
+		// Vista condivisione
+		EMBED_YOUR_FORM: 'Inserisci il tuo modulo',
+		SHARE_YOUR_FORM: 'Condividi il tuo modulo',
+
+		// Schede amministratore
+		CREATE_TAB: 'Crea',
+		DESIGN_TAB: 'Design',
+		CONFIGURE_TAB: 'Configura',
+		ANALYZE_TAB: 'Analizza',
+		SHARE_TAB: 'Condividi',
+
+		// Tipi di campo
+		SHORT_TEXT: 'Testo corto',
+		EMAIL: 'E-mail',
+		MULTIPLE_CHOICE: 'Scelta multipla',
+		DROPDOWN: 'Dropdown',
+		DATE: 'Data',
+		PARAGRAPH_T: 'Paragrafo',
+		YES_NO: 'Sì / no',
+		LEGAL: 'Legale',
+		RATING: 'Valutazione',
+		NUMBERS: 'Numeri',
+		SIGNATURE: 'Firma',
+		FILE_UPLOAD: 'Caricamento file',
+		OPTION_SCALE: 'Scala opzione',
+		PAGAMENTO: 'Pagamento',
+		STATEMENT: 'Dichiarazione',
+		LINK: 'Link',
+
+		// Anteprima del modulo
+		FORM_SUCCESS: 'Inserimento modulo con successo presentato!',
+		REVIEW: 'Recensione',
+		BACK_TO_FORM: 'Torna alla scheda',
+		EDIT_FORM: 'Modifica questo TellForm',
+		ADVANCEMENT: '{{done}} su {{total}} ha risposto',
+		CONTINUE_FORM: "Continua a formare",
+		REQUIRED: 'richiesta',
+		COMPLETING_NEEDED: '{{answers_not_completed}} answer (s) need completing',
+		OPTIONAL: 'facoltativo',
+		ERROR_EMAIL_INVALID: 'Inserisci un indirizzo e-mail valido',
+		ERROR_NOT_A_NUMBER: 'Inserisci solo numeri validi',
+		ERROR_URL_INVALID: 'Per favore un url valido',
+		OK: 'OK',
+		ENTER: 'premere INVIO',
+		NEWLINE: 'premere SHIFT + INVIO per creare una nuova riga',
+		CONTINUE: 'Continua',
+		LEGAL_ACCEPT: 'accetto',
+		LEGAL_NO_ACCEPT: 'Non accetto',
+		SUBMIT: 'Invia',
+		UPLOAD_FILE: 'Carica il tuo file'
+  	});
 
 }]);
 
@@ -3309,8 +3972,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		//Edit Field Modal
 		EDIT_FIELD: 'Editar este campo',
 		SAVE_FIELD: 'Grabar',
-		ON: 'ON',
-		OFF: 'OFF',
+		ON: 'EN',
+		OFF: 'APAGADO',
 		REQUIRED_FIELD: 'Requerido',
 		LOGIC_JUMP: 'Salto lógico',
 		SHOW_BUTTONS: 'Botones adicionales',
@@ -3407,7 +4070,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOCATION: 'Lugar',
 		IP_ADDRESS: 'Dirección IP',
 		DATE_SUBMITTED: 'Fecha de envío',
-		GENERATED_PDF: 'PDF generado',
 
 		//Design View
 		BACKGROUND_COLOR: 'Color de fondo',
@@ -3664,7 +4326,7 @@ angular.module('view-form').constant('VIEW_FORM_URL', '/forms/:formId/render');
 
 angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('english', {
+  $translateProvider.translations('en', {
     FORM_SUCCESS: 'Form entry successfully submitted!',
 	REVIEW: 'Review',
     BACK_TO_FORM: 'Go back to Form',
@@ -3690,10 +4352,22 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	CANCEL: 'Cancel',
 	SUBMIT: 'Submit',
 	UPLOAD_FILE: 'Upload your File',
+	Y: 'Y',
+	N: 'N',
+	OPTION_PLACEHOLDER: 'Type or select an option',
+	ADD_NEW_LINE_INSTR: 'Press SHIFT+ENTER to add a newline',
+	ERROR: 'Error',
+
+	FORM_404_HEADER: '404 - Form Does Not Exist',
+	FORM_404_BODY: 'The form you are trying to access does not exist. Sorry about that!',
+
+  	FORM_UNAUTHORIZED_HEADER: 'Not Authorized to Access Form',
+  	FORM_UNAUTHORIZED_BODY1: 'The form you are trying to access is currently private and not accesible publically.',
+  	FORM_UNAUTHORIZED_BODY2: 'If you are the owner of the form, you can set it to "Public" in the "Configuration" panel in the form admin.',
   });
 
-  $translateProvider.preferredLanguage('english')
-  	.fallbackLanguage('english')
+  $translateProvider.preferredLanguage('en')
+  	.fallbackLanguage('en')
 	.useSanitizeValueStrategy('escape');
 
 }]);
@@ -3702,7 +4376,7 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 
 angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('french', {
+  $translateProvider.translations('fr', {
     FORM_SUCCESS: 'Votre formulaire a été enregistré!',
 	REVIEW: 'Incomplet',
     BACK_TO_FORM: 'Retourner au formulaire',
@@ -3730,6 +4404,16 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	UPLOAD_FILE: 'Envoyer un fichier',
 	Y: 'O',
 	N: 'N',
+	OPTION_PLACEHOLDER: 'Tapez ou sélectionnez une option',
+	ADD_NEW_LINE_INSTR: 'Appuyez sur MAJ + ENTRÉE pour ajouter une nouvelle ligne',
+	ERROR: 'Erreur',
+	
+	FORM_404_HEADER: '404 - Le formulaire n\'existe pas',
+	FORM_404_BODY: 'Le formulaire auquel vous essayez d\'accéder n\'existe pas. Désolé pour ça!',
+  
+	FORM_UNAUTHORIZED_HEADER: 'Non autorisé à accéder au formulaire',
+   FORM_UNAUTHORIZED_BODY1: 'Le formulaire auquel vous essayez d\'accéder est actuellement privé et inaccessible publiquement.',
+   FORM_UNAUTHORIZED_BODY2: 'Si vous êtes le propriétaire du formulaire, vous pouvez le définir sur "Public" dans le panneau "Configuration" du formulaire admin.',
   });
 
 }]);
@@ -3738,12 +4422,12 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 
 angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('german', {
+  $translateProvider.translations('de', {
 	FORM_SUCCESS: 'Ihre Angaben wurden gespeichert.',
 	REVIEW: 'Unvollständig',
 	BACK_TO_FORM: 'Zurück zum Formular',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
+	EDIT_FORM: 'Bearbeiten Sie diese TellForm',
+	CREATE_FORM: 'Dieses TellForm erstellen',
 	ADVANCEMENT: '{{done}} von {{total}} beantwortet',
 	CONTINUE_FORM: 'Zum Formular',
 	REQUIRED: 'verpflichtend',
@@ -3766,6 +4450,16 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	UPLOAD_FILE: 'Datei versenden',
 	Y: 'J',
 	N: 'N',
+	OPTION_PLACEHOLDER: 'Geben oder wählen Sie eine Option aus',
+	ADD_NEW_LINE_INSTR: 'Drücken Sie UMSCHALT + EINGABETASTE, um eine neue Zeile hinzuzufügen',
+  	ERROR: 'Fehler',
+  	
+  	FORM_404_HEADER: '404 - Formular existiert nicht',
+  	FORM_404_BODY: 'Das Formular, auf das Sie zugreifen möchten, existiert nicht. Das tut mir leid!',
+  	
+  	FORM_UNAUTHORIZED_HEADER: 'Nicht zum Zugriffsformular berechtigt\' ',
+   FORM_UNAUTHORIZED_BODY1: 'Das Formular, auf das Sie zugreifen möchten, ist derzeit privat und nicht öffentlich zugänglich.',
+   FORM_UNAUTHORIZED_BODY2: 'Wenn Sie der Eigentümer des Formulars sind, können Sie es im Fenster "Konfiguration" im Formular admin auf "Öffentlich" setzen.',
   });
 
 }]);
@@ -3774,12 +4468,12 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 
 angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('italian', {
+  $translateProvider.translations('it', {
 	FORM_SUCCESS: 'Il formulario è stato inviato con successo!',
 	REVIEW: 'Incompleto',
 	BACK_TO_FORM: 'Ritorna al formulario',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
+	EDIT_FORM: 'Modifica questo TellForm',
+	CREATE_FORM: 'Crea questo TellForm',
 	ADVANCEMENT: '{{done}} su {{total}} completate',
 	CONTINUE_FORM: 'Vai al formulario',
 	REQUIRED: 'obbligatorio',
@@ -3802,6 +4496,16 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	UPLOAD_FILE: 'Invia un file',
 	Y: 'S',
 	N: 'N',
+	OPTION_PLACEHOLDER: 'Digitare o selezionare un\'opzione',
+	ADD_NEW_LINE_INSTR: 'Premere SHIFT + INVIO per aggiungere una nuova riga',
+  	ERROR: 'Errore',
+  	
+  	FORM_404_HEADER: '404 - Il modulo non esiste',
+  	FORM_404_BODY: 'La forma che stai cercando di accedere non esiste. Ci dispiace!',
+  
+  	FORM_UNAUTHORIZED_HEADER: 'Non autorizzato per accedere al modulo',
+   	FORM_UNAUTHORIZED_BODY1: 'Il modulo che si sta tentando di accedere è attualmente privato e non accessibile in pubblico.',
+   	FORM_UNAUTHORIZED_BODY2: 'Se sei il proprietario del modulo, puoi impostarlo su "Pubblico" nel pannello "Configurazione" nell\'amministratore di moduli.',
   });
 
 }]);
@@ -3810,35 +4514,45 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 
 angular.module('view-form').config(['$translateProvider', function ($translateProvider) {
 
-  $translateProvider.translations('spanish', {
-	FORM_SUCCESS: '¡El formulario ha sido enviado con éxito!',
-	REVIEW: 'Revisar',
-	BACK_TO_FORM: 'Regresar al formulario',
-	EDIT_FORM: '',
-	CREATE_FORM: '',
-	ADVANCEMENT: '{{done}} de {{total}} contestadas',
-	CONTINUE_FORM: 'Continuar al formulario',
-	REQUIRED: 'Información requerida',
-	COMPLETING_NEEDED: '{{answers_not_completed}} respuesta(s) necesita(n) ser completada(s)',
-	OPTIONAL: 'Opcional',
-	ERROR_EMAIL_INVALID: 'Favor de proporcionar un correo electrónico válido',
-	ERROR_NOT_A_NUMBER: 'Por favor, introduzca sólo números válidos',
-	ERROR_URL_INVALID: 'Favor de proporcionar un url válido',
-	OK: 'OK',
-	ENTER: 'pulse INTRO',
-	YES: 'Si',
-	NO: 'No',
-	NEWLINE: 'presione SHIFT+INTRO para crear una nueva línea',
-	CONTINUE: 'Continuar',
-	LEGAL_ACCEPT: 'Yo acepto',
-	LEGAL_NO_ACCEPT: 'Yo no acepto',
-	DELETE: 'Eliminar',
-	CANCEL: 'Cancelar',
-	SUBMIT: 'Registrar',
-	UPLOAD_FILE: 'Cargar el archivo',
-	Y: 'S',
-	N: 'N'
-  });
+	  $translateProvider.translations('es', {
+		FORM_SUCCESS: '¡El formulario ha sido enviado con éxito!',
+		REVIEW: 'Revisar',
+		BACK_TO_FORM: 'Regresar al formulario',
+		EDIT_FORM: 'Editar este TellForm',
+		CREATE_FORM: 'Crear este TellForm',
+		ADVANCEMENT: '{{done}} de {{total}} contestadas',
+		CONTINUE_FORM: 'Continuar al formulario',
+		REQUIRED: 'Información requerida',
+		COMPLETING_NEEDED: '{{answers_not_completed}} respuesta(s) necesita(n) ser completada(s)',
+		OPTIONAL: 'Opcional',
+		ERROR_EMAIL_INVALID: 'Favor de proporcionar un correo electrónico válido',
+		ERROR_NOT_A_NUMBER: 'Por favor, introduzca sólo números válidos',
+		ERROR_URL_INVALID: 'Favor de proporcionar un url válido',
+		OK: 'OK',
+		ENTER: 'pulse INTRO',
+		YES: 'Si',
+		NO: 'No',
+		NEWLINE: 'presione SHIFT+INTRO para crear una nueva línea',
+		CONTINUE: 'Continuar',
+		LEGAL_ACCEPT: 'Yo acepto',
+		LEGAL_NO_ACCEPT: 'Yo no acepto',
+		DELETE: 'Eliminar',
+		CANCEL: 'Cancelar',
+		SUBMIT: 'Registrar',
+		UPLOAD_FILE: 'Cargar el archivo',
+		Y: 'S',
+		N: 'N',
+		OPTION_PLACEHOLDER: 'Escriba o seleccione una opción',
+		ADD_NEW_LINE_INSTR: 'Presione MAYÚS + ENTRAR para agregar una nueva línea',
+	  	ERROR: 'Error',
+	  	
+	  	FORM_404_HEADER: '404 - La forma no existe',
+	  	FORM_404_BODY: 'El formulario al que intenta acceder no existe. ¡Lo siento por eso!',
+	  	
+	  	FORM_UNAUTHORIZED_HEADER: 'Non autorizzato per accedere al modulo',
+   		FORM_UNAUTHORIZED_BODY1: 'Il modulo che si sta tentando di accedere è attualmente privato e non accessibile in pubblico.',
+   		FORM_UNAUTHORIZED_BODY2: 'Se sei il proprietario del modulo, puoi impostarlo su "Pubblico" nel pannello "Configurazione" nell\'amministratore di moduli.',
+	});
 
 }]);
 

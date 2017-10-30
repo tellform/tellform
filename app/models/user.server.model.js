@@ -38,17 +38,10 @@ var validateLocalStrategyProperty = function(property) {
 };
 
 /**
- * A Validation function for local strategy password
- */
-var validateLocalStrategyPassword = function(password) {
-	return (this.provider !== 'local' || (password && password.length > 6));
-};
-
-/**
  * A Validation function for username
  */
 var validateUsername = function(username) {
-	return (username.match(/^[a-zA-Z0-9]+$/) !== null);
+	return (username.match(/^[a-zA-Z0-9.-_]+$/) !== null);
 };
 
 
@@ -69,23 +62,17 @@ var UserSchema = new Schema({
 	email: {
 		type: String,
 		trim: true,
+		lowercase: true,
 		unique: 'Account already exists with this email',
-		required: 'Please enter your email',
-		validate: {
-			validator: validateLocalStrategyProperty,
-			message: 'Please fill in your email'
-		},
-		match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+		required: [true, 'Email is required']
 	},
 	username: {
 		type: String,
 		unique: true,
-		required: true,
 		lowercase: true,
-		validate: {
-			validator: validateUsername,
-			message: 'Please use a valid username'
-		}
+		match: [/^[a-zA-Z0-9\-]+$/, 'Username can only contain alphanumeric characters and \'-\''],
+		required: [true, 'Username is required']
 	},
 	passwordHash: {
 		type: String,
@@ -96,7 +83,6 @@ var UserSchema = new Schema({
 	},
 	provider: {
 		type: String,
-		required: 'Provider is required',
 		default: 'local'
 	},
 	providerData: {},
@@ -112,7 +98,6 @@ var UserSchema = new Schema({
 		type: String,
 		enum: ['en', 'fr', 'es', 'it', 'de'],
 		default: 'en',
-		required: 'User must have a language'
 	},
 	lastModified: {
 		type: Date

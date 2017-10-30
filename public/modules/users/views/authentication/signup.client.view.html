@@ -1,30 +1,10 @@
 <section class="auth signup-view valign-wrapper" data-ng-controller="AuthenticationController">
-<!-- 	<h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
-	<div class="col-md-12 text-center">
-		<a href="/auth/facebook" class="undecorated-link">
-			<img src="/modules/users/img/buttons/facebook.png">
-		</a>
-		<a href="/auth/twitter" class="undecorated-link">
-			<img src="/modules/users/img/buttons/twitter.png">
-		</a>
-		<a href="/auth/google" class="undecorated-link">
-			<img src="/modules/users/img/buttons/google.png">
-		</a>
-		<a href="/auth/linkedin" class="undecorated-link">
-			<img src="/modules/users/img/buttons/linkedin.png">
-		</a>
-		<a href="/auth/github" class="undecorated-link">
-			<img src="/modules/users/img/buttons/github.png">
-		</a>
-	</div> -->
-	<!--<h3 class="col-md-12 text-center">{{ 'SIGNUP_HEADER_TEXT' | translate }}</h3>-->
-
 	<div class="row valign">
 		<div class="col-md-12 text-center vcenter" style="padding-bottom: 50px;">
 			<img src="/static/modules/core/img/logo_white.svg" height="100px">
 		</div>
 		<div class="col-xs-offset-3 col-xs-6 col-sm-offset-4 col-sm-4">
-			<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
+			<form name="forms.signupForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
 				<fieldset>
 					<div data-ng-show="error" id="signup_errors" class="text-center">
 						{{'SIGNUP_ERROR_TEXT' | translate}}: <br>
@@ -32,15 +12,15 @@
 					</div>
 					<div class="form-group">
 						<!--<label for="username">{{ 'USERNAME_LABEL' | translate }}</label>-->
-						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}" ng-minlength="4">
+						<input type="text" id="username" name="username" class="form-control" ng-pattern="languageRegExp" ng-minlength="4" ng-model="credentials.username" placeholder="{{ 'USERNAME_LABEL' | translate }}" required pattern=".{4,}" title="Username/Email must be at least 4 characters">
 					</div>
 					<div class="form-group">
 						<!--<label for="email">{{ 'EMAIL_LABEL' | translate }}</label>-->
-						<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="{{ 'EMAIL_LABEL' | translate }}">
+						<input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="{{ 'EMAIL_LABEL' | translate }}" required pattern=".{4,}" title="Email must be at least 4 characters">
 					</div>
 					<div class="form-group">
 						<!--<label for="password">{{ 'PASSWORD_LABEL' | translate }}</label>-->
-						<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" ng-minlength="4">
+						<input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="{{ 'PASSWORD_LABEL' | translate }}" pattern=".{4,}" required title="Passwords must be at least 4 characters">
 					</div>
 					<div class="text-center form-group">
 						<button type="submit" class="btn btn-signup btn-rounded btn-block">{{ 'SIGNUP_BTN' | translate }}</button>

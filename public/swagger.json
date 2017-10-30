@@ -10,7 +10,7 @@
 	},
 	"externalDocs": {
 		"description": "Find out how to host your own TellForm instance.",
-		"url": "https://github.com/whitef0x0/tellform"
+		"url": "https://github.com/tellform/tellform"
 	},
 	"host": "api.tellform.com",
 	"basePath": "/",

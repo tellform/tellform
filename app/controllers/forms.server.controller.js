@@ -102,7 +102,7 @@ exports.createSubmission = function(req, res) {
 exports.listSubmissions = function(req, res) {
 	var _form = req.form;
 
-	FormSubmission.find({ form: _form._id }).sort('-created').lean().exec(function(err, _submissions) {
+	FormSubmission.find({ form: _form._id }).sort('created').lean().exec(function(err, _submissions) {
 		if (err) {
 			console.error(err);
 			res.status(500).send({
@@ -148,15 +148,7 @@ exports.read = function(req, res) {
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
-		FormSubmission.find({ form: req.form._id }).exec(function(err, _submissions) {
-			if (err) {
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
-
 			var newForm = req.form.toJSON();
-			newForm.submissions = _submissions;
 
 			if (req.userId) {
 				if(req.form.admin._id+'' === req.userId+''){
@@ -167,7 +159,6 @@ exports.read = function(req, res) {
 				});
 			}
 			return res.json(newForm);
-		});
 	}
 };
 
@@ -279,7 +270,7 @@ exports.list = function(req, res) {
 
 	Form.find(searchObj)
 		.sort('-created')
-		.select('title language submissions admin isLive')
+		.select('title language admin submissions isLive')
 		.populate('admin.username', 'admin._id')
 		.lean()
 		.exec(function(err, forms) {
@@ -311,7 +302,6 @@ exports.formByID = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.populate('admin')
-		.populate('submissions')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);

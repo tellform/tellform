@@ -93,7 +93,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		IS_NOT_EQUAL_TO: 'is not equal to',
 		IS_GREATER_THAN: 'is greater than',
 		IS_GREATER_OR_EQUAL_THAN: 'is greater or equal than',
-		IS_SMALLER_THAN: 'is_smaller_than',
+		IS_SMALLER_THAN: 'is smaller than',
 		IS_SMALLER_OR_EQUAL_THAN: 'is smaller or equal than',
 		CONTAINS: 'contains',
 		DOES_NOT_CONTAINS: 'does not contain',
@@ -129,7 +129,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOCATION: 'Location',
 		IP_ADDRESS: 'IP Address',
 		DATE_SUBMITTED: 'Date Submitted',
-		GENERATED_PDF: 'Generated PDF',
 
 		//Design View
 		BACKGROUND_COLOR: 'Background Color',

@@ -38,14 +38,15 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SUBMIT_BTN: 'Enregistrer',
 
 		ASK_FOR_NEW_PASSWORD: 'Demander un nouveau mot de pass ',
-		PASSWORD_RESET_INVALID: 'Le nouveau mot de passe est invalid',
+		PASSWORD_RESET_INVALID: 'Ce lien de réinitialisation de mot de passe a déjà expiré',
 		PASSWORD_RESET_SUCCESS: 'Mot de passe réinitialisé avec succès',
 		PASSWORD_CHANGE_SUCCESS: 'Mot de passe enregistré avec succès',
 
 		CONTINUE_TO_LOGIN: 'Allez à la page de connexion',
 
 		VERIFY_SUCCESS: 'Votre compte est activé !',
-		VERIFY_ERROR: 'Le lien de vérification est invalide ou à expiré'
+		VERIFY_ERROR: 'Le lien de vérification est invalide ou à expiré',
+		ERROR: 'Erreur'
 	});
 
 }]);

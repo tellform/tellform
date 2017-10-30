@@ -23,11 +23,11 @@ module.exports = function(grunt) {
 
 	// Unified Watch Object
 	var watchFiles = {
-		serverViews: ['app/views/**/*.*'],
+		serverViews: ['app/views/**/*.pug'],
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 
 		clientViews: ['public/modules/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html',],
-		clientJS: ['public/js/*.js', 'public/form_modules/**/*.js', 'public/modules/**/*.js'],
+		clientJS: ['public/form_modules/**/*.js', 'public/modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
 
 		serverTests: ['app/tests/**/*.js'],
@@ -145,10 +145,14 @@ module.exports = function(grunt) {
 			}
 		},
 		ngAnnotate: {
+			options:{
+				add: true,
+				remove: true
+			},
 			production: {
 				files: {
-					'public/dist/application.js': '<%= applicationJavaScriptFiles %>',
-					'public/dist/form-application.js': '<%= formApplicationJavaScriptFiles %>'
+					'public/dist/application.js': ['public/application.js', 'public/config.js', 'public/form_modules/**/*.js'],
+					'public/dist/form_application.js': ['public/form-application.js', 'public/form-config.js', 'public/form_modules/**/*.js']
 				}
 			}
 		},
@@ -291,7 +295,7 @@ module.exports = function(grunt) {
 			target: {
 				src: ['./scripts/setup.js']
 			}
-		}
+		},
 	});
 
 	grunt.event.on('coverage', function(lcov, done){
@@ -335,7 +339,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('secure', ['env:secure', 'lint', 'html2js:main', 'html2js:forms', 'concurrent:default']);
 
 	// Lint task(s).
-	grunt.registerTask('lint', ['jshint', 'csslint']);
+	grunt.registerTask('lint', ['jshint', 'csslint', 'i18nlint:client', 'i18nlint:server']);
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).

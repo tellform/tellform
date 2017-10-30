@@ -55,16 +55,17 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SUBMIT_BTN: 'Submit',
 
 		ASK_FOR_NEW_PASSWORD: 'Ask for new password reset',
-		PASSWORD_RESET_INVALID: 'Password reset is invalid',
-		PASSWORD_RESET_SUCCESS: 'Passport successfully reset',
-		PASSWORD_CHANGE_SUCCESS: 'Passport successfully changed',
+		PASSWORD_RESET_INVALID: 'Password reset link is invalid',
+		PASSWORD_RESET_SUCCESS: 'Password successfully reset',
+		PASSWORD_CHANGE_SUCCESS: 'Password successfully changed',
 		RESET_PASSWORD: 'Reset your password',
 		CHANGE_PASSWORD: 'Change your password',
 
 		CONTINUE_TO_LOGIN: 'Continue to login page',
 
 		VERIFY_SUCCESS: 'Account successfully activated',
-		VERIFY_ERROR: 'Verification link is invalid or has expired'
+		VERIFY_ERROR: 'Verification link is invalid or has expired',
+		ERROR: 'Error'
 	});
 
 	$translateProvider.preferredLanguage('en')

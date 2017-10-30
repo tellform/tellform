@@ -14,7 +14,6 @@ module.exports = function(app) {
 	// Setting up the users profile api
 	app.route('/users/me').get(auth.isAuthenticatedOrApiKey, users.getUser);
 	app.route('/users').put(auth.isAuthenticatedOrApiKey, users.update);
-	app.route('/users/accounts').delete(users.requiresLogin, users.removeOAuthProvider);
 
 	// Setting up the users account verification api
 	app.route('/auth/verify/:token').get(users.validateVerificationToken);

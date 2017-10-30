@@ -8,9 +8,9 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 		SIGNIN_TAB: 'Sign In',
 		SIGNOUT_TAB: 'Signout',
 		EDIT_PROFILE: 'Edit Profile',
-		MY_FORMS: 'My Forms',
 		MY_SETTINGS: 'My Settings',
-		CHANGE_PASSWORD: 'Change Password'
+		CHANGE_PASSWORD: 'Change Password',
+		TOGGLE_NAVIGATION: 'Toggle navigation'
 	});
 
 	$translateProvider.preferredLanguage('en')

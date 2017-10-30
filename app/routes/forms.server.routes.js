@@ -25,10 +25,13 @@ module.exports = function(app) {
 	} else {
 		app.route('/forms/:formIdFast([a-zA-Z0-9]+)/render')
 			.get(forms.readForRender);
+
+		app.route('/view/')
+		 	.get(core.form);
 	}
 
    	app.route('/forms/:formIdFast([a-zA-Z0-9]+)')
-                .post(forms.createSubmission)
+        .post(forms.createSubmission)
 	
 	app.route('/forms')
 		.get(auth.isAuthenticatedOrApiKey, forms.list)

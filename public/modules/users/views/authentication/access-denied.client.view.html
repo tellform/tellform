@@ -1,4 +1,15 @@
-<section class="text-center auth">
-	<h3 class="col-md-12">{{ 'ACCESS_DENIED_TEXT' | translate }}</h3>
-	<a href="/#!/sigin" class="col-md-12">{{ 'SIGNIN_BTN' | translate }}</a>
+<section class="row auth" data-ng-controller="PasswordController">
+	<div class="row valign">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="col-md-12 text-center" style="padding-bottom: 50px;">
+				<img src="/static/modules/core/img/logo_white.svg" height="100px">
+			</div>
+			<h3 class="col-md-12 text-center">{{ 'ACCESS_DENIED_TEXT' | translate }}</h3>
+			<div class="col-md-12 text-center"> 
+				<a class="btn btn-signup btn-rounded btn-block" href="/#!/signin" >
+					{{ 'ASK_FOR_NEW_PASSWORD' | translate }}
+				</a>
+			</div>
+		</div>
+	</div>
 </section>

@@ -29,8 +29,8 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		//Edit Field Modal
 		EDIT_FIELD: 'Editar este campo',
 		SAVE_FIELD: 'Grabar',
-		ON: 'ON',
-		OFF: 'OFF',
+		ON: 'EN',
+		OFF: 'APAGADO',
 		REQUIRED_FIELD: 'Requerido',
 		LOGIC_JUMP: 'Salto lógico',
 		SHOW_BUTTONS: 'Botones adicionales',
@@ -127,7 +127,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOCATION: 'Lugar',
 		IP_ADDRESS: 'Dirección IP',
 		DATE_SUBMITTED: 'Fecha de envío',
-		GENERATED_PDF: 'PDF generado',
 
 		//Design View
 		BACKGROUND_COLOR: 'Color de fondo',
