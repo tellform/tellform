@@ -2,7 +2,7 @@
 
 	<div class="row">
 		<uib-tabset active="activePill" type="pills">
-			<uib-tab ng-repeat="tab in configureTabs" index="$index" heading="{{tab.heading}}" select="go(tab.route)">
+			<uib-tab ng-repeat="tab in configureTabs" active="tab.active" select="go(tab)" heading="{{tab.heading}}">
 				<div ui-view></div>
 			</uib-tab>
 		</uib-tabset>

@@ -68,7 +68,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         };
 
         function setActiveTab() {
-            var start = new Date().getTime();
             $scope.tabData.forEach(function(tab) {
                 tab.active = ($state.current.name === tab.route);
 
@@ -78,19 +77,11 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                     $scope.designTabActive = false;
                 }
             });
-
-            var end = new Date().getTime();
-            var time = end - start;
-            console.log('Execution time: ' + time);
         }
 
         setActiveTab();
 
-        $scope.$on("$stateChangeSuccess", function() {
-
-            setActiveTab();
-
-        });
+        $scope.$on("$stateChangeSuccess", setActiveTab());
 
         $scope.deactivateDesignTab = function(){
             $scope.designTabActive = false

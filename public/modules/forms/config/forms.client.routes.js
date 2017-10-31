@@ -75,10 +75,10 @@ angular.module('forms').config(['$stateProvider',
 			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/general.html'
 	    }).state('viewForm.configure.self_notifications', {
 			url: '/self_notifications',
-			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/self_notifications.html'
+			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/self-notifications.html'
 	    }).state('viewForm.configure.respondent_notifications', {
 			url: '/respondent_notifications',
-			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/respondent_notifications.html'
+			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/respondent-notifications.html'
 	    })
 
 	    .state('viewForm.design', {
