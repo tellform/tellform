@@ -64,10 +64,24 @@ angular.module('forms').config(['$stateProvider',
 		}).state('viewForm.create', {
 			url: '/create',
 			templateUrl: 'modules/forms/admin/views/adminTabs/create.html'
-		}).state('viewForm.configure', {
+		})
+
+		.state('viewForm.configure', {
+			abstract: true,
 			url: '/configure',
 			templateUrl: 'modules/forms/admin/views/adminTabs/configure.html'
-	    }).state('viewForm.design', {
+	    }).state('viewForm.configure.general', {
+			url: '/general',
+			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/general.html'
+	    }).state('viewForm.configure.self_notifications', {
+			url: '/self_notifications',
+			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/self_notifications.html'
+	    }).state('viewForm.configure.respondent_notifications', {
+			url: '/respondent_notifications',
+			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/respondent_notifications.html'
+	    })
+
+	    .state('viewForm.design', {
 			url: '/design',
 			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
 		}).state('viewForm.share', {

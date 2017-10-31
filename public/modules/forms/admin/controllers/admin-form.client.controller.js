@@ -50,7 +50,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             },
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-                route: 'viewForm.configure'
+                route: 'viewForm.configure.general'
             },
             {
                 heading: $filter('translate')('ANALYZE_TAB'),
