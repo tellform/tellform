@@ -57,13 +57,14 @@
 	</div>
 
 	<div class="row">
-		<div class="col-xs-12">
-			<uib-tabset active="activePill" vertical="true" type="pills">
-				<uib-tab ng-repeat="tab in tabData" index="{{$index}}" select="go(tab.route)" heading="{{tab.heading}}">
-					<div ui-view></div>
+		<div >
+			<uib-tabset vertical="true" type="pills">
+				<uib-tab ng-repeat="tab in tabData" active="tab.active" select="go(tab)" heading="{{tab.heading}}">
 				</uib-tab>
 			</uib-tabset>
-
+		</div>
+		<div class="col-xs-10">
+			<div ui-view></div>
 		</div>
 	</div>
 </section>

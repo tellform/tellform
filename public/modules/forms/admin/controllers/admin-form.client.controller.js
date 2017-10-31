@@ -4,19 +4,12 @@
 angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$translate',
     function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $translate) {
 
-        //Set active tab to Create
-        $scope.activePill = 0;
-
-        $scope.copied = false;
-        $scope.onCopySuccess = function (e) {
-            $scope.copied = true;
-        };
-
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
         $rootScope.saveInProgress = false;
         $scope.oldForm = _.cloneDeep($scope.myform);
+        $scope.designTabActive = false
 
         CurrentForm.setForm($scope.myform);
 
@@ -36,7 +29,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
         }
 
-
         var refreshFrame = $scope.refreshFrame = function(){
             if(document.getElementById('iframe')) {
                 document.getElementById('iframe').contentWindow.location.reload();
@@ -46,31 +38,59 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         $scope.tabData = [
             {
                 heading: $filter('translate')('CREATE_TAB'),
-                route: 'viewForm.create'
+                route: 'viewForm.create',
+                active: false
             },
             {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-                route: 'viewForm.configure.general'
+                route: 'viewForm.configure.general',
+                active: false
             },
             {
                 heading: $filter('translate')('ANALYZE_TAB'),
-                route: 'viewForm.analyze'
+                route: 'viewForm.analyze',
+                active: false
             },
             {
                 heading: $filter('translate')('SHARE_TAB'),
-                route: 'viewForm.share'
+                route: 'viewForm.share',
+                active: false
             },
             {
                 heading: $filter('translate')('DESIGN_TAB'),
-                route: 'viewForm.design'
+                route: 'viewForm.design',
+                active: false
             }
         ];
 
-        $scope.go = function(route){
-            $state.go(route);
+        $scope.go = function(tab){
+            $state.go(tab.route);
         };
 
-        $scope.designTabActive = false
+        function setActiveTab() {
+            var start = new Date().getTime();
+            $scope.tabData.forEach(function(tab) {
+                tab.active = ($state.current.name === tab.route);
+
+                if(tab.active && tab.route === 'viewForm.design'){
+                    $scope.designTabActive = true;
+                } else {
+                    $scope.designTabActive = false;
+                }
+            });
+
+            var end = new Date().getTime();
+            var time = end - start;
+            console.log('Execution time: ' + time);
+        }
+
+        setActiveTab();
+
+        $scope.$on("$stateChangeSuccess", function() {
+
+            setActiveTab();
+
+        });
 
         $scope.deactivateDesignTab = function(){
             $scope.designTabActive = false
