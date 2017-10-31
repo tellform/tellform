@@ -43,6 +43,7 @@ angular.module('forms').config(['$stateProvider',
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
 		}).state('viewForm', {
+			abstract: true,
 			url: '/forms/:formId/admin',
 			templateUrl: 'modules/forms/admin/views/admin-form.client.view.html',
 			data: {
@@ -60,18 +61,21 @@ angular.module('forms').config(['$stateProvider',
 		        }
 			},
 			controller: 'AdminFormController'
+		}).state('viewForm.create', {
+			url: '/create',
+			templateUrl: 'modules/forms/admin/views/adminTabs/create.html'
 		}).state('viewForm.configure', {
 			url: '/configure',
 			templateUrl: 'modules/forms/admin/views/adminTabs/configure.html'
 	    }).state('viewForm.design', {
 			url: '/design',
 			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
+		}).state('viewForm.share', {
+			url: '/share',
+			templateUrl: 'modules/forms/admin/views/adminTabs/share.html'
 	    }).state('viewForm.analyze', {
 			url: '/analyze',
 			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html'
-	    }).state('viewForm.create', {
-			url: '/create',
-			templateUrl: 'modules/forms/admin/views/adminTabs/create.html'
 	    });
 	}
 ]);

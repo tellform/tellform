@@ -59,22 +59,11 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<uib-tabset active="activePill" vertical="true" type="pills">
-				<uib-tab index="0" heading="{{ 'CREATE_TAB' | translate }}" select="deactivateDesignTab()">
-					<edit-form-directive myform="myform"></edit-form-directive>
-				</uib-tab>
-				<uib-tab ng-repeat="tab in tabData" index="{{$index+1}}" heading="{{tab.heading}}" select="deactivateDesignTab()">
-					<div class='row' data-ng-include="'/static/modules/forms/admin/views/adminTabs/'+tab.templateName+'.html'"></div>
-				</uib-tab>
-				<uib-tab index="2" heading="{{ 'ANALYZE_TAB' | translate }}" select="deactivateDesignTab()">
-					<edit-submissions-form-directive myform="myform" user="myform.admin"></edit-submissions-form-directive>
-				</uib-tab>
-				<uib-tab ng-if="tabData" heading="{{ 'SHARE_TAB' | translate }}" index="3" select="deactivateDesignTab()">
-					<share-form-directive actualformurl="actualFormURL"></share-form-directive>
-				</uib-tab>
-				<uib-tab class="design-tab" ng-if="tabData && myform.form_fields.length" heading="{{ 'DESIGN_TAB' | translate }}" index="4" select="activateDesignTab()">
-					<design-form-directive myform="myform" formurl="formURL"></design-form-directive>
+				<uib-tab ng-repeat="tab in tabData" index="{{$index}}" select="go(tab.route)" heading="{{tab.heading}}">
+					<div ui-view></div>
 				</uib-tab>
 			</uib-tabset>
+
 		</div>
 	</div>
 </section>

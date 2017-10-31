@@ -45,10 +45,30 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
         $scope.tabData = [
             {
+                heading: $filter('translate')('CREATE_TAB'),
+                route: 'viewForm.create'
+            },
+            {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-                templateName:   'configure'
+                route: 'viewForm.configure'
+            },
+            {
+                heading: $filter('translate')('ANALYZE_TAB'),
+                route: 'viewForm.analyze'
+            },
+            {
+                heading: $filter('translate')('SHARE_TAB'),
+                route: 'viewForm.share'
+            },
+            {
+                heading: $filter('translate')('DESIGN_TAB'),
+                route: 'viewForm.design'
             }
         ];
+
+        $scope.go = function(route){
+            $state.go(route);
+        };
 
         $scope.designTabActive = false
 
