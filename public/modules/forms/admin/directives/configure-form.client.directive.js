@@ -9,10 +9,11 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                 myform:'='
             },
             controller: function($scope){
+                $rootScope.myform = $scope.myform;
                 $scope.languages = $rootScope.languages;
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
-
+                
                 $scope.configureTabs = [
                     {
                         heading: $filter('translate')('GENERAL_TAB'),

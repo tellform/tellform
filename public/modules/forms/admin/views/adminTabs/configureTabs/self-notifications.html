@@ -1,39 +1,50 @@
-<!-- Settings -->
 <div class="row">
-    <div class="col-sm-offset-2 col-sm-4">
+    <div class="col-sm-offset-2">
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'FORM_NAME' | translate }}</h5>
+                <h5>{{ 'SEND_NOTIFICATION_TO' | translate }}</h5>
             </div>
 
             <div class="col-sm-12">
                 <input class="form-control"
-				    type="text"
-                    ng-model="myform.title"
-                    value="{{myform.title}}"
-                    style="width: 100%;"
-                    ng-minlength="4"
-                    ng-pattern="/^[a-zA-Z0-9 \-.]*$/">
+                       type="text"
+                       ng-model="myform.emailNotifications.recipients"
+                       value="{{myform.emailNotifications.recipients}}"
+                       placeholder="email@domain.com,email2@domain2.com,etc">
             </div>
         </div>
 
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'FORM_STATUS' | translate }}</h5>
+                <h5>{{ 'REPLY_TO' | translate }}</h5>
             </div>
 
-            <div class="field-input col-sm-12">
+            <div class="col-xs-12 field-input">
+                <ui-select ng-model="myform.selfNotifications.fromField"
+                        theme="selectize"
+                        search-enabled="true"
+                        search-by="title"
+                        set-search-to-answer="true"
+                        ng-required="true">
+                    <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
+                    </ui-select-match>
+                    <ui-select-choices repeat="field in myform.form_fields | filter: $select.search"
+                                       ng-class="{'active': field._id === myform.selfNotifications.fromField }">
+                        <span ng-bind-html="field.title | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
 
-                <label style="display: inline-block;">
-                    <input type="radio" data-ng-value="true" ng-model="myform.isLive"  ng-required="true" style="background-color:#33CC00;"/>
-                    &nbsp;<span>{{ 'PUBLIC' | translate }}</span>
-                </label>
+        <div class="row field">
+            <div class="field-title col-sm-12">
+                <h5>{{ 'EMAIL_SUBJECT' | translate }}</h5>
+            </div>
 
-                <label style="display: inline-block;">
-                    <input type="radio" data-ng-value="false" ng-model="myform.isLive"  ng-required="true" />
-                    &nbsp;<span>{{ 'PRIVATE' | translate }}</span>
-                </label>
+            <div class="col-sm-12">
+                <text-angular ng-model="htmlVariable" ta-toolbar="[['bold','italics', 'test']]"></text-angular>
 
+                <div ng-bind="htmlVariable"></div>
             </div>
         </div>
 
@@ -57,22 +68,6 @@
             </div>
         </div>
 
-        <div class="row field" ng-if="myform.emailNotifications.enabled">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'EMAIL_NOTIFICATION_RECIPIENTS' | translate }}</h5>
-			</div>
-
-			<div class="col-sm-12">
-				<input class="form-control"
-					   type="text"
-					   ng-model="myform.emailNotifications.recipients"
-					   value="{{myform.emailNotifications.recipients}}"
-					   style="width: 100%;"
-					   placeholder="email@domain.com,email2@domain2.com,etc">
-			</div>
-		</div>
-
-
         <div class="row field">
             <div class="col-sm-12 field-title">{{ 'LANGUAGE' | translate }}</div>
             <div class="col-sm-12 field-input">
@@ -87,79 +82,4 @@
             </div>
         </div>
     </div>
-	<div class="col-sm-4">
-		<div class="row field">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'GA_TRACKING_CODE' | translate }}</h5>
-			</div>
-
-			<div class="col-sm-12">
-				<input class="form-control"
-					   type="text"
-					   ng-model="myform.analytics.gaCode"
-					   value="{{myform.analytics.gaCode}}"
-					   style="width: 100%;"
-					   ng-minlength="4"
-					   placeholder="UA-XXXXX-Y"
-					   ng-pattern="/\bUA-\d{4,10}-\d{1,4}\b/">
-			</div>
-		</div>
-		<div class="row field">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'DISPLAY_FOOTER' | translate }}</h5>
-			</div>
-
-			<div class="field-input col-sm-12">
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="false" ng-model="myform.hideFooter"  ng-required="true" />
-					&nbsp;<span>{{ 'YES' | translate }}</span>
-				</label>
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="true" ng-model="myform.hideFooter"  ng-required="true" />
-					&nbsp;<span>{{ 'NO' | translate }}</span>
-				</label>
-			</div>
-		</div>
-
-		<div class="row field">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'DISPLAY_START_PAGE' | translate }}</h5>
-			</div>
-
-			<div class="field-input col-sm-12">
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="true" ng-model="myform.startPage.showStart"  ng-required="true" style="background-color:#33CC00;"/>
-					&nbsp;<span>{{ 'YES' | translate }}</span>
-				</label>
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="false" ng-model="myform.startPage.showStart"  ng-required="true" />
-					&nbsp;<span>{{ 'NO' | translate }}</span>
-				</label>
-
-			</div>
-		</div>
-
-		<div class="row field">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'DISPLAY_END_PAGE' | translate }}</h5>
-			</div>
-
-			<div class="field-input col-sm-12">
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="true" ng-model="myform.endPage.showEnd"  ng-required="true" style="background-color:#33CC00;"/>
-					&nbsp;<span>{{ 'YES' | translate }}</span>
-				</label>
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="false" ng-model="myform.endPage.showEnd"  ng-required="true" />
-					&nbsp;<span>{{ 'NO' | translate }}</span>
-				</label>
-
-			</div>
-		</div>
-	</div>
 </div>

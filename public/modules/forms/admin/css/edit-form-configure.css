@@ -1,0 +1,14 @@
+.tag {
+    background-color: #999;
+    border-radius: 3px 3px 3px 3px;
+    border: 0;
+    color: #FFFFFF;
+    font-style: inherit;
+    font-size: 11px;
+    padding: 4px 5px;
+    margin: 0 2px 2px 2px;
+    font-family: inherit;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer !important;
+}

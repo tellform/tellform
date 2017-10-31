@@ -150,7 +150,16 @@ var FormSchema = new Schema({
 		buttons:[ButtonSchema]
 	},
 
-	emailNotifications: {
+	selfNotifications: {
+		fromField: {
+			type: Schema.Types.ObjectId,
+		},
+		subject: {
+			type: String
+		},
+		htmlTemplate: {
+			type: String
+		},
 		enabled: {
 			type: Boolean,
 			default: false

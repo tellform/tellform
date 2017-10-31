@@ -10,7 +10,8 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	diff = require('deep-diff'),
 	_ = require('lodash'),
-	nodemailer = require('nodemailer');
+	nodemailer = require('nodemailer'),
+	emailNotifications = require('../libs/send-email-notifications');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
@@ -73,22 +74,25 @@ exports.createSubmission = function(req, res) {
 			});
 		}
 
-		if (req.body.emailNotifications && req.body.emailNotifications.enabled && req.body.emailNotifications.recipients) {
-				 var mailOptions = {
-					from: config.mailer.from,
-					cc: req.body.emailNotifications.recipients,
-					subject: 'TellForm ' + submission.title + 'Submitted',
-					body: 'Your form ' + submission.title + 'was submitted.'
-				}
+		var form = req.body.form;
 
-				smtpTransport.sendMail(mailOptions, function(err) {
-					if (!err) {
-						return res.status(200).send('Form submission successfully saved');
-					} 
-					return res.status(400).send({
-						message: 'Failure sending submission email'
-					});
+		if (form.selfNotifications && form.selfNotifications.enabled && form.selfNotifications.recipients) {
+
+			var formFieldDict = {};
+			form.form_fields.forEach(function(field){
+				formFieldDict[field._id] = field.fieldValue;
+			});
+
+			form.selfNotifications.from = formFieldDict[form.selfNotifications.fromField].fieldValue;
+
+			emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, function(err){
+				if (!err) {
+					return res.status(200).send('Form submission successfully saved');
+				} 
+				return res.status(400).send({
+					message: 'Failure sending submission email'
 				});
+			});
 		} else {
 			res.status(200).send('Form submission successfully saved');
 		}

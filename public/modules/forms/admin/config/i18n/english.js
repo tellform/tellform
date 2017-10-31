@@ -22,6 +22,9 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		SELF_NOTIFICATIONS_TAB: 'Self notifications',
 		RESPONDENT_NOTIFICATIONS_TAB: 'Respondent notifications',
 
+		//Self Notifications Tab
+		ADD_VARIABLE_BUTTON: 'Add variable',
+
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Create a new form',
 		CREATE_FORM: 'Create form',
