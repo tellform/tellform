@@ -3,7 +3,8 @@
 /**
  * Module dependencies.
  */
-var emailNotifications = require('../../libs/send-email-notifications');
+var emailNotifications = require('../../libs/send-email-notifications'),
+	constants = require('../../libs/constants');
 
 /**
  * Globals
@@ -26,6 +27,14 @@ var invalidFormFields = [
     {fieldType:'number', title:'Your Age'}
 ];
 
+var htmlTemplate = '<p><var class="tag" id="field:56340745f59a6fc9e22028e9">First Name</var> \
+	<br><var class="tag" id="field:5c9e22028e907634f45f59a6">Your Website</var> \
+	<br><var class="tag" id="field:56e90745f5934fc9e22028a6">Your Age</var></p>';
+
+var renderedTemplate = '<p>John Smith \
+	<br>https://johnsmith.me \
+	<br>45</p>';
+
 /**
  * Unit tests
  */
@@ -43,12 +52,16 @@ describe('Send Email Notification Unit Tests', function() {
 		});
 	});
 
+	describe('Method parseTemplate', function(){
+		it('should be properly render a template given a valid field dict', function() {
+			var actualRenderedTemplate = parseTemplate(htmlTemplate, validFieldDict, constants.varFormat);
+			actualRenderedTemplate.should.equal(renderedTemplate);
+		});
+	});
+
 	describe('Method replaceTemplateVal', function() {
 	});
 
 	describe('Method send', function() {
-	});
-
-	describe('Method parseTemplate', function(){
 	});
 });
