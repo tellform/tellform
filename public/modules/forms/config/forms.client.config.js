@@ -48,7 +48,7 @@ angular.module('forms').run(['Menus',
     });
 }]).config(['$provide', function ($provide){
     $provide.decorator('taOptions', ['$delegate', 'taRegisterTool', '$translate', '$window', function(taOptions, taRegisterTool, $translate, $window) {
-        taRegisterTool('test', {
+        taRegisterTool('addFieldVariable', {
             display: '<div class="dropdown" uib-dropdown is-open="isopen">\
 					<div class="dropdown-toggle" ng-disabled="isDisabled()" uib-dropdown-toggle>\
 						<span>{{ "ADD_A_VARIABLE" | translate }}</span>\
@@ -66,7 +66,6 @@ angular.module('forms').run(['Menus',
             action: function(){
             }
         });
-        taOptions.toolbar[1].push('test');
 
 		return taOptions;
     }]);

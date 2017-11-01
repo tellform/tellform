@@ -32,6 +32,10 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                     }
                 ];
 
+                $scope.emailFields = $scope.myform.form_fields.filter(function(field){
+                    return field.fieldType === 'email';
+                });
+
                 $scope.go = function(tab){
                     tab.active = true;
                     $state.go(tab.route);

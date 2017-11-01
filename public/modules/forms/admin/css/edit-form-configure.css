@@ -12,3 +12,18 @@
     vertical-align: middle;
     cursor: pointer !important;
 }
+
+.email-subject.ta-root .ta-editor.ta-html, .email-subject .ta-scroll-window.form-control {
+    min-height: 0;
+    overflow: hidden; 
+    height: auto;
+    border-radius: 4px;
+    box-shadow: none;
+    font-size: 18px;
+    padding-top: 10px;
+}
+
+.email-subject.ta-root .ta-scroll-window > .ta-bind {
+    min-height: 0;
+    outline: 0;
+}

@@ -154,6 +154,9 @@ var FormSchema = new Schema({
 		fromField: {
 			type: Schema.Types.ObjectId,
 		},
+		toEmails: {
+			type: String
+		},
 		subject: {
 			type: String
 		},
@@ -163,11 +166,31 @@ var FormSchema = new Schema({
 		enabled: {
 			type: Boolean,
 			default: false
-		},
-		recipients: {
-			type: String
 		}
 	},
+
+	respondentNotifications: {
+		toField: {
+			type: Schema.Types.ObjectId,
+		},
+		fromEmail: {
+			type: String,
+			match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		},
+		subject: {
+			type: String,
+			default: 'Tellform: Thank you for filling out <var class="tag" id="tellform-title">Tellform name</var>'
+		},
+		htmlTemplate: {
+			type: String,
+			default: 'Hello, <br><br> We’ve received your submission. <br><br> Thank you & have a nice day!',
+		},
+		enabled: {
+			type: Boolean,
+			default: false
+		}
+	},
+
 	hideFooter: {
 		type: Boolean,
 		default: false
