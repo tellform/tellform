@@ -179,7 +179,7 @@ var FormSchema = new Schema({
 		toField: {
 			type: Schema.Types.ObjectId,
 		},
-		fromEmail: {
+		fromEmails: {
 			type: String,
 			match: [/.+\@.+\..+/, 'Please fill a valid email address']
 		},

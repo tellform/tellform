@@ -7,8 +7,8 @@ module.exports = {
 		var parsedTemplate = this.parseTemplate(emailSettings.htmlTemplate, emailTemplateVars);
 		var parsedSubject = this.parseTemplate(emailSettings.body, emailTemplateVars);
 		var mailOptions = {
-			from: emailSettings.from,
-			cc: emailSettings.recipients,
+			from: emailSettings.fromEmails,
+			cc: emailSettings.toEmails,
 			subject: parsedSubject,
 			html: parsedTemplate
 		};

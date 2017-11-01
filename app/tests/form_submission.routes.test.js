@@ -27,8 +27,8 @@ describe('Form Submission Routes Unit tests', function() {
 
 		// Create user credentials
 		credentials = {
-			email: 	  'test@test.com',
-			username: 'test',
+			email: 	  'test423@test.com',
+			username: 'test534',
 			password: 'password'
 		};
 
@@ -44,7 +44,10 @@ describe('Form Submission Routes Unit tests', function() {
 
 		// Save a user to the test db and create new Form
 		user.save(function(err) {
-			if(err) return done(err);
+			if(err) {
+				return done(err);
+			}
+
 			FormObj = new Form({
 				title: 'Form Title',
 				language: 'en',
@@ -53,7 +56,22 @@ describe('Form Submission Routes Unit tests', function() {
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
 					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
 					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
-				]
+				],
+				selfNotifications: {
+					fromField: mongoose.Types.ObjectId(),
+					toEmails: 'john@smith.com',
+					subject: 'Hello there',
+					htmlTemplate: '<p> A form was submitted </p>',
+					enabled: true
+				},
+
+				respondentNotifications: {
+					toField: mongoose.Types.ObjectId(),
+					fromEmails: 'john@smith.com',
+					subject: 'Tellform: Thank you for filling out this TellForm',
+					htmlTemplate:'Hello, <br><br> We’ve received your submission. <br><br> Thank you & have a nice day!',
+					enabled: true
+				}
 			});
 
 			FormObj.save(function(formSaveErr, form) {

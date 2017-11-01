@@ -13,7 +13,8 @@ var mongoose = require('mongoose'),
 	nodemailer = require('nodemailer'),
 	emailNotifications = require('../libs/send-email-notifications'),
 	constants = require('../libs/constants'),
-	helpers = require('./helpers.server.controller');
+	helpers = require('./helpers.server.controller'),
+	async = require('async');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
@@ -75,27 +76,52 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
+		var form = req.body
+		var formFieldDict = emailNotifications.createFieldDict(form.form_fields);
 
-		var form = req.body.form;
-		/*
-		if (form.selfNotifications && form.selfNotifications.enabled && form.selfNotifications.recipients) {
+		async.waterfall([
+		    function(callback) {
+		    	if (form.selfNotifications && form.selfNotifications.enabled && form.selfNotifications.fromField) {
 
-			formFieldDict = emailNotifications.createFieldDict(form.form_fields);
-			form.selfNotifications.from = formFieldDict[form.selfNotifications.fromField].fieldValue;
+					form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField].fieldValue;
 
-			emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
-				if (!err) {
-					return res.status(200).send('Form submission successfully saved');
+					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+						if(err){
+							return callback({
+								message: 'Failure sending submission self-notification email'
+							});
+						}
+
+						callback();
+					});
+				} else {
+					callback();
 				} 
-				return res.status(400).send({
-					message: 'Failure sending submission email'
-				});
-			});
-		} else {
-		*/
-			res.status(200).send('Form submission successfully saved');
-		//}
+		    },
+		    function(callback) {
+		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
 
+					form.selfNotifications.toEmails = formFieldDict[form.selfNotifications.toField].fieldValue;
+
+					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+						if(err){
+							return callback({
+								message: 'Failure sending submission respondent-notification email'
+							});
+						}
+
+						callback();
+					});
+				} else {
+					callback();
+				} 
+		    }
+		], function (err) {
+			if(err){
+				return res.status(400).send(err);
+			}
+		    res.status(200).send('Form submission successfully saved');
+		});
 	});
 };
 
@@ -326,7 +352,7 @@ exports.formByIDFast = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.lean()
-		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
+		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);
