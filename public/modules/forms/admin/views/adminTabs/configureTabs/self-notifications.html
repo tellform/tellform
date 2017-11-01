@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="row field">
+        <div class="row field" ng-if="formHasEmailField">
             <div class="field-title col-sm-12">
                 <h5>{{ 'REPLY_TO' | translate }}</h5>
             </div>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-sm-12">
-                <text-angular class="email-subject" ng-model="myform.selfNotifications.subject" ta-toolbar="[['addFieldVariable']]" ta-default-wrap="n"></text-angular>
+                <text-angular class="email-subject" ng-model="myform.selfNotifications.subject" ta-toolbar="[['insertEmailField']]" ta-default-wrap="n"></text-angular>
                 <div ng-bind="myform.selfNotifications.subject"></div>
             </div>
         </div>
@@ -52,7 +52,7 @@
             </div>
 
             <div class="col-sm-12">
-                <text-angular ng-model="myform.selfNotifications.htmlTemplate" ta-toolbar="[['bold','italics', 'addFieldVariable']]"></text-angular>
+                <text-angular ng-model="myform.selfNotifications.htmlTemplate" ta-toolbar="[['bold','italics', 'insertField']]"></text-angular>
             </div>
         </div>
 

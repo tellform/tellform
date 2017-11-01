@@ -32,9 +32,11 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                     }
                 ];
 
-                $scope.emailFields = $scope.myform.form_fields.filter(function(field){
+                $rootScope.emailFields = $scope.myform.form_fields.filter(function(field){
                     return field.fieldType === 'email';
                 });
+
+                $scope.formHasEmailField = ($rootScope.emailFields > 0);
 
                 $scope.go = function(tab){
                     tab.active = true;
