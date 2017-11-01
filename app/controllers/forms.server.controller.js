@@ -82,8 +82,7 @@ exports.createSubmission = function(req, res) {
 		async.waterfall([
 		    function(callback) {
 		    	if (form.selfNotifications && form.selfNotifications.enabled && form.selfNotifications.fromField) {
-
-					form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField].fieldValue;
+					form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField];
 
 					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
 						if(err){
@@ -101,7 +100,7 @@ exports.createSubmission = function(req, res) {
 		    function(callback) {
 		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
 
-					form.selfNotifications.toEmails = formFieldDict[form.selfNotifications.toField].fieldValue;
+					form.selfNotifications.toEmails = formFieldDict[form.selfNotifications.toField];
 
 					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
 						if(err){

@@ -15,11 +15,21 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Annuler',
 		DISPLAY_START_PAGE: "Afficher la page de démarrage?",
 		DISPLAY_END_PAGE: "Afficher la page de fin personnalisée?",
-		ENABLE_EMAIL_NOTIFICATIONS: 'Enable Email Notifications',
-		EMAIL_NOTIFICATION_RECIPIENTS: 'Email Notification Recipients',
+
 		GENERAL_TAB: 'General',
 		SELF_NOTIFICATIONS_TAB: 'Self notifications',
 		RESPONDANT_NOTIFICATIONS_TAB: 'Respondent notifications',
+
+		SEND_NOTIFICATION_TO: 'Envoyer à',
+		NO_EMAIL_FIELD_WARNING: 'Erreur: Vous avez besoin d\'un champ e-mail dans votre formulaire pour envoyer l\'e-mail au répondant de votre formulaire',
+		REPLY_TO: "Répondre à",
+		EMAIL_SUBJECT: 'Sujet',
+		EMAIL_MESSAGE: "Message",
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Les notifications des répondants sont actuellement',
+		ENABLE_SELF_NOTIFICATIONS: "Les notifications des répondants sont actuellement",
+		TOGGLE_ENABLED: 'Activé',
+		TOGGLE_DISABLED: 'Désactivé',
+		ADD_VARIABLE_BUTTON: "Ajouter une variable",
 
 		// Afficher les formulaires
 		CREATE_A_NEW_FORM: "Créer un nouveau formulaire",

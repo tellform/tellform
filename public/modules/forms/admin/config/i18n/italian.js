@@ -15,11 +15,21 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Annulla',
 		DISPLAY_START_PAGE: 'Visualizza pagina iniziale?',
 		DISPLAY_END_PAGE: 'Mostra pagina finale personalizzata?',
-		ENABLE_EMAIL_NOTIFICATIONS: 'Attiva notifiche e-mail',
-		EMAIL_NOTIFICATION_RECIPIENTS: 'Destinatari di notifica e-mail',
+
 		GENERAL_TAB: 'Generale',
 		SELF_NOTIFICATIONS_TAB: 'Autodiagnosi',
 		RESPONDANT_NOTIFICATIONS_TAB: 'Notifiche rispondenti',
+
+		SEND_NOTIFICATION_TO: 'Invia a',
+		NO_EMAIL_FIELD_WARNING: 'Errore: Hai bisogno di un campo e-mail nel tuo modulo per inviare l\'email al tuo interlocutore',
+		REPLY_TO: 'Rispondi a',
+		EMAIL_SUBJECT: 'Oggetto',
+		EMAIL_MESSAGE: 'Messaggio',
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Notifiche rispondenti sono attualmente',
+		ENABLE_SELF_NOTIFICATIONS: 'Notifiche rispondenti sono attualmente',
+		TOGGLE_ENABLED: 'Abilitato',
+		TOGGLE_DISABLED: 'disabilitato',
+		ADD_VARIABLE_BUTTON: 'Aggiungi variabile',
 
 		// Visualizzazione dei moduli di elenco
 		CREATE_A_NEW_FORM: 'Crea un nuovo modulo',

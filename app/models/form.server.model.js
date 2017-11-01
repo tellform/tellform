@@ -158,7 +158,7 @@ var FormSchema = new Schema({
 
 	selfNotifications: {
 		fromField: {
-			type: Schema.Types.ObjectId,
+			type: String
 		},
 		toEmails: {
 			type: String
@@ -177,7 +177,7 @@ var FormSchema = new Schema({
 
 	respondentNotifications: {
 		toField: {
-			type: Schema.Types.ObjectId,
+			type: String
 		},
 		fromEmails: {
 			type: String,
@@ -248,10 +248,6 @@ FormSchema.virtual('analytics.views').get(function () {
 	} else {
 		return 0;
 	}
-});
-
-FormSchema.virtual('analytics.submissions').get(function () {
-	return this.submissions.length;
 });
 
 FormSchema.virtual('analytics.conversionRate').get(function () {

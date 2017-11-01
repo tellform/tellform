@@ -2,7 +2,7 @@
     <div class="col-sm-offset-2">
         <div class="row field" ng-if="formHasEmailField">
             <div class="field-title col-sm-12">
-                <h5>{{ 'SEND_NOTIFICATION_TO' | translate }}</h5>
+                <h5>{{ 'SEND_NOTIFICATION_TO' | translate }}:</h5>
             </div>
 
             <div class="col-xs-12 field-input">
@@ -14,7 +14,7 @@
                         ng-required="true">
                     <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
                     </ui-select-match>
-                    <ui-select-choices repeat="field in emailFields | filter: $select.search" ng-class="{'active': field._id === myform.respondentNotifications.toField }">
+                    <ui-select-choices repeat="field.globalId as field in emailFields | filter: $select.search">
                         <span ng-bind-html="field.title | highlight: $select.search">
                         </span>
                     </ui-select-choices>
@@ -28,7 +28,7 @@
 
         <div class="row field">
             <div class="field-title col-xs-12">
-                <h5>{{ 'REPLY_TO' | translate }}</h5>
+                <h5>{{ 'REPLY_TO' | translate }}:</h5>
             </div>
 
             <div class="col-xs-12 field-input">
@@ -41,7 +41,7 @@
 
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'EMAIL_SUBJECT' | translate }}</h5>
+                <h5>{{ 'EMAIL_SUBJECT' | translate }}:</h5>
             </div>
             <div class="col-sm-12">
                 <text-angular class="email-subject" ng-model="myform.respondentNotifications.subject" ta-toolbar="[['insertField']]" ta-default-wrap="n"></text-angular>
@@ -60,19 +60,19 @@
 
          <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'ENABLE_RESPONDENT_NOTIFICATIONS' | translate }}</h5>
+                <h5>{{ 'ENABLE_RESPONDENT_NOTIFICATIONS' | translate }}:</h5>
             </div>
 
             <div class="field-input col-sm-12">
 
                 <label style="display: inline-block;">
                     <input type="radio" data-ng-value="true" ng-model="myform.respondentNotifications.enabled"  ng-required="true" style="background-color:#33CC00;"/>
-                    &nbsp;<span>{{ 'YES' | translate }}</span>
+                    &nbsp;<span>{{ 'ENABLED' | translate }}</span>
                 </label>
 
                 <label style="display: inline-block;">
                     <input type="radio" data-ng-value="false" ng-model="myform.respondentNotifications.enabled"  ng-required="true" />
-                    &nbsp;<span>{{ 'NO' | translate }}</span>
+                    &nbsp;<span>{{ 'DISABLED' | translate }}</span>
                 </label>
                 
             </div>

@@ -37,42 +37,6 @@
             </div>
         </div>
 
-         <div class="row field">
-            <div class="field-title col-sm-12">
-                <h5>{{ 'ENABLE_EMAIL_NOTIFICATIONS' | translate }}</h5>
-            </div>
-
-            <div class="field-input col-sm-12">
-
-                <label style="display: inline-block;">
-                    <input type="radio" data-ng-value="true" ng-model="myform.emailNotifications.enabled"  ng-required="true" style="background-color:#33CC00;"/>
-                    &nbsp;<span>{{ 'YES' | translate }}</span>
-                </label>
-
-                <label style="display: inline-block;">
-                    <input type="radio" data-ng-value="false" ng-model="myform.emailNotifications.enabled"  ng-required="true" />
-                    &nbsp;<span>{{ 'NO' | translate }}</span>
-                </label>
-                
-            </div>
-        </div>
-
-        <div class="row field" ng-if="myform.emailNotifications.enabled">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'EMAIL_NOTIFICATION_RECIPIENTS' | translate }}</h5>
-			</div>
-
-			<div class="col-sm-12">
-				<input class="form-control"
-					   type="text"
-					   ng-model="myform.emailNotifications.recipients"
-					   value="{{myform.emailNotifications.recipients}}"
-					   style="width: 100%;"
-					   placeholder="email@domain.com,email2@domain2.com,etc">
-			</div>
-		</div>
-
-
         <div class="row field">
             <div class="col-sm-12 field-title">{{ 'LANGUAGE' | translate }}</div>
             <div class="col-sm-12 field-input">

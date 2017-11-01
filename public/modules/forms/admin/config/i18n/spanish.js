@@ -16,11 +16,21 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Cancelar',
 		DISPLAY_START_PAGE: '¿Mostrar página de inicio?',
 		DISPLAY_END_PAGE: '¿Mostrar paǵina de fin?',
-		ENABLE_EMAIL_NOTIFICATIONS: 'Habilitar notificaciones por correo electrónico',
-		EMAIL_NOTIFICATION_RECIPIENTS: 'Destinatarios de notificación de correo electrónico',
-		GENERAL_TAB: 'General',
+
 		SELF_NOTIFICATIONS_TAB: 'Auto notificaciones',
 		RESPONDANT_NOTIFICATIONS_TAB: 'Notificaciones de los demandados',
+		GENERAL_TAB: 'Général',
+		
+		SEND_NOTIFICATION_TO: 'Enviar a',
+		NO_EMAIL_FIELD_WARNING: 'Error: necesita un campo de correo electrónico en su formulario para enviar el correo electrónico a su encuestado',
+		REPLY_TO: 'Responder a',
+		EMAIL_SUBJECT: 'Asunto',
+		EMAIL_MESSAGE: 'Mensaje',
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Las notificaciones de los demandados son actualmente',
+		ENABLE_SELF_NOTIFICATIONS: 'Las notificaciones de los demandados son actualmente',
+		TOGGLE_ENABLED: 'Habilitado',
+		TOGGLE_DISABLED: 'Desactivado',
+		ADD_VARIABLE_BUTTON: 'Agregar variable',
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Crear formulario',

@@ -15,11 +15,21 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Abbrechen',
 		DISPLAY_START_PAGE: 'Startseite anzeigen?',
 		DISPLAY_END_PAGE: 'Benutzerdefinierte Endseite anzeigen?',
-		ENABLE_EMAIL_NOTIFICATIONS: 'E-Mail-Benachrichtigungen aktivieren',
-		EMAIL_NOTIFICATION_RECIPIENTS: 'E-Mail-Benachrichtigungsempfänger',
+
 		GENERAL_TAB: 'Allgemein',
 		SELF_NOTIFICATIONS_TAB: 'Selbstbenachrichtigungen',
 		RESPONDANT_NOTIFICATIONS_TAB: 'Beantwortungsbenachrichtigungen',
+
+		SEND_NOTIFICATION_TO: 'Senden an',
+		NO_EMAIL_FIELD_WARNING: 'Fehler: Sie benötigen ein E-Mail-Feld in Ihrem Formular, um die E-Mail an Ihr Formular zu senden.',
+		REPLY_TO: 'Antworten auf',
+		EMAIL_SUBJECT: "Betreff",
+		EMAIL_MESSAGE: 'Nachricht',
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Antwortbenachrichtigungen sind derzeit',
+		ENABLE_SELF_NOTIFICATIONS: 'Antwortbenachrichtigungen sind derzeit',
+		TOGGLE_ENABLED: 'Aktiviert',
+		TOGGLE_DISABLED: 'Deaktiviert',
+		ADD_VARIABLE_BUTTON: 'Variable hinzufügen',
 
 		// Listenformularansicht
 		CREATE_A_NEW_FORM: 'Erstelle ein neues Formular',

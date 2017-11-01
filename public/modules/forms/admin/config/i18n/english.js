@@ -16,13 +16,19 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CANCEL: 'Cancel',
 		DISPLAY_START_PAGE: 'Display Start Page?',
 		DISPLAY_END_PAGE: 'Display Custom End Page?',
-		ENABLE_EMAIL_NOTIFICATIONS: 'Enable Email Notifications',
-		EMAIL_NOTIFICATION_RECIPIENTS: 'Email Notification Recipients',
 		GENERAL_TAB: 'General',
 		SELF_NOTIFICATIONS_TAB: 'Self notifications',
 		RESPONDENT_NOTIFICATIONS_TAB: 'Respondent notifications',
 
-		//Self Notifications Tab
+		SEND_NOTIFICATION_TO: 'Send to',
+		NO_EMAIL_FIELD_WARNING: 'Error: You need an email field in your form to send the email to your form respondent',
+		REPLY_TO: 'Reply to',
+		EMAIL_SUBJECT: 'Subject',
+		EMAIL_MESSAGE: 'Message',
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Respondent Notifications are currently',
+		ENABLE_SELF_NOTIFICATIONS: 'Respondent Notifications are currently',
+		TOGGLE_ENABLED: 'Enabled',
+		TOGGLE_DISABLED: 'Disabled',
 		ADD_VARIABLE_BUTTON: 'Add variable',
 
 		//List Forms View

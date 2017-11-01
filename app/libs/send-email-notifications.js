@@ -4,10 +4,11 @@ const constants = require('./constants');
 
 module.exports = {
 	send: function(emailSettings, emailTemplateVars, smtpTransport, varFormat, cb){
-		var parsedTemplate = this.parseTemplate(emailSettings.htmlTemplate, emailTemplateVars);
-		var parsedSubject = this.parseTemplate(emailSettings.body, emailTemplateVars);
+		var parsedTemplate = this.parseTemplate(emailSettings.htmlTemplate, emailTemplateVars, varFormat);
+		var parsedSubject = this.parseTemplate(emailSettings.subject, emailTemplateVars, varFormat);
 		var mailOptions = {
-			from: emailSettings.fromEmails,
+			replyTo: emailSettings.fromEmails,
+			from: 'noreply@tellform.com',
 			cc: emailSettings.toEmails,
 			subject: parsedSubject,
 			html: parsedTemplate
@@ -32,8 +33,8 @@ module.exports = {
 	createFieldDict: function(form_fields){
 		var formFieldDict = {};
 		form_fields.forEach(function(field){
-			if(field.hasOwnProperty('_id') && field.hasOwnProperty('fieldValue')){
-				formFieldDict[field._id] = field.fieldValue;
+			if(field.hasOwnProperty('globalId') && field.hasOwnProperty('fieldValue')){
+				formFieldDict[field.globalId] = field.fieldValue;
 			}
 		});
 		return formFieldDict;

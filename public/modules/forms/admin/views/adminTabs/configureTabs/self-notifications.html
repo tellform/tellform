@@ -26,8 +26,9 @@
                         set-search-to-answer="true"
                         ng-required="true">
                     <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
+                        {{$select.selected.title}}
                     </ui-select-match>
-                    <ui-select-choices repeat="field in emailFields | filter: $select.search" ng-class="{'active': field._id === myform.selfNotifications.fromField }">
+                    <ui-select-choices repeat="field.globalId as field in $root.emailFields | filter: { title: $select.search }">
                         <span ng-bind-html="field.title | highlight: $select.search">
                         </span>
                     </ui-select-choices>
@@ -42,7 +43,6 @@
 
             <div class="col-sm-12">
                 <text-angular class="email-subject" ng-model="myform.selfNotifications.subject" ta-toolbar="[['insertField']]" ta-default-wrap="n"></text-angular>
-                <div ng-bind="myform.selfNotifications.subject"></div>
             </div>
         </div>
 
@@ -65,12 +65,12 @@
 
                 <label style="display: inline-block;">
                     <input type="radio" data-ng-value="true" ng-model="myform.selfNotifications.enabled"  ng-required="true" style="background-color:#33CC00;"/>
-                    &nbsp;<span>{{ 'YES' | translate }}</span>
+                    &nbsp;<span>{{ 'ENABLED' | translate }}</span>
                 </label>
 
                 <label style="display: inline-block;">
                     <input type="radio" data-ng-value="false" ng-model="myform.selfNotifications.enabled"  ng-required="true" />
-                    &nbsp;<span>{{ 'NO' | translate }}</span>
+                    &nbsp;<span>{{ 'DISABLED' | translate }}</span>
                 </label>
                 
             </div>

@@ -51,11 +51,11 @@ angular.module('forms').run(['Menus',
         taRegisterTool('insertField', {
             display: '<div class="dropdown" uib-dropdown is-open="isopen">\
 					<div class="dropdown-toggle" ng-disabled="isDisabled()" uib-dropdown-toggle>\
-						<span>{{ "ADD_A_VARIABLE" | translate }}</span>\
+						<span>{{ "ADD_VARIABLE_BUTTON" | translate }}</span>\
 						<b class="caret"></b>\
 					</div>\
 					<ul class="dropdown-menu">\
-						<li ng-repeat="field in $root.myform.form_fields" ng-click="onClickField(field._id, field.title)">\
+						<li ng-repeat="field in $root.myform.form_fields" ng-click="onClickField(field.globalId, field.title)">\
 							{{field.title}}\
 						</li>\
 					</ul>\
