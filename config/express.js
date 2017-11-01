@@ -263,18 +263,20 @@ module.exports = function(db) {
 	//Visitor Language Detection
 	app.use(function(req, res, next) {
 		var acceptLanguage = req.headers['accept-language'];
-		var languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
+		if(acceptLanguage){
+			var languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
 
-		var supportedLanguage = containsAnySupportedLanguages(languages);
-		if(!req.user && supportedLanguage !== null){
-			var currLanguage = res.cookie('userLang');
+			var supportedLanguage = containsAnySupportedLanguages(languages);
+			if(!req.user && supportedLanguage !== null){
+				var currLanguage = res.cookie('userLang');
 
-			if(currLanguage && currLanguage !== supportedLanguage || !currLanguage){
-				res.clearCookie('userLang');
-				res.cookie('userLang', supportedLanguage, { maxAge: 90000, httpOnly: true });
+				if(currLanguage && currLanguage !== supportedLanguage || !currLanguage){
+					res.clearCookie('userLang');
+					res.cookie('userLang', supportedLanguage, { maxAge: 90000, httpOnly: true });
+				}
+			} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies['userLang'] !== req.user.language) ){
+				res.cookie('userLang', req.user.language, { maxAge: 90000, httpOnly: true });
 			}
-		} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies['userLang'] !== req.user.language) ){
-			res.cookie('userLang', req.user.language, { maxAge: 90000, httpOnly: true });
 		}
 		next();
 	});
@@ -319,17 +321,10 @@ module.exports = function(db) {
 
 		// Log it
 		client.captureError(err);
-
-		if(process.env.NODE_ENV === 'production'){
-			res.status(500).render('500', {
-	   		    error: 'Internal Server Error'
-        	});
-		} else { 
-			// Error page
-			res.status(500).render('500', {
-				error: err.stack
-			});
-		}
+		
+		res.status(500).render('500', {
+			error: err.stack
+		});
 	});
 
 	// Assume 404 since no middleware responded

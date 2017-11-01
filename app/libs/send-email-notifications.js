@@ -1,7 +1,11 @@
+'use strict';
+
+const constants = require('./constants');
+
 module.exports = {
 	send: function(emailSettings, emailTemplateVars, smtpTransport, varFormat, cb){
-		var parsedTemplate = parseTemplate(emailSettings.htmlTemplate, emailTemplateVars);
-		var parsedSubject = parseTemplate(emailSettings.body, emailTemplateVars);
+		var parsedTemplate = this.parseTemplate(emailSettings.htmlTemplate, emailTemplateVars);
+		var parsedSubject = this.parseTemplate(emailSettings.body, emailTemplateVars);
 		var mailOptions = {
 			from: emailSettings.from,
 			cc: emailSettings.recipients,
@@ -22,5 +26,15 @@ module.exports = {
 
 	replaceTemplateVal: function(key, val, template, varFormat){
 		return template.replace( new RegExp(varFormat[0] + key + varFormat[1], 'g'), value )
+	},
+
+	createFieldDict: function(form_fields){
+		var formFieldDict = {}
+		form_fields.forEach(function(field){
+			if(field.hasOwnProperty('_id') && field.hasOwnProperty('fieldValue')){
+				formFieldDict[field._id] = field.fieldValue;
+			}
+		});
+		return formFieldDict;
 	}
 }

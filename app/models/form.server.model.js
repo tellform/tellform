@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	async = require('async'),
 	Random = require('random-js'),
-	mt = Random.engines.mt19937();
+	mt = Random.engines.mt19937(),
+	constants = require('../libs/constants');
 
 
 mt.autoSeed();
@@ -57,11 +58,12 @@ var VisitorDataSchema = new Schema({
 		type: Boolean
 	},
 	language: {
-		type: String
+		type: String,
+		enum: constants.languageTypes,
+		default: 'en',
 	},
 	ipAddr: {
-		type: String,
-		default: ''
+		type: String
 	},
 	deviceType: {
 		type: String,
@@ -179,7 +181,7 @@ var FormSchema = new Schema({
 		},
 		subject: {
 			type: String,
-			default: 'Tellform: Thank you for filling out <var class="tag" id="tellform-title">Tellform name</var>'
+			default: 'Tellform: Thank you for filling out this TellForm'
 		},
 		htmlTemplate: {
 			type: String,

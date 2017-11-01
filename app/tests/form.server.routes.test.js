@@ -68,7 +68,7 @@ describe('Form Routes Unit tests', function() {
 			.send({form: myForm})
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
-
+				console.log(FormSaveRes.text)
 				// Call the assertion callback
 				done(FormSaveErr);
 			});

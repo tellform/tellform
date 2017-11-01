@@ -76,14 +76,10 @@ exports.createSubmission = function(req, res) {
 		}
 
 		var form = req.body.form;
-
+		/*
 		if (form.selfNotifications && form.selfNotifications.enabled && form.selfNotifications.recipients) {
 
-			var formFieldDict = {};
-			form.form_fields.forEach(function(field){
-				formFieldDict[field._id] = field.fieldValue;
-			});
-
+			formFieldDict = emailNotifications.createFieldDict(form.form_fields);
 			form.selfNotifications.from = formFieldDict[form.selfNotifications.fromField].fieldValue;
 
 			emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
@@ -95,8 +91,9 @@ exports.createSubmission = function(req, res) {
 				});
 			});
 		} else {
+		*/
 			res.status(200).send('Form submission successfully saved');
-		}
+		//}
 
 	});
 };
