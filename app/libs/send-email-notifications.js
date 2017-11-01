@@ -1,5 +1,5 @@
 module.exports = {
-	send: function(emailSettings, emailTemplateVars, smtpTransport, cb){
+	send: function(emailSettings, emailTemplateVars, smtpTransport, varFormat, cb){
 		var parsedTemplate = parseTemplate(emailSettings.htmlTemplate, emailTemplateVars);
 		var parsedSubject = parseTemplate(emailSettings.body, emailTemplateVars);
 		var mailOptions = {
@@ -12,7 +12,7 @@ module.exports = {
 		smtpTransport.sendMail(mailOptions, cb);
 	},
 
-	parseTemplate: function(emailTemplate, emailAttrs){
+	parseTemplate: function(emailTemplate, emailAttrs, varFormat){
 		var resolvedTemplate = emailTemplate;
 		Object.keys(emailAttrs).forEach(function (key) {
 		   resolvedTemplate = replaceTemplateVal(key, emailAttrs[key], resolvedTemplate);
@@ -20,7 +20,7 @@ module.exports = {
 		return resolvedTemplate;
 	},
 
-	replaceTemplateVal: function(key, val, template){
-		return template.replace( new RegExp('${' + key + '}', 'g'), value )
+	replaceTemplateVal: function(key, val, template, varFormat){
+		return template.replace( new RegExp(varFormat[0] + key + varFormat[1], 'g'), value )
 	}
 }

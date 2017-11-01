@@ -11,7 +11,8 @@ var mongoose = require('mongoose'),
 	diff = require('deep-diff'),
 	_ = require('lodash'),
 	nodemailer = require('nodemailer'),
-	emailNotifications = require('../libs/send-email-notifications');
+	emailNotifications = require('../libs/send-email-notifications'),
+	constants = require('../libs/constants');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
@@ -85,7 +86,7 @@ exports.createSubmission = function(req, res) {
 
 			form.selfNotifications.from = formFieldDict[form.selfNotifications.fromField].fieldValue;
 
-			emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, function(err){
+			emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
 				if (!err) {
 					return res.status(200).send('Form submission successfully saved');
 				} 

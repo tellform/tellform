@@ -36,7 +36,9 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                     return field.fieldType === 'email';
                 });
 
-                $scope.formHasEmailField = ($rootScope.emailFields > 0);
+                console.log($rootScope.emailFields);
+
+                $scope.formHasEmailField = ($rootScope.emailFields.length > 0);
 
                 $scope.go = function(tab){
                     tab.active = true;
