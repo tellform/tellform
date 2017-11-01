@@ -77,5 +77,5 @@ module.exports = {
         templateVariable: /<var(.*)id(.*)>(.|\n)*?<\/var>/g
     },
 
-    varFormat: ['<var(.*)id="field:', '"(.*)>(.|\n)*?</var>'], 
+    varFormat: ['<var([^<>]+)id=["\']{1}field:', '["\']{1}>([^<>]+)*?<\/var>'], 
 };

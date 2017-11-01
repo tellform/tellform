@@ -20,7 +20,7 @@ module.exports = {
 		var resolvedTemplate = emailTemplate;
 		var that = this;
 		Object.keys(emailAttrs).forEach(function (key) {
-		   resolvedTemplate = that.replaceTemplateVal(key, emailAttrs[key], resolvedTemplate);
+		   resolvedTemplate = that.replaceTemplateVal(key, emailAttrs[key], resolvedTemplate, varFormat);
 		});
 		return resolvedTemplate;
 	},

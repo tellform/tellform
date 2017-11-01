@@ -54,12 +54,20 @@ describe('Send Email Notification Unit Tests', function() {
 
 	describe('Method parseTemplate', function(){
 		it('should be properly render a template given a valid field dict', function() {
-			var actualRenderedTemplate = parseTemplate(htmlTemplate, validFieldDict, constants.varFormat);
-			actualRenderedTemplate.should.equal(renderedTemplate);
+			var actualRenderedTemplate = emailNotifications.parseTemplate(htmlTemplate, validFieldDict, constants.varFormat).replace((/  |\r\n|\n|\r|\t/gm),'');
+			actualRenderedTemplate.should.equal(renderedTemplate.replace((/  |\r\n|\n|\r|\t/gm),''));
 		});
 	});
 
 	describe('Method replaceTemplateVal', function() {
+		it('should be properly replace a template var in a valid template', function() {
+			var expectedHtml = '<p>John Smith \
+				<br><var class="tag" id="field:5c9e22028e907634f45f59a6">Your Website</var> \
+				<br><var class="tag" id="field:56e90745f5934fc9e22028a6">Your Age</var></p>';
+
+			var actualRenderedTemplate = emailNotifications.replaceTemplateVal('56340745f59a6fc9e22028e9', validFieldDict['56340745f59a6fc9e22028e9'], htmlTemplate, constants.varFormat).replace((/  |\r\n|\n|\r|\t/gm),'');
+			actualRenderedTemplate.should.equal(expectedHtml.replace((/  |\r\n|\n|\r|\t/gm),''));
+		});
 	});
 
 	describe('Method send', function() {
