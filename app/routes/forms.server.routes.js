@@ -31,7 +31,7 @@ module.exports = function(app) {
 	}
 
    	app.route('/forms/:formIdFast([a-zA-Z0-9]+)')
-        .post(forms.createSubmission)
+        .post(forms.createSubmission);
 	
 	app.route('/forms')
 		.get(auth.isAuthenticatedOrApiKey, forms.list)

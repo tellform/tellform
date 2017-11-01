@@ -57,22 +57,7 @@
 			_id: '525a8422f6d0f87f0e407a33'
 		};
 
-		var newFakeModal = function(){
-			var result = {
-				opened: true,
-			    close: function( item ) {
-			        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
-			        this.opened = false;
-			    },
-			    dismiss: function( type ) {
-			        //The user clicked cancel on the modal dialog, call the stored cancel callback
-			        this.opened = false;
-			    }
-			};
-			return result;
-		};
-
-		//Mock Users Service
+		//Mock myForm Service
         beforeEach(module(function($provide) {
             $provide.service('myForm', function($q) {
                 return sampleForm;
@@ -159,6 +144,27 @@
 			});
 		}));
 
+		var newFakeModal = function(){
+			var modal = {
+				opened: true,
+			    close: function( item ) {
+			        //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+			        this.opened = false;
+			    },
+			    dismiss: function( type ) {
+			        //The user clicked cancel on the modal dialog, call the stored cancel callback
+			        this.opened = false;
+			    }, 
+			    result: {
+				    then: function (cb) {
+				    	if(cb && typeof cb === 'function'){
+				    		cb();
+				    	}
+				    }
+			    }
+			};
+			return modal;
+		};
 
 		//Mock $uibModal
 		beforeEach(inject(function($uibModal) {
@@ -199,7 +205,7 @@
 			expect(scope.myform).toEqualData(sampleForm);
 		});
 
-		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', function() {
+		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', inject(function($uibModal) {
 			var controller = createAdminFormController();
 
 			//Set $state transition
@@ -214,7 +220,7 @@
 
 			$httpBackend.flush();
 			$state.ensureAllTransitionsHappened();
-		});
+		}));
 
 		it('$scope.update() should send a PUT request with the id of form', function() {
 			var controller = createAdminFormController();

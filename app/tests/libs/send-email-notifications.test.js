@@ -24,7 +24,7 @@ var invalidFormFields = [
 	{fieldType:'textfield', title:'First Name', fieldValue: 'John Smith', deletePreserved: false},
     {fieldType:'link', title:'Your Website', deletePreserved: false, _id:'5c9e22028e907634f45f59a6'},
     {fieldType:'number', title:'Your Age'}
-]
+];
 
 /**
  * Unit tests

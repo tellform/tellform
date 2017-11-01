@@ -62,6 +62,52 @@
         beforeEach(module('module-templates'));
         beforeEach(module('stateMock'));
 
+        //Mock FormFields Service
+        beforeEach(module(function($provide) {
+            $provide.service('FormFields', function() {
+                return {
+                    types: [
+                        {
+                            name : 'textfield',
+                            value : 'Short Text'
+                        },
+                        {
+                            name : 'email',
+                            value : 'Email'
+                        }
+                    ]
+                };
+            });
+        }));
+
+        var newFakeModal = function(){
+            var modal = {
+                opened: true,
+                close: function( item ) {
+                    //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+                    this.opened = false;
+                },
+                dismiss: function( type ) {
+                    //The user clicked cancel on the modal dialog, call the stored cancel callback
+                    this.opened = false;
+                }, 
+                result: {
+                    then: function (cb) {
+                        if(cb && typeof cb === 'function'){
+                            cb();
+                        }
+                    }
+                }
+            };
+            return modal;
+        };
+
+        //Mock $uibModal
+        beforeEach(inject(function($uibModal) {
+            var modal = newFakeModal();
+            spyOn($uibModal, 'open').and.returnValue(modal);
+        }));
+
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
             //Instantiate directive.
             var tmp_scope = $rootScope.$new();
@@ -97,26 +143,12 @@
         		scope.myform = _.cloneDeep(sampleForm);
         	});
 
-	        it('$scope.addNewField() should ADD a new field to $scope.myform.form_fields', function() {
+	        it('$scope.addNewField() should open the new field modal', function() {
 
 	        	//Run controller methods
-	            scope.addNewField(true, 'textfield');
+	            scope.addNewField('textfield');
 
-	            var expectedFormField = {
-					title: 'Short Text2',
-					fieldType: 'textfield',
-					fieldValue: '',
-					required: true,
-					disabled: false,
-					deletePreserved: false,
-					logicJump: Object({  })
-				};
-
-				var actualFormField = _.cloneDeep(_.last(scope.myform.form_fields));
-	            delete actualFormField._id;
-
-	            expect(scope.myform.form_fields.length).toEqual(sampleForm.form_fields.length+1);
-	            expect(actualFormField).toEqualData(expectedFormField);
+                expect(scope.editFieldModal.opened).toBeTruthy();
 	        });
 
 	        it('$scope.deleteField() should DELETE a field to $scope.myform.form_fields', function() {

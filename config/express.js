@@ -39,8 +39,9 @@ var configureSocketIO = function (app, db) {
 var supportedLanguages = ['en', 'de', 'fr', 'it', 'es'];
 
 function containsAnySupportedLanguages(preferredLanguages){
-	for (var i = 0; i < preferredLanguages.length; i++) {
-		var currIndex = supportedLanguages.indexOf(preferredLanguages[i]);
+	var i, currIndex;
+	for (i = 0; i < preferredLanguages.length; i++) {
+		currIndex = supportedLanguages.indexOf(preferredLanguages[i]);
 	    if (currIndex > -1) {
 	        return supportedLanguages[currIndex];
 	    }
@@ -148,8 +149,6 @@ module.exports = function(db) {
 				// reassign url
 				req.url = subdomainPath;
 
-				req.userId = user._id;
-
 				// Q.E.D.
 				return next();
 			});
@@ -200,7 +199,7 @@ module.exports = function(db) {
 	app.use(morgan(logger.getLogFormat(), logger.getMorganOptions()));
 
 	// Environment dependent middleware
-	if (process.env.NODE_ENV === 'development') {
+	if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
 		// Disable views cache
 		app.set('view cache', false);
 	} else if (process.env.NODE_ENV === 'production') {
@@ -228,7 +227,6 @@ module.exports = function(db) {
 
 	// Setting the app router and static folder
 	app.use('/static', express.static(path.resolve('./public')));
-	app.use('/uploads', express.static(path.resolve('./uploads')));
 
 	// CookieParser should be above session
 	app.use(cookieParser());
@@ -263,18 +261,20 @@ module.exports = function(db) {
 	//Visitor Language Detection
 	app.use(function(req, res, next) {
 		var acceptLanguage = req.headers['accept-language'];
+
+		var languages, supportedLanguage;
+
 		if(acceptLanguage){
-			var languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
+			languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
+			supportedLanguage = containsAnySupportedLanguages(languages);
+		}
 
-			var supportedLanguage = containsAnySupportedLanguages(languages);
-			if(!req.user && supportedLanguage !== null){
-				var currLanguage = res.cookie('userLang');
-
-				if(currLanguage && currLanguage !== supportedLanguage || !currLanguage){
-					res.clearCookie('userLang');
-					res.cookie('userLang', supportedLanguage, { maxAge: 90000, httpOnly: true });
-				}
-			} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies['userLang'] !== req.user.language) ){
+		if(!req.user && supportedLanguage !== null){
+			var currLanguage = res.cookie('userLang');
+			if(currLanguage && currLanguage !== supportedLanguage || !currLanguage){
+				res.clearCookie('userLang');
+				res.cookie('userLang', supportedLanguage, { maxAge: 90000, httpOnly: true });
+			} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies.userLang !== req.user.language) ){
 				res.cookie('userLang', req.user.language, { maxAge: 90000, httpOnly: true });
 			}
 		}
@@ -290,7 +290,7 @@ module.exports = function(db) {
 	app.use(function (req, res, next) {
 
 	    // Website you wish to allow to connect
-	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.polydaic.com');
+	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.io');
 
 	    // Request methods you wish to allow
 	    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -321,7 +321,8 @@ module.exports = function(db) {
 
 		// Log it
 		client.captureError(err);
-		
+
+		// Error page
 		res.status(500).render('500', {
 			error: err.stack
 		});
@@ -335,22 +336,6 @@ module.exports = function(db) {
 			error: 'Not Found'
 		});
 	});
-
-	if (process.env.NODE_ENV === 'secure') {
-		// Load SSL key and certificate
-		var privateKey = fs.readFileSync('./config/sslcerts/key.pem', 'utf8');
-		var certificate = fs.readFileSync('./config/sslcerts/cert.pem', 'utf8');
-
-		// Create HTTPS Server
-		var httpsServer = https.createServer({
-			key: privateKey,
-			cert: certificate
-		}, app);
-
-		// Return HTTPS server instance
-		return httpsServer;
-	}
-
 
 	app = configureSocketIO(app, db);
 

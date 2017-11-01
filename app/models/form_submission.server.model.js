@@ -55,18 +55,18 @@ FormSubmissionSchema.pre('save', function (next) {
             this.form_fields[i].fieldValue = this.form_fields[i].fieldValue.option_value;
         }
 
-    	delete form_fields[i].validFieldTypes;
-		delete form_fields[i].disabled;
-		delete form_fields[i].required;
-		delete form_fields[i].isSubmission;
-		delete form_fields[i].title;
-		delete form_fields[i].fieldOptions;
-		delete form_fields[i].ratingOptions;
-		delete form_fields[i].logicJump;
-		delete form_fields[i].description;
-		delete form_fields[i].created;
-		delete form_fields[i].lastModified;
-		delete form_fields[i].deletePreserved;
+    	delete this.form_fields[i].validFieldTypes;
+		delete this.form_fields[i].disabled;
+		delete this.form_fields[i].required;
+		delete this.form_fields[i].isSubmission;
+		delete this.form_fields[i].title;
+		delete this.form_fields[i].fieldOptions;
+		delete this.form_fields[i].ratingOptions;
+		delete this.form_fields[i].logicJump;
+		delete this.form_fields[i].description;
+		delete this.form_fields[i].created;
+		delete this.form_fields[i].lastModified;
+		delete this.form_fields[i].deletePreserved;
     }
     next();
 });

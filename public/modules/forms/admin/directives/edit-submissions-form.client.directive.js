@@ -10,13 +10,33 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 myform: '='
             },
             controller: function($scope){
-
                 $scope.table = {
                     masterChecker: false,
                     rows: []
                 };
 
-                var getSubmissions = function(){
+                $scope.deletionInProgress = false; 
+                $scope.waitingForDeletion = false;
+
+                //Waits until deletionInProgress is false before running getSubmissions
+                $scope.$watch("deletionInProgress",function(newVal, oldVal){
+                    if(newVal === oldVal) return;
+
+                    if(newVal === false && $scope.waitingForDeletion) {
+                        $scope.getSubmissions();
+                        $scope.waitingForDeletion = false;
+                    }
+                });
+
+                $scope.handleSubmissionsRefresh = function(){
+                    if(!$scope.deletionInProgress) {
+                        $scope.getSubmissions();
+                    } else {
+                        $scope.waitingForDeletion = true;
+                    }
+                };
+
+                $scope.getSubmissions = function(cb){
                     $http({
                       method: 'GET',
                       url: '/forms/'+$scope.myform._id+'/submissions'
@@ -36,10 +56,19 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         }
 
                         $scope.table.rows = submissions;
-                    });
+
+                        if(cb && typeof cb === 'function'){
+                            cb();
+                        }
+                    }, function errorCallback(err){
+                        console.error(err);
+                        if(cb && typeof cb === 'function'){
+                            cb(err);
+                        }
+                    });       
                 };
 
-                var getVisitors = function(){
+                $scope.getVisitors = function(){
                     $http({
                       method: 'GET',
                       url: '/forms/'+$scope.myform._id+'/visitors'
@@ -52,8 +81,23 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     });
                 };
 
-                getSubmissions();
-                getVisitors();
+                $scope.handleSubmissionsRefresh();
+                $scope.getVisitors();
+
+                //Fetch submissions and visitor data every 1.67 min
+                var updateSubmissions = $interval($scope.handleSubmissionsRefresh, 100000);
+                var updateVisitors = $interval($scope.getVisitors, 1000000);
+
+                //Prevent $intervals from running after directive is destroyed
+                $scope.$on('$destroy', function() {
+                    if (updateSubmissions) {
+                        $interval.cancel($scope.updateSubmissions);
+                    }
+
+                    if (updateVisitors) {
+                        $interval.cancel($scope.updateVisitors);
+                    }
+                });
 
                 /*
                 ** Analytics Functions
@@ -72,14 +116,48 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     return (totalTime/numSubmissions).toFixed(0);
                 })();
 
-                var updateFields = $interval(getSubmissions, 100000);
-                var updateFields = $interval(getVisitors, 1000000);
+                $scope.DeviceStatistics = (function(){
+                    var newStatItem = function(){
+                        return {
+                            visits: 0,
+                            responses: 0,
+                            completion: 0,
+                            average_time: 0,
+                            total_time: 0
+                        };
+                    };
 
-                $scope.$on('$destroy', function() {
-                    if (updateFields) {
-                        $interval.cancel($scope.updateFields);
+                    var stats = {
+                        desktop: newStatItem(),
+                        tablet: newStatItem(),
+                        phone: newStatItem(),
+                        other: newStatItem()
+                    };
+
+                    if($scope.myform.analytics && $scope.myform.analytics.visitors) {
+                        var visitors = $scope.myform.analytics.visitors;
+                        for (var i = 0; i < visitors.length; i++) {
+                            var visitor = visitors[i];
+                            var deviceType = visitor.deviceType;
+
+                            stats[deviceType].visits++;
+
+                            if (visitor.isSubmitted) {
+                                stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
+                                stats[deviceType].responses++;
+                            }
+
+                            if(stats[deviceType].visits) {
+                                stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
+                            }
+
+                            if(stats[deviceType].responses){
+                                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
+                            }
+                        }
                     }
-                });
+                    return stats;
+                })();
 
                 /*
                 ** Table Functions
@@ -109,25 +187,24 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 //Delete selected submissions of Form
                 $scope.deleteSelectedSubmissions = function(){
 
+                    $scope.deletionInProgress = true;
                     var delete_ids = _.chain($scope.table.rows).filter(function(row){
                         return !!row.selected;
                     }).pluck('_id').value();
 
-                    $http({ url: '/forms/'+$scope.myform._id+'/submissions',
+                    return $http({ url: '/forms/'+$scope.myform._id+'/submissions',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
                         }).success(function(data, status){
+                            $scope.deletionInProgress = true;
                             //Remove deleted ids from table
-                            var tmpArray = [];
-                            for(var i=0; i<$scope.table.rows.length; i++){
-                                if(!$scope.table.rows[i].selected){
-                                    tmpArray.push($scope.table.rows[i]);
-                                }
-                            }
-                            $scope.table.rows = tmpArray;
+                            $scope.table.rows =  $scope.table.rows.filter(function(field){
+                                return !field.selected;
+                            });
                         })
                         .error(function(err){
+                            $scope.deletionInProgress = true;
                             console.error(err);
                         });
                 };

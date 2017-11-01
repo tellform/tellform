@@ -12,7 +12,8 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	nodemailer = require('nodemailer'),
 	emailNotifications = require('../libs/send-email-notifications'),
-	constants = require('../libs/constants');
+	constants = require('../libs/constants'),
+	helpers = require('./helpers.server.controller');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
@@ -113,16 +114,14 @@ exports.listSubmissions = function(req, res) {
 		}
 		res.json(_submissions);
 	});
-
 };
 
 /**
  * Create a new form
  */
 exports.create = function(req, res) {
-
 	if(!req.body.form){
-		return res.status(401).send({
+		return res.status(400).send({
 			message: 'Invalid Input'
 		});
 	}
@@ -130,14 +129,15 @@ exports.create = function(req, res) {
 	var form = new Form(req.body.form);
 	form.admin = req.user._id;
 
-	form.save(function(err) {
+	form.save(function(err, createdForm) {
 		if (err) {
 			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
 
-		return res.json(form);
+		createdForm = helpers.removeSensitiveModelData('private_form', createdForm);
+		return res.json(createdForm);
 	});
 };
 
@@ -148,16 +148,19 @@ exports.read = function(req, res) {
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
-			var newForm = req.form.toJSON();
-
-			if (req.userId) {
-				if(req.form.admin._id+'' === req.userId+''){
-					return res.json(newForm);
-				}
+			if(!req.form){
 				return res.status(404).send({
 					message: 'Form Does Not Exist'
 				});
 			}
+
+			var newForm = req.form.toJSON();
+
+			if(newForm.admin._id === req.user._id){
+				return res.json(newForm);
+			}
+		
+			newForm = helpers.removeSensitiveModelData('private_form', newForm);
 			return res.json(newForm);
 	}
 };
@@ -173,9 +176,7 @@ var readForRender = exports.readForRender = function(req, res) {
 		});
 	}
 
-	delete newForm.lastModified;
-	delete newForm.__v;
-	delete newForm.created;
+	newForm = helpers.removeSensitiveModelData('public_form', newForm);
 
 	if(newForm.startPage && !newForm.startPage.showStart){
 		delete newForm.startPage;
@@ -191,15 +192,12 @@ exports.update = function(req, res) {
 
     var form = req.form;
     var updatedForm = req.body.form;
-    if(form.form_fields === undefined){
-    	form.form_fields = [];
-    }
-
-    if(form.analytics === undefined){
+ 
+    if(!form.analytics){
     	form.analytics = {
     		visitors: [],
     		gaCode: ''
-    	}
+    	};
     }
 
 	if (req.body.changes) {
@@ -215,11 +213,6 @@ exports.update = function(req, res) {
 		//Unless we have 'admin' privileges, updating the form's admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
-		}
-
-		if(form.analytics === null){
-			form.analytics.visitors = [];
-			form.analytics.gaCode = '';
 		}
 
 		//Do this so we can create duplicate fields
@@ -239,6 +232,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			savedForm = helpers.removeSensitiveModelData('private_form', savedForm);
 			res.json(savedForm);
 		}
 	});
@@ -280,6 +274,8 @@ exports.list = function(req, res) {
 			});
 		} else {
 			for(var i=0; i<forms.length; i++){
+				forms[i] = helpers.removeSensitiveModelData('private_form', forms[i]);
+
 				forms[i].numberOfResponses = 0;
 				if(forms[i].submissions){
 					forms[i].numberOfResponses = forms[i].submissions.length;
@@ -300,6 +296,7 @@ exports.formByID = function(req, res, next, id) {
 			message: 'Form is invalid'
 		});
 	}
+
 	Form.findById(id)
 		.populate('admin')
 		.exec(function(err, form) {
@@ -312,12 +309,7 @@ exports.formByID = function(req, res, next, id) {
 		}
 		else {
 			//Remove sensitive information from User object
-			 var _form = form;
-                        _form.admin.password = null;
-                        _form.admin.salt = null;
-                        _form.provider = null;
-
-                        req.form = _form;
+			req.form = helpers.removeSensitiveModelData('private_form', form);
 			return next();
 		}
 	});
@@ -345,13 +337,7 @@ exports.formByIDFast = function(req, res, next, id) {
 		}
 		else {
 			//Remove sensitive information from User object
-			var _form = form;
-			if(_form.admin){
-			_form.admin.password = null;
-			_form.admin.salt = null;
-			_form.provider = null;
-			}
-			req.form = _form;
+			req.form = helpers.removeSensitiveModelData('public_form', form);
 			return next();
 		}
 	});

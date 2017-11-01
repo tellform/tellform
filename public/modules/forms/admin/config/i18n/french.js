@@ -157,7 +157,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		MULTIPLE_CHOICE: 'Choix multiple',
 		DROPDOWN: 'Menu Déroulant',
 		DATE: 'Date',
-		PARAGRAPH_T: "Paragraphe",
+		PARAGRAPH_FIELD: "Paragraphe",
 		OUI_NON: 'Oui / Non',
 		LEGAL: 'Légal',
 		RATING: "Évaluation",

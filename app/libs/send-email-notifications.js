@@ -11,25 +11,26 @@ module.exports = {
 			cc: emailSettings.recipients,
 			subject: parsedSubject,
 			html: parsedTemplate
-		}
+		};
 
 		smtpTransport.sendMail(mailOptions, cb);
 	},
 
 	parseTemplate: function(emailTemplate, emailAttrs, varFormat){
 		var resolvedTemplate = emailTemplate;
+		var that = this;
 		Object.keys(emailAttrs).forEach(function (key) {
-		   resolvedTemplate = replaceTemplateVal(key, emailAttrs[key], resolvedTemplate);
+		   resolvedTemplate = that.replaceTemplateVal(key, emailAttrs[key], resolvedTemplate);
 		});
 		return resolvedTemplate;
 	},
 
 	replaceTemplateVal: function(key, val, template, varFormat){
-		return template.replace( new RegExp(varFormat[0] + key + varFormat[1], 'g'), value )
+		return template.replace( new RegExp(varFormat[0] + key + varFormat[1], 'g'), val);
 	},
 
 	createFieldDict: function(form_fields){
-		var formFieldDict = {}
+		var formFieldDict = {};
 		form_fields.forEach(function(field){
 			if(field.hasOwnProperty('_id') && field.hasOwnProperty('fieldValue')){
 				formFieldDict[field._id] = field.fieldValue;
@@ -37,4 +38,4 @@ module.exports = {
 		});
 		return formFieldDict;
 	}
-}
+};

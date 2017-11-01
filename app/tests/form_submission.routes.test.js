@@ -21,8 +21,7 @@ var credentials, user;
  * Form routes tests
  */
 describe('Form Submission Routes Unit tests', function() {
-	var FormObj, _Submission, submissionSession, _SubmissionBody
-
+	var FormObj, _Submission, submissionSession, _SubmissionBody;
 
 	beforeEach(function(done) {
 
@@ -237,6 +236,4 @@ describe('Form Submission Routes Unit tests', function() {
 			});
 		});
 	});
-
-
 });
