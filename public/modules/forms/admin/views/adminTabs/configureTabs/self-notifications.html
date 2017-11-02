@@ -18,17 +18,12 @@
                 <h5>{{ 'REPLY_TO' | translate }}</h5>
             </div>
 
-            <div class="col-xs-12 field-input">
-                <ui-select ng-model="myform.selfNotifications.fromField"
-                        theme="selectize"
-                        search-enabled="true"
-                        search-by="title"
-                        set-search-to-answer="true"
-                        ng-required="true">
+            <div class="col-xs-12 ui-select">
+                <ui-select ng-model="myform.selfNotifications.fromField" theme="selectize">
                     <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
-                        {{$select.selected.title}}
+                    {{$select.selected.title}}
                     </ui-select-match>
-                    <ui-select-choices repeat="field.globalId as field in $root.emailFields | filter: { title: $select.search }">
+                    <ui-select-choices repeat="field.globalId as field in emailFields | filter: { title: $select.search }">
                         <span ng-bind-html="field.title | highlight: $select.search">
                         </span>
                     </ui-select-choices>

@@ -285,8 +285,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 };
 
                 $rootScope.prevField = $scope.prevField = function(){
-                	console.log('prevField');
-                	console.log($scope.selected);
                 	var selected_index = $scope.selected.index - 1;
                     if($scope.selected.index > 0){
                         $scope.setActiveField(null, selected_index, true);

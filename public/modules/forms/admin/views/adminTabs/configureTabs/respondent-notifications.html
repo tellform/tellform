@@ -6,16 +6,11 @@
             </div>
 
             <div class="col-xs-12 field-input">
-                <ui-select ng-model="myform.respondentNotifications.toField"
-                        theme="selectize"
-                        search-enabled="true"
-                        search-by="title"
-                        set-search-to-answer="true"
-                        ng-required="true">
+                <ui-select ng-model="myform.respondentNotifications.toField" theme="selectize">
                     <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
                         {{$select.selected.title}}
                     </ui-select-match>
-                    <ui-select-choices repeat="field.globalId as field in $root.emailFields | filter: { title: $select.search }">
+                    <ui-select-choices repeat="field.globalId as field in emailFields | filter: { title: $select.search }">
                         <span ng-bind-html="field.title | highlight: $select.search">
                         </span>
                     </ui-select-choices>

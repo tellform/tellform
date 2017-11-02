@@ -27,3 +27,8 @@
     min-height: 0;
     outline: 0;
 }
+
+.ui-select input.form-control {
+    height: 34px;
+    padding: 6px;
+}

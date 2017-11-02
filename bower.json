@@ -32,7 +32,6 @@
     "raven-js": "^3.0.4",
     "tableExport.jquery.plugin": "^1.5.1",
     "js-yaml": "^3.6.1",
-    "angular-ui-select": "https://github.com/tellform/ui-select.git#compiled",
     "angular-translate": "~2.11.0",
     "ng-translate": "*",
     "deep-diff": "^0.3.4",
@@ -42,17 +41,18 @@
     "socket.io-client": "^1.7.2",
     "css-toggle-switch": "^4.0.2",
     "angular-strap": "^2.3.12",
-    "textAngular": "^1.5.16"
+    "textAngular": "^1.5.16",
+    "angular-ui-select": "^0.19.8"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
     "angular": "1.4.14",
-    "angular-ui-select": "compiled",
     "jspdf": "~1.0.178",
     "angular-sanitize": "1.4.14",
     "angular-ui-sortable": "^0.17.1",
     "angular-ui-date": "~0.0.11",
-    "angular-input-stars-directive": "master"
+    "angular-input-stars-directive": "master",
+    "angular-ui-select": "^0.19.8"
   },
   "overrides": {
     "BOWER-PACKAGE": {
