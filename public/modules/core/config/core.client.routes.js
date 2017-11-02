@@ -15,10 +15,13 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 		$rootScope.$stateParams = $stateParams;
 
 		// add previous state property
-		$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
-			$state.previous = fromState;
+		$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+			$state.previous = {
+				state: fromState,
+				params: fromParams
+			}
 
-			var statesToIgnore = ['home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
+			var statesToIgnore = ['', 'home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
 
 			//Redirect to listForms if user is authenticated
 			if(statesToIgnore.indexOf(toState.name) > 0){
