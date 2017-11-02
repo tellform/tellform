@@ -84,7 +84,6 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		ADD_OPTION: 'Option hinzufügen',
 		NUM_OF_STEPS: 'Anzahl der Schritte',
 		CLICK_FIELDS_FOOTER: 'Klicken Sie auf Felder, um sie hier hinzuzufügen',
-		FORM: 'Formular',
 		IF_THIS_FIELD: 'Wenn dieses Feld',
 		IS_EQUAL_TO: 'ist gleich',
 		IS_NOT_EQUAL_TO: 'ist nicht gleich',
