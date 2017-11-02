@@ -26,7 +26,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		EMAIL_SUBJECT: 'Oggetto',
 		EMAIL_MESSAGE: 'Messaggio',
 		ENABLE_RESPONDENT_NOTIFICATIONS: 'Notifiche rispondenti sono attualmente',
-		ENABLE_SELF_NOTIFICATIONS: 'Notifiche rispondenti sono attualmente',
+		ENABLE_SELF_NOTIFICATIONS: 'Le notifiche auto sono attualmente',
 		TOGGLE_ENABLED: 'Abilitato',
 		TOGGLE_DISABLED: 'disabilitato',
 		ADD_VARIABLE_BUTTON: 'Aggiungi variabile',

@@ -5,7 +5,7 @@
                 <h5>{{ 'SEND_NOTIFICATION_TO' | translate }}:</h5>
             </div>
 
-            <div class="col-xs-12 field-input">
+            <div class="col-sm-12 field-input">
                 <ui-select ng-model="myform.respondentNotifications.toField" theme="selectize">
                     <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
                         {{$select.selected.title}}
@@ -25,11 +25,11 @@
         </div>
 
         <div class="row field">
-            <div class="field-title col-xs-12">
+            <div class="field-title col-sm-12">
                 <h5>{{ 'REPLY_TO' | translate }}:</h5>
             </div>
 
-            <div class="col-xs-12 field-input">
+            <div class="col-sm-12 field-input">
                 <input class="form-control"
                        type="text"
                        ng-model="myform.respondentNotifications.replyEmail"
@@ -41,7 +41,7 @@
             <div class="field-title col-sm-12">
                 <h5>{{ 'EMAIL_SUBJECT' | translate }}:</h5>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-12 field-input">
                 <text-angular class="email-subject" ng-model="myform.respondentNotifications.subject" ta-toolbar="[['insertField']]" ta-default-wrap="n"></text-angular>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 <h5>{{ 'EMAIL_MESSAGE' | translate }}</h5>
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 field-input">
                 <text-angular class="email-subject" ng-model="myform.respondentNotifications.htmlTemplate" ta-toolbar="[['bold','italics', 'insertField']]"></text-angular>
             </div>
         </div>
