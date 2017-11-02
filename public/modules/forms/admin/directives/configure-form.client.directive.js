@@ -14,6 +14,10 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 
+                $scope.$evalAsync(function() {
+                    angular.element('.tag')
+                });
+
                 $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
 
                 $scope.langCodeToWord = {

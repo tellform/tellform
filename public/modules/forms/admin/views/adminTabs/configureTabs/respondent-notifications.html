@@ -59,7 +59,9 @@
                 <h5>{{ 'EMAIL_SUBJECT' | translate }}:</h5>
             </div>
             <div class="col-sm-12 field-input">
-                <text-angular class="email-subject" ng-model="myform.respondentNotifications.subject" ta-toolbar="[['insertField']]" ta-default-wrap="n"></text-angular>
+                <text-angular class="email-subject" ng-model="myform.respondentNotifications.subject" ta-toolbar="[['insertField']]" ta-default-wrap="n"
+                ta-default-tag-attributes="{ var: {contenteditable:'true'}" ta-unsafe-sanitizer="true">
+                </text-angular>
             </div>
         </div>
 
@@ -69,7 +71,9 @@
             </div>
 
             <div class="col-sm-12 field-input">
-                <text-angular class="email-subject" ng-model="myform.respondentNotifications.htmlTemplate" ta-toolbar="[['bold','italics', 'insertField']]"></text-angular>
+                <text-angular class="email-subject" ng-model="myform.respondentNotifications.htmlTemplate" ta-toolbar="[['bold','italics', 'insertField']]"
+                ta-default-tag-attributes="{ var: {contenteditable:'true'}" ta-unsafe-sanitizer="true"
+                ></text-angular>
                 <div ng-bind="myform.respondentNotifications.htmlTemplate"></div>
             </div>
         </div>

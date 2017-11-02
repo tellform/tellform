@@ -1,7 +1,5 @@
 'use strict';
 
-const constants = require('./constants');
-
 module.exports = {
 	send: function(emailSettings, emailTemplateVars, smtpTransport, varFormat, cb){
 		var parsedTemplate = this.parseTemplate(emailSettings.htmlTemplate, emailTemplateVars, varFormat);
@@ -14,7 +12,11 @@ module.exports = {
 			html: parsedTemplate
 		};
 
-		smtpTransport.sendMail(mailOptions, cb);
+		console.log('HERE');
+		smtpTransport.sendMail(mailOptions, function(){
+			console.log('THERE');
+			cb();
+		});
 	},
 
 	parseTemplate: function(emailTemplate, emailAttrs, varFormat){

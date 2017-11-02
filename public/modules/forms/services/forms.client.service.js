@@ -12,7 +12,6 @@ angular.module('forms').factory('GetForms', ['$resource', 'FORM_URL',
 			},
 			'get' : {
 				method: 'GET',
-				isArray: true,
 				transformResponse: function(data, header) {
 		          	var form = angular.fromJson(data);
 

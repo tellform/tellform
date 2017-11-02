@@ -70,11 +70,15 @@ angular.module('forms').run(['Menus',
 					</ul>\
 				</div>',
             onClickField: function(field_id, field_name){
-            	this.$editor().wrapSelection('insertHTML', '<var class="tag" contenteditable="false" ta-readonly="true" id="field:' + field_id + '">' + field_name + '</var>', false);
+            	this.$editor().wrapSelection('insertHTML', '<var class="tag" contenteditable="false" id="field:' + field_id + '">' + field_name + '</var>', false);
             },
             action: function(){
             }
         });
+
+        taOptions.defaultTagAttributes['var'] = {
+        	'contenteditable': 'false'
+        };
 
 		return taOptions;
     }]);
