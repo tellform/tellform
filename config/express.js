@@ -148,8 +148,6 @@ module.exports = function(db) {
 				// reassign url
 				req.url = subdomainPath;
 
-				req.userId = user._id;
-
 				// Q.E.D.
 				return next();
 			});
@@ -200,7 +198,7 @@ module.exports = function(db) {
 	app.use(morgan(logger.getLogFormat(), logger.getMorganOptions()));
 
 	// Environment dependent middleware
-	if (process.env.NODE_ENV === 'development') {
+	if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
 		// Disable views cache
 		app.set('view cache', false);
 	} else if (process.env.NODE_ENV === 'production') {
@@ -263,9 +261,13 @@ module.exports = function(db) {
 	//Visitor Language Detection
 	app.use(function(req, res, next) {
 		var acceptLanguage = req.headers['accept-language'];
-		var languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
+		var languages, supportedLanguage;
 
-		var supportedLanguage = containsAnySupportedLanguages(languages);
+		if(acceptLanguage){
+			languages = acceptLanguage.match(/[a-z]{2}(?!-)/g) || [];
+			supportedLanguage = containsAnySupportedLanguages(languages);
+		}
+
 		if(!req.user && supportedLanguage !== null){
 			var currLanguage = res.cookie('userLang');
 
@@ -288,7 +290,7 @@ module.exports = function(db) {
 	app.use(function (req, res, next) {
 
 	    // Website you wish to allow to connect
-	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.polydaic.com');
+	    res.setHeader('Access-Control-Allow-Origin', 'https://sentry.io');
 
 	    // Request methods you wish to allow
 	    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -320,16 +322,10 @@ module.exports = function(db) {
 		// Log it
 		client.captureError(err);
 
-		if(process.env.NODE_ENV === 'production'){
-			res.status(500).render('500', {
-	   		    error: 'Internal Server Error'
-        	});
-		} else { 
-			// Error page
-			res.status(500).render('500', {
-				error: err.stack
-			});
-		}
+		// Error page
+		res.status(500).render('500', {
+			error: err.stack
+		});
 	});
 
 	// Assume 404 since no middleware responded

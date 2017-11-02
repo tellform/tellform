@@ -88,17 +88,15 @@ exports.listSubmissions = function(req, res) {
 		}
 		res.json(_submissions);
 	});
-
 };
 
 /**
  * Create a new form
  */
 exports.create = function(req, res) {
-	debugger;
-
+	
 	if(!req.body.form){
-		return res.status(401).send({
+		return res.status(400).send({
 			message: 'Invalid Input'
 		});
 	}
