@@ -100,9 +100,9 @@ exports.createSubmission = function(req, res) {
 		    function(callback) {
 		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
 
-					form.selfNotifications.toEmails = formFieldDict[form.selfNotifications.toField];
-
-					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+					form.respondentNotifications.toEmails = formFieldDict[form.respondentNotifications.toField];
+					debugger;
+					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
 						if(err){
 							return callback({
 								message: 'Failure sending submission respondent-notification email'

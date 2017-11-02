@@ -13,8 +13,9 @@
                         set-search-to-answer="true"
                         ng-required="true">
                     <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
+                        {{$select.selected.title}}
                     </ui-select-match>
-                    <ui-select-choices repeat="field.globalId as field in emailFields | filter: $select.search">
+                    <ui-select-choices repeat="field.globalId as field in $root.emailFields | filter: { title: $select.search }">
                         <span ng-bind-html="field.title | highlight: $select.search">
                         </span>
                     </ui-select-choices>
@@ -22,8 +23,10 @@
             </div>
         </div>
 
-        <div class="row field" ng-else>
-            {{ 'NO_EMAIL_FIELD_WARNING' | translate }}
+        <div class="row field" ng-if="!formHasEmailField">
+            <strong>
+                {{ 'NO_EMAIL_FIELD_WARNING' | translate }}
+            </strong>
         </div>
 
         <div class="row field">
@@ -67,12 +70,12 @@
 
                 <label style="display: inline-block;">
                     <input type="radio" data-ng-value="true" ng-model="myform.respondentNotifications.enabled"  ng-required="true" style="background-color:#33CC00;"/>
-                    &nbsp;<span>{{ 'ENABLED' | translate }}</span>
+                    &nbsp;<span>{{ 'TOGGLE_ENABLED' | translate }}</span>
                 </label>
 
                 <label style="display: inline-block;">
                     <input type="radio" data-ng-value="false" ng-model="myform.respondentNotifications.enabled"  ng-required="true" />
-                    &nbsp;<span>{{ 'DISABLED' | translate }}</span>
+                    &nbsp;<span>{{ 'TOGGLE_DISABLED' | translate }}</span>
                 </label>
                 
             </div>
