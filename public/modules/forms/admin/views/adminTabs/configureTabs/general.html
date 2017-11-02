@@ -1,13 +1,13 @@
 <!-- Settings -->
 <div class="row">
-    <div class="col-sm-offset-2 col-sm-4">
+    <div class="col-sm-offset-2 col-sm-10">
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'FORM_NAME' | translate }}</h5>
+                <h4>{{ 'FORM_NAME' | translate }}</h4>
             </div>
 
             <div class="col-sm-12">
-                <input class="form-control"
+                <input class=""
 				    type="text"
                     ng-model="myform.title"
                     value="{{myform.title}}"
@@ -18,47 +18,43 @@
         </div>
 
         <div class="row field">
-            <div class="field-title col-sm-12">
-                <h5>{{ 'FORM_STATUS' | translate }}</h5>
-            </div>
-
-            <div class="field-input col-sm-12">
-
-                <label style="display: inline-block;">
-                    <input type="radio" data-ng-value="true" ng-model="myform.isLive"  ng-required="true" style="background-color:#33CC00;"/>
-                    &nbsp;<span>{{ 'PUBLIC' | translate }}</span>
-                </label>
-
-                <label style="display: inline-block;">
-                    <input type="radio" data-ng-value="false" ng-model="myform.isLive"  ng-required="true" />
-                    &nbsp;<span>{{ 'PRIVATE' | translate }}</span>
-                </label>
-
-            </div>
-        </div>
-
-        <div class="row field">
-            <div class="col-sm-12 field-title">{{ 'LANGUAGE' | translate }}</div>
-            <div class="col-sm-12 field-input">
-                <select ng-model="myform.language">
-                    <option ng-repeat="language in languages"
-                            ng-selected="language == myform.language"
-                            value="{{language}}">
-                        {{language}}
-                    </option>
+            <div class="col-sm-4 field-title"><h4>{{ 'LANGUAGE' | translate }}</h4></div>
+            <div class="col-sm-8 field-input">
+                <ui-select ng-model="myform.language" search-enabled="false" theme="selectize">
+                    <ui-select-match>
+                        {{ langCodeToWord[$select.selected] }}
+                    </ui-select-match>
+                    <ui-select-choices repeat="language in languages">
+                        <span ng-bind-html="langCodeToWord[language] | highlight: $select.search">
+                        </span>
+                    </ui-select-choices>
                 </select>
                 <span class="required-error" ng-show="field.required && !field.fieldValue">* {{ 'REQUIRED_FIELD' | translate }}</span>
             </div>
         </div>
-    </div>
-	<div class="col-sm-4">
+
+        <div class="row field">
+            <div class="field-title col-sm-8">
+            	<h4>{{ 'FORM_STATUS' | translate }}</h4>
+            </div>
+
+            <div class="field-input col-sm-4 text-right">
+            	<input class="toggle-switch" type="checkbox" name="my-checkbox" 
+            		bs-switch ng-model="myform.isLive"
+            		switch-on-text="{{ 'PUBLIC' | translate }}"
+            		switch-off-text="{{ 'PRIVATE' | translate }}"
+            		switch-on-color="success"
+					switch-off-color="danger">
+            </div>
+        </div>
+    
 		<div class="row field">
 			<div class="field-title col-sm-12">
-				<h5>{{ 'GA_TRACKING_CODE' | translate }}</h5>
+				<h4>{{ 'GA_TRACKING_CODE' | translate }}</h4>
 			</div>
 
 			<div class="col-sm-12">
-				<input class="form-control"
+				<input class=""
 					   type="text"
 					   ng-model="myform.analytics.gaCode"
 					   value="{{myform.analytics.gaCode}}"
@@ -69,60 +65,41 @@
 			</div>
 		</div>
 		<div class="row field">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'DISPLAY_FOOTER' | translate }}</h5>
+			<div class="field-title col-sm-8">
+				<h4>{{ 'DISPLAY_FOOTER' | translate }}</h4>
 			</div>
 
-			<div class="field-input col-sm-12">
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="false" ng-model="myform.hideFooter"  ng-required="true" />
-					&nbsp;<span>{{ 'YES' | translate }}</span>
-				</label>
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="true" ng-model="myform.hideFooter"  ng-required="true" />
-					&nbsp;<span>{{ 'NO' | translate }}</span>
-				</label>
+			<div class="field-input col-sm-4 text-right">
+				<input class="toggle-switch" type="checkbox"
+            		bs-switch ng-model="myform.hideFooter"
+            		switch-on-text="{{ 'ON' | translate }}"
+            		switch-off-text="{{ 'OFF' | translate }}">
 			</div>
 		</div>
 
 		<div class="row field">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'DISPLAY_START_PAGE' | translate }}</h5>
+			<div class="field-title col-sm-8">
+				<h4>{{ 'DISPLAY_START_PAGE' | translate }}</h4>
 			</div>
 
-			<div class="field-input col-sm-12">
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="true" ng-model="myform.startPage.showStart"  ng-required="true" style="background-color:#33CC00;"/>
-					&nbsp;<span>{{ 'YES' | translate }}</span>
-				</label>
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="false" ng-model="myform.startPage.showStart"  ng-required="true" />
-					&nbsp;<span>{{ 'NO' | translate }}</span>
-				</label>
-
+			<div class="field-input col-sm-4 text-right">
+				<input class="toggle-switch" type="checkbox"
+            		bs-switch ng-model="myform.startPage.showStart"
+            		switch-on-text="{{ 'ON' | translate }}"
+            		switch-off-text="{{ 'OFF' | translate }}">
 			</div>
 		</div>
 
 		<div class="row field">
-			<div class="field-title col-sm-12">
-				<h5>{{ 'DISPLAY_END_PAGE' | translate }}</h5>
+			<div class="field-title col-sm-8">
+				<h4>{{ 'DISPLAY_END_PAGE' | translate }}</h4>
 			</div>
 
-			<div class="field-input col-sm-12">
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="true" ng-model="myform.endPage.showEnd"  ng-required="true" style="background-color:#33CC00;"/>
-					&nbsp;<span>{{ 'YES' | translate }}</span>
-				</label>
-
-				<label style="display: inline-block;">
-					<input type="radio" data-ng-value="false" ng-model="myform.endPage.showEnd"  ng-required="true" />
-					&nbsp;<span>{{ 'NO' | translate }}</span>
-				</label>
-
+			<div class="field-input col-sm-4 text-right">
+				<input class="toggle-switch" type="checkbox"
+            		bs-switch ng-model="myform.endPage.showEnd"
+            		switch-on-text="{{ 'ON' | translate }}"
+            		switch-off-text="{{ 'OFF' | translate }}">
 			</div>
 		</div>
 	</div>

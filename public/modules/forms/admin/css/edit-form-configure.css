@@ -32,3 +32,11 @@
     height: 34px;
     padding: 6px;
 }
+
+.config-form .btn-secondary {
+    border-color: #DDDDDD;
+}
+
+.notification-toggle.toggle-switch {
+    margin: 5px 0;
+}

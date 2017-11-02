@@ -42,7 +42,8 @@
     "css-toggle-switch": "^4.0.2",
     "angular-strap": "^2.3.12",
     "textAngular": "^1.5.16",
-    "angular-ui-select": "^0.19.8"
+    "angular-ui-select": "^0.19.8",
+    "angular-bootstrap-switch": "^0.5.2"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",

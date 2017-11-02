@@ -247,8 +247,24 @@ div.config-form .row.field {
             margin: 10px 0 10px;
         }
 
+.view-form-btn {
+    border: none;
+}
 .view-form-btn.span {
     padding-right:0.6em;
+}
+
+.notification-row {
+    display: inline-block;
+    padding: 0 5px;
+}
+
+.status-light {
+    font-size: 10px;
+}
+
+.notification-row .status-light {
+    padding-top: 15px;
 }
 .status-light.status-light-off {
     color: #BE0000;

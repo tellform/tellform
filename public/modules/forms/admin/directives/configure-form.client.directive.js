@@ -13,6 +13,24 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                 $scope.languages = $rootScope.languages;
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
+
+                $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
+
+                $scope.langCodeToWord = {
+                    'en': 'English',
+                    'fr': 'Français',
+                    'es': 'Español',
+                    'it': 'Italiàno',
+                    'de': 'Deutsch'
+                };
+
+                $scope.wordToLangCode = {
+                    'English': 'en',
+                    'Français': 'fr',
+                    'Español': 'es',
+                    'Italiàno': 'it',
+                    'Deutsch': 'de'
+                };
                 
                 $scope.configureTabs = [
                     {

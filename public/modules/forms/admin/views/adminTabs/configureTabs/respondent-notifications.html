@@ -1,5 +1,22 @@
 <div class="row">
-    <div class="col-sm-offset-2">
+    <div class="col-sm-offset-2 col-sm-10">
+        <div class="row field">
+            <div class="notification-row">
+                <i class="status-light status-light-on fa fa-circle" ng-if="myform.respondentNotifications.enabled"></i>
+                <i class="status-light status-light-off fa fa-circle" ng-if="!myform.respondentNotifications.enabled"></i>
+            </div>
+            <div class="notification-row">
+                <h5>{{ 'ENABLE_RESPONDENT_NOTIFICATIONS' | translate }}</h5>
+            </div>
+
+            <div class="notification-row">
+                <input class="toggle-switch notification-toggle" type="checkbox" switch-size="small"
+                    bs-switch ng-model="myform.respondentNotifications.enabled"
+                    switch-on-text="{{ 'ON' | translate }}"
+                    switch-off-text="{{ 'OFF' | translate }}">
+            </div>
+        </div>
+
         <div class="row field" ng-if="formHasEmailField">
             <div class="field-title col-sm-12">
                 <h5>{{ 'SEND_NOTIFICATION_TO' | translate }}:</h5>
@@ -53,26 +70,6 @@
 
             <div class="col-sm-12 field-input">
                 <text-angular class="email-subject" ng-model="myform.respondentNotifications.htmlTemplate" ta-toolbar="[['bold','italics', 'insertField']]"></text-angular>
-            </div>
-        </div>
-
-         <div class="row field">
-            <div class="field-title col-sm-12">
-                <h5>{{ 'ENABLE_RESPONDENT_NOTIFICATIONS' | translate }}:</h5>
-            </div>
-
-            <div class="field-input col-sm-12">
-
-                <label style="display: inline-block;">
-                    <input type="radio" data-ng-value="true" ng-model="myform.respondentNotifications.enabled"  ng-required="true" style="background-color:#33CC00;"/>
-                    &nbsp;<span>{{ 'TOGGLE_ENABLED' | translate }}</span>
-                </label>
-
-                <label style="display: inline-block;">
-                    <input type="radio" data-ng-value="false" ng-model="myform.respondentNotifications.enabled"  ng-required="true" />
-                    &nbsp;<span>{{ 'TOGGLE_DISABLED' | translate }}</span>
-                </label>
-                
             </div>
         </div>
     </div>
