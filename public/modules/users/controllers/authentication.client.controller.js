@@ -9,7 +9,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope.forms = {};
 
 	    $scope.signin = function() {
-	    	if($scope.forms && $scope.forms.hasOwnProperty('siginForm') && !$scope.forms.signinForm.$invalid){
+	    	if($scope.forms && $scope.forms.signinForm.$valid){
 				User.login($scope.credentials).then(
 					function(response) {
 						Auth.login(response);
@@ -38,7 +38,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 	    		return;
 	    	}
 
-	    	if(!$scope.forms.signupForm.$invalid){
+	    	if($scope.forms && $scope.forms.signupForm.$valid){
 		        User.signup($scope.credentials).then(
 			        function(response) {
 			        	$state.go('signup-success');

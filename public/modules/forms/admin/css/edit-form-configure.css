@@ -11,6 +11,7 @@
     white-space: nowrap;
     vertical-align: middle;
     cursor: pointer !important;
+    pointer-events: none;
 }
 
 .email-subject.ta-root .ta-editor.ta-html, .email-subject .ta-scroll-window.form-control {
