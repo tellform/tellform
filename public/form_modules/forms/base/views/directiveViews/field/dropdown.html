@@ -15,19 +15,17 @@
     </div>
     <div class="col-xs-12 field-input">
 		<ui-select ng-model="field.fieldValue"
+				class="dropdown"
 		 		ng-focus="setActiveField(field._id, null, false)"
                 theme="selectize"
 			    search-enabled="true"
-			    search-by="option_value"
-			    set-search-to-answer="true"
 				ng-required="field.required"
 			    on-tab-and-shift-key="prevField()"
 			    on-tab-key="nextField()"
 				ng-change="nextField()">
 			<ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
 			</ui-select-match>
-			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"
-							   ng-class="{'active': option.option_value === field.fieldValue }">
+			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search">
 				<span ng-bind-html="option.option_value | highlight: $select.search"></span>
 			</ui-select-choices>
         </ui-select>

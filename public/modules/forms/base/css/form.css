@@ -224,13 +224,13 @@ form .row.field {
             font-size:0.8em;
         }
 
-    form .row.field.dropdown > .field-input input {
+    form .dropdown > .field-input input {
         min-height: 34px;
 		border-width: 0 0 2px 0;
 		border-radius: 5px;
     }
 	
-	form .row.field.dropdown > .field-input input:focus {
+	form .dropdown > .field-input input:focus {
 		border: none;
 	}
 
