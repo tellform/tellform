@@ -3,6 +3,7 @@
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
 angular.module('forms').service('FormFields', [ '$rootScope', '$translate', '$window',
 	function($rootScope, $translate, $window) {
+		console.log($window.user);
 		$translate.use($window.user.language);
 
 		this.types = [
