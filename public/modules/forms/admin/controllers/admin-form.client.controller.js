@@ -64,12 +64,19 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
         ];
 
         $scope.go = function(tab){
-            $state.go(tab.route);
+            var currParentState = $state.current.name.split('.').slice(0,2).join('.');
+            var tabParentState = tab.route.split('.').slice(0,2).join('.');
+
+            if(currParentState !== tabParentState && tabParentState !== 'viewForm.configure.general'){
+                $state.go(tab.route);
+            }
         };
 
         function setActiveTab() {
             $scope.tabData.forEach(function(tab) {
-                tab.active = ($state.current.name === tab.route);
+                var currentTabState = $state.current.name.split('.').slice(0,2).join('.');
+                var tabRouteState = tab.route.split('.').slice(0,2).join('.');
+                tab.active = (currentTabState === tabRouteState);
 
                 if(tab.active && tab.route === 'viewForm.design'){
                     $scope.designTabActive = true;

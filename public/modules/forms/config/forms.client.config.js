@@ -6,6 +6,15 @@ angular.module('forms').run(['Menus',
 		// Set top bar menu items
 		Menus.addMenuItem('topbar', 'My Forms', 'forms', '', '/forms', false);
 	}
+]).run(['$rootScope', '$state', 
+	function($rootScope, $state) {
+    	$rootScope.$on('$stateChangeStart', function(evt, to, params) {
+	      	if (to.redirectTo) {
+	       		evt.preventDefault();
+	        	$state.go(to.redirectTo, params)
+	      	}
+	    });
+	}
 ]).filter('secondsToDateTime', [function() {
 	return function(seconds) {
 		return new Date(1970, 0, 1).setSeconds(seconds);
