@@ -8,6 +8,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 		$scope.error = '';
 		$scope.forms = {};
 
+		var statesToIgnore = ['', 'home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
+
 	    $scope.signin = function() {
 	    	if(!$scope.forms.signinForm.$invalid){
 				User.login($scope.credentials).then(
@@ -15,8 +17,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 						Auth.login(response);
 						$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-						if($state.previous.name !== 'home' && $state.previous.name !== 'verify' && $state.previous.name !== '') {
-							$state.go($state.previous.name);
+						if(statesToIgnore.indexOf($state.previous.state.name) === -1) {
+							$state.go($state.previous.state.name, $state.previous.params);
 						} else {
 							$state.go('listForms');
 						}

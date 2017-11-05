@@ -9,7 +9,8 @@ var should = require('should'),
 	User = mongoose.model('User'),
 	Form = mongoose.model('Form'),
 	Field = mongoose.model('Field'),
-	FormSubmission = mongoose.model('FormSubmission');
+	FormSubmission = mongoose.model('FormSubmission'),
+	async = require('async');
 
 /**
  * Globals
@@ -68,7 +69,7 @@ describe('Form Routes Unit tests', function() {
 			.send({form: myForm})
 			.expect(401)
 			.end(function(FormSaveErr, FormSaveRes) {
-
+				console.log(FormSaveRes.text);
 				// Call the assertion callback
 				done(FormSaveErr);
 			});
@@ -83,7 +84,7 @@ describe('Form Routes Unit tests', function() {
 			});
 	});
 
-	it(' > should be able to read/get a Form if not signed in', function(done) {
+	it(' > should be able to read/get a live Form if not signed in', function(done) {
 		// Create new Form model instance
 		var FormObj = new Form(myForm);
 
@@ -101,6 +102,23 @@ describe('Form Routes Unit tests', function() {
 
 					// Call the assertion callback
 					done();
+				});
+		});
+	});
+
+	it(' > should be able to read/get a non-live Form if not signed in', function(done) {
+		// Create new Form model instance
+		var FormObj = new Form(myForm);
+		FormObj.isLive = false;
+
+		// Save the Form
+		FormObj.save(function(err, form) {
+			if(err) return done(err);
+
+			userSession.get('/subdomain/' + credentials.username + '/forms/' + form._id + '/render')
+				.expect(401, {message: 'Form is Not Public'})
+				.end(function(err, res) {
+					done(err);
 				});
 		});
 	});
@@ -146,6 +164,16 @@ describe('Form Routes Unit tests', function() {
 				});
 		});
 
+		it(' > should not be able to create a Form if body is empty', function(done) {
+			loginSession.post('/forms')
+				.send({form: null})
+				.expect(400, {"message":"Invalid Input"})
+				.end(function(FormSaveErr, FormSaveRes) {
+					// Call the assertion callback
+					done(FormSaveErr);
+				});
+		});
+
 		it(' > should not be able to save a Form if no title is provided', function(done) {
 			// Set Form with a invalid title field
 			myForm.title = '';
@@ -165,10 +193,22 @@ describe('Form Routes Unit tests', function() {
 
 					done();
 				});
-
 		});
 
-		it(' > should be able to update a Form if signed in', function(done) {
+		it(' > should be able to create a Form if form_fields are undefined', function(done) {
+			myForm.analytics = null;
+			myForm.form_fields = null;
+
+			loginSession.post('/forms')
+				.send({form: myForm})
+				.expect(200)
+				.end(function(FormSaveErr, FormSaveRes) {
+					// Call the assertion callback
+					done(FormSaveErr);
+				});
+		});
+
+		it(' > should be able to update a Form if signed in and Form is valid', function(done) {
 
 			// Save a new Form
 			loginSession.post('/forms')
@@ -182,7 +222,7 @@ describe('Form Routes Unit tests', function() {
 					}
 
 					// Update Form title
-					myForm.title = 'WHY YOU GOTTA BE SO MEAN?';
+					myForm.title = 'WHY YOU GOTTA BE SO FORMULAIC?';
 
 					// Update an existing Form
 					loginSession.put('/forms/' + FormSaveRes.body._id)
@@ -197,13 +237,12 @@ describe('Form Routes Unit tests', function() {
 
 							// Set assertions
 							(FormUpdateRes.body._id).should.equal(FormSaveRes.body._id);
-							(FormUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
+							(FormUpdateRes.body.title).should.match(myForm.title);
 
 							// Call the assertion callback
 							done();
 						});
 				});
-
 		});
 
 		it(' > should be able to delete a Form if signed in', function(done) {
@@ -238,10 +277,9 @@ describe('Form Routes Unit tests', function() {
 							done();
 						});
 				});
-
 		});
 
-		it('should be able to save new form while logged in', function(done){
+		it(' > should be able to save new form while logged in', function(done){
 			// Save a new Form
 			authenticatedSession.post('/forms')
 				.send({form: myForm})
@@ -271,12 +309,70 @@ describe('Form Routes Unit tests', function() {
 				});
 		});
 
+		it(' > should be able to get list of users\' forms sorted by date created while logged in', function(done) {
+			var myForm1 = {
+				title: 'First Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var myForm2 = {
+				title: 'Second Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'formula one',      'fieldValue': ''}),
+					new Field({'fieldType':'checkbox', 'title':'football',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var FormObj1 = new Form(myForm1);
+			var FormObj2 = new Form(myForm2);
+
+			async.waterfall([
+			    function(callback) {
+			        FormObj1.save(function(err){
+			        	callback(err);
+			        });
+			    },
+			    function(callback) {
+			        FormObj2.save(function(err){
+			        	callback(err);
+			        });
+			    },
+			    function(callback) {
+			        loginSession.get('/forms')
+					.expect(200)
+					.end(function(err, res) {
+						res.body.length.should.equal(2);
+						res.body[0].title.should.equal('Second Form');
+						res.body[1].title.should.equal('First Form');
+
+						// Call the assertion callback
+						callback(err);
+					});
+			    }
+			], function (err) {
+			    done(err);
+			});
+		});
+
 		afterEach('should be able to signout user', function(done){
 			authenticatedSession.get('/auth/signout')
 				.expect(200)
 				.end(function(signoutErr, signoutRes) {
 					// Handle signout error
-					if (signoutErr) return done(signoutErr);
+					if (signoutErr) {
+						return done(signoutErr);
+					}
 					authenticatedSession.destroy();
 					done();
 				});
