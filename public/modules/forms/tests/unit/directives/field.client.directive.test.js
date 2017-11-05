@@ -5,11 +5,63 @@
     describe('Field Directive Tests', function() {
         // Initialize global variables
         var scope,
-            FormFields,
             $templateCache,
             $httpBackend,
             $compile;
 
+        var FormFields = {
+            types: [
+                {
+                    name : 'textfield',
+                    value : 'Short Text'
+                },
+                {
+                    name : 'email',
+                    value : 'Email'
+                },
+                {
+                    name : 'radio',
+                    value : 'Muliple Choice'
+                },
+                {
+                    name : 'dropdown',
+                    value : 'Dropdown'
+                },
+                {
+                    name : 'date',
+                    value : 'Date'
+                },
+                {
+                    name : 'textarea',
+                    value : 'Paragraph',
+                },
+                {
+                    name : 'yes_no',
+                    value : 'Yes/No',
+                },
+                {
+                    name : 'legal',
+                    value : 'Legal',
+                },
+                {
+                    name : 'rating',
+                    value : 'Rating',
+                },
+                {
+                    name : 'link',
+                    value : 'Link',
+                },
+                {
+                    name : 'number',
+                    value : 'Numbers',
+                },
+                {
+                    name : 'statement',
+                    value : 'Statement'
+                }
+            ]
+        };
+        
         var sampleUser = {
             firstName: 'Full',
             lastName: 'Name',
@@ -65,9 +117,15 @@
 
         beforeEach(module('ngSanitize', 'ui.select'));
 
+        //Mock FormFields Service
+        beforeEach(module(function($provide) {
+            $provide.service('FormFields', function() {
+                return FormFields;
+            });
+        }));
+
         beforeEach(inject(function($rootScope, _FormFields_, _$compile_, _$httpBackend_) {
             scope = $rootScope.$new();
-            FormFields = _FormFields_;
 
 			// Point global variables to injected services
 			$httpBackend = _$httpBackend_;
@@ -75,6 +133,7 @@
 
             $compile = _$compile_;
         }));
+
 
         it('should be able to render all field types in html', inject(function($rootScope) {
             scope.fields = sampleFields;

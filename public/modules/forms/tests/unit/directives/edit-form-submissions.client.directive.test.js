@@ -2,7 +2,7 @@
 
 (function() {
     // Forms Controller Spec
-    describe('EditSubmissions Directive-Controller Tests', function() {
+    describe('EditFormSubmissions Directive-Controller Tests', function() {
         // Initialize global variables
          var el, scope, controller, $httpBackend;
 
@@ -10,12 +10,24 @@
             firstName: 'Full',
             lastName: 'Name',
             email: 'test@test.com',
-            username: 'test@test.com',
+            username: 'test1234',
             password: 'password',
             provider: 'local',
             roles: ['user'],
             _id: 'ed873933b1f1dea0ce12fab9'
         };
+
+        var sampleVisitors = [{
+            socketId: '33b1f1dea0ce12fab9ed8739',
+            referrer: 'https://tellform.com/examples',
+            lastActiveField: 'ed873933b0ce121f1deafab9',
+            timeElapsed: 100000,
+            isSubmitted: true,
+            language: 'en',
+            ipAddr: '192.168.1.1',
+            deviceType: 'desktop',
+            userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) FxiOS/1.0 Mobile/12F69 Safari/600.1.4'
+        }]
 
         var sampleForm = {
             title: 'Form Title',
@@ -27,7 +39,18 @@
                 {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
             analytics: {
-				visitors: []
+				visitors: sampleVisitors,
+                conversionRate: 80.5,
+                fields: [
+                    {
+                        dropoffViews: 0,
+                        responses: 1,
+                        totalViews: 1,
+                        continueRate: 100,
+                        dropoffRate: 0,
+                        field: {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'}
+                    }
+                ]
 			},
 			submissions: [],
             startPage: {
@@ -61,7 +84,8 @@
             ],
             admin: sampleUser,
             form: sampleForm,
-            timeElapsed: 10.33
+            timeElapsed: 10.33,
+            selected: false
         },
         {
             form_fields: [
@@ -71,7 +95,8 @@
             ],
             admin: sampleUser,
             form: sampleForm,
-            timeElapsed: 2.33
+            timeElapsed: 2.33,
+            selected: false
         },
         {
             form_fields: [
@@ -81,7 +106,8 @@
             ],
             admin: sampleUser,
             form: sampleForm,
-            timeElapsed: 11.11
+            timeElapsed: 11.11,
+            selected: false
         }];
 
         // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -118,10 +144,12 @@
             $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
 			$httpBackend.whenGET('/forms').respond(200, sampleForm);
 			$httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
-			//Instantiate directive.
+            $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})\/submissions$/).respond(200, sampleSubmissions);
+            $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})\/visitors$/).respond(200, sampleVisitors);
+			
+            //Instantiate directive.
             var tmp_scope = $rootScope.$new();
             tmp_scope.myform = sampleForm;
-			tmp_scope.myform.submissions = sampleSubmissions;
             tmp_scope.user = sampleUser;
 
             //gotacha: Controller and link functions will execute.
@@ -141,6 +169,7 @@
 
             it('$scope.toggleAllCheckers should toggle all checkboxes in table', function(){
                 //Run Controller Logic to Test
+                scope.table.rows = sampleSubmissions;
                 scope.table.masterChecker = true;
                 scope.toggleAllCheckers();
 
@@ -151,6 +180,7 @@
             });
 
             it('$scope.isAtLeastOneChecked should return true when at least one checkbox is selected', function(){
+                scope.table.rows = sampleSubmissions;
                 scope.table.masterChecker = true;
                 scope.toggleAllCheckers();
 
@@ -161,16 +191,22 @@
             });
 
             it('$scope.deleteSelectedSubmissions should delete all submissions that are selected', function(){
+                $httpBackend.expect('GET', /^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200, sampleSubmissions);
                 scope.table.masterChecker = true;
-                scope.toggleAllCheckers();
+                scope.getSubmissions(function(err){
+                    scope.toggleAllCheckers();
 
-                $httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200);
+                    $httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})(\/submissions)$/).respond(200);
 
-                //Run Controller Logic to Test
-                scope.deleteSelectedSubmissions();
+                    //Run Controller Logic to Test
+                    scope.deleteSelectedSubmissions().then(function(){
+                        expect(scope.table.rows.length).toEqual(0);
+                    });
+                    expect(err).not.toBeDefined();
 
+                });
                 $httpBackend.flush();
-                expect(scope.table.rows.length).toEqual(0);
+
             });
         });
 

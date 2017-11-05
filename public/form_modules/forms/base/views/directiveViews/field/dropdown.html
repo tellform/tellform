@@ -26,8 +26,7 @@
 				ng-change="nextField()">
 			<ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
 			</ui-select-match>
-			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search"
-							   ng-class="{'active': option.option_value === field.fieldValue }">
+			<ui-select-choices repeat="option in field.fieldOptions | filter: $select.search">
 				<span ng-bind-html="option.option_value | highlight: $select.search"></span>
 			</ui-select-choices>
         </ui-select>
