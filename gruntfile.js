@@ -152,7 +152,7 @@ module.exports = function(grunt) {
 			production: {
 				files: {
 					'public/dist/application.js': ['public/application.js', 'public/config.js', 'public/form_modules/**/*.js'],
-					'public/dist/form_application.js': ['public/form-application.js', 'public/form-config.js', 'public/form_modules/**/*.js']
+					'public/dist/form-application.js': ['public/form-application.js', 'public/form-config.js', 'public/form_modules/**/*.js']
 				}
 			}
 		},
