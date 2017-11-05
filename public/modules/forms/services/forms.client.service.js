@@ -8,6 +8,7 @@ angular.module('forms').factory('GetForms', ['$resource', 'FORM_URL',
 		}, {
 			'query' : {
 				method: 'GET',
+				url: '/forms',
 				isArray: true
 			},
 			'get' : {
