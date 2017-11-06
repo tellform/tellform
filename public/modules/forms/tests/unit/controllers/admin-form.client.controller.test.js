@@ -10,7 +10,8 @@
 			$httpBackend,
 			$stateParams,
 			$location,
-			$state;
+			$state,
+			$timeout;
 
 		var sampleUser = {
 			firstName: 'Full',
@@ -175,7 +176,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms) {
+		beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms, _$timeout_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -187,6 +188,7 @@
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
 			$state = _$state_;
+			$timeout = _$timeout_;
 
 			$httpBackend.whenGET(/\.html$/).respond('');
 			$httpBackend.whenGET('/users/me/').respond('');
@@ -197,60 +199,70 @@
 			};
  		}));
 
-		it('AdminFormController should fetch current Form when instantiated', function() {
-			// Run controller functionality
-			var controller = createAdminFormController();
+		it('AdminFormController should fetch current Form when instantiated', inject(function($timeout) {
+			$timeout(function() {
+				// Run controller functionality
+				var controller = createAdminFormController();
 
-			// Test scope value
-			expect(scope.myform).toEqualData(sampleForm);
-		});
-
-		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', inject(function($uibModal) {
-			var controller = createAdminFormController();
-
-			//Set $state transition
-			$state.expectTransitionTo('listForms');
-
-			// Set DELETE response
-			$httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
-
-			//Run controller functionality
-			scope.openDeleteModal();
-			scope.removeCurrentForm();
-
-			$httpBackend.flush();
-			$state.ensureAllTransitionsHappened();
+				// Test scope value
+				expect(scope.myform).toEqualData(sampleForm);
+			});
 		}));
 
-		it('$scope.update() should send a PUT request with the id of form', function() {
-			var controller = createAdminFormController();
+		it('$scope.removeCurrentForm() with valid form data should send a DELETE request with the id of form', inject(function($timeout, $uibModal) {
+			$timeout(function() {
+				var controller = createAdminFormController();
 
-			//Set PUT response
-			$httpBackend.expect('PUT', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
+				//Set $state transition
+				$state.expectTransitionTo('listForms');
 
-			//Run controller functionality
-			scope.update(false, sampleForm, false, false);
+				// Set DELETE response
+				$httpBackend.expect('DELETE', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
 
-			$httpBackend.flush();
-		});
+				//Run controller functionality
+				scope.openDeleteModal();
+				scope.removeCurrentForm();
 
-		it('$scope.openDeleteModal() should open scope.deleteModal', function() {
-			var controller = createAdminFormController();
+				$httpBackend.flush();
+				$state.ensureAllTransitionsHappened();
+			});
+		}));
 
-			//Run controller functionality
-			scope.openDeleteModal();
-			expect(scope.deleteModal.opened).toEqual(true);
-		});
+		it('$scope.update() should send a PUT request with the id of form', inject(function($timeout) {
+			$timeout(function() {
+				var controller = createAdminFormController();
 
-		it('$scope.cancelDeleteModal() should close $scope.deleteModal', inject(function($uibModal) {
-			var controller = createAdminFormController();
+				//Set PUT response
+				$httpBackend.expect('PUT', /^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
 
-			//Run controller functionality
-			scope.openDeleteModal();
+				//Run controller functionality
+				scope.update(false, sampleForm, false, false);
 
-			//Run controller functionality
-			scope.cancelDeleteModal();
-			expect( scope.deleteModal.opened ).toEqual(false);
+				$httpBackend.flush();
+			});
+		}));
+
+		it('$scope.openDeleteModal() should open scope.deleteModal', inject(function($timeout) {
+			$timeout(function() {
+				var controller = createAdminFormController();
+
+				//Run controller functionality
+				scope.openDeleteModal();
+				expect(scope.deleteModal.opened).toEqual(true);
+			});
+		}));
+
+		it('$scope.cancelDeleteModal() should close $scope.deleteModal', inject(function($uibModal, $timeout) {
+			$timeout(function() {
+				var controller = createAdminFormController();
+
+				//Run controller functionality
+				scope.openDeleteModal();
+
+				//Run controller functionality
+				scope.cancelDeleteModal();
+				expect( scope.deleteModal.opened ).toEqual(false);
+			});
 		}));
 	});
 }());

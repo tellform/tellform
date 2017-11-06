@@ -166,7 +166,7 @@ describe('Form Routes Unit tests', function() {
 		it(' > should not be able to create a Form if body is empty', function(done) {
 			loginSession.post('/forms')
 				.send({form: null})
-				.expect(400, {"message":"Invalid Input"})
+				.expect(400, {'message':'Invalid Input'})
 				.end(function(FormSaveErr, FormSaveRes) {
 					// Call the assertion callback
 					done(FormSaveErr);

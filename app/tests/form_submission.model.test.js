@@ -81,8 +81,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			email: 'test1@test.com'+Date.now(),
-			username: 'test1'+Date.now(),
+			email: 'test1@test.com',
+			username: 'test1',
 			password: 'password',
 			provider: 'local'
 		});

@@ -3,7 +3,9 @@ extends layout.server.view.pug
 block content
 	section.content(ui-view='', ng-cloak='')
 
-	script(src='/static/lib/file-saver.js/FileSaver.js', type='text/javascript')
+
+	link(rel='stylesheet', href='/static/lib/jquery-ui/themes/flick/jquery-ui.min.css')
+	script(src='/static/lib/jquery/jquery.min.js')
 
 	//Embedding The User Object
 	script(type='text/javascript').

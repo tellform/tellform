@@ -10,7 +10,8 @@ var mongoose = require('mongoose'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	path = require('path'),
 	querystring = require('querystring'),
-	nodemailer = require('nodemailer');
+	nodemailer = require('nodemailer'),
+	constants = require('../libs/constants');
 
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
@@ -42,7 +43,7 @@ var UserSchema = new Schema({
 		trim: true,
 		lowercase: true,
 		unique: 'Account already exists with this email',
-		match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+		match: [constants.regex.email, 'Please fill a valid email address'],
 		required: [true, 'Email is required']
 	},
 	username: {
@@ -66,13 +67,13 @@ var UserSchema = new Schema({
 	roles: {
 		type: [{
 			type: String,
-			enum: ['user', 'admin', 'superuser']
+			enum: constants.userRoleTypes
 		}],
 		default: ['user']
 	},
 	language: {
 		type: String,
-		enum: ['en', 'fr', 'es', 'it', 'de'],
+		enum: constants.languageTypes,
 		default: 'en',
 	},
 	lastModified: {

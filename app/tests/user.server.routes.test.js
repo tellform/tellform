@@ -48,7 +48,7 @@ describe('User CRUD tests', function() {
 						.send(_User)
 						.expect(200)
 						.end(function(err) {
-							callback(err)
+							callback(err);
 						});
 			    },
 			    function(callback) {
@@ -136,7 +136,7 @@ describe('User CRUD tests', function() {
 			        		if(err){
 			        			callback(err);
 			        		}
-			        		callback(null, user.resetPasswordToken)
+			        		callback(null, user.resetPasswordToken);
 						});
 			    },
 			    function(resetPasswordToken, callback) {

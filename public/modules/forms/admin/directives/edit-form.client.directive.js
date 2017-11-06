@@ -1,4 +1,3 @@
-
 'use strict';
 
 angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', '$uibModal',
