@@ -4,7 +4,7 @@ TellForm 2.1.0
 [![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
 ![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
-[![Gitter](https://badges.gitter.im/tellform/tellform.svg)](https://gitter.im/tellform/tellform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 > An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
@@ -201,7 +201,7 @@ TellForm's configuration is done with environment variables. To set an option fo
 
 ## Where to get help
 
-[Gitter Chat](https://gitter.im/tellform/tellform)
+[Gitter Chat](https://gitter.im/tellform/Lobby)
 
 [Official Twitter](https://twitter.com/tellform_real)
 
