@@ -83,13 +83,142 @@ exports.listSubmissions = function(req, res) {
 	FormSubmission.find({ form: _form._id }).sort('created').lean().exec(function(err, _submissions) {
 		if (err) {
 			console.error(err);
-			res.status(500).send({
+			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
 		res.json(_submissions);
 	});
 };
+
+/**
+ * Get Visitor Analytics Data for a given Form
+ */
+exports.getVisitorData = function(req, res) {
+	Form.aggregate([
+	    {
+	        $match: {
+	            _id: mongoose.Types.ObjectId(req.params.formIdNoMiddleware),
+	            admin: mongoose.Types.ObjectId(req.user.id)
+	        }
+	    },
+	    {
+	        $facet: {
+	            "deviceStatistics": [
+	                {
+	                    $unwind: '$analytics.visitors'
+	                },
+	                {
+	                    $project: {
+	                        _id: 0,
+	                        deviceType: '$analytics.visitors.deviceType',
+	                        SubmittedTimeElapsed: {
+	                            $cond: [ 
+	                                {
+	                                    $eq: ['$analytics.visitors.isSubmitted', true]
+	                                }, 
+	                                '$analytics.visitors.timeElapsed', 
+	                                0
+	                            ]
+	                        },
+	                        SubmittedResponses: {
+	                            $cond: [ 
+	                                {
+	                                    $eq: ['$analytics.visitors.isSubmitted', true]
+	                                }, 
+	                                1, 
+	                                0
+	                            ]
+	                        }
+	                    }
+	                },
+	                { 
+	                    $group: {
+	                        _id: "$deviceType",
+	                        total_time: { $sum: "$SubmittedTimeElapsed"  },
+	                        responses: { $sum: "$SubmittedResponses" },
+	                        visits: { $sum: 1 }
+	                    }
+	                },
+	                {
+	                    $project: {
+	                        total_time: "$total_time",
+	                        responses: "$responses",
+	                        visits: "$visits",
+	                        average_time: {
+	                            $divide : ["$total_time", "$responses"]
+	                        },
+	                        conversion_rate: {
+	                            $divide : ["$responses", "$visits"]
+	                        }
+	                    }
+	                }
+	            ],
+	            "globalStatistics": [
+	                {
+	                    $unwind: '$analytics.visitors'
+	                },
+	                {
+	                    $project: {
+	                        _id: 0,
+	                        deviceType: '$analytics.visitors.deviceType',
+	                        SubmittedTimeElapsed: {
+	                            $cond: [ 
+	                                {
+	                                    $eq: ['$analytics.visitors.isSubmitted', true]
+	                                }, 
+	                                '$analytics.visitors.timeElapsed', 
+	                                0
+	                            ]
+	                        },
+	                        SubmittedResponses: {
+	                            $cond: [ 
+	                                {
+	                                    $eq: ['$analytics.visitors.isSubmitted', true]
+	                                }, 
+	                                1, 
+	                                0
+	                            ]
+	                        }
+	                    }
+	                },
+	                { 
+	                    $group: {
+	                        _id: null,
+	                        total_time: { $sum: "$SubmittedTimeElapsed"  },
+	                        responses: { $sum: "$SubmittedResponses" },
+	                        visits: { $sum: 1 }
+	                    }
+	                },
+	                {
+	                    $project: {
+	                        _id: 0,
+	                        total_time: "$total_time",
+	                        responses: "$responses",
+	                        visits: "$visits",
+	                        average_time: {
+	                            $divide : ["$total_time", "$responses"]
+	                        },
+	                        conversion_rate: {
+	                            $divide : ["$responses", "$visits"]
+	                        }
+	                    }
+	                }
+	            ],
+	        }
+	    }
+	], function(err, results){
+		if (err) {
+			console.error(err);
+			return res.status(500).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+
+		return res.json(results);
+	});
+};
+
 
 /**
  * Create a new form
@@ -132,7 +261,7 @@ exports.read = function(req, res) {
 
 			var newForm = req.form.toJSON();
 
-			if(newForm.admin._id === req.user._id){
+			if(newForm.admin === req.user._id){
 				return res.json(newForm);
 			}
 		
@@ -274,6 +403,7 @@ exports.formByID = function(req, res, next, id) {
 	}
 
 	Form.findById(id)
+		.select('admin title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
 		.populate('admin')
 		.exec(function(err, form) {
 		if (err) {
