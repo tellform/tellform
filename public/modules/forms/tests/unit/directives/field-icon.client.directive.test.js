@@ -5,7 +5,6 @@
     describe('FieldIcon Directive Tests', function() {
         // Initialize global variables
         var scope,
-            FormFields,
             faClasses = {
                 'textfield': 'fa fa-pencil-square-o',
                 'dropdown': 'fa fa-th-list',
@@ -28,10 +27,68 @@
         // Load the main application module
         beforeEach(module(ApplicationConfiguration.applicationModuleName));
 
+        //Mock FormFields Service
+        var FormFields = {
+            types: [
+                {
+                    name : 'textfield',
+                    value : 'Short Text'
+                },
+                {
+                    name : 'email',
+                    value : 'Email'
+                },
+                {
+                    name : 'radio',
+                    value : 'Muliple Choice'
+                },
+                {
+                    name : 'dropdown',
+                    value : 'Dropdown'
+                },
+                {
+                    name : 'date',
+                    value : 'Date'
+                },
+                {
+                    name : 'textarea',
+                    value : 'Paragraph',
+                },
+                {
+                    name : 'yes_no',
+                    value : 'Yes/No',
+                },
+                {
+                    name : 'legal',
+                    value : 'Legal',
+                },
+                {
+                    name : 'rating',
+                    value : 'Rating',
+                },
+                {
+                    name : 'link',
+                    value : 'Link',
+                },
+                {
+                    name : 'number',
+                    value : 'Numbers',
+                },
+                {
+                    name : 'statement',
+                    value : 'Statement'
+                }
+            ]
+        };
+        beforeEach(module(function($provide) {
+            $provide.service('FormFields', function() {
+                return FormFields;
+            });
+        }));
+
         beforeEach(inject(function ($rootScope, _FormFields_) {
             scope = $rootScope.$new();
-            FormFields = _FormFields_;
-		}));
+        }));
 
         it('should be able render all field-icon types', inject(function($compile) {
             var currType, currClass;

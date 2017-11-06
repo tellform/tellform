@@ -63,7 +63,6 @@ logger.setupFileLogger = function setupFileLogger() {
 
     return false;
   }
-
 };
 
 /**
@@ -76,7 +75,7 @@ logger.getLogOptions = function getLogOptions() {
   var _config = _.clone(config, true);
   var configFileLogger = _config.log.fileLogger;
   
-  if (!_.has(_config, 'log.fileLogger.directoryPath') || !_.has(_config, 'log.fileLogger.fileName')) {
+  if (process.env.NODE_ENV !== 'test' && !_.has(_config, 'log.fileLogger.directoryPath') || !_.has(_config, 'log.fileLogger.fileName')) {
     console.log('unable to find logging file configuration');
     return false;
   }
@@ -97,7 +96,6 @@ logger.getLogOptions = function getLogOptions() {
     handleExceptions: true,
     humanReadableUnhandledException: true
   };
-
 };
 
 /**

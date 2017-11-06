@@ -5,7 +5,7 @@ block content
         div.row.valign
             h3.col-md-12.text-center=__('500_HEADER')
             div.col-md-4.col-md-offset-4
-                if process.env.NODE_ENV == 'development'
+                if process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test'
                     div.col-md-12.text-center(style="padding-bottom: 50px;")
                         | #{error}
                 else

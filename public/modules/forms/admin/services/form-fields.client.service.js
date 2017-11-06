@@ -1,10 +1,11 @@
 'use strict';
 
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
-angular.module('forms').service('FormFields', [ '$rootScope', '$translate', '$window',
-	function($rootScope, $translate, $window) {
-		$translate.use($window.user.language);
-		console.log($translate.instant('SHORT_TEXT'));
+angular.module('forms').service('FormFields', [ '$rootScope', '$translate', 'Auth',
+	function($rootScope, $translate, Auth) {
+
+		var language = Auth.ensureHasCurrentUser().language;
+		$translate.use(language);
 
 		this.types = [
 		    {
@@ -29,7 +30,7 @@ angular.module('forms').service('FormFields', [ '$rootScope', '$translate', '$wi
 		    },
 		    {
 		        name : 'textarea',
-		        value : $translate.instant('PARAGRAPH'),
+		        value : $translate.instant('PARAGRAPH_FIELD'),
 		    },
 		    {
 		        name : 'yes_no',
