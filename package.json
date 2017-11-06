@@ -21,7 +21,7 @@
     "generate": "all-contributors generate",
     "start": "grunt",
     "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false; grunt build;",
+    "postinstall": "bower install --config.interactive=false",
     "init": "node scripts/setup.js"
   },
   "dependencies": {
