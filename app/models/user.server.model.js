@@ -9,19 +9,7 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	path = require('path'),
-	querystring = require('querystring'),
-	nodemailer = require('nodemailer');
-
-var smtpTransport = nodemailer.createTransport(config.mailer.options);
-
-// verify connection configuration on startup
-smtpTransport.verify(function(error, success) {
-	if (error) {
-			 console.log('Your mail configuration is incorrect', error);
-	} else {
-			 console.log('Mail server is ready to take our messages');
-	}
-});
+	querystring = require('querystring');
 
 /**
  * A Validation function for local strategy properties
