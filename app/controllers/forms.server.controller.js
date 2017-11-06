@@ -10,7 +10,13 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	diff = require('deep-diff'),
 	_ = require('lodash'),
-	helpers = require('./helpers.server.controller');
+	nodemailer = require('nodemailer'),
+	emailNotifications = require('../libs/send-email-notifications'),
+	constants = require('../libs/constants'),
+	helpers = require('./helpers.server.controller'),
+	async = require('async');
+
+var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 /**
  * Delete a forms submissions
@@ -70,7 +76,51 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		res.status(200).send('Form submission successfully saved');
+		var form = req.body
+		var formFieldDict = emailNotifications.createFieldDict(form.form_fields);
+
+		async.waterfall([
+		    function(callback) {
+		    	if (form.selfNotifications && form.selfNotifications.enabled && form.selfNotifications.fromField) {
+					form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField];
+
+					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+						if(err){
+							return callback({
+								message: 'Failure sending submission self-notification email'
+							});
+						}
+
+						callback();
+					});
+				} else {
+					callback();
+				} 
+		    },
+		    function(callback) {
+		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
+
+					form.respondentNotifications.toEmails = formFieldDict[form.respondentNotifications.toField];
+					debugger;
+					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+						if(err){
+							return callback({
+								message: 'Failure sending submission respondent-notification email'
+							});
+						}
+
+						callback();
+					});
+				} else {
+					callback();
+				} 
+		    }
+		], function (err) {
+			if(err){
+				return res.status(400).send(err);
+			}
+		    res.status(200).send('Form submission successfully saved');
+		});
 	});
 };
 
@@ -224,14 +274,13 @@ exports.getVisitorData = function(req, res) {
  * Create a new form
  */
 exports.create = function(req, res) {
-	
 	if(!req.body.form){
 		return res.status(400).send({
 			message: 'Invalid Input'
 		});
 	}
+	
 	var form = new Form(req.body.form);
-
 	form.admin = req.user._id;
 
 	form.save(function(err, createdForm) {
@@ -302,7 +351,7 @@ exports.update = function(req, res) {
     	form.analytics = {
     		visitors: [],
     		gaCode: ''
-    	}
+    	};
     }
 
 	if (req.body.changes) {
@@ -432,7 +481,7 @@ exports.formByIDFast = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.lean()
-		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
+		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);

@@ -39,8 +39,9 @@ var configureSocketIO = function (app, db) {
 var supportedLanguages = ['en', 'de', 'fr', 'it', 'es'];
 
 function containsAnySupportedLanguages(preferredLanguages){
-	for (var i = 0; i < preferredLanguages.length; i++) {
-		var currIndex = supportedLanguages.indexOf(preferredLanguages[i]);
+	var i, currIndex;
+	for (i = 0; i < preferredLanguages.length; i++) {
+		currIndex = supportedLanguages.indexOf(preferredLanguages[i]);
 	    if (currIndex > -1) {
 	        return supportedLanguages[currIndex];
 	    }
@@ -226,7 +227,6 @@ module.exports = function(db) {
 
 	// Setting the app router and static folder
 	app.use('/static', express.static(path.resolve('./public')));
-	app.use('/uploads', express.static(path.resolve('./uploads')));
 
 	// CookieParser should be above session
 	app.use(cookieParser());
@@ -261,6 +261,7 @@ module.exports = function(db) {
 	//Visitor Language Detection
 	app.use(function(req, res, next) {
 		var acceptLanguage = req.headers['accept-language'];
+
 		var languages, supportedLanguage;
 
 		if(acceptLanguage){
@@ -270,13 +271,12 @@ module.exports = function(db) {
 
 		if(!req.user && supportedLanguage !== null){
 			var currLanguage = res.cookie('userLang');
-
 			if(currLanguage && currLanguage !== supportedLanguage || !currLanguage){
 				res.clearCookie('userLang');
 				res.cookie('userLang', supportedLanguage, { maxAge: 90000, httpOnly: true });
+			} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies.userLang !== req.user.language) ){
+				res.cookie('userLang', req.user.language, { maxAge: 90000, httpOnly: true });
 			}
-		} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies['userLang'] !== req.user.language) ){
-			res.cookie('userLang', req.user.language, { maxAge: 90000, httpOnly: true });
 		}
 		next();
 	});

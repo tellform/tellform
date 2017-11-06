@@ -41,7 +41,7 @@
     "express": "~4.13.3",
     "express-session": "~1.12.1",
     "glob": "^7.0.3",
-    "grunt": "~0.4.1",
+    "grunt": "^0.4.5",
     "grunt-concurrent": "~2.3.0",
     "grunt-contrib-csslint": "~1.0.0",
     "grunt-contrib-cssmin": "~1.0.1",
