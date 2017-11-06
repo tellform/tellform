@@ -58,7 +58,10 @@ angular.module('forms').config(['$stateProvider',
 					});
 
 					return deferred.promise;
-		        }
+		        },
+		        formId: ['$stateParams', function ($stateParams) {
+			        return $stateParams.formId;
+			    }]
 			},
 			controller: 'AdminFormController'
 		}).state('viewForm.create', {

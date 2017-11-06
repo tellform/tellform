@@ -57,7 +57,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
     //Embedding socketUrl
     if socketUrl
       script(type='text/javascript').
-        socketUrl = !{socketUrl}
+        socketUrl = "!{socketUrl}"
 
     script(src='/static/lib/jquery/dist/jquery.min.js', type='text/javascript')
     link(rel='stylesheet', href='/static/lib/font-awesome/css/font-awesome.min.css')
@@ -80,6 +80,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
     script(src='/static/lib/socket.io-client/dist/socket.io.min.js')
 
     //Minified Bower Dependencies
+    script(src='/static/lib/angular/angular.min.js')
     script(src='/static/dist/vendor.min.js')
     script(src='/static/lib/angular-ui-date/src/date.js', type='text/javascript')
 

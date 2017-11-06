@@ -22,7 +22,7 @@ angular.module('users').factory('Auth', ['$window',
         } else if ($window.user){
           service._currentUser = $window.user;
           return service._currentUser;
-        } else{
+        } else {
           User.getCurrent().then(function(user) {
             // success
             service._currentUser = user;
