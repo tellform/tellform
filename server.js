@@ -14,7 +14,8 @@ require('events').EventEmitter.prototype._maxListeners = 0;
 
 var config = require('./config/config'),
 	mongoose = require('mongoose'),
-	chalk = require('chalk');
+	chalk = require('chalk'),
+	nodemailer = require('nodemailer');
 
 /**
  * Main application entry file.
@@ -31,6 +32,16 @@ var db = mongoose.connect(config.db.uri, config.db.options, function (err) {
 mongoose.connection.on('error', function (err) {
 	console.error(chalk.red('MongoDB connection error: ' + err));
 	process.exit(-1);
+});
+
+const smtpTransport = nodemailer.createTransport(config.mailer.options);
+
+// verify connection configuration on startup
+smtpTransport.verify(function(error, success) {
+	if (error) {
+			 console.error(chalk.red('Your mail configuration is incorrect: ' + error));
+			 process.exit(-1);
+	}
 });
 
 // Init the express application
