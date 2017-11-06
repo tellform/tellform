@@ -4,7 +4,7 @@ TellForm 2.1.0
 [![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
 ![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
-[![Gitter](https://badges.gitter.im/tellform/tellform.svg)](https://gitter.im/tellform/tellform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 > An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
@@ -119,14 +119,7 @@ Your application should run on port 3000 or the port you specified in your .env 
 
 To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/).
 
-Then run these commands
-
-```
-$ docker run -p 27017:27017 -d --name some-mongo mongo
-$ docker run -p 127.0.0.1:6379:6379 -d --name some-redis redis
-$ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db -e "SUBDOMAINS_DISABLED=TRUE" -e "DISABLE_CLUSTER_MODE=TRUE" -e "MAILER_EMAIL_ID=<YourEmailAPI_ID>" -e "MAILER_FROM=<noreply@yourdomain.com>" -e "MAILER_SERVICE_PROVIDER=<YourEmailAPIProvider>"  -e "MAILER_PASSWORD=<YourAPIKey>" -e "BASE_URL=localhost" -p 80:80 tellform/development
-```
-
+Then see this page [here](https://tellform.com/install_docker) for commands on how to deploy your own local TellForm instance.
 
 ## Testing Your Application
 You can run the full test suite included with TellForm with the test task:
@@ -201,7 +194,7 @@ TellForm's configuration is done with environment variables. To set an option fo
 
 ## Where to get help
 
-[Gitter Chat](https://gitter.im/tellform/tellform)
+[Gitter Chat](https://gitter.im/tellform/Lobby)
 
 [Official Twitter](https://twitter.com/tellform_real)
 
