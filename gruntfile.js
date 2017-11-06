@@ -1,4 +1,4 @@
-
+'use strict';
 
 var bowerArray = ['public/lib/angular/angular.min.js',
 	'public/lib/angular-scroll/angular-scroll.min.js',

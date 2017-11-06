@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	_ = require('lodash'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
-	async = require('async');
+	async = require('async'),
+	constants = require('../libs/constants');
 
 //Mongoose Models
 var FieldSchema = require('./form_field.server.model.js');
@@ -52,11 +53,12 @@ var VisitorDataSchema = new Schema({
 		type: Boolean
 	},
 	language: {
-		type: String
+		type: String,
+		enum: constants.languageTypes,
+		default: 'en',
 	},
 	ipAddr: {
-		type: String,
-		default: ''
+		type: String
 	},
 	deviceType: {
 		type: String,
@@ -147,6 +149,47 @@ var FormSchema = new Schema({
 			default: 'Go back to Form'
 		},
 		buttons:[ButtonSchema]
+	},
+
+	selfNotifications: {
+		fromField: {
+			type: String
+		},
+		toEmails: {
+			type: String
+		},
+		subject: {
+			type: String
+		},
+		htmlTemplate: {
+			type: String
+		},
+		enabled: {
+			type: Boolean,
+			default: false
+		}
+	},
+
+	respondentNotifications: {
+		toField: {
+			type: String
+		},
+		fromEmails: {
+			type: String,
+			match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		},
+		subject: {
+			type: String,
+			default: 'Tellform: Thank you for filling out this TellForm'
+		},
+		htmlTemplate: {
+			type: String,
+			default: 'Hello, <br><br> We’ve received your submission. <br><br> Thank you & have a nice day!',
+		},
+		enabled: {
+			type: Boolean,
+			default: false
+		}
 	},
 
 	hideFooter: {

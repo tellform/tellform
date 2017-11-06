@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	Schema = mongoose.Schema,
 	LogicJumpSchema = require('./logic_jump.server.model'),
-	tokgen = require('../libs/tokenGenerator');
+	tokgen = require('../libs/tokenGenerator'),
+	constants = require('../libs/constants');
 
 var FieldOptionSchema = new Schema({
 	option_id: {
@@ -34,21 +35,7 @@ var RatingFieldSchema = new Schema({
 	},
 	shape: {
 		type: String,
-		enum: [
-			'Heart',
-			'Star',
-			'thumbs-up',
-			'thumbs-down',
-			'Circle',
-			'Square',
-			'Check Circle',
-			'Smile Outlined',
-			'Hourglass',
-			'bell',
-			'Paper Plane',
-			'Comment',
-			'Trash'
-		]
+		enum: constants.ratingShapeTypes
 	},
 	validShapes: {
 		type: [String]
@@ -103,29 +90,7 @@ function BaseFieldSchema(){
 		},
 		fieldType: {
 			type: String,
-			enum: [
-				'textfield',
-				'date',
-				'email',
-				'link',
-				'legal',
-				'url',
-				'textarea',
-				'statement',
-				'welcome',
-				'thankyou',
-				'file',
-				'dropdown',
-				'scale',
-				'rating',
-				'radio',
-				'checkbox',
-				'hidden',
-				'yes_no',
-				'natural',
-				'stripe',
-				'number'
-			]
+			enum: constants.fieldTypes
 		},
 		fieldValue: Schema.Types.Mixed
 	});
@@ -140,7 +105,7 @@ function BaseFieldSchema(){
 		this.validFieldTypes = mongoose.model('Field').schema.path('fieldType').enumValues;
 
 		if(this.fieldType === 'rating' && this.ratingOptions.validShapes.length === 0){
-			this.ratingOptions.validShapes = mongoose.model('RatingOptions').schema.path('shape').enumValues;
+			this.ratingOptions.validShapes = constants.ratingShapeTypes;
 		}
 
 		next();

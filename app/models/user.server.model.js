@@ -9,19 +9,7 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	path = require('path'),
-	querystring = require('querystring'),
-	nodemailer = require('nodemailer');
-
-var smtpTransport = nodemailer.createTransport(config.mailer.options);
-
-// verify connection configuration on startup
-smtpTransport.verify(function(error, success) {
-	if (error) {
-			 console.log('Your mail configuration is incorrect', error);
-	} else {
-			 console.log('Mail server is ready to take our messages');
-	}
-});
+	querystring = require('querystring');
 
 /**
  * User Schema
@@ -42,7 +30,7 @@ var UserSchema = new Schema({
 		trim: true,
 		lowercase: true,
 		unique: 'Account already exists with this email',
-		match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+		match: [constants.regex.email, 'Please fill a valid email address'],
 		required: [true, 'Email is required']
 	},
 	username: {
@@ -66,13 +54,13 @@ var UserSchema = new Schema({
 	roles: {
 		type: [{
 			type: String,
-			enum: ['user', 'admin', 'superuser']
+			enum: constants.userRoleTypes
 		}],
 		default: ['user']
 	},
 	language: {
 		type: String,
-		enum: ['en', 'fr', 'es', 'it', 'de'],
+		enum: constants.languageTypes,
 		default: 'en',
 	},
 	lastModified: {

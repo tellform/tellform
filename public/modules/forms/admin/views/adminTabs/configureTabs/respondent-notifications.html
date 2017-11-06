@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-10">
+        <div class="row field">
+            <div class="notification-row">
+                <i class="status-light status-light-on fa fa-circle" ng-if="myform.respondentNotifications.enabled"></i>
+                <i class="status-light status-light-off fa fa-circle" ng-if="!myform.respondentNotifications.enabled"></i>
+            </div>
+            <div class="notification-row">
+                <h5>{{ 'ENABLE_RESPONDENT_NOTIFICATIONS' | translate }}</h5>
+            </div>
+
+            <div class="notification-row">
+                <input class="toggle-switch notification-toggle" type="checkbox" switch-size="small"
+                    bs-switch ng-model="myform.respondentNotifications.enabled"
+                    switch-on-text="{{ 'ON' | translate }}"
+                    switch-off-text="{{ 'OFF' | translate }}">
+            </div>
+        </div>
+
+        <div class="row field" ng-if="formHasEmailField">
+            <div class="field-title col-sm-12">
+                <h5>{{ 'SEND_NOTIFICATION_TO' | translate }}:</h5>
+            </div>
+
+            <div class="col-sm-12 field-input">
+                <ui-select ng-model="myform.respondentNotifications.toField" theme="selectize">
+                    <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
+                        {{$select.selected.title}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="field.globalId as field in emailFields | filter: { title: $select.search }">
+                        <span ng-bind-html="field.title | highlight: $select.search">
+                        </span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+
+        <div class="row field" ng-if="!formHasEmailField">
+            <strong>
+                {{ 'NO_EMAIL_FIELD_WARNING' | translate }}
+            </strong>
+        </div>
+
+        <div class="row field">
+            <div class="field-title col-sm-12">
+                <h5>{{ 'REPLY_TO' | translate }}:</h5>
+            </div>
+
+            <div class="col-sm-12 field-input">
+                <input class="form-control"
+                       type="text"
+                       ng-model="myform.respondentNotifications.replyEmail"
+                       placeholder="noreply@tellform.com">
+            </div>
+        </div>
+
+        <div class="row field">
+            <div class="field-title col-sm-12">
+                <h5>{{ 'EMAIL_SUBJECT' | translate }}:</h5>
+            </div>
+            <div class="col-sm-12 field-input">
+                <text-angular class="email-subject" ng-model="myform.respondentNotifications.subject" ta-toolbar="[['insertField']]" ta-default-wrap="n" ta-unsafe-sanitizer="true">
+                </text-angular>
+            </div>
+        </div>
+
+        <div class="row field">
+            <div class="field-title col-sm-12">
+                <h5>{{ 'EMAIL_MESSAGE' | translate }}</h5>
+            </div>
+
+            <div class="col-sm-12 field-input">
+                <text-angular class="email-subject" ng-model="myform.respondentNotifications.htmlTemplate" 
+                ta-toolbar="[['bold','italics', 'insertField']]" 
+                ta-unsafe-sanitizer="true">
+                </text-angular>
+                <div ng-bind="myform.respondentNotifications.htmlTemplate"></div>
+            </div>
+        </div>
+    </div>
+</div>

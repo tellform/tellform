@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
 	removeSensitiveModelData: function(type, object){
 		var privateFields = {
@@ -5,7 +7,7 @@ module.exports = {
 			'private_form': ['__v'],
 			'public_user': ['passwordHash', 'password', 'provider', 'salt', 'lastModified', 'created', 'resetPasswordToken', 'resetPasswordExpires', 'token', 'apiKey', '__v'],
 			'private_user': ['passwordHash', 'password', 'provider', 'salt', 'resetPasswordToken', 'resetPasswordExpires', 'token', '__v']
-		}
+		};
 
 		function removeKeysFromDict(dict, keys){
 			for(var i=0; i<keys.length; i++){
@@ -16,19 +18,18 @@ module.exports = {
 			}
 		}
 
-
 		switch(type){
 			case 'private_form':
-	            removeKeysFromDict(object, privateFields['private_form']);
+	            removeKeysFromDict(object, privateFields[type]);
 	            if(object.admin){
-	            	removeKeysFromDict(object.admin, privateFields['private_user']);
+	            	removeKeysFromDict(object.admin, privateFields.private_user);
 	            }
 	            break;
 
 	        case 'public_form':
-				removeKeysFromDict(object, privateFields['public_form']);
+				removeKeysFromDict(object, privateFields[type]);
 				if(object.admin){
-	            	removeKeysFromDict(object.admin, privateFields['public_user']);
+	            	removeKeysFromDict(object.admin, privateFields.public_user);
 	        	}
 	            break;
 
@@ -41,4 +42,4 @@ module.exports = {
 
 		return object;
 	}
-}
+};

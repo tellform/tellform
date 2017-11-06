@@ -5,7 +5,7 @@
  */
 process.env.NODE_ENV = 'production';
 
-var  config = require('../config/config'),
+var config = require('../config/config'),
 	mongoose = require('mongoose'),
 	inquirer = require('inquirer'),
 	envfile = require('envfile'),

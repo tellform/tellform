@@ -61,7 +61,7 @@ config_nev();
 
 exports.validateVerificationToken = function(req, res){
 
-	const fn = pug.compileFile(__dirname + "/../../views/welcome.email.view.pug");
+	const fn = pug.compileFile(__dirname + '/../../views/welcome.email.view.pug');
 	var renderedHtml = fn(res.locals);
 
     var emailTemplate = {
@@ -84,7 +84,7 @@ exports.validateVerificationToken = function(req, res){
 };
 
 exports.resendVerificationEmail = function(req, res, next){
-	const fn = pug.compileFile(__dirname + "/../../views/verification.email.view.pug");
+	const fn = pug.compileFile(__dirname + '/../../views/verification.email.view.pug');
 	var renderedHtml = fn(res.locals);
 
 	var emailTemplate = {
@@ -118,7 +118,7 @@ exports.signup = function(req, res) {
 	var user = new User(req.body);
 
 	// Set language to visitor's language
-	user.language = req.cookies['userLang'];
+	user.language = req.cookies.userLang;
 
 	// Add missing user fields
 	user.provider = 'local';
@@ -134,7 +134,7 @@ exports.signup = function(req, res) {
 
 		// new user created
 		if (newTempUser) {
-			const fn = pug.compileFile(__dirname + "/../../views/verification.email.view.pug");
+			const fn = pug.compileFile(__dirname + '/../../views/verification.email.view.pug');
 			var renderedHtml = fn(res.locals);
 
 			var URL = newTempUser[nev.options.URLFieldName];

@@ -285,8 +285,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 };
 
                 $rootScope.prevField = $scope.prevField = function(){
-                	console.log('prevField');
-                	console.log($scope.selected);
                 	var selected_index = $scope.selected.index - 1;
                     if($scope.selected.index > 0){
                         $scope.setActiveField(null, selected_index, true);
@@ -380,17 +378,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						if($scope.myform.form_fields[i].fieldType === 'dropdown' && !$scope.myform.form_fields[i].deletePreserved){
 							$scope.myform.form_fields[i].fieldValue = $scope.myform.form_fields[i].fieldValue.option_value;
 						}
-						
-						//Get rid of unnessecary attributes for each form field
-						delete form.form_fields[i].submissionId;
-                        			delete form.form_fields[i].disabled;
-                        			delete form.form_fields[i].ratingOptions;
-                       				delete form.form_fields[i].fieldOptions;
-                        			delete form.form_fields[i].logicJump;
-                        			delete form.form_fields[i].description;
-                        			delete form.form_fields[i].validFieldTypes;
-                        			delete form.form_fields[i].fieldType;	
-					 
 					}
 
 					setTimeout(function () {
