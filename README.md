@@ -119,14 +119,7 @@ Your application should run on port 3000 or the port you specified in your .env 
 
 To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/).
 
-Then run these commands
-
-```
-$ docker run -p 27017:27017 -d --name some-mongo mongo
-$ docker run -p 127.0.0.1:6379:6379 -d --name some-redis redis
-$ docker run --rm -p 3000:3000 --link some-redis:redis-db --link some-mongo:db -e "SUBDOMAINS_DISABLED=TRUE" -e "DISABLE_CLUSTER_MODE=TRUE" -e "MAILER_EMAIL_ID=<YourEmailAPI_ID>" -e "MAILER_FROM=<noreply@yourdomain.com>" -e "MAILER_SERVICE_PROVIDER=<YourEmailAPIProvider>"  -e "MAILER_PASSWORD=<YourAPIKey>" -e "BASE_URL=localhost" -p 80:80 tellform/development
-```
-
+Then see this page [here](https://tellform.com/install_docker) for commands on how to deploy your own local TellForm instance.
 
 ## Testing Your Application
 You can run the full test suite included with TellForm with the test task:
