@@ -151,8 +151,8 @@ module.exports = function(grunt) {
 			},
 			production: {
 				files: {
-					'public/dist/application.js': ['public/application.js', 'public/config.js', 'public/form_modules/**/*.js'],
-					'public/dist/form_application.js': ['public/form-application.js', 'public/form-config.js', 'public/form_modules/**/*.js']
+					'public/dist/application.js': '<%= applicationJavaScriptFiles %>',
+					'public/dist/form-application.js': '<%= formApplicationJavaScriptFiles %>'
 				}
 			}
 		},
@@ -329,7 +329,7 @@ module.exports = function(grunt) {
     grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
-	grunt.registerTask('default', ['lint', 'html2js:main', 'html2js:forms', 'env', 'concurrent:default']);
+	grunt.registerTask('default', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'html2js:main', 'html2js:forms', 'env', 'concurrent:default']);
 	grunt.registerTask('dev', ['lint', 'html2js:main',  'html2js:forms', 'env:dev', 'concurrent:default']);
 
 	// Debug task.
