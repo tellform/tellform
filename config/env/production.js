@@ -28,9 +28,9 @@ module.exports = {
 		domain: process.env.BASE_URL || '.tellform.com'
 	},
 	assets: {
-		bower_js: 'public/dist/vendor.min.js',
-		css: 'public/dist/application.min.css',
-		js: 'public/dist/application.min.js',
-		form_js: 'public/dist/form-application.min.js'
+		bower_js: ['public/dist/vendor.min.js'],
+		css: ['public/dist/application.min.css'],
+		js: ['public/dist/application.min.js', 'public/dist/populate_template_cache.js'],
+		form_js: ['public/dist/form-application.min.js', 'public/dist/form_populate_template_cache.js']
 	}
 };
