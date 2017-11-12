@@ -123,7 +123,7 @@ module.exports = function(grunt) {
 					compress: true
 				},
 				files: {
-					'public/dist/vendor.min.js': bowerArray
+					'public/dist/form-vendor.min.js': bowerArray
 				}
 			}
 		},
