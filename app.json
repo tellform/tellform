@@ -28,5 +28,10 @@
 			"description": "Which mail service/API you will be using (i.e. SparkPost, Mandrill, etc)",
 			"value": "SendGrid"
 		}
-	}
+	},
+	"buildpacks": [
+	    {
+	      "url": "https://github.com/heroku/heroku-buildpack-nodejs#v111"
+	    }
+	  ]
 }

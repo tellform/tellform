@@ -1,18 +1,11 @@
 'use strict';
 
 //TODO: DAVID: URGENT: Make this a $resource that fetches valid field types from server
-<<<<<<< HEAD
-angular.module('forms').service('FormFields', [ '$rootScope', '$translate', '$window',
-	function($rootScope, $translate, $window) {
-		console.log($window.user);
-		$translate.use($window.user.language);
-=======
 angular.module('forms').service('FormFields', [ '$rootScope', '$translate', 'Auth',
 	function($rootScope, $translate, Auth) {
 
 		var language = Auth.ensureHasCurrentUser().language;
 		$translate.use(language);
->>>>>>> 2.20
 
 		this.types = [
 		    {

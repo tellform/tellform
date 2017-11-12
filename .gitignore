@@ -1,14 +1,10 @@
 dist
 .vagrant
 npm-debug.*
-docs/Oscar_Credentials.md
 scripts/test_oscarhost.js
-scripts/oscarhost/private/
 coverage/
 e2e_coverage/
-uploads/
 app/e2e_tests/screeshots/*
-tmp
 
 # iOS / Apple
 # ===========
@@ -25,6 +21,7 @@ Oscar_Credentials.*
 npm-debug.log
 node_modules/
 public/lib/
+public/dist
 app/tests/coverage/
 .bower-*/
 .idea/
