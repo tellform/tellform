@@ -49,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOGIC_JUMP: 'Logischer Sprung',
 		SHOW_BUTTONS: 'Zusätzliche Schaltflächen',
 		SAVE_START_PAGE: 'Speichern',
+		ADD_OPTIONS_PLACEHOLDER: 'Fügen Sie eine Auswahl pro Zeile hinzu. Mindestens eine Wahl ist erforderlich.',
 
 		// Admin-Formularansicht
 		ARE_YOU_SURE: "Bist du ABSOLUT sicher?",

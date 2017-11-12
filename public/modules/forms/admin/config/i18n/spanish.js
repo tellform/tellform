@@ -49,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOGIC_JUMP: 'Salto lógico',
 		SHOW_BUTTONS: 'Botones adicionales',
 		SAVE_START_PAGE: 'Grabar',
+		ADD_OPTIONS_PLACEHOLDER: 'Agregue una opción por línea. Se requiere un mínimo de una opción',
 
 		//Admin Form View
 		ARE_YOU_SURE: '¿Estás absolutamente seguro?',
