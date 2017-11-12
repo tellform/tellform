@@ -20,14 +20,9 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 				state: fromState,
 				params: fromParams
 			}
-
-<<<<<<< HEAD
-			var statesToIgnore = ['home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
 			
-=======
 			var statesToIgnore = ['', 'home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
 
->>>>>>> 2.20
 			//Redirect to listForms if user is authenticated
 			if(statesToIgnore.indexOf(toState.name) > 0){
 				if(Auth.isAuthenticated()){
