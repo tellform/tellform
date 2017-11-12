@@ -21,7 +21,7 @@ Oscar_Credentials.*
 npm-debug.log
 node_modules/
 public/lib/
-public/dist
+public/dist/
 app/tests/coverage/
 .bower-*/
 .idea/

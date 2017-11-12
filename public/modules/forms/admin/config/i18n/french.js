@@ -49,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOGIC_JUMP: 'Saut logique',
 		SHOW_BUTTONS: 'Boutons supplémentaires',
 		SAVE_START_PAGE: "Enregistrer",
+		ADD_OPTIONS_PLACEHOLDER: "Ajouter un choix par ligne. Un minimum d'un choix est requis",
 
 		// Affichage du formulaire d'administration
 		ARE_YOU_SURE: 'Es-tu ABSOLUMENT sûr?',
