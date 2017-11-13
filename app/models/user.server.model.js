@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	path = require('path'),
-	querystring = require('querystring');
+	querystring = require('querystring'),
 	constants = require('../libs/constants');
 
 /**
