@@ -199,7 +199,12 @@ exports.getVisitorData = function(req, res) {
 	                            $divide : ["$total_time", "$responses"]
 	                        },
 	                        conversion_rate: {
-	                            $divide : ["$responses", "$visits"]
+	                            $multiply: [
+	                            	100,
+	                            	{ 
+	                            		$divide : ["$responses", "$visits"]
+	                            	}
+	                            ]
 	                        }
 	                    }
 	                }
@@ -250,7 +255,12 @@ exports.getVisitorData = function(req, res) {
 	                            $divide : ["$total_time", "$responses"]
 	                        },
 	                        conversion_rate: {
-	                            $divide : ["$responses", "$visits"]
+	                            $multiply: [
+	                            	100,
+	                            	{ 
+	                            		$divide : ["$responses", "$visits"]
+	                            	}
+	                            ]
 	                        }
 	                    }
 	                }

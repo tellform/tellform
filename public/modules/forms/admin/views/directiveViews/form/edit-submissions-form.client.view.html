@@ -1,5 +1,5 @@
 <div class="submissions-table row">
-	<div class="row text-center analytics">
+	<div class="row text-center analytics" ng-if="analyticsData">
 		<div class="col-xs-12 header-title">
 			<div class="col-xs-3">
 				{{ 'TOTAL_VIEWS' | translate }}
@@ -27,7 +27,7 @@
 			</div>
 
 			<div class="col-xs-3">
-				{{analyticsData.globalStatistics.conversion_rate | number:2}} 
+				{{analyticsData.globalStatistics.conversion_rate | number:2}}% 
 			</div>
 
 			<div class="col-xs-3">
@@ -204,39 +204,6 @@
 			</div>
 		</div>
 
-		<!--
-		<div class="col-xs-12 field-title-row">
-
-			<div class="col-xs-3">
-				<strong>{{ 'FIELD_TITLE' | translate }}</strong>
-			</div>
-			<div class="col-xs-3">
-				<strong>{{ 'FIELD_VIEWS' | translate }}</strong>
-			</div>
-			<div class="col-xs-3">
-				<strong>{{ 'FIELD_RESPONSES' | translate }}</strong>
-			</div>
-
-			<div class="col-xs-3">
-				<strong>{{ 'FIELD_DROPOFF' | translate }}</strong>
-			</div>
-		</div>
-
-		<div class="col-xs-12 field-detailed-row" ng-repeat="fieldStats in myform.analytics.fields">
-			<div class="col-xs-3">
-				{{fieldStats.field.title}}
-			</div>
-			<div class="col-xs-3">
-				{{fieldStats.totalViews}}
-			</div>
-			<div class="col-xs-3">
-				{{fieldStats.responses}}
-			</div>
-			<div class="col-xs-3">
-				{{fieldStats.continueRate}}%
-			</div>
-		</div>
-		-->
 	</div>
 
 
