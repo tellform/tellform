@@ -21,8 +21,8 @@
     "generate": "all-contributors generate",
     "start": "grunt",
     "test": "grunt test",
+    "postinstall": "bower install --config.interactive=false",
     "travis": "grunt test:travis",
-    "postinstall": "bower install --config.interactive=false; grunt build;",
     "init": "node scripts/setup.js"
   },
   "dependencies": {
@@ -58,7 +58,7 @@
     "main-bower-files": "~2.9.0",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
-    "mongoose": "~4.4.19",
+    "mongoose": "^4.13.0",
     "morgan": "~1.8.1",
     "nodemailer": "~4.0.0",
     "passport": "~0.3.0",
@@ -86,7 +86,6 @@
     "grunt-closure-compiler": "0.0.21",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-uglify": "^0.11.1",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-execute": "^0.2.2",
     "grunt-karma": "~0.12.1",

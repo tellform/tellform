@@ -22,7 +22,6 @@ module.exports = function (io, socket) {
 			var newVisitor = {
 				socketId: data.socketId,
 				referrer: data.referrer,
-				lastActiveField: data.lastActiveField,
 				timeElapsed: data.timeElapsed,
 				isSubmitted: data.isSubmitted,
 				language: data.language,
