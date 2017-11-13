@@ -49,6 +49,10 @@ function BaseFieldSchema(){
 	Schema.apply(this, arguments);
 
 	this.add({
+		newOptionSchema: {
+			type: Boolean,
+			default: false
+		},
 		globalId: {
 			type: String,
     	},
@@ -72,6 +76,7 @@ function BaseFieldSchema(){
 
 		ratingOptions: RatingFieldSchema,
 		fieldOptions: [FieldOptionSchema],
+
 		required: {
 			type: Boolean,
 			default: true
@@ -168,7 +173,6 @@ FormFieldSchema.pre('save', function(next) {
 	if(this.fieldType === 'dropdown' && this.isSubmission){
 		this.fieldValue = this.fieldValue.option_value;
 	}
-
 	return next();
 });
 

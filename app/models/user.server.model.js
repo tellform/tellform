@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	path = require('path'),
 	querystring = require('querystring');
+	constants = require('../libs/constants');
 
 /**
  * User Schema

@@ -22,6 +22,7 @@
     "start": "grunt",
     "test": "grunt test",
     "postinstall": "bower install --config.interactive=false",
+    "travis": "grunt test:travis",
     "init": "node scripts/setup.js"
   },
   "dependencies": {
