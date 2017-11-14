@@ -463,15 +463,20 @@ exports.list = function(req, res) {
 				});
 			}
 
-			const result_ids = results.map(function(result){ return result._id.id });
+			const result_ids = results.map(function(result){ return ''+result._id });
 			var currIndex = -1;
 
 			for(var i=0; i<forms.length; i++){
 				forms[i] = helpers.removeSensitiveModelData('private_form', forms[i]);
 
-				currIndex = result_ids.indexOf(forms[i]._id.id)
-
-				if(currIndex > -1){
+				currIndex = result_ids.indexOf(forms[i]._id+'')
+                console.log("forms[i]: ")
+                console.log(forms[i]);
+    
+                console.log(result_ids); 
+				
+                console.log("currIndex: "+currIndex);
+                if(currIndex > -1){
 					forms[i].submissionNum = results[currIndex].responses;
 				} else {
 					forms[i].submissionNum = 0;
