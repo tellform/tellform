@@ -14,6 +14,8 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 
+                console.log($scope.myform);
+
                 $scope.$evalAsync(function() {
                     angular.element('.tag')
                 });

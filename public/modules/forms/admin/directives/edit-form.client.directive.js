@@ -302,12 +302,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						newField.fieldValue = 0;
 					}
 
-					if(fieldType === 'dropdown' || fieldType === 'radio'){
-						newField.fieldOptions = [{
-							option_value: 'Option1'
-						}];
-					}
-
 					$scope.openEditModal(newField, false, $scope.myform.form_fields.length);
                 };
 

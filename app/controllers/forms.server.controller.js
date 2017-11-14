@@ -462,7 +462,7 @@ exports.formByID = function(req, res, next, id) {
 	}
 
 	Form.findById(id)
-		.select('admin title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
+		.select('admin title language form_fields startPage endPage hideFooter isLive design analytics.gaCode respondentNotifications selfNotifications')
 		.populate('admin')
 		.exec(function(err, form) {
 		if (err) {

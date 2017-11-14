@@ -1,5 +1,12 @@
 <div class="row">
     <div class="col-sm-offset-2 col-sm-10">
+
+        <div class="row field" ng-if="!formHasEmailField">
+            <strong>
+                {{ 'NO_EMAIL_FIELD_WARNING' | translate }}
+            </strong>
+        </div>
+
         <div class="row field">
             <div class="notification-row">
                 <i class="status-light status-light-on fa fa-circle" ng-if="myform.respondentNotifications.enabled"></i>
@@ -13,7 +20,10 @@
                 <input class="toggle-switch notification-toggle" type="checkbox" switch-size="small"
                     bs-switch ng-model="myform.respondentNotifications.enabled"
                     switch-on-text="{{ 'ON' | translate }}"
-                    switch-off-text="{{ 'OFF' | translate }}">
+                    switch-off-text="{{ 'OFF' | translate }}"
+                    ng-disabled="!formHasEmailField"
+                    ng-true-value="true"
+                    ng-false-value="false">
             </div>
         </div>
 
@@ -33,12 +43,6 @@
                     </ui-select-choices>
                 </ui-select>
             </div>
-        </div>
-
-        <div class="row field" ng-if="!formHasEmailField">
-            <strong>
-                {{ 'NO_EMAIL_FIELD_WARNING' | translate }}
-            </strong>
         </div>
 
         <div class="row field">
