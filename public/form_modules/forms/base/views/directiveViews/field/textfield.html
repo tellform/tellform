@@ -26,7 +26,6 @@
 			placeholder="{{placeholder}}"
 			ng-class="{ 'no-border': !!field.fieldValue }"
             class="focusOn text-field-input"
-            ng-focus="setActiveField(field._id, null, false)"
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
 			value="field.fieldValue"

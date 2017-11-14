@@ -168,7 +168,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
 
-
 					var nb_valid = $filter('formValidity')($scope.myform);
 					$scope.translateAdvancementData = {
 						done: nb_valid,
@@ -202,14 +201,18 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 	if(oldValue !== newValue && newValue < $scope.myform.form_fields.length){
         		        //Only send analytics data if form has not been submitted
 						if(!$scope.myform.submitted){
-							console.log('SendVisitorData.send()');
-							SendVisitorData.send($scope.myform, newValue, TimeCounter.getTimeElapsed());
+							//SendVisitorData.send($scope.myform, newValue, TimeCounter.getTimeElapsed());
 						}
                 	}
                 });
 
+                $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
+                	console.log($element);
+                	//$scope.setActiveField($element.prop('id'), null, false);
+                });
+
                 //Fire event when window is scrolled
-				$window.onscroll = function(){
+				/*$window.onscroll = function(){
                     if(!NOSCROLL){
 
 						var scrollTop = $(window).scrollTop();
@@ -230,6 +233,14 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 						var fractionToJump = 0.9;
 
+						console.log("fieldBottom < elemHeight * fractionToJump: "+fieldBottom + " < " + elemHeight * fractionToJump);
+
+						console.log("fieldTop > elemHeight * fractionToJump: "+fieldTop + " > " + elemHeight * fractionToJump);
+
+						console.log('fieldTop: '+fieldTop);
+						console.log('fieldBottom: '+fieldBottom);
+						console.log('scrollPosition: '+scrollPosition)
+
                     	//Focus on field above submit form button
                         if($scope.selected.index === $scope.myform.visible_form_fields.length){
                             if(scrollTop < scrollPosition){
@@ -237,15 +248,13 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                                 $scope.setActiveField(null, field_index, false);
                             }
                         }
-
                         //Focus on submit form button
                         else if($scope.selected.index === $scope.myform.visible_form_fields.length-1 && scrollTop > scrollPosition){
                             field_index = $scope.selected.index+1;
                             $scope.setActiveField(FORM_ACTION_ID, field_index, false);
                         }
-                        
                         //If we scrolled bellow the current field, move to next field
-                        else if(fieldBottom < elemHeight * fractionToJump && $scope.selected.index < $scope.myform.visible_form_fields.length-1 ){
+                        else if(fieldBottom < elemHeight * fractionToJump && $scope.selected.index < $scope.myform.visible_form_fields.length-1){
                             field_index = $scope.selected.index+1;
                             $scope.setActiveField(null, field_index, false);
                         } 
@@ -257,7 +266,9 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     }
 
                     $scope.$apply();
-        		};
+        		};*/
+
+
 
                 $rootScope.nextField = $scope.nextField = function(){
 					if($scope.selected && $scope.selected.index > -1){
@@ -281,7 +292,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						//If selected is not defined go to the first field
 						$rootScope.setActiveField(null, 0, true);
 					}
-	
                 };
 
                 $rootScope.prevField = $scope.prevField = function(){
