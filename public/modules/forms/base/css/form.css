@@ -34,6 +34,10 @@ form .btn {
     border-width: 0px;
 }
 
+.public-form input[type='radio'] {
+    display: none;
+}
+
 form .btn {
     border-color: grey;
 }

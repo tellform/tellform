@@ -197,7 +197,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                		$scope.updateFormValidity();
        	            $scope.$apply()
                 	if(!$scope.myform.submitted){
-						SendVisitorData.send($scope.myform, newValue, TimeCounter.getTimeElapsed());
+						SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
 					}
                 });
 

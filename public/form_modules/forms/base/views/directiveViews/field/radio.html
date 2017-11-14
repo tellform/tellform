@@ -30,8 +30,8 @@
                     type="radio" class="focusOn"
 				    value="{{option.option_value}}"
                     ng-model="field.fieldValue"
-                    ng-value="field.fieldValue"
                     ng-required="field.required"
+                    ng-click="$root.nextField()"
 					ng-change="$root.nextField()"/>
 
                 <span ng-bind="option.option_value"></span>
