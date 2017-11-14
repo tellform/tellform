@@ -47,10 +47,9 @@
 						<div class="col-md-5 col-sm-9">{{ 'SHAPE' | translate }}:</div>
 						<div class="col-md-7 col-sm-3">
 							<select style="width:100%" ng-model="field.ratingOptions.shape"
-									ng-value="field.ratingOptions.steps"
 									name="ratingOptions_shape{{field._id}}" required>
 								<option ng-repeat="shapeType in validShapes"
-										ng-value="shapeType">
+										value="{{shapeType}}">
 									{{select2FA[shapeType]}}
 								</option>
 							</select>
