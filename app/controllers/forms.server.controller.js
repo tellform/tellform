@@ -279,7 +279,6 @@ exports.getVisitorData = function(req, res) {
 	});
 };
 
-
 /**
  * Create a new form
  */
@@ -428,26 +427,59 @@ exports.list = function(req, res) {
 
 	Form.find(searchObj)
 		.sort('-created')
-		.select('title language admin submissions isLive')
-		.populate('admin.username', 'admin._id')
+		.select('title language isLive')
 		.lean()
 		.exec(function(err, forms) {
 		if (err) {
-			res.status(400).send({
+			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
+		}
+		
+		var form_ids = forms.map(function(form){
+			return form._id;
+		});
+
+		//Get number of submissions for each form
+		FormSubmission.aggregate([
+		     {
+		        $match: {
+		        	form: {
+		        		$in: form_ids
+		        	}
+		        }
+		    },
+            { 
+                $group: {
+                    _id: '$form',
+                    responses: { $sum: 1 }
+                }
+            },
+		], function(err, results){
+			if (err) {
+				console.error(err);
+				return res.status(500).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			}
+
+			const result_ids = results.map(function(result){ return result._id.id });
+			var currIndex = -1;
+
 			for(var i=0; i<forms.length; i++){
 				forms[i] = helpers.removeSensitiveModelData('private_form', forms[i]);
 
-				forms[i].numberOfResponses = 0;
-				if(forms[i].submissions){
-					forms[i].numberOfResponses = forms[i].submissions.length;
-					delete forms[i].submissions;
+				currIndex = result_ids.indexOf(forms[i]._id.id)
+
+				if(currIndex > -1){
+					forms[i].submissionNum = results[currIndex].responses;
+				} else {
+					forms[i].submissionNum = 0;
 				}
 			}
+
 			res.json(forms);
-		}
+		});
 	});
 };
 
