@@ -178,18 +178,18 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     if(animateScroll){
                         NOSCROLL=true;
                         setTimeout(function() {
-                            $document.scrollToElement(angular.element('.activeField'), -10, 200).then(function() {
+                            $document.scrollToElement(angular.element('#'+field_id), -10, 50).then(function() {
 								NOSCROLL = false;
 								setTimeout(function() {
-									if (document.querySelectorAll('.activeField .focusOn').length) {
+									if (document.querySelectorAll('#'+field_id+' .focusOn').length) {
 										//Handle default case
-										document.querySelectorAll('.activeField .focusOn')[0].focus();
-									} else if(document.querySelectorAll('.activeField input').length) {
+										document.querySelectorAll('#'+field_id+' .focusOn')[0].focus();
+									} else if(document.querySelectorAll('#'+field_id+' input').length) {
 										//Handle case for rating input
-										document.querySelectorAll('.activeField input')[0].focus();
+										document.querySelectorAll('#'+field_id+' input')[0].focus();
 									} else {
 										//Handle case for dropdown input
-										document.querySelectorAll('.activeField .selectize-input')[0].focus();
+										document.querySelectorAll('#'+field_id+'.selectize-input')[0].focus();
 									}
 								});
                             });
@@ -207,8 +207,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 });
 
                 $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
-                	console.log($element);
-                	//$scope.setActiveField($element.prop('id'), null, false);
+                	console.log($element.prop('id'));
+                	$scope.setActiveField($element.prop('id'), null, false);
+                	console.log($scope.selected.index);
+                	$scope.$apply();
                 });
 
                 //Fire event when window is scrolled
@@ -268,8 +270,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     $scope.$apply();
         		};*/
 
-
-
                 $rootScope.nextField = $scope.nextField = function(){
 					if($scope.selected && $scope.selected.index > -1){
 
@@ -284,9 +284,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 							} else {
 								$scope.setActiveField(FORM_ACTION_ID, null, true);
 							}
-						} else {
-							//If we are at the submit actions page, go to the first field
-							$rootScope.setActiveField(null, 0, true);
 						}
 					} else {
 						//If selected is not defined go to the first field
