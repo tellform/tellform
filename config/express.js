@@ -78,6 +78,7 @@ module.exports = function(db) {
 		app.locals.socketUrl = config.socketUrl;
 	} 
 
+	app.locals.bowerFormJSFiles = config.getBowerFormJSAssets();
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();
 	app.locals.bowerOtherFiles = config.getBowerOtherAssets();

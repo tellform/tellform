@@ -22,6 +22,7 @@
             <label class="btn col-md-5 col-xs-12"
 				   ng-class="{activeBtn: field.fieldValue == 'true'}">
                 <input class="focusOn"
+                    name="{{field.fieldType}}{{index}}"
                     ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" value="true"
                     ng-model="field.fieldValue"
@@ -36,6 +37,7 @@
             <label class="btn col-md-5 col-md-offset-1 col-xs-12"
 				   ng-class="{activeBtn: field.fieldValue == 'false'}">
                 <input class="focusOn"
+                    name="{{field.fieldType}}{{index}}"
 					ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
                     type="radio" value="false"
                     ng-model="field.fieldValue"

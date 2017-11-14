@@ -18,6 +18,7 @@
 			{{ 'ADD_NEW_LINE_INSTR' | translate }}
 		</small>
 		<textarea class="textarea focusOn" type="text"
+			name="{{field.fieldType}}{{index}}"
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
 			ng-class="{ 'no-border': !!field.fieldValue }"

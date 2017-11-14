@@ -19,7 +19,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 ispreview: '='
             },
             controller: function($document, $window, $scope){
-		        var NOSCROLL = false;
 		        var FORM_ACTION_ID = 'submit_field';
                 $scope.forms = {};
                 
@@ -32,12 +31,26 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 		            return field.fieldType !== 'statement';
 		        }).length;
 
-				var nb_valid = $filter('formValidity')($scope.myform);
-				$scope.translateAdvancementData = {
-					done: nb_valid,
-					total: form_fields_count,
-					answers_not_completed: form_fields_count - nb_valid
-				};
+				$scope.$watch('myform', function(oldVal, newVal){
+						$scope.myform.visible_form_fields = $scope.myform.form_fields.filter(function(field){
+							return !field.deletePreserved;
+						});
+						console.log($scope.myform.visible_form_fields);
+				})
+
+				$scope.updateFormValidity = function(){
+					$timeout(function(){
+						var nb_valid = $scope.myform.form_fields.filter(function(field){
+							return (field.fieldType === 'statement' || field.fieldValue !== '' || !field.required);
+						}).length;
+						$scope.translateAdvancementData = {
+							done: nb_valid,
+							total: $scope.myform.visible_form_fields.length
+						};
+					});
+				}
+
+				$scope.updateFormValidity();
 
                 $scope.reloadForm = function(){
                     //Reset Form
@@ -135,19 +148,14 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					return $scope.selected.index;
 				};
 
-				$scope.isActiveField = function(field){
-					if($scope.selected._id === field._id) {
-						return true
-					}
-					return false;
-				};
-
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index, animateScroll) {
                     if($scope.selected === null || (!field_id && field_index === null) )  {
                     	return;
                     }
 	    			
-	    			if(!field_id){
+	    			if(field_id === FORM_ACTION_ID){ 
+	    				field_index = $scope.myform.visible_form_fields.length;
+	    			} else if(!field_id) {
 	    				field_id = $scope.myform.visible_form_fields[field_index]._id;
 					} else if(field_index === null){
 						field_index = $scope.myform.visible_form_fields.length
@@ -168,107 +176,30 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
 
-					var nb_valid = $filter('formValidity')($scope.myform);
-					$scope.translateAdvancementData = {
-						done: nb_valid,
-						total: form_fields_count,
-						answers_not_completed: form_fields_count - nb_valid
-					};
-
                     if(animateScroll){
-                        NOSCROLL=true;
-                        setTimeout(function() {
-                            $document.scrollToElement(angular.element('#'+field_id), -10, 50).then(function() {
-								NOSCROLL = false;
-								setTimeout(function() {
-									if (document.querySelectorAll('#'+field_id+' .focusOn').length) {
-										//Handle default case
-										document.querySelectorAll('#'+field_id+' .focusOn')[0].focus();
-									} else if(document.querySelectorAll('#'+field_id+' input').length) {
-										//Handle case for rating input
-										document.querySelectorAll('#'+field_id+' input')[0].focus();
-									} else {
-										//Handle case for dropdown input
-										document.querySelectorAll('#'+field_id+'.selectize-input')[0].focus();
-									}
-								});
-                            });
+                        $document.scrollToElement(angular.element('#'+field_id), -10, 50).then(function() {
+							if (angular.element('#'+field_id+' .focusOn').length) {
+								//Handle default case
+								angular.element('#'+field_id+' .focusOn')[0].focus();
+							} else if(angular.element('#'+field_id+' input').length) {
+								//Handle case for rating input
+								angular.element('#'+field_id+' input')[0].focus();
+							} else {
+								//Handle case for dropdown input
+								angular.element('#'+field_id+'.selectize-input')[0].focus();
+							}
                         });
-                    }
+                    }                
                 };
 
-                $scope.$watch('selected.index', function(oldValue, newValue){
-                	if(oldValue !== newValue && newValue < $scope.myform.form_fields.length){
-        		        //Only send analytics data if form has not been submitted
-						if(!$scope.myform.submitted){
-							//SendVisitorData.send($scope.myform, newValue, TimeCounter.getTimeElapsed());
-						}
-                	}
-                });
-
                 $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
-                	console.log($element.prop('id'));
                 	$scope.setActiveField($element.prop('id'), null, false);
-                	console.log($scope.selected.index);
-                	$scope.$apply();
+               		$scope.updateFormValidity();
+       	            $scope.$apply()
+                	if(!$scope.myform.submitted){
+						SendVisitorData.send($scope.myform, newValue, TimeCounter.getTimeElapsed());
+					}
                 });
-
-                //Fire event when window is scrolled
-				/*$window.onscroll = function(){
-                    if(!NOSCROLL){
-
-						var scrollTop = $(window).scrollTop();
-						var elemBox = document.getElementsByClassName('activeField')[0].getBoundingClientRect();
-						var fieldTop = elemBox.top;
-						var fieldBottom = elemBox.bottom;
-
-						var field_id, field_index;
-						var elemHeight = $('.activeField').height();
-
-						var submitSectionHeight = $('.form-actions').height();
-						var maxScrollTop = $(document).height() - $(window).height();
-						var fieldWrapperHeight = $('form_fields').height();
-
-						var selector = 'form > .field-directive:nth-of-type(' + String($scope.myform.visible_form_fields.length - 1)+ ')'
-						var fieldDirectiveHeight = $(selector).height()
-						var scrollPosition = maxScrollTop - submitSectionHeight - fieldDirectiveHeight*1.2;
-
-						var fractionToJump = 0.9;
-
-						console.log("fieldBottom < elemHeight * fractionToJump: "+fieldBottom + " < " + elemHeight * fractionToJump);
-
-						console.log("fieldTop > elemHeight * fractionToJump: "+fieldTop + " > " + elemHeight * fractionToJump);
-
-						console.log('fieldTop: '+fieldTop);
-						console.log('fieldBottom: '+fieldBottom);
-						console.log('scrollPosition: '+scrollPosition)
-
-                    	//Focus on field above submit form button
-                        if($scope.selected.index === $scope.myform.visible_form_fields.length){
-                            if(scrollTop < scrollPosition){
-                                field_index = $scope.selected.index-1;
-                                $scope.setActiveField(null, field_index, false);
-                            }
-                        }
-                        //Focus on submit form button
-                        else if($scope.selected.index === $scope.myform.visible_form_fields.length-1 && scrollTop > scrollPosition){
-                            field_index = $scope.selected.index+1;
-                            $scope.setActiveField(FORM_ACTION_ID, field_index, false);
-                        }
-                        //If we scrolled bellow the current field, move to next field
-                        else if(fieldBottom < elemHeight * fractionToJump && $scope.selected.index < $scope.myform.visible_form_fields.length-1){
-                            field_index = $scope.selected.index+1;
-                            $scope.setActiveField(null, field_index, false);
-                        } 
-                        //If we scrolled above the current field, move to prev field
-                        else if ( $scope.selected.index !== 0 && fieldTop > elemHeight * fractionToJump) {
-                            field_index = $scope.selected.index-1;
-                            $scope.setActiveField(null, field_index, false);
-                        }
-                    }
-
-                    $scope.$apply();
-        		};*/
 
                 $rootScope.nextField = $scope.nextField = function(){
 					if($scope.selected && $scope.selected.index > -1){
@@ -287,7 +218,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						}
 					} else {
 						//If selected is not defined go to the first field
-						$rootScope.setActiveField(null, 0, true);
+						$scope.setActiveField(null, 0, true);
 					}
                 };
 
@@ -299,7 +230,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 };
 
                 $rootScope.goToInvalid = $scope.goToInvalid = function() {
-					var field_id = $('.row.field-directive .ng-invalid.focusOn, .row.field-directive .ng-untouched.focusOn:not(.ng-valid)').first().parents('.row.field-directive').first().attr('data-id');
+					var field_id = $('.ng-invalid, .ng-untouched').first().parents('.row.field-directive').first().attr('id');
 					$scope.setActiveField(field_id, null, true);
 				};
 

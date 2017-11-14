@@ -26,10 +26,11 @@
 					{{$index+1}}
 				</div>
 				<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
+					name="{{field.fieldType}}{{index}}"
                     type="radio" class="focusOn"
 				    value="{{option.option_value}}"
                     ng-model="field.fieldValue"
-                    ng-model-options="{ debounce: 250 }"
+                    ng-value="field.fieldValue"
                     ng-required="field.required"
 					ng-change="$root.nextField()"/>
 

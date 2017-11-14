@@ -97,7 +97,10 @@ function BaseFieldSchema(){
 			type: String,
 			enum: constants.fieldTypes
 		},
-		fieldValue: Schema.Types.Mixed
+		fieldValue: {
+			type: Schema.Types.Mixed,
+			default: ''
+		}
 	});
 
 	this.plugin(timeStampPlugin, {
@@ -132,18 +135,13 @@ FormFieldSchema.pre('validate', function(next) {
 			return(next(error));
 		}
 
-	}else{
+	} else {
 		//Setting default values for ratingOptions
-		if(!this.ratingOptions.steps){
+		if(!this.ratingOptions.steps) {
 			this.ratingOptions.steps = 10;
 		}
 		if(!this.ratingOptions.shape){
 			this.ratingOptions.shape = 'Star';
-		}
-
-		//Checking that the fieldValue is between 0 and ratingOptions.steps
-		if(this.fieldValue+0 > this.ratingOptions.steps || this.fieldValue+0 < 0){
-			this.fieldValue = 1;
 		}
 	}
 

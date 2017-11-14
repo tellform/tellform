@@ -26,6 +26,7 @@
             <label class="btn btn-default col-md-2 col-sm-3 col-xs-7"
 		style="background: rgba(0,0,0,0.1); text-align:left;">
                 <input type="radio" value="true"
+                	name="{{field.fieldType}}{{index}}"
 					class="focusOn"
                     style="opacity: 0; margin-left: 0px;"
 					ng-model="field.fieldValue"
@@ -45,6 +46,7 @@
 		        style="background: rgba(0,0,0,0.1); text-align:left;">
 
                 <input type="radio" value="false"
+               	 	name="{{field.fieldType}}{{index}}"
 			        style="opacity:0; margin-left:0px;"
 			        ng-model="field.fieldValue"
 			        ng-model-options="{ debounce: 250 }"

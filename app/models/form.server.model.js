@@ -254,9 +254,11 @@ function getDeletedIndexes(needle, haystack){
 }
 
 function formFieldsAllHaveIds(form_fields){
-	for(var i=0; i<form_fields.length; i++){
-		if(!form_fields[i].hasOwnProperty('_id') && !form_fields[i].hasOwnProperty('globalId')){
-			return false;
+	if(form_fields){
+		for(var i=0; i<form_fields.length; i++){
+			if(form_fields[i] && !form_fields[i].hasOwnProperty('_id') && !form_fields[i].hasOwnProperty('globalId')){
+				return false;
+			}
 		}
 	}
 	return true;

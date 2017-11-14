@@ -41,7 +41,7 @@
     <div class="row form-field-wrapper">
         <form name="forms.myForm" novalidate class="submission-form">
 
-            <div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved" data-index="{{$index}}" data-id="{{field._id}}" id="{{field._id}}" class="row field-directive" du-scrollspy="{{field._id}}">
+            <div ng-repeat="field in myform.form_fields" ng-if="!field.deletePreserved" id="{{field._id}}" class="row field-directive" du-scrollspy="{{field._id}}">
                 <field-directive field="field" design="myform.design" index="$index" forms="forms">
                 </field-directive>
             </div>
@@ -56,7 +56,6 @@
                 </div>
 
                 <button ng-if="!forms.myForm.$invalid" class="Button btn col-sm-2 col-xs-8 focusOn" v-busy="loading" v-busy-label="Please wait" v-pressable ng-disabled="loading || forms.myForm.$invalid" ng-click="submitForm()" on-enter-key-disabled="loading || forms.myForm.$invalid" ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}" style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
-
                     {{ 'SUBMIT' | translate }}
                 </button>
 

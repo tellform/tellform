@@ -79,13 +79,11 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
     //Socket.io Client Dependency
     script(src='/static/lib/socket.io-client/dist/socket.io.min.js')
 
-    //Minified Bower Dependencies
-    script(src='/static/lib/angular/angular.min.js')
-    script(src='/static/dist/vendor.min.js')
-    script(src='/static/lib/angular-ui-date/src/date.js', type='text/javascript')
+    //Bower JS dependencies
+    each bowerJSFile in bowerFormJSFiles
+      script(type='text/javascript', src=bowerJSFile)
+    // end Bower JS dependencies
 
-    script(src='/static/lib/jquery-ui/jquery-ui.js', type='text/javascript')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
 
     //Application JavaScript Files
     each jsFile in formJSFiles
@@ -96,7 +94,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
       //Livereload script rendered 
       script(async='', type='text/javascript', src='http://#{request.hostname}:35729/livereload.js')
 
-    script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
+    //script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
     
     if google_analytics_id
       script window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;ga('create','{{google_analytics_id}}','auto');ga('send','pageview')
