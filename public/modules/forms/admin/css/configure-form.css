@@ -1,0 +1,80 @@
+configure-form-directive .placeholder-tag {
+    background-color: #999;
+    border-radius: 3px 3px 3px 3px;
+    border: 0;
+    color: #FFFFFF;
+    font-style: inherit;
+    font-size: 11px;
+    padding: 4px 5px;
+    margin: 0 2px 2px 2px;
+    font-family: inherit;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer !important;
+    display: inline!important;
+    width: 100%;
+}
+
+configure-form-directive .tab-content {
+	padding-top: 0;
+}
+
+configure-form-directive .ui-select input.form-control {
+    height: 34px;
+    padding: 6px;
+}
+
+configure-form-directive .config-form .btn-secondary {
+    border-color: #DDDDDD;
+}
+
+configure-form-directive .notification-toggle.toggle-switch {
+    margin: 5px 0;
+}
+
+configure-form-directive .ql-picker.ql-placeholder {
+  width: 118px;
+}
+
+configure-form-directive .ql-picker.ql-placeholder > span.ql-picker-label:before {
+  content: attr(data-before);
+}
+
+configure-form-directive .ql-picker.ql-placeholder > span.ql-picker-options > span.ql-picker-item::before {
+  content: attr(data-label);
+}
+
+configure-form-directive .config-form .row.field {
+    padding-top:1.5em;
+}
+
+    configure-form-directive .config-form > .row > .container:nth-of-type(odd){
+        border-right: 1px #ddd solid;
+    }
+    configure-form-directive .config-form.design > .row > .container:nth-of-type(odd){
+        border-right: none;
+    }
+
+        configure-form-directive .config-form .row > .field-input {
+            padding-left:0.1em;
+        }
+            configure-form-directive .config-form .row > .field-input label {
+                padding-left:1.3em;
+                display: block;
+            }
+
+
+configure-form-directive .config-form {
+    max-width: 100%;
+}
+
+configure-form-directive .config-form > .row {
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
