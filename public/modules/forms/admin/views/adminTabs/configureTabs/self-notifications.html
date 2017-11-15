@@ -8,7 +8,7 @@
             </div>
 
             <div class='notification-row'>
-                <h5>{{ 'ENABLE_SELF_NOTIFICATIONS' | translate }}</h5>
+                <h4>{{ 'ENABLE_SELF_NOTIFICATIONS' | translate }}</h4>
             </div>
 
             <div class='notification-row'>
@@ -21,7 +21,7 @@
         
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'SEND_NOTIFICATION_TO' | translate }}</h5>
+                <h4>{{ 'SEND_NOTIFICATION_TO' | translate }}</h4>
             </div>
 
             <div class="col-sm-12 field-input">
@@ -34,7 +34,7 @@
 
         <div class="row field" ng-if="formHasEmailField">
             <div class="field-title col-sm-12">
-                <h5>{{ 'REPLY_TO' | translate }}</h5>
+                <h4>{{ 'REPLY_TO' | translate }}</h4>
             </div>
 
             <div class="col-sm-12 ui-select field-input">
@@ -52,21 +52,30 @@
 
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'EMAIL_SUBJECT' | translate }}</h5>
+                <h4>{{ 'EMAIL_SUBJECT' | translate }}</h4>
             </div>
 
             <div class="col-sm-12 field-input">
-                <!--
-                <text-angular class="email-subject" ng-model="myform.selfNotifications.subject" 
-                ta-toolbar="[['insertField']]" 
-                ta-unsafe-sanitizer="true" ta-default-wrap="n"></text-angular>
-                -->
+                <ng-quill-editor modules="customModules"
+                ng-model="myform.selfNotifications.subject">
+                    <ng-quill-toolbar>
+                        <div id="ng-quill-toolbar">
+                            <span class="ql-formats">
+                                <select class="ql-placeholder">
+                                    <option ng-repeat="placeholder in customModules.placeholder.placeholders" value="{{placeholder.id}}">
+                                        {{placeholder.label}}
+                                    </option>
+                                </select>
+                            </span>
+                        </div>
+                    </ng-quill-toolbar>
+                </ng-quill-editor>
             </div>
         </div>
 
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'EMAIL_MESSAGE' | translate }}</h5>
+                <h4>{{ 'EMAIL_MESSAGE' | translate }}</h4>
             </div>
 
             <div class="col-sm-12 field-input">
@@ -89,8 +98,6 @@
                     </ng-quill-toolbar>
                 </ng-quill-editor>
             </div>
-
-            <div ng-bind="myform.selfNotifications.htmlTemplate"></div>
         </div>
     </div>
 </div>

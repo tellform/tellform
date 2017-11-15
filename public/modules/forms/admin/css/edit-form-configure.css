@@ -15,8 +15,8 @@
   width: 118px;
 }
 
-.ql-picker.ql-placeholder > span.ql-picker-label::before {
-  content: 'Placeholders';
+.ql-picker.ql-placeholder > span.ql-picker-label:before {
+  content: attr(data-before);
 }
 
 .ql-picker.ql-placeholder > span.ql-picker-options > span.ql-picker-item::before {

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$rootScope', '$filter', '$state',
-    function ($rootScope, $filter, $state) {
+angular.module('forms').directive('configureFormDirective', ['$rootScope', '$filter', '$state', '$translate', '$timeout', '$window',
+    function ($rootScope, $filter, $state, $translate, $timeout, $window) {
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/configure-form.client.view.html',
             restrict: 'E',
@@ -24,7 +24,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                             };
                         }),
                         className: 'placeholder-tag',
-                        delimiters: ['', ''],  
+                        delimiters: ['', '']
                     }
                 };
 
@@ -66,6 +66,16 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                 setActiveTab();
 
                 $scope.$on("$stateChangeSuccess", setActiveTab());
+
+                $scope.$on('$viewContentLoaded', function ($evt, data) {
+                    console.log('hello');
+                    $timeout(function(){
+                        if(!$('.ql-picker.ql-placeholder > span.ql-picker-label').attr('data-before')){
+                            $('.ql-picker.ql-placeholder > span.ql-picker-label').attr('data-before', $translate.instant('ADD_VARIABLE_BUTTON'));
+                        }
+                    }, 500);
+                    console.log($('.ql-picker.ql-placeholder > span.ql-picker-label'));
+                });
             }
         };
     }
