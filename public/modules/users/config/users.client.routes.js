@@ -12,7 +12,6 @@ angular.module('users').config(['$stateProvider',
 	  	} else {
 	        User.getCurrent().then(
 				function(user) {
-					console.log(user);
 				  	Auth.login();
 					deferred.resolve(user);
 				},

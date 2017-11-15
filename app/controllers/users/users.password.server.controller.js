@@ -113,7 +113,6 @@ exports.forgot = function(req, res) {
 		}
 	], function(err, obfuscatedEmail) {
 		if (err) {
-			console.log(err);
 			return res.status(400).send({
 				message: 'Couldn\'t send reset password email due to internal server errors. Please contact support at team@tellform.com.'
 			});

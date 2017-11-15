@@ -68,13 +68,11 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                 $scope.$on("$stateChangeSuccess", setActiveTab());
 
                 $scope.$on('$viewContentLoaded', function ($evt, data) {
-                    console.log('hello');
                     $timeout(function(){
                         if(!$('.ql-picker.ql-placeholder > span.ql-picker-label').attr('data-before')){
                             $('.ql-picker.ql-placeholder > span.ql-picker-label').attr('data-before', $translate.instant('ADD_VARIABLE_BUTTON'));
                         }
                     }, 500);
-                    console.log($('.ql-picker.ql-placeholder > span.ql-picker-label'));
                 });
             }
         };

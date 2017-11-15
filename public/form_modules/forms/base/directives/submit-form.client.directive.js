@@ -29,8 +29,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						$scope.myform.visible_form_fields = $scope.myform.form_fields.filter(function(field){
 							return !field.deletePreserved;
 						});
-						console.log($scope.myform.visible_form_fields);
-				})
+				});
 
 				$scope.updateFormValidity = function(){
 					$timeout(function(){
