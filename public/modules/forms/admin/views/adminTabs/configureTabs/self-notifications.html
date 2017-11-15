@@ -70,10 +70,24 @@
             </div>
 
             <div class="col-sm-12 field-input">
-                <text-angular ng-model="myform.selfNotifications.htmlTemplate" 
-                ta-toolbar="[['bold','italics', 'insertField', 'insertImage']]"
-                ta-unsafe-sanitizer="true">
-                </text-angular>
+                <ng-quill-editor modules="customModules"
+                ng-model="myform.selfNotifications.htmlTemplate">
+                    <ng-quill-toolbar>
+                        <div id="ng-quill-toolbar">
+                            <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-placeholder">
+                                    <option ng-repeat="placeholder in customModules.placeholder.placeholders" value="{{placeholder.id}}">
+                                        {{placeholder.label}}
+                                    </option>
+                                </select>
+                            </span>
+                        </div>
+                    </ng-quill-toolbar>
+                </ng-quill-editor>
             </div>
 
             <div ng-bind="myform.selfNotifications.htmlTemplate"></div>

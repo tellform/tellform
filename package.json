@@ -54,6 +54,7 @@
     "helmet": "3.5.0",
     "i18n": "^0.8.3",
     "jit-grunt": "^0.9.1",
+    "jsdom": "^11.3.0",
     "lodash": "^4.17.4",
     "main-bower-files": "~2.9.0",
     "method-override": "~2.3.0",

@@ -14,6 +14,20 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 
+                Quill.register('modules/placeholder', PlaceholderModule.default(Quill))
+                $scope.customModules = {
+                    placeholder: {
+                        placeholders: $scope.myform.visible_form_fields.map(function(field){
+                            return {
+                                id: field.globalId,
+                                label: field.title
+                            };
+                        }),
+                        className: 'placeholder-tag',
+                        delimiters: ['', ''],  
+                    }
+                };
+
                 $scope.configureTabs = [
                     {
                         heading: $filter('translate')('GENERAL_TAB'),

@@ -1,9 +1,11 @@
 'use strict';
+const jsdom = require("jsdom");
+var JSDOM = jsdom.JSDOM;
 
 module.exports = {
-	send: function(emailSettings, emailTemplateVars, smtpTransport, varFormat, cb){
-		var parsedTemplate = this.parseTemplate(emailSettings.htmlTemplate, emailTemplateVars, varFormat);
-		var parsedSubject = this.parseTemplate(emailSettings.subject, emailTemplateVars, varFormat);
+	send: function(emailSettings, emailTemplateVars, smtpTransport, cb){
+		var parsedTemplate = this.parseTemplate(emailSettings.htmlTemplate, emailTemplateVars);
+		var parsedSubject = this.parseTemplate(emailSettings.subject, emailTemplateVars);
 		var mailOptions = {
 			replyTo: emailSettings.fromEmails,
 			from: 'noreply@tellform.com',
@@ -12,29 +14,40 @@ module.exports = {
 			html: parsedTemplate
 		};
 
-		smtpTransport.sendMail(mailOptions, function(){
-			cb();
+		smtpTransport.sendMail(mailOptions, function(err){
+			cb(err);
 		});
 	},
 
-	parseTemplate: function(emailTemplate, emailAttrs, varFormat){
-		var resolvedTemplate = emailTemplate;
-		var that = this;
-		Object.keys(emailAttrs).forEach(function (key) {
-		   resolvedTemplate = that.replaceTemplateVal(key, emailAttrs[key], resolvedTemplate, varFormat);
-		});
-		return resolvedTemplate;
-	},
+	parseTemplate: function(emailTemplate, emailTemplateVars){
+		var dom = new JSDOM('<!doctype html>'+emailTemplate);
+		debugger;
 
-	replaceTemplateVal: function(key, val, template, varFormat){
-		return template.replace( new RegExp(varFormat[0] + key + varFormat[1], 'g'), val);
+		Object.keys(emailTemplateVars).forEach(function (key) {
+			var elem = dom.window.document.querySelector("span.placeholder-tag[data-id='" + key + "']");
+			if(elem !== null){
+				elem.outerHTML = emailTemplateVars[key];
+			}
+		});
+
+		debugger;
+		//Removed unused variables
+		//TODO: Currently querySelectorAll not working in JSDOM
+		/*
+		dom.window.document.querySelectorAll("span[data-id]").forEach(function(elem){
+			if(elem !== null){
+				elem.outerHTML = '';
+			}
+		})
+		*/
+		return dom.serialize();
 	},
 
 	createFieldDict: function(form_fields){
 		var formFieldDict = {};
 		form_fields.forEach(function(field){
 			if(field.hasOwnProperty('globalId') && field.hasOwnProperty('fieldValue')){
-				formFieldDict[field.globalId] = field.fieldValue;
+				formFieldDict[field.globalId+''] = field.fieldValue+'';
 			}
 		});
 		return formFieldDict;

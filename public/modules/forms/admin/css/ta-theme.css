@@ -1,9 +1,4 @@
-.ta-editor > div.ta-bind p {
-	display: inline-block;
-	min-width: 1px;
-}
-
-.tag {
+.placeholder-tag {
     background-color: #999;
     border-radius: 3px 3px 3px 3px;
     border: 0;

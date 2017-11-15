@@ -10,3 +10,15 @@
 .notification-toggle.toggle-switch {
     margin: 5px 0;
 }
+
+.ql-picker.ql-placeholder {
+  width: 118px;
+}
+
+.ql-picker.ql-placeholder > span.ql-picker-label::before {
+  content: 'Placeholders';
+}
+
+.ql-picker.ql-placeholder > span.ql-picker-options > span.ql-picker-item::before {
+  content: attr(data-label);
+}
