@@ -320,12 +320,11 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
-							.success(function (data, status) {
+							.then(function (data, status) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send(form, getActiveField(), _timeElapsed);
-							})
-							.error(function (error) {
+							}, function (error) {
 								$scope.loading = false;
 								console.error(error);
 								$scope.error = error.message;

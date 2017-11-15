@@ -172,14 +172,13 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
-                        }).success(function(data, status){
+                        }).then(function(data, status){
                             $scope.deletionInProgress = true;
                             //Remove deleted ids from table
                             $scope.table.rows =  $scope.table.rows.filter(function(field){
                                 return !field.selected;
                             });
-                        })
-                        .error(function(err){
+                        }, function(err){
                             $scope.deletionInProgress = true;
                             console.error(err);
                         });

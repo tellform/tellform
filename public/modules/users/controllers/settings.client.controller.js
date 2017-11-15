@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth',
-	function($scope, $rootScope, $http, $state, Users, Auth) {
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth', 'currentUser',
+	function($scope, $rootScope, $http, $state, Users, Auth, currentUser) {
 
-		$scope.user = Auth.currentUser;
+		$scope.user = currentUser;
 
 		// Check if there are additional accounts
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
@@ -30,12 +30,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 				params: {
 					provider: provider
 				}
-			}).success(function(response) {
+			}).then(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
 				$scope.error = null;
 				$scope.user = response;
-			}).error(function(response) {
+			}, function(response) {
 				$scope.success = null;
 				$scope.error = response.message;
 			});
@@ -64,12 +64,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
 
-			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
+			$http.post('/users/password', $scope.passwordDetails).then(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
 				$scope.error = null;
 				$scope.passwordDetails = null;
-			}).error(function(response) {
+			}, function(response) {
 				$scope.success = null;
 				$scope.error = response.message;
 			});

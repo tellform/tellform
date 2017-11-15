@@ -6,10 +6,7 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		$rootScope.signupDisabled = $window.signupDisabled;
 
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
-
 	    $scope.authentication = $rootScope.authentication = Auth;
-
-		$rootScope.languages = $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
 
 		//Set global app language
 		$rootScope.language = $scope.user.language;

@@ -4,5 +4,5 @@
 ApplicationConfiguration.registerModule('forms', [
 	'ngFileUpload', 'ui.date', 'ui.sortable',
 	'angular-input-stars', 'users', 'ngclipboard', 'textAngular',
-	'frapontillo.bootstrap-switch'
+	'frapontillo.bootstrap-switch', 'ngQuill'
 ]);//, 'colorpicker.module' @TODO reactivate this module

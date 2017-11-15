@@ -74,11 +74,23 @@
             </div>
 
             <div class="col-sm-12 field-input">
+                <!--
                 <text-angular ng-model="myform.respondentNotifications.htmlTemplate" 
                 ta-toolbar="[['bold','italics', 'insertField']]" 
                 ta-unsafe-sanitizer="true"
                 ta-default-wrap='p'>
                 </text-angular>
+                -->
+                <ng-quill-editor ng-model="myform.respondentNotifications.htmlTemplate">
+                    <ng-quill-toolbar>
+                        <div>
+                            <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                            </span>
+                        </div>
+                    </ng-quill-toolbar>
+                </ng-quill-editor>
                 <div ng-bind="myform.respondentNotifications.htmlTemplate"></div>
             </div>
         </div>

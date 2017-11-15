@@ -74,9 +74,9 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             delete form._id;
 
             $http.post('/forms', {form: form})
-                .success(function(data, status, headers){
+                .then(function(data, status, headers){
                     $scope.myforms.splice(form_index+1, 0, data);
-                }).error(function(errorResponse){
+                }, function(errorResponse){
                     console.error(errorResponse);
                     if(errorResponse === null){
                         $scope.error = errorResponse.data.message;
@@ -93,10 +93,10 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
             if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
                 $http.post('/forms', {form: form})
-                .success(function(data, status, headers){
+                .then(function(data, status, headers){
                     // Redirect after save
                     $scope.goToWithId('viewForm.create', data._id+'');
-                }).error(function(errorResponse){
+                }, function(errorResponse){
                     console.error(errorResponse);
                     $scope.error = errorResponse.data.message;
                 });
@@ -109,10 +109,10 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             }
 
             $http.delete('/forms/'+$scope.myforms[form_index]._id)
-                .success(function(data, status, headers){
+                .then(function(data, status, headers){
                     $scope.myforms.splice(form_index, 1);
 					$scope.cancelDeleteModal();
-                }).error(function(error){
+                }, function(error){
                     console.error(error);
                 });
         };
