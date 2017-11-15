@@ -17,7 +17,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 						Auth.login(response);
 						$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
 
-						if(statesToIgnore.indexOf($state.previous.state.name) === -1) {
+						if($state.previous && statesToIgnore.indexOf($state.previous.state.name) === -1) {
 							$state.go($state.previous.state.name, $state.previous.params);
 						} else {
 							$state.go('listForms');

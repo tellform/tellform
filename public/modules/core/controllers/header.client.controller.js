@@ -39,12 +39,8 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		    var promise = User.logout();
 			promise.then(function() {
 				Auth.logout();
-				Auth.ensureHasCurrentUser(User);
 				$scope.user = $rootScope.user = null;
-				$state.go('listForms');
-
-				//Refresh view
-				$state.reload();
+				$state.go('signin', { reload: true });
 			},
 			function(reason) {
 			  	console.error('Logout Failed: ' + reason);
