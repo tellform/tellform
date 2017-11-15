@@ -112,30 +112,30 @@
 /*
 ** Edit Modal
 */
-.admin-form .edit-modal-window .modal-dialog {
+.edit-modal-window .modal-dialog {
 	width: 90%;
 }
 
-.admin-form .edit-modal-window .modal-body {
+.edit-modal-window .modal-body {
 	padding: 0;
 }
 
-.admin-form .edit-modal-window .edit-panel {
+.edit-modal-window .edit-panel {
 	background-color: #F1F1F1;
 	padding: 0 35px 0 35px;
 }
 
-.admin-form .edit-modal-window .preview-field-panel {
+.edit-modal-window .preview-field-panel {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-.admin-form .edit-modal-window .preview-field-panel form {
+.edit-modal-window .preview-field-panel form {
 	padding-right: 20px;
 }
 
-.admin-form .edit-modal-window .preview-field {
+.edit-modal-window .preview-field {
 	resize: vertical;
 }
 

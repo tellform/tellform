@@ -265,6 +265,14 @@ function formFieldsAllHaveIds(form_fields){
 }
 
 FormSchema.pre('save', function (next) {
+	this.form_fields = this.form_fields.filter(function(field){
+		return !field.deletePreserved;
+	});
+	next();
+});
+
+/*
+FormSchema.pre('save', function (next) {
 	var that = this;
 	var _original;
 
@@ -374,6 +382,7 @@ FormSchema.pre('save', function (next) {
 		next();
 	});
 });
+*/
 
 FormSchema.index({created: 1});
 
