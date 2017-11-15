@@ -3,9 +3,11 @@
 /**
  * Module dependencies.
  */
-const emailNotifications = require('../../libs/send-email-notifications'),
-	constants = require('../../libs/constants'),
-	mockTransport = require("nodemailer").createTransport("Stub"),
+const should = require('should'),
+	emailNotifications = require('../../libs/send-email-notifications'),
+	mockTransport = require('nodemailer').createTransport({
+            jsonTransport: true
+        }),
 	config = require('../../../config/config');
 
 /**
@@ -20,7 +22,7 @@ const validFormFields = [
 const validFieldDict = {
 	'56340745f59a6fc9e22028e9': 'John Smith',
 	'5c9e22028e907634f45f59a6': 'https://johnsmith.me',
-	'56e90745f5934fc9e22028a6': 45
+	'56e90745f5934fc9e22028a6': '45'
 };
 
 const invalidFormFields = [
@@ -29,13 +31,11 @@ const invalidFormFields = [
     {fieldType:'number', title:'Your Age'}
 ];
 
-const htmlTemplate = '<p><var class="tag" id="field:56340745f59a6fc9e22028e9">First Name</var> \
-	<br><var class="tag" id="field:5c9e22028e907634f45f59a6">Your Website</var> \
-	<br><var class="tag" id="field:56e90745f5934fc9e22028a6">Your Age</var></p>';
+const htmlTemplate = '<p><span class="placeholder-tag" data-id="56340745f59a6fc9e22028e9">First Name</span>'+
+	'<br><span class="placeholder-tag" data-id="5c9e22028e907634f45f59a6">Your Website</span>'+
+	'<br><span class="placeholder-tag" data-id="56e90745f5934fc9e22028a6">Your Age</span></p>';
 
-const renderedTemplate = '<p>John Smith \
-	<br>https://johnsmith.me \
-	<br>45</p>';
+const renderedTemplate = '<!DOCTYPE html><html><head></head><body><p>John Smith<br>https://johnsmith.me<br>45</p></body></html>';
 
 /**
  * Unit tests
@@ -56,19 +56,8 @@ describe('Send Email Notification Unit Tests', function() {
 
 	describe('Method parseTemplate', function(){
 		it('should properly render a template given a valid field dict', function() {
-			var actualRenderedTemplate = emailNotifications.parseTemplate(htmlTemplate, validFieldDict, constants.varFormat).replace((/  |\r\n|\n|\r|\t/gm),'');
+			var actualRenderedTemplate = emailNotifications.parseTemplate(htmlTemplate, validFieldDict, false).replace((/  |\r\n|\n|\r|\t/gm),'');
 			actualRenderedTemplate.should.equal(renderedTemplate.replace((/  |\r\n|\n|\r|\t/gm),''));
-		});
-	});
-
-	describe('Method replaceTemplateVal', function() {
-		it('should properly replace a template var in a valid template', function() {
-			var expectedHtml = '<p>John Smith \
-				<br><var class="tag" id="field:5c9e22028e907634f45f59a6">Your Website</var> \
-				<br><var class="tag" id="field:56e90745f5934fc9e22028a6">Your Age</var></p>';
-
-			var actualRenderedTemplate = emailNotifications.replaceTemplateVal('56340745f59a6fc9e22028e9', validFieldDict['56340745f59a6fc9e22028e9'], htmlTemplate, constants.varFormat).replace((/  |\r\n|\n|\r|\t/gm),'');
-			actualRenderedTemplate.should.equal(expectedHtml.replace((/  |\r\n|\n|\r|\t/gm),''));
 		});
 	});
 
@@ -77,15 +66,14 @@ describe('Send Email Notification Unit Tests', function() {
 		const emailSettings = {
 			fromEmails: 'somewhere@somewhere.com',
 			toEmails: 'there@there.com',
-			subject: 'Hello <var class="tag" id="field:56340745f59a6fc9e22028e9">First Name</var>!',
+			subject: 'Hello <span class="placeholder-tag" data-id="56340745f59a6fc9e22028e9">First Name</span>!',
 			htmlTemplate: htmlTemplate
 		};
 
 		const emailTemplateVars = validFieldDict;
-		const varFormat = constants.varFormat;
 
 		it('should properly replace a template var in a valid template', function(done) {
-			emailNotifications.send(emailSettings, emailTemplateVars, mockTransport, varFormat, function(err){
+			emailNotifications.send(emailSettings, emailTemplateVars, mockTransport, function(err){
 				should.not.exist(err);
 				done();
 			});
