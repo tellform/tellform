@@ -265,9 +265,11 @@ function formFieldsAllHaveIds(form_fields){
 }
 
 FormSchema.pre('save', function (next) {
-	this.form_fields = this.form_fields.filter(function(field){
-		return !field.deletePreserved;
-	});
+	if(this.form_fields && this.form_fields.length){
+		this.form_fields = this.form_fields.filter(function(field){
+			return !field.deletePreserved;
+		});
+	}
 	next();
 });
 
