@@ -122,10 +122,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								'Trash': 'Trash Can'
 							};
 
-							if($scope.field.fieldType === 'dropdown' || $scope.field.fieldType === 'radio'){
-								
-							}
-
 							$scope.saveField = function(){
 								if($scope.options.isEdit){
 									$scope.myform.form_fields[field_index] = $scope.field;
@@ -258,15 +254,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 
                 //Populate local scope with rootScope methods/variables
                 $scope.update = $rootScope.update;
-
-                /*
-                ** FormFields (ui-sortable) drag-and-drop configuration
-                */
-				$scope.dropzone = {
-					handle: '.handle',
-					containment: '.dropzoneContainer',
-					cursor: 'grabbing'
-				};
 
                 /*
                 **  Field CRUD Methods
