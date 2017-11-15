@@ -514,7 +514,7 @@ exports.formByID = function(req, res, next, id) {
 	}
 
 	Form.findById(id)
-		.select('admin title language form_fields startPage endPage hideFooter isLive design analytics.gaCode respondentNotifications selfNotifications')
+		.select('admin title language form_fields startPage endPage showFooter isLive design analytics.gaCode respondentNotifications selfNotifications')
 		.populate('admin')
 		.exec(function(err, form) {
 		if (err) {
@@ -543,7 +543,7 @@ exports.formByIDFast = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.lean()
-		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
+		.select('title language form_fields startPage endPage showFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);

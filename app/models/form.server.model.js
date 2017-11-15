@@ -192,9 +192,9 @@ var FormSchema = new Schema({
 		}
 	},
 
-	hideFooter: {
+	showFooter: {
 		type: Boolean,
-		default: false
+		default: true
 	},
 	
 	isLive: {
