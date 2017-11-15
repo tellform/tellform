@@ -143,7 +143,7 @@
 	visibility: visible !important;
 	border: none;
 	padding:1px;
-  background: #000;
+    background: #000;
 	background:rgba(0, 0, 0, 0.5) !important;
 }
 
@@ -168,11 +168,6 @@
 	margin-bottom: none;
 }
 
-/*Styles for admin view tabs */
-.admin-form .tab-content {
-    padding-top: 3em;
-}
-
 /*Styles for add fields tab*/
 .admin-form .add-field {
     background-color: #ddd;
@@ -187,10 +182,6 @@
             border-style: solid;
             border-color: #bbb;
             border-radius: 4px;
-        }
-
-        .admin-form .oscar-field-select {
-            margin: 10px 0 10px;
         }
 
 .view-form-btn {

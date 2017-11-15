@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms').directive('configureFormDirective', ['$rootScope', '$filter', '$state', '$translate', '$timeout', '$window',
-    function ($rootScope, $filter, $state, $translate, $timeout, $window) {
+angular.module('forms').directive('configureFormDirective', ['$rootScope', '$state', '$translate', '$timeout', '$window',
+    function ($rootScope, $state, $translate, $timeout, $window) {
         return {
             templateUrl: 'modules/forms/admin/views/directiveViews/form/configure-form.client.view.html',
             restrict: 'E',
@@ -28,29 +28,30 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                     }
                 };
 
-                $scope.configureTabs = [
-                    {
-                        heading: $filter('translate')('GENERAL_TAB'),
-                        route: 'viewForm.configure.general',
-                        active: false
-                    },
-                    {
-                        heading: $filter('translate')('SELF_NOTIFICATIONS_TAB'),
-                        route: 'viewForm.configure.self_notifications',
-                        active: false
-                    },
-                    {
-                        heading: $filter('translate')('RESPONDENT_NOTIFICATIONS_TAB'),
-                        route: 'viewForm.configure.respondent_notifications',
-                        active: false
-                    }
-                ];
-
                 $scope.emailFields = $scope.myform.form_fields.filter(function(field){
                     return field.fieldType === 'email';
                 });
 
                 $scope.formHasEmailField = ($scope.emailFields.length > 0);
+
+                /* Tab Routing Logic */
+                $scope.configureTabs = [
+                    {
+                        heading: $translate.instant('GENERAL_TAB'),
+                        route: 'viewForm.configure.general',
+                        active: false
+                    },
+                    {
+                        heading: $translate.instant('SELF_NOTIFICATIONS_TAB'),
+                        route: 'viewForm.configure.self_notifications',
+                        active: false
+                    },
+                    {
+                        heading: $translate.instant('RESPONDENT_NOTIFICATIONS_TAB'),
+                        route: 'viewForm.configure.respondent_notifications',
+                        active: false
+                    }
+                ];
 
                 $scope.go = function(tab){
                     tab.active = true;

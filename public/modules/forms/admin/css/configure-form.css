@@ -15,10 +15,6 @@ configure-form-directive .placeholder-tag {
     width: 100%;
 }
 
-configure-form-directive .tab-content {
-	padding-top: 0;
-}
-
 configure-form-directive .ui-select input.form-control {
     height: 34px;
     padding: 6px;
@@ -50,9 +46,6 @@ configure-form-directive .config-form .row.field {
 
     configure-form-directive .config-form > .row > .container:nth-of-type(odd){
         border-right: 1px #ddd solid;
-    }
-    configure-form-directive .config-form.design > .row > .container:nth-of-type(odd){
-        border-right: none;
     }
 
         configure-form-directive .config-form .row > .field-input {

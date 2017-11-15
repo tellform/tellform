@@ -53,7 +53,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             },
             {
                 heading: $filter('translate')('SHARE_TAB'),
-                route: 'viewForm.share',
+                route: 'viewForm.share.share_form',
                 active: false
             },
             {

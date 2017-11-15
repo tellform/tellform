@@ -84,13 +84,22 @@ angular.module('forms').config(['$stateProvider',
 			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/respondent-notifications.html'
 	    })
 
+	    .state('viewForm.share', {
+			abstract: true,
+			url: '/share',
+			templateUrl: 'modules/forms/admin/views/adminTabs/share.html'
+	    }).state('viewForm.share.share_form', {
+			url: '/share_form',
+			templateUrl: 'modules/forms/admin/views/adminTabs/shareTabs/share_form.html'
+	    }).state('viewForm.share.embed_form', {
+			url: '/embed_form',
+			templateUrl: 'modules/forms/admin/views/adminTabs/shareTabs/embed_form.html'
+	    })
+
 	    .state('viewForm.design', {
 			url: '/design',
 			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
-		}).state('viewForm.share', {
-			url: '/share',
-			templateUrl: 'modules/forms/admin/views/adminTabs/share.html'
-	    }).state('viewForm.analyze', {
+		}).state('viewForm.analyze', {
 			url: '/analyze',
 			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html'
 	    });
