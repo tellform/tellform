@@ -28,6 +28,12 @@ configure-form-directive .notification-toggle.toggle-switch {
     margin: 5px 0;
 }
 
+/* QuillJS Custom Theming */
+configure-form-directive .ql-editor {
+  background: white;
+  font-size: 18px;
+}
+
 configure-form-directive .ql-picker.ql-placeholder {
   width: 118px;
 }
