@@ -19,6 +19,25 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		$rootScope.hideNav = false;
 		$scope.menu = Menus.getMenu('topbar');
 
+        $rootScope.languages = ['en', 'fr', 'es', 'it', 'de'];
+
+        $rootScope.langCodeToWord = {
+            'en': 'English',
+            'fr': 'Français',
+            'es': 'Español',
+            'it': 'Italiàno',
+            'de': 'Deutsch'
+        };
+
+        $rootScope.wordToLangCode = {
+            'English': 'en',
+            'Français': 'fr',
+            'Español': 'es',
+            'Italiàno': 'it',
+            'Deutsch': 'de'
+        };
+                
+
 	    $scope.signout = function() {
 		    var promise = User.logout();
 			promise.then(function() {

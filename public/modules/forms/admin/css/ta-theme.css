@@ -1,0 +1,36 @@
+.ta-editor > div.ta-bind p {
+	display: inline-block;
+	min-width: 1px;
+}
+
+.tag {
+    background-color: #999;
+    border-radius: 3px 3px 3px 3px;
+    border: 0;
+    color: #FFFFFF;
+    font-style: inherit;
+    font-size: 11px;
+    padding: 4px 5px;
+    margin: 0 2px 2px 2px;
+    font-family: inherit;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer !important;
+    display: inline!important;
+    width: 100%;
+}
+
+.email-subject.ta-root .ta-editor.ta-html, .email-subject .ta-scroll-window.form-control {
+    min-height: 0;
+    overflow: hidden; 
+    height: auto;
+    border-radius: 4px;
+    box-shadow: none;
+    font-size: 18px;
+    padding-top: 10px;
+}
+
+.email-subject.ta-root .ta-scroll-window > .ta-bind {
+    min-height: 0;
+    outline: 0;
+}

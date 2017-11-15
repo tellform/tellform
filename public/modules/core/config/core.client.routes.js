@@ -35,7 +35,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 				event.preventDefault(); // stop current execution
 				$state.go('listForms'); // go to listForms page
 			}
-
 		});
 
 	}
@@ -45,6 +44,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', 'User', 'Authorizer', '$state', '$stateParams',
 	function($rootScope, Auth, User, Authorizer, $state, $stateParams) {
 		$rootScope.$on('$stateChangeStart', function(event, next) {
+			console.log('$stateChangeStart');
 			var authenticator, permissions, user;
 			permissions = next && next.data && next.data.permissions ? next.data.permissions : null;
 

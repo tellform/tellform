@@ -44,7 +44,8 @@
     "textAngular": "^1.5.16",
     "angular-ui-select": "^0.19.8",
     "angular-bootstrap-switch": "^0.5.2",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "ng-quill": "https://github.com/KillerCodeMonkey/ng-quill"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",

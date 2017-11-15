@@ -12,9 +12,7 @@ module.exports = {
 			html: parsedTemplate
 		};
 
-		console.log('HERE');
 		smtpTransport.sendMail(mailOptions, function(){
-			console.log('THERE');
 			cb();
 		});
 	},

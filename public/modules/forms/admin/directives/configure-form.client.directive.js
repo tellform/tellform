@@ -14,30 +14,6 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$fil
                 $scope.resetForm = $rootScope.resetForm;
                 $scope.update = $rootScope.update;
 
-                console.log($scope.myform);
-
-                $scope.$evalAsync(function() {
-                    angular.element('.tag')
-                });
-
-                $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
-
-                $scope.langCodeToWord = {
-                    'en': 'English',
-                    'fr': 'Français',
-                    'es': 'Español',
-                    'it': 'Italiàno',
-                    'de': 'Deutsch'
-                };
-
-                $scope.wordToLangCode = {
-                    'English': 'en',
-                    'Français': 'fr',
-                    'Español': 'es',
-                    'Italiàno': 'it',
-                    'Deutsch': 'de'
-                };
-                
                 $scope.configureTabs = [
                     {
                         heading: $filter('translate')('GENERAL_TAB'),

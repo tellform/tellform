@@ -1,4 +1,5 @@
 <header data-ng-include="'/static/modules/core/views/header.client.view.html'"></header>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css'>
 
 <section class="row" data-ng-controller="SettingsController">
 	<h2 class="col-xs-offset-1 col-xs-10 text-center">{{ 'EDIT_PROFILE' | translate }}</h2>
@@ -32,20 +33,23 @@
 				<div class="row">
 					<hr>
 				</div>
-				<div class="row form-group">
-				    <div class="col-xs-7 field-title">
-				    	{{ 'LANGUAGE_LABEL' | translate }}
-				    </div>
-				    <div class="col-xs-12 field-input">
-						<select ng-model="user.language" required>
-							<option ng-repeat="language in languages"
-									ng-selected="language == user.language"
-									value="{{language}}">
-								{{language}}
-							</option>
-				        </select>
-				    </div>
-				</div>
+				<div class="row field">
+		            <div class="col-sm-4 field-title">
+		            	<h4>{{ 'LANGUAGE' | translate }}</h4>
+		            </div>
+		            <div class="col-sm-8 field-input">
+		                <ui-select ng-model="user.language" search-enabled="false" theme="selectize">
+		                    <ui-select-match>
+		                        {{ $root.langCodeToWord[$select.selected] }}
+		                    </ui-select-match>
+		                    <ui-select-choices repeat="language in $root.languages">
+		                        <span ng-bind-html="$root.langCodeToWord[language] | highlight: $select.search">
+		                        </span>
+		                    </ui-select-choices>
+		                </select>
+		                <span class="required-error" ng-show="field.required && !field.fieldValue">* {{ 'REQUIRED_FIELD' | translate }}</span>
+		            </div>
+		        </div>
 
 				<div class="row form-group">
 					<div class="col-xs-7 field-title">

@@ -74,9 +74,10 @@
             </div>
 
             <div class="col-sm-12 field-input">
-                <text-angular class="email-subject" ng-model="myform.respondentNotifications.htmlTemplate" 
+                <text-angular ng-model="myform.respondentNotifications.htmlTemplate" 
                 ta-toolbar="[['bold','italics', 'insertField']]" 
-                ta-unsafe-sanitizer="true">
+                ta-unsafe-sanitizer="true"
+                ta-default-wrap='p'>
                 </text-angular>
                 <div ng-bind="myform.respondentNotifications.htmlTemplate"></div>
             </div>

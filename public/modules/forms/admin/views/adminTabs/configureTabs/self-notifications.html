@@ -56,8 +56,11 @@
             </div>
 
             <div class="col-sm-12 field-input">
-                <text-angular class="email-subject" ng-model="myform.selfNotifications.subject" ta-toolbar="[['insertField']]" 
+                <!--
+                <text-angular class="email-subject" ng-model="myform.selfNotifications.subject" 
+                ta-toolbar="[['insertField']]" 
                 ta-unsafe-sanitizer="true" ta-default-wrap="n"></text-angular>
+                -->
             </div>
         </div>
 
@@ -67,8 +70,13 @@
             </div>
 
             <div class="col-sm-12 field-input">
-                <text-angular ng-model="myform.selfNotifications.htmlTemplate" ta-toolbar="[['bold','italics', 'insertField']]" ta-unsafe-sanitizer="true"></text-angular>
+                <text-angular ng-model="myform.selfNotifications.htmlTemplate" 
+                ta-toolbar="[['bold','italics', 'insertField', 'insertImage']]"
+                ta-unsafe-sanitizer="true">
+                </text-angular>
             </div>
+
+            <div ng-bind="myform.selfNotifications.htmlTemplate"></div>
         </div>
     </div>
 </div>
