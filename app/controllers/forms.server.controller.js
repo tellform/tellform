@@ -200,13 +200,21 @@ exports.getVisitorData = function(req, res) {
 	                        responses: "$responses",
 	                        visits: "$visits",
 	                        average_time: {
-	                            $divide : ["$total_time", "$responses"]
+	                        	$cond: [ 
+                    				{ $eq: [ "$responses", 0 ] }, 
+                    				0, 
+                    				{ $divide: ["$total_time", "$responses"] } 
+                    			] 
 	                        },
 	                        conversion_rate: {
 	                            $multiply: [
 	                            	100,
 	                            	{ 
-	                            		$divide : ["$responses", "$visits"]
+                            			$cond: [ 
+                            				{ $eq: [ "$visits", 0 ] }, 
+                            				0, 
+                            				{ $divide: ["$responses", "$visits"] } 
+                            			] 
 	                            	}
 	                            ]
 	                        }
@@ -256,13 +264,21 @@ exports.getVisitorData = function(req, res) {
 	                        responses: "$responses",
 	                        visits: "$visits",
 	                        average_time: {
-	                            $divide : ["$total_time", "$responses"]
+	                            $cond: [ 
+                    				{ $eq: [ "$responses", 0 ] }, 
+                    				0, 
+                    				{ $divide: ["$total_time", "$responses"] } 
+                    			] 
 	                        },
 	                        conversion_rate: {
 	                            $multiply: [
 	                            	100,
 	                            	{ 
-	                            		$divide : ["$responses", "$visits"]
+	                            		$cond: [ 
+                            				{ $eq: [ "$visits", 0 ] }, 
+                            				0, 
+                            				{ $divide: ["$responses", "$visits"] } 
+                            			] 
 	                            	}
 	                            ]
 	                        }

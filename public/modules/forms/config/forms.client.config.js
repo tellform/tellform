@@ -55,38 +55,4 @@ angular.module('forms').run(['Menus',
         directive.replace = true;
         return $delegate;
     });
-}]).config(['$provide', function ($provide){
-    $provide.decorator('taOptions', ['$delegate', 'taRegisterTool', '$translate', '$window', 'taSelection', function(taOptions, taRegisterTool, $translate, $window, taSelection) {
-        taRegisterTool('insertField', {
-            display: '<div uib-dropdown is-open="isopen">\
-					<div class="btn btn-default" ng-disabled="isDisabled()" uib-dropdown-toggle>\
-						<span>{{ "ADD_VARIABLE_BUTTON" | translate }}</span>\
-						<b class="caret"></b>\
-					</div>\
-					<ul class="dropdown-menu" uib-dropdown-menu>\
-						<li ng-repeat="field in $root.myform.form_fields" ng-click="onClickField(field.globalId, field.title)">\
-							<a> {{field.title}} </a>\
-						</li>\
-					</ul>\
-				</div>',
-			class: 'btn-group',
-            onClickField: function(field_id, field_name){
-            	if (taSelection.getSelectionElement().tagName && (taSelection.getSelectionElement().tagName.toLowerCase() === 'var' || taSelection.getSelectionElement().tagName.toLowerCase() === 'a')) {
-                    // due to differences in implementation between FireFox and Chrome, we must move the
-                    // insertion point past the <a> element, otherwise FireFox inserts inside the <a>
-                    // With this change, both FireFox and Chrome behave the same way!
-                    taSelection.setSelectionAfterElement(taSelection.getSelectionElement());
-                }
-            	this.$editor().wrapSelection('insertHTML', ' <var class="tag field-' + field_id + '" contenteditable="false">' + field_name + '</var> ', true);
-            },
-            action: function(){
-            }
-        });
-
-        taOptions.defaultTagAttributes['var'] = {
-        	'contenteditable': 'false'
-        };
-
-		return taOptions;
-    }]);
 }]);

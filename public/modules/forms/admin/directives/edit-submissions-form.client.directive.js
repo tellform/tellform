@@ -24,9 +24,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
                 //Waits until deletionInProgress is false before running getSubmissions
                 $scope.$watch("deletionInProgress",function(newVal, oldVal){
-                    if(newVal === oldVal) return;
-
-                    if(newVal === false && $scope.waitingForDeletion) {
+                    if(newVal !== oldVal && newVal === false && $scope.waitingForDeletion) {
                         $scope.getSubmissions();
                         $scope.waitingForDeletion = false;
                     }
