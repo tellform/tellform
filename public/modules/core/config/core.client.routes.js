@@ -8,6 +8,9 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 	}
 ]);
 
+var statesWithoutAuth = ['signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
+var statesToIgnore = statesWithoutAuth.concat(['', 'home']);
+
 angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', '$state', '$stateParams',
 	function($rootScope, Auth, $state, $stateParams) {
 
@@ -21,10 +24,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 				params: fromParams
 			}
 			
-			var statesToIgnore = ['', 'home', 'signin', 'resendVerifyEmail', 'verify', 'signup', 'signup-success', 'forgot', 'reset-invalid', 'reset', 'reset-success'];
-
 			//Redirect to listForms if user is authenticated
-			if(statesToIgnore.indexOf(toState.name) > 0){
+			if(statesToIgnore.indexOf(toState.name) > -1){
 				if(Auth.isAuthenticated()){
 					event.preventDefault(); // stop current execution
 					$state.go('listForms'); // go to listForms page
@@ -35,7 +36,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 				event.preventDefault(); // stop current execution
 				$state.go('listForms'); // go to listForms page
 			}
-
 		});
 
 	}
@@ -44,22 +44,28 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 //Page access/authorization logic
 angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Auth', 'User', 'Authorizer', '$state', '$stateParams',
 	function($rootScope, Auth, User, Authorizer, $state, $stateParams) {
-		$rootScope.$on('$stateChangeStart', function(event, next) {
-			var authenticator, permissions, user;
-			permissions = next && next.data && next.data.permissions ? next.data.permissions : null;
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+			if(statesWithoutAuth.indexOf(toState.name) === -1){
+				Auth.ensureHasCurrentUser(User).then(
+					function onSuccess(currentUser){
+						if(currentUser){
+							var authenticator = new Authorizer(user);
+							var permissions = toState && toState.data && toState.data.permissions ? toState.data.permissions : null;
 
-			Auth.ensureHasCurrentUser(User);
-			user = Auth.currentUser;
-
-			if(user){
-				authenticator = new Authorizer(user);
-
-				if( (permissions !== null) ){
-					if( !authenticator.canAccess(permissions) ){
+							if( permissions !== null && !authenticator.canAccess(permissions) ){
+								event.preventDefault();
+								$state.go('access_denied');
+							}
+						}
+					}, 
+					function onError(error){
 						event.preventDefault();
 						$state.go('access_denied');
 					}
-				}
+				);
+			} else {
+				event.preventDefault();
+				$state.go('access_denied');
 			}
 		});
 	}]);

@@ -24,9 +24,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
 
                 //Waits until deletionInProgress is false before running getSubmissions
                 $scope.$watch("deletionInProgress",function(newVal, oldVal){
-                    if(newVal === oldVal) return;
-
-                    if(newVal === false && $scope.waitingForDeletion) {
+                    if(newVal !== oldVal && newVal === false && $scope.waitingForDeletion) {
                         $scope.getSubmissions();
                         $scope.waitingForDeletion = false;
                     }
@@ -80,7 +78,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         var data = response.data || [];
 
                         $scope.analyticsData = data[0];
-                        $scope.analyticsData.globalStatistics = $scope.analyticsData.globalStatistics[0];
+                        $scope.analyticsData.globalStatistics = formatGlobalStatistics($scope.analyticsData.globalStatistics);
                         $scope.analyticsData.deviceStatistics = formatDeviceStatistics($scope.analyticsData.deviceStatistics);
                     });
                 };
@@ -106,6 +104,19 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 /*
                 ** Analytics Functions
                 */
+                var formatGlobalStatistics = function(globalStatData){
+                    if(!globalStatData.length){
+                        return {
+                            visits: 0,
+                            responses: 0,
+                            conversion_rate: 0,
+                            average_time: 0
+                        };
+                    } 
+                    return globalStatData[0];
+                }
+                        
+
                 var formatDeviceStatistics = function(deviceStatData){
                     var newStatItem = function(){
                         return {
@@ -172,14 +183,13 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
-                        }).success(function(data, status){
+                        }).then(function(data, status){
                             $scope.deletionInProgress = true;
                             //Remove deleted ids from table
                             $scope.table.rows =  $scope.table.rows.filter(function(field){
                                 return !field.selected;
                             });
-                        })
-                        .error(function(err){
+                        }, function(err){
                             $scope.deletionInProgress = true;
                             console.error(err);
                         });

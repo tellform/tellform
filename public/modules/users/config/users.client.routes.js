@@ -4,26 +4,25 @@
 angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
 
-	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
-      var deferred = $q.defer();
-		
-      if (Auth.currentUser && Auth.currentUser.email) {
-        $timeout(deferred.resolve);
-      }
-      else {
-        Auth.currentUser = User.getCurrent(
-			function() {
-			  Auth.login();
-			  $timeout(deferred.resolve());
-			},
-			function() {
-			  Auth.logout();
-			  $timeout(deferred.reject());
-			  $state.go('signin', {reload: true});
-			});
-      }
+	var checkCurrentUser = function($q, $state, User, Auth) {
+	  	var deferred = $q.defer();
+			
+	  	if (Auth.currentUser && Auth.currentUser.email) {
+	    	deferred.resolve(Auth.currentUser);
+	  	} else {
+	        User.getCurrent().then(
+				function(user) {
+				  	Auth.login();
+					deferred.resolve(user);
+				},
+				function() {
+					Auth.logout();
+					deferred.reject();
+					$state.go('signin', {reload: true});
+				});
+      	}
 
-      return deferred.promise;
+      	return deferred.promise;
     };
 
 	var checkSignupDisabled = function($window, $timeout, $q) {
@@ -40,22 +39,24 @@ angular.module('users').config(['$stateProvider',
 	$stateProvider.
 		state('profile', {
 			resolve: {
-          		loggedin: checkLoggedin
+          		currentUser: ['$q', '$state', 'User', 'Auth', checkCurrentUser]
         	},
 			url: '/settings/profile',
-			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
+			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html',
+			controller: 'SettingsController'
 		}).
 		state('password', {
 			resolve: {
-	          	loggedin: checkLoggedin
-	        },
+          		currentUser: ['$q', '$state', 'User', 'Auth', checkCurrentUser]
+        	},
 			url: '/settings/password',
-			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
+			templateUrl: 'modules/users/views/settings/change-password.client.view.html',
+			controller: 'SettingsController'
 		}).
 		state('accounts', {
 			resolve: {
-	          	loggedin: checkLoggedin
-	        },
+          		currentUser: ['$q', '$state', 'User', 'Auth', checkCurrentUser]
+        	},
 			url: '/settings/accounts',
 			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
 		}).

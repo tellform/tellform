@@ -6,10 +6,7 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		$rootScope.signupDisabled = $window.signupDisabled;
 
 		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
-
 	    $scope.authentication = $rootScope.authentication = Auth;
-
-		$rootScope.languages = $scope.languages = ['en', 'fr', 'es', 'it', 'de'];
 
 		//Set global app language
 		$rootScope.language = $scope.user.language;
@@ -19,16 +16,31 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		$rootScope.hideNav = false;
 		$scope.menu = Menus.getMenu('topbar');
 
+        $rootScope.languages = ['en', 'fr', 'es', 'it', 'de'];
+
+        $rootScope.langCodeToWord = {
+            'en': 'English',
+            'fr': 'Français',
+            'es': 'Español',
+            'it': 'Italiàno',
+            'de': 'Deutsch'
+        };
+
+        $rootScope.wordToLangCode = {
+            'English': 'en',
+            'Français': 'fr',
+            'Español': 'es',
+            'Italiàno': 'it',
+            'Deutsch': 'de'
+        };
+                
+
 	    $scope.signout = function() {
 		    var promise = User.logout();
 			promise.then(function() {
 				Auth.logout();
-				Auth.ensureHasCurrentUser(User);
 				$scope.user = $rootScope.user = null;
-				$state.go('listForms');
-
-				//Refresh view
-				$state.reload();
+				$state.go('signin', { reload: true });
 			},
 			function(reason) {
 			  	console.error('Logout Failed: ' + reason);

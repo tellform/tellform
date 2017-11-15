@@ -31,7 +31,7 @@
             startPage: {
                 showStart: false
             },
-            hideFooter: false,
+            showFooter: false,
             isGenerated: false,
             isLive: false,
             autofillPDFs: false,

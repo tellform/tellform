@@ -176,6 +176,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 		});
 	});
 
+	/*
 	describe('Test FormField and Submission Logic', function() {
 
 		beforeEach(function(done){
@@ -245,6 +246,7 @@ describe('FormSubmission Model Unit Tests:', function() {
 			});
 		});
 	});
+	*/
 
 	afterEach(function(done) {
 		Form.remove().exec(function() {

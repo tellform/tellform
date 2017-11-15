@@ -192,9 +192,9 @@ var FormSchema = new Schema({
 		}
 	},
 
-	hideFooter: {
+	showFooter: {
 		type: Boolean,
-		default: false
+		default: true
 	},
 	
 	isLive: {
@@ -264,6 +264,16 @@ function formFieldsAllHaveIds(form_fields){
 	return true;
 }
 
+FormSchema.pre('save', function (next) {
+	if(this.form_fields && this.form_fields.length){
+		this.form_fields = this.form_fields.filter(function(field){
+			return !field.deletePreserved;
+		});
+	}
+	next();
+});
+
+/*
 FormSchema.pre('save', function (next) {
 	var that = this;
 	var _original;
@@ -374,6 +384,7 @@ FormSchema.pre('save', function (next) {
 		next();
 	});
 });
+*/
 
 FormSchema.index({created: 1});
 

@@ -81,10 +81,14 @@ exports.createSubmission = function(req, res) {
 
 		async.waterfall([
 		    function(callback) {
-		    	if (form.selfNotifications && form.selfNotifications.enabled && form.selfNotifications.fromField) {
-					form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField];
-
-					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+		    	if (form.selfNotifications && form.selfNotifications.enabled) {
+		    		if(form.selfNotifications.fromField){
+		    			form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField];
+		    		} else {
+		    			form.selfNotifications.fromEmails = config.mailer.options.from;
+		    		}
+					
+					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, function(err){
 						if(err){
 							return callback({
 								message: 'Failure sending submission self-notification email'
@@ -102,7 +106,7 @@ exports.createSubmission = function(req, res) {
 
 					form.respondentNotifications.toEmails = formFieldDict[form.respondentNotifications.toField];
 					debugger;
-					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, function(err){
 						if(err){
 							return callback({
 								message: 'Failure sending submission respondent-notification email'
@@ -196,13 +200,21 @@ exports.getVisitorData = function(req, res) {
 	                        responses: "$responses",
 	                        visits: "$visits",
 	                        average_time: {
-	                            $divide : ["$total_time", "$responses"]
+	                        	$cond: [ 
+                    				{ $eq: [ "$responses", 0 ] }, 
+                    				0, 
+                    				{ $divide: ["$total_time", "$responses"] } 
+                    			] 
 	                        },
 	                        conversion_rate: {
 	                            $multiply: [
 	                            	100,
 	                            	{ 
-	                            		$divide : ["$responses", "$visits"]
+                            			$cond: [ 
+                            				{ $eq: [ "$visits", 0 ] }, 
+                            				0, 
+                            				{ $divide: ["$responses", "$visits"] } 
+                            			] 
 	                            	}
 	                            ]
 	                        }
@@ -252,13 +264,21 @@ exports.getVisitorData = function(req, res) {
 	                        responses: "$responses",
 	                        visits: "$visits",
 	                        average_time: {
-	                            $divide : ["$total_time", "$responses"]
+	                            $cond: [ 
+                    				{ $eq: [ "$responses", 0 ] }, 
+                    				0, 
+                    				{ $divide: ["$total_time", "$responses"] } 
+                    			] 
 	                        },
 	                        conversion_rate: {
 	                            $multiply: [
 	                            	100,
 	                            	{ 
-	                            		$divide : ["$responses", "$visits"]
+	                            		$cond: [ 
+                            				{ $eq: [ "$visits", 0 ] }, 
+                            				0, 
+                            				{ $divide: ["$responses", "$visits"] } 
+                            			] 
 	                            	}
 	                            ]
 	                        }
@@ -499,7 +519,7 @@ exports.formByID = function(req, res, next, id) {
 	}
 
 	Form.findById(id)
-		.select('admin title language form_fields startPage endPage hideFooter isLive design analytics.gaCode respondentNotifications selfNotifications')
+		.select('admin title language form_fields startPage endPage showFooter isLive design analytics.gaCode respondentNotifications selfNotifications')
 		.populate('admin')
 		.exec(function(err, form) {
 		if (err) {
@@ -528,7 +548,7 @@ exports.formByIDFast = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.lean()
-		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
+		.select('title language form_fields startPage endPage showFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);

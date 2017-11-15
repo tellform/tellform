@@ -15,18 +15,12 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
             templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
             scope: {
-                myform:'=',
-                ispreview: '='
+                myform:'='
             },
             controller: function($document, $window, $scope){
 		        var FORM_ACTION_ID = 'submit_field';
                 $scope.forms = {};
                 
-				//Don't start timer if we are looking at a design preview
-                if($scope.ispreview){
-                    TimeCounter.restartClock();
-                }
-
 				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
 		            return field.fieldType !== 'statement';
 		        }).length;
@@ -35,8 +29,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 						$scope.myform.visible_form_fields = $scope.myform.form_fields.filter(function(field){
 							return !field.deletePreserved;
 						});
-						console.log($scope.myform.visible_form_fields);
-				})
+				});
 
 				$scope.updateFormValidity = function(){
 					$timeout(function(){
@@ -320,12 +313,11 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
 					setTimeout(function () {
 						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
-							.success(function (data, status) {
+							.then(function (data, status) {
 								$scope.myform.submitted = true;
 								$scope.loading = false;
 								SendVisitorData.send(form, getActiveField(), _timeElapsed);
-							})
-							.error(function (error) {
+							}, function (error) {
 								$scope.loading = false;
 								console.error(error);
 								$scope.error = error.message;

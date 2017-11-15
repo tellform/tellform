@@ -16,13 +16,11 @@
     "angular-mocks": "~1.4.7",
     "angular-bootstrap": "~0.14.3",
     "angular-ui-utils": "~3.0.0",
-    "angular-ui-router": "~0.2.11",
     "ng-file-upload": "^12.0.4",
     "angular-raven": "~0.5.11",
     "angular-ui-date": "~0.0.11",
     "lodash": "~3.10.0",
     "angular-ui-sortable": "~0.13.4",
-    "angular-permission": "~1.1.1",
     "file-saver.js": "~1.20150507.2",
     "angular-bootstrap-colorpicker": "~3.0.19",
     "angular-scroll": "^1.0.0",
@@ -41,21 +39,17 @@
     "socket.io-client": "^1.7.2",
     "css-toggle-switch": "^4.0.2",
     "angular-strap": "^2.3.12",
-    "textAngular": "^1.5.16",
     "angular-ui-select": "^0.19.8",
     "angular-bootstrap-switch": "^0.5.2",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "ng-quill": "https://github.com/KillerCodeMonkey/ng-quill",
+    "angular-ui-router": "^1.0.11",
+    "angular-permission": "^5.3.2"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
-    "angular": "1.4.14",
-    "jspdf": "~1.0.178",
-    "angular-sanitize": "1.4.14",
-    "angular-ui-sortable": "^0.17.1",
-    "angular-ui-date": "~0.0.11",
-    "angular-input-stars-directive": "master",
-    "angular-ui-select": "^0.19.8",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "angular-ui-router": "^1.0.11"
   },
   "overrides": {
     "BOWER-PACKAGE": {

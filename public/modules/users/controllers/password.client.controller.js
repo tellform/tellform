@@ -2,7 +2,6 @@
 
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User', '$translate', '$window',
 	function($scope, $stateParams, $state, User, $translate, $window) {
-		$translate.use($window.locale);
 
 		$scope.error = '';
 		$scope.forms = {};

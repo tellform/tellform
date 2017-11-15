@@ -186,7 +186,6 @@
 		</div>
 	</script>
 
-
 	<!-- Edit EndPage Modal Dialog Template -->
 	<script type="text/ng-template" id="editEndPageModal.html" class="edit-endpage-modal">
 		<div class="modal-body">
@@ -527,7 +526,7 @@
 
             <div class="panel-group dropzone col-xs-12" ui-sortable="sortableOptions" ng-model="myform.form_fields">
 
-            	<div class="col-xs-12 field-row" ng-repeat="field in myform.form_fields track by $id($index)" ng-if="!field.deletePreserved">
+            	<div class="col-xs-12 field-row" ng-repeat="field in myform.form_fields track by $index" ng-hide="field.deletePreserved">
 	            	<div class="col-xs-10">
 			            <div class="panel panel-default" ng-click="openEditModal(field, true, $index)">
 			                <div class="panel-heading">

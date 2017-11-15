@@ -29,7 +29,6 @@ angular.module('users').controller('VerifyController', ['$scope', '$state', '$ro
 		//Validate Verification Token
 		$scope.validateVerifyToken = function() {
 			if($stateParams.token){
-				console.log($stateParams.token);
 				User.validateVerifyToken($stateParams.token).then(
 					function(response){
 						$scope.success = response.message;
