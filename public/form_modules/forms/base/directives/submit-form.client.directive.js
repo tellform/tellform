@@ -15,18 +15,12 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
             templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
             scope: {
-                myform:'=',
-                ispreview: '='
+                myform:'='
             },
             controller: function($document, $window, $scope){
 		        var FORM_ACTION_ID = 'submit_field';
                 $scope.forms = {};
                 
-				//Don't start timer if we are looking at a design preview
-                if($scope.ispreview){
-                    TimeCounter.restartClock();
-                }
-
 				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
 		            return field.fieldType !== 'statement';
 		        }).length;
