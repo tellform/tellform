@@ -78,7 +78,7 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         var data = response.data || [];
 
                         $scope.analyticsData = data[0];
-                        $scope.analyticsData.globalStatistics = $scope.analyticsData.globalStatistics[0];
+                        $scope.analyticsData.globalStatistics = formatGlobalStatistics($scope.analyticsData.globalStatistics);
                         $scope.analyticsData.deviceStatistics = formatDeviceStatistics($scope.analyticsData.deviceStatistics);
                     });
                 };
@@ -104,6 +104,19 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                 /*
                 ** Analytics Functions
                 */
+                var formatGlobalStatistics = function(globalStatData){
+                    if(!globalStatData.length){
+                        return {
+                            visits: 0,
+                            responses: 0,
+                            conversion_rate: 0,
+                            average_time: 0
+                        };
+                    } 
+                    return globalStatData[0];
+                }
+                        
+
                 var formatDeviceStatistics = function(deviceStatData){
                     var newStatItem = function(){
                         return {
