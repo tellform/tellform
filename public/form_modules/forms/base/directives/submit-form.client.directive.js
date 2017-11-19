@@ -170,7 +170,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     $scope.selected.index = field_index;
 
                     if(animateScroll){
-                        $document.scrollToElement(angular.element('#'+field_id), -10, 50).then(function() {
+                        $document.scrollToElement(angular.element('#'+field_id), -10, 300).then(function() {
 							if (angular.element('#'+field_id+' .focusOn').length) {
 								//Handle default case
 								angular.element('#'+field_id+' .focusOn')[0].focus();
