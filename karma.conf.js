@@ -30,8 +30,10 @@ module.exports = function(config) {
 		    'public/modules/**/views/*.html': ['ng-html2js'],
 		    'public/form_modules/forms/base/views/**/*.html': ['ng-html2js'],
 		    'public/form_modules/forms/base/views/*.html': ['ng-html2js'],
-		    //'public/modules/*/*.js': ['coverage'],
-			//'public/modules/*/*[!tests]*/*.js': ['coverage']
+		    'public/modules/*/*.js': ['coverage'],
+			'public/modules/*/*[!tests]*/*.js': ['coverage'],
+			'public/form_modules/*/*.js': ['coverage'],
+			'public/form_modules/*/*[!tests]*/*.js': ['coverage']
 		},
 
 		// configure coverage reporter

@@ -27,12 +27,13 @@
             $provide.service('Auth', function() {
                 return {
                     ensureHasCurrentUser: function() {
-                        return sampleUser;
+                        return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
                     },
                     isAuthenticated: function() {
-                        return true;
-                    },
-                    getUserState: function() {
                         return true;
                     }
                 };
