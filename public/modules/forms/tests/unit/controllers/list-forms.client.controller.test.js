@@ -102,6 +102,7 @@
 
             $httpBackend.whenGET(/\.html$/).respond('');
             $httpBackend.whenGET('/users/me/').respond('');
+            $httpBackend.whenGET('/forms').respond(200, sampleFormList);
 
             // Initialize the Forms controller.
             createListFormsController = function(){
@@ -188,6 +189,5 @@
             $httpBackend.flush();
             $state.ensureAllTransitionsHappened();
         }));
-
     });
 }());

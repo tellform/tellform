@@ -44,7 +44,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 			});
 		};
 
-
 		$scope.cancelDeleteModal = function(){
 			if($scope.deleteModal){
 				$scope.deleteModal.dismiss('cancel');
@@ -75,8 +74,8 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             delete form._id;
 
             $http.post('/forms', {form: form})
-                .then(function(data, status, headers){
-                    $scope.myforms.splice(form_index+1, 0, data);
+                .then(function(resp_data, status, headers){
+                    $scope.myforms.splice(form_index+1, 0, resp_data.data);
                 }, function(errorResponse){
                     console.error(errorResponse);
                     if(errorResponse === null){
@@ -87,7 +86,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         // Create new Form
         $scope.createNewForm = function(){
-
             var form = {};
             form.title = $scope.forms.createForm.title.$modelValue;
             form.language = $scope.forms.createForm.language.$modelValue;

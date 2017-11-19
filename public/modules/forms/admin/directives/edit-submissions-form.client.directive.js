@@ -38,6 +38,50 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     }
                 };
 
+                /*
+                ** Analytics Functions
+                */
+                var formatGlobalStatistics = function(globalStatData){
+                    if(!globalStatData || !globalStatData.length){
+                        return {
+                            visits: 0,
+                            responses: 0,
+                            conversion_rate: 0,
+                            average_time: 0
+                        };
+                    }
+                    return globalStatData[0];
+                }
+                        
+                var formatDeviceStatistics = function(deviceStatData){
+                    var newStatItem = function(){
+                        return {
+                            visits: 0,
+                            responses: 0,
+                            conversion_rate: 0,
+                            average_time: 0,
+                            total_time: 0
+                        };
+                    };
+
+                    var stats = {
+                        desktop: newStatItem(),
+                        tablet: newStatItem(),
+                        phone: newStatItem(),
+                        other: newStatItem()
+                    };
+
+                    if(deviceStatData && deviceStatData.length){
+                        for(var i=0; i<deviceStatData.length; i++){
+                            var currDevice = deviceStatData[i];
+                            if(stats[currDevice._id]){
+                                stats[currDevice._id] = currDevice;
+                            }
+                        }
+                    }
+                    return stats;
+                };
+
                 $scope.getSubmissions = function(cb){
                     $http({
                       method: 'GET',
@@ -83,6 +127,10 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     });
                 };
 
+                //Initialize analytics data
+                $scope.analyticsData.globalStatistics = formatGlobalStatistics();
+                $scope.analyticsData.deviceStatistics = formatDeviceStatistics();
+
                 $scope.handleSubmissionsRefresh();
                 $scope.getVisitors();
 
@@ -100,51 +148,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         $interval.cancel($scope.updateVisitors);
                     }
                 });
-
-                /*
-                ** Analytics Functions
-                */
-                var formatGlobalStatistics = function(globalStatData){
-                    if(!globalStatData.length){
-                        return {
-                            visits: 0,
-                            responses: 0,
-                            conversion_rate: 0,
-                            average_time: 0
-                        };
-                    } 
-                    return globalStatData[0];
-                }
-                        
-
-                var formatDeviceStatistics = function(deviceStatData){
-                    var newStatItem = function(){
-                        return {
-                            visits: 0,
-                            responses: 0,
-                            conversion_rate: 0,
-                            average_time: 0,
-                            total_time: 0
-                        };
-                    };
-
-                    var stats = {
-                        desktop: newStatItem(),
-                        tablet: newStatItem(),
-                        phone: newStatItem(),
-                        other: newStatItem()
-                    };
-
-                    if(deviceStatData.length){
-                        for(var i=0; i<deviceStatData.length; i++){
-                            var currDevice = deviceStatData[i];
-                            if(stats[currDevice._id]){
-                                stats[currDevice._id] = currDevice;
-                            }
-                        }
-                    }
-                    return stats;
-                };
 
                 /*
                 ** Table Functions

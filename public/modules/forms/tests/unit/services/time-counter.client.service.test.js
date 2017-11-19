@@ -14,15 +14,15 @@
 		 }));
 
 
-        it('should be able to time 1 second interval as 1 second', function() {
+        it('should be able to time 1 second interval as 1 second', function(done) {
             var timeSpent = 0;
         	TimeCounter.restartClock();
 
             setTimeout(function(){
                 timeSpent = TimeCounter.stopClock();
-                expect(timeSpent).toEqual(1);
-            },1000);
-
+                expect(timeSpent).toBeGreaterThan(3);
+                done();
+            }, 3000);
         });
     });
 }());

@@ -33,7 +33,6 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
             'Italiàno': 'it',
             'Deutsch': 'de'
         };
-                
 
 	    $scope.signout = function() {
 		    var promise = User.logout();

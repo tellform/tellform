@@ -13,7 +13,6 @@
     "bootstrap": "^3.3.7",
     "angular-resource": "~1.4.7",
     "angular-cache-buster": "~0.4.3",
-    "angular-mocks": "~1.4.7",
     "angular-bootstrap": "~0.14.3",
     "angular-ui-utils": "~3.0.0",
     "ng-file-upload": "^12.0.4",
@@ -44,12 +43,17 @@
     "jquery": "^3.2.1",
     "ng-quill": "https://github.com/KillerCodeMonkey/ng-quill",
     "angular-ui-router": "^1.0.11",
-    "angular-permission": "^5.3.2"
+    "angular-permission": "^5.3.2",
+    "angular-mocks": "^1.6.6",
+    "quill": "https://github.com/quilljs/quill/releases/download/v1.3.4/quill.tar.gz"
   },
   "resolutions": {
     "angular-bootstrap": "^0.14.0",
     "jquery": "^3.2.1",
-    "angular-ui-router": "^1.0.11"
+    "angular-ui-router": "^1.0.11",
+    "angular": "1.6",
+    "angular-mocks": "^1.6.6",
+    "quill": "e-tag:792062a8d"
   },
   "overrides": {
     "BOWER-PACKAGE": {

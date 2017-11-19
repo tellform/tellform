@@ -62,6 +62,8 @@
 			// Point global variables to injected services
 			$httpBackend = _$httpBackend_;
 			User = _User_;
+
+			$httpBackend.whenGET('/forms').respond('');
  		}));
 
 		it('User.login() should send a POST request to /auth/signin', function() {

@@ -109,20 +109,22 @@
         }));
 
         beforeEach(inject(function($compile, $controller, $rootScope, _$httpBackend_) {
+            // Point global variables to injected services
+            $httpBackend = _$httpBackend_;
+
+            $httpBackend.whenGET('/users/me/').respond('');
+            $httpBackend.whenGET('/forms').respond(200, [sampleForm]);
+            $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
+
             //Instantiate directive.
             var tmp_scope = $rootScope.$new();
             tmp_scope.myform = _.cloneDeep(sampleForm);
+            tmp_scope.user = _.cloneDeep(sampleUser)
 
             //gotacha: Controller and link functions will execute.
             el = angular.element('<edit-form-directive myform=\'myform\'></edit-form-directive>');
             $compile(el)(tmp_scope);
             $rootScope.$digest();
-
-            // Point global variables to injected services
-            $httpBackend = _$httpBackend_;
-
-            //$httpBackend.whenGET(/.+\.html$/).respond('');
-            $httpBackend.whenGET('/users/me/').respond('');
 
             //Grab controller instance
             controller = el.controller();
@@ -130,19 +132,16 @@
             //Grab scope. Depends on type of scope.
             //See angular.element documentation.
             scope = el.isolateScope() || el.scope();
-
-			scope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
-				if(cb) cb();
-			};
-
+            scope.update = function(updateImmediately, data, isDiffed, refreshAfterUpdate, cb){
+                if(cb) cb();
+            };
         }));
 
         describe('> Form Field >',function(){
-
-        	beforeEach(function(){
-        		scope.myform = _.cloneDeep(sampleForm);
-        	});
-
+            beforeEach(function(){
+                scope.myform = _.cloneDeep(sampleForm);
+            })
+            
 	        it('$scope.addNewField() should open the new field modal', function() {
 
 	        	//Run controller methods
@@ -152,8 +151,9 @@
 	        });
 
 	        it('$scope.deleteField() should DELETE a field to $scope.myform.form_fields', function() {
-
 				spyOn(scope, 'update');
+
+                expect(scope.myform.form_fields).toEqualData(sampleForm.form_fields);
 
 				//Run controller methods
 	            scope.deleteField(0);

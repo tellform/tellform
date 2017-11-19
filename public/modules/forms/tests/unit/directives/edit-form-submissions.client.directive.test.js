@@ -141,8 +141,7 @@
 
 			sampleForm.submissions = sampleSubmissions;
             $httpBackend.whenGET('/users/me/').respond('');
-            $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
-			$httpBackend.whenGET('/forms').respond(200, sampleForm);
+			$httpBackend.whenGET('/forms').respond(200, [sampleForm]);
 			$httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
             $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})\/submissions$/).respond(200, sampleSubmissions);
             $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})\/visitors$/).respond(200, sampleVisitors);

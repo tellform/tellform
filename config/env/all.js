@@ -103,6 +103,7 @@ module.exports = {
 			'public/config.js',
             'public/application.js',
 			'public/dist/populate_template_cache.js',
+			'public/dist/populate_template_cache.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/*/*/*/*.js',
@@ -113,8 +114,6 @@ module.exports = {
 			'public/form_modules/forms/base/config/*/*.js',
 			'public/form_modules/forms/base/**/*.js',
 			'public/form_modules/forms/base/*/*.js',
-			'!public/modules/*/tests/**/*.js',
-			'!public/modules/*/tests/*.js'
 		],
 		form_js: [
 			'public/form-config.js',

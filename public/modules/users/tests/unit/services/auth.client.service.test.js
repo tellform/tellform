@@ -17,7 +17,6 @@
 			_id: 'ed873933b1f1dea0ce12fab9'
 		};
 
-
 		// The $resource service augments the response object with methods for updating and deleting the resource.
 		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
 		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
@@ -44,8 +43,9 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function(_Auth_) {
+		beforeEach(inject(function(_Auth_, $httpBackend) {
 			Auth = _Auth_;
+			$httpBackend.whenGET('/users/me').respond(200, sampleUser);
  		}));
 
 		it('Auth.login() should save user in Auth.currentUser', function() {
@@ -79,13 +79,11 @@
 		});
 
 		it('Auth.ensureHasCurrentUser() should fetch most current user if it exists in $window, currentUser or fetch it from /users/me', function() {
-			Auth.login(sampleUser);
-
 			//Run Service Logic to Test
-			var currUser = Auth.ensureHasCurrentUser(sampleUser);
-
-			expect(currUser).not.toEqual(null);
-			expect(currUser).toEqualData(sampleUser);
+			Auth.ensureHasCurrentUser().then(function onSuccess(currUser){
+				expect(currUser).not.toEqual(null);
+				expect(currUser).toEqualData(sampleUser);
+			});
 		});
 
 	});

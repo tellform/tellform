@@ -130,7 +130,7 @@ var MobileDetect = function(userAgentStr){
             // Point global variables to injected services
             $httpBackend = _$httpBackend_;
             $httpBackend.whenGET('/users/me/').respond('');
-
+            $httpBackend.whenGET('/forms').respond('');
 
             //Instantiate directive.
             var tmp_scope = $rootScope.$new();
