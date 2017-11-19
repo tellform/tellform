@@ -6,7 +6,7 @@ angular.module('core').config(['$translateProvider', function ($translateProvide
 		MENU: 'MENU',
 		SIGNUP_TAB: 'Créer un Compte',
 		SIGNIN_TAB: 'Connexion',
-		SIGNOUT_TAB: 'Créer un compte',
+		SIGNOUT_TAB: 'Déconnexion',
 		EDIT_PROFILE: 'Modifier Mon Profil',
 		MY_SETTINGS: 'Mes Paramètres',
 		CHANGE_PASSWORD: 'Changer mon Mot de Pass',

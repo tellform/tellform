@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth', 'currentUser', 'USERS_URL',
-	function($scope, $rootScope, $http, $state, Users, Auth, currentUser, USERS_URL) {
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth', 'currentUser', 'USERS_URL', '$translate',
+	function($scope, $rootScope, $http, $state, Users, Auth, currentUser, USERS_URL, $translate) {
 
 		$scope.user = currentUser;
 
@@ -18,6 +18,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 					$scope.success = true;
 					$scope.error = null;
 					$scope.user = response.data;
+
+					$translate.use($scope.user.language);
+					Auth.update($scope.user);
 				}, function(error) {
 					$scope.success = null;
 					$scope.error = 'Could not update your profile due to an error with the server. Sorry about this!'

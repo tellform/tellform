@@ -56,6 +56,10 @@ angular.module('users').factory('Auth', ['$window', '$q', 'User',
         this._currentUser = new_user;
       },
 
+      update: function(new_user) {
+        this._currentUser = new_user;
+      },
+
       logout: function() {
         $window.user = null;
         userState.isLoggedIn = false;
