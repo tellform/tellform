@@ -53,13 +53,6 @@ angular.module('users').config(['$stateProvider',
 			templateUrl: 'modules/users/views/settings/change-password.client.view.html',
 			controller: 'SettingsController'
 		}).
-		state('accounts', {
-			resolve: {
-          		currentUser: ['$q', '$state', 'User', 'Auth', checkCurrentUser]
-        	},
-			url: '/settings/accounts',
-			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
-		}).
 		state('signup', {
 			resolve: {
 				isDisabled: checkSignupDisabled

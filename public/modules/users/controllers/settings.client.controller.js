@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth', 'currentUser',
-	function($scope, $rootScope, $http, $state, Users, Auth, currentUser) {
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth', 'currentUser', 'USERS_URL',
+	function($scope, $rootScope, $http, $state, Users, Auth, currentUser, USERS_URL) {
 
 		$scope.user = currentUser;
 
@@ -11,17 +11,16 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 
 		// Update a user profile
 		$scope.updateUserProfile = function(isValid) {
-			if (isValid) {
+			if (isValid && $scope.user) {
 				$scope.success = $scope.error = null;
-				var user = new Users($scope.user);
 
-				user.$update(function(response) {
+				$http.put(USERS_URL, $scope.user).then(function(response){ 
 					$scope.success = true;
 					$scope.error = null;
-					$scope.user = response;
-				}, function(response) {
+					$scope.user = response.data;
+				}, function(error) {
 					$scope.success = null;
-					$scope.error = response.data.message;
+					$scope.error = 'Could not update your profile due to an error with the server. Sorry about this!'
 				});
 			}
 		};
@@ -35,9 +34,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 				$scope.success = true;
 				$scope.error = null;
 				$scope.passwordDetails = null;
-			}, function(response) {
+			}, function(errResponse) {
 				$scope.success = null;
-				$scope.error = response.message;
+				$scope.error = errResponse.message;
 			});
 		};
 

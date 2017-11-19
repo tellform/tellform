@@ -25,14 +25,15 @@ angular.module('users').factory('Auth', ['$window', '$q', 'User',
           this._currentUser = $window.user;
           deferred.resolve(this._currentUser)
         } else {
+          var that = this;
           User.getCurrent().then(function(fetchedUser) {
-            this._currentUser = fetchedUser;
+            that._currentUser = fetchedUser;
             $window.user = fetchedUser;
             userState.isLoggedIn = true;
             deferred.resolve(fetchedUser);
           },
           function(response) {
-            this._currentUser = null;
+            that._currentUser = null;
             $window.user = null;
             userState.isLoggedIn = false;
             deferred.reject('User data could not be fetched from server');

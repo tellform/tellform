@@ -103,11 +103,12 @@ module.exports = {
 			'public/config.js',
             'public/application.js',
 			'public/dist/populate_template_cache.js',
-			'public/dist/populate_template_cache.js',
+			'public/dist/form_populate_template_cache.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/*/*/*/*.js',
 			'public/modules/*/*/*/*/*.js',
+			'!public/modules/*/tests/**/*.js',
 			'public/form_modules/forms/*.js',
 			'public/form_modules/forms/directives/*.js',
 			'public/form_modules/forms/base/config/*.js',
@@ -122,8 +123,7 @@ module.exports = {
 			'public/form_modules/forms/*.js',
 			'public/form_modules/forms/*/*.js',
 			'public/form_modules/forms/*/*/*.js',
-			'public/form_modules/forms/*/*/*/*.js',
-			'public/form_modules/forms/**.js',
+			'public/form_modules/forms/**/*.js',
 			'!public/form_modules/**/tests/**/*.js'
 		],
 		views: [
