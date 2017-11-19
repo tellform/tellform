@@ -165,7 +165,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 					if($scope.selected._id === field_id){
 						return;
 		    		}
-
+		    		
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
 
