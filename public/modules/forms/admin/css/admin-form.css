@@ -74,7 +74,7 @@
 	position: relative;
 	min-height: 1px;
 	float:left;
-	padding-top: 0!important;
+	padding-top: 0;
 }
 
 .admin-form .panel-default.startPage {

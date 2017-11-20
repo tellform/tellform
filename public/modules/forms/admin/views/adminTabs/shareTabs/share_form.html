@@ -1,11 +1,15 @@
-<div class="row">
+<div class="row share-row">
 	<div class="col-sm-12">
 		{{ 'TELLFORM_URL' | translate }}
 	</div>
-	<div class="col-sm-8 form-input">
-		<span ngclipboard data-clipboard-target="#copyURL"> <input id="copyURL" ng-value="actualFormURL" class="form-control ng-pristine ng-untouched ng-valid"> </span>
+</div>
+<div class="row">
+	<div class="col-sm-10 form-input">
+		<span ngclipboard data-clipboard-target="#copyURL"> 
+			<input id="copyURL" ng-value="actualFormURL" class="form-control ng-pristine ng-untouched ng-valid"> 
+		</span>
 	</div>
-	<div class="col-sm-4">
+	<div class="col-sm-2">
 		<button class="btn btn btn-secondary view-form-btn" ngclipboard data-clipboard-target="#copyURL">
 			{{ 'COPY' | translate }} <i class="fa fa-clipboard" aria-hidden="true"></i>
 		</button>

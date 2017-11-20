@@ -6,8 +6,8 @@ share-form-directive #copyEmbedded {
 	padding: 18px;
 }
 
-share-form-directive .tab-content {
-	padding-top: 50px;
+share-form-directive .share-row {
+    padding-top: 2.5em;
 }
 
 share-form-directive .config-form {
