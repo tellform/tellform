@@ -1,8 +1,8 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'GetForms', 'CurrentForm', '$http', '$uibModal', 'myForms','$window',
-	function($rootScope, $scope, $stateParams, $state, GetForms, CurrentForm, $http, $uibModal, myForms, $window) {
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'GetForms', 'CurrentForm', '$http', '$uibModal', 'myForms', '$window', '$location',
+	function($rootScope, $scope, $stateParams, $state, GetForms, CurrentForm, $http, $uibModal, myForms, $window, $location) {
 
         $scope = $rootScope;
         $scope.forms = {};
@@ -65,9 +65,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.setForm = function (form) {
             $scope.myform = form;
         };
-        $scope.goToWithId = function(route, id) {
-            $state.go(route, {'formId': id}, {reload: true});
-        };
 
         $scope.duplicateForm = function(form_index){
             var form = _.cloneDeep($scope.myforms[form_index]);
@@ -92,13 +89,13 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
             if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
                 $http.post('/forms', {form: form})
-                .then(function(data, status, headers){
-                    // Redirect after save
-                    $scope.goToWithId('viewForm.create', data._id+'');
-                }, function(errorResponse){
-                    console.error(errorResponse);
-                    $scope.error = errorResponse.data.message;
-                });
+                    .then(function(response, status, headers){
+                        // Redirect after save
+                        $state.go('viewForm.create', {formId: response.data.id}, {reload: true});
+                    }, function(errorResponse){
+                        console.error(errorResponse);
+                        $scope.error = errorResponse.data.message;
+                    });
             }
         };
 
