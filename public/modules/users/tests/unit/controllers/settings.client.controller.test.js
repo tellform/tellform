@@ -18,7 +18,8 @@
 			password: 'password',
 			provider: 'local',
 			roles: ['user'],
-			_id: 'ed873933b1f1dea0ce12fab9'
+			_id: 'ed873933b1f1dea0ce12fab9',
+			language: 'en'
 		};
 
 		var sampleForm = {
@@ -82,7 +83,7 @@
 			$http = _$http_;
 
 			$httpBackend.whenGET('/forms').respond('');
-			$httpBackend.whenGET('/users/me/').respond('');
+			$httpBackend.whenGET('/users/me/').respond(sampleUser);
 
 			// Initialize the Forms controller.
 		    ctrl = $controller('SettingsController', {
@@ -91,7 +92,7 @@
  		}));
 
  		var thenFunction = function(onFulfilled, onRejected, progressBack){ 
-			onFulfilled(sampleForm) 
+			onFulfilled({ data: sampleUser }) 
 		};
 
 		it('$scope.updateUserProfile should update my user profile if isValid is TRUE', inject(function($http) {
