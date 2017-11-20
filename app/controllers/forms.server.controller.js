@@ -489,13 +489,7 @@ exports.list = function(req, res) {
 			for(var i=0; i<forms.length; i++){
 				forms[i] = helpers.removeSensitiveModelData('private_form', forms[i]);
 
-				currIndex = result_ids.indexOf(forms[i]._id+'')
-                console.log("forms[i]: ")
-                console.log(forms[i]);
-    
-                console.log(result_ids); 
-				
-                console.log("currIndex: "+currIndex);
+				currIndex = result_ids.indexOf(forms[i]._id)
                 if(currIndex > -1){
 					forms[i].submissionNum = results[currIndex].responses;
 				} else {

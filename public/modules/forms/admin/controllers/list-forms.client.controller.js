@@ -69,10 +69,15 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.duplicateForm = function(form_index){
             var form = _.cloneDeep($scope.myforms[form_index]);
             delete form._id;
+            delete form.id;
+
+            form.title += ' copy';
 
             $http.post('/forms', {form: form})
                 .then(function(resp_data, status, headers){
-                    $scope.myforms.splice(form_index+1, 0, resp_data.data);
+                    var result_form = resp_data.data;
+                    result_form.submissionNum = 0;
+                    $scope.myforms.splice(form_index+1, 0, result_form);
                 }, function(errorResponse){
                     console.error(errorResponse);
                     if(errorResponse === null){
