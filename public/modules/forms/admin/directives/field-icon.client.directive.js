@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('view-form').directive('fieldIconDirective', function() {
+angular.module('forms').directive('fieldIconDirective', function() {
 
     return {
-        template: '<i class="{{typeIcon}}"></i>',
+        template: '<i ng-class="iconTypeMap[typeName]"></i>',
         restrict: 'E',
         scope: {
             typeName: '@'
         },
         controller: function($scope){
-        	var iconTypeMap = {
+        	$scope.iconTypeMap = {
 				'textfield': 'fa fa-pencil-square-o',
 				'dropdown': 'fa fa-th-list',
 				'date': 'fa fa-calendar',
@@ -27,7 +27,6 @@ angular.module('view-form').directive('fieldIconDirective', function() {
 				'yes_no': 'fa fa-toggle-on',
 				'number': 'fa fa-slack'
 			};
-			$scope.typeIcon = iconTypeMap[$scope.typeName];
         }
     };
 });

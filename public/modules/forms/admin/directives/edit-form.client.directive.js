@@ -16,14 +16,20 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 */
         		var newField;
 
+                //Populate local scope with rootScope methods/variables
+                $scope.update = $rootScope.update;
+
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
 					appendTo: '.dropzone',
-				    //helper: 'clone',
+				    items: '.sortable-fields',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
 					update: function(e, ui) {
                         $scope.update(false, $scope.myform, true, false, function(err){
+                        	if(err){
+                        		console.error(err);
+                        	}
 						});
 					},
 				};
@@ -250,10 +256,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						}
 					});
 				};
-
-
-                //Populate local scope with rootScope methods/variables
-                $scope.update = $rootScope.update;
 
                 /*
                 **  Field CRUD Methods
