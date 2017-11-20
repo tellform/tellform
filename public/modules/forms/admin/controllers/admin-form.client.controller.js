@@ -115,7 +115,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             $scope.deleteModal = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'formDeleteModal.html',
-                controller: 'AdminFormController',
                 resolve: {
                     myForm: function(){
                         return $scope.myform;

@@ -17,7 +17,7 @@ angular.module('view-form').directive('keyToOption', ['$rootScope', function($ro
 					index = keyCode - 65;
 				}
 
-				if (index !== -1 && index < $scope.field.fieldOptions.length) {
+				if ($scope.field._id === $rootScope.getActiveField() && index !== -1 && index < $scope.field.fieldOptions.length) {
 					event.preventDefault();
 					$scope.$apply(function () {
 						$scope.field.fieldValue = $scope.field.fieldOptions[index].option_value;
