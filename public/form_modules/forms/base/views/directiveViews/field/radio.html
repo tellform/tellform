@@ -22,7 +22,7 @@
             <label class="btn col-md-4 col-xs-12 col-sm-12"
                     style="margin: 0.5em; padding-left:30px"
                     ng-class="{activeBtn: field.fieldValue == field.fieldOptions[$index].option_value}">
-				<div class="letter" style="float:left">
+				<div ng-if="field.fieldOptions.length <= 26" class="letter" style="float:left">
 					{{$index | indexToAlphabet}}
 				</div>
 				<input ng-style="{'color': design.colors.answerColor, 'border-color': design.colors.answerColor}"
