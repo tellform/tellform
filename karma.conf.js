@@ -18,7 +18,7 @@ module.exports = function(config) {
 		frameworks: ['jasmine'],
 
 		// List of files / patterns to load in the browser
-		files: bowerDep.concat(['public/lib/socket.io-client/dist/socket.io.js', 'public/lib/mobile-detect/mobile-detect.js', 'public/lib/quill/quill.js', 'public/lib/ngQuill/src/ng-quill.js'], applicationConfiguration.assets.js, applicationConfiguration.assets.views,  applicationConfiguration.assets.unit_tests),
+		files: bowerDep.concat(['public/lib/socket.io-client/dist/socket.io.js', 'public/lib/mobile-detect/mobile-detect.js', 'public/lib/quill/quill.js', 'public/lib/ng-quill/src/ng-quill.js'], applicationConfiguration.assets.js, applicationConfiguration.assets.views,  applicationConfiguration.assets.unit_tests),
 
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
