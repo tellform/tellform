@@ -182,7 +182,18 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 								angular.element('#'+field_id+'.selectize-input')[0].focus();
 							}
                         });
-                    }                
+                    } else {
+                    	if (angular.element('#'+field_id+' .focusOn').length) {
+							//Handle default case
+							angular.element('#'+field_id+' .focusOn')[0].focus();
+						} else if(angular.element('#'+field_id+' input').length) {
+							//Handle case for rating input
+							angular.element('#'+field_id+' input')[0].focus();
+						} else if(angular.element('#'+field_id+'.selectize-input').length) {
+							//Handle case for dropdown input
+							angular.element('#'+field_id+'.selectize-input')[0].focus();
+						}
+                    }         
                 };
 
                 $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
@@ -196,7 +207,6 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
                 $rootScope.nextField = $scope.nextField = function(){
 					if($scope.selected && $scope.selected.index > -1){
-
 						if($scope.selected._id !== FORM_ACTION_ID){
 							var currField = $scope.myform.visible_form_fields[$scope.selected.index];
 						

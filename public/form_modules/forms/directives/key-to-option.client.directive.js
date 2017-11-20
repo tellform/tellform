@@ -1,14 +1,13 @@
 'use strict';
 
-angular.module('view-form').directive('keyToOption', function(){
+angular.module('view-form').directive('keyToOption', ['$rootScope', function($rootScope){
 	return {
 		restrict: 'A',
 		scope: {
 			field: '='
 		},
-		link: function($scope, $element, $attrs, $select) {
-			$element.bind('keydown keypress', function(event) {
-
+		link: function($scope, $element, $attrs) {
+			$('body').on('keypress', function(event) {
 				var keyCode = event.which || event.keyCode;
 				var index = parseInt(String.fromCharCode(keyCode))-1;
 
@@ -22,4 +21,4 @@ angular.module('view-form').directive('keyToOption', function(){
 			});
 		}
 	};
-});
+}]);
