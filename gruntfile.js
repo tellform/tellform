@@ -224,7 +224,7 @@ module.exports = function(grunt) {
 	      options: {
 	          emitters: ['event'],
 	      },
-	      src: ['./coverageServer/*.info', './coverageClient/lcov-report/*.info']
+	      src: ['./coverageServer/*.info', './coverageClient/**/*.info']
 	    },
 		html2js: {
 			options: {
