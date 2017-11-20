@@ -15,7 +15,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
             templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
 			restrict: 'E',
             scope: {
-                myform:'='
+                myform: '='
             },
             controller: function($document, $window, $scope){
 		        var FORM_ACTION_ID = 'submit_field';
