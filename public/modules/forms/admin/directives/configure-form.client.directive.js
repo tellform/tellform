@@ -39,16 +39,19 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$sta
                     {
                         heading: $translate.instant('GENERAL_TAB'),
                         route: 'viewForm.configure.general',
+                        template: 'modules/forms/admin/views/adminTabs/configureTabs/general.html',
                         active: false
                     },
                     {
                         heading: $translate.instant('SELF_NOTIFICATIONS_TAB'),
                         route: 'viewForm.configure.self_notifications',
+                        template: 'modules/forms/admin/views/adminTabs/configureTabs/self_notifications.html',
                         active: false
                     },
                     {
                         heading: $translate.instant('RESPONDENT_NOTIFICATIONS_TAB'),
                         route: 'viewForm.configure.respondent_notifications',
+                        template: 'modules/forms/admin/views/adminTabs/configureTabs/respondent_notifications.html',
                         active: false
                     }
                 ];

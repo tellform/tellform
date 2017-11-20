@@ -17,11 +17,13 @@
             </div>
 
             <div class="notification-row">
-                <input class="toggle-switch notification-toggle" type="checkbox" switch-size="small"
-                    bs-switch ng-model="myform.respondentNotifications.enabled"
+                <input bs-switch class="toggle-switch notification-toggle" type="checkbox" 
+                    switch-size="small"
+                    ng-model="myform.respondentNotifications.enabled" 
+                    ng-if="myform.respondentNotifications"
                     switch-on-text="{{ 'ON' | translate }}"
                     switch-off-text="{{ 'OFF' | translate }}"
-                    ng-disabled="!formHasEmailField"
+                    switch-active="!formHasEmailField"
                     ng-true-value="true"
                     ng-false-value="false">
             </div>
