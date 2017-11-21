@@ -11,7 +11,7 @@ var	mongoose = require('mongoose'),
  * Main application entry file.
  * Please note that the order of loading is important.
  */
-var bootstrap = module.exports.bootstrap = function() {
+var bootstrap = function() {
 	//Don't check .env file if we are in travis-ci
 	if(!process.env.TRAVIS) {
 		require('dotenv').config({path: './.env'});
@@ -49,7 +49,7 @@ var bootstrap = module.exports.bootstrap = function() {
 	var app = require('./config/express')(db);
 
 	//Create admin account
-	if (process.env.CREATE_ADMIN_ACCOUNT === 'TRUE') {
+	if (process.env.CREATE_ADMIN_ACCOUNT === 'TRUE' && process.env.NODE_ENV !== 'test') {
 		var create_admin = require('./scripts/create_admin');
 
 		create_admin.run(app, db, function(err){
@@ -59,15 +59,11 @@ var bootstrap = module.exports.bootstrap = function() {
 		});
 	}
 
-
 	// Bootstrap passport config
 	require('./config/passport')();
 
 	// Start the app by listening on <port>
 	app.listen(config.port);
-
-	// Expose app
-	exports = module.exports = app;
 
 	// Logging initialization
 	console.log('--');
@@ -81,7 +77,11 @@ var bootstrap = module.exports.bootstrap = function() {
 		console.error(err.stack);
 		process.exit(1);
 	});
+
+	return app;
 }
+
+module.exports = bootstrap();
 
 // To maintain backwards compatibility, run bootstrap when called as a file
 if(require.main === module) {

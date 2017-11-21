@@ -7,8 +7,8 @@ require('../../server.js');
  */
 var should = require('should'),
 	mongoose = require('mongoose'),
-	User = mongoose.model('User'),
-	Form = mongoose.model('Form');
+	User = require('../models/user.server.model.js'),
+	Form = require('../models/form.server.model.js');
 
 /**
  * Globals
