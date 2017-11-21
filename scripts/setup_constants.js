@@ -1,19 +1,19 @@
 var constants = require('../app/libs/constants');
 
-var createRegexValidator = function(regex){
+var createRegexValidator = function(regex, message){
 	return function(value) {
 		var isValid = new RegExp(regex, 'g').test(value);
 
 		if(!isValid){
-			return 'Please enter a valid email'
+			return message
 		} else {
 			return true;
 		}
 	}
 }
 
-var validateEmail = createRegexValidator(constants.regex.email);
-var validateUsername = createRegexValidator(constants.regex.username);
+var validateEmail = createRegexValidator(constants.regex.email, 'Please enter a valid email');
+var validateUsername = createRegexValidator(constants.regex.username, 'Usernames can only contain alphanumeric characters and \'-\'');
 
 module.exports = {
 		replaceENVQuestion: {
@@ -105,11 +105,6 @@ module.exports = {
 				type: 'password',
 				name: 'MAILER_PASSWORD',
 				message: 'What is your SMTP password?'
-			},
-			{
-				type: 'input',
-				name: 'MAILER_FROM',
-				message: 'What do you want the default "from" email address to be?'
 			}
 		],
 
@@ -143,16 +138,16 @@ module.exports = {
 				type: 'password',
 				name: 'MAILER_PASSWORD',
 				message: 'What is your SMTP password?'
-			},
+			}
+		],
+
+		questionsPart2: [
 			{
 				type: 'input',
 				name: 'MAILER_FROM',
 				message: 'What do you want the default "from" email address to be?',
 				validate: validateEmail
-			}
-		],
-
-		questionsPart2: [
+			},
 			{
 				type: 'input',
 				name: 'MONGODB_URI',

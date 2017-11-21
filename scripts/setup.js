@@ -63,7 +63,7 @@ var createOrUpdateAdminUser = function(username, email, password, cb){
 		setDefaultsOnInsert: true
 	}
 
-	User.findOneAndUpdate({ username: username }, updateObj, options, function (err, result) {
+	User.findOneAndUpdate({ username: username, email: email }, updateObj, options, function (err, result) {
 		if (err) {
 			return cb(err);
 		}
