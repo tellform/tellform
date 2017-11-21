@@ -3,10 +3,10 @@
 angular.module('forms').directive('fieldIconDirective', function() {
 
     return {
-        template: '<i ng-class="iconTypeMap[typeName]"></i>',
+        template: '<i class="{{iconTypeMap[typeName]}}"></i>',
         restrict: 'E',
         scope: {
-            typeName: '@'
+            typeName: '='
         },
         controller: function($scope){
         	$scope.iconTypeMap = {
