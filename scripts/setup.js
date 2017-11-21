@@ -142,9 +142,10 @@ var createENVFile = function(cb) {
 }
 
 var checkENVAndRunSetup = function(cb) {
+	console.log(chalk.green(constants.asciiArt));
 	if(require.main === module){
-		console.log(chalk.green('\n\nWelcome to TellForm\'s Setup Tool'));
-		console.log(chalk.green('Follow the prompts to begin.\n---------------------------------------------------------------------\n\n'));
+		console.log(chalk.green('Welcome to TellForm\'s Setup Tool'));
+		console.log(chalk.green('Follow the prompts to begin.\n-------------------------------------------\n\n'));
 	}
 
 	if(fs.existsSync('./\.env') && require.main === module) {
@@ -159,9 +160,9 @@ var checkENVAndRunSetup = function(cb) {
 	} else {
 
 		if(require.main !== module){
-			console.log(chalk.green('\nWelcome to TellForm!\n'));
-			console.log(chalk.green('The following prompts will help you configure your TellForm instance for your needs'));
-			console.log(chalk.green('These prompts won\'t show up again after the initial setup.\n---------------------------------------------------------------------\n\n'));
+			console.log(chalk.green('Welcome to TellForm\'s Initial Setup\n'));
+			console.log(chalk.green('The following prompts will help you properly configure your TellForm instance.'));
+			console.log(chalk.green('If you want to run this tool after your inital setup, run `node scripts/setup.js`.\n---------------------------------------------------------------------\n\n'));
 		}
 		createENVFile();
 	}

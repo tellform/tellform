@@ -16,6 +16,14 @@ var validateEmail = createRegexValidator(constants.regex.email, 'Please enter a 
 var validateUsername = createRegexValidator(constants.regex.username, 'Usernames can only contain alphanumeric characters and \'-\'');
 
 module.exports = {
+		asciiArt: 	"   _____    _ _______                   \n" + 
+					"  |_   _|  | | |  ___|                  \n" +
+					"    | | ___| | | |_ ___  _ __ _ __ ___  \n" +
+					"    | |/ _ \\ | |  _/ _ \\| '__| '_ ` _ \\ \n" +
+					"    | |  __/ | | || (_) | |  | | | | | |\n" +
+					"    \\_/\\___|_|_\\_| \\___/|_|  |_| |_| |_|\n",
+                                     
+
 		replaceENVQuestion: {
 			type: 'confirm',
 			name: 'replaceENVFile',
