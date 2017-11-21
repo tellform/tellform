@@ -1,5 +1,5 @@
 'use strict';
-const jsdom = require("jsdom");
+const jsdom = require('jsdom');
 var JSDOM = jsdom.JSDOM;
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
 		var dom = new JSDOM('<!doctype html>'+emailTemplate);
 
 		Object.keys(emailTemplateVars).forEach(function (key) {
-			var elem = dom.window.document.querySelector("span.placeholder-tag[data-id='" + key + "']");
+			var elem = dom.window.document.querySelector('span.placeholder-tag[data-id=\'' + key + '\']');
 			if(elem !== null){
 				elem.outerHTML = emailTemplateVars[key];
 			}

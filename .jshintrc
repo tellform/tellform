@@ -21,6 +21,7 @@
 	"globals": { // Globals variables.
 		"jasmine": true,
 		"angular": true,
+		"devel": false,
 		"_": true,
 		"saveAs": true, 
 		"ApplicationConfiguration": true,

@@ -76,7 +76,7 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		var form = req.body
+		var form = req.body;
 		var formFieldDict = emailNotifications.createFieldDict(form.form_fields);
 
 		async.waterfall([
@@ -105,7 +105,6 @@ exports.createSubmission = function(req, res) {
 		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
 
 					form.respondentNotifications.toEmails = formFieldDict[form.respondentNotifications.toField];
-					debugger;
 					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, function(err){
 						if(err){
 							return callback({
@@ -158,7 +157,7 @@ exports.getVisitorData = function(req, res) {
 	    },
 	    {
 	        $facet: {
-	            "deviceStatistics": [
+	            'deviceStatistics': [
 	                {
 	                    $unwind: '$analytics.visitors'
 	                },
@@ -188,22 +187,22 @@ exports.getVisitorData = function(req, res) {
 	                },
 	                { 
 	                    $group: {
-	                        _id: "$deviceType",
-	                        total_time: { $sum: "$SubmittedTimeElapsed"  },
-	                        responses: { $sum: "$SubmittedResponses" },
+	                        _id: '$deviceType',
+	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
+	                        responses: { $sum: '$SubmittedResponses' },
 	                        visits: { $sum: 1 }
 	                    }
 	                },
 	                {
 	                    $project: {
-	                        total_time: "$total_time",
-	                        responses: "$responses",
-	                        visits: "$visits",
+	                        total_time: '$total_time',
+	                        responses: '$responses',
+	                        visits: '$visits',
 	                        average_time: {
 	                        	$cond: [ 
-                    				{ $eq: [ "$responses", 0 ] }, 
+                    				{ $eq: [ '$responses', 0 ] }, 
                     				0, 
-                    				{ $divide: ["$total_time", "$responses"] } 
+                    				{ $divide: ['$total_time', '$responses'] } 
                     			] 
 	                        },
 	                        conversion_rate: {
@@ -211,9 +210,9 @@ exports.getVisitorData = function(req, res) {
 	                            	100,
 	                            	{ 
                             			$cond: [ 
-                            				{ $eq: [ "$visits", 0 ] }, 
+                            				{ $eq: [ '$visits', 0 ] }, 
                             				0, 
-                            				{ $divide: ["$responses", "$visits"] } 
+                            				{ $divide: ['$responses', '$visits'] } 
                             			] 
 	                            	}
 	                            ]
@@ -221,7 +220,7 @@ exports.getVisitorData = function(req, res) {
 	                    }
 	                }
 	            ],
-	            "globalStatistics": [
+	            'globalStatistics': [
 	                {
 	                    $unwind: '$analytics.visitors'
 	                },
@@ -252,22 +251,22 @@ exports.getVisitorData = function(req, res) {
 	                { 
 	                    $group: {
 	                        _id: null,
-	                        total_time: { $sum: "$SubmittedTimeElapsed"  },
-	                        responses: { $sum: "$SubmittedResponses" },
+	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
+	                        responses: { $sum: '$SubmittedResponses' },
 	                        visits: { $sum: 1 }
 	                    }
 	                },
 	                {
 	                    $project: {
 	                        _id: 0,
-	                        total_time: "$total_time",
-	                        responses: "$responses",
-	                        visits: "$visits",
+	                        total_time: '$total_time',
+	                        responses: '$responses',
+	                        visits: '$visits',
 	                        average_time: {
 	                            $cond: [ 
-                    				{ $eq: [ "$responses", 0 ] }, 
+                    				{ $eq: [ '$responses', 0 ] }, 
                     				0, 
-                    				{ $divide: ["$total_time", "$responses"] } 
+                    				{ $divide: ['$total_time', '$responses'] } 
                     			] 
 	                        },
 	                        conversion_rate: {
@@ -275,9 +274,9 @@ exports.getVisitorData = function(req, res) {
 	                            	100,
 	                            	{ 
 	                            		$cond: [ 
-                            				{ $eq: [ "$visits", 0 ] }, 
+                            				{ $eq: [ '$visits', 0 ] }, 
                             				0, 
-                            				{ $divide: ["$responses", "$visits"] } 
+                            				{ $divide: ['$responses', '$visits'] } 
                             			] 
 	                            	}
 	                            ]
@@ -483,13 +482,16 @@ exports.list = function(req, res) {
 				});
 			}
 
-			const result_ids = results.map(function(result){ return ''+result._id });
+			const result_ids = results.map(function(result){ 
+				return ''+result._id; 
+			});
+			
 			var currIndex = -1;
 
 			for(var i=0; i<forms.length; i++){
 				forms[i] = helpers.removeSensitiveModelData('private_form', forms[i]);
 
-				currIndex = result_ids.indexOf(forms[i]._id)
+				currIndex = result_ids.indexOf(forms[i]._id);
                 if(currIndex > -1){
 					forms[i].submissionNum = results[currIndex].responses;
 				} else {
