@@ -34,17 +34,8 @@ exports.deleteSubmissions = function(req, res) {
 			});
 			return;
 		}
-
-		form.save(function(formSaveErr){
-			if(formSaveErr){
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(formSaveErr)
-				});
-				return;
-			}
-			res.status(200).send('Form submissions successfully deleted');
-
-		});
+		
+		res.status(200).send('Form submissions successfully deleted');
 	});
 };
 

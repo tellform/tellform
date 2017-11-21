@@ -101,4 +101,4 @@ FormSubmissionSchema.plugin(timeStampPlugin, {
 	useVirtual: false
 });
 
-module.exports = FormSubmissionSchema;
+mongoose.model('FormSubmission', FormSubmissionSchema);
