@@ -3,304 +3,153 @@
 /**
  * Module dependencies.
  */
-process.env.NODE_ENV = 'production';
 
-var config = require('../config/config'),
-	mongoose = require('mongoose'),
+var	mongoose = require('mongoose'),
 	inquirer = require('inquirer'),
 	envfile = require('envfile'),
 	fs = require('fs-extra'),
 	chalk = require('chalk'),
+	constants = require('./setup_constants'),
 	_ = require('lodash');
 
-// Bootstrap db connection
-var db = mongoose.connect(config.db.uri, config.db.options, function(err) {
-	if (err) {
-		console.error(chalk.red('Could not connect to MongoDB!'));
-		console.log(chalk.red(err));
-	}
-});
-mongoose.connection.on('error', function(err) {
-	console.error(chalk.red('MongoDB connection error: ' + err));
-	process.exit(-1);
-});
-
-// Init the express application
-require('../config/express')(db);
-
-// Bootstrap passport config
-require('../config/passport')();
-
-var User = mongoose.model('User');
-require('../app/models/user.server.model.js');
-
-var nodemailer_providers = [
-	'Custom Mailserver',
-	'1und1',
-	'AOL',
-	'DebugMail.io',
-	'DynectEmail',
-	'FastMail',
-	'GandiMail',
-	'Gmail',
-	'Godaddy',
-	'GodaddyAsia',
-	'GodaddyEurope',
-	'hot.ee',
-	'Hotmail',
-	'iCloud',
-	'mail.ee',
-	'Mail.ru',
-	'Mailgun',
-	'Mailjet',
-	'Mandrill',
-	'Naver',
-	'OpenMailBox',
-	'Postmark',
-	'QQ',
-	'QQex',
-	'SendCloud',
-	'SendGrid',
-	'SES',
-	'SES-US-EAST-1',
-	'SES-US-WEST-1',
-	'SES-EU-WEST-1',
-	'Sparkpost',
-	'Yahoo',
-	'Yandex',
-	'Zoho'
-];
-
-var replaceENVQuestion = 	{
-	type: 'confirm',
-	name: 'replaceENVFile',
-	message: 'An older .env file already exists. Do you want to replace it?',
-	default: false
-};
-
-var questionsPart1 = [
-	{
-		type: 'list',
-		name: 'NODE_ENV',
-		message: 'What mode do you want to run TellForm in?',
-		choices: ['development', 'production', 'test'],
-		default: 'development'
-	},
-	{
-		type: 'input',
-		name: 'APP_NAME',
-		message: 'What do you want to name your TellForm deployment?'
-	},
-	{
-		type: 'input',
-		name: 'APP_DESC',
-		message: 'Describe your project (for SEO)  (optional)'
-	},
-	{
-		type: 'confirm',
-		name: 'SIGNUP_DISABLED',
-		message: 'Do you want to disable signups?',
-		default: false
-	},
-	{
-		type: 'confirm',
-		name: 'SUBDOMAINS_DISABLED',
-		message: 'Do you want to disable subdomains? (i.e. are you using a custom domain)'
-	},
-	{
-		type: 'list',
-		name: 'MAILER_SERVICE_PROVIDER',
-		message: 'What email service provider are you using?',
-		choices: nodemailer_providers
-	}
-]
-
-var mailerWellKnownQuestions = [
-	{
-		type: 'input',
-		name: 'MAILER_EMAIL_ID',
-		message: 'What is your SMTP username?'
-	},
-	{
-		type: 'password',
-		name: 'MAILER_PASSWORD',
-		message: 'What is your SMTP password?'
-	},
-	{
-		type: 'input',
-		name: 'MAILER_FROM',
-		message: 'What do you want the default "from" email address to be?'
-	}
-];
-
-var mailerCustomQuestions = [
-	{
-		type: 'input',
-		name: 'MAILER_SMTP_HOST',
-		message: 'What is your SMTP server url?'
-	},
-	{
-		type: 'input',
-		name: 'MAILER_SMTP_PORT',
-		message: 'What is your SMTP server port?'
-	},
-	{
-		type: 'confirm',
-		name: 'MAILER_SMTP_SECURE',
-		message: 'Is your SMTP server using SSL/TLS?'
-	},
-	{
-		type: 'input',
-		name: 'MAILER_SMTP_HOST',
-		message: 'What is your SMTP host domain?'
-	},
-	{
-		type: 'input',
-		name: 'MAILER_EMAIL_ID',
-		message: 'What is your SMTP username?'
-	},
-	{
-		type: 'password',
-		name: 'MAILER_PASSWORD',
-		message: 'What is your SMTP password?'
-	},
-	{
-		type: 'input',
-		name: 'MAILER_FROM',
-		message: 'What do you want the default "from" email address to be?'
-	}
-];
-
-var questionsPart2 = [
-	{
-		type: 'input',
-		name: 'MONGODB_URI',
-		message: 'What is the URI of your Mongo database?',
-		default: 'mongodb://localhost/mean'
-	},
-	{
-		type: 'input',
-		name: 'REDIS_URL',
-		message: 'What is the URI of your Redis installation?',
-		default: 'redis://127.0.0.1:6379'
-	},
-	{
-		type: 'input',
-		name: 'BASE_URL',
-		message: 'What is the (root) url your TellForm will be hosted at?',
-		default: 'localhost'
-	},
-	{
-		type: 'input',
-		name: 'PORT',
-		message: 'What port should the TellForm server run on?',
-		default: '3000'
-	},
-	{
-		type: 'input',
-		name: 'email',
-		message: 'What should be the email for your admin account?'
-	},
-	{
-		type: 'input',
-		name: 'username',
-		message: 'What should be the username for your admin account?'
-	},
-	{
-		type: 'password',
-		name: 'password',
-		message: 'What should be the password for your admin account?'
-	}
-];
-
 var exitProcess = function() {
+	console.log(chalk.green('TellForm has been successfully setup'));
 	console.log(chalk.green('Have fun using TellForm!'));
 	process.exit(1);
 }
 
-var removeENVFile = function(){
+var removeENVFile = function() {
 	fs.unlinkSync('./\.env')
 }
 
+var createOrUpdateAdminUser = function(username, email, password, cb){
+	//Command Line Bootstrapping Code
+	if (require.main === module) {
+		var config = require('../config/config');
+
+		// Bootstrap db connection
+		var db = mongoose.connect(config.db.uri, config.db.options, function(err) {
+			if (err) {
+				console.error(chalk.red('Could not connect to MongoDB!'));
+				return cb(new Error(err));
+			}
+		});
+		mongoose.connection.on('error', function(err) {
+			return cb(new Error('MongoDB connection error: ' + err));
+		});
+
+		// Init the express application
+		require('../config/express')(db);
+
+		// Bootstrap passport config
+		require('../config/passport')();
+	}
+
+	var User = require('../app/models/user.server.model.js');
+
+	var updateObj = {
+		firstName: 'Admin',
+		lastName: 'Account',
+		username: username,
+		email: email,
+		password: pass,
+		provider: 'local',
+		roles: ['admin', 'user']
+	}
+
+	var options = {
+		upsert: true,
+		new: true, 
+		setDefaultsOnInsert: true
+	}
+
+	User.findOneAndUpdate({ username: username }, updateObj, options, function (err, result) {
+		if (err) {
+			return cb(err);
+		}
+
+		if(!result){
+			return cb(new Error('Admin User could not be created'));
+		}
+
+		delete pass;
+		delete email;
+		delete username;
+
+		console.log(chalk.green('Successfully created user'));
+
+		cb();
+	});
+
+}
+
 var createENVFile = function() {
-	inquirer.prompt(questionsPart1).then(function (answersPart1) {
-		var nextQuestions = mailerWellKnownQuestions.concat(questionsPart2);
+	inquirer.prompt(constants.questionsPart1).then(function (answersPart1) {
+		var nextQuestions = constants.mailerWellKnownQuestions.concat(constants.questionsPart2);
 		if(answersPart1['MAILER_SERVICE_PROVIDER'] === 'Custom Mailserver'){
-			 nextQuestions = mailerCustomQuestions.concat(questionsPart2);
+			nextQuestions = constants.mailerCustomQuestions.concat(constants.questionsPart2);
 		}
 
 		inquirer.prompt(nextQuestions).then(function (answersPart2) {
-			var answers = _.extend(answersPart1, answersPart2);
-			answers = _.mapValues(answers, function(val){
+			var answers = _.chain(anwsersPart1)._extend(answersPart2).mapValues(function(val){
 				if(_.isBoolean(val)){
 					return val ? 'TRUE' : 'FALSE';
 				}
 				return val;
-			});
+			}).values();
 
 			var email = answers['email'];
 			var username = answers['username'];
 			var pass = answers['password'];
 			delete answers['email'];
-		  delete answers['username'];
+		  	delete answers['username'];
 			delete answers['password'];
 
 			envfile.stringify(answers, function (err, str) {
-        try {
-				  fs.outputFileSync('./\.env', str);
-        } catch (fileErr) {
-			    return console.error(chalk.red(fileErr));
-			  }
+	        try {
+				fs.outputFileSync('./\.env', str);
+	        } catch (fileErr) {
+				console.error(chalk.red(fileErr));
+				process.exit(-1);
+			}	
 
-		    console.log(chalk.green('Successfully created .env file'));
+  			console.log(chalk.green('Successfully created .env file'));
 
-				var updateObj = {
-					firstName: 'Admin',
-					lastName: 'Account',
-					username: username,
-					email: email,
-					password: pass,
-					provider: 'local',
-					roles: ['admin', 'user']
-				}
-
-				var options = {
-					upsert: true,
-					new: true, 
-					setDefaultsOnInsert: true
-				}
-
-				User.findOneAndUpdate({ username: username }, updateObj, options, function (userSaveErr, result) {
-					if (err || !result) {
-						return console.error(chalk.red(userSaveErr));
+				createOrUpdateAdminUser(username, email, pass, function(err){
+					if(err) {
+						console.error(chalk.red(err.message));
+						process.exit(-1);
 					}
-
-					delete pass;
-					delete email;
-					delete username;
-
-					console.log(chalk.green('Successfully created user'));
 
 					exitProcess();
 				});
+				
 			});
 		});
 	});
 }
 
-console.log(chalk.green('\n\nWelcome to TellForm Setup'));
+var runSetup = function(){
+	console.log(chalk.green('\n\nWelcome to TellForm Setup'));
 
-console.log(chalk.green('You should only need to run this script the first time you run TellForm\n------------------------------------------------------------------------\n\n'));
+	console.log(chalk.green('You should only need to run this script the first time you run TellForm\n------------------------------------------------------------------------\n\n'));
 
-if(fs.existsSync('./\.env')) {
-	inquirer.prompt([replaceENVQuestion]).then(function (envAnswer) {
-		if (envAnswer['replaceENVFile']) {
-			removeENVFile();
-			createENVFile();
-		} else {
-			exitProcess();
-		}
-	});
-} else {
-	createENVFile();
+	if(fs.existsSync('./\.env') && require.main === module) {
+		inquirer.prompt([constants.replaceENVQuestion]).then(function (envAnswer) {
+			if (envAnswer['replaceENVFile']) {
+				removeENVFile();
+				createENVFile();
+			} else {
+				exitProcess();
+			}
+		});
+	} else {
+		createENVFile();
+	}
+}
+
+module.exports.runSetup = runSetup;
+
+if(require.main === module) {
+	runSetup();
 }

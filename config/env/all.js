@@ -15,8 +15,7 @@ module.exports = {
 			useMongoClient: true
 		}
 	},
-	
-	
+		
 	admin: {
 		email: process.env.ADMIN_EMAIL || 'admin@admin.com',
 		username: process.env.ADMIN_USERNAME || 'root',
