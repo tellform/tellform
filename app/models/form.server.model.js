@@ -228,30 +228,6 @@ FormSchema.plugin(timeStampPlugin, {
 	useVirtual: false
 });
 
-function getDeletedIndexes(needle, haystack){
-	var deletedIndexes = [];
-
-	if(haystack.length > 0){
-	  	for(var i = 0; i < needle.length; i++){
-	    	if(haystack.indexOf(needle[i]) === -1){
-				deletedIndexes.push(i);
-	    	}
-	  	}
-	}
-	return deletedIndexes;
-}
-
-function formFieldsAllHaveIds(form_fields){
-	if(form_fields){
-		for(var i=0; i<form_fields.length; i++){
-			if(form_fields[i] && !form_fields[i].hasOwnProperty('_id') && !form_fields[i].hasOwnProperty('globalId')){
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
 FormSchema.pre('save', function (next) {
 	if(this.form_fields && this.form_fields.length){
 		this.form_fields = this.form_fields.filter(function(field){

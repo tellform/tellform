@@ -10,7 +10,22 @@ var should = require('should'),
 	Form = require('../models/form.server.model.js'),
 	FormSubmission = require('../models/form_submission.server.model.js'),
 	Field = mongoose.model('Field'),
-	async = require('async');
+	async = require('async'),
+	_ = require('lodash');
+
+function omitDeep(collection, excludeKeys) {
+
+  function omitFn(value) {
+
+    if (value && typeof value === 'object') {
+      excludeKeys.forEach((key) => {
+        delete value[key];
+      });
+    }
+  }
+
+  return _.cloneDeepWith(collection, omitFn);
+}
 
 /**
  * Globals
@@ -23,6 +38,18 @@ var credentials = {
 	email: 'aeoaekjqjqqjkoeoa@test.com',
 	password: 'password'
 };
+
+var sampleVisitorData = [{
+	socketId: 'ntneooe8989eotnoeeo',
+	referrer: 'http://google.com',
+	timeElapsed: 89898989,
+	isSubmitted: true,
+	language:  'en',
+	ipAddr: '192.168.1.1',
+	deviceType: 'desktop',
+	userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+	filledOutFields: []
+}];
 
 /**
  * Form routes tests
@@ -50,8 +77,8 @@ describe('Form Routes Unit tests', function() {
 				admin: user.id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
 				],
 				isLive: true
 			};
@@ -91,7 +118,7 @@ describe('Form Routes Unit tests', function() {
 		FormObj.save(function(err, form) {
 			if(err) return done(err);
 
-			userSession.get('/subdomain/' + credentials.username + '/forms/' + form._id + '/render')
+			userSession.get('/forms/' + form._id + '/render')
 				.expect(200)
 				.end(function(err, res) {
 					if(err) return done(err)
@@ -114,7 +141,7 @@ describe('Form Routes Unit tests', function() {
 		FormObj.save(function(err, form) {
 			if(err) return done(err);
 
-			userSession.get('/subdomain/' + credentials.username + '/forms/' + form._id + '/render')
+			userSession.get('/forms/' + form._id + '/render')
 				.expect(401, {message: 'Form is Not Public'})
 				.end(function(err, res) {
 					done(err);
@@ -315,8 +342,8 @@ describe('Form Routes Unit tests', function() {
 				admin: user.id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
 				],
 				isLive: true
 			};
@@ -327,8 +354,8 @@ describe('Form Routes Unit tests', function() {
 				admin: user.id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'formula one',      'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'football',      'fieldValue': ''})
+					new Field({'fieldType':'legal', 'title':'formula one',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'football',      'fieldValue': ''})
 				],
 				isLive: true
 			};
@@ -361,6 +388,123 @@ describe('Form Routes Unit tests', function() {
 			    }
 			], function (err) {
 			    done(err);
+			});
+		});
+
+		it(' > should preserve visitor data when updating a Form', function(done) {
+			// Create new Form model instance
+
+			var formObject = {
+				title: 'First Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
+				],
+				isLive: true,
+				analytics: {
+					gaCode: '',
+					visitors: sampleVisitorData
+				}
+			};
+
+			var formUpdateObject = {
+				title: 'Second Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'formula one',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'football',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var CurrentForm = new Form(formObject);
+
+			// Save the Form
+			CurrentForm.save(function(err, form) {
+				if(err) return done(err);
+
+				loginSession.put('/forms/' + form.id)
+					.send({ form: formUpdateObject })
+					.expect(200)
+					.end(function(err, res) {
+
+						should.not.exist(err);
+
+						Form.findById(form.id, function (FormFindErr, UpdatedForm){
+							should.not.exist(FormFindErr);
+							should.exist(UpdatedForm);
+
+							var updatedFormObj = UpdatedForm.toJSON();
+							var oldFormObj = CurrentForm.toJSON();
+
+							updatedFormObj.analytics.should.deepEqual(oldFormObj.analytics);
+
+							done(FormFindErr);
+						});
+					});
+			});
+		});
+
+		it(' > shouldn\'t allow a user to change the id when updating a form', function(done) {
+			// Create new Form model instance
+
+			var formObject = {
+				title: 'First Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var formUpdateObject = {
+				id: mongoose.Types.ObjectId(),
+				title: 'First Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'formula one',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'football',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var CurrentForm = new Form(formObject);
+
+			// Save the Form
+			CurrentForm.save(function(err, InitialForm) {
+				if(err) return done(err);
+
+				loginSession.put('/forms/' + InitialForm.id)
+					.send({ form: formUpdateObject })
+					.expect(200)
+					.end(function(err, OldForm) {
+						should.not.exist(err);
+
+						Form.findById(InitialForm.id, function (FormFindErr, UpdatedForm){
+							should.not.exist(FormFindErr);
+							should.exist(UpdatedForm);
+
+							var updatedFormObj = UpdatedForm.toJSON();
+							var oldFormObj = InitialForm.toJSON();
+
+							updatedFormObj = omitDeep('lastModified');
+							oldFormObj = omitDeep('lastModified');
+
+							updatedFormObj.should.deepEqual(oldFormObj);
+
+							done(FormFindErr);
+						});
+					});
 			});
 		});
 

@@ -18,6 +18,7 @@ module.exports = {
 			//stream: 'access.log'
 		}
 	},
+	subdomainsDisabled: true,
 	app: {
 		title: 'TellForm Test'
 	},
