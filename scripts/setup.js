@@ -66,7 +66,6 @@ var createOrUpdateAdminUser = function(username, email, password, cb){
 		lastName: 'Account',
 		username: username,
 		email: email,
-		password: pass,
 		provider: 'local',
 		roles: ['admin', 'user']
 	}
@@ -77,22 +76,38 @@ var createOrUpdateAdminUser = function(username, email, password, cb){
 		setDefaultsOnInsert: true
 	}
 
-	User.findOneAndUpdate({ username: username, email: email }, updateObj, options, function (err, result) {
+	User.findOneAndUpdate({ username: username }, updateObj, options, function (err, user) {
 		if (err) {
+			delete pass;
+			delete email;
+			delete username;
 			return cb(err);
 		}
 
-		if(!result){
+		if(!user){
+			delete pass;
+			delete email;
+			delete username;
 			return cb(new Error('Admin User could not be created'));
 		}
 
-		delete pass;
-		delete email;
-		delete username;
+		user.password = password
+		user.save(function(err) {
+			if(err){
+				delete pass;
+				delete email;
+				delete username;
+				return cb(err);
+			}
 
-		console.log(chalk.green('Successfully created user'));
+			delete pass;
+			delete email;
+			delete username;
 
-		cb();
+			console.log(chalk.green('Successfully created user'));
+
+			cb();
+		});
 	});
 
 }

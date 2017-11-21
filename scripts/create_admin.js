@@ -23,7 +23,7 @@ exports.run = function(app, db, cb) {
 		}
 
 		if(!user){
-			newUser.save(function (userErr) {
+			user.save(function (userErr) {
 				if (userErr) {
 					return cb(userErr);
 				}
