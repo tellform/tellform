@@ -33,6 +33,22 @@ module.exports = {
 	],
 
     ratingShapeTypes: [
+		'Heart',
+		'Star',
+		'thumbs-up',
+		'thumbs-down',
+		'Circle',
+		'Square',
+		'Check Circle',
+		'Smile Outlined',
+		'Hourglass',
+		'bell',
+		'Paper Plane',
+		'Comment',
+		'Trash'
+	],
+
+    ratingShapeTypes: [
     		'Heart',
 			'Star',
 			'thumbs-up',

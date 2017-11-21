@@ -232,7 +232,6 @@ module.exports = function(db) {
 	// CookieParser should be above session
 	app.use(cookieParser());
 
-	debugger;
 	// Express MongoDB session storage
 	app.use(session({
 		saveUninitialized: true,
