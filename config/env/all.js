@@ -17,7 +17,7 @@ module.exports = {
 	},
 	
 	
-	admin:{
+	admin: {
 		email: process.env.ADMIN_EMAIL || 'admin@admin.com',
 		username: process.env.ADMIN_USERNAME || 'root',
 		password: process.env.ADMIN_PASSWORD || 'root',
