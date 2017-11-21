@@ -108,7 +108,7 @@ UserSchema.virtual('password').get(function () {
 /**
  * Create instance method for hashing a password
  */
-UserSchema.methods.hashPassword = function(password) {
+UserSchema.statics.hashPassword = UserSchema.methods.hashPassword = function(password) {
   var encoding = 'base64';
   var iterations = 10000;
   var keylen = 128;
