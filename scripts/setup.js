@@ -98,14 +98,12 @@ var questions = [
 	{
 		type: 'confirm',
 		name: 'SIGNUP_DISABLED',
-		message: 'Do you want to disable signups?',
-		default: false
+		message: 'Do you want to disable signups?'
 	},
 	{
-		type: 'list',
+		type: 'confirm',
 		name: 'SUBDOMAINS_DISABLED',
-		message: 'Do you want to have subdomains? (i.e. are you using a custom domain)',
-		choices: bool_options
+		message: 'Do you want to have subdomains? (i.e. are you using a custom domain)'
 	},
 	{
 		type: 'list',
@@ -159,11 +157,6 @@ var questions = [
 		type: 'input',
 		name: 'COVERALLS_REPO_TOKEN',
 		message: 'What is your Coveralls.io token? (optional)'
-	},
-	{
-		type: 'input',
-		name: 'COVERALLS_REPO_TOKEN',
-		message: 'What is your reCAPTCHA token? (optional)'
 	},
 	{
 		type: 'input',
