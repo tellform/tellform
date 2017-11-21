@@ -11,7 +11,7 @@ var	mongoose = require('mongoose'),
  * Main application entry file.
  * Please note that the order of loading is important.
  */
-module.exports.bootstrap = function() {
+var bootstrap = module.exports.bootstrap = function() {
 	//Don't check .env file if we are in travis-ci
 	if(!process.env.TRAVIS) {
 		require('dotenv').config({path: './.env'});
@@ -81,4 +81,9 @@ module.exports.bootstrap = function() {
 		console.error(err.stack);
 		process.exit(1);
 	});
+}
+
+// To maintain backwards compatibility, run bootstrap when called as a file
+if(require.main === module) {
+	bootstrap();
 }

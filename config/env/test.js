@@ -5,8 +5,6 @@ module.exports = {
 	db: {
 		uri: 'mongodb://localhost/mean-test',
 		options: {
-			user: '',
-			pass: '',
 			useMongoClient: true
 		}
 	},
