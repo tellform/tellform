@@ -49,10 +49,6 @@ function BaseFieldSchema(){
 	Schema.apply(this, arguments);
 
 	this.add({
-		newOptionSchema: {
-			type: Boolean,
-			default: false
-		},
 		isSubmission: {
 			type: Boolean,
 			default: false
