@@ -30,15 +30,6 @@ module.exports = {
 			}
 		});
 
-		//Removed unused variables
-		//TODO: Currently querySelectorAll not working in JSDOM
-		/*
-		dom.window.document.querySelectorAll("span[data-id]").forEach(function(elem){
-			if(elem !== null){
-				elem.outerHTML = '';
-			}
-		})
-		*/
 		if(onlyText){
 			return dom.window.document.documentElement.textContent;
 		}
