@@ -180,7 +180,7 @@ var questionsPart2 = [
 	},
 	{
 		type: 'input',
-		name: 'MONGODB_URI',
+		name: 'REDIS_URL',
 		message: 'What is the URI of your Redis installation?',
 		default: 'redis://127.0.0.1:6379'
 	},
