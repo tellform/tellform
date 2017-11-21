@@ -4,6 +4,9 @@ module.exports = {
 	baseUrl: process.env.BASE_URL || process.env.HEROKU_APP_NAME + '.herokuapp.com' || 'tellform.com',
 	db: {
 		uri: process.env.MONGODB_URI || process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_PORT_27017_TCP_ADDR || '127.0.0.1') + '/mean',
+		options: {
+			useMongoClient: true
+		}
 	},
 	port: process.env.PORT || 5000,
 	socketUrl: process.env.SOCKET_URL || 'ws.tellform.com',

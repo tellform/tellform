@@ -11,7 +11,8 @@ module.exports = {
 		uri: process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR  || '127.0.0.1') + '/mean',
 		options: {
 			user: '',
-			pass: ''
+			pass: '',
+			useMongoClient: true
 		}
 	},
 	
