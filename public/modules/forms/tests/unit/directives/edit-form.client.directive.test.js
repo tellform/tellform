@@ -26,14 +26,11 @@
                 {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
                 {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}
             ],
-            pdf: {},
-            pdfFieldMap: {},
             startPage: {
                 showStart: false,
                 buttons: []
             },
             showFooter: false,
-            isGenerated: false,
             isLive: false,
             _id: '525a8422f6d0f87f0e407a33'
         };
