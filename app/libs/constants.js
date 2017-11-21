@@ -2,7 +2,7 @@
 
 module.exports = {
 	extraneousFormFieldProps: [	
-		'validFieldTypes'
+		'validFieldTypes',
 		'disabled',
 		'required',
 		'isSubmission',

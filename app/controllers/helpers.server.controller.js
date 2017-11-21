@@ -14,7 +14,7 @@ module.exports = {
 	removeSensitiveModelData: function(type, object){
 		switch(type){
 			case 'private_form':
-	            this.this.removeKeysFromDict(object, constants.privateFields[type]);
+	            this.removeKeysFromDict(object, constants.privateFields[type]);
 	            if(object.admin){
 	            	this.removeKeysFromDict(object.admin, constants.privateFields.private_user);
 	            }
