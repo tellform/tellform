@@ -24,6 +24,17 @@ var credentials = {
 	password: 'password'
 };
 
+var sampleVisitorData = [{
+	socketId: 'ntneooe8989eotnoeeo',
+	referrer: 'http://google.com',
+	timeElapsed: 89898989,
+	isSubmitted: true,
+	language:  'en',
+	ipAddr: '192.168.1.1',
+	deviceType: 'desktop',
+	userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
+}]
+
 /**
  * Form routes tests
  */
@@ -50,8 +61,8 @@ describe('Form Routes Unit tests', function() {
 				admin: user.id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
 				],
 				isLive: true
 			};
@@ -315,8 +326,8 @@ describe('Form Routes Unit tests', function() {
 				admin: user.id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
 				],
 				isLive: true
 			};
@@ -327,8 +338,8 @@ describe('Form Routes Unit tests', function() {
 				admin: user.id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'formula one',      'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'football',      'fieldValue': ''})
+					new Field({'fieldType':'legal', 'title':'formula one',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'football',      'fieldValue': ''})
 				],
 				isLive: true
 			};
@@ -361,6 +372,63 @@ describe('Form Routes Unit tests', function() {
 			    }
 			], function (err) {
 			    done(err);
+			});
+		});
+
+		it(' > should preserve visitor data when updating a Form', function(done) {
+			// Create new Form model instance
+
+			var formObject = {
+				title: 'First Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
+				],
+				isLive: true,
+				analytics: {
+					gaCode: '',
+					visitors: sampleVisitorData
+				}
+			};
+
+			var formUpdateObject = {
+				title: 'Second Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'formula one',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'football',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var CurrentForm = new Form(formObject);
+
+			// Save the Form
+			CurrentForm.save(function(err, form) {
+				if(err) return done(err);
+
+				loginSession.post('/forms/' + form._id)
+					.send(formUpdateObject)
+					.expect(200)
+					.end(function(FormSaveErr) {
+
+						should.not.exist(FormSaveErr);
+
+						Form.findById(form._id, function (FormFindErr, UpdatedForm){
+							should.not.exist(FormFindErr);
+							should.exist(UpdatedForm);
+
+							UpdatedForm.toObject().visitors.should.deepEqual(sampleVisitorData);
+
+							done(FormFindErr);
+						});
+		
+					});
 			});
 		});
 
