@@ -12,10 +12,24 @@ var	mongoose = require('mongoose'),
 	constants = require('./setup_constants'),
 	_ = require('lodash');
 
-var exitProcess = function() {
+var exitSuccess = function(cb) {
 	console.log(chalk.green('TellForm has been successfully setup'));
 	console.log(chalk.green('Have fun using TellForm!'));
-	process.exit(1);
+
+	if(require.main === module){
+		process.exit(1);
+	} else if(cb && typeof cb === 'function'){
+		cb();
+	}
+}
+
+var exitError = function(err, cb){
+	console.error(chalk.red(err.message || err));
+	if(require.main === module){
+		process.exit(-1);
+	} else if(cb && typeof cb === 'function'){
+		cb();
+	}
 }
 
 var removeENVFile = function() {
@@ -83,7 +97,7 @@ var createOrUpdateAdminUser = function(username, email, password, cb){
 
 }
 
-var createENVFile = function() {
+var createENVFile = function(cb) {
 	inquirer.prompt(constants.questionsPart1).then(function (answersPart1) {
 		var nextQuestions = constants.mailerWellKnownQuestions.concat(constants.questionsPart2);
 		if(answersPart1['MAILER_SERVICE_PROVIDER'] === 'Custom Mailserver'){
@@ -106,22 +120,20 @@ var createENVFile = function() {
 			delete answers['password'];
 
 			envfile.stringify(answers, function (err, str) {
-	        try {
-				fs.outputFileSync('./\.env', str);
-	        } catch (fileErr) {
-				console.error(chalk.red(fileErr));
-				process.exit(-1);
-			}	
+		        try {
+					fs.outputFileSync('./\.env', str);
+		        } catch (fileErr) {
+					console.error(chalk.red(fileErr));
+					process.exit(-1);
+				}	
 
-  			console.log(chalk.green('Successfully created .env file'));
+  				console.log(chalk.green('Successfully created .env file'));
 
 				createOrUpdateAdminUser(username, email, pass, function(err){
 					if(err) {
-						console.error(chalk.red(err.message));
-						process.exit(-1);
+						return exitError(err, cb);
 					}
-
-					exitProcess();
+					exitSuccess(cb);
 				});
 				
 			});
@@ -129,27 +141,34 @@ var createENVFile = function() {
 	});
 }
 
-var runSetup = function(){
-	console.log(chalk.green('\n\nWelcome to TellForm Setup'));
-
-	console.log(chalk.green('You should only need to run this script the first time you run TellForm\n------------------------------------------------------------------------\n\n'));
+var checkENVAndRunSetup = function(cb) {
+	if(require.main === module){
+		console.log(chalk.green('\n\nWelcome to TellForm\'s Setup Tool'));
+		console.log(chalk.green('Follow the prompts to begin.\n---------------------------------------------------------------------\n\n'));
+	}
 
 	if(fs.existsSync('./\.env') && require.main === module) {
 		inquirer.prompt([constants.replaceENVQuestion]).then(function (envAnswer) {
 			if (envAnswer['replaceENVFile']) {
 				removeENVFile();
-				createENVFile();
+				createENVFile(cb);
 			} else {
-				exitProcess();
+				exitSuccess(cb);
 			}
 		});
 	} else {
+
+		if(require.main !== module){
+			console.log(chalk.green('\nWelcome to TellForm!\n'));
+			console.log(chalk.green('The following prompts will help you configure your TellForm instance for your needs'));
+			console.log(chalk.green('These prompts won\'t show up again after the initial setup.\n---------------------------------------------------------------------\n\n'));
+		}
 		createENVFile();
 	}
 }
 
-module.exports.runSetup = runSetup;
+module.exports.checkENVAndRunSetup = checkENVAndRunSetup;
 
 if(require.main === module) {
-	runSetup();
+	checkENVAndRunSetup();
 }
