@@ -55,6 +55,13 @@ module.exports = {
 		'Deutsch': 'de'
 	},
 
+	privateFields: {
+		'public_form': ['__v', 'analytics.visitors', 'analytics.views', 'analytics.conversionRate', 'analytics.fields', 'lastModified', 'created'],
+		'private_form': ['__v'],
+		'public_user': ['passwordHash', 'password', 'provider', 'salt', 'lastModified', 'created', 'resetPasswordToken', 'resetPasswordExpires', 'token', 'apiKey', '__v'],
+		'private_user': ['passwordHash', 'password', 'provider', 'salt', 'resetPasswordToken', 'resetPasswordExpires', 'token', '__v']
+	},
+
     expressionStringTypes: 	['field == static',
 			'field != static',
 			'field > static',
