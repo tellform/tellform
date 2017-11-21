@@ -254,20 +254,30 @@ var createENVFile = function() {
 
 		    console.log(chalk.green('Successfully created .env file'));
 
-				user = new User({
+				var updateObj = {
 					firstName: 'Admin',
 					lastName: 'Account',
-					email: email,
 					username: username,
+					email: email,
 					password: pass,
 					provider: 'local',
 					roles: ['admin', 'user']
-				});
+				}
 
-				user.save(function (userSaveErr) {
-					if (err) {
+				var options = {
+					upsert: true,
+					new: true, 
+					setDefaultsOnInsert: true
+				}
+
+				User.findOneAndUpdate({ username: username }, updateObj, options, function (userSaveErr, result) {
+					if (err || !result) {
 						return console.error(chalk.red(userSaveErr));
 					}
+
+					delete pass;
+					delete email;
+					delete username;
 
 					console.log(chalk.green('Successfully created user'));
 
