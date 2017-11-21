@@ -39,8 +39,8 @@ module.exports = {
 	createFieldDict: function(form_fields){
 		var formFieldDict = {};
 		form_fields.forEach(function(field){
-			if(field.hasOwnProperty('fieldValue')){
-				formFieldDict[field.id] = String(field.fieldValue);
+			if(field.hasOwnProperty('fieldValue') && field.hasOwnProperty('_id')){
+				formFieldDict[field._id] = String(field.fieldValue);
 			}
 		});
 		return formFieldDict;

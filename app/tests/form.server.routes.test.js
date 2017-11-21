@@ -10,7 +10,22 @@ var should = require('should'),
 	Form = mongoose.model('Form'),
 	Field = mongoose.model('Field'),
 	FormSubmission = mongoose.model('FormSubmission'),
-	async = require('async');
+	async = require('async'),
+	_ = require('lodash');
+
+function omitDeep(collection, excludeKeys) {
+
+  function omitFn(value) {
+
+    if (value && typeof value === 'object') {
+      excludeKeys.forEach((key) => {
+        delete value[key];
+      });
+    }
+  }
+
+  return _.cloneDeepWith(collection, omitFn);
+}
 
 /**
  * Globals
@@ -473,8 +488,6 @@ describe('Form Routes Unit tests', function() {
 					.send({ form: formUpdateObject })
 					.expect(200)
 					.end(function(err, OldForm) {
-						console.log(OldForm.body);
-
 						should.not.exist(err);
 
 						Form.findById(InitialForm.id, function (FormFindErr, UpdatedForm){
@@ -484,8 +497,8 @@ describe('Form Routes Unit tests', function() {
 							var updatedFormObj = UpdatedForm.toJSON();
 							var oldFormObj = InitialForm.toJSON();
 
-							delete oldFormObj.lastModified;
-							delete updatedFormObj.lastModified;
+							updatedFormObj = omitDeep('lastModified');
+							oldFormObj = omitDeep('lastModified');
 
 							updatedFormObj.should.deepEqual(oldFormObj);
 
