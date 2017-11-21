@@ -26,7 +26,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
 					stop: function(e, ui) {
-						debugger;
                         $scope.update(false, $scope.myform, true, false, function(err){
                         	if(err){
                         		console.error(err);

@@ -40,8 +40,8 @@ describe('Form Model Unit Tests:', function() {
 				language: 'en',
 				form_fields: [
 					{'fieldType':'textfield', title:'First Name', 'fieldValue': ''},
-					{'fieldType':'checkbox',  title:'nascar',     'fieldValue': ''},
-					{'fieldType':'checkbox',  title:'hockey',     'fieldValue': ''}
+					{'fieldType':'legal',  title:'nascar',     'fieldValue': ''},
+					{'fieldType':'legal',  title:'hockey',     'fieldValue': ''}
 				]
 			});
 			done();

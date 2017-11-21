@@ -54,8 +54,8 @@ describe('Form Submission Routes Unit tests', function() {
 				admin: user._id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
 				],
 				selfNotifications: {
 					fromField: mongoose.Types.ObjectId(),
@@ -81,8 +81,8 @@ describe('Form Submission Routes Unit tests', function() {
 					form: form._id,
 					form_fields: [
 						{'fieldType':'textfield', 	'title':'First Name', 	'fieldValue': 'David', 	_id: '', isSubmission: false, deletePreserved: false},
-						{'fieldType':'checkbox', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
-						{'fieldType':'checkbox', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
+						{'fieldType':'legal', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
+						{'fieldType':'legal', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
 					],
 					percentageComplete: 100,
 					timeElapsed: 11.55,
@@ -101,8 +101,8 @@ describe('Form Submission Routes Unit tests', function() {
 					_id: form._id,
 					form_fields: [
 						{'fieldType':'textfield', 	'title':'First Name', 	'fieldValue': 'David', 	_id: '', isSubmission: false, deletePreserved: false},
-						{'fieldType':'checkbox', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
-						{'fieldType':'checkbox', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
+						{'fieldType':'legal', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
+						{'fieldType':'legal', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
 					],
 					percentageComplete: 100,
 					timeElapsed: 11.55,

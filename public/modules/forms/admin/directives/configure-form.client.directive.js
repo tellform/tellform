@@ -18,7 +18,7 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$sta
                     placeholder: {
                         placeholders: $scope.myform.visible_form_fields.map(function(field){
                             return {
-                                id: field.globalId,
+                                id: field.id,
                                 label: field.title
                             };
                         }),
