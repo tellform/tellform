@@ -242,6 +242,7 @@ var createENVFile = function() {
 			var username = answers['username'];
 			var pass = answers['password'];
 			delete answers['email'];
+		  delete answers['username'];
 			delete answers['password'];
 
 			envfile.stringify(answers, function (err, str) {
