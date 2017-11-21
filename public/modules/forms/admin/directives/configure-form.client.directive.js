@@ -75,11 +75,11 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$sta
                     }, 500);
                 });
 
-                $scope.loading = false;
+                $scope.saveInProgress = false;
                 $scope.saveChanges = function(){
-                    $scope.loading = true;
+                    $scope.saveInProgress = true;
                     $rootScope.update(false, $scope.myform, false, false, function(){
-                         $scope.loading = false;
+                         $scope.saveInProgress = false;
                     });
                 };
             }
