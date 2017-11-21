@@ -102,7 +102,7 @@ describe('Form Routes Unit tests', function() {
 		FormObj.save(function(err, form) {
 			if(err) return done(err);
 
-			userSession.get('/subdomain/' + credentials.username + '/forms/' + form._id + '/render')
+			userSession.get('/forms/' + form._id + '/render')
 				.expect(200)
 				.end(function(err, res) {
 					if(err) return done(err)
@@ -125,7 +125,7 @@ describe('Form Routes Unit tests', function() {
 		FormObj.save(function(err, form) {
 			if(err) return done(err);
 
-			userSession.get('/subdomain/' + credentials.username + '/forms/' + form._id + '/render')
+			userSession.get('/forms/' + form._id + '/render')
 				.expect(401, {message: 'Form is Not Public'})
 				.end(function(err, res) {
 					done(err);
