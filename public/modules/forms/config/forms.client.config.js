@@ -19,32 +19,6 @@ angular.module('forms').run(['Menus',
 	return function(seconds) {
 		return new Date(0).setSeconds(seconds);
 	};
-}]).filter('formValidity', [function(){
-        return function(formObj){
-        	if(formObj && formObj.form_fields && formObj.visible_form_fields){
-
-				//get keys
-				var formKeys = Object.keys(formObj);
-
-				//we only care about things that don't start with $
-				var fieldKeys = formKeys.filter(function(key){
-					return key[0] !== '$';
-				});
-
-				var fields = formObj.form_fields;
-
-				var valid_count = fields.filter(function(field){
-					if(typeof field === 'object' && field.fieldType !== 'statement' && field.fieldType !== 'rating'){
-					    return !!(field.fieldValue);
-					} else if(field.fieldType === 'rating'){
-					    return true;
-					}
-
-				}).length;
-				return valid_count - (formObj.form_fields.length - formObj.visible_form_fields.length);
-			}
-			return 0;
-        };
 }]).filter('trustSrc', ['$sce', function($sce){
         return function(formUrl){
         	return $sce.trustAsResourceUrl(formUrl);

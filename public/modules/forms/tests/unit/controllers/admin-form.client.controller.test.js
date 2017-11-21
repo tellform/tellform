@@ -138,9 +138,6 @@
 					},
 					isAuthenticated: function() {
 						return true;
-					},
-					getUserState: function() {
-						return true;
 					}
 				};
 			});

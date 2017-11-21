@@ -33,13 +33,16 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	OPTION_PLACEHOLDER: 'Geben oder wählen Sie eine Option aus',
 	ADD_NEW_LINE_INSTR: 'Drücken Sie UMSCHALT + EINGABETASTE, um eine neue Zeile hinzuzufügen',
   	ERROR: 'Fehler',
+
+  	LOADING_LABEL: 'Laden',
+  	WAIT_LABEL: 'Bitte warten',
   	
   	FORM_404_HEADER: '404 - Formular existiert nicht',
   	FORM_404_BODY: 'Das Formular, auf das Sie zugreifen möchten, existiert nicht. Das tut mir leid!',
   	
   	FORM_UNAUTHORIZED_HEADER: 'Nicht zum Zugriffsformular berechtigt\' ',
-   FORM_UNAUTHORIZED_BODY1: 'Das Formular, auf das Sie zugreifen möchten, ist derzeit privat und nicht öffentlich zugänglich.',
-   FORM_UNAUTHORIZED_BODY2: 'Wenn Sie der Eigentümer des Formulars sind, können Sie es im Fenster "Konfiguration" im Formular admin auf "Öffentlich" setzen.',
+   	FORM_UNAUTHORIZED_BODY1: 'Das Formular, auf das Sie zugreifen möchten, ist derzeit privat und nicht öffentlich zugänglich.',
+   	FORM_UNAUTHORIZED_BODY2: 'Wenn Sie der Eigentümer des Formulars sind, können Sie es im Fenster "Konfiguration" im Formular admin auf "Öffentlich" setzen.',
   });
 
 }]);

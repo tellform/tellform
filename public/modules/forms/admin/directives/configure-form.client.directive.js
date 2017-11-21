@@ -12,14 +12,13 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$sta
                 $rootScope.myform = $scope.myform;
                 $scope.languages = $rootScope.languages;
                 $scope.resetForm = $rootScope.resetForm;
-                $scope.update = $rootScope.update;
 
                 Quill.register('modules/placeholder', PlaceholderModule.default(Quill))
                 $scope.customModules = {
                     placeholder: {
                         placeholders: $scope.myform.visible_form_fields.map(function(field){
                             return {
-                                id: field.globalId,
+                                id: field.id,
                                 label: field.title
                             };
                         }),
@@ -39,19 +38,16 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$sta
                     {
                         heading: $translate.instant('GENERAL_TAB'),
                         route: 'viewForm.configure.general',
-                        template: 'modules/forms/admin/views/adminTabs/configureTabs/general.html',
                         active: false
                     },
                     {
                         heading: $translate.instant('SELF_NOTIFICATIONS_TAB'),
                         route: 'viewForm.configure.self_notifications',
-                        template: 'modules/forms/admin/views/adminTabs/configureTabs/self_notifications.html',
                         active: false
                     },
                     {
                         heading: $translate.instant('RESPONDENT_NOTIFICATIONS_TAB'),
                         route: 'viewForm.configure.respondent_notifications',
-                        template: 'modules/forms/admin/views/adminTabs/configureTabs/respondent_notifications.html',
                         active: false
                     }
                 ];
@@ -78,6 +74,14 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$sta
                         }
                     }, 500);
                 });
+
+                $scope.saveInProgress = false;
+                $scope.saveChanges = function(){
+                    $scope.saveInProgress = true;
+                    $rootScope.update(false, $scope.myform, false, false, function(){
+                         $scope.saveInProgress = false;
+                    });
+                };
             }
         };
     }

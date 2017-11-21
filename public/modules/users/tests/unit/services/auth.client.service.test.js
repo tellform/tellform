@@ -61,23 +61,8 @@
 			expect($window.user).toEqual(null);
 			expect(Auth.currentUser).toEqual(null);
 			expect(Auth.isAuthenticated()).toBe(false);
-			expect(Auth.getUserState().isLoggedIn).toBe(false);
 		}));
-
-		it('Auth.getUserState() should fetch current user state', function() {
-			//Run Service Logic to Test
-			Auth.login(sampleUser);
-			var currUserState = Auth.getUserState();
-
-			expect(currUserState.isLoggedIn).toBe(true);
-
-			//Run Service Logic to Test
-			Auth.logout();
-			currUserState = Auth.getUserState();
-
-			expect(currUserState.isLoggedIn).toBe(false);
-		});
-
+		
 		it('Auth.ensureHasCurrentUser() should fetch most current user if it exists in $window, currentUser or fetch it from /users/me', function() {
 			//Run Service Logic to Test
 			Auth.ensureHasCurrentUser().then(function onSuccess(currUser){

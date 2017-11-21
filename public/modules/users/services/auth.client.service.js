@@ -47,10 +47,6 @@ angular.module('users').factory('Auth', ['$window', '$q', 'User',
         return !!this._currentUser && this._currentUser.username;
       },
 
-      getUserState: function() {
-        return userState;
-      },
-
       login: function(new_user) {
         userState.isLoggedIn = true;
         this._currentUser = new_user;

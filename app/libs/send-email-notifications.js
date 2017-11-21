@@ -1,5 +1,5 @@
 'use strict';
-const jsdom = require("jsdom");
+const jsdom = require('jsdom');
 var JSDOM = jsdom.JSDOM;
 
 module.exports = {
@@ -24,21 +24,12 @@ module.exports = {
 		var dom = new JSDOM('<!doctype html>'+emailTemplate);
 
 		Object.keys(emailTemplateVars).forEach(function (key) {
-			var elem = dom.window.document.querySelector("span.placeholder-tag[data-id='" + key + "']");
+			var elem = dom.window.document.querySelector('span.placeholder-tag[data-id=\'' + key + '\']');
 			if(elem !== null){
 				elem.outerHTML = emailTemplateVars[key];
 			}
 		});
 
-		//Removed unused variables
-		//TODO: Currently querySelectorAll not working in JSDOM
-		/*
-		dom.window.document.querySelectorAll("span[data-id]").forEach(function(elem){
-			if(elem !== null){
-				elem.outerHTML = '';
-			}
-		})
-		*/
 		if(onlyText){
 			return dom.window.document.documentElement.textContent;
 		}
@@ -48,8 +39,8 @@ module.exports = {
 	createFieldDict: function(form_fields){
 		var formFieldDict = {};
 		form_fields.forEach(function(field){
-			if(field.hasOwnProperty('globalId') && field.hasOwnProperty('fieldValue')){
-				formFieldDict[field.globalId+''] = field.fieldValue+'';
+			if(field.hasOwnProperty('fieldValue') && field.hasOwnProperty('_id')){
+				formFieldDict[field._id] = String(field.fieldValue);
 			}
 		});
 		return formFieldDict;

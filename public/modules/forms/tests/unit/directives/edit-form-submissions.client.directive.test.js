@@ -60,7 +60,6 @@
 				showEnd: false
 			},
             showFooter: false,
-            isGenerated: false,
             isLive: false,
             _id: '525a8422f6d0f87f0e407a33'
         };

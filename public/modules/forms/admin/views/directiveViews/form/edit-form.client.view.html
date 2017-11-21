@@ -492,7 +492,7 @@
                 <div class="panel panel-default" style="background-color: #f5f5f5;">
                     <div class="panel-heading" ng-click="addNewField(type.name)" style="cursor: pointer; font-size:12px; padding-left: 10px; padding-right: 10px;">
                         <span>
-                            <field-icon-directive type-name="{{type.name}}">
+                            <field-icon-directive type-name="type.name">
                             </field-icon-directive>
                         </span>
 
@@ -533,7 +533,7 @@
 			                <div class="panel-heading">
 								<div class="row">
 									<span class="col-xs-1" ng-switch="field.fieldType">
-										<field-icon-directive type-name="{{field.fieldType}}">
+										<field-icon-directive type-name="field.fieldType">
 										</field-icon-directive>
 									</span>
 									<span class="col-xs-11">

@@ -21,7 +21,6 @@ module.exports.isAuthenticatedOrApiKey = function isAuthenticated(req, res, next
 			}
 
 			if (!user) {
-				console.log('no user for apikey');
 				return res.status(401).send(info.message || '');
 			}
 

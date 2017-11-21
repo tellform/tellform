@@ -25,7 +25,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 				    items: '.sortable-fields',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
-					update: function(e, ui) {
+					stop: function(e, ui) {
                         $scope.update(false, $scope.myform, true, false, function(err){
                         	if(err){
                         		console.error(err);

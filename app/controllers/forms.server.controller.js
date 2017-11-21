@@ -34,18 +34,8 @@ exports.deleteSubmissions = function(req, res) {
 			});
 			return;
 		}
-
-		form.analytics.visitors = [];
-		form.save(function(formSaveErr){
-			if(formSaveErr){
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(formSaveErr)
-				});
-				return;
-			}
-			res.status(200).send('Form submissions successfully deleted');
-
-		});
+		
+		res.status(200).send('Form submissions successfully deleted');
 	});
 };
 
@@ -76,7 +66,7 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		var form = req.body
+		var form = req.body;
 		var formFieldDict = emailNotifications.createFieldDict(form.form_fields);
 
 		async.waterfall([
@@ -105,7 +95,6 @@ exports.createSubmission = function(req, res) {
 		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
 
 					form.respondentNotifications.toEmails = formFieldDict[form.respondentNotifications.toField];
-					debugger;
 					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, function(err){
 						if(err){
 							return callback({
@@ -158,7 +147,7 @@ exports.getVisitorData = function(req, res) {
 	    },
 	    {
 	        $facet: {
-	            "deviceStatistics": [
+	            'deviceStatistics': [
 	                {
 	                    $unwind: '$analytics.visitors'
 	                },
@@ -188,22 +177,22 @@ exports.getVisitorData = function(req, res) {
 	                },
 	                { 
 	                    $group: {
-	                        _id: "$deviceType",
-	                        total_time: { $sum: "$SubmittedTimeElapsed"  },
-	                        responses: { $sum: "$SubmittedResponses" },
+	                        _id: '$deviceType',
+	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
+	                        responses: { $sum: '$SubmittedResponses' },
 	                        visits: { $sum: 1 }
 	                    }
 	                },
 	                {
 	                    $project: {
-	                        total_time: "$total_time",
-	                        responses: "$responses",
-	                        visits: "$visits",
+	                        total_time: '$total_time',
+	                        responses: '$responses',
+	                        visits: '$visits',
 	                        average_time: {
 	                        	$cond: [ 
-                    				{ $eq: [ "$responses", 0 ] }, 
+                    				{ $eq: [ '$responses', 0 ] }, 
                     				0, 
-                    				{ $divide: ["$total_time", "$responses"] } 
+                    				{ $divide: ['$total_time', '$responses'] } 
                     			] 
 	                        },
 	                        conversion_rate: {
@@ -211,9 +200,9 @@ exports.getVisitorData = function(req, res) {
 	                            	100,
 	                            	{ 
                             			$cond: [ 
-                            				{ $eq: [ "$visits", 0 ] }, 
+                            				{ $eq: [ '$visits', 0 ] }, 
                             				0, 
-                            				{ $divide: ["$responses", "$visits"] } 
+                            				{ $divide: ['$responses', '$visits'] } 
                             			] 
 	                            	}
 	                            ]
@@ -221,7 +210,7 @@ exports.getVisitorData = function(req, res) {
 	                    }
 	                }
 	            ],
-	            "globalStatistics": [
+	            'globalStatistics': [
 	                {
 	                    $unwind: '$analytics.visitors'
 	                },
@@ -252,22 +241,22 @@ exports.getVisitorData = function(req, res) {
 	                { 
 	                    $group: {
 	                        _id: null,
-	                        total_time: { $sum: "$SubmittedTimeElapsed"  },
-	                        responses: { $sum: "$SubmittedResponses" },
+	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
+	                        responses: { $sum: '$SubmittedResponses' },
 	                        visits: { $sum: 1 }
 	                    }
 	                },
 	                {
 	                    $project: {
 	                        _id: 0,
-	                        total_time: "$total_time",
-	                        responses: "$responses",
-	                        visits: "$visits",
+	                        total_time: '$total_time',
+	                        responses: '$responses',
+	                        visits: '$visits',
 	                        average_time: {
 	                            $cond: [ 
-                    				{ $eq: [ "$responses", 0 ] }, 
+                    				{ $eq: [ '$responses', 0 ] }, 
                     				0, 
-                    				{ $divide: ["$total_time", "$responses"] } 
+                    				{ $divide: ['$total_time', '$responses'] } 
                     			] 
 	                        },
 	                        conversion_rate: {
@@ -275,9 +264,9 @@ exports.getVisitorData = function(req, res) {
 	                            	100,
 	                            	{ 
 	                            		$cond: [ 
-                            				{ $eq: [ "$visits", 0 ] }, 
+                            				{ $eq: [ '$visits', 0 ] }, 
                             				0, 
-                            				{ $divide: ["$responses", "$visits"] } 
+                            				{ $divide: ['$responses', '$visits'] } 
                             			] 
 	                            	}
 	                            ]
@@ -375,8 +364,8 @@ exports.update = function(req, res) {
 
     var form = req.form;
     var updatedForm = req.body.form;
- 
-    if(!form.analytics){
+
+    if(!form.analytics && req.body.form.analytics){
     	form.analytics = {
     		visitors: [],
     		gaCode: ''
@@ -390,9 +379,18 @@ exports.update = function(req, res) {
 			diff.applyChange(form._doc, true, change);
 		});
 	} else {
+		if(!updatedForm){
+			res.status(400).send({
+				message: 'Updated Form is empty'
+			});
+		}
 
-	    delete updatedForm.__v;
+		delete updatedForm.lastModified; 
 	    delete updatedForm.created; 
+	    delete updatedForm.id;
+	    delete updatedForm._id;
+	    delete updatedForm.__v;
+
 		//Unless we have 'admin' privileges, updating the form's admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
@@ -483,13 +481,16 @@ exports.list = function(req, res) {
 				});
 			}
 
-			const result_ids = results.map(function(result){ return ''+result._id });
+			const result_ids = results.map(function(result){ 
+				return ''+result._id; 
+			});
+			
 			var currIndex = -1;
 
 			for(var i=0; i<forms.length; i++){
 				forms[i] = helpers.removeSensitiveModelData('private_form', forms[i]);
 
-				currIndex = result_ids.indexOf(forms[i]._id)
+				currIndex = result_ids.indexOf(forms[i]._id);
                 if(currIndex > -1){
 					forms[i].submissionNum = results[currIndex].responses;
 				} else {
@@ -564,7 +565,8 @@ exports.formByIDFast = function(req, res, next, id) {
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
+	debugger
+	if (req.form.admin.id !== req.user.id || req.user.roles.indexOf('admin') > -1) {
 		res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});
