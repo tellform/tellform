@@ -11,7 +11,12 @@ angular.module('forms').directive('shareFormDirective', ['$rootScope', '$transla
             controller: function($scope){
                 $scope.actualFormURL = $scope.actualformurl;
 
-                $scope.fullScreen = "<iframe id='iframe' src='" + $scope.actualFormURL + "' style='width:100%;height:500px;'></iframe>"+
+                $scope.isCopied = false;
+                $scope.onCopySuccess = function(){
+                    $scope.isCopied = true;
+                }
+
+                $scope.embedCode = "<iframe id='iframe' src='" + $scope.actualFormURL + "' style='width:100%;height:500px;'></iframe>"+
                                     "<div style='font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px;'>"+
                                         $translate.instant('POWERED_BY')+
                                         "<a href='https://www.tellform.com' style='color: #999' target='_blank'>TellForm</a>"+
@@ -32,6 +37,7 @@ angular.module('forms').directive('shareFormDirective', ['$rootScope', '$transla
                 ];
 
                 $scope.go = function(tab){
+                    $scope.isCopied = false;
                     tab.active = true;
                     $state.go(tab.route);
                 };
