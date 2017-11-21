@@ -74,6 +74,8 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     if(deviceStatData && deviceStatData.length){
                         for(var i=0; i<deviceStatData.length; i++){
                             var currDevice = deviceStatData[i];
+
+                            //_id here is deviceType of field due to aggregation in getVisitorData
                             if(stats[currDevice._id]){
                                 stats[currDevice._id] = currDevice;
                             }
