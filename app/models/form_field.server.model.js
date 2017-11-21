@@ -53,9 +53,6 @@ function BaseFieldSchema(){
 			type: Boolean,
 			default: false
 		},
-		globalId: {
-			type: String,
-    	},
 		isSubmission: {
 			type: Boolean,
 			default: false
@@ -151,19 +148,11 @@ FormFieldSchema.pre('validate', function(next) {
 		if(this.fieldOptions && this.fieldOptions.length > 0){
 			error.errors.ratingOptions = new mongoose.Error.ValidatorError({path:'fieldOptions', message: 'fieldOptions are only allowed for type dropdown, checkbox or radio fields.', type: 'notvalid', value: this.ratingOptions});
 			console.error(error);
-			return(next(error));
+			return next(error);
 		}
 	}
 
 	return next();
-});
-
-//LogicJump Save
-FormFieldSchema.pre('save', function(next) {
-	if(!this.globalId){
-		this.globalId = tokgen();
-	}
-	next();
 });
 
 //Submission fieldValue correction

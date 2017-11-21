@@ -32,7 +32,8 @@ var sampleVisitorData = [{
 	language:  'en',
 	ipAddr: '192.168.1.1',
 	deviceType: 'desktop',
-	userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
+	userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+	filledOutFields: []
 }];
 
 /**
@@ -412,22 +413,84 @@ describe('Form Routes Unit tests', function() {
 			CurrentForm.save(function(err, form) {
 				if(err) return done(err);
 
-				loginSession.post('/forms/' + form._id)
-					.send(formUpdateObject)
+				loginSession.put('/forms/' + form.id)
+					.send({ form: formUpdateObject })
 					.expect(200)
-					.end(function(FormSaveErr) {
+					.end(function(err, res) {
 
-						should.not.exist(FormSaveErr);
+						should.not.exist(err);
 
-						Form.findById(form._id, function (FormFindErr, UpdatedForm){
+						Form.findById(form.id, function (FormFindErr, UpdatedForm){
 							should.not.exist(FormFindErr);
 							should.exist(UpdatedForm);
 
-							UpdatedForm.toObject().visitors.should.deepEqual(sampleVisitorData);
+							var updatedFormObj = UpdatedForm.toJSON();
+							var oldFormObj = CurrentForm.toJSON();
+
+							updatedFormObj.analytics.should.deepEqual(oldFormObj.analytics);
 
 							done(FormFindErr);
 						});
-		
+					});
+			});
+		});
+
+		it(' > shouldn\'t allow a user to change the id when updating a form', function(done) {
+			// Create new Form model instance
+
+			var formObject = {
+				title: 'First Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var formUpdateObject = {
+				id: mongoose.Types.ObjectId(),
+				title: 'First Form',
+				language: 'en',
+				admin: user.id,
+				form_fields: [
+					new Field({'fieldType':'textfield', 'title':'Last Name', 'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'formula one',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'football',      'fieldValue': ''})
+				],
+				isLive: true
+			};
+
+			var CurrentForm = new Form(formObject);
+
+			// Save the Form
+			CurrentForm.save(function(err, InitialForm) {
+				if(err) return done(err);
+
+				loginSession.put('/forms/' + InitialForm.id)
+					.send({ form: formUpdateObject })
+					.expect(200)
+					.end(function(err, OldForm) {
+						console.log(OldForm.body);
+
+						should.not.exist(err);
+
+						Form.findById(InitialForm.id, function (FormFindErr, UpdatedForm){
+							should.not.exist(FormFindErr);
+							should.exist(UpdatedForm);
+
+							var updatedFormObj = UpdatedForm.toJSON();
+							var oldFormObj = InitialForm.toJSON();
+
+							delete oldFormObj.lastModified;
+							delete updatedFormObj.lastModified;
+
+							updatedFormObj.should.deepEqual(oldFormObj);
+
+							done(FormFindErr);
+						});
 					});
 			});
 		});

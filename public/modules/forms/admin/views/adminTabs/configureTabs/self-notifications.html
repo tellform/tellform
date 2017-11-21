@@ -42,7 +42,7 @@
                     <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
                     {{$select.selected.title}}
                     </ui-select-match>
-                    <ui-select-choices repeat="field.globalId as field in emailFields | filter: { title: $select.search }">
+                    <ui-select-choices repeat="field.id as field in emailFields | filter: { title: $select.search }">
                         <span ng-bind-html="field.title | highlight: $select.search">
                         </span>
                     </ui-select-choices>

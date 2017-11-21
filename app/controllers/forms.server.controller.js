@@ -364,8 +364,8 @@ exports.update = function(req, res) {
 
     var form = req.form;
     var updatedForm = req.body.form;
- 
-    if(!form.analytics){
+
+    if(!form.analytics && req.body.form.analytics){
     	form.analytics = {
     		visitors: [],
     		gaCode: ''
@@ -379,9 +379,18 @@ exports.update = function(req, res) {
 			diff.applyChange(form._doc, true, change);
 		});
 	} else {
+		if(!updatedForm){
+			res.status(400).send({
+				message: 'Updated Form is empty'
+			});
+		}
 
-	    delete updatedForm.__v;
+		delete updatedForm.lastModified; 
 	    delete updatedForm.created; 
+	    delete updatedForm.id;
+	    delete updatedForm._id;
+	    delete updatedForm.__v;
+
 		//Unless we have 'admin' privileges, updating the form's admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
@@ -556,7 +565,8 @@ exports.formByIDFast = function(req, res, next, id) {
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
+	debugger
+	if (req.form.admin.id !== req.user.id || req.user.roles.indexOf('admin') > -1) {
 		res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});
