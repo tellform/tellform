@@ -35,7 +35,6 @@ exports.deleteSubmissions = function(req, res) {
 			return;
 		}
 
-		form.analytics.visitors = [];
 		form.save(function(formSaveErr){
 			if(formSaveErr){
 				res.status(400).send({
