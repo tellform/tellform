@@ -38,7 +38,7 @@ var UserSchema = new Schema({
 		type: String,
 		unique: true,
 		lowercase: true,
-		match: [/^[a-zA-Z0-9\-]+$/, 'Username can only contain alphanumeric characters and \'-\''],
+		match: [constants.regex.username, 'Username can only contain alphanumeric characters and \'-\''],
 		required: [true, 'Username is required']
 	},
 	passwordHash: {

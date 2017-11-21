@@ -1,14 +1,19 @@
 var constants = require('../app/libs/constants');
 
-var validateEmail = function(value) {
-	var isValidEmail = new RegExp(constants.regex.email, 'g').test(value);
+var createRegexValidator = function(regex){
+	return function(value) {
+		var isValid = new RegExp(regex, 'g').test(value);
 
-	if(!isValidEmail){
-		return 'Please enter a valid email'
-	} else {
-		return true;
+		if(!isValid){
+			return 'Please enter a valid email'
+		} else {
+			return true;
+		}
 	}
 }
+
+var validateEmail = createRegexValidator(constants.regex.email);
+var validateUsername = createRegexValidator(constants.regex.username);
 
 module.exports = {
 		replaceENVQuestion: {
@@ -181,7 +186,8 @@ module.exports = {
 			{
 				type: 'input',
 				name: 'username',
-				message: 'What should be the username for your admin account?'
+				message: 'What should be the username for your admin account?',
+				validate: validateUsername
 			},
 			{
 				type: 'password',
