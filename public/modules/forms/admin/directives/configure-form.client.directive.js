@@ -12,7 +12,6 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$sta
                 $rootScope.myform = $scope.myform;
                 $scope.languages = $rootScope.languages;
                 $scope.resetForm = $rootScope.resetForm;
-                $scope.update = $rootScope.update;
 
                 Quill.register('modules/placeholder', PlaceholderModule.default(Quill))
                 $scope.customModules = {
@@ -78,6 +77,14 @@ angular.module('forms').directive('configureFormDirective', ['$rootScope', '$sta
                         }
                     }, 500);
                 });
+
+                $scope.loading = false;
+                $scope.saveChanges = function(){
+                    $scope.loading = true;
+                    $rootScope.update(false, $scope.myform, false, false, function(){
+                         $scope.loading = false;
+                    });
+                };
             }
         };
     }

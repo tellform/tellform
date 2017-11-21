@@ -33,6 +33,9 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	OPTION_PLACEHOLDER: 'Digitare o selezionare un\'opzione',
 	ADD_NEW_LINE_INSTR: 'Premere SHIFT + INVIO per aggiungere una nuova riga',
   	ERROR: 'Errore',
+
+  	LOADING_LABEL: 'Caricamento',
+  	WAIT_LABEL: "Attendere prego",
   	
   	FORM_404_HEADER: '404 - Il modulo non esiste',
   	FORM_404_BODY: 'La forma che stai cercando di accedere non esiste. Ci dispiace!',

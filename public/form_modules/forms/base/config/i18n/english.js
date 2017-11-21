@@ -34,6 +34,9 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 	ADD_NEW_LINE_INSTR: 'Press SHIFT+ENTER to add a newline',
 	ERROR: 'Error',
 
+	LOADING_LABEL: 'Loading',
+	WAIT_LABEL: 'Please wait',
+
 	FORM_404_HEADER: '404 - Form Does Not Exist',
 	FORM_404_BODY: 'The form you are trying to access does not exist. Sorry about that!',
 
