@@ -36,165 +36,150 @@ module.exports = function(){
                .val(_(`{{LoginUsername}}`));
     });
 
-    it('insertVar: password ( #password, {{LoginUsername}} )', async function(){
+    it('insertVar: password ( #password, {{LoginPassword}} )', async function(){
         await driver.sleep(300).wait('#password', 30000)
-               .val(_(`{{LoginUsername}}`));
+               .val(_(`{{LoginPassword}}`));
     });
 
-    it('expect: displayed, .btn-signup, equal, true', async function(){
-        await driver.sleep(300).wait('.btn-signup', 30000)
+    it('mouseUp: Sign in ( button, 375, 45, 0 )', async function(){
+        await driver.sleep(300).wait('button', 30000)
+               .sleep(300).mouseMove(375, 45).mouseMove(375, 45).mouseUp(0);
+    });
+
+    it('expect: displayed, button.btn.btn-signup, equal, true', async function(){
+        await driver.sleep(300).wait('button.btn.btn-signup', 30000)
             .displayed()
             .should.not.be.a('error')
             .should.equal(_(true));
     });
 
-    it('click: Sign in ( button, 174, 18, 0 )', async function(){
-        await driver.sleep(300).wait('button.btn-signup', 30000)
-               .sleep(300).click();
+    it('click: Sign in ( button, 217, 21, 0 )', async function(){
+        await driver.sleep(300).wait('button', 30000)
+               .sleep(300).mouseMove(217, 21).click(0);
     });
 
     it('expect: displayed, div.new-button, equal, true', async function(){
-        await driver.sleep(300).wait('div.new-button', 30000)
+        await driver.sleep(500).wait('div.new-button', 30000)
             .displayed()
             .should.not.be.a('error')
             .should.equal(_(true));
     });
 
-    it('expect: displayed, a.dropdown-toggle, equal, true', async function(){
-        await driver.sleep(300).wait('a.dropdown-toggle', 30000)
+    it('expect: displayed, section.navbar.navbar-inverse, equal, true', async function(){
+        await driver.sleep(300).wait('section.navbar.navbar-inverse', 30000)
             .displayed()
             .should.not.be.a('error')
             .should.equal(_(true));
     });
 
-    it('click: My Settings ( a.dropdown-toggle )', async function(){
-        await driver.sleep(300).wait('a.dropdown-toggle', 30000)
-               .sleep(300).click();
+    it('click: h4.fa, 76, 96, 0', async function(){
+        await driver.sleep(300).wait('h4.fa', 30000)
+               .sleep(300).mouseMove(76, 96).click(0);
     });
 
-    it('× expect: display, ul.dropdown-menu > li:nth-child(1) > a.ng-binding, equal, true', async function(){
-        await driver.sleep(300).wait('ul.dropdown-menu > li:nth-child(1) > a.ng-binding', 30000)
+    it('sleep: 100', async function(){
+        await driver.sleep(100);
+    });
+
+    it('expect: displayed, form[name="forms.createForm"], equal, true', async function(){
+        await driver.sleep(300).wait('form[name="forms.createForm"]', 30000)
             .displayed()
             .should.not.be.a('error')
             .should.equal(_(true));
     });
 
-    it('× expect: display, ul.dropdown-menu > li:nth-child(3) > a.ng-binding, equal, true', async function(){
-        await driver.sleep(300).wait('ul.dropdown-menu > li:nth-child(3) > a.ng-binding', 30000)
+    it('× click: title ( input[name="title"], 115, 12, 0 )', async function(){
+        await driver.sleep(300).wait('input[name="title"]', 30000)
+               .sleep(300).mouseMove(115, 12).click(0);
+    });
+
+    it('× expect: attr, .form-item.create-new.new-form button.btn,disabled, equal, true', async function(){
+        await driver.sleep(300).wait('.form-item.create-new.new-form button.btn', 30000)
+            .attr('disabled')
+            .should.not.be.a('error')
+            .should.equal(_(`true`));
+    });
+
+    it('sendKeys: aeoaoe', async function(){
+        await driver.sendKeys('aeoaoe');
+    });
+
+    it('× expect: attr, .form-item.create-new.new-form button.btn,disabled, equal, undefined', async function(){
+        await driver.sleep(300).wait('.form-item.create-new.new-form button.btn', 30000)
+            .attr('disabled')
+            .should.not.be.a('error')
+            .should.equal(_(null));
+    });
+
+    it('× click: Create this TellForm ( button, 57, 16, 0 )', async function(){
+        await driver.sleep(300).wait('button', 30000)
+               .sleep(300).mouseMove(57, 16).click(0);
+    });
+
+    it('× expect: displayed, i.status-light.status-light-on, equal, true', async function(){
+        await driver.sleep(300).wait('i.status-light.status-light-on', 30000)
             .displayed()
             .should.not.be.a('error')
             .should.equal(_(true));
     });
 
-    it('click: Edit Profile ( ul.dropdown-menu > li:nth-child(1) > a.ng-binding )', async function(){
-        await driver.sleep(300).wait('ul.dropdown-menu > li:nth-child(1) > a.ng-binding', 30000)
-               .sleep(300).click();
-    });
-
-    it('waitBody: ', async function(){
-        await driver.sleep(500).wait('body', 30000).html().then(function(code){
-            isPageError(code).should.be.false;
-        });
-    });
-
-    it('× insertVar: firstName ( #firstName, {{Profile_NewFirstName}} )', async function(){
-        await driver.sleep(300).wait('#firstName', 30000)
-               .val(_(`{{Profile_NewFirstName}}`));
-    });
-
-    it('× insertVar: lastName ( #lastName, {{Profile_NewLastName}} )', async function(){
-        await driver.sleep(300).wait('#lastName', 30000)
-               .val(_(`{{Profile_NewLastName}}`));
-    });
-
-    it('× click: Save Changes ( button.btn-signup )', async function(){
-        await driver.sleep(300).wait('button.btn-signup', 30000)
-               .sleep(300).click();
-    });
-
-    it('× expect: displayed, div.text-success, equal, true', async function(){
-        await driver.sleep(300).wait('div.text-success', 30000)
+    it('× expect: displayed, .btn.btn-danger > .fa.fa-trash-o, equal, true', async function(){
+        await driver.sleep(300).wait('.btn.btn-danger > .fa.fa-trash-o', 30000)
             .displayed()
             .should.not.be.a('error')
             .should.equal(_(true));
     });
 
-    it('× expect: displayed, .text-danger, notEqual, true', async function(){
-        await driver.sleep(300).wait('.text-danger', 300)
-            .displayed()
-            .should.not.be.a('error')
-            .should.not.equal(_(true));
+    it('× click: Create ( //a[text()="Create"], 163, 25, 2 )', async function(){
+        await driver.sleep(300).wait('//a[text()="Create"]', 30000)
+               .sleep(300).mouseMove(163, 25).click(2);
     });
 
-    /*
-    ** Revert back to expected names
-    */
-
-    it('× insertVar: firstName ( #firstName, {{Profile_OldFirstName}} )', async function(){
-        await driver.sleep(300).wait('#firstName', 30000)
-               .val(_(`{{Profile_OldFirstName}}`));
+    it('× mouseUp: aeoaoe ( section.admin-form, 467, 53, 0 )', async function(){
+        await driver.sleep(300).wait('section.admin-form', 30000)
+               .sleep(300).mouseMove(467, 53).mouseMove(467, 53).mouseUp(0);
     });
 
-    it('× insertVar: lastName ( #lastName, {{Profile_OldLastName}} )', async function(){
-        await driver.sleep(300).wait('#lastName', 30000)
-               .val(_(`{{Profile_OldLastName}}`));
+    it('× click: Short Text ( div:nth-child(1) > div.panel-default > div.panel-heading > span.ng-binding, 39, 4, 0 )', async function(){
+        await driver.sleep(300).wait('div:nth-child(1) > div.panel-default > div.panel-heading > span.ng-binding', 30000)
+               .sleep(300).mouseMove(39, 4).click(0);
     });
 
-    it('× click: Save Changes ( button.btn-signup, 95, 10, 0 )', async function(){
-        await driver.sleep(300).wait('button.btn-signup', 30000)
-               .sleep(300).click();
+    it('× insertVar: title ( input[name="title"], {{ShortTextTitle}} )', async function(){
+        await driver.sleep(300).wait('input[name="title"]', 30000)
+               .val(_(`{{ShortTextTitle}}`));
     });
 
-    it('× expect: displayed, .text-danger, notEqual, true', async function(){
-        await driver.sleep(300).wait('.text-danger', 300)
-            .displayed()
-            .should.not.be.a('error')
-            .should.not.equal(_(true));
+    it('mouseUp: 1  SeleniumShortText... ( body, 740, 97, 0 )', async function(){
+        await driver.sleep(300).wait('body', 30000)
+               .sleep(300).mouseMove(740, 97).mouseMove(740, 97).mouseUp(0);
     });
 
-
-    //Check that we can't save an invalid email
-    it('× insertVar: email ( #email, {{Profile_NewInvalidEmail}} )', async function(){
-        await driver.sleep(300).wait('#email', 30000)
-               .val(_(`{{Profile_NewInvalidEmail}}`));
-    });
-
-    it('× click: Save Changes ( button.btn-signup )', async function(){
-        await driver.sleep(300).wait('button.btn-signup', 30000)
-               .sleep(300).click();
-    });
-
-    it('url: http://localhost:5000/#!/settings/profile', async function(){
-        await driver.url(_(`http://localhost:5000/#!/settings/profile`));
-    });
-
-    it('waitBody: ', async function(){
-        await driver.sleep(500).wait('body', 30000).html().then(function(code){
-            isPageError(code).should.be.false;
-        });
-    });
-
-    it('expect: text, #email, notEqual, {{Profile_NewInvalidEmail}}', async function(){
-        await driver.sleep(300).wait('#email', 300)
+    it('× expect: text, field-directive .field-title h3, equal, 1 {{ShortTextTitle}}', async function(){
+        await driver.sleep(300).wait('field-directive .field-title h3', 30000)
             .text()
             .should.not.be.a('error')
-            .should.not.equal(_(`{{Profile_NewInvalidEmail}}`));
+            .should.equal(_(`1 {{ShortTextTitle}}`));
     });
 
-
-    /*
-    ** Logout
-    */
-    it('click: Signout ( //a[text()="Signout"], 31, 31, 0 )', async function(){
-        await driver.sleep(300).wait('//a[text()="Signout"]', 30000)
-               .sleep(300).mouseMove(31, 31).click(0);
-    });
-
-    it('expect: displayed, button.btn-signup, equal, true', async function(){
+    it('× click: Save ( button.btn-signup, 33, 23, 0 )', async function(){
         await driver.sleep(300).wait('button.btn-signup', 30000)
-            .displayed()
-            .should.not.be.a('error')
-            .should.equal(_(true));
+               .sleep(300).mouseMove(33, 23).click(0);
+    });
+
+    it('× click: Delete Form ( span.hidden-sm, 55, 8, 0 )', async function(){
+        await driver.sleep(300).wait('span.hidden-sm', 30000)
+               .sleep(300).mouseMove(55, 8).click(0);
+    });
+
+    it('× dblClick: aeoaoe ( //strong[text()="aeoaoe"], 26, 4, 0 )', async function(){
+        await driver.sleep(300).wait('//strong[text()="aeoaoe"]', 30000)
+               .sleep(300).mouseMove(26, 4).click(0).click(0);
+    });
+
+    it('× click: input.input-block, 399, 3, 0', async function(){
+        await driver.sleep(300).wait('input.input-block', 30000)
+               .sleep(300).mouseMove(399, 3).click(0);
     });
 
     function _(str){

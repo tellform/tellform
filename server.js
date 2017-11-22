@@ -81,9 +81,9 @@ var bootstrap = function() {
 	return app;
 }
 
-module.exports = bootstrap();
-
 // To maintain backwards compatibility, run bootstrap when called as a file
 if(require.main === module) {
 	bootstrap();
+} else {
+	module.exports = bootstrap();
 }

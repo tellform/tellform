@@ -308,7 +308,7 @@ exports.create = function(req, res) {
 			});
 		}
 
-		createdForm = helpers.removeSensitiveModelData('private_form', createdForm);
+		createdForm = helpers.removeSensitiveModelData('private_form', createdForm.toJSON());
 		return res.json(createdForm);
 	});
 };
@@ -326,13 +326,8 @@ exports.read = function(req, res) {
 				});
 			}
 
-			var newForm = req.form.toJSON();
-
-			if(newForm.admin === req.user._id){
-				return res.json(newForm);
-			}
-		
-			newForm = helpers.removeSensitiveModelData('private_form', newForm);
+			newForm = helpers.removeSensitiveModelData('private_form', req.form.toJSON());
+			
 			return res.json(newForm);
 	}
 };
@@ -348,7 +343,7 @@ var readForRender = exports.readForRender = function(req, res) {
 		});
 	}
 
-	newForm = helpers.removeSensitiveModelData('public_form', newForm);
+	newForm = helpers.removeSensitiveModelData('public_form', newForm.toJSON());
 
 	if(newForm.startPage && !newForm.startPage.showStart){
 		delete newForm.startPage;
@@ -413,7 +408,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			savedForm = helpers.removeSensitiveModelData('private_form', savedForm);
+			savedForm = helpers.removeSensitiveModelData('private_form', savedForm.toJSON());
 			res.json(savedForm);
 		}
 	});
@@ -526,7 +521,7 @@ exports.formByID = function(req, res, next, id) {
 		}
 		else {
 			//Remove sensitive information from User object
-			req.form = helpers.removeSensitiveModelData('private_form', form);
+			req.form = helpers.removeSensitiveModelData('private_form', form.toJSON());
 			return next();
 		}
 	});

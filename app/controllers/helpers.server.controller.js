@@ -1,6 +1,7 @@
 'use strict';
 
 const constants = require('../libs/constants');
+const _ = require('lodash');
 
 module.exports = {
 	removeKeysFromDict: function(dict, keys){
@@ -10,29 +11,18 @@ module.exports = {
 				delete dict[curr_key];
 			}
 		}
+		return dict;
 	},
-	removeSensitiveModelData: function(type, object){
-		switch(type){
-			case 'private_form':
-	            this.removeKeysFromDict(object, constants.privateFields[type]);
-	            if(object.admin){
-	            	this.removeKeysFromDict(object.admin, constants.privateFields.private_user);
-	            }
-	            break;
+	removeSensitiveModelData: function(type, actual_object){
+		var object = _.cloneDeep(actual_object);
 
-	        case 'public_form':
-				this.removeKeysFromDict(object, constants.privateFields[type]);
-				if(object.admin){
-	            	this.removeKeysFromDict(object.admin, constants.privateFields.public_user);
-	        	}
-	            break;
-
-	        default:
-	        	if(constants.privateFields.hasOwnProperty(type)){
-	        		this.removeKeysFromDict(object, constants.privateFields[type]);
-	        	} 
-	            break;
-		}
+		if(constants.privateFields.hasOwnProperty(type)) {
+	        object = this.removeKeysFromDict(object, constants.privateFields[type]);
+	    }
+        if(object.admin){
+        	object.admin = this.removeKeysFromDict(object.admin, constants.privateFields.private_user);
+        }
+		debugger;
 
 		return object;
 	}

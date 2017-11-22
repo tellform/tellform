@@ -72,23 +72,28 @@ module.exports = function(){
                .sleep(300).click();
     });
 
-    it('× expect: display, ul.dropdown-menu > li:nth-child(1) > a.ng-binding, equal, true', async function(){
-        await driver.sleep(300).wait('ul.dropdown-menu > li:nth-child(1) > a.ng-binding', 30000)
+    it('× expect: display, li:nth-child(1) > a.ng-binding, equal, true', async function(){
+        await driver.sleep(300).wait('li:nth-child(1) > a.ng-binding', 30000)
             .displayed()
             .should.not.be.a('error')
             .should.equal(_(true));
     });
 
-    it('× expect: display, ul.dropdown-menu > li:nth-child(3) > a.ng-binding, equal, true', async function(){
-        await driver.sleep(300).wait('ul.dropdown-menu > li:nth-child(3) > a.ng-binding', 30000)
+    it('× expect: display, li:nth-child(3) > a.ng-binding, equal, true', async function(){
+        await driver.sleep(300).wait('li:nth-child(3) > a.ng-binding', 30000)
             .displayed()
             .should.not.be.a('error')
             .should.equal(_(true));
     });
 
-    it('click: Edit Profile ( ul.dropdown-menu > li:nth-child(1) > a.ng-binding )', async function(){
-        await driver.sleep(300).wait('ul.dropdown-menu > li:nth-child(1) > a.ng-binding', 30000)
-               .sleep(300).click();
+    it('click: Edit Profile ( li:nth-child(1) > a.ng-binding)', async function(){
+        await driver.sleep(300).wait('li:nth-child(1) > a.ng-binding', 30000)
+               .sleep(300).mouseMove(54.59375, 14).mouseDown(0);
+    });
+
+    it('click: Edit Profile ( li:nth-child(1) > a.ng-binding, 52, 13, 0 )', async function(){
+        await driver.sleep(300).wait('li:nth-child(1) > a.ng-binding', 30000)
+               .sleep(300).mouseMove(52, 13).click(0);
     });
 
     it('waitBody: ', async function(){
@@ -107,9 +112,14 @@ module.exports = function(){
                .val(_(`{{Profile_NewLastName}}`));
     });
 
-    it('× click: Save Changes ( button.btn-signup )', async function(){
+    it('× click: Save Changes ( button.btn-signup, 95, 10, 0 )', async function(){
         await driver.sleep(300).wait('button.btn-signup', 30000)
-               .sleep(300).click();
+               .sleep(300).mouseMove(95, 10).click(0);
+    });
+
+    it('× mouseUp: Profile saved succes... ( section.row, 333, 78, 0 )', async function(){
+        await driver.sleep(300).wait('section.row', 30000)
+               .sleep(300).mouseMove(333, 78).mouseMove(333, 78).mouseUp(0);
     });
 
     it('× expect: displayed, div.text-success, equal, true', async function(){
@@ -142,7 +152,7 @@ module.exports = function(){
 
     it('× click: Save Changes ( button.btn-signup, 95, 10, 0 )', async function(){
         await driver.sleep(300).wait('button.btn-signup', 30000)
-               .sleep(300).click();
+               .sleep(300).click(0);
     });
 
     it('× expect: displayed, .text-danger, notEqual, true', async function(){
@@ -159,9 +169,9 @@ module.exports = function(){
                .val(_(`{{Profile_NewInvalidEmail}}`));
     });
 
-    it('× click: Save Changes ( button.btn-signup )', async function(){
+    it('× click: Save Changes ( button.btn-signup, 90, 16, 0 )', async function(){
         await driver.sleep(300).wait('button.btn-signup', 30000)
-               .sleep(300).click();
+               .sleep(300).click(0);
     });
 
     it('url: http://localhost:5000/#!/settings/profile', async function(){
@@ -172,6 +182,16 @@ module.exports = function(){
         await driver.sleep(500).wait('body', 30000).html().then(function(code){
             isPageError(code).should.be.false;
         });
+    });
+
+    it('click: Email ( div:nth-child(8) > div.field-title, 352, 0, 0 )', async function(){
+        await driver.sleep(300).wait('div:nth-child(8) > div.field-title', 30000)
+               .sleep(300).click(0);
+    });
+
+    it('click: Email ( //h4[text()="Email"], 323, 5, 0 )', async function(){
+        await driver.sleep(300).wait('//h4[text()="Email"]', 30000)
+               .sleep(300).click(0);
     });
 
     it('expect: text, #email, notEqual, {{Profile_NewInvalidEmail}}', async function(){
