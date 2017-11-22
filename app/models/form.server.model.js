@@ -241,3 +241,4 @@ FormSchema.index({created: 1});
 
 mongoose.model('Form', FormSchema);
 
+module.exports = mongoose.model('Form');

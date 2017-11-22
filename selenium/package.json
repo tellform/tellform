@@ -12,8 +12,7 @@
     "resemblejs-node": "1.0.0",
     "selenium-standalone": "6.x.x"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "installdriver": "./node_modules/.bin/selenium-standalone install --drivers.firefox.baseURL=http://npm.taobao.org/mirrors/geckodriver --baseURL=http://npm.taobao.org/mirrors/selenium --drivers.chrome.baseURL=http://npm.taobao.org/mirrors/chromedriver --drivers.ie.baseURL=http://npm.taobao.org/mirrors/selenium",
     "server": "./node_modules/.bin/selenium-standalone start",

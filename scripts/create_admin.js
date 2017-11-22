@@ -7,9 +7,6 @@ exports.run = function(app, db, cb) {
 
 	var User = mongoose.model('User');
 	var username =  config.admin.username;
-
-	console.log('username: ' + config.admin.username);
-	console.log('password: ' + config.admin.password);
 	
 	var newUserObj = {
 		firstName: 'Admin',

@@ -81,3 +81,5 @@ FormSubmissionSchema.plugin(timeStampPlugin, {
 });
 
 mongoose.model('FormSubmission', FormSubmissionSchema);
+
+module.exports = mongoose.model('FormSubmission');

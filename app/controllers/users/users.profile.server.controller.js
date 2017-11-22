@@ -18,6 +18,8 @@ exports.update = function(req, res) {
 	// To improve security we remove the roles from the req.body object
 	delete req.body.roles;
 
+	debugger;
+
 	// Merge existing user
 	user = _.extend(user, req.body);
 	user.updated = Date.now();
@@ -32,7 +34,7 @@ exports.update = function(req, res) {
 			if (err) {
 				res.status(500).send(loginErr);
 			} else {
-				user = helpers.removeSensitiveModelData('private_user', user);
+				user = helpers.removeSensitiveModelData('private_user', user.toJSON());
 				res.json(user);
 			}
 		});
@@ -44,7 +46,7 @@ exports.update = function(req, res) {
  * Send User
  */
 exports.getUser = function(req, res) {
-	var user = helpers.removeSensitiveModelData('private_user', req.user);
+	var user = helpers.removeSensitiveModelData('private_user', req.user.toJSON());
 
 	return res.json(user);
 };

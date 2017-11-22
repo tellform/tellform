@@ -180,7 +180,7 @@ exports.signin = function(req, res, next) {
 
 				res.cookie('langCookie', user.language, { maxAge: 90000, httpOnly: true });
 				
-				user = helpers.removeSensitiveModelData('private_user', user);
+				user = helpers.removeSensitiveModelData('private_user', user.toJSON());
 				return res.json(user);
 			});
 		}
