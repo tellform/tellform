@@ -57,7 +57,7 @@ FormSubmissionSchema.pre('save', function (next) {
             this.form_fields[i].fieldValue = this.form_fields[i].fieldValue.option_value;
         }
 
-    	helpers.removeKeysFromDict(form_fields[i], constants.extraneousFormFieldProps); 
+    	helpers.removeKeysFromDict(this.form_fields[i], constants.extraneousFormFieldProps); 
     }
     next();
 });

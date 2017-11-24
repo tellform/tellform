@@ -326,7 +326,7 @@ exports.read = function(req, res) {
 				});
 			}
 
-			newForm = helpers.removeSensitiveModelData('private_form', req.form.toJSON());
+			var newForm = helpers.removeSensitiveModelData('private_form', req.form.toJSON());
 			
 			return res.json(newForm);
 	}
@@ -560,7 +560,6 @@ exports.formByIDFast = function(req, res, next, id) {
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	debugger
 	if (req.form.admin.id !== req.user.id || req.user.roles.indexOf('admin') > -1) {
 		res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
