@@ -65,8 +65,6 @@ angular.module('view-form').directive('onEnterKey', ['$rootScope', function($roo
 				var keyCode = event.which || event.keyCode;
 
 				if(keyCode === 9 && event.shiftKey) {
-
-					console.log('onTabAndShiftKey');
 					event.preventDefault();
 					$rootScope.$apply(function() {
 						$rootScope.$eval($attrs.onTabAndShiftKey);

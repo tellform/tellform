@@ -65,9 +65,11 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		VIEW_MY_TELLFORM: 'Mein tellform anzeigen',
 		LIVE: 'Leben',
 		PREVIEW: 'Vorschau',
+
+		//Share Tab
+		COPIED_LABEL: 'Kopiert',
 		COPY: 'Kopieren',
 		COPY_AND_PASTE: 'Kopieren und einfügen, um Ihre TellForm auf Ihrer Website hinzuzufügen',
-		CHANGE_WIDTH_AND_HEIGHT: 'Ändern Sie die Werte für Breite und Höhe, um Ihnen am besten zu entsprechen',
 		POWERED_BY: 'Unterstützt von',
 		TELLFORM_URL: "Ihr TellForm ist dauerhaft unter dieser URL",
 

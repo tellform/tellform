@@ -25,6 +25,9 @@ angular.module(ApplicationConfiguration.applicationModuleName).constant('USER_RO
   superuser: 'superuser'
 });
 
+//users url
+angular.module(ApplicationConfiguration.applicationModuleName).constant('USERS_URL', '/users');
+
 //form url
 angular.module(ApplicationConfiguration.applicationModuleName).constant('FORM_URL', '/forms/:formId');
 

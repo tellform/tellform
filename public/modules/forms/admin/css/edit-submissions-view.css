@@ -1,4 +1,19 @@
-
+/*Styles for submission table*/
+.submissions-table .table-outer.row {
+    margin: 1.5em 0 2em 0!important;
+}
+.submissions-table .table-outer .col-xs-12 {
+    padding-left: 0!important;
+    border:1px solid #ddd;
+    overflow-x: scroll; 
+    border-radius:3px;
+}
+.submissions-table .table > thead > tr > th {
+    min-width:8em;
+}
+.submissions-table .table > tbody > tr.selected {
+    background-color:#efefef;
+}
 
 .analytics .header-title {
 	font-size: 1em;

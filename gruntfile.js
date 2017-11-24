@@ -18,8 +18,13 @@ var bowerArray = ['public/lib/angular/angular.min.js',
 	'public/lib/js-yaml/dist/js-yaml.js',
 	'public/lib/angular-sanitize/angular-sanitize.min.js'];
 
+const bowerFiles = require('main-bower-files');
+const bowerDep = bowerFiles('**/**.js');
+
 module.exports = function(grunt) {
 	require('jit-grunt')(grunt);
+
+	var angularTestDeps = ['public/lib/angular/angular.js', 'public/lib/angular-mocks/angular-mocks.js'];
 
 	// Unified Watch Object
 	var watchFiles = {
@@ -27,7 +32,7 @@ module.exports = function(grunt) {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 
 		clientViews: ['public/modules/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html',],
-		clientJS: ['public/form_modules/**/*.js', 'public/modules/**/*.js'],
+		clientJS: ['public/config.js', 'public/form-config.js', 'public/application.js', 'public/form-application.js', 'public/form_modules/**[!tests]/*.js', 'public/modules/**[!tests]/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
 
 		serverTests: ['app/tests/**/*.js'],
@@ -201,7 +206,7 @@ module.exports = function(grunt) {
 				    level: 'log',
 				    terminal: true
 				},
-			    singleRun: true
+			    singleRun: false
             }
 		},
 	    mocha_istanbul: {
@@ -219,7 +224,7 @@ module.exports = function(grunt) {
 	      options: {
 	          emitters: ['event'],
 	      },
-	      src: ['./coverageServer/*.info', './coverageClient/lcov-report/*.info']
+	      src: ['./coverageServer/*.info', './coverageClient/**/*.info']
 	    },
 		html2js: {
 			options: {

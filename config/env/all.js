@@ -10,16 +10,14 @@ module.exports = {
 	db: {
 		uri: process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR  || '127.0.0.1') + '/mean',
 		options: {
-			user: '',
-			pass: ''
+			useMongoClient: true
 		}
 	},
-	
-	
-	admin:{
+	admin: {
 		email: process.env.ADMIN_EMAIL || 'admin@admin.com',
 		username: process.env.ADMIN_USERNAME || 'root',
 		password: process.env.ADMIN_PASSWORD || 'root',
+		roles: ['user', 'admin']
 	},
 	
 	redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
@@ -103,18 +101,18 @@ module.exports = {
 			'public/config.js',
             'public/application.js',
 			'public/dist/populate_template_cache.js',
+			'public/dist/form_populate_template_cache.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*/*.js',
 			'public/modules/*/*/*/*.js',
 			'public/modules/*/*/*/*/*.js',
+			'!public/modules/*/tests/**/*.js',
 			'public/form_modules/forms/*.js',
 			'public/form_modules/forms/directives/*.js',
 			'public/form_modules/forms/base/config/*.js',
 			'public/form_modules/forms/base/config/*/*.js',
 			'public/form_modules/forms/base/**/*.js',
 			'public/form_modules/forms/base/*/*.js',
-			'!public/modules/*/tests/**/*.js',
-			'!public/modules/*/tests/*.js'
 		],
 		form_js: [
 			'public/form-config.js',
@@ -123,8 +121,7 @@ module.exports = {
 			'public/form_modules/forms/*.js',
 			'public/form_modules/forms/*/*.js',
 			'public/form_modules/forms/*/*/*.js',
-			'public/form_modules/forms/*/*/*/*.js',
-			'public/form_modules/forms/**.js',
+			'public/form_modules/forms/**/*.js',
 			'!public/form_modules/**/tests/**/*.js'
 		],
 		views: [

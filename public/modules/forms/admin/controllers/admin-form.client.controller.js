@@ -53,7 +53,7 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             },
             {
                 heading: $filter('translate')('SHARE_TAB'),
-                route: 'viewForm.share',
+                route: 'viewForm.share.share_form',
                 active: false
             },
             {
@@ -115,7 +115,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             $scope.deleteModal = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'formDeleteModal.html',
-                controller: 'AdminFormController',
                 resolve: {
                     myForm: function(){
                         return $scope.myform;
@@ -208,20 +207,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                     if(dataToSend.analytics && dataToSend.analytics.visitors){
                         delete dataToSend.analytics.visitors;
                     }
-                    if(dataToSend.submissions){
-                        delete dataToSend.submissions;
-                    }
 
                     if(dataToSend.visible_form_fields){
                         delete dataToSend.visible_form_fields;
-                    }
-
-                     if(dataToSend.analytics){
-                        delete dataToSend.analytics.visitors;
-                        delete dataToSend.analytics.fields;
-                        delete dataToSend.analytics.submissions;
-                        delete dataToSend.analytics.views;
-                        delete dataToSend.analytics.conversionRate;
                     }
 
                     delete dataToSend.created;

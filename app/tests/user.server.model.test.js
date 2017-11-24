@@ -5,8 +5,8 @@
  */
 var should = require('should'),
 	mongoose = require('mongoose'),
-	User = mongoose.model('User');
-
+	User = require('../models/user.server.model.js');
+	
 /**
  * Globals
  */

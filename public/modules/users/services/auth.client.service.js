@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').factory('Auth', ['$window',
-  function($window) {
+angular.module('users').factory('Auth', ['$window', '$q', 'User',
+  function($window, $q, User) {
 
     var userState = {
       isLoggedIn: false
@@ -16,46 +16,50 @@ angular.module('users').factory('Auth', ['$window',
       // Note: we can't make the User a dependency of Auth
       // because that would create a circular dependency
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
-      ensureHasCurrentUser: function(User) {
-        if (service._currentUser && service._currentUser.username) {
-          return service._currentUser;
-        } else if ($window.user){
-          service._currentUser = $window.user;
-          return service._currentUser;
+      ensureHasCurrentUser: function() {
+        var deferred = $q.defer();
+
+        if (this._currentUser && this._currentUser.username) {
+          deferred.resolve(this._currentUser);
+        } else if ($window.user) {
+          this._currentUser = $window.user;
+          deferred.resolve(this._currentUser)
         } else {
-          User.getCurrent().then(function(user) {
-            // success
-            service._currentUser = user;
+          var that = this;
+          User.getCurrent().then(function(fetchedUser) {
+            that._currentUser = fetchedUser;
+            $window.user = fetchedUser;
             userState.isLoggedIn = true;
-            $window.user = service._currentUser;
-            return service._currentUser;
+            deferred.resolve(fetchedUser);
           },
           function(response) {
-            userState.isLoggedIn = false;
-            service._currentUser = null;
+            that._currentUser = null;
             $window.user = null;
-            return null;
+            userState.isLoggedIn = false;
+            deferred.reject('User data could not be fetched from server');
           });
         }
+
+        return deferred.promise;
       },
 
       isAuthenticated: function() {
-        return !!service._currentUser;
-      },
-
-      getUserState: function() {
-        return userState;
+        return !!this._currentUser && this._currentUser.username;
       },
 
       login: function(new_user) {
         userState.isLoggedIn = true;
-        service._currentUser = new_user;
+        this._currentUser = new_user;
+      },
+
+      update: function(new_user) {
+        this._currentUser = new_user;
       },
 
       logout: function() {
         $window.user = null;
         userState.isLoggedIn = false;
-        service._currentUser = null;
+        this._currentUser = null;
       }
     };
     return service;

@@ -3,36 +3,43 @@ var config = require('../config/config'),
   	chalk = require('chalk');
 
 exports.run = function(app, db, cb) {
+	console.log(chalk.green('Creating the Admin Account'));
 
 	var User = mongoose.model('User');
-	var email = 'admin@admin.com' || config.admin.email;
+	var username =  config.admin.username;
 	
-	var newUser = new User({
+	var newUserObj = {
 		firstName: 'Admin',
 		lastName: 'Account',
-		email: email,
-		username: 'root' || config.admin.username,
-		password: 'root' || config.admin.password,
-		provider: 'local',
-		roles: ['admin', 'user']
-	});
+		email: config.admin.email,
+		username: username,
+		roles: config.admin.roles
+	};
 
-	User.findOne({email: email}, function (err, user) {
+	var options = {
+		upsert: true,
+		new: true, 
+		setDefaultsOnInsert: true
+	}
+
+	User.findOneAndUpdate({username: username}, newUserObj, options, function (err, currUser1) {
 		if (err) {
-			cb(err);
+			return cb(err);
 		}
 
-		if(!user){
-			newUser.save(function (userErr) {
-				if (userErr) {
-					return cb(userErr);
-				}
-				console.log(chalk.green('Successfully created Admin Account'));
-
-				cb();
-			});
+		if(!currUser1){
+			return cb(new Error('Couldn\'t create admin account'))
 		} else {
-			cb('User already exists!');
+
+			currUser1.password = config.admin.password;
+			currUser1.save(function(err, currUser2){
+				if (err) {
+					return cb(err);
+				}
+
+				console.log(chalk.green('Successfully created/updated Admin Account'));
+				return cb();
+			});
 		}
 	});
 }

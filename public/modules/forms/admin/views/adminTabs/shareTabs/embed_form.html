@@ -1,0 +1,27 @@
+<div class="row share-row">
+	<div class="col-sm-12">
+		{{ 'COPY_AND_PASTE' | translate }}
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-10 form-input">
+		<span>
+			<div id="copyEmbedded" class="form-control">
+				{{ embedCode }}
+			</div>
+		</span>
+	</div>
+	<div class="col-sm-2">
+		<button class="btn btn-secondary view-form-btn" 
+			ngclipboard data-clipboard-text="{{embedCode}}" ngclipboard-success="onCopySuccess()">
+			
+			<span ng-if="!isCopied">
+				{{ 'COPY' | translate }} <i class="fa fa-clipboard" aria-hidden="true"></i>
+			</span>
+			<span ng-if="isCopied">
+				{{ 'COPIED_LABEL' | translate }}
+			</span>
+		
+		</button>
+	</div>
+</div>

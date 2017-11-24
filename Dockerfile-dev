@@ -10,12 +10,23 @@ MAINTAINER David Baldwynn <team@tellform.com>
 # Install NPM Global Libraries
 RUN npm install --quiet -g grunt bower && npm cache clean
 
-ADD . /code
 WORKDIR /code
 
+# Add bower.json
+COPY package.json /code/package.json
+COPY bower.json /code/bower.json
+COPY .bowerrc /code/.bowerrc
+
+COPY ./process.yml /code/process.yml
+COPY ./app /code/app
+COPY ./public /code/public
+COPY ./config /code/config
+COPY ./gruntfile.js /code/gruntfile.js
+COPY ./server.js /code/server.js
+COPY ./scripts/create_admin.js /code/scripts/create_admin.js
+
 RUN npm install --quiet
-RUN bower install --interactive-mode=false --allow-root
-RUN grunt build
+RUN bower install --config.interactive=false --allow-root
 
 # Run TellForm server
-CMD ["grunt"]
+CMD ["node", "server.js"]

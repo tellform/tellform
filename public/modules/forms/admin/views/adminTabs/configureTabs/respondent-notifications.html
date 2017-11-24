@@ -13,23 +13,22 @@
                 <i class="status-light status-light-off fa fa-circle" ng-if="!myform.respondentNotifications.enabled"></i>
             </div>
             <div class="notification-row">
-                <h5>{{ 'ENABLE_RESPONDENT_NOTIFICATIONS' | translate }}</h5>
+                <h4>{{ 'ENABLE_RESPONDENT_NOTIFICATIONS' | translate }}</h4>
             </div>
 
             <div class="notification-row">
-                <input class="toggle-switch notification-toggle" type="checkbox" switch-size="small"
-                    bs-switch ng-model="myform.respondentNotifications.enabled"
+                <input bs-switch class="toggle-switch notification-toggle" type="checkbox" 
+                    switch-size="small"
+                    ng-model="myform.respondentNotifications.enabled" 
                     switch-on-text="{{ 'ON' | translate }}"
                     switch-off-text="{{ 'OFF' | translate }}"
-                    ng-disabled="!formHasEmailField"
-                    ng-true-value="true"
-                    ng-false-value="false">
+                    switch-active="{{formHasEmailField}}">
             </div>
         </div>
 
         <div class="row field" ng-if="formHasEmailField">
             <div class="field-title col-sm-12">
-                <h5>{{ 'SEND_NOTIFICATION_TO' | translate }}:</h5>
+                <h4>{{ 'SEND_NOTIFICATION_TO' | translate }}</h4>
             </div>
 
             <div class="col-sm-12 field-input">
@@ -37,7 +36,7 @@
                     <ui-select-match placeholder="{{ 'OPTION_PLACEHOLDER' | translate }}">
                         {{$select.selected.title}}
                     </ui-select-match>
-                    <ui-select-choices repeat="field.globalId as field in emailFields | filter: { title: $select.search }">
+                    <ui-select-choices repeat="field.id as field in emailFields | filter: { title: $select.search }">
                         <span ng-bind-html="field.title | highlight: $select.search">
                         </span>
                     </ui-select-choices>
@@ -47,7 +46,7 @@
 
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'REPLY_TO' | translate }}:</h5>
+                <h4>{{ 'REPLY_TO' | translate }}</h4>
             </div>
 
             <div class="col-sm-12 field-input">
@@ -60,25 +59,50 @@
 
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'EMAIL_SUBJECT' | translate }}:</h5>
+                <h4>{{ 'EMAIL_SUBJECT' | translate }}</h4>
             </div>
             <div class="col-sm-12 field-input">
-                <text-angular class="email-subject" ng-model="myform.respondentNotifications.subject" ta-toolbar="[['insertField']]" ta-default-wrap="n" ta-unsafe-sanitizer="true">
-                </text-angular>
+                <ng-quill-editor modules="customModules"
+                ng-model="myform.respondentNotifications.subject">
+                    <ng-quill-toolbar>
+                        <div id="ng-quill-toolbar">
+                            <span class="ql-formats">
+                                <select class="ql-placeholder">
+                                    <option ng-repeat="placeholder in customModules.placeholder.placeholders" value="{{placeholder.id}}">
+                                        {{placeholder.label}}
+                                    </option>
+                                </select>
+                            </span>
+                        </div>
+                    </ng-quill-toolbar>
+                </ng-quill-editor>
             </div>
         </div>
 
         <div class="row field">
             <div class="field-title col-sm-12">
-                <h5>{{ 'EMAIL_MESSAGE' | translate }}</h5>
+                <h4>{{ 'EMAIL_MESSAGE' | translate }}</h4>
             </div>
 
             <div class="col-sm-12 field-input">
-                <text-angular class="email-subject" ng-model="myform.respondentNotifications.htmlTemplate" 
-                ta-toolbar="[['bold','italics', 'insertField']]" 
-                ta-unsafe-sanitizer="true">
-                </text-angular>
-                <div ng-bind="myform.respondentNotifications.htmlTemplate"></div>
+                <ng-quill-editor modules="customModules"
+                ng-model="myform.respondentNotifications.htmlTemplate">
+                    <ng-quill-toolbar>
+                        <div id="ng-quill-toolbar">
+                            <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-placeholder">
+                                    <option ng-repeat="placeholder in customModules.placeholder.placeholders" value="{{placeholder.id}}">
+                                        {{placeholder.label}}
+                                    </option>
+                                </select>
+                            </span>
+                        </div>
+                    </ng-quill-toolbar>
+                </ng-quill-editor>
             </div>
         </div>
     </div>
