@@ -39,8 +39,9 @@ var configureSocketIO = function (app, db) {
 var supportedLanguages = ['en', 'de', 'fr', 'it', 'es'];
 
 function containsAnySupportedLanguages(preferredLanguages){
-	for (var i = 0; i < preferredLanguages.length; i++) {
-		var currIndex = supportedLanguages.indexOf(preferredLanguages[i]);
+	var i, currIndex;
+	for (i = 0; i < preferredLanguages.length; i++) {
+		currIndex = supportedLanguages.indexOf(preferredLanguages[i]);
 	    if (currIndex > -1) {
 	        return supportedLanguages[currIndex];
 	    }
@@ -77,6 +78,7 @@ module.exports = function(db) {
 		app.locals.socketUrl = config.socketUrl;
 	} 
 
+	app.locals.bowerFormJSFiles = config.getBowerFormJSAssets();
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
 	app.locals.bowerCssFiles = config.getBowerCSSAssets();
 	app.locals.bowerOtherFiles = config.getBowerOtherAssets();
@@ -226,7 +228,6 @@ module.exports = function(db) {
 
 	// Setting the app router and static folder
 	app.use('/static', express.static(path.resolve('./public')));
-	app.use('/uploads', express.static(path.resolve('./uploads')));
 
 	// CookieParser should be above session
 	app.use(cookieParser());
@@ -261,6 +262,7 @@ module.exports = function(db) {
 	//Visitor Language Detection
 	app.use(function(req, res, next) {
 		var acceptLanguage = req.headers['accept-language'];
+
 		var languages, supportedLanguage;
 
 		if(acceptLanguage){
@@ -270,13 +272,12 @@ module.exports = function(db) {
 
 		if(!req.user && supportedLanguage !== null){
 			var currLanguage = res.cookie('userLang');
-
 			if(currLanguage && currLanguage !== supportedLanguage || !currLanguage){
 				res.clearCookie('userLang');
 				res.cookie('userLang', supportedLanguage, { maxAge: 90000, httpOnly: true });
+			} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies.userLang !== req.user.language) ){
+				res.cookie('userLang', req.user.language, { maxAge: 90000, httpOnly: true });
 			}
-		} else if(req.user && (!req.cookies.hasOwnProperty('userLang') || req.cookies['userLang'] !== req.user.language) ){
-			res.cookie('userLang', req.user.language, { maxAge: 90000, httpOnly: true });
 		}
 		next();
 	});
@@ -336,22 +337,6 @@ module.exports = function(db) {
 			error: 'Not Found'
 		});
 	});
-
-	if (process.env.NODE_ENV === 'secure') {
-		// Load SSL key and certificate
-		var privateKey = fs.readFileSync('./config/sslcerts/key.pem', 'utf8');
-		var certificate = fs.readFileSync('./config/sslcerts/cert.pem', 'utf8');
-
-		// Create HTTPS Server
-		var httpsServer = https.createServer({
-			key: privateKey,
-			cert: certificate
-		}, app);
-
-		// Return HTTPS server instance
-		return httpsServer;
-	}
-
 
 	app = configureSocketIO(app, db);
 

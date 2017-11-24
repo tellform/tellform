@@ -30,6 +30,6 @@ module.exports = {
 	assets: {
 		css: ['public/dist/application.min.css'],
 		js: ['public/dist/application.min.js', 'public/dist/populate_template_cache.js'],
-		form_js: ['public/dist/form-application.min.js', 'public/dist/form_populate_template_cache.js', 'public/dist/form-vendor.min.js']
+		form_js: ['public/dist/form-application.min.js', 'public/dist/form_populate_template_cache.js']
 	}
 };

@@ -31,7 +31,7 @@ module.exports = function(app) {
 	}
 
    	app.route('/forms/:formIdFast([a-zA-Z0-9]+)')
-        .post(forms.createSubmission)
+        .post(forms.createSubmission);
 	
 	app.route('/forms')
 		.get(auth.isAuthenticatedOrApiKey, forms.list)
@@ -47,6 +47,8 @@ module.exports = function(app) {
 		.get(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.listSubmissions)
 		.delete(auth.isAuthenticatedOrApiKey, forms.hasAuthorization, forms.deleteSubmissions);
 
+	app.route('/forms/:formIdNoMiddleware([a-zA-Z0-9]+)/visitors')
+		.get(auth.isAuthenticatedOrApiKey, forms.getVisitorData);
 	// Slower formId middleware
 	app.param('formId', forms.formByID);
 

@@ -1,7 +1,7 @@
 {
   "name": "TellForm",
   "description": "Opensource alternative to TypeForm",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "homepage": "https://github.com/tellform/tellform",
   "authors": [
     "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
@@ -22,6 +22,7 @@
     "start": "grunt",
     "test": "grunt test",
     "postinstall": "bower install --config.interactive=false",
+    "travis": "grunt test:travis",
     "init": "node scripts/setup.js"
   },
   "dependencies": {
@@ -41,7 +42,7 @@
     "express": "~4.13.3",
     "express-session": "~1.12.1",
     "glob": "^7.0.3",
-    "grunt": "~0.4.1",
+    "grunt": "^0.4.5",
     "grunt-concurrent": "~2.3.0",
     "grunt-contrib-csslint": "~1.0.0",
     "grunt-contrib-cssmin": "~1.0.1",
@@ -57,7 +58,7 @@
     "main-bower-files": "~2.9.0",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
-    "mongoose": "~4.4.19",
+    "mongoose": "^4.13.0",
     "morgan": "~1.8.1",
     "nodemailer": "~4.0.0",
     "passport": "~0.3.0",
@@ -72,7 +73,6 @@
     "request": "^2.83.0",
     "socket.io": "^1.4.6",
     "socket.io-redis": "^1.0.0",
-    "swig": "~1.4.1",
     "uuid-token-generator": "^0.5.0",
     "winston": "^2.3.1"
   },
@@ -86,11 +86,10 @@
     "grunt-closure-compiler": "0.0.21",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-uglify": "^0.11.1",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-execute": "^0.2.2",
-    "grunt-i18nlint": "github:jwarby/grunt-i18nlint",
     "grunt-karma": "~0.12.1",
+    "grunt-lcov-merge": "^1.2.3",
     "grunt-mocha-istanbul": "^3.0.1",
     "grunt-mocha-test": "~0.12.1",
     "grunt-newer": "~1.1.1",
@@ -98,7 +97,7 @@
     "grunt-usemin": "^3.1.1",
     "grunt-wiredep": "^3.0.1",
     "istanbul": "^0.4.0",
-    "jasmine-core": "^2.4.1",
+    "jasmine-core": "^2.6",
     "karma": "~0.13.14",
     "karma-chrome-launcher": "~0.2.1",
     "karma-coverage": "~0.5.3",
@@ -111,7 +110,7 @@
     "mocha": "^3.1.2",
     "mocha-lcov-reporter": "^1.0.0",
     "nightwatch": "^0.9.8",
-    "phantomjs": "^1.9.18",
+    "phantomjs-prebuilt": "^2.1.15",
     "selenium-server": "^3.0.1",
     "should": "~7.1.1",
     "supertest": "~1.2.0",

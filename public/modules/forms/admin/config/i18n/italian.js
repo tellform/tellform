@@ -5,16 +5,31 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
   	$translateProvider.translations('it', {
 		// Configura la visualizzazione scheda modulo
 		ADVANCED_SETTINGS: 'Impostazioni avanzate',
-		FORM_NAME: 'Nome modulo',
-		FORM_STATUS: 'Stato modulo',
+		FORM_NAME: 'Il tuo tellform è chiamato',
+		FORM_STATUS: 'Stato',
 		PUBLIC: 'pubblico',
 		PRIVATE: 'Privato',
 		GA_TRACKING_CODE: 'Codice di monitoraggio di Google Analytics',
-		DISPLAY_FOOTER: 'Visualizza piè di pagina?',
+		DISPLAY_FOOTER: 'Piè di pagina',
 		SAVE_CHANGES: 'Salva modifiche',
 		CANCEL: 'Annulla',
-		DISPLAY_START_PAGE: 'Visualizza pagina iniziale?',
-		DISPLAY_END_PAGE: 'Mostra pagina finale personalizzata?',
+		DISPLAY_START_PAGE: 'Pagina iniziale',
+		DISPLAY_END_PAGE: 'Pagina finale personalizzata',
+
+		GENERAL_TAB: 'Generale',
+		SELF_NOTIFICATIONS_TAB: 'Autodiagnosi',
+		RESPONDANT_NOTIFICATIONS_TAB: 'Notifiche rispondenti',
+
+		SEND_NOTIFICATION_TO: 'Invia a',
+		NO_EMAIL_FIELD_WARNING: 'Errore: Hai bisogno di un campo e-mail nel tuo modulo per inviare l\'email al tuo interlocutore',
+		REPLY_TO: 'Rispondi a',
+		EMAIL_SUBJECT: 'Oggetto',
+		EMAIL_MESSAGE: 'Messaggio',
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Notifiche rispondenti sono attualmente',
+		ENABLE_SELF_NOTIFICATIONS: 'Le notifiche auto sono attualmente',
+		TOGGLE_ENABLED: 'Abilitato',
+		TOGGLE_DISABLED: 'disabilitato',
+		ADD_VARIABLE_BUTTON: 'Aggiungi variabile',
 
 		// Visualizzazione dei moduli di elenco
 		CREATE_A_NEW_FORM: 'Crea un nuovo modulo',
@@ -34,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOGIC_JUMP: 'Jump Logic',
 		SHOW_BUTTONS: 'Pulsanti aggiuntivi',
 		SAVE_START_PAGE: 'Salva',
+		ADD_OPTIONS_PLACEHOLDER: "Aggiungi una scelta per riga. È necessario un minimo di una scelta.",
 
 		// Visualizzazione modulo di amministrazione
 		ARE_YOU_SURE: 'Sei ASSOLUTAMENTE sicuro?',
@@ -46,7 +62,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: 'Elimina modulo',
 		DELETE: 'Elimina',
 		FORM: 'Forma',
-		VIEW: 'Visualizza',
+		VIEW_MY_TELLFORM: 'Visualizza la mia informazione',
 		LIVE: 'Live',
 		PREVIEW: 'Anteprima',
 		COPY: 'Copia',
@@ -152,7 +168,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		MULTIPLE_CHOICE: 'Scelta multipla',
 		DROPDOWN: 'Dropdown',
 		DATE: 'Data',
-		PARAGRAPH_T: 'Paragrafo',
+		PARAGRAPH_FIELD: 'Paragrafo',
 		YES_NO: 'Sì / no',
 		LEGAL: 'Legale',
 		RATING: 'Valutazione',

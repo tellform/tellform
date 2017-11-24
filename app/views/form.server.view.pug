@@ -32,7 +32,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
         width: 100%;
         height: 100%;
         z-index: 9999;
-        background: url('/static/dist/page-loader.gif') 50% 35% no-repeat rgb(249,249,249);
+        background: url('/static/modules/core/img/loaders/page-loader.gif') 50% 35% no-repeat rgb(249,249,249);
         background-size: 50px 50px;
       }
     // Fav Icon 
@@ -78,12 +78,11 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
 
     //Socket.io Client Dependency
     script(src='/static/lib/socket.io-client/dist/socket.io.min.js')
-    script(src='/static/lib/jquery-ui/jquery-ui.js', type='text/javascript')
 
-    //Minified Bower Dependencies
-    script(src='/static/lib/angular/angular.min.js')
-    script(src='/static/dist/form-vendor.min.js')
-    script(src='/static/lib/angular-ui-date/src/date.js', type='text/javascript')
+    //Bower JS dependencies
+    each bowerJSFile in bowerFormJSFiles
+      script(type='text/javascript', src=bowerJSFile)
+    // end Bower JS dependencies
 
     //Application JavaScript Files
     each jsFile in formJSFiles
@@ -94,7 +93,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
       //Livereload script rendered 
       script(async='', type='text/javascript', src='http://#{request.hostname}:35729/livereload.js')
 
-    script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
+    //script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();
     
     if google_analytics_id
       script window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;ga('create','{{google_analytics_id}}','auto');ga('send','pageview')

@@ -17,7 +17,6 @@ var exampleDemo = {
 	address: '880-9650 Velit. St.',
 	city: '',
 	dateOfBirth: '10',
-	displayName: 'Test User',
 	email: 'polydaic@gmail.com',
 	firstName: 'Test User',
 	hin: '',
@@ -82,9 +81,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
-			email: 'test1@test.com'+Date.now(),
-			username: 'test1'+Date.now(),
+			email: 'test1@test.com',
+			username: 'test1',
 			password: 'password',
 			provider: 'local'
 		});

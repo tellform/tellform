@@ -5,16 +5,31 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
   	$translateProvider.translations('fr', {
     	// Configurer la vue de l'onglet Formulaire
 		ADVANCED_SETTINGS: 'Paramètres avancés',
-		FORM_NAME: "Nom du formulaire",
-		FORM_STATUS: 'Statut du formulaire',
+		FORM_NAME: "Votre tellform est appelé",
+		FORM_STATUS: 'Statut',
 		PUBLIC: 'Public',
 		PRIVATE: "Privé",
 		GA_TRACKING_CODE: "Code de suivi Google Analytics",
-		DISPLAY_FOOTER: "Afficher le pied de formulaire?",
+		DISPLAY_FOOTER: "Pied de formulaire",
 		SAVE_CHANGES: 'Enregistrer les modifications',
 		CANCEL: 'Annuler',
-		DISPLAY_START_PAGE: "Afficher la page de démarrage?",
-		DISPLAY_END_PAGE: "Afficher la page de fin personnalisée?",
+		DISPLAY_START_PAGE: "Page de démarrage",
+		DISPLAY_END_PAGE: "Page de fin personnalisée",
+
+		GENERAL_TAB: 'General',
+		SELF_NOTIFICATIONS_TAB: 'Self notifications',
+		RESPONDANT_NOTIFICATIONS_TAB: 'Respondent notifications',
+
+		SEND_NOTIFICATION_TO: 'Envoyer à',
+		NO_EMAIL_FIELD_WARNING: 'Erreur: Vous avez besoin d\'un champ e-mail dans votre formulaire pour envoyer l\'e-mail au répondant de votre formulaire',
+		REPLY_TO: "Répondre à",
+		EMAIL_SUBJECT: 'Sujet',
+		EMAIL_MESSAGE: "Message",
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Les notifications des répondants sont actuellement',
+		ENABLE_SELF_NOTIFICATIONS: 'Les notifications automatiques sont actuellement',
+		TOGGLE_ENABLED: 'Activé',
+		TOGGLE_DISABLED: 'Désactivé',
+		ADD_VARIABLE_BUTTON: "Ajouter une variable",
 
 		// Afficher les formulaires
 		CREATE_A_NEW_FORM: "Créer un nouveau formulaire",
@@ -34,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOGIC_JUMP: 'Saut logique',
 		SHOW_BUTTONS: 'Boutons supplémentaires',
 		SAVE_START_PAGE: "Enregistrer",
+		ADD_OPTIONS_PLACEHOLDER: "Ajouter un choix par ligne. Un minimum d'un choix est requis",
 
 		// Affichage du formulaire d'administration
 		ARE_YOU_SURE: 'Es-tu ABSOLUMENT sûr?',
@@ -46,7 +62,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: "Supprimer le formulaire",
 		DELETE: "Supprimer",
 		FORM: 'Formulaire',
-		VIEW: "Afficher",
+		VIEW_MY_TELLFORM: "Afficher ma forme",
 		LIVE: "Live",
 		PREVIEW: 'Aperçu',
 		COPY: "Copier",
@@ -152,7 +168,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		MULTIPLE_CHOICE: 'Choix multiple',
 		DROPDOWN: 'Menu Déroulant',
 		DATE: 'Date',
-		PARAGRAPH_T: "Paragraphe",
+		PARAGRAPH_FIELD: "Paragraphe",
 		OUI_NON: 'Oui / Non',
 		LEGAL: 'Légal',
 		RATING: "Évaluation",
