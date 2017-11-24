@@ -6,10 +6,10 @@ var should = require('should'),
 	request = require('supertest'),
 	Session = require('supertest-session'),
 	mongoose = require('mongoose'),
-	User = mongoose.model('User'),
-	Form = mongoose.model('Form'),
+	User = require('../models/user.server.model.js'),
+	Form = require('../models/form.server.model.js'),
+	FormSubmission = require('../models/form_submission.server.model.js'),
 	Field = mongoose.model('Field'),
-	FormSubmission = mongoose.model('FormSubmission'),
 	async = require('async'),
 	_ = require('lodash');
 

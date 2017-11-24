@@ -11,7 +11,7 @@ var should = require('should'),
 	_ = require('lodash'),
 	async = require('async'),
 	config = require('../../config/config'),
-	FormSubmission = mongoose.model('FormSubmission');
+	FormSubmission = require('../models/form_submission.server.model.js');
 
 var exampleDemo = {
 	address: '880-9650 Velit. St.',

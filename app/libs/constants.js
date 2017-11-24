@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = {
+var constants = module.exports = {
+
 	extraneousFormFieldProps: [	
 		'validFieldTypes',
 		'disabled',
@@ -106,6 +107,7 @@ module.exports = {
     userRoleTypes: ['user', 'admin', 'superuser'],
 
     regex: {
+    	username: /^[a-zA-Z0-9\-]+$/,
         url: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/,
         hexCode: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
         email: /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,

@@ -38,7 +38,7 @@ var UserSchema = new Schema({
 		type: String,
 		unique: true,
 		lowercase: true,
-		match: [/^[a-zA-Z0-9\-]+$/, 'Username can only contain alphanumeric characters and \'-\''],
+		match: [constants.regex.username, 'Username can only contain alphanumeric characters and \'-\''],
 		required: [true, 'Username is required']
 	},
 	passwordHash: {
@@ -108,7 +108,7 @@ UserSchema.virtual('password').get(function () {
 /**
  * Create instance method for hashing a password
  */
-UserSchema.methods.hashPassword = function(password) {
+UserSchema.statics.hashPassword = UserSchema.methods.hashPassword = function(password) {
   var encoding = 'base64';
   var iterations = 10000;
   var keylen = 128;
@@ -165,4 +165,6 @@ UserSchema.methods.isAdmin = function() {
 	return false;
 };
 
-module.exports = mongoose.model('User', UserSchema);
+mongoose.model('User', UserSchema);
+
+module.exports = mongoose.model('User');
