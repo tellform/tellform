@@ -1,0 +1,21 @@
+# Build:
+# docker build -t tellform-prod -f ./Dockerfile-production .
+#
+# Run:
+# docker run -it tellform-prod
+
+FROM node:7
+MAINTAINER David Baldwynn <team@tellform.com>
+
+# Install NPM Global Libraries
+RUN npm install --quiet -g grunt bower && npm cache clean
+
+ADD . /code
+WORKDIR /code
+
+RUN npm install --quiet
+RUN bower install --interactive-mode=false --allow-root
+RUN grunt build
+
+# Run TellForm server
+CMD ["grunt"]
