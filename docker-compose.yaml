@@ -7,7 +7,7 @@ services:
     volumes:
       - .:/code
     ports:
-      - "5000:5000"
+      - "5000"
       - 587:587
     env_file:
       - .env
