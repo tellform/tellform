@@ -48,23 +48,7 @@ var constants = module.exports = {
 		'Comment',
 		'Trash'
 	],
-
-    ratingShapeTypes: [
-    		'Heart',
-			'Star',
-			'thumbs-up',
-			'thumbs-down',
-			'Circle',
-			'Square',
-			'Check Circle',
-			'Smile Outlined',
-			'Hourglass',
-			'bell',
-			'Paper Plane',
-			'Comment',
-			'Trash'
-	],
-
+	
     deviceTypes: ['desktop', 'phone', 'tablet', 'other'],
     languageTypes: ['en', 'fr', 'es', 'it', 'de'],
 
