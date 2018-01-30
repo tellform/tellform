@@ -30,7 +30,7 @@ module.exports = {
 		options: process.env.MAILER_SMTP_HOST ? { //Uses custom SMTP if MAILER_SMTP_HOST is set
 			host: process.env.MAILER_SMTP_HOST || '',
 			port: process.env.MAILER_SMTP_PORT || 587,
-			secure: process.env.MAILER_SMTP_SECURE || true,
+			secure: (process.env.MAILER_SMTP_SECURE === 'TRUE'),
 			auth: {
 				user: process.env.MAILER_EMAIL_ID || '',
 				pass: process.env.MAILER_PASSWORD || ''
