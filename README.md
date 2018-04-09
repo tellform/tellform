@@ -11,6 +11,7 @@ Below you will find a changelog.
 
 (newest to oldest)
 
+- fix responsiveness and mobile design
 - fix form styling so it isn't terrible (use Raleway, change bg color)
 - disable signups (turn on disable flag, hardcode in automatic 400 if the URL contains `signup`)
 - build in HTTPS support in `config/express.js`
