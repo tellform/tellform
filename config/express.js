@@ -70,7 +70,7 @@ module.exports = function(db) {
 	// Setting application local variables
 	app.locals.google_analytics_id = config.app.google_analytics_id;
 	app.locals.title = config.app.title;
-	app.locals.signupDisabled = config.signupDisabled;
+	app.locals.signupDisabled = true; //config.signupDisabled;
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
 
@@ -115,6 +115,10 @@ module.exports = function(db) {
 				urlPath.splice(1, 1);
 				req.root = req.protocol + '://' + config.baseUrl + urlPath.join('/');
 				return next();
+			}
+
+			if (urlPath.indexOf('signup') > -1) {
+				res.send(400); return;
 			}
 
 			if (urlPath.indexOf('users') > -1 && urlPath.indexOf('me') > -1) {
