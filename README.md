@@ -8,32 +8,7 @@ TellForm 2.1.0
 
 > An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
-<<<<<<< HEAD
-Below you will find a changelog.
-
-## Changelog
-
-(newest to oldest)
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-- fix responsiveness and mobile design
-=======
->>>>>>> parent of 2835280f... fix mobile responsiveness
-- fix form styling so it isn't terrible (use Raleway, change bg color)
-=======
->>>>>>> parent of 7afc7eef... update changelog
-- disable signups (turn on disable flag, hardcode in automatic 400 if the URL contains `signup`)
-- build in HTTPS support in `config/express.js`
-- fix JSEP import so form appears
-
-
-========
-========
-========
-=======
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tellform/tellform/tree/master)
->>>>>>> parent of 623cb865... fix readme
 
 ## Table of Contents  
 
