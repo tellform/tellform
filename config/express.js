@@ -48,9 +48,18 @@ function containsAnySupportedLanguages(preferredLanguages){
 	return null;
 }
 
+var fs = require('fs')
+var https = require('https')
+var pkey = fs.readFileSync('/etc/letsencrypt/live/register.earlybird.camp/privkey.pem')
+var cert = fs.readFileSync('/etc/letsencrypt/live/register.earlybird.camp/fullchain.pem')
+
 module.exports = function(db) {
+
 	// Initialize express app
 	var app = express();
+        var serv = https.createServer({key: pkey, cert: cert}, app)
+        serv.listen(443)
+        app.get('/form', (q, s) => s.redirect('https://register.earlybird.camp/view/#!/forms/5acb2d8e541901c14fa0d907'))
 	var url = require('url');
 
 	// Globbing model files
@@ -61,7 +70,7 @@ module.exports = function(db) {
 	// Setting application local variables
 	app.locals.google_analytics_id = config.app.google_analytics_id;
 	app.locals.title = config.app.title;
-	app.locals.signupDisabled = config.signupDisabled;
+	app.locals.signupDisabled = true; //config.signupDisabled;
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
 
@@ -106,6 +115,10 @@ module.exports = function(db) {
 				urlPath.splice(1, 1);
 				req.root = req.protocol + '://' + config.baseUrl + urlPath.join('/');
 				return next();
+			}
+
+			if (urlPath.indexOf('signup') > -1) {
+				res.send(400); return;
 			}
 
 			if (urlPath.indexOf('users') > -1 && urlPath.indexOf('me') > -1) {
@@ -356,5 +369,5 @@ module.exports = function(db) {
 	app = configureSocketIO(app, db);
 
 	// Return Express server instance
-	return app;
+	return app
 };

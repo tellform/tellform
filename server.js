@@ -1,13 +1,19 @@
+
 'use strict';
 /**
  * Module dependencies.
  */
+var fs = require('fs')
+var https = require('https')
 
 require('dotenv').config({path: './.env'});
 
 if(!process.env.NODE_ENV){
     process.env.NODE_ENV = 'development';
 }
+
+var pkey = fs.readFileSync('/etc/letsencrypt/live/register.earlybird.camp/privkey.pem')
+var cert = fs.readFileSync('/etc/letsencrypt/live/register.earlybird.camp/fullchain.pem')
 
 
 require('events').EventEmitter.prototype._maxListeners = 0;
@@ -35,7 +41,7 @@ mongoose.connection.on('error', function (err) {
 });
 
 const smtpTransport = nodemailer.createTransport(config.mailer.options);
-
+console.log("GOT PAST MONGOOSE")
 // verify connection configuration on startup
 smtpTransport.verify(function(error, success) {
 	if (error) {
@@ -61,10 +67,16 @@ if (process.env.CREATE_ADMIN_ACCOUNT === 'TRUE') {
 
 // Bootstrap passport config
 require('./config/passport')();
-
+console.log("Got past passport!")
 // Start the app by listening on <port>
-app.listen(config.port);
+app.listen(80, () => console.log("Listening"));
+console.log("Got past Listen1")
 
+//https.createServer({key: pkey, cert: cert}, app).listen(config.port, () => {
+//    console.log('Listening on 443')
+//})
+
+console.log("GOT PAST LISTEN");
 // Expose app
 exports = module.exports = app;
 
