@@ -1,10 +1,14 @@
-TellForm 2.1.EB
+TellForm 2.1.0
 ========
 
-## EarlyBird version
+[![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
+![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
+[![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-We've made some changes and will continue to be changing this particular fork of TellForm to comply with our guidelines.
+> An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
+<<<<<<< HEAD
 Below you will find a changelog.
 
 ## Changelog
@@ -21,6 +25,9 @@ Below you will find a changelog.
 ========
 ========
 ========
+=======
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tellform/tellform/tree/master)
+>>>>>>> parent of 623cb865... fix readme
 
 ## Table of Contents  
 
