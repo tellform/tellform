@@ -16,7 +16,10 @@ Below you will find a changelog.
 (newest to oldest)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - fix responsiveness and mobile design
+=======
+>>>>>>> parent of 2835280f... fix mobile responsiveness
 - fix form styling so it isn't terrible (use Raleway, change bg color)
 =======
 >>>>>>> parent of 7afc7eef... update changelog
