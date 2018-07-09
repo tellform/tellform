@@ -216,24 +216,24 @@ TellForm's configuration is done with environment variables. To set an option fo
 Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
 
 <a href="https://m.do.co/c/a86fd8843e09" style="padding: 30px 0">
-	<img src="/docs/readme_logos/do_logo.png" height="30px">
+	<img src="/docs/readme_logos/digitalOcean.png" height="30px">
 </a>
 <a href="https://getsentry.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/sentry_logo.png" height="30px">
+	<img src="/docs/readme_logos/sentryIO.png" height="30px">
 </a>
 <a href="https://statuspage.io/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/statuspage_logo.png" height="30px">
+	<img src="/docs/readme_logos/statusPageIO.png" height="30px">
 </a>
 <br><br>
 <a href="https://www.stickermule.com/unlock?ref_id=0939360701" style="padding: 30px 0">
-	<img src="/docs/readme_logos/stickermule_logo.png" height="30px">
+	<img src="/docs/readme_logos/stickerMule.png" height="30px">
 </a>
 <a href="https://sparkpost.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/sparkpost_logo.png" height="30px">
+	<img src="/docs/readme_logos/sparkPost.png" height="30px">
 </a>
 
 <a href="https://therooststand.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/roost_logo.png" height="30px">
+	<img src="/docs/readme_logos/theRoostStand.png" height="30px">
 </a>
 
 ## Backers
