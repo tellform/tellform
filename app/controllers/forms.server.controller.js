@@ -48,7 +48,7 @@ exports.deleteSubmissions = function(req, res) {
 exports.createSubmission = function(req, res) {
 
 	var timeElapsed = 0;
-	
+
 	if(typeof req.body.timeElapsed === 'number'){
 		timeElapsed = req.body.timeElapsed;
 	}
