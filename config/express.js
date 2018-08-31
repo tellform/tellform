@@ -186,6 +186,24 @@ module.exports = function(db) {
 		level: 9
 	}));
 
+        //Setup i18n
+    i18n.configure({
+        locales: supportedLanguages,
+        directory: __dirname + '/locales',
+        defaultLocale: 'en',
+        cookie: 'userLang'
+    });
+
+    app.use(i18n.init);
+
+    app.use(function(req, res, next) {
+        // express helper for natively supported engines
+        res.locals.__ = res.__ = function() {
+            return i18n.__.apply(req, arguments);
+        };
+
+        next();
+    });
 
 	// Set template engine as defined in the config files
 	app.engine('server.view.pug', consolidate.pug);
@@ -248,15 +266,6 @@ module.exports = function(db) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	//Setup i18n
-	i18n.configure({
-		locales: supportedLanguages,
-		directory: __dirname + '/locales',
-		defaultLocale: 'en',
-		cookie: 'userLang'
-	});
-
-	app.use(i18n.init);
 
 	//Visitor Language Detection
 	app.use(function(req, res, next) {
@@ -324,7 +333,8 @@ module.exports = function(db) {
 
 		// Error page
 		res.status(500).render('500', {
-			error: err.stack
+		    __: i18n.__,
+            error: err.stack
 		});
 	});
 
@@ -333,7 +343,8 @@ module.exports = function(db) {
 		client.captureError(new Error('Page Not Found'));
 		res.status(404).render('404', {
 			url: req.originalUrl,
-			error: 'Not Found'
+			error: 'Not Found',
+            __: i18n.__
 		});
 	});
 

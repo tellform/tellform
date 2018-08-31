@@ -2,7 +2,7 @@
 
 angular.module('core').config(['$translateProvider', function ($translateProvider) {
 
-	$translateProvider.translations('en', {
+	$translateProvider.translations('se', {
 		MENU: 'MENY',
 		SIGNUP_TAB: 'Registrera konto',
 		SIGNIN_TAB: 'Logga In',
