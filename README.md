@@ -1,14 +1,26 @@
-TellForm 2.1.0
+TellForm 2.1.EB
 ========
 
-[![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
-![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
-[![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+## EarlyBird version
 
-> An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
+We've made some changes and will continue to be changing this particular fork of TellForm to comply with our guidelines.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tellform/tellform/tree/master)
+Below you will find a changelog.
+
+## Changelog
+
+(newest to oldest)
+
+- fix responsiveness and mobile design
+- fix form styling so it isn't terrible (use Raleway, change bg color)
+- disable signups (turn on disable flag, hardcode in automatic 400 if the URL contains `signup`)
+- build in HTTPS support in `config/express.js`
+- fix JSEP import so form appears
+
+
+========
+========
+========
 
 ## Table of Contents  
 
@@ -204,24 +216,24 @@ TellForm's configuration is done with environment variables. To set an option fo
 Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
 
 <a href="https://m.do.co/c/a86fd8843e09" style="padding: 30px 0">
-	<img src="/docs/readme_logos/do_logo.png" height="30px">
+	<img src="/docs/readme_logos/digitalOcean.png" height="30px">
 </a>
 <a href="https://getsentry.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/sentry_logo.png" height="30px">
+	<img src="/docs/readme_logos/sentryIO.png" height="30px">
 </a>
 <a href="https://statuspage.io/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/statuspage_logo.png" height="30px">
+	<img src="/docs/readme_logos/statusPageIO.png" height="30px">
 </a>
 <br><br>
 <a href="https://www.stickermule.com/unlock?ref_id=0939360701" style="padding: 30px 0">
-	<img src="/docs/readme_logos/stickermule_logo.png" height="30px">
+	<img src="/docs/readme_logos/stickerMule.png" height="30px">
 </a>
 <a href="https://sparkpost.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/sparkpost_logo.png" height="30px">
+	<img src="/docs/readme_logos/sparkPost.png" height="30px">
 </a>
 
 <a href="https://therooststand.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/roost_logo.png" height="30px">
+	<img src="/docs/readme_logos/theRoostStand.png" height="30px">
 </a>
 
 ## Backers
