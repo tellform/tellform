@@ -5,7 +5,7 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 
 		$rootScope.signupDisabled = $window.signupDisabled;
 
-		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
+		$scope.user = $rootScope.user = Auth.ensureHasCurrentUser();
 
 	    $scope.authentication = $rootScope.authentication = Auth;
 
@@ -23,7 +23,7 @@ angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '
 		    var promise = User.logout();
 			promise.then(function() {
 				Auth.logout();
-				Auth.ensureHasCurrentUser(User);
+				Auth.ensureHasCurrentUser();
 				$scope.user = $rootScope.user = null;
 				$state.go('listForms');
 

@@ -15,7 +15,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 				User.login($scope.credentials).then(
 					function(response) {
 						Auth.login(response);
-						$scope.user = $rootScope.user = Auth.ensureHasCurrentUser(User);
+						$scope.user = $rootScope.user = Auth.ensureHasCurrentUser();
 
 						if(statesToIgnore.indexOf($state.previous.state.name) === -1) {
 							$state.go($state.previous.state.name, $state.previous.params);
@@ -24,7 +24,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$loca
 						}
 					},
 					function(error) {
-						$rootScope.user = Auth.ensureHasCurrentUser(User);
+						$rootScope.user = Auth.ensureHasCurrentUser();
 						$scope.user = $rootScope.user;
 
 						$scope.error = error;

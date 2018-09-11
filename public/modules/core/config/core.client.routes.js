@@ -48,7 +48,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
 			var authenticator, permissions, user;
 			permissions = next && next.data && next.data.permissions ? next.data.permissions : null;
 
-			Auth.ensureHasCurrentUser(User);
+			Auth.ensureHasCurrentUser();
 			user = Auth.currentUser;
 
 			if(user){
