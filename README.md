@@ -6,7 +6,7 @@ TellForm 2.1.0
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
 [![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-> An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
+> An *open-source alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples), surveys and questionnaires.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tellform/tellform/tree/master)
 
@@ -29,7 +29,7 @@ TellForm 2.1.0
 ### Currently following features are implemented:
 
 - Multi-Language Support
-- 11 possible question types
+- 11 available question types
 - Editable start and end pages
 - Export Submissions to XLS, JSON or CSV
 - Native Analytics and Google Analytics Support
@@ -49,7 +49,7 @@ TellForm 2.1.0
 
 ## How to Contribute
 
-Please checkout our CONTRIBUTING.md on ways to contribute to TellForm.
+Please check out our CONTRIBUTING.md on ways to contribute to TellForm.
 
 All contributors are eligible to get a free [TellForm Sticker](https://www.stickermule.com/marketplace/15987-tellform-round-sticker). All you have to do is submit a PR, get it accepted, email your address to team [at] tellform.com and we'll send you a sticker that you can proudly put on your laptop.
 
