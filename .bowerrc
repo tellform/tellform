@@ -1,4 +1,5 @@
 {
 	"directory": "public/lib",
-	"analytics": false
+	"analytics": false,
+	"registry": "https://registry.bower.io"
 }
