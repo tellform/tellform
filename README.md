@@ -245,8 +245,6 @@ Love our work and community? [Become a backer](https://opencollective.com/tellfo
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 ## Mentions on the Web
 
-[Mister Ad](http://start.mister-ad.biz/newsticker/open-source-alternative-zu-typeform-tellform-in-der-kurzvorstellung/)
-
 [t3n.de](http://t3n.de/news/open-source-alternative-typeform-tellform-707295/)
 
 [BootCSS Expo](http://expo.bootcss.com/)
