@@ -1,6 +1,7 @@
 TellForm 2.1.0
 ========
 
+[![Code Shelter](https://www.codeshelter.co/static/badges/badge-flat.svg)](https://www.codeshelter.co/)
 [![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
 ![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
