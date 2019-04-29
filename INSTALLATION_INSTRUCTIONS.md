@@ -10,56 +10,7 @@ TellForm Installation Instructions
 
 ## Local deployment with Docker
 
-### Prerequisites
-
-Make you sure have the following packages and versions on your machine:
-```
-"node": ">=6.11.2"
-"npm": ">=3.3.6"
-"bower": ">=1.8.0"
-"grunt-cli": ">=1.2.0"
-"grunt": ">=0.4.5"
-"docker": ">=17.06.0-ce"
-"docker-compose": ">=1.14.0"
-```
-
-### Install dependencies
-
-```
-$ npm install
-```
-
-### Prepare .env file:
-Create `.env` file at project root folder. Fill in `MAILER_SERVICE_PROVIDER`, `MAILER_EMAIL_ID`, `MAILER_PASSWORD` and `MAILER_FROM`.
-```
-APP_NAME=TellForm
-BASE_URL=localhost:3000
-PORT=3000
-DB_PORT_27017_TCP_ADDR=tellform-mongo
-REDIS_DB_PORT_6379_TCP_ADDR=tellform-redis
-MAILER_SERVICE_PROVIDER=<TO-FILL-IN>
-MAILER_EMAIL_ID=<TO-FILL-IN>
-MAILER_PASSWORD=<TO-FILL-IN>
-MAILER_FROM=<TO-FILL-IN>
-SIGNUP_DISABLED=false
-SUBDOMAINS_DISABLED=true
-DISABLE_CLUSTER_MODE=true
-```
-
-### Build docker image
-
-```
-$ docker-compose build
-```
-
-### Run docker containers with docker-compose
-
-Create and start mongo & redis docker container:
-```
-$ docker-compose up
-```
-
-Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
+Refer to [docker_files](https://github.com/tellform/docker_files).
 
 ## AWS AMI Deployment
 

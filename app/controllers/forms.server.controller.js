@@ -19,7 +19,7 @@ exports.deleteSubmissions = function(req, res) {
 	var submission_id_list = req.body.deleted_submissions,
 		form = req.form;
 
-	FormSubmission.remove({ form: req.form, admin: req.user, _id: {$in: submission_id_list} }, function(err){
+	FormSubmission.remove({ form: req.form, _id: {$in: submission_id_list} }, function(err){
 
 		if(err){
 			res.status(400).send({
