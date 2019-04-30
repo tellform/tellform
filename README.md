@@ -120,7 +120,25 @@ Your application should run on port 3000 or the port you specified in your .env 
 
 To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/).
 
-Then see this page [here](https://tellform.com/install_docker) for commands on how to deploy your own local TellForm instance.
+Then run follow these steps:
+
+### Step 1: Clone the repo
+
+`$ git clone https://github.com/tellform/docker_files.git`
+
+### Step 2: Setup TellForm Configuration
+
+Create your .env file by copying the .env.dist file included in the repo and changing it to suit your deployment.
+
+Important: You need to fill out all of the ENV variables in the "Mail Settings" section or your TellForm instance won't work.
+
+If you want to have https, make sure to change 'TLS_FLAVOR'
+
+### Step 3: Start your TellForm instance
+
+`docker-compose up -d`
+
+TellForm should now be accessible on http://localhost
 
 ## Testing Your Application
 You can run the full test suite included with TellForm with the test task:
@@ -204,25 +222,8 @@ TellForm's configuration is done with environment variables. To set an option fo
 
 Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
 
-<a href="https://m.do.co/c/a86fd8843e09" style="padding: 30px 0">
-	<img src="/docs/readme_logos/digitalOcean.png" height="30px">
-</a>
-<a href="https://getsentry.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/sentryIO.png" height="30px">
-</a>
-<a href="https://statuspage.io/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/statusPageIO.png" height="30px">
-</a>
-<br><br>
-<a href="https://www.stickermule.com/unlock?ref_id=0939360701" style="padding: 30px 0">
-	<img src="/docs/readme_logos/stickerMule.png" height="30px">
-</a>
-<a href="https://sparkpost.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/sparkPost.png" height="30px">
-</a>
-
-<a href="https://therooststand.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/theRoostStand.png" height="30px">
+<a href="https://countable.ca" style="padding: 30px 0">
+	<img src="https://countable.ca/logo.cb446ab0.svg" height="30px">
 </a>
 
 ## Backers
