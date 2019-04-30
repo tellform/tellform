@@ -5,7 +5,7 @@
 # docker run -it tellform-prod
 
 FROM  phusion/baseimage:0.9.19
-MAINTAINER David Baldwynn <team@tellform.com>
+MAINTAINER Arielle Baldwynn <team@tellform.com>
 
 # Install Utilities
 RUN apt-get update -q  \

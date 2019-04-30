@@ -1,0 +1,57 @@
+version: "3"
+services:
+  redis:
+    restart: always
+    image: redis
+    volumes:
+      - "${PWD}/.env:/opt/tellform/.env"
+    networks:
+      - back-tier
+  mongo:
+    restart: always
+    image: mongo
+    volumes: 
+      - "$ROOT/mongo:/data"
+    networks:
+      - back-tier
+  tellform:
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      # - "${PWD}/.env:/opt/tellform/.env"
+      - .:/opt/tellform
+    links:
+      - mongo
+      - redis
+    ports:
+      - "5000:5000"
+      # - "20523:20523"
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - back-tier
+  web:
+    # image: tellform/nginx:stable
+    build:
+      context: ./nginx
+    # image: nginx:1.13
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "20523:20523"
+    env_file:
+      - .env
+    volumes: 
+      - "$ROOT/certs:/certs"
+      # - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - back-tier
+
+networks:
+    back-tier:
+        driver: bridge
+
