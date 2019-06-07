@@ -3,7 +3,13 @@
  * Module dependencies.
  */
 
-require('dotenv').config({path: './.env'});
+const fs = require('fs');
+if(fs.existsSync(__dirname + '/.env')) {
+	require('dotenv').config({path: './.env'});
+}
+else {
+	console.warn('unable to find .env file, expecting env vars');
+}
 
 if(!process.env.NODE_ENV){
     process.env.NODE_ENV = 'development';
