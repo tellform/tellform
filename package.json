@@ -19,9 +19,10 @@
   "scripts": {
     "addcontrib": "all-contributors add",
     "generate": "all-contributors generate",
-    "start": "grunt",
+    "start": "node server.js",
+    "start:local": "grunt",
     "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false",
+    "postinstall": "bower install --config.interactive=false && grunt build:prod",
     "init": "node scripts/setup.js"
   },
   "dependencies": {
@@ -47,8 +48,7 @@
     "grunt-contrib-csslint": "~1.0.0",
     "grunt-contrib-cssmin": "~1.0.1",
     "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-uglify": "~0.11.0",
-    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-uglify": "~0.11.1",
     "grunt-env": "~0.4.1",
     "grunt-html2js": "^0.6.0",
     "grunt-ng-annotate": "~1.0.1",
@@ -88,7 +88,7 @@
     "grunt-closure-compiler": "0.0.21",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-uglify": "^0.11.1",
+		"grunt-contrib-watch": "~0.6.1",
     "grunt-execute": "^0.2.2",
     "grunt-i18nlint": "github:jwarby/grunt-i18nlint",
     "grunt-karma": "~0.12.1",

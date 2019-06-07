@@ -10,6 +10,10 @@ if(fs.existsSync(__dirname + '/.env')) {
 else {
 	console.warn('unable to find .env file, expecting env vars');
 }
+// fix for heroku
+process.env.MAILER_EMAIL_ID = process.env.MAILER_EMAIL_ID || process.env.SENDGRID_USERNAME;
+process.env.MAILER_PASSWORD = process.env.MAILER_PASSWORD || process.env.SENDGRID_PASSWORD;
+
 
 if(!process.env.NODE_ENV){
     process.env.NODE_ENV = 'development';
