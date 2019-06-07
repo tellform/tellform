@@ -5,8 +5,11 @@ TellForm 2.1.0
 [![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
 ![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
+<!--
+Moving over to Discord so that I can manage things without hassle.
 [![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
+-->
+![Discord](https://img.shields.io/discord/586697165980565504.svg?label=Discord%20Chat)
 > An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tellform/tellform/tree/master)
