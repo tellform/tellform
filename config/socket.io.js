@@ -9,7 +9,14 @@ var config = require('./config'),
 // Define the Socket.io configuration method
 module.exports = function (app, db) {
 	var server = http.createServer(app);
-  	var io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
+	var io;
+
+	// make it possible to only expose one domain
+	if (process.env.SOCKET_PORT != process.env.PORT) {
+		io = socketio(config.socketPort, { transports: ['websocket', 'polling'] });
+	} else {
+		io = socketio(server, { transports: ['websocket', 'polling'] });
+	}
 
 	if(config.enableClusterMode){
 		var redis = require('socket.io-redis');
