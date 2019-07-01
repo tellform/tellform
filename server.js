@@ -40,7 +40,8 @@ const smtpTransport = nodemailer.createTransport(config.mailer.options);
 smtpTransport.verify(function(error, success) {
 	if (error) {
 			 console.error(chalk.red('Your mail configuration is incorrect: ' + error));
-			 process.exit(-1);
+			 // verify but to abort!
+			 // process.exit(-1);
 	}
 });
 
@@ -48,7 +49,7 @@ smtpTransport.verify(function(error, success) {
 var app = require('./config/express')(db);
 
 //Create admin account
-if (process.env.CREATE_ADMIN_ACCOUNT === 'TRUE') {
+if (process.env.CREATE_ADMIN === 'TRUE') {
 	var create_admin = require('./scripts/create_admin');
 
 	create_admin.run(app, db, function(err){

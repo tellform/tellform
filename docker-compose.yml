@@ -3,31 +3,29 @@ services:
   redis:
     restart: always
     image: redis
-    volumes:
-      - "${PWD}/.env:/opt/tellform/.env"
     networks:
       - back-tier
   mongo:
     restart: always
     image: mongo
     volumes: 
-      - "$ROOT/mongo:/data"
+      - ".data/mongo:/data"
     networks:
       - back-tier
   tellform:
     build:
       context: .
-    env_file:
-      - .env
-    volumes:
-      # - "${PWD}/.env:/opt/tellform/.env"
-      - .:/opt/tellform
+    environment:
+      CREATE_ADMIN: "TRUE"
+      MONGODB_URI: mongodb://mongo/tellform
+      REDIS_URL: redis://redis
+#    volumes:
+#      - .:/opt/tellform
     links:
       - mongo
       - redis
     ports:
       - "5000:5000"
-      # - "20523:20523"
     depends_on:
       - mongo
       - redis
@@ -43,10 +41,10 @@ services:
       - "80:80"
       - "443:443"
       - "20523:20523"
-    env_file:
-      - .env
-    volumes: 
-      - "$ROOT/certs:/certs"
+    environment:
+      NODE_ENV: development
+    #volumes: 
+      # - "$ROOT/certs:/certs"
       # - ./nginx/conf.d:/etc/nginx/conf.d
     networks:
       - back-tier
