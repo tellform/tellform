@@ -1,3 +1,4 @@
+data/
 dist
 .vagrant
 npm-debug.*
