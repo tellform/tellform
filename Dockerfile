@@ -70,6 +70,7 @@ ENV RAVEN_DSN=
 # Add npm package.json
 COPY ./package.json /opt/tellform/package.json
 RUN npm install --only=production --quiet
+RUN bower install --allow-root
 RUN grunt build
 
 # Run TellForm server
