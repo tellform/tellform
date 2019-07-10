@@ -53,7 +53,7 @@
     "helmet": "^3.16.0",
     "i18n": "^0.8.3",
     "jit-grunt": "^0.9.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "main-bower-files": "^2.13.1",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
