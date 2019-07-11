@@ -34,18 +34,8 @@ exports.deleteSubmissions = function(req, res) {
 			});
 			return;
 		}
-
-		form.analytics.visitors = [];
-		form.save(function(formSaveErr){
-			if(formSaveErr){
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(formSaveErr)
-				});
-				return;
-			}
-			res.status(200).send('Form submissions successfully deleted');
-
-		});
+		
+		res.status(200).send('Form submissions successfully deleted');
 	});
 };
 
@@ -76,15 +66,19 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		var form = req.body
+		var form = req.body;
 		var formFieldDict = emailNotifications.createFieldDict(form.form_fields);
 
 		async.waterfall([
 		    function(callback) {
-		    	if (form.selfNotifications && form.selfNotifications.enabled && form.selfNotifications.fromField) {
-					form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField];
-
-					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+		    	if (form.selfNotifications && form.selfNotifications.enabled) {
+		    		if(form.selfNotifications.fromField){
+		    			form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField];
+		    		} else {
+		    			form.selfNotifications.fromEmails = config.mailer.options.from;
+		    		}
+					
+					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, function(err){
 						if(err){
 							return callback({
 								message: 'Failure sending submission self-notification email'
@@ -101,8 +95,7 @@ exports.createSubmission = function(req, res) {
 		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
 
 					form.respondentNotifications.toEmails = formFieldDict[form.respondentNotifications.toField];
-					debugger;
-					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, constants.varFormat, function(err){
+					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, function(err){
 						if(err){
 							return callback({
 								message: 'Failure sending submission respondent-notification email'
@@ -154,7 +147,7 @@ exports.getVisitorData = function(req, res) {
 	    },
 	    {
 	        $facet: {
-	            "deviceStatistics": [
+	            'deviceStatistics': [
 	                {
 	                    $unwind: '$analytics.visitors'
 	                },
@@ -184,32 +177,40 @@ exports.getVisitorData = function(req, res) {
 	                },
 	                { 
 	                    $group: {
-	                        _id: "$deviceType",
-	                        total_time: { $sum: "$SubmittedTimeElapsed"  },
-	                        responses: { $sum: "$SubmittedResponses" },
+	                        _id: '$deviceType',
+	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
+	                        responses: { $sum: '$SubmittedResponses' },
 	                        visits: { $sum: 1 }
 	                    }
 	                },
 	                {
 	                    $project: {
-	                        total_time: "$total_time",
-	                        responses: "$responses",
-	                        visits: "$visits",
+	                        total_time: '$total_time',
+	                        responses: '$responses',
+	                        visits: '$visits',
 	                        average_time: {
-	                            $divide : ["$total_time", "$responses"]
+	                        	$cond: [ 
+                    				{ $eq: [ '$responses', 0 ] }, 
+                    				0, 
+                    				{ $divide: ['$total_time', '$responses'] } 
+                    			] 
 	                        },
 	                        conversion_rate: {
 	                            $multiply: [
 	                            	100,
 	                            	{ 
-	                            		$divide : ["$responses", "$visits"]
+                            			$cond: [ 
+                            				{ $eq: [ '$visits', 0 ] }, 
+                            				0, 
+                            				{ $divide: ['$responses', '$visits'] } 
+                            			] 
 	                            	}
 	                            ]
 	                        }
 	                    }
 	                }
 	            ],
-	            "globalStatistics": [
+	            'globalStatistics': [
 	                {
 	                    $unwind: '$analytics.visitors'
 	                },
@@ -240,25 +241,33 @@ exports.getVisitorData = function(req, res) {
 	                { 
 	                    $group: {
 	                        _id: null,
-	                        total_time: { $sum: "$SubmittedTimeElapsed"  },
-	                        responses: { $sum: "$SubmittedResponses" },
+	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
+	                        responses: { $sum: '$SubmittedResponses' },
 	                        visits: { $sum: 1 }
 	                    }
 	                },
 	                {
 	                    $project: {
 	                        _id: 0,
-	                        total_time: "$total_time",
-	                        responses: "$responses",
-	                        visits: "$visits",
+	                        total_time: '$total_time',
+	                        responses: '$responses',
+	                        visits: '$visits',
 	                        average_time: {
-	                            $divide : ["$total_time", "$responses"]
+	                            $cond: [ 
+                    				{ $eq: [ '$responses', 0 ] }, 
+                    				0, 
+                    				{ $divide: ['$total_time', '$responses'] } 
+                    			] 
 	                        },
 	                        conversion_rate: {
 	                            $multiply: [
 	                            	100,
 	                            	{ 
-	                            		$divide : ["$responses", "$visits"]
+	                            		$cond: [ 
+                            				{ $eq: [ '$visits', 0 ] }, 
+                            				0, 
+                            				{ $divide: ['$responses', '$visits'] } 
+                            			] 
 	                            	}
 	                            ]
 	                        }
@@ -299,7 +308,7 @@ exports.create = function(req, res) {
 			});
 		}
 
-		createdForm = helpers.removeSensitiveModelData('private_form', createdForm);
+		createdForm = helpers.removeSensitiveModelData('private_form', createdForm.toJSON());
 		return res.json(createdForm);
 	});
 };
@@ -317,13 +326,8 @@ exports.read = function(req, res) {
 				});
 			}
 
-			var newForm = req.form.toJSON();
-
-			if(newForm.admin === req.user._id){
-				return res.json(newForm);
-			}
-		
-			newForm = helpers.removeSensitiveModelData('private_form', newForm);
+			var newForm = helpers.removeSensitiveModelData('private_form', req.form.toJSON());
+			
 			return res.json(newForm);
 	}
 };
@@ -339,7 +343,7 @@ var readForRender = exports.readForRender = function(req, res) {
 		});
 	}
 
-	newForm = helpers.removeSensitiveModelData('public_form', newForm);
+	newForm = helpers.removeSensitiveModelData('public_form', newForm.toJSON());
 
 	if(newForm.startPage && !newForm.startPage.showStart){
 		delete newForm.startPage;
@@ -355,8 +359,8 @@ exports.update = function(req, res) {
 
     var form = req.form;
     var updatedForm = req.body.form;
- 
-    if(!form.analytics){
+
+    if(!form.analytics && req.body.form.analytics){
     	form.analytics = {
     		visitors: [],
     		gaCode: ''
@@ -370,9 +374,18 @@ exports.update = function(req, res) {
 			diff.applyChange(form._doc, true, change);
 		});
 	} else {
+		if(!updatedForm){
+			res.status(400).send({
+				message: 'Updated Form is empty'
+			});
+		}
 
-	    delete updatedForm.__v;
+		delete updatedForm.lastModified; 
 	    delete updatedForm.created; 
+	    delete updatedForm.id;
+	    delete updatedForm._id;
+	    delete updatedForm.__v;
+
 		//Unless we have 'admin' privileges, updating the form's admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
@@ -395,7 +408,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			savedForm = helpers.removeSensitiveModelData('private_form', savedForm);
+			savedForm = helpers.removeSensitiveModelData('private_form', savedForm.toJSON());
 			res.json(savedForm);
 		}
 	});
@@ -463,15 +476,17 @@ exports.list = function(req, res) {
 				});
 			}
 
-			const result_ids = results.map(function(result){ return result._id.id });
+			const result_ids = results.map(function(result){ 
+				return ''+result._id; 
+			});
+			
 			var currIndex = -1;
 
 			for(var i=0; i<forms.length; i++){
 				forms[i] = helpers.removeSensitiveModelData('private_form', forms[i]);
 
-				currIndex = result_ids.indexOf(forms[i]._id.id)
-
-				if(currIndex > -1){
+				currIndex = result_ids.indexOf(forms[i]._id);
+                if(currIndex > -1){
 					forms[i].submissionNum = results[currIndex].responses;
 				} else {
 					forms[i].submissionNum = 0;
@@ -494,7 +509,7 @@ exports.formByID = function(req, res, next, id) {
 	}
 
 	Form.findById(id)
-		.select('admin title language form_fields startPage endPage hideFooter isLive design analytics.gaCode respondentNotifications selfNotifications')
+		.select('admin title language form_fields startPage endPage showFooter isLive design analytics.gaCode respondentNotifications selfNotifications')
 		.populate('admin')
 		.exec(function(err, form) {
 		if (err) {
@@ -506,7 +521,7 @@ exports.formByID = function(req, res, next, id) {
 		}
 		else {
 			//Remove sensitive information from User object
-			req.form = helpers.removeSensitiveModelData('private_form', form);
+			req.form = helpers.removeSensitiveModelData('private_form', form.toJSON());
 			return next();
 		}
 	});
@@ -523,7 +538,7 @@ exports.formByIDFast = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.lean()
-		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
+		.select('title language form_fields startPage endPage showFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);
@@ -545,7 +560,7 @@ exports.formByIDFast = function(req, res, next, id) {
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
+	if (req.form.admin.id !== req.user.id || req.user.roles.indexOf('admin') > -1) {
 		res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});

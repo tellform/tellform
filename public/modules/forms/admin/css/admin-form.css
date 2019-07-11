@@ -1,4 +1,212 @@
-.admin-form-title {
-	margin-bottom: 0px; 
-	overflow-wrap: break-word;
+.admin-form .pull-top {
+    display: inline-block;
+    vertical-align: top;
+    float: none;
 }
+
+.admin-form .box {
+    padding: 0 5px 0 5px!important;
+}
+
+.admin-form .current-fields .field-row {
+	padding: 5px 0;
+}
+
+.admin-form .current-fields .panel {
+	background-color: #f1f1f1;
+	margin-top: 0!important;
+}
+	.admin-form .current-fields  .panel:hover {
+		background-color: #fff;
+        cursor: pointer;
+	}
+
+.admin-form .current-fields .panel.tool-panel {
+	background-color: white;
+}
+
+.admin-form .current-fields .panel-heading {
+    background-color: #f1f1f1;
+	position: relative;
+}
+    .admin-form .current-fields .panel-heading:hover {
+        background-color: #fff;
+        cursor: pointer;
+    }
+        .admin-form .current-fields .panel-heading a:hover {
+            text-decoration: none;
+        }
+
+
+.admin-form .current-fields .tool-panel.panel:hover {
+    border-color: #9d9d9d;
+    background-color: #eee;
+    cursor: pointer;
+}
+    .admin-form .current-fields .tool-panel.panel:hover .panel-heading {
+        background-color: inherit;
+        color: #000;
+        cursor: pointer;
+    }
+
+.admin-form .current-fields .tool-panel.panel .panel-heading {
+    background-color: #fff;
+    color: #9d9d9d;
+}
+	.admin-form .current-fields .tool-panel.panel .panel-heading a {
+	    color: inherit;
+	}
+	.admin-form .current-fields .tool-panel.panel .panel-heading a:hover{
+	    text-decoration: none;
+	}
+
+/* Custom Tab CSS */
+.admin-form .nav.nav-pills.nav-stacked {
+	width: 16.66666667%;
+	float: left;
+	position: relative;
+	min-height: 1px;
+	padding-right: 15px;
+}
+
+.admin-form .tab-content {
+	width: 83.33333333%;
+	position: relative;
+	min-height: 1px;
+	float:left;
+	padding-top: 0;
+}
+
+.admin-form .panel-default.startPage {
+    border-style: dashed;
+    border-color: #a9a9a9;
+    border-width:3px;
+}
+
+.admin-form .busy-updating-wrapper {
+   text-align: center;
+   font-size: 20px;
+   position: fixed;
+   bottom: 0;
+   right: 55px;
+   z-index: 1;
+}
+
+.admin-form .busy-submitting-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.admin-form .dropzone h4.panel-title {
+    height: 17px;
+    overflow: hidden;
+}
+
+.container.admin-form {
+    margin-top: 70px;
+}
+
+/*
+** Edit Modal
+*/
+.edit-modal-window .modal-dialog {
+	width: 90%;
+}
+
+.edit-modal-window .modal-body {
+	padding: 0;
+}
+
+.edit-modal-window .edit-panel {
+	background-color: #F1F1F1;
+	padding: 0 35px 0 35px;
+}
+
+.edit-modal-window .preview-field-panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.edit-modal-window .preview-field-panel form {
+	padding-right: 20px;
+}
+
+.edit-modal-window .preview-field {
+	resize: vertical;
+}
+
+.admin-form .ui-sortable-placeholder {
+	visibility: visible !important;
+	border: none;
+	padding:1px;
+    background: #000;
+	background:rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Styles for form admin view (/forms/:formID/admin) */
+.admin-form > .page-header {
+    padding-bottom: 0;
+    margin-bottom: 40px;
+}
+    .admin-form > .page-header h1 {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    .admin-form > .page-header > .col-xs-3 {
+        padding-top: 1.4em;
+    }
+.admin-form .form-controls .row {
+    padding: 5px;
+}
+.admin-form .page-header {
+    border: none;
+	margin-top: none;
+	margin-bottom: none;
+}
+
+/*Styles for add fields tab*/
+.admin-form .add-field {
+    background-color: #ddd;
+    padding: 0 2% 0 2%;
+    border-radius: 3px;
+}
+    .admin-form .add-field .col-xs-6 {
+        padding: 0.25em 0.4em;
+    }
+        .admin-form .add-field .col-xs-6 .panel-heading {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #bbb;
+            border-radius: 4px;
+        }
+
+.view-form-btn {
+    border: none;
+}
+.view-form-btn.span {
+    padding-right:0.6em;
+}
+
+.notification-row {
+    display: inline-block;
+    padding: 0 5px;
+}
+
+.status-light {
+    font-size: 10px;
+}
+
+.notification-row .status-light {
+    padding-top: 15px;
+}
+.status-light.status-light-off {
+    color: #BE0000;
+}
+.status-light.status-light-on {
+    color: #33CC00;
+}
+

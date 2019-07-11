@@ -5,8 +5,7 @@ module.exports = {
 	db: {
 		uri: 'mongodb://localhost/mean-test',
 		options: {
-			user: '',
-			pass: ''
+			useMongoClient: true
 		}
 	},
 	port: 3001,
@@ -19,6 +18,7 @@ module.exports = {
 			//stream: 'access.log'
 		}
 	},
+	subdomainsDisabled: true,
 	app: {
 		title: 'TellForm Test'
 	},

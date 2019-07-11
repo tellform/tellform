@@ -13,44 +13,37 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
     function ($http, TimeCounter, $filter, $rootScope, SendVisitorData, $translate, $timeout) {
         return {
             templateUrl: 'form_modules/forms/base/views/directiveViews/form/submit-form.client.view.html',
-			restrict: 'E',
+            restrict: 'E',
             scope: {
-                myform:'=',
-                ispreview: '='
+                myform: '='
             },
             controller: function($document, $window, $scope){
-		        var FORM_ACTION_ID = 'submit_field';
+                var FORM_ACTION_ID = 'submit_field';
                 $scope.forms = {};
                 
-				//Don't start timer if we are looking at a design preview
-                if($scope.ispreview){
-                    TimeCounter.restartClock();
+                var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
+                    return field.fieldType !== 'statement';
+                }).length;
+
+                $scope.$watch('myform', function(oldVal, newVal){
+                    $scope.myform.visible_form_fields = $scope.myform.form_fields.filter(function(field){
+                        return !field.deletePreserved;
+                    });
+                });
+
+                $scope.updateFormValidity = function(){
+                    $timeout(function(){
+                        var nb_valid = $scope.myform.form_fields.filter(function(field){
+                            return (field.fieldType === 'statement' || field.fieldValue !== '' || !field.required);
+                        }).length;
+                        $scope.translateAdvancementData = {
+                            done: nb_valid,
+                            total: $scope.myform.visible_form_fields.length
+                        };
+                    });
                 }
 
-				var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
-		            return field.fieldType !== 'statement';
-		        }).length;
-
-				$scope.$watch('myform', function(oldVal, newVal){
-						$scope.myform.visible_form_fields = $scope.myform.form_fields.filter(function(field){
-							return !field.deletePreserved;
-						});
-						console.log($scope.myform.visible_form_fields);
-				})
-
-				$scope.updateFormValidity = function(){
-					$timeout(function(){
-						var nb_valid = $scope.myform.form_fields.filter(function(field){
-							return (field.fieldType === 'statement' || field.fieldValue !== '' || !field.required);
-						}).length;
-						$scope.translateAdvancementData = {
-							done: nb_valid,
-							total: $scope.myform.visible_form_fields.length
-						};
-					});
-				}
-
-				$scope.updateFormValidity();
+                $scope.updateFormValidity();
 
                 $scope.reloadForm = function(){
                     //Reset Form
@@ -60,7 +53,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                             return field;
                         }).value();
 
-					$scope.loading = false;
+                    $scope.loading = false;
                     $scope.error = '';
 
                     $scope.selected = {
@@ -76,163 +69,179 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                 /*
                 ** Field Controls
                 */
-				var evaluateLogicJump = function(field){
-					var logicJump = field.logicJump;
+                var evaluateLogicJump = function(field){
+                    var logicJump = field.logicJump;
 
-					if(logicJump.enabled){
-						if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
-							var parse_tree = jsep(logicJump.expressionString);
-							var left, right;
+                    if(logicJump.enabled){
+                        if (logicJump.expressionString && logicJump.valueB && field.fieldValue) {
+                            var parse_tree = jsep(logicJump.expressionString);
+                            var left, right;
 
-							if(parse_tree.left.name === 'field'){
-								left = field.fieldValue;
-								right = logicJump.valueB;
-							} else {
-								left = logicJump.valueB;
-								right = field.fieldValue;
-							}
+                            if(parse_tree.left.name === 'field'){
+                                left = field.fieldValue;
+                                right = logicJump.valueB;
+                            } else {
+                                left = logicJump.valueB;
+                                right = field.fieldValue;
+                            }
 
-							if(field.fieldType === 'number' || field.fieldType === 'scale' || field.fieldType === 'rating'){
-								switch(parse_tree.operator) {
-									case '==':
-										return (parseInt(left) === parseInt(right));
-									case '!==':
-										return (parseInt(left) !== parseInt(right));
-									case '>':
-										return (parseInt(left) > parseInt(right));
-									case '>=':
-										return (parseInt(left) > parseInt(right));
-									case '<':
-										return (parseInt(left) < parseInt(right));
-									case '<=':
-										return (parseInt(left) <= parseInt(right));
-									default:
-										return false;
-								}
-							} else {
-								switch(parse_tree.operator) {
-									case '==':
-										return (left === right);
-									case '!==':
-										return (left !== right);
-									case 'contains':
-										return (left.indexOf(right) > -1);
-									case '!contains':
-	                  				/* jshint -W018 */
-										return !(left.indexOf(right) > -1);
-									case 'begins':
-										return left.startsWith(right);
-									case '!begins':
-										return !left.startsWith(right);
-									case 'ends':
-										return left.endsWith(right);
-									case '!ends':
-										return left.endsWith(right);
-									default:
-										return false;
-								}
-							}
-						}
-					}
-				};
+                            if(field.fieldType === 'number' || field.fieldType === 'scale' || field.fieldType === 'rating'){
+                                switch(parse_tree.operator) {
+                                    case '==':
+                                        return (parseInt(left) === parseInt(right));
+                                    case '!==':
+                                        return (parseInt(left) !== parseInt(right));
+                                    case '>':
+                                        return (parseInt(left) > parseInt(right));
+                                    case '>=':
+                                        return (parseInt(left) > parseInt(right));
+                                    case '<':
+                                        return (parseInt(left) < parseInt(right));
+                                    case '<=':
+                                        return (parseInt(left) <= parseInt(right));
+                                    default:
+                                        return false;
+                                }
+                            } else {
+                                switch(parse_tree.operator) {
+                                    case '==':
+                                        return (left === right);
+                                    case '!==':
+                                        return (left !== right);
+                                    case 'contains':
+                                        return (left.indexOf(right) > -1);
+                                    case '!contains':
+                                    /* jshint -W018 */
+                                        return !(left.indexOf(right) > -1);
+                                    case 'begins':
+                                        return left.startsWith(right);
+                                    case '!begins':
+                                        return !left.startsWith(right);
+                                    case 'ends':
+                                        return left.endsWith(right);
+                                    case '!ends':
+                                        return left.endsWith(right);
+                                    default:
+                                        return false;
+                                }
+                            }
+                        }
+                    }
+                };
 
-				var getActiveField = function(){
-					if($scope.selected === null){
-						console.error('current active field is null');
-						throw new Error('current active field is null');
-					}
+                $rootScope.getActiveField = function(){
+                    if($scope.selected === null){
+                        console.error('current active field is null');
+                        throw new Error('current active field is null');
+                    }
 
-					if($scope.selected._id === FORM_ACTION_ID) {
-						return $scope.myform.form_fields.length - 1;
-					}
-					return $scope.selected.index;
-				};
+                    if($scope.selected._id === FORM_ACTION_ID) {
+                        return $scope.myform.visible_form_fields[$scope.selected.index - 1]._id;
+                    }
+                    return $scope.selected._id;
+                };
 
                 $scope.setActiveField = $rootScope.setActiveField = function(field_id, field_index, animateScroll) {
-                    if($scope.selected === null || (!field_id && field_index === null) )  {
-                    	return;
+                    if(!field_id && field_index === null)  {
+                        return;
                     }
-	    			
-	    			if(field_id === FORM_ACTION_ID){ 
-	    				field_index = $scope.myform.visible_form_fields.length;
-	    			} else if(!field_id) {
-	    				field_id = $scope.myform.visible_form_fields[field_index]._id;
-					} else if(field_index === null){
-						field_index = $scope.myform.visible_form_fields.length
+                    
+                    if(field_id === FORM_ACTION_ID){ 
+                        field_index = $scope.myform.visible_form_fields.length;
+                    } else if(!field_id) {
+                        field_id = $scope.myform.visible_form_fields[field_index]._id;
+                    } else if(field_index === null){
+                        field_index = $scope.myform.visible_form_fields.length
 
-						for(var i=0; i < $scope.myform.visible_form_fields.length; i++){
-							var currField = $scope.myform.visible_form_fields[i];
-							if(currField['_id'] == field_id){
-								field_index = i;
-								break;
-							}
-						}
-					}
+                        for(var i=0; i < $scope.myform.visible_form_fields.length; i++){
+                            var currField = $scope.myform.visible_form_fields[i];
+                            if(currField['_id'] == field_id){
+                                field_index = i;
+                                break;
+                            }
+                        }
+                    }
 
-					if($scope.selected._id === field_id){
-						return;
-		    		}
-
+                    if(!$scope.selected){
+                        $scope.selected = {
+                            _id: '',
+                            index: 0
+                        }
+                    }
+                    if($scope.selected._id === field_id){
+                        return;
+                    }
+                    
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
 
                     if(animateScroll){
-                        $document.scrollToElement(angular.element('#'+field_id), -10, 50).then(function() {
-							if (angular.element('#'+field_id+' .focusOn').length) {
-								//Handle default case
-								angular.element('#'+field_id+' .focusOn')[0].focus();
-							} else if(angular.element('#'+field_id+' input').length) {
-								//Handle case for rating input
-								angular.element('#'+field_id+' input')[0].focus();
-							} else {
-								//Handle case for dropdown input
-								angular.element('#'+field_id+'.selectize-input')[0].focus();
-							}
+                        $document.scrollToElement(angular.element('#'+field_id), -10, 300).then(function() {
+                            if (angular.element('#'+field_id+' .focusOn').length) {
+                                //Handle default case
+                                angular.element('#'+field_id+' .focusOn')[0].focus();
+                            } else if(angular.element('#'+field_id+' input').length) {
+                                //Handle case for rating input
+                                angular.element('#'+field_id+' input')[0].focus();
+                            } else {
+                                //Handle case for dropdown input
+                                angular.element('#'+field_id+'.selectize-input')[0].focus();
+                            }
                         });
-                    }                
+                    } else {
+                        if (angular.element('#'+field_id+' .focusOn').length) {
+                            //Handle default case
+                            angular.element('#'+field_id+' .focusOn')[0].focus();
+                        } else if(angular.element('#'+field_id+' input').length) {
+                            //Handle case for rating input
+                            angular.element('#'+field_id+' input')[0].focus();
+                        } else if(angular.element('#'+field_id+'.selectize-input').length) {
+                            //Handle case for dropdown input
+                            angular.element('#'+field_id+'.selectize-input')[0].focus();
+                        }
+                    }         
                 };
 
                 $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
-                	$scope.setActiveField($element.prop('id'), null, false);
-               		$scope.updateFormValidity();
-       	            $scope.$apply()
-                	if(!$scope.myform.submitted){
-						SendVisitorData.send($scope.myform, getActiveField(), TimeCounter.getTimeElapsed());
-					}
+                    $scope.setActiveField($element.prop('id'), null, false);
+                    $scope.updateFormValidity();
+                    $scope.$apply()
+                    if(!$scope.myform.submitted){
+                        SendVisitorData.send($scope.myform, $rootScope.getActiveField(), TimeCounter.getTimeElapsed());
+                    }
                 });
 
                 $rootScope.nextField = $scope.nextField = function(){
-					if($scope.selected && $scope.selected.index > -1){
-
-						if($scope.selected._id !== FORM_ACTION_ID){
-							var currField = $scope.myform.visible_form_fields[$scope.selected.index];
-						
-							//Jump to logicJump's destination if it is true
-							if(currField.logicJump && currField.logicJump.jumpTo && evaluateLogicJump(currField)){
-								$scope.setActiveField(currField.logicJump.jumpTo, null, true);
-							} else if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
-								$scope.setActiveField(null, $scope.selected.index+1, true);
-							} else {
-								$scope.setActiveField(FORM_ACTION_ID, null, true);
-							}
-						}
-					} else {
-						//If selected is not defined go to the first field
-						$scope.setActiveField(null, 0, true);
-					}
+                    if($scope.selected && $scope.selected.index > -1){
+                        if($scope.selected._id !== FORM_ACTION_ID){
+                            var currField = $scope.myform.visible_form_fields[$scope.selected.index];
+                        
+                            //Jump to logicJump's destination if it is true
+                            if(currField.logicJump && currField.logicJump.jumpTo && evaluateLogicJump(currField)){
+                                $scope.setActiveField(currField.logicJump.jumpTo, null, true);
+                            } else if($scope.selected.index < $scope.myform.visible_form_fields.length-1){
+                                $scope.setActiveField(null, $scope.selected.index+1, true);
+                            } else {
+                                $scope.setActiveField(FORM_ACTION_ID, null, true);
+                            }
+                        }
+                    } else {
+                        //If selected is not defined go to the first field
+                        $scope.setActiveField(null, 0, true);
+                    }
                 };
 
                 $rootScope.prevField = $scope.prevField = function(){
-                	var selected_index = $scope.selected.index - 1;
+                    var selected_index = $scope.selected.index - 1;
                     if($scope.selected.index > 0){
                         $scope.setActiveField(null, selected_index, true);
                     }
                 };
 
                 $rootScope.goToInvalid = $scope.goToInvalid = function() {
-					var field_id = $('.ng-invalid, .ng-untouched').first().parents('.row.field-directive').first().attr('id');
-					$scope.setActiveField(field_id, null, true);
-				};
+                    var field_id = $('.ng-invalid, .ng-untouched').first().parents('.row.field-directive').first().attr('id');
+                    $scope.setActiveField(field_id, null, true);
+                };
 
                 /*
                 ** Form Display Functions
@@ -244,98 +253,98 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     }
                 };
 
-				var getDeviceData = function(){
-					var md = new MobileDetect(window.navigator.userAgent);
-					var deviceType = 'other';
+                var getDeviceData = function(){
+                    var md = new MobileDetect(window.navigator.userAgent);
+                    var deviceType = 'other';
 
-					if (md.tablet()){
-						deviceType = 'tablet';
-					} else if (md.mobile()) {
-						deviceType = 'mobile';
-					} else if (!md.is('bot')) {
-						deviceType = 'desktop';
-					}
+                    if (md.tablet()){
+                        deviceType = 'tablet';
+                    } else if (md.mobile()) {
+                        deviceType = 'mobile';
+                    } else if (!md.is('bot')) {
+                        deviceType = 'desktop';
+                    }
 
-					return {
-						type: deviceType,
-						name: window.navigator.platform
-					};
-				};
+                    return {
+                        type: deviceType,
+                        name: window.navigator.platform
+                    };
+                };
 
-				var getIpAndGeo = function(){
-					//Get Ip Address and GeoLocation Data
-					$.ajaxSetup( { 'async': false } );
-					var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
-					$.ajaxSetup( { 'async': true } );
+                var getIpAndGeo = function(){
+                    //Get Ip Address and GeoLocation Data
+                    $.ajaxSetup( { 'async': false } );
+                    var geoData = $.getJSON('https://freegeoip.net/json/').responseJSON;
+                    $.ajaxSetup( { 'async': true } );
 
-					if(!geoData || !geoData.ip){
-						geoData = {
-							ip: 'Adblocker'
-						};
-					}
+                    if(!geoData || !geoData.ip){
+                        geoData = {
+                            ip: 'Adblocker'
+                        };
+                    }
 
-					return {
-						ipAddr: geoData.ip,
-						geoLocation: {
-							City: geoData.city,
-							Country: geoData.country_name
-						}
-					};
-				};
+                    return {
+                        ipAddr: geoData.ip,
+                        geoLocation: {
+                            City: geoData.city,
+                            Country: geoData.country_name
+                        }
+                    };
+                };
 
-				$rootScope.submitForm = $scope.submitForm = function() {
-					if($scope.forms.myForm.$invalid){
-						$scope.goToInvalid();
-						return;
-					}
+                $rootScope.submitForm = $scope.submitForm = function() {
+                    if($scope.forms.myForm.$invalid){
+                        $scope.goToInvalid();
+                        return;
+                    }
 
-					var _timeElapsed = TimeCounter.stopClock();
-					$scope.loading = true;
+                    var _timeElapsed = TimeCounter.stopClock();
+                    $scope.loading = true;
 
-					var form = _.cloneDeep($scope.myform);
+                    var form = _.cloneDeep($scope.myform);
 
-					var deviceData = getDeviceData();
-					form.device = deviceData;
+                    var deviceData = getDeviceData();
+                    form.device = deviceData;
 
-					var geoData = getIpAndGeo();
-					form.ipAddr = geoData.ipAddr;
-					form.geoLocation = geoData.geoLocation;
+                    var geoData = getIpAndGeo();
+                    form.ipAddr = geoData.ipAddr;
+                    form.geoLocation = geoData.geoLocation;
 
-					form.timeElapsed = _timeElapsed;
-					form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
-					delete form.endPage
-					delete form.isLive
-					delete form.provider
-					delete form.startPage
-					delete form.visible_form_fields;
-					delete form.analytics;
-					delete form.design;
-					delete form.submissions;
-					delete form.submitted;
-					for(var i=0; i < $scope.myform.form_fields.length; i++){
-						if($scope.myform.form_fields[i].fieldType === 'dropdown' && !$scope.myform.form_fields[i].deletePreserved){
-							$scope.myform.form_fields[i].fieldValue = $scope.myform.form_fields[i].fieldValue.option_value;
-						}
-					}
+                    form.timeElapsed = _timeElapsed;
+                    form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
+                    delete form.endPage
+                    delete form.isLive
+                    delete form.provider
+                    delete form.startPage
+                    delete form.visible_form_fields;
+                    delete form.analytics;
+                    delete form.design;
+                    delete form.submissions;
+                    delete form.submitted;
+                    for(var i=0; i < $scope.myform.form_fields.length; i++){
+                        if($scope.myform.form_fields[i].fieldType === 'dropdown' && !$scope.myform.form_fields[i].deletePreserved){
+                            $scope.myform.form_fields[i].fieldValue = $scope.myform.form_fields[i].fieldValue.option_value;
+                        }
+                    }
 
-					setTimeout(function () {
-						$scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
-							.success(function (data, status) {
-								$scope.myform.submitted = true;
-								$scope.loading = false;
-								SendVisitorData.send(form, getActiveField(), _timeElapsed);
-							})
-							.error(function (error) {
-								$scope.loading = false;
-								console.error(error);
-								$scope.error = error.message;
-							});
-					}, 500);
+                    setTimeout(function () {
+                        $scope.submitPromise = $http.post('/forms/' + $scope.myform._id, form)
+                            .then(function (data, status) {
+                                $scope.myform.submitted = true;
+                                $scope.loading = false;
+                                SendVisitorData.send(form, $rootScope.getActiveField(), _timeElapsed);
+                            }, function (error) {
+                                $scope.loading = false;
+                                console.error(error);
+                                $scope.error = error.message;
+                            });
+                    }, 500);
                 };
 
                 //Reload our form
-				$scope.reloadForm();
+                $scope.reloadForm();
             }
         };
     }
 ]);
+

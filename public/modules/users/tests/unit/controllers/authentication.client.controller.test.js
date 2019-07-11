@@ -4,11 +4,10 @@
 	// Forms Controller Spec
 	describe('Authentication Controller Tests', function() {
 		// Initialize global variables
-		var AuthenticationController,
+		var ctrl,
 			scope,
 			$httpBackend,
 			$stateParams,
-			$location,
 			$state;
 
 		var sampleUser = {
@@ -88,34 +87,32 @@
 			$provide.service('User', function($q) {
 				return {
 					getCurrent: function() {
-						var deferred = $q.defer();
-						deferred.resolve( JSON.stringify(sampleUser) );
-						return deferred.promise;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
 					},
 					login: function(credentials) {
-						var deferred = $q.defer();
-						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
-							deferred.resolve( JSON.stringify(sampleUser) );
-						}else {
-							deferred.resolve('Error: User could not be loggedin');
-						}
-
-						return deferred.promise;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
 					},
 					logout: function() {
-						var deferred = $q.defer();
-						deferred.resolve(null);
-						return deferred.promise;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(null);
+				            }
+			          	};
 					},
 					signup: function(credentials) {
-						var deferred = $q.defer();
-						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
-							deferred.resolve( JSON.stringify(sampleUser) );
-						}else {
-							deferred.resolve('Error: User could not be signed up');
-						}
-
-						return deferred.promise;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
 					}
 				};
 			});
@@ -125,13 +122,16 @@
 		beforeEach(module(function($provide) {
 			$provide.service('Auth', function() {
 				return {
+					_currentUser: null,
+				    get currentUser(){
+				        return sampleUser
+				    },
+					login: function(user) {
+					},
 					ensureHasCurrentUser: function() {
 						return sampleUser;
 					},
 					isAuthenticated: function() {
-						return true;
-					},
-					getUserState: function() {
 						return true;
 					}
 				};
@@ -141,41 +141,103 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$state_, _$location_, _$stateParams_, _$httpBackend_, CurrentForm, Forms) {
+		beforeEach(inject(function($controller, $rootScope, _$state_, _$stateParams_, _$httpBackend_, Auth, User) {
 			// Set a new global scope
 			scope = $rootScope.$new();
-			scope.abc = 'hello';
+			scope.forms = {
+				signinForm: {
+					$valid: true
+				},
+				signupForm: {
+					$valid: true
+				},
+			};
+
+			scope.credentials = _.cloneDeep(sampleCredentials);
 
 			// Point global variables to injected services
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
-			$location = _$location_;
 			$state = _$state_;
 
-			// $httpBackend.whenGET(/\.html$/).respond('');
+			$httpBackend.whenGET('/forms').respond('');
 			$httpBackend.whenGET('/users/me/').respond('');
 
 			// Initialize the Forms controller.
-			AuthenticationController = $controller('AuthenticationController', { $scope: scope });
+
+			this.init = function(){
+			    ctrl = $controller('AuthenticationController', {
+			      $scope: scope
+			    });
+			}
  		}));
 
-		it('$scope.signin should sigin in user with valid credentials', inject(function(Auth) {
-			
-			//Set $state transition 
-			// $state.expectTransitionTo('listForms');
-			//Set POST response
-			// $httpBackend.expect('POST', '/auth/signin', sampleCredentials).respond(200, sampleUser);
+		it('$scope.signin should sign-in in user with valid credentials', inject(function(Auth) {
+			this.init();
 
-			scope.abc = 'sampleCredentials';
+			//Set $state transition
+			$state.expectTransitionTo('listForms');
+			spyOn(Auth, 'login');
+
 			//Run Controller Logic to Test
 			scope.signin();
 
-			// $httpBackend.flush();
+			// Test scope value
+			expect(Auth.ensureHasCurrentUser()).toEqualData(sampleUser);
+			expect(Auth.login).toHaveBeenCalledTimes(1);
+			expect(scope.user).toEqualData(sampleUser);
+
+			$state.ensureAllTransitionsHappened();
+		}));
+
+		it('$scope.signin should sign-in in user and redirect to previous state', inject(function(Auth) {
+			this.init();
+
+			$state.previous = {
+				state: {
+					name: 'profile'
+				},
+				fromParams: {}
+			}
+
+			//Set $state transition
+			$state.expectTransitionTo('profile');
+			spyOn(Auth, 'login');
+
+			//Run Controller Logic to Test
+			scope.signin();
 
 			// Test scope value
-			// expect(Auth.ensureHasCurrentUser()).toEqualData(sampleUser);
+			expect(Auth.ensureHasCurrentUser()).toEqualData(sampleUser);
+			expect(Auth.login).toHaveBeenCalledTimes(1);
+			expect(scope.user).toEqualData(sampleUser);
+
+			$state.ensureAllTransitionsHappened();
 		}));
 
 
+		it('$scope.signup should sign-up user with valid credentials', inject(function(Auth) {
+			this.init();
+
+			//Set $state transition
+			$state.expectTransitionTo('signup-success');
+			spyOn(Auth, 'isAuthenticated').and.returnValue(false);
+
+			//Run Controller Logic to Test
+			scope.signup();
+
+			$state.ensureAllTransitionsHappened();
+		}));
+
+		it('$scope.signup should not sign-up user if username is admin', function() {
+			scope.credentials.username = 'admin';
+			scope.credentials.email = 'test@example.com';
+			this.init();
+
+			//Run Controller Logic to Test
+			scope.signup();
+
+			expect(scope.error).toEqual('Username cannot be \'admin\'. Please pick another username.');
+		});
 	});
 }());

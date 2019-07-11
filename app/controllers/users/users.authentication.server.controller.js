@@ -126,7 +126,6 @@ exports.signup = function(req, res) {
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
 		if (err) {
-			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -181,7 +180,7 @@ exports.signin = function(req, res, next) {
 
 				res.cookie('langCookie', user.language, { maxAge: 90000, httpOnly: true });
 				
-				user = helpers.removeSensitiveModelData('private_user', user);
+				user = helpers.removeSensitiveModelData('private_user', user.toJSON());
 				return res.json(user);
 			});
 		}

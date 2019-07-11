@@ -9,7 +9,7 @@ angular.module('stateMock').service('$state', function($q){
             if(expectedState !== stateName){
                 throw Error('Expected transition to state: ' + expectedState + ' but transitioned to ' + stateName );
             }
-        }else{
+        } else {
             throw Error('No more transitions were expected! Tried to transition to '+ stateName );
         }
         var deferred = $q.defer();

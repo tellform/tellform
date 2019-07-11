@@ -1,62 +1,30 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth',
-	function($scope, $rootScope, $http, $state, Users, Auth) {
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth', 'currentUser', 'USERS_URL', '$translate',
+	function($scope, $rootScope, $http, $state, Users, Auth, currentUser, USERS_URL, $translate) {
 
-		$scope.user = Auth.currentUser;
-
-		// Check if there are additional accounts
-		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
-			for (var i in $scope.user.additionalProvidersData) {
-				return true;
-			}
-			return false;
-		};
+		$scope.user = currentUser;
 
 		$scope.cancel = function(){
-			$scope.user = Auth.currentUser;
-		};
-
-		// Check if provider is already in use with current user
-		$scope.isConnectedSocialAccount = function(provider) {
-			return $scope.user.provider === provider || ($scope.user.additionalProvidersData && $scope.user.additionalProvidersData[provider]);
-		};
-
-		// Remove a user social account
-		$scope.removeUserSocialAccount = function(provider) {
-			$scope.success = $scope.error = null;
-
-			$http.delete('/users/accounts', {
-				params: {
-					provider: provider
-				}
-			}).success(function(response) {
-				// If successful show success message and clear form
-				$scope.success = true;
-				$scope.error = null;
-				$scope.user = response;
-			}).error(function(response) {
-				$scope.success = null;
-				$scope.error = response.message;
-			});
+			$scope.user = currentUser;
 		};
 
 		// Update a user profile
 		$scope.updateUserProfile = function(isValid) {
-			if (isValid) {
+			if (isValid && $scope.user) {
 				$scope.success = $scope.error = null;
-				var user = new Users($scope.user);
 
-				user.$update(function(response) {
+				$http.put(USERS_URL, $scope.user).then(function(response){ 
 					$scope.success = true;
 					$scope.error = null;
-					$scope.user = response;
-				}, function(response) {
+					$scope.user = response.data;
+
+					$translate.use($scope.user.language);
+					Auth.update($scope.user);
+				}, function(error) {
 					$scope.success = null;
-					$scope.error = response.data.message;
+					$scope.error = 'Could not update your profile due to an error with the server. Sorry about this!'
 				});
-			} else {
-				$scope.submitted = true;
 			}
 		};
 
@@ -64,14 +32,14 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
 
-			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
+			$http.post('/users/password', $scope.passwordDetails).then(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
 				$scope.error = null;
 				$scope.passwordDetails = null;
-			}).error(function(response) {
+			}, function(errResponse) {
 				$scope.success = null;
-				$scope.error = response.message;
+				$scope.error = errResponse.message;
 			});
 		};
 

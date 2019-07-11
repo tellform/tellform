@@ -52,9 +52,9 @@
 			    <div class="col-xs-5 field-title text-left"> {{ 'LANGUAGE' | translate }} </div>
 			    <div class="col-xs-12 field-input">
 				    <div class="button custom-select">
-						<select style="color:black;" name="language" required ng-model="formLanguage" ng-init="formLanguage = user.language">
-							<option ng-repeat="language in languages" value="{{language}}">
-								{{language}}
+						<select style="color:black;" name="language" required ng-init="formLanguage = user.language" ng-model="formLanguage">
+							<option ng-repeat="language in $root.languages" value="{{language}}"> 
+								{{ $root.langCodeToWord[language] }}                     
 							</option>
 				        </select>
 				    </div>

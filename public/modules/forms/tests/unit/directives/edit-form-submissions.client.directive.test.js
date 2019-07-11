@@ -59,8 +59,7 @@
 			endPage: {
 				showEnd: false
 			},
-            hideFooter: false,
-            isGenerated: false,
+            showFooter: false,
             isLive: false,
             _id: '525a8422f6d0f87f0e407a33'
         };
@@ -141,8 +140,7 @@
 
 			sampleForm.submissions = sampleSubmissions;
             $httpBackend.whenGET('/users/me/').respond('');
-            $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
-			$httpBackend.whenGET('/forms').respond(200, sampleForm);
+			$httpBackend.whenGET('/forms').respond(200, [sampleForm]);
 			$httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})$/).respond(200, sampleForm);
             $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})\/submissions$/).respond(200, sampleSubmissions);
             $httpBackend.whenGET(/^(\/forms\/)([0-9a-fA-F]{24})\/visitors$/).respond(200, sampleVisitors);

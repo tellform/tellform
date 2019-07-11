@@ -65,7 +65,6 @@
             });
         }));
 
-
 		// The $resource service augments the response object with methods for updating and deleting the resource.
 		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
 		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
@@ -95,34 +94,32 @@
 			$provide.service('User', function($q) {
 				return {
 					getCurrent: function() {
-						var deferred = $q.defer();
-						deferred.resolve( JSON.stringify(sampleUser) );
-						return deferred.promise;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
 					},
 					login: function(credentials) {
-						var deferred = $q.defer();
-						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
-							deferred.resolve( JSON.stringify(sampleUser) );
-						}else {
-							deferred.resolve('Error: User could not be loggedin');
-						}
-
-						return deferred.promise;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
 					},
 					logout: function() {
-						var deferred = $q.defer();
-						deferred.resolve(null);
-						return deferred.promise;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(null);
+				            }
+			          	};
 					},
 					signup: function(credentials) {
-						var deferred = $q.defer();
-						if( credentials.password === sampleUser.password && credentials.username === sampleUser.username){
-							deferred.resolve( JSON.stringify(sampleUser) );
-						}else {
-							deferred.resolve('Error: User could not be signed up');
-						}
-
-						return deferred.promise;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
 					}
 				};
 			});
@@ -133,12 +130,13 @@
 			$provide.service('Auth', function() {
 				return {
 					ensureHasCurrentUser: function() {
-						return sampleUser;
+						return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
 					},
 					isAuthenticated: function() {
-						return true;
-					},
-					getUserState: function() {
 						return true;
 					}
 				};

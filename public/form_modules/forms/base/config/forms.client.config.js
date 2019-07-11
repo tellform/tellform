@@ -28,7 +28,8 @@ angular.module('view-form')
 		}
 		return 0;
 	};
-}).value('supportedFields', [
+})
+.value('supportedFields', [
 	'textfield',
 	'textarea',
 	'date',
@@ -42,7 +43,14 @@ angular.module('view-form')
 	'yes_no',
 	'number',
 	'natural'
-]).constant('VIEW_FORM_URL', '/forms/:formId/render');
+])
+.constant('VIEW_FORM_URL', '/forms/:formId/render')
+.filter('indexToAlphabet', function(){
+	return function(index){
+		var char = String.fromCharCode(index + 65);
+		return char;
+	};
+})
 
 //Angular-Scroll Settings
 angular.module('view-form').value('duScrollActiveClass', 'activeField')

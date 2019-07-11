@@ -22,10 +22,10 @@
             <div class="col-sm-8 field-input">
                 <ui-select ng-model="myform.language" search-enabled="false" theme="selectize">
                     <ui-select-match>
-                        {{ langCodeToWord[$select.selected] }}
+                        {{ $root.langCodeToWord[$select.selected] }}
                     </ui-select-match>
-                    <ui-select-choices repeat="language in languages">
-                        <span ng-bind-html="langCodeToWord[language] | highlight: $select.search">
+                    <ui-select-choices repeat="language in $root.languages">
+                        <span ng-bind-html="$root.langCodeToWord[language] | highlight: $select.search">
                         </span>
                     </ui-select-choices>
                 </select>
@@ -71,7 +71,7 @@
 
 			<div class="field-input col-sm-4 text-right">
 				<input class="toggle-switch" type="checkbox"
-            		bs-switch ng-model="myform.hideFooter"
+            		bs-switch ng-model="myform.showFooter"
             		switch-on-text="{{ 'ON' | translate }}"
             		switch-off-text="{{ 'OFF' | translate }}">
 			</div>

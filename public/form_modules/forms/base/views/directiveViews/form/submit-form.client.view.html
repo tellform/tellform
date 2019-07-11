@@ -46,7 +46,8 @@
                 </field-directive>
             </div>
             <div class="row form-actions" id="submit_field" du-scrollspy="submit_field"
-            ng-style="{ 'background-color':myform.design.colors.buttonColor}" style="border-top: 1px solid #ddd; margin-top: 30vh; height: 100vh; margin-left: 1%; margin-right: 1%;"
+                ng-style="{ 'background-color':myform.design.colors.buttonColor}" 
+                style="border-top: 1px solid #ddd; margin-top: 30vh; height: 100vh; margin-left: 1%; margin-right: 1%;"
                 on-tab-and-shift-key="prevField()"
                 on-tab-key="nextField()"
                 on-enter-key="submitForm()">
@@ -55,7 +56,10 @@
                     {{ 'COMPLETING_NEEDED' | translate:translateAdvancementData }}
                 </div>
 
-                <button ng-if="!forms.myForm.$invalid" class="Button btn col-sm-2 col-xs-8 focusOn" v-busy="loading" v-busy-label="Please wait" v-pressable ng-disabled="loading || forms.myForm.$invalid" ng-click="submitForm()" on-enter-key-disabled="loading || forms.myForm.$invalid" ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}" style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
+                <button ng-if="!forms.myForm.$invalid" class="Button btn col-sm-2 col-xs-8 focusOn" v-busy="loading" v-busy-label="{{ 'WAIT_LABEL' | translate }}" v-pressable 
+                ng-disabled="loading || forms.myForm.$invalid" ng-click="submitForm()" on-enter-key-disabled="loading || forms.myForm.$invalid" 
+                ng-style="{'background-color':myform.design.colors.buttonColor, 'color':myform.design.colors.buttonTextColor}" 
+                style="font-size: 1.6em; margin-left: 1em; margin-top: 1em;">
                     {{ 'SUBMIT' | translate }}
                 </button>
 
@@ -72,7 +76,7 @@
         </form>
     </div>
 
-    <section ng-if="!myform.hideFooter" class="navbar navbar-fixed-bottom" ng-style="{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}">
+    <section ng-if="myform.showFooter" class="navbar navbar-fixed-bottom" ng-style="{ 'background-color':myform.design.colors.buttonColor, 'padding-top': '15px', 'border-top': '2px '+ myform.design.colors.buttonTextColor +' solid', 'color':myform.design.colors.buttonTextColor}">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-xs-5" ng-show="!myform.submitted">

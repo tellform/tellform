@@ -18,7 +18,7 @@ module.exports = function(config) {
 		frameworks: ['jasmine'],
 
 		// List of files / patterns to load in the browser
-		files: bowerDep.concat(['public/lib/socket.io-client/dist/socket.io.js', 'public/lib/mobile-detect/mobile-detect.js'], applicationConfiguration.assets.js, applicationConfiguration.assets.views, applicationConfiguration.assets.unit_tests),
+		files: bowerDep.concat(['public/lib/socket.io-client/dist/socket.io.js', 'public/lib/mobile-detect/mobile-detect.js', 'public/lib/quill/quill.js', 'public/lib/ng-quill/src/ng-quill.js'], applicationConfiguration.assets.js, applicationConfiguration.assets.views,  applicationConfiguration.assets.unit_tests),
 
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
@@ -31,14 +31,16 @@ module.exports = function(config) {
 		    'public/form_modules/forms/base/views/**/*.html': ['ng-html2js'],
 		    'public/form_modules/forms/base/views/*.html': ['ng-html2js'],
 		    'public/modules/*/*.js': ['coverage'],
-			'public/modules/*/*[!tests]*/*.js': ['coverage']
+			'public/modules/*/*[!tests]*/*.js': ['coverage'],
+			'public/form_modules/*/*.js': ['coverage'],
+			'public/form_modules/*/*[!tests]*/*.js': ['coverage']
 		},
 
 		// configure coverage reporter
 	    coverageReporter: {
 	      	reporters: [
-	      		{ type: 'html', subdir: 'report-html' },
-        		{ type: 'lcov', subdir: 'report-lcov' },
+	      		//{ type: 'html', subdir: 'report-html' },
+        		{ type: 'lcov' },
           	],
 	      	dir : 'coverageClient/'
 	    },

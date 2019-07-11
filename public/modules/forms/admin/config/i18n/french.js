@@ -65,6 +65,9 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		VIEW_MY_TELLFORM: "Afficher ma forme",
 		LIVE: "Live",
 		PREVIEW: 'Aperçu',
+
+		//Share Tab
+		COPIED_LABEL: 'Copié',
 		COPY: "Copier",
 		COPY_AND_PASTE: "Copiez et collez ceci pour ajouter votre TellForm à votre site Web",
 		CHANGE_WIDTH_AND_HEIGHT: "Changez les valeurs de largeur et de hauteur pour mieux vous convenir",
