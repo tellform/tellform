@@ -1,3 +1,4 @@
+<!-- TODO: Consider modernizing this and moving it to https://ohmyform.com's documentation -->
 # wildcard DNS in localhost development
 - install [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html)
 ```
