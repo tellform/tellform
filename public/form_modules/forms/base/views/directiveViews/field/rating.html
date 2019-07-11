@@ -15,14 +15,13 @@
     <div class="col-xs-12 field-input">
 
 		<input-stars max="{{field.ratingOptions.steps}}"
-					 ng-init="field.fieldValue = 1"
+					 name="{{field.fieldType}}{{index}}"
                      on-shape-click="true"
-                     on-star-click="nextField()"
+                     on-star-click="$root.nextField()"
 					 icon-full="{{field.ratingOptions.shape}}"
 					 icon-base="fa fa-3x"
 					 icon-empty="{{field.ratingOptions.shape}}"
 					 ng-model="field.fieldValue"
-					 ng-model-options="{ debounce: 250 }"
 					 ng-required="field.required"
 					 on-enter-or-tab-key="nextField()"
 					 on-tab-and-shift-key="prevField()"

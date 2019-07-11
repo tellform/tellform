@@ -8,11 +8,7 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	async = require('async'),
-	Random = require('random-js'),
-	mt = Random.engines.mt19937();
-
-
-mt.autoSeed();
+	constants = require('../libs/constants');
 
 //Mongoose Models
 var FieldSchema = require('./form_field.server.model.js');
@@ -47,8 +43,8 @@ var VisitorDataSchema = new Schema({
 	referrer: {
 		type: String
 	},
-	lastActiveField: {
-		type: Schema.Types.ObjectId
+	filledOutFields: {
+		type: [Schema.Types.ObjectId]
 	},
 	timeElapsed: {
 		type: Number
@@ -57,11 +53,12 @@ var VisitorDataSchema = new Schema({
 		type: Boolean
 	},
 	language: {
-		type: String
+		type: String,
+		enum: constants.languageTypes,
+		default: 'en',
 	},
 	ipAddr: {
-		type: String,
-		default: ''
+		type: String
 	},
 	deviceType: {
 		type: String,
@@ -101,12 +98,17 @@ var FormSchema = new Schema({
 		visitors: [VisitorDataSchema]
 	},
 
-	form_fields: [FieldSchema],
-	submissions: [{
-		type: Schema.Types.ObjectId,
-		ref: 'FormSubmission'
-	}],
-
+	form_fields: {
+		type: [FieldSchema],
+		default: []
+	},
+	submissions: {
+		type: [{
+			type: Schema.Types.ObjectId,
+			ref: 'FormSubmission'
+		}],
+		default: []
+	},
 	admin: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
@@ -149,17 +151,59 @@ var FormSchema = new Schema({
 		buttons:[ButtonSchema]
 	},
 
+	selfNotifications: {
+		fromField: {
+			type: String
+		},
+		toEmails: {
+			type: String
+		},
+		subject: {
+			type: String
+		},
+		htmlTemplate: {
+			type: String
+		},
+		enabled: {
+			type: Boolean,
+			default: false
+		}
+	},
+
+	respondentNotifications: {
+		toField: {
+			type: String
+		},
+		fromEmails: {
+			type: String,
+			match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		},
+		subject: {
+			type: String,
+			default: 'Tellform: Thank you for filling out this TellForm'
+		},
+		htmlTemplate: {
+			type: String,
+			default: 'Hello, <br><br> We’ve received your submission. <br><br> Thank you & have a nice day!',
+		},
+		enabled: {
+			type: Boolean,
+			default: false
+		}
+	},
+
 	hideFooter: {
 		type: Boolean,
 		default: false
 	},
+
 	isLive: {
 		type: Boolean,
 		default: true
 	},
 
 	design: {
-		colors:{
+		colors: {
 			backgroundColor: {
 				type: String,
 				match: [/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/],
@@ -190,182 +234,10 @@ var FormSchema = new Schema({
 	}
 }, formSchemaOptions);
 
-/*
-** In-Form Analytics Virtual Attributes
- */
-FormSchema.virtual('analytics.views').get(function () {
-	if(this.analytics && this.analytics.visitors && this.analytics.visitors.length > 0){
-		return this.analytics.visitors.length;
-	} else {
-		return 0;
-	}
-});
-
-function getDeviceStatistics(visitors){
-    var newStatItem = function(){
-        return {
-            visits: 0,
-            responses: 0,
-            completion: 0,
-            average_time: 0,
-            total_time: 0
-        };
-    };
-
-    var stats = {
-        desktop: newStatItem(),
-        tablet: newStatItem(),
-        phone: newStatItem(),
-        other: newStatItem()
-    };
-
-    if(visitors) {
-        for (var i = 0; i < visitors.length; i++) {
-            var visitor = visitors[i];
-            var deviceType = visitor.deviceType;
-
-            stats[deviceType].visits++;
-
-            if (visitor.isSubmitted) {
-                stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
-                stats[deviceType].responses++;
-            }
-
-            if(stats[deviceType].visits) {
-                stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
-            }
-
-            if(stats[deviceType].responses){
-                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
-            }
-        }
-    }
-    return stats;
-}
-
-function getFieldAnalytics(form){
-	var fieldDropoffs = [];
-	var visitors = form.analytics.visitors;
-	var that = form;
-
-	if(!form.form_fields || form.form_fields.length === 0) {
-		return null;
-	}
-
-	for(var i=0; i<form.form_fields.length; i++){
-		var field = form.form_fields[i];
-
-		if(field && !field.deletePreserved){
-
-			var dropoffViews =  _.reduce(visitors, function(sum, visitorObj){
-
-					if(visitorObj.lastActiveField+'' === field._id+'' && !visitorObj.isSubmitted){
-						return sum + 1;
-					}
-					return sum;
-				}, 0);
-
-			var continueViews, nextIndex;
-
-			if(i !== form.form_fields.length-1){
-				continueViews =  _.reduce(visitors, function(sum, visitorObj){
-					nextIndex = that.form_fields.indexOf(_.find(that.form_fields, function(o) {
-						return o._id+'' === visitorObj.lastActiveField+'';
-					}));
-
-					if(nextIndex > i){
-						return sum + 1;
-					}
-					return sum;
-				}, 0);
-			} else {
-				continueViews =  _.reduce(visitors, function(sum, visitorObj){
-					if(visitorObj.lastActiveField+'' === field._id+'' && visitorObj.isSubmitted){
-						return sum + 1;
-					}
-					return sum;
-				}, 0);
-
-			}
-
-			var totalViews = dropoffViews+continueViews;
-			var continueRate = 0;
-			var dropoffRate = 0;
-
-			if(totalViews > 0){
-				continueRate = (continueViews/totalViews*100).toFixed(0);
-				dropoffRate = (dropoffViews/totalViews*100).toFixed(0);
-			}
-
-			fieldDropoffs[i] = {
-				dropoffViews: dropoffViews,
-				responses: continueViews,
-				totalViews: totalViews,
-				continueRate: continueRate,
-				dropoffRate: dropoffRate,
-				field: field
-			};
-
-		}
-	}
-
-	return fieldDropoffs;
-}
-
-function getConversionRate(form, numSubmissions){
-	if(form.analytics && form.analytics.visitors && form.analytics.visitors.length > 0){
-		return numSubmissions.length/form.analytics.visitors.length*100;
-	} else {
-		return 0;
-	}
-}
-
-FormSchema.virtual('formAnalytics').get(function () {
-	var that = this;
-	mongoose.model('FormSubmission').find({ form: that._id })
-		.select("id")
-		.lean()
-		.exec(function(err, results){
-			if(err){
-				return null;
-			}
-
-			var submissionCount = results.count;
-
-			return {
-				fields: getFieldAnalytics(that),
-				submissions: submissionCount,
-				conversionRate: getConversionRate(that),
-				deviceStatistics: getDeviceStatistics(that.analytics.visitors)
-			}
-		});
-
-});
-
 FormSchema.plugin(timeStampPlugin, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
 	useVirtual: false
-});
-
-FormSchema.pre('save', function (next) {
-	switch(this.language){
-		case 'spanish':
-			this.language = 'es';
-			break;
-		case 'french':
-			this.language = 'fr';
-			break;
-		case 'italian':
-			this.language = 'it';
-			break;
-		case 'german':
-			this.language = 'de';
-			break;
-		default:
-			break;
-	}
-	next();
 });
 
 function getDeletedIndexes(needle, haystack){
@@ -382,9 +254,11 @@ function getDeletedIndexes(needle, haystack){
 }
 
 function formFieldsAllHaveIds(form_fields){
-	for(var i=0; i<form_fields.length; i++){
-		if(!form_fields[i].hasOwnProperty('_id') && !form_fields[i].hasOwnProperty('globalId')){
-			return false;
+	if(form_fields){
+		for(var i=0; i<form_fields.length; i++){
+			if(form_fields[i] && !form_fields[i].hasOwnProperty('_id') && !form_fields[i].hasOwnProperty('globalId')){
+				return false;
+			}
 		}
 	}
 	return true;

@@ -30,7 +30,7 @@ angular.module('forms').service('FormFields', [ '$rootScope', '$translate', 'Aut
 		    },
 		    {
 		        name : 'textarea',
-		        value : $translate.instant('PARAGRAPH'),
+		        value : $translate.instant('PARAGRAPH_FIELD'),
 		    },
 		    {
 		        name : 'yes_no',

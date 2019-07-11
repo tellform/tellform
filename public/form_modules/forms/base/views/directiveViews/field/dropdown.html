@@ -15,11 +15,10 @@
     </div>
     <div class="col-xs-12 field-input">
 		<ui-select ng-model="field.fieldValue"
-		 		ng-focus="setActiveField(field._id, null, false)"
+				name="{{field.fieldType}}{{index}}"	
+				class="dropdown"
                 theme="selectize"
 			    search-enabled="true"
-			    search-by="option_value"
-			    set-search-to-answer="true"
 				ng-required="field.required"
 			    on-tab-and-shift-key="prevField()"
 			    on-tab-key="nextField()"

@@ -1,5 +1,4 @@
-<div class="textfield field row"
-	 ng-click="setActiveField(field._id, index, true)">
+<div class="textfield field row">
 	<div class="col-xs-12 field-title row-fluid" ng-style="{'color': design.colors.questionColor}">
     	<h3 class="col-xs-12">
     		<small class="field-number">
@@ -26,7 +25,6 @@
 			placeholder="{{placeholder}}"
 			ng-class="{ 'no-border': !!field.fieldValue }"
             class="focusOn text-field-input"
-            ng-focus="setActiveField(field._id, null, false)"
 			ng-model="field.fieldValue"
 			ng-model-options="{ debounce: 250 }"
 			value="field.fieldValue"

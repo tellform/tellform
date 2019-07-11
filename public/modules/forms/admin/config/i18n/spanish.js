@@ -3,19 +3,33 @@
 angular.module('forms').config(['$translateProvider', function ($translateProvider) {
 
 	$translateProvider.translations('es', {
-
 		//Configure Form Tab View
 		ADVANCED_SETTINGS: 'Configuraciones avanzadas',
-		FORM_NAME: 'Nombre del formulario',
-		FORM_STATUS: 'Estado del formulario',
+		FORM_NAME: 'Tu tellform se llama',
+		FORM_STATUS: 'Estado',
 		PUBLIC: 'Público',
 		PRIVATE: 'Privado',
 		GA_TRACKING_CODE: 'Código de Google Analytics',
-		DISPLAY_FOOTER: '¿Mostrar pie de página?',
+		DISPLAY_FOOTER: 'Pie de página',
 		SAVE_CHANGES: 'Grabar',
 		CANCEL: 'Cancelar',
-		DISPLAY_START_PAGE: '¿Mostrar página de inicio?',
-		DISPLAY_END_PAGE: '¿Mostrar paǵina de fin?',
+		DISPLAY_START_PAGE: 'Página de inicio',
+		DISPLAY_END_PAGE: 'Página final personalizada',
+
+		SELF_NOTIFICATIONS_TAB: 'Auto notificaciones',
+		RESPONDANT_NOTIFICATIONS_TAB: 'Notificaciones de los demandados',
+		GENERAL_TAB: 'Général',
+		
+		SEND_NOTIFICATION_TO: 'Enviar a',
+		NO_EMAIL_FIELD_WARNING: 'Error: necesita un campo de correo electrónico en su formulario para enviar el correo electrónico a su encuestado',
+		REPLY_TO: 'Responder a',
+		EMAIL_SUBJECT: 'Asunto',
+		EMAIL_MESSAGE: 'Mensaje',
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Las notificaciones de los demandados son actualmente',
+		ENABLE_SELF_NOTIFICATIONS: 'Las notificaciones automáticas están actualmente',
+		TOGGLE_ENABLED: 'Habilitado',
+		TOGGLE_DISABLED: 'Desactivado',
+		ADD_VARIABLE_BUTTON: 'Agregar variable',
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Crear formulario',
@@ -35,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOGIC_JUMP: 'Salto lógico',
 		SHOW_BUTTONS: 'Botones adicionales',
 		SAVE_START_PAGE: 'Grabar',
+		ADD_OPTIONS_PLACEHOLDER: 'Agregue una opción por línea. Se requiere un mínimo de una opción',
 
 		//Admin Form View
 		ARE_YOU_SURE: '¿Estás absolutamente seguro?',
@@ -47,7 +62,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: 'Borrar formulario',
 		DELETE: 'Borrar',
 		FORM: 'Formulario',
-		VIEW: 'Vista',
+		VIEW_MY_TELLFORM: 'Ver mi tellform',
 		LIVE: 'Online',
 		PREVIEW: 'Vista previa',
 		COPY: 'Copiar',
@@ -153,7 +168,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	    MULTIPLE_CHOICE: 'Opciones múltiples',
 	    DROPDOWN: 'Desplegable',
 	    DATE: 'Fecha',
-	    PARAGRAPH_T: 'Párrafo',
+	    PARAGRAPH_FIELD: 'Párrafo',
 	    YES_NO: 'Si/No',
 	    LEGAL: 'Legal',
 	    RATING: 'Puntaje',

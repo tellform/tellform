@@ -3,10 +3,13 @@
  * Module dependencies.
  */
 
-require('dotenv').config({path: './.env'});
-
 if(!process.env.NODE_ENV){
     process.env.NODE_ENV = 'development';
+}
+
+//Don't check .env file if we are in travis-ci
+if(!process.env.TRAVIS){
+	require('dotenv').config({path: './.env'});
 }
 
 
@@ -74,9 +77,6 @@ console.log('--');
 console.log(chalk.green('Environment:\t\t\t' + process.env.NODE_ENV));
 console.log(chalk.green('Port:\t\t\t\t' + config.port));
 console.log(chalk.green('Database:\t\t\t' + config.db.uri));
-if (process.env.NODE_ENV === 'secure') {
-	console.log(chalk.green('HTTPs:\t\t\t\ton'));
-}
 console.log('--');
 
 process.on('uncaughtException', function (err) {
