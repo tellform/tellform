@@ -29,10 +29,6 @@ Moving over to Discord so that I can manage things without hassle.
 	- [Quickstart](#quickstart)
 	- [Configuration](#configuration)
 	- [Where to get help](#where-to-get-help)
-	- [Sponsors](#sponsors)
-	- [Backers](#backers)
-	- [Contributors](#contributors)
-	- [Mentions on the Web](#mentions-on-the-web)
 
 <!-- /TOC -->
 
@@ -50,7 +46,7 @@ Moving over to Discord so that I can manage things without hassle.
 	- Forms as a Service API
 	- Deployable with Heroku and DockerHub
 
-### On the Roadmap for v1.0.0
+###On the Roadmap for v1.0.0
 	- Implement encryption for all form data
 	- Add Typeform API integration
 	- Add plugin/3rd party integration support (ala Slack)
@@ -61,7 +57,7 @@ Moving over to Discord so that I can manage things without hassle.
 
 
 <!-- TODO: add a CONTRIBUTING.md.
-## How to Contribute
+##How to Contribute
 
 Please checkout our CONTRIBUTING.md on ways to contribute to TellForm. -->
 
@@ -96,58 +92,15 @@ TellForm's configuration is done with environment variables. To set an option fo
 | ADMIN_EMAIL             | A valid email                                          | admin@admin.com                                                      | Email of generated admin user                                                                                         | No                                         |
 | ADMIN_USERNAME          | A string                                               | root                                                                 | Username of generated admin user                                                                                      | No                                         |
 | ADMIN_PASSWORD          | A string                                               | root                                                                 | Password of generated admin user                                                                                      | No                                         |
-| APP_NAME                | A string                                               | TellForm                                                             | Sets the <title> property of your webapp.                                                                             | No                                         |
+| APP_NAME                | A string                                               | TellForm                                                             | Sets the `<title>` property of your webapp.                                                                             | No                                         |
 | APP_DESC                | A string                                               | Opensource form builder alternative to TypeForm                      | Sets the,property of your webapp.                                                                                     | No                                         |
 | APP_KEYWORDS            | A comma-seperated list of phrases/words                | typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs | Sets the value of the <meta> description attribute.                                                                   | No                                         |
 | RAVEN_DSN               | A valid Sentry.io DSN                                  | N/A                                                                  | Set this to your Sentry.io Public DSN to enable remote logging                                                        | No                                         |
-| GOOGLE_ANALYTICS_ID     | A valid Google Analytics ID                            | N/A                                                                  | Set this to your GA id to enable GA tracking on your TellForm instance                                                | No                                         |
+| GOOGLE_ANALYTICS_ID     | A valid Google Analytics ID                            | N/A                                                                  | Set this to your GA id to enable GA tracking on your TellForm instance                                                | No                                         | |
 
 ##Where to get help
 
-[Gitter Chat](https://gitter.im/tellform/Lobby)
+![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)
+[Discord Chat](https://discord.gg/Y2TTePM)
 
-[Official Twitter](https://twitter.com/tellform_real)
-
-
-##Sponsors
-
-Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
-
-<a href="https://countable.ca" style="padding: 30px 0">
-	<img src="https://countable.ca/logo.cb446ab0.svg" height="30px">
-</a>
-
-##Backers
-
-Love our work and community? [Become a backer](https://opencollective.com/tellform).
-
-<a href="https://opencollective.com/elliot" target="_blank">
-	<img src="https://opencollective.com/proxy/images/?src=https%3A%2F%2Fd1ts43dypk8bqh.cloudfront.net%2Fv1%2Favatars%2F6fd61b2c-62b6-438a-9168-bab7ef1489b8" height= "64">
-</a>
-
-<a href="https://opencollective.com/aldrnv" target="_blank">
-	<img src="https://opencollective.com/public/images/users/avatar-01.svg" height="64">
-</a>
-
-##Contributors
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars2.githubusercontent.com/u/1160417?v=3" width="100px;"/><br /><sub>David Baldwynn</sub>](http://baldwynn.me)<br />[💻](https://github.com/tellform/tellform/commits?author=whitef0x0 "Code") [🔧](#tool-whitef0x0 "Tools") [🚇](#infra-whitef0x0 "Infrastructure (Hosting, Build-Tools, etc)") [📖](https://github.com/tellform/tellform/commits?author=whitef0x0 "Documentation") [💡](#example-whitef0x0 "Examples") [🎨](#design-whitef0x0 "Design") [🔍](#fundingFinding-whitef0x0 "Funding Finding") [👀](#review-whitef0x0 "Reviewed Pull Requests") [⚠️](https://github.com/tellform/tellform/commits?author=whitef0x0 "Tests") | [<img src="https://avatars2.githubusercontent.com/u/313117?v=3" width="100px;"/><br /><sub>Samuel Laulhau</sub>](https://samuellaulhau.fr)<br />[💻](https://github.com/tellform/tellform/commits?author=lalop "Code") [🌍](#translation-lalop "Translation") | [<img src="https://avatars0.githubusercontent.com/u/313507?v=3" width="100px;"/><br /><sub>Arun Pattnaik</sub>](http://arun.co)<br />[🎨](#design-arunpattnaik "Design") | [<img src="https://avatars0.githubusercontent.com/u/5405744?v=3" width="100px;"/><br /><sub>Thiên Toán</sub>](https://toanalien.com)<br />[🐛](https://github.com/tellform/tellform/issues?q=author%3Atoanalien "Bug reports") [💻](https://github.com/tellform/tellform/commits?author=toanalien "Code") [📖](https://github.com/tellform/tellform/commits?author=toanalien "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/8615608?v=3" width="100px;"/><br /><sub>Adrian Portabales</sub>](https://github.com/AdrianP-)<br />[🐛](https://github.com/tellform/tellform/issues?q=author%3AAdrianP- "Bug reports") [💻](https://github.com/tellform/tellform/commits?author=AdrianP- "Code") | [<img src="https://avatars3.githubusercontent.com/u/8433587?v=3" width="100px;"/><br /><sub>Peter Thaleikis</sub>](https://github.com/spekulatius)<br />[📖](https://github.com/tellform/tellform/commits?author=spekulatius "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/1247388?v=3" width="100px;"/><br /><sub>Mickaël Andrieu</sub>](http://www.mickael-andrieu.com)<br />[📖](https://github.com/tellform/tellform/commits?author=mickaelandrieu "Documentation") |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| [<img src="https://avatars1.githubusercontent.com/u/1522464?v=3" width="100px;"/><br /><sub>Ahmad Luqman</sub>](https://github.com/ahmad-luqman)<br />[📖](https://github.com/tellform/tellform/commits?author=ahmad-luqman "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/3691490?v=3" width="100px;"/><br /><sub>Peter Dave Hello</sub>](https://www.peterdavehello.org/)<br />[📖](https://github.com/tellform/tellform/commits?author=PeterDaveHello "Documentation") |
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-##Mentions on the Web
-
-[t3n.de](http://t3n.de/news/open-source-alternative-typeform-tellform-707295/)
-
-[BootCSS Expo](http://expo.bootcss.com/)
-
-[Product Hunt](https://www.producthunt.com/tech/tellform)
-
-[Hacker News Post](https://news.ycombinator.com/item?id=11711095)
-
-[Reddit Posts](https://www.reddit.com/domain/tellform.com/)
-
-[Betapage](https://betapage.co/startup/tellform)
-
-[Opensource.com](http://opensource.com/article/17/2/tools-online-surveys-polls)
+<!-- TODO: Figure out how to generate that contributors table. -->
