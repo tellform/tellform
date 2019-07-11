@@ -17,7 +17,7 @@ Moving over to Discord so that I can manage things without hassle.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ohmyform/ohmyform/tree/production)
 
-##Table of Contents  
+## Table of Contents  
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
@@ -33,9 +33,9 @@ Moving over to Discord so that I can manage things without hassle.
 
 <!-- /TOC -->
 
-##Features
+## Features
 
-###Currently following features are implemented:
+### Currently following features are implemented:
 
 	- Multi-Language Support
 	- 11 possible question types
@@ -47,7 +47,7 @@ Moving over to Discord so that I can manage things without hassle.
 	- Forms as a Service API
 	- Deployable with Heroku and DockerHub
 
-###On the Roadmap for v1.0.0
+### On the Roadmap for v1.0.0
 	- Implement encryption for all form data
 	- Add Typeform API integration
 	- Add plugin/3rd party integration support (ala Slack)
@@ -58,15 +58,15 @@ Moving over to Discord so that I can manage things without hassle.
 
 
 <!-- TODO: add a CONTRIBUTING.md.
-##How to Contribute
+## How to Contribute
 
 Please checkout our CONTRIBUTING.md on ways to contribute to TellForm. -->
 
-##Quickstart
+## Quickstart
 
 Follow documentation hosted on [OhMyForm.com](https://OhMyForm.com/) it will be the main and hopefully only location to obtain the up to date documentation.
 
-##Configuration
+## Configuration
 
 TellForm's configuration is done with environment variables. To set an option for TellForm, open/create your .env file and set add `ENV_VAR=somevalue` to set the ENV_VAR variable to the value `somevalue`.
 
@@ -99,7 +99,7 @@ TellForm's configuration is done with environment variables. To set an option fo
 | RAVEN_DSN               | A valid Sentry.io DSN                                  | N/A                                                                  | Set this to your Sentry.io Public DSN to enable remote logging                                                        | No                                         |
 | GOOGLE_ANALYTICS_ID     | A valid Google Analytics ID                            | N/A                                                                  | Set this to your GA id to enable GA tracking on your TellForm instance                                                | No                                         | |
 
-##Where to get help
+## Where to get help
 
 ![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)
 [Discord Chat](https://discord.gg/Y2TTePM)
