@@ -1,8 +1,8 @@
 {
-  "name": "TellForm",
+  "name": "ohmyform",
   "description": "Opensource alternative to TypeForm",
   "version": "2.1.0",
-  "homepage": "https://github.com/tellform/tellform",
+  "homepage": "https://github.com/ohmyform/ohmyform",
   "authors": [
     "David Baldwynn <polydaic@gmail.com> (http://baldwynn.me)"
   ],
@@ -10,11 +10,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/tellform/tellform.git"
-  },
-  "engines": {
-    "node": "6.x.x",
-    "npm": "3.x.x"
+    "url": "https://github.com/ohmyform/ohmyform.git"
   },
   "scripts": {
     "addcontrib": "all-contributors add",
@@ -53,7 +49,7 @@
     "helmet": "^3.16.0",
     "i18n": "^0.8.3",
     "jit-grunt": "^0.9.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "main-bower-files": "^2.13.1",
     "method-override": "~2.3.0",
     "mkdirp": "^0.5.1",
