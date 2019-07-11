@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').factory('Auth', ['$window',
-  function($window) {
+angular.module('users').factory('Auth', ['$window',  'User',
+  function($window, User) {
 
     var userState = {
       isLoggedIn: false
@@ -16,7 +16,7 @@ angular.module('users').factory('Auth', ['$window',
       // Note: we can't make the User a dependency of Auth
       // because that would create a circular dependency
       // Auth <- $http <- $resource <- LoopBackResource <- User <- Auth
-      ensureHasCurrentUser: function(User) {
+      ensureHasCurrentUser: function() {
         if (service._currentUser && service._currentUser.username) {
           return service._currentUser;
         } else if ($window.user){

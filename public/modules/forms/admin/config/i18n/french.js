@@ -10,11 +10,11 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		PUBLIC: 'Public',
 		PRIVATE: "Privé",
 		GA_TRACKING_CODE: "Code de suivi Google Analytics",
-		DISPLAY_FOOTER: "Pied de formulaire",
+		DISPLAY_FOOTER: "Afficher le pied de formulaire?",
 		SAVE_CHANGES: 'Enregistrer les modifications',
 		CANCEL: 'Annuler',
-		DISPLAY_START_PAGE: "Page de démarrage",
-		DISPLAY_END_PAGE: "Page de fin personnalisée",
+		DISPLAY_START_PAGE: "Afficher la page de démarrage ?",
+		DISPLAY_END_PAGE: "Afficher la page de fin personnalisée ?",
 
 		GENERAL_TAB: 'General',
 		SELF_NOTIFICATIONS_TAB: 'Self notifications',
@@ -35,7 +35,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		CREATE_A_NEW_FORM: "Créer un nouveau formulaire",
 		CREATE_FORM: "Créer un formulaire",
 		CREATED_ON: 'Créé le',
-		MY_FORMS: 'Mes formes',
+		MY_FORMS: 'Mes formulaires',
 		NAME: "Nom",
 		LANGUE: 'Langue',
 		FORM_PAUSED: 'Formulaire en pause',
@@ -69,7 +69,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		COPY_AND_PASTE: "Copiez et collez ceci pour ajouter votre TellForm à votre site Web",
 		CHANGE_WIDTH_AND_HEIGHT: "Changez les valeurs de largeur et de hauteur pour mieux vous convenir",
 		POWERED_BY: "Alimenté par",
-		TELLFORM_URL: "Votre TellForm est en permanence sur cette URL",
+		TELLFORM_URL: "Votre TellForm est disponible à cette URL",
 
 		// Modifier la vue de formulaire
 		DISABLED: "Désactivé",
@@ -145,7 +145,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
 		// Vue de conception
 		BACKGROUND_COLOR: "Couleur d'arrière-plan",
-		DESIGN_HEADER: "Changez l'apparence de votre formulaire",
+		DESIGN_HEADER: "Changer l'apparence de votre formulaire",
 		QUESTION_TEXT_COLOR: "Couleur du texte de la question",
 		ANSWER_TEXT_COLOR: "Couleur du texte de la réponse",
 		BTN_BACKGROUND_COLOR: "Couleur d'arrière-plan du bouton",

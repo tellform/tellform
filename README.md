@@ -1,11 +1,15 @@
 TellForm 2.1.0
 ========
 
+[![Code Shelter](https://www.codeshelter.co/static/badges/badge-flat.svg)](https://www.codeshelter.co/)
 [![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
 ![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
+<!--
+Moving over to Discord so that I can manage things without hassle.
 [![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
+-->
+![Discord](https://img.shields.io/discord/586697165980565504.svg?label=Discord%20Chat)
 > An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tellform/tellform/tree/master)
@@ -97,7 +101,7 @@ MAILER_SERVICE_PROVIDER=SendGrid
 # Note: MAILER_SMTP_HOST will override MAILER_SERVICE_PROVIDER
 MAILER_SMTP_HOST=smtp.domain.com
 MAILER_SMTP_PORT=465
-MAILER_SMTP_SECURE=true
+MAILER_SMTP_SECURE=TRUE
 
 ```
 
@@ -119,7 +123,25 @@ Your application should run on port 3000 or the port you specified in your .env 
 
 To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/).
 
-Then see this page [here](https://tellform.com/install_docker) for commands on how to deploy your own local TellForm instance.
+Then run follow these steps:
+
+### Step 1: Clone the repo
+
+`$ git clone https://github.com/tellform/docker_files.git`
+
+### Step 2: Setup TellForm Configuration
+
+Create your .env file by copying the .env.dist file included in the repo and changing it to suit your deployment.
+
+Important: You need to fill out all of the ENV variables in the "Mail Settings" section or your TellForm instance won't work.
+
+If you want to have https, make sure to change 'TLS_FLAVOR'
+
+### Step 3: Start your TellForm instance
+
+`docker-compose up -d`
+
+TellForm should now be accessible on http://localhost
 
 ## Testing Your Application
 You can run the full test suite included with TellForm with the test task:
@@ -203,25 +225,8 @@ TellForm's configuration is done with environment variables. To set an option fo
 
 Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
 
-<a href="https://m.do.co/c/a86fd8843e09" style="padding: 30px 0">
-	<img src="/docs/readme_logos/do_logo.png" height="30px">
-</a>
-<a href="https://getsentry.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/sentry_logo.png" height="30px">
-</a>
-<a href="https://statuspage.io/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/statuspage_logo.png" height="30px">
-</a>
-<br><br>
-<a href="https://www.stickermule.com/unlock?ref_id=0939360701" style="padding: 30px 0">
-	<img src="/docs/readme_logos/stickermule_logo.png" height="30px">
-</a>
-<a href="https://sparkpost.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/sparkpost_logo.png" height="30px">
-</a>
-
-<a href="https://therooststand.com/" style="padding: 30px 0">
-	<img src="/docs/readme_logos/roost_logo.png" height="30px">
+<a href="https://countable.ca" style="padding: 30px 0">
+	<img src="https://countable.ca/logo.cb446ab0.svg" height="30px">
 </a>
 
 ## Backers
@@ -244,8 +249,6 @@ Love our work and community? [Become a backer](https://opencollective.com/tellfo
 | [<img src="https://avatars1.githubusercontent.com/u/1522464?v=3" width="100px;"/><br /><sub>Ahmad Luqman</sub>](https://github.com/ahmad-luqman)<br />[📖](https://github.com/tellform/tellform/commits?author=ahmad-luqman "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/3691490?v=3" width="100px;"/><br /><sub>Peter Dave Hello</sub>](https://www.peterdavehello.org/)<br />[📖](https://github.com/tellform/tellform/commits?author=PeterDaveHello "Documentation") |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 ## Mentions on the Web
-
-[Mister Ad](http://start.mister-ad.biz/newsticker/open-source-alternative-zu-typeform-tellform-in-der-kurzvorstellung/)
 
 [t3n.de](http://t3n.de/news/open-source-alternative-typeform-tellform-707295/)
 
