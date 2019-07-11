@@ -9,7 +9,7 @@ TellForm 2.1.0
 Moving over to Discord so that I can manage things without hassle.
 [![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 -->
-![Discord](https://img.shields.io/discord/586697165980565504.svg?label=Discord%20Chat)
+![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)
 > An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tellform/tellform/tree/master)
