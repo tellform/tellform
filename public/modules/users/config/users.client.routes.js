@@ -4,25 +4,26 @@
 angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
 
-	var checkCurrentUser = function($q, $state, User, Auth) {
-	  	var deferred = $q.defer();
-			
+	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
+
 	  	if (Auth.currentUser && Auth.currentUser.email) {
-	    	deferred.resolve(Auth.currentUser);
-	  	} else {
-	        User.getCurrent().then(
-				function(user) {
-				  	Auth.login();
-					deferred.resolve(user);
+        return;
+      }
+      else {
+        return User.getCurrent().then(
+			function(user) {
+				Auth.login(user);
+				return;
 				},
 				function() {
 					Auth.logout();
-					deferred.reject();
+			  $timeout(deferred.reject());
 					$state.go('signin', {reload: true});
+				return;
 				});
       	}
 
-      	return deferred.promise;
+
     };
 
 	var checkSignupDisabled = function($window, $timeout, $q) {

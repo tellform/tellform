@@ -1,47 +1,32 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth', 'currentUser', 'USERS_URL', '$translate',
-	function($scope, $rootScope, $http, $state, Users, Auth, currentUser, USERS_URL, $translate) {
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth',
+	function($scope, $rootScope, $http, $state, Users, Auth) {
 
-		$scope.user = currentUser;
+		$scope.user = Auth.currentUser;
 
 		$scope.cancel = function(){
-			$scope.user = currentUser;
-		};
+			$scope.user = Auth.currentUser;
+		}
 
 		// Update a user profile
 		$scope.updateUserProfile = function(isValid) {
-			if (isValid && $scope.user) {
+			if (isValid) {
 				$scope.success = $scope.error = null;
+				var user = new Users($scope.user);
 
-				$http.put(USERS_URL, $scope.user).then(function(response){ 
+				user.$update(function(response) {
 					$scope.success = true;
 					$scope.error = null;
-					$scope.user = response.data;
-
-					$translate.use($scope.user.language);
-					Auth.update($scope.user);
-				}, function(error) {
+					$scope.user = response;
+					$scope.$apply();
+				}, function(response) {
 					$scope.success = null;
-					$scope.error = 'Could not update your profile due to an error with the server. Sorry about this!'
+					$scope.error = response.data.message;
 				});
+			} else {
+				$scope.submitted = true;
 			}
 		};
-
-		// Change user password
-		$scope.changeUserPassword = function() {
-			$scope.success = $scope.error = null;
-
-			$http.post('/users/password', $scope.passwordDetails).then(function(response) {
-				// If successful show success message and clear form
-				$scope.success = true;
-				$scope.error = null;
-				$scope.passwordDetails = null;
-			}, function(errResponse) {
-				$scope.success = null;
-				$scope.error = errResponse.message;
-			});
-		};
-
 	}
 ]);
