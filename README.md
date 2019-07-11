@@ -1,5 +1,5 @@
-OhMyForm 0.2.1
-========
+# OhMyForm 0.2.1
+
 
 <!-- TODO: Code Shelter maybe. -->
 <!-- [![Code Shelter](https://www.codeshelter.co/static/badges/badge-flat.svg)](https://www.codeshelter.co/) -->
@@ -21,6 +21,7 @@ Moving over to Discord so that I can manage things without hassle.
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
+- [OhMyForm 0.2.1](#ohmyform-021)
 	- [Table of Contents](#table-of-contents)
 	- [Features](#features)
 		- [Currently following features are implemented:](#currently-following-features-are-implemented)
