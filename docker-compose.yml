@@ -1,3 +1,4 @@
+## TODO: add a compose examples directory with various deployment options.
 version: "3"
 services:
   redis:
