@@ -1,6 +1,11 @@
 TellForm 2.1.0
 ========
 
+DEPRECATION WARNING UNTIL FURTHER NOTICE.
+There are many oudated and vulnerable dependencies within this project and I recommend that you use this code repository for internal testing and development only.
+
+There were too many impassable hurdles to really continue forward at the pace that I was hoping with TellForm @leopere~ If you want to follow my progress on an alternative in the mean time check out https://OhMyForm.com or our Discord server.  We managed to get the base Docker image fixed before forking the code so you can give this a try however not much has changed at the moment.
+
 [![Code Shelter](https://www.codeshelter.co/static/badges/badge-flat.svg)](https://www.codeshelter.co/)
 [![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
 ![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
