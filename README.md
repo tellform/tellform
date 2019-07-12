@@ -37,7 +37,7 @@ Moving over to Discord so that I can manage things without hassle.
 
 ### Currently following features are implemented:
 
-	- Multi-Language Support
+	- Multi-Language Support (Semi implemented)
 	- 11 possible question types
 	- Editable start and end pages
 	- Export Submissions to XLS, JSON or CSV
@@ -45,7 +45,6 @@ Moving over to Discord so that I can manage things without hassle.
 	- Custom Subdomains for each User
 	- Embeddable Forms
 	- Forms as a Service API
-	- Deployable with Heroku and DockerHub
 
 ### On the Roadmap for v1.0.0
 	- Implement encryption for all form data
@@ -55,6 +54,7 @@ Moving over to Discord so that I can manage things without hassle.
 	- Add Stripe/Payment Form field
 	- Add Custom Background and Dropdown Field Images
 	- Add File Upload Form Field
+	- Deployable with Heroku and DockerHub
 
 
 <!-- TODO: add a CONTRIBUTING.md.
