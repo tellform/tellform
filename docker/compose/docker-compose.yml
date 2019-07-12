@@ -8,8 +8,7 @@ services:
     volumes:
       - "./data/mongo:/data"
   tellform:
-    build:
-      context: .
+    image: ohmyform/ohmyform
     environment:
       CREATE_ADMIN: "TRUE"
       SOCKET_PORT: "5000"
@@ -21,6 +20,7 @@ services:
     links:
       - mongo
       - redis
+      - mail
     ports:
       - "5000:5000"
     depends_on:
