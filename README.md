@@ -63,7 +63,7 @@ Please checkout our CONTRIBUTING.md on ways to contribute to TellForm. -->
 
 ## Quickstart
 
-Follow documentation hosted on [OhMyForm.com](https://OhMyForm.com/) it will be the main and hopefully only location to obtain the up to date documentation.
+Follow documentation hosted on [OhMyForm.com](http://ohmyform.com/docs/install/) it will be the main and hopefully only location to obtain the up to date documentation.
 
 <!-- TODO: Reconsider location of the following. -->
 <!-- ## Configuration
