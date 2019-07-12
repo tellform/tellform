@@ -28,7 +28,6 @@ Moving over to Discord so that I can manage things without hassle.
 		- [On the Roadmap for v1.0.0](#on-the-roadmap-for-v100)
 	- [How to Contribute](#how-to-contribute)
 	- [Quickstart](#quickstart)
-	- [Configuration](#configuration)
 	- [Where to get help](#where-to-get-help)
 
 <!-- /TOC -->
@@ -66,7 +65,8 @@ Please checkout our CONTRIBUTING.md on ways to contribute to TellForm. -->
 
 Follow documentation hosted on [OhMyForm.com](https://OhMyForm.com/) it will be the main and hopefully only location to obtain the up to date documentation.
 
-## Configuration
+<!-- TODO: Reconsider location of the following. -->
+<!-- ## Configuration
 
 TellForm's configuration is done with environment variables. To set an option for TellForm, open/create your .env file and set add `ENV_VAR=somevalue` to set the ENV_VAR variable to the value `somevalue`.
 
@@ -97,7 +97,7 @@ TellForm's configuration is done with environment variables. To set an option fo
 | APP_DESC                | A string                                               | Opensource form builder alternative to TypeForm                      | Sets the,property of your webapp.                                                                                     | No                                         |
 | APP_KEYWORDS            | A comma-seperated list of phrases/words                | typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs | Sets the value of the <meta> description attribute.                                                                   | No                                         |
 | RAVEN_DSN               | A valid Sentry.io DSN                                  | N/A                                                                  | Set this to your Sentry.io Public DSN to enable remote logging                                                        | No                                         |
-| GOOGLE_ANALYTICS_ID     | A valid Google Analytics ID                            | N/A                                                                  | Set this to your GA id to enable GA tracking on your TellForm instance                                                | No                                         | |
+| GOOGLE_ANALYTICS_ID     | A valid Google Analytics ID                            | N/A                                                                  | Set this to your GA id to enable GA tracking on your TellForm instance                                                | No                                         | | -->
 
 ## Where to get help
 
