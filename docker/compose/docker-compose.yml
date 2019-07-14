@@ -1,0 +1,32 @@
+## TODO: add a compose examples directory with various deployment options.
+version: "3"
+services:
+  redis:
+    image: redis
+  mongo:
+    image: mongo
+    volumes:
+      - "./data/mongo:/data"
+  tellform:
+    image: ohmyform/ohmyform
+    environment:
+      CREATE_ADMIN: "TRUE"
+      SOCKET_PORT: "5000"
+      SOCKET_PORT_EXTERN_VISIBLE: "TRUE"
+      MONGODB_URI: mongodb://mongo/tellform
+      REDIS_URL: redis://redis
+      MAILER_SMTP_HOST: mail
+      MAILER_SMTP_PORT: 1025
+    links:
+      - mongo
+      - redis
+      - mail
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+      - redis
+  mail:
+    image: mailhog/mailhog
+    ports:
+      - "5050:8025"

@@ -1,4 +1,5 @@
 FROM alpine:edge
+## TODO: Reconsider this.
 RUN apk add --no-cache nginx certbot openssl python py-jinja2
 
 COPY *.py /
