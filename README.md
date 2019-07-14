@@ -45,7 +45,8 @@ Moving over to Discord so that I can manage things without hassle.
 	- Embeddable Forms
 	- Forms as a Service API
 
-### On the Roadmap for v1.0.0
+<!-- TODO: Determine roadmap for OhMyForm if it is to be different from TellForm's roadmap.
+### On the Roadmap (Tentative pending [refactor](https://github.com/ohmyform/ohmyform/pull/1))
 	- Implement encryption for all form data
 	- Add Typeform API integration
 	- Add plugin/3rd party integration support (ala Slack)
@@ -54,6 +55,7 @@ Moving over to Discord so that I can manage things without hassle.
 	- Add Custom Background and Dropdown Field Images
 	- Add File Upload Form Field
 	- Deployable with Heroku and DockerHub
+-->
 
 
 <!-- TODO: add a CONTRIBUTING.md.
@@ -64,40 +66,6 @@ Please checkout our CONTRIBUTING.md on ways to contribute to TellForm. -->
 ## Quickstart
 
 Follow documentation hosted on [OhMyForm.com](http://ohmyform.com/docs/install/) it will be the main and hopefully only location to obtain the up to date documentation.
-
-<!-- TODO: Reconsider location of the following. -->
-<!-- ## Configuration
-
-TellForm's configuration is done with environment variables. To set an option for TellForm, open/create your .env file and set add `ENV_VAR=somevalue` to set the ENV_VAR variable to the value `somevalue`.
-
-| Property                | Valid Values                                           | Default Value                                                        | Description                                                                                                           | Required?                                  |
-|-------------------------|--------------------------------------------------------|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
-| NODE_ENV                | "development", "production", "test" or "secure"        | development                                                          | Set which version of the app you want to run  (either secure/SSL, dev, prod or test)                                  | No                                         |
-| SESSION_SECRET          | Any string                                             | CHANGE_ME_PLEASE                                                     | Value used to compute session hash                                                                                    | No                                         |
-| BASE_URL                | A valid URL                                            | localhost:3000                                                       | URL where the admin panel will live                                                                                   | Yes                                        |
-| MONGODB_URI             | A valid MongoDB URI                                    | localhost/mean                                                       | URI of the MONGODB server/db that your server will use                                                                | Yes                                        |
-| REDIS_URL               | A valid Redis URI                                      | redis://127.0.0.1:6379                                               | URI of the Redis instance that your server will use                                                                   | Only if ENABLE_CLUSTER_MODE=TRUE           |
-| SOCKET_PORT             | A valid port number from 0 - 65535                     | 20523                                                                | Port that your SocketIO server will bind to                                                                           | No                                         |
-| SOCKET_URL              | A valid URL                                            | ws.tellform.com                                                      | Url that your SocketIO server will bind to                                                                            | No                                         |
-| SIGNUP_DISABLED         | "TRUE" or "FALSE"                                      | FALSE                                                                | Set this flag to disable signups.                                                                                     | No                                         |
-| SUBDOMAINS_DISABLED     | "TRUE" or "FALSE"                                      | FALSE                                                                | Set this flag to disable subdomains. (Useful if hosting behind an uncontrolled domain or without a wildcard SSL cert) | No                                         |
-| ENABLE_CLUSTER_MODE     |  "TRUE" or "FALSE"                                     | FALSE                                                                | Disable support for running TellForm with pm2's cluster mode. Disabling this allows you to not run a Redis instance.  | No                                         |
-| MAILER_EMAIL_ID         | A string                                               | N/A                                                                  | Username credential for the SMTP MAIL service used to send signup/verification/lost password emails.                  | Yes                                        |
-| MAILER_PASSWORD         | A string                                               |                                                                      | Password credential for the SMTP MAIL service used to send signup/verification/lost password emails.                  | Yes                                        |
-| MAILER_FROM             | A valid email                                          | noreply@tellform.com                                                 | Email address that all mail should be sent from.                                                                      | No                                         |
-| MAILER_SERVICE_PROVIDER | A service from [https://nodemailer.com/smtp/well-known/](https://nodemailer.com/smtp/well-known/) |                                                                      | A "well-known" email service that is supported by nodemail. If MAILER_SMTP_HOST is enabled, this is ignored.          | Only if MAILER_SMTP_HOST is not set        |
-| MAILER_SMTP_HOST        | A valid URL                                            |                                                                      | URL to the SMTP server of your choice                                                                                 | Only if MAILER_SERVICE_PROVIDER is not set |
-| MAILER_SMTP_PORT        | A valid port number from 0 - 65535                     |                                                                      | Port of the SMTP server of your choice.                                                                               | Only if MAILER_SMTP_HOST is set            |
-| MAILER_SMTP_SECURE      | "TRUE" or "FALSE"                                      | FALSE                                                                | Boolean that enables/disables SSL support for your SMTP client.                                                       | Only if MAILER_SMTP_HOST is set            |
-| CREATE_ADMIN            | "TRUE" or "FALSE"                                      | FALSE                                                                | Setting this variable will create a admin user on startup with credentials as specified below                         | No                                         |
-| ADMIN_EMAIL             | A valid email                                          | admin@admin.com                                                      | Email of generated admin user                                                                                         | No                                         |
-| ADMIN_USERNAME          | A string                                               | root                                                                 | Username of generated admin user                                                                                      | No                                         |
-| ADMIN_PASSWORD          | A string                                               | root                                                                 | Password of generated admin user                                                                                      | No                                         |
-| APP_NAME                | A string                                               | TellForm                                                             | Sets the `<title>` property of your webapp.                                                                             | No                                         |
-| APP_DESC                | A string                                               | Opensource form builder alternative to TypeForm                      | Sets the,property of your webapp.                                                                                     | No                                         |
-| APP_KEYWORDS            | A comma-seperated list of phrases/words                | typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs | Sets the value of the <meta> description attribute.                                                                   | No                                         |
-| RAVEN_DSN               | A valid Sentry.io DSN                                  | N/A                                                                  | Set this to your Sentry.io Public DSN to enable remote logging                                                        | No                                         |
-| GOOGLE_ANALYTICS_ID     | A valid Google Analytics ID                            | N/A                                                                  | Set this to your GA id to enable GA tracking on your TellForm instance                                                | No                                         | | -->
 
 ## Where to get help
 
