@@ -12,7 +12,7 @@
 Moving over to Discord so that I can manage things without hassle.
 [![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 -->
-![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)
+[![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)](https://discord.gg/3jYMAYg)
 > An *open source alternative to TypeForm* that can create [stunning mobile-ready forms](https://ohmyform.com/examples) , surveys and questionnaires.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ohmyform/ohmyform/tree/production)
@@ -101,7 +101,6 @@ TellForm's configuration is done with environment variables. To set an option fo
 
 ## Where to get help
 
-![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)
-[Discord Chat](https://discord.gg/Y2TTePM)
+[![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)](https://discord.gg/Y2TTePM)
 
 <!-- TODO: Figure out how to generate that contributors table. -->
