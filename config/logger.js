@@ -11,7 +11,7 @@ var validFormats = ['combined', 'common', 'dev', 'short', 'tiny'];
 
 // Instantiating the default winston application logger with the Console
 // transport
-var logger = new winston.Logger({
+var logger = new winston.createLogger({
   transports: [
     new winston.transports.Console({
       level: 'info',
@@ -49,7 +49,7 @@ logger.setupFileLogger = function setupFileLogger() {
     // Check first if the configured path is writable and only then
     // instantiate the file logging transport
     if (fs.openSync(fileLoggerTransport.filename, 'a+')) {
-      logger.add(winston.transports.File, fileLoggerTransport);
+      logger.add(new winston.transports.File(), fileLoggerTransport);
     }
 
     return true;
@@ -74,7 +74,7 @@ logger.getLogOptions = function getLogOptions() {
 
   var _config = _.clone(config, true);
   var configFileLogger = _config.log.fileLogger;
-  
+
   if (process.env.NODE_ENV !== 'test' && !_.has(_config, 'log.fileLogger.directoryPath') || !_.has(_config, 'log.fileLogger.fileName')) {
     console.log('unable to find logging file configuration');
     return false;
@@ -120,13 +120,13 @@ logger.getMorganOptions = function getMorganOptions() {
 logger.getLogFormat = function getLogFormat() {
   var format = config.log && config.log.format ? config.log.format.toString() : 'combined';
 
-   if (!_.includes(validFormats, format)) { 
+   if (!_.includes(validFormats, format)) {
     if (process.env.NODE_ENV !== 'test') {
       console.log();
       console.log(chalk.yellow('Warning: An invalid format was provided. The logger will use the default format of "' + format + '"'));
       console.log();
     }
-  }    
+  }
   return format;
 };
 
