@@ -23,8 +23,7 @@ var smtpTransport = nodemailer.createTransport(config.mailer.options);
  */
 exports.deleteSubmissions = function(req, res) {
 
-	var submission_id_list = req.body.deleted_submissions,
-		form = req.form;
+	var submission_id_list = req.body.deleted_submissions;
 
 	FormSubmission.remove({ form: req.form, _id: {$in: submission_id_list} }, function(err){
 
@@ -121,9 +120,7 @@ exports.createSubmission = function(req, res) {
  * Get List of Submissions for a given Form
  */
 exports.listSubmissions = function(req, res) {
-	var _form = req.form;
-
-	FormSubmission.find({ form: _form._id }).sort('created').lean().exec(function(err, _submissions) {
+	FormSubmission.find({ form: req.form._id }).sort('created').lean().exec(function(err, _submissions) {
 		if (err) {
 			console.error(err);
 			return res.status(500).send({
@@ -357,11 +354,10 @@ var readForRender = exports.readForRender = function(req, res) {
  * Update a form
  */
 exports.update = function(req, res) {
-
     var form = req.form;
     var updatedForm = req.body.form;
 
-    if(!form.analytics && req.body.form.analytics){
+    if(!form.analytics){
     	form.analytics = {
     		visitors: [],
     		gaCode: ''
@@ -376,7 +372,7 @@ exports.update = function(req, res) {
 		});
 	} else {
 		if(!updatedForm){
-			res.status(400).send({
+			return res.status(400).send({
 				message: 'Updated Form is empty'
 			});
 		}
@@ -426,7 +422,9 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(form);
+			res.json(
+        helpers.removeSensitiveModelData('private_form', form)
+      );
 		}
 	});
 };
@@ -513,8 +511,7 @@ exports.formByID = function(req, res, next, id) {
 			});
 		}
 		else {
-			//Remove sensitive information from User object
-			req.form = helpers.removeSensitiveModelData('private_form', form.toJSON());
+			req.form = form;
 			return next();
 		}
 	});
@@ -542,7 +539,7 @@ exports.formByIDFast = function(req, res, next, id) {
 		}
 		else {
 			//Remove sensitive information from User object
-			req.form = helpers.removeSensitiveModelData('public_form', form);
+			req.form = form;
 			return next();
 		}
 	});
@@ -555,7 +552,7 @@ exports.formByIDFast = function(req, res, next, id) {
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') < 0) {
+	if (!req.form.admin || req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') < 0) {
 		return res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});
