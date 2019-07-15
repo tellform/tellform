@@ -97,7 +97,9 @@
                 currType = FormFields.types[i];
                 currClass = faClasses[currType.name];
 
-                var element = $compile('<field-icon-directive type-name="'+currType.name+'"></field-icon-directive>')(scope);
+                scope.currType = currType;
+
+                var element = $compile('<field-icon-directive type-name="currType.name"></field-icon-directive>')(scope);
                 scope.$digest();
 
                 expect(currClass).toBeDefined();

@@ -46,16 +46,13 @@ var MobileDetect = function(userAgentStr){
             visible_form_fields: [
                 {fieldType:'textfield', title:'First Name', fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed873933b0ce121f1deafab9'},
                 {fieldType:'checkbox', title:'nascar',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed83b0ce121f17393deafab9'},
-                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}            ],
-            pdf: {},
-            pdfFieldMap: {},
+                {fieldType:'checkbox', title:'hockey',      fieldOptions: [], fieldValue: '', required: true, disabled: false, deletePreserved: false, _id: 'ed8317393deab0ce121ffab9'}            
+            ],
             startPage: {
                 showStart: false
             },
-            hideFooter: false,
-            isGenerated: false,
+            showFooter: false,
             isLive: false,
-            autofillPDFs: false,
             _id: '525a8422f6d0f87f0e407a33'
         };
 
@@ -130,7 +127,7 @@ var MobileDetect = function(userAgentStr){
             // Point global variables to injected services
             $httpBackend = _$httpBackend_;
             $httpBackend.whenGET('/users/me/').respond('');
-
+            $httpBackend.whenGET('/forms').respond('');
 
             //Instantiate directive.
             var tmp_scope = $rootScope.$new();

@@ -811,7 +811,7 @@
 						}
 					}
 				},
-				"hideFooter": {
+				"showFooter": {
 					"type": "boolean",
 					"default": false,
 					"description": "Specifies whether to hide or show Form Footer",

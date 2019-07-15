@@ -1,0 +1,9 @@
+<div class="config-form container">
+	<div class="row">
+		<uib-tabset active="activePill" type="pills">
+			<uib-tab ng-repeat="tab in shareTabs" active="tab.active" select="go(tab)" heading="{{tab.heading}}">
+				<div ui-view></div>
+			</uib-tab>
+		</uib-tabset>
+	</div>
+</div>

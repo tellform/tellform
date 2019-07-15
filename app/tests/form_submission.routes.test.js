@@ -21,15 +21,14 @@ var credentials, user;
  * Form routes tests
  */
 describe('Form Submission Routes Unit tests', function() {
-	var FormObj, _Submission, submissionSession, _SubmissionBody
-
+	var FormObj, _Submission, submissionSession, _SubmissionBody;
 
 	beforeEach(function(done) {
 
 		// Create user credentials
 		credentials = {
-			email: 	  'test@test.com',
-			username: 'test',
+			email: 	  'test423@test.com',
+			username: 'test534',
 			password: 'password'
 		};
 
@@ -45,16 +44,34 @@ describe('Form Submission Routes Unit tests', function() {
 
 		// Save a user to the test db and create new Form
 		user.save(function(err) {
-			if(err) return done(err);
+			if(err) {
+				return done(err);
+			}
+
 			FormObj = new Form({
 				title: 'Form Title',
 				language: 'en',
 				admin: user._id,
 				form_fields: [
 					new Field({'fieldType':'textfield', 'title':'First Name', 'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'nascar',      'fieldValue': ''}),
-					new Field({'fieldType':'checkbox', 'title':'hockey',      'fieldValue': ''})
-				]
+					new Field({'fieldType':'legal', 'title':'nascar',      'fieldValue': ''}),
+					new Field({'fieldType':'legal', 'title':'hockey',      'fieldValue': ''})
+				],
+				selfNotifications: {
+					fromField: mongoose.Types.ObjectId(),
+					toEmails: 'john@smith.com',
+					subject: 'Hello there',
+					htmlTemplate: '<p> A form was submitted </p>',
+					enabled: true
+				},
+
+				respondentNotifications: {
+					toField: mongoose.Types.ObjectId(),
+					fromEmails: 'john@smith.com',
+					subject: 'Tellform: Thank you for filling out this TellForm',
+					htmlTemplate:'Hello, <br><br> We’ve received your submission. <br><br> Thank you & have a nice day!',
+					enabled: true
+				}
 			});
 
 			FormObj.save(function(formSaveErr, form) {
@@ -64,8 +81,8 @@ describe('Form Submission Routes Unit tests', function() {
 					form: form._id,
 					form_fields: [
 						{'fieldType':'textfield', 	'title':'First Name', 	'fieldValue': 'David', 	_id: '', isSubmission: false, deletePreserved: false},
-						{'fieldType':'checkbox', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
-						{'fieldType':'checkbox', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
+						{'fieldType':'legal', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
+						{'fieldType':'legal', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
 					],
 					percentageComplete: 100,
 					timeElapsed: 11.55,
@@ -84,8 +101,8 @@ describe('Form Submission Routes Unit tests', function() {
 					_id: form._id,
 					form_fields: [
 						{'fieldType':'textfield', 	'title':'First Name', 	'fieldValue': 'David', 	_id: '', isSubmission: false, deletePreserved: false},
-						{'fieldType':'checkbox', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
-						{'fieldType':'checkbox', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
+						{'fieldType':'legal', 	'title':'nascar',      	'fieldValue': true, 	_id: '', isSubmission: false, deletePreserved: true},
+						{'fieldType':'legal', 	'title':'hockey',      	'fieldValue': false, 	_id: '', isSubmission: false, deletePreserved: false}
 					],
 					percentageComplete: 100,
 					timeElapsed: 11.55,
@@ -237,6 +254,4 @@ describe('Form Submission Routes Unit tests', function() {
 			});
 		});
 	});
-
-
 });

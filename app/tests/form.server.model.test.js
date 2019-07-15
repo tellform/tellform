@@ -7,8 +7,8 @@ require('../../server.js');
  */
 var should = require('should'),
 	mongoose = require('mongoose'),
-	User = mongoose.model('User'),
-	Form = mongoose.model('Form');
+	User = require('../models/user.server.model.js'),
+	Form = require('../models/form.server.model.js');
 
 /**
  * Globals
@@ -40,8 +40,8 @@ describe('Form Model Unit Tests:', function() {
 				language: 'en',
 				form_fields: [
 					{'fieldType':'textfield', title:'First Name', 'fieldValue': ''},
-					{'fieldType':'checkbox',  title:'nascar',     'fieldValue': ''},
-					{'fieldType':'checkbox',  title:'hockey',     'fieldValue': ''}
+					{'fieldType':'legal',  title:'nascar',     'fieldValue': ''},
+					{'fieldType':'legal',  title:'hockey',     'fieldValue': ''}
 				]
 			});
 			done();

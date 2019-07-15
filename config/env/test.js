@@ -3,11 +3,7 @@
 module.exports = {
 	baseUrl: '127.0.0.1:3001',
 	db: {
-		uri: 'mongodb://localhost/mean-test',
-		options: {
-			user: '',
-			pass: ''
-		}
+		uri: 'mongodb://localhost/mean-test'
 	},
 	port: 3001,
 	log: {
@@ -19,6 +15,7 @@ module.exports = {
 			//stream: 'access.log'
 		}
 	},
+	subdomainsDisabled: true,
 	app: {
 		title: 'TellForm Test'
 	},

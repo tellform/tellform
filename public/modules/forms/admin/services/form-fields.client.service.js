@@ -4,7 +4,7 @@
 angular.module('forms').service('FormFields', [ '$rootScope', '$translate', 'Auth',
 	function($rootScope, $translate, Auth) {
 
-		var language = Auth.ensureHasCurrentUser().language;
+		var language = $rootScope.language;
 		$translate.use(language);
 
 		this.types = [
@@ -30,7 +30,7 @@ angular.module('forms').service('FormFields', [ '$rootScope', '$translate', 'Aut
 		    },
 		    {
 		        name : 'textarea',
-		        value : $translate.instant('PARAGRAPH'),
+		        value : $translate.instant('PARAGRAPH_FIELD'),
 		    },
 		    {
 		        name : 'yes_no',

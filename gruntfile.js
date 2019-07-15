@@ -18,8 +18,13 @@ var bowerArray = ['public/lib/angular/angular.min.js',
 	'public/lib/js-yaml/dist/js-yaml.js',
 	'public/lib/angular-sanitize/angular-sanitize.min.js'];
 
+const bowerFiles = require('main-bower-files');
+const bowerDep = bowerFiles('**/**.js');
+
 module.exports = function(grunt) {
 	require('jit-grunt')(grunt);
+
+	var angularTestDeps = ['public/lib/angular/angular.js', 'public/lib/angular-mocks/angular-mocks.js'];
 
 	// Unified Watch Object
 	var watchFiles = {
@@ -27,7 +32,7 @@ module.exports = function(grunt) {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
 
 		clientViews: ['public/modules/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html',],
-		clientJS: ['public/form_modules/**/*.js', 'public/modules/**/*.js'],
+		clientJS: ['public/config.js', 'public/form-config.js', 'public/application.js', 'public/form-application.js', 'public/form_modules/**[!tests]/*.js', 'public/modules/**[!tests]/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
 
 		serverTests: ['app/tests/**/*.js'],
@@ -123,7 +128,7 @@ module.exports = function(grunt) {
 					compress: true
 				},
 				files: {
-					'public/dist/form-vendor.min.js': bowerArray
+					'public/dist/vendor.min.js': bowerArray
 				}
 			}
 		},
@@ -138,7 +143,7 @@ module.exports = function(grunt) {
 			dev: {
 				script: 'server.js',
 				options: {
-					nodeArgs: ['--debug'],
+					nodeArgs: ['--inspect'],
 					ext: 'js,html',
 					watch: watchFiles.serverViews.concat(watchFiles.serverJS)
 				}
@@ -201,66 +206,26 @@ module.exports = function(grunt) {
 				    level: 'log',
 				    terminal: true
 				},
-			    singleRun: true
+			    singleRun: false
             }
 		},
-		protractor: {
-			options: {
-				configFile: 'protractor.conf.js',
-				keepAlive: true,
-				noColor: false
-			},
-			e2e: {
-				options: {
-					args: {} // Target-specific arguments
-				}
-			}
-	    },
 	    mocha_istanbul: {
-            coverage: {
-                src: watchFiles.allTests, // a folder works nicely
-                options: {
-                    mask: '*.test.js',
-                    require: ['server.js']
-                }
-            },
-            coverageClient: {
-                src: watchFiles.clientTests, // specifying file patterns works as well
-                options: {
-                    coverageFolder: 'coverageClient',
-                    mask: '*.test.js',
-                    require: ['server.js']
-                }
-            },
             coverageServer: {
                 src: watchFiles.serverTests,
                 options: {
                     coverageFolder: 'coverageServer',
                     mask: '*.test.js',
-                    require: ['server.js']
-                }
-            },
-            coveralls: {
-                src: watchFiles.allTests, // multiple folders also works
-                options: {
-                	require: ['server.js'],
-                    coverage: true, // this will make the grunt.event.on('coverage') event listener to be triggered
-                    root: './lib', // define where the cover task should consider the root of libraries that are covered by tests
-                    reportFormats: ['cobertura','lcovonly']
+                    require: ['server.js'],
+                    reportFormats: ['html','lcovonly']
                 }
             }
         },
-        istanbul_check_coverage: {
-          default: {
-            options: {
-              coverageFolder: 'coverage*', // will check both coverage folders and merge the coverage results
-              check: {
-                lines: 80,
-                statements: 80
-              }
-            }
-          }
-        },
+        lcovMerge: {
+	      options: {
+	          emitters: ['event'],
+	      },
+	      src: ['./coverageServer/*.info', './coverageClient/**/*.info']
+	    },
 		html2js: {
 			options: {
 				base: 'public',
@@ -285,9 +250,9 @@ module.exports = function(grunt) {
 			},
 			main: {
 				options: {
-					module: 'TellForm.templates'
+					module: 'app.templates'
 				},
-				src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html', 'public/form_modules/forms/base/**/*.html', '!public/modules/forms/base/**/*.html'],
+				src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html', 'public/form_modules/forms/base/**/*.html'],
 				dest: 'public/dist/populate_template_cache.js'
 			}
 		},
@@ -323,9 +288,7 @@ module.exports = function(grunt) {
 	});
 
 	// Code coverage tasks.
-	grunt.registerTask('coveralls', ['env:test','mocha_istanbul:coveralls']);
-    grunt.registerTask('coverage', ['env:test', 'mocha_istanbul:coverage']);
-    grunt.registerTask('coverage:client', ['env:test', 'mocha_istanbul:coverageClient']);
+	grunt.registerTask('coveralls', ['test:client', 'karma:unit', 'mocha_istanbul:coverageServer', 'lcovMerge']);
     grunt.registerTask('coverage:server', ['env:test', 'mocha_istanbul:coverageServer']);
 
 	// Default task(s).
@@ -334,9 +297,9 @@ module.exports = function(grunt) {
 
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'html2js:forms', 'concurrent:debug']);
-	
+
 	// Lint task(s).
-	grunt.registerTask('lint', ['jshint', 'csslint', 'i18nlint:client', 'i18nlint:server']);
+	grunt.registerTask('lint', ['jshint', 'csslint']);
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).
@@ -346,9 +309,11 @@ module.exports = function(grunt) {
 	grunt.registerTask('setup', ['execute']);
 
 	// Test task(s).
-	grunt.registerTask('test', ['lint:tests', 'test:server', 'test:client']);
+	grunt.registerTask('test', ['test:server', 'test:client']);
 	grunt.registerTask('test:server', ['lint:tests', 'env:test', 'mochaTest']);
 	grunt.registerTask('test:client', ['lint:tests', 'html2js:main', 'html2js:forms', 'env:test', 'karma:unit']);
+	grunt.registerTask('test:travis', ['coverage:server', 'test:client', 'lcovMerge']);
+
 
 	grunt.registerTask('testdebug', ['env:test', 'karma:debug']);
 };

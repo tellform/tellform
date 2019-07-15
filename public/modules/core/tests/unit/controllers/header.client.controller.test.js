@@ -20,18 +20,20 @@
 
 		// Load the main application module
 		beforeEach(module(ApplicationConfiguration.applicationModuleName));
+		beforeEach(module('module-templates'));
 
 		//Mock Authentication Service
         beforeEach(module(function($provide) {
             $provide.service('Auth', function() {
                 return {
                     ensureHasCurrentUser: function() {
-                        return sampleUser;
+                        return { 
+				            then: function(onFulfilled, onRejected, progressBack) {
+				            	return onFulfilled(sampleUser);
+				            }
+			          	};
                     },
                     isAuthenticated: function() {
-                        return true;
-                    },
-                    getUserState: function() {
                         return true;
                     }
                 };
@@ -45,9 +47,5 @@
 				$scope: scope
 			});
 		}));
-
-		it('should expose the authentication service', function() {
-			expect(scope.authentication).toBeTruthy();
-		});
 	});
 })();

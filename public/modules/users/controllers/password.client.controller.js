@@ -1,11 +1,10 @@
 'use strict';
 
-angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User', '$translate', '$window',
-	function($scope, $stateParams, $state, User, $translate, $window) {
-		$translate.use($window.locale);
+angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
+	function($scope, $stateParams, $state, User) {
 
 		$scope.error = '';
-		$scope.forms = {};
+		if(!$scope.forms) $scope.forms = {};
 
 		// Submit forgotten password account id
 		$scope.askForPasswordReset = function() {
@@ -25,7 +24,7 @@ angular.module('users').controller('PasswordController', ['$scope', '$stateParam
 
 		// Change user password
 		$scope.resetUserPassword = function() {
-			if(!$scope.forms.resetPasswordForm.$invalid){
+			if($scope.forms.hasOwnProperty('resetPasswordForm') && $scope.forms.resetPasswordForm.$valid){
 				$scope.success = $scope.error = null;
 				User.resetPassword($scope.passwordDetails, $stateParams.token).then(
 					function(response){

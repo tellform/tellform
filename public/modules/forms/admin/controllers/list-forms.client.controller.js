@@ -1,13 +1,14 @@
 'use strict';
 
 // Forms controller
-angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'GetForms', 'CurrentForm', '$http', '$uibModal', 'myForms',
-	function($rootScope, $scope, $stateParams, $state, GetForms, CurrentForm, $http, $uibModal, myForms) {
+angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope', '$stateParams', '$state', 'GetForms', 'CurrentForm', '$http', '$uibModal', 'myForms', '$window',
+	function($rootScope, $scope, $stateParams, $state, GetForms, CurrentForm, $http, $uibModal, myForms, $window) {
 
         $scope = $rootScope;
         $scope.forms = {};
         $scope.showCreateModal = false;
-        $scope.myforms = myForms
+        $scope.myforms = myForms;
+        $scope.formLanguage = $window.$locale;
 
 		$rootScope.languageRegExp = {
 			regExp: /[@!#$%^&*()\-+={}\[\]|\\/'";:`.,~№?<>]+/i,
@@ -43,7 +44,6 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 			});
 		};
 
-
 		$scope.cancelDeleteModal = function(){
 			if($scope.deleteModal){
 				$scope.deleteModal.dismiss('cancel');
@@ -65,18 +65,20 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
         $scope.setForm = function (form) {
             $scope.myform = form;
         };
-        $scope.goToWithId = function(route, id) {
-            $state.go(route, {'formId': id}, {reload: true});
-        };
 
         $scope.duplicateForm = function(form_index){
             var form = _.cloneDeep($scope.myforms[form_index]);
             delete form._id;
+            delete form.id;
+
+            form.title += ' copy';
 
             $http.post('/forms', {form: form})
-                .success(function(data, status, headers){
-                    $scope.myforms.splice(form_index+1, 0, data);
-                }).error(function(errorResponse){
+                .then(function(resp_data, status, headers){
+                    var result_form = resp_data.data;
+                    result_form.submissionNum = 0;
+                    $scope.myforms.splice(form_index+1, 0, result_form);
+                }, function(errorResponse){
                     console.error(errorResponse);
                     if(errorResponse === null){
                         $scope.error = errorResponse.data.message;
@@ -86,20 +88,19 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
 
         // Create new Form
         $scope.createNewForm = function(){
-
             var form = {};
             form.title = $scope.forms.createForm.title.$modelValue;
             form.language = $scope.forms.createForm.language.$modelValue;
 
             if($scope.forms.createForm.$valid && $scope.forms.createForm.$dirty){
                 $http.post('/forms', {form: form})
-                .success(function(data, status, headers){
-                    // Redirect after save
-                    $scope.goToWithId('viewForm.create', data._id+'');
-                }).error(function(errorResponse){
-                    console.error(errorResponse);
-                    $scope.error = errorResponse.data.message;
-                });
+                    .then(function(response, status, headers){
+                        // Redirect after save
+                        $state.go('viewForm.create', {formId: response.data.id}, {reload: true});
+                    }, function(errorResponse){
+                        console.error(errorResponse);
+                        $scope.error = errorResponse.data.message;
+                    });
             }
         };
 
@@ -109,10 +110,10 @@ angular.module('forms').controller('ListFormsController', ['$rootScope', '$scope
             }
 
             $http.delete('/forms/'+$scope.myforms[form_index]._id)
-                .success(function(data, status, headers){
+                .then(function(data, status, headers){
                     $scope.myforms.splice(form_index, 1);
 					$scope.cancelDeleteModal();
-                }).error(function(error){
+                }, function(error){
                     console.error(error);
                 });
         };

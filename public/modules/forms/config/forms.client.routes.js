@@ -43,6 +43,7 @@ angular.module('forms').config(['$stateProvider',
 			controller: 'SubmitFormController',
 			controllerAs: 'ctrl'
 		}).state('viewForm', {
+			abstract: true,
 			url: '/forms/:formId/admin',
 			templateUrl: 'modules/forms/admin/views/admin-form.client.view.html',
 			data: {
@@ -63,18 +64,44 @@ angular.module('forms').config(['$stateProvider',
 			    }]
 			},
 			controller: 'AdminFormController'
-		}).state('viewForm.configure', {
-			url: '/configure',
-			templateUrl: 'modules/forms/admin/views/adminTabs/configure.html'
-	    }).state('viewForm.design', {
-			url: '/design',
-			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
-	    }).state('viewForm.analyze', {
-			url: '/analyze',
-			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html'
-	    }).state('viewForm.create', {
+		}).state('viewForm.create', {
 			url: '/create',
 			templateUrl: 'modules/forms/admin/views/adminTabs/create.html'
+		})
+
+		.state('viewForm.configure', {
+			abstract: true,
+			url: '/configure',
+			templateUrl: 'modules/forms/admin/views/adminTabs/configure.html'
+	    }).state('viewForm.configure.general', {
+			url: '/general',
+			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/general.html'
+	    }).state('viewForm.configure.self_notifications', {
+			url: '/self_notifications',
+			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/self-notifications.html'
+	    }).state('viewForm.configure.respondent_notifications', {
+			url: '/respondent_notifications',
+			templateUrl: 'modules/forms/admin/views/adminTabs/configureTabs/respondent-notifications.html'
+	    })
+
+	    .state('viewForm.share', {
+			abstract: true,
+			url: '/share',
+			templateUrl: 'modules/forms/admin/views/adminTabs/share.html'
+	    }).state('viewForm.share.share_form', {
+			url: '/share_form',
+			templateUrl: 'modules/forms/admin/views/adminTabs/shareTabs/share_form.html'
+	    }).state('viewForm.share.embed_form', {
+			url: '/embed_form',
+			templateUrl: 'modules/forms/admin/views/adminTabs/shareTabs/embed_form.html'
+	    })
+
+	    .state('viewForm.design', {
+			url: '/design',
+			templateUrl: 'modules/forms/admin/views/adminTabs/design.html'
+		}).state('viewForm.analyze', {
+			url: '/analyze',
+			templateUrl: 'modules/forms/admin/views/adminTabs/analyze.html'
 	    });
 	}
 ]);

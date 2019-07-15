@@ -1,0 +1,106 @@
+<!-- Settings -->
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-10">
+        <div class="row field">
+            <div class="field-title col-sm-12">
+                <h4>{{ 'FORM_NAME' | translate }}</h4>
+            </div>
+
+            <div class="col-sm-12">
+                <input class=""
+				    type="text"
+                    ng-model="myform.title"
+                    value="{{myform.title}}"
+                    style="width: 100%;"
+                    ng-minlength="4"
+                    ng-pattern="/^[a-zA-Z0-9 \-.]*$/">
+            </div>
+        </div>
+
+        <div class="row field">
+            <div class="col-sm-4 field-title"><h4>{{ 'LANGUAGE' | translate }}</h4></div>
+            <div class="col-sm-8 field-input">
+                <ui-select ng-model="myform.language" search-enabled="false" theme="selectize">
+                    <ui-select-match>
+                        {{ $root.langCodeToWord[$select.selected] }}
+                    </ui-select-match>
+                    <ui-select-choices repeat="language in $root.languages">
+                        <span ng-bind-html="$root.langCodeToWord[language] | highlight: $select.search">
+                        </span>
+                    </ui-select-choices>
+                </select>
+                <span class="required-error" ng-show="field.required && !field.fieldValue">* {{ 'REQUIRED_FIELD' | translate }}</span>
+            </div>
+        </div>
+
+        <div class="row field">
+            <div class="field-title col-sm-8">
+            	<h4>{{ 'FORM_STATUS' | translate }}</h4>
+            </div>
+
+            <div class="field-input col-sm-4 text-right">
+            	<input class="toggle-switch" type="checkbox"
+            		bs-switch ng-model="myform.isLive"
+            		switch-on-text="{{ 'PUBLIC' | translate }}"
+            		switch-off-text="{{ 'PRIVATE' | translate }}"
+            		switch-on-color="success"
+					switch-off-color="danger">
+            </div>
+        </div>
+    
+		<div class="row field">
+			<div class="field-title col-sm-12">
+				<h4>{{ 'GA_TRACKING_CODE' | translate }}</h4>
+			</div>
+
+			<div class="col-sm-12">
+				<input class=""
+					   type="text"
+					   ng-model="myform.analytics.gaCode"
+					   value="{{myform.analytics.gaCode}}"
+					   style="width: 100%;"
+					   ng-minlength="4"
+					   placeholder="UA-XXXXX-Y"
+					   ng-pattern="/\bUA-\d{4,10}-\d{1,4}\b/">
+			</div>
+		</div>
+		<div class="row field">
+			<div class="field-title col-sm-8">
+				<h4>{{ 'DISPLAY_FOOTER' | translate }}</h4>
+			</div>
+
+			<div class="field-input col-sm-4 text-right">
+				<input class="toggle-switch" type="checkbox"
+            		bs-switch ng-model="myform.showFooter"
+            		switch-on-text="{{ 'ON' | translate }}"
+            		switch-off-text="{{ 'OFF' | translate }}">
+			</div>
+		</div>
+
+		<div class="row field">
+			<div class="field-title col-sm-8">
+				<h4>{{ 'DISPLAY_START_PAGE' | translate }}</h4>
+			</div>
+
+			<div class="field-input col-sm-4 text-right">
+				<input class="toggle-switch" type="checkbox"
+            		bs-switch ng-model="myform.startPage.showStart"
+            		switch-on-text="{{ 'ON' | translate }}"
+            		switch-off-text="{{ 'OFF' | translate }}">
+			</div>
+		</div>
+
+		<div class="row field">
+			<div class="field-title col-sm-8">
+				<h4>{{ 'DISPLAY_END_PAGE' | translate }}</h4>
+			</div>
+
+			<div class="field-input col-sm-4 text-right">
+				<input class="toggle-switch" type="checkbox"
+            		bs-switch ng-model="myform.endPage.showEnd"
+            		switch-on-text="{{ 'ON' | translate }}"
+            		switch-off-text="{{ 'OFF' | translate }}">
+			</div>
+		</div>
+	</div>
+</div>

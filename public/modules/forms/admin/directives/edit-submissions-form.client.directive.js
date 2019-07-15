@@ -14,15 +14,17 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     masterChecker: false,
                     rows: []
                 };
+                $scope.analyticsData = {
+                    deviceStatistics: [],
+                    globalStatistics: []
+                };
 
                 $scope.deletionInProgress = false; 
                 $scope.waitingForDeletion = false;
 
                 //Waits until deletionInProgress is false before running getSubmissions
                 $scope.$watch("deletionInProgress",function(newVal, oldVal){
-                    if(newVal === oldVal) return;
-
-                    if(newVal === false && $scope.waitingForDeletion) {
+                    if(newVal !== oldVal && newVal === false && $scope.waitingForDeletion) {
                         $scope.getSubmissions();
                         $scope.waitingForDeletion = false;
                     }
@@ -34,6 +36,52 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                     } else {
                         $scope.waitingForDeletion = true;
                     }
+                };
+
+                /*
+                ** Analytics Functions
+                */
+                var formatGlobalStatistics = function(globalStatData){
+                    if(!globalStatData || !globalStatData.length){
+                        return {
+                            visits: 0,
+                            responses: 0,
+                            conversion_rate: 0,
+                            average_time: 0
+                        };
+                    }
+                    return globalStatData[0];
+                }
+                        
+                var formatDeviceStatistics = function(deviceStatData){
+                    var newStatItem = function(){
+                        return {
+                            visits: 0,
+                            responses: 0,
+                            conversion_rate: 0,
+                            average_time: 0,
+                            total_time: 0
+                        };
+                    };
+
+                    var stats = {
+                        desktop: newStatItem(),
+                        tablet: newStatItem(),
+                        phone: newStatItem(),
+                        other: newStatItem()
+                    };
+
+                    if(deviceStatData && deviceStatData.length){
+                        for(var i=0; i<deviceStatData.length; i++){
+                            var currDevice = deviceStatData[i];
+
+                            //_id here is deviceType of field due to aggregation in getVisitorData
+                            if(stats[currDevice._id]){
+                                stats[currDevice._id] = currDevice;
+                            }
+                        }
+                    }
+                    return stats;
                 };
 
                 $scope.getSubmissions = function(cb){
@@ -73,13 +121,17 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                       method: 'GET',
                       url: '/forms/'+$scope.myform._id+'/visitors'
                     }).then(function successCallback(response) {
-                        var defaultFormFields = _.cloneDeep($scope.myform.form_fields);
+                        var data = response.data || [];
 
-                        var visitors = response.data || [];
-
-                        $scope.visitors = visitors;
+                        $scope.analyticsData = data[0];
+                        $scope.analyticsData.globalStatistics = formatGlobalStatistics($scope.analyticsData.globalStatistics);
+                        $scope.analyticsData.deviceStatistics = formatDeviceStatistics($scope.analyticsData.deviceStatistics);
                     });
                 };
+
+                //Initialize analytics data
+                $scope.analyticsData.globalStatistics = formatGlobalStatistics();
+                $scope.analyticsData.deviceStatistics = formatDeviceStatistics();
 
                 $scope.handleSubmissionsRefresh();
                 $scope.getVisitors();
@@ -98,66 +150,6 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                         $interval.cancel($scope.updateVisitors);
                     }
                 });
-
-                /*
-                ** Analytics Functions
-                */
-                $scope.AverageTimeElapsed = (function(){
-                    var totalTime = 0;
-                    var numSubmissions = $scope.table.rows.length;
-
-                    for(var i=0; i<$scope.table.rows.length; i++){
-                        totalTime += $scope.table.rows[i].timeElapsed;
-                    }
-
-                    if(numSubmissions === 0) {
-                        return 0;
-                    }
-                    return (totalTime/numSubmissions).toFixed(0);
-                })();
-
-                $scope.DeviceStatistics = (function(){
-                    var newStatItem = function(){
-                        return {
-                            visits: 0,
-                            responses: 0,
-                            completion: 0,
-                            average_time: 0,
-                            total_time: 0
-                        };
-                    };
-
-                    var stats = {
-                        desktop: newStatItem(),
-                        tablet: newStatItem(),
-                        phone: newStatItem(),
-                        other: newStatItem()
-                    };
-
-                    if($scope.myform.analytics && $scope.myform.analytics.visitors) {
-                        var visitors = $scope.myform.analytics.visitors;
-                        for (var i = 0; i < visitors.length; i++) {
-                            var visitor = visitors[i];
-                            var deviceType = visitor.deviceType;
-
-                            stats[deviceType].visits++;
-
-                            if (visitor.isSubmitted) {
-                                stats[deviceType].total_time = stats[deviceType].total_time + visitor.timeElapsed;
-                                stats[deviceType].responses++;
-                            }
-
-                            if(stats[deviceType].visits) {
-                                stats[deviceType].completion = 100*(stats[deviceType].responses / stats[deviceType].visits).toFixed(2);
-                            }
-
-                            if(stats[deviceType].responses){
-                                stats[deviceType].average_time = (stats[deviceType].total_time / stats[deviceType].responses).toFixed(0);
-                            }
-                        }
-                    }
-                    return stats;
-                })();
 
                 /*
                 ** Table Functions
@@ -196,14 +188,13 @@ angular.module('forms').directive('editSubmissionsFormDirective', ['$rootScope',
                             method: 'DELETE',
                             data: {deleted_submissions: delete_ids},
                             headers: {'Content-Type': 'application/json;charset=utf-8'}
-                        }).success(function(data, status){
+                        }).then(function(data, status){
                             $scope.deletionInProgress = true;
                             //Remove deleted ids from table
                             $scope.table.rows =  $scope.table.rows.filter(function(field){
                                 return !field.selected;
                             });
-                        })
-                        .error(function(err){
+                        }, function(err){
                             $scope.deletionInProgress = true;
                             console.error(err);
                         });

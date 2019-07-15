@@ -9,29 +9,8 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	timeStampPlugin = require('../libs/timestamp.server.plugin'),
 	path = require('path'),
-	querystring = require('querystring');
-
-/**
- * A Validation function for local strategy properties
- */
-var validateLocalStrategyProperty = function(property) {
-	var propHasLength;
-	if (property) {
-		propHasLength = !!property.length;
-	} else {
-		propHasLength = false;
-	}
-
-	return ((this.provider !== 'local' && !this.updated) || propHasLength);
-};
-
-/**
- * A Validation function for username
- */
-var validateUsername = function(username) {
-	return (username.match(/^[a-zA-Z0-9.-_]+$/) !== null);
-};
-
+	querystring = require('querystring'),
+	constants = require('../libs/constants');
 
 /**
  * User Schema
@@ -52,14 +31,14 @@ var UserSchema = new Schema({
 		trim: true,
 		lowercase: true,
 		unique: 'Account already exists with this email',
-		match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+		match: [constants.regex.email, 'Please fill a valid email address'],
 		required: [true, 'Email is required']
 	},
 	username: {
 		type: String,
 		unique: true,
 		lowercase: true,
-		match: [/^[a-zA-Z0-9\-]+$/, 'Username can only contain alphanumeric characters and \'-\''],
+		match: [constants.regex.username, 'Username can only contain alphanumeric characters and \'-\''],
 		required: [true, 'Username is required']
 	},
 	passwordHash: {
@@ -73,18 +52,16 @@ var UserSchema = new Schema({
 		type: String,
 		default: 'local'
 	},
-	providerData: {},
-	additionalProvidersData: {},
 	roles: {
 		type: [{
 			type: String,
-			enum: ['user', 'admin', 'superuser']
+			enum: constants.userRoleTypes
 		}],
 		default: ['user']
 	},
 	language: {
 		type: String,
-		enum: ['en', 'fr', 'es', 'it', 'de'],
+		enum: constants.languageTypes,
 		default: 'en',
 	},
 	lastModified: {
@@ -111,10 +88,6 @@ var UserSchema = new Schema({
 	}
 });
 
-UserSchema.virtual('displayName').get(function () {
-  	return this.firstName + ' ' + this.lastName;
-});
-
 UserSchema.plugin(timeStampPlugin, {
 	createdPath: 'created',
 	modifiedPath: 'lastModified',
@@ -135,7 +108,7 @@ UserSchema.virtual('password').get(function () {
 /**
  * Create instance method for hashing a password
  */
-UserSchema.methods.hashPassword = function(password) {
+UserSchema.statics.hashPassword = UserSchema.methods.hashPassword = function(password) {
   var encoding = 'base64';
   var iterations = 10000;
   var keylen = 128;
@@ -192,4 +165,6 @@ UserSchema.methods.isAdmin = function() {
 	return false;
 };
 
-module.exports = mongoose.model('User', UserSchema);
+mongoose.model('User', UserSchema);
+
+module.exports = mongoose.model('User');

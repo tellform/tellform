@@ -5,16 +5,31 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	$translateProvider.translations('de', {
 		// Konfigurieren der Formularregisterkarte
 		ADVANCED_SETTINGS: 'Erweiterte Einstellungen',
-		FORM_NAME: 'Formularname',
-		FORM_STATUS: 'Formularstatus',
+		FORM_NAME: 'Ihr tellform heißt',
+		FORM_STATUS: 'Status',
 		PUBLIC: 'Öffentlich',
 		PRIVATE: 'Privat',
 		GA_TRACKING_CODE: 'Google Analytics Tracking-Code',
-		DISPLAY_FOOTER: 'Formularfußzeile anzeigen?',
+		DISPLAY_FOOTER: 'Fußzeile',
 		SAVE_CHANGES: 'Änderungen speichern',
 		CANCEL: 'Abbrechen',
-		DISPLAY_START_PAGE: 'Startseite anzeigen?',
-		DISPLAY_END_PAGE: 'Benutzerdefinierte Endseite anzeigen?',
+		DISPLAY_START_PAGE: 'Startseite',
+		DISPLAY_END_PAGE: 'Benutzerdefinierte Endseite',
+
+		GENERAL_TAB: 'Allgemein',
+		SELF_NOTIFICATIONS_TAB: 'Selbstbenachrichtigungen',
+		RESPONDANT_NOTIFICATIONS_TAB: 'Beantwortungsbenachrichtigungen',
+
+		SEND_NOTIFICATION_TO: 'Senden an',
+		NO_EMAIL_FIELD_WARNING: 'Fehler: Sie benötigen ein E-Mail-Feld in Ihrem Formular, um die E-Mail an Ihr Formular zu senden.',
+		REPLY_TO: 'Antworten auf',
+		EMAIL_SUBJECT: "Betreff",
+		EMAIL_MESSAGE: 'Nachricht',
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Antwortbenachrichtigungen sind derzeit',
+		ENABLE_SELF_NOTIFICATIONS: 'Selbstbenachrichtigungen sind derzeit',
+		TOGGLE_ENABLED: 'Aktiviert',
+		TOGGLE_DISABLED: 'Deaktiviert',
+		ADD_VARIABLE_BUTTON: 'Variable hinzufügen',
 
 		// Listenformularansicht
 		CREATE_A_NEW_FORM: 'Erstelle ein neues Formular',
@@ -34,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOGIC_JUMP: 'Logischer Sprung',
 		SHOW_BUTTONS: 'Zusätzliche Schaltflächen',
 		SAVE_START_PAGE: 'Speichern',
+		ADD_OPTIONS_PLACEHOLDER: 'Fügen Sie eine Auswahl pro Zeile hinzu. Mindestens eine Wahl ist erforderlich.',
 
 		// Admin-Formularansicht
 		ARE_YOU_SURE: "Bist du ABSOLUT sicher?",
@@ -46,12 +62,14 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: 'Formular löschen',
 		DELETE: 'Löschen',
 		FORM: 'Formular',
-		VIEW: 'Ansicht',
+		VIEW_MY_TELLFORM: 'Mein tellform anzeigen',
 		LIVE: 'Leben',
 		PREVIEW: 'Vorschau',
+
+		//Share Tab
+		COPIED_LABEL: 'Kopiert',
 		COPY: 'Kopieren',
 		COPY_AND_PASTE: 'Kopieren und einfügen, um Ihre TellForm auf Ihrer Website hinzuzufügen',
-		CHANGE_WIDTH_AND_HEIGHT: 'Ändern Sie die Werte für Breite und Höhe, um Ihnen am besten zu entsprechen',
 		POWERED_BY: 'Unterstützt von',
 		TELLFORM_URL: "Ihr TellForm ist dauerhaft unter dieser URL",
 
@@ -151,7 +169,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		MULTIPLE_CHOICE: 'Mehrfachauswahl',
 		DROPDOWN: 'Dropdown-Liste',
 		DATE: 'Datum',
-		PARAGRAPH_T: "Absatz",
+		PARAGRAPH_FIELD: "Absatz",
 		YES_NO: 'Ja / Nein',
 		LEGAL: "Rechtliche",
 		RATING: 'Bewertung',

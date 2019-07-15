@@ -11,13 +11,12 @@ var should = require('should'),
 	_ = require('lodash'),
 	async = require('async'),
 	config = require('../../config/config'),
-	FormSubmission = mongoose.model('FormSubmission');
+	FormSubmission = require('../models/form_submission.server.model.js');
 
 var exampleDemo = {
 	address: '880-9650 Velit. St.',
 	city: '',
 	dateOfBirth: '10',
-	displayName: 'Test User',
 	email: 'polydaic@gmail.com',
 	firstName: 'Test User',
 	hin: '',
@@ -82,9 +81,8 @@ describe('FormSubmission Model Unit Tests:', function() {
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
-			email: 'test1@test.com'+Date.now(),
-			username: 'test1'+Date.now(),
+			email: 'test1@test.com',
+			username: 'test1',
 			password: 'password',
 			provider: 'local'
 		});
@@ -168,83 +166,13 @@ describe('FormSubmission Model Unit Tests:', function() {
 		});
 
 		it('should be able to find FormSubmission by $elemMatch on form_fields id', function(done){
-			 FormSubmission.findOne({ form: myForm._id, form_fields: {$elemMatch: {globalId: myForm.form_fields[0].globalId} }  })
+			 FormSubmission.findOne({ form: myForm.id, form_fields: {$elemMatch: {_id: myForm.form_fields[0]._id} }  })
 				.exec(function(err, submission){
 					should.not.exist(err);
 					should.exist(submission);
 					should.deepEqual(submission.toObject(), mySubmission.toObject());
 					done();
 				});
-		});
-	});
-
-	describe('Test FormField and Submission Logic', function() {
-
-		beforeEach(function(done){
-
-			//Create Submission
-			mySubmission = new FormSubmission({
-				form_fields: _.merge(sampleSubmission, myForm.form_fields),
-				admin: user,
-				form: myForm,
-				timeElapsed: 17.55
-			});
-
-			mySubmission.save(function(err){
-				should.not.exist(err);
-				done();
-			});
-
-		});
-
-        it('should preserve deleted form_fields that have submissions without any problems', function(done) {
-
-        	var fieldPropertiesToOmit = ['deletePreserved', 'globalId', 'lastModified', 'created', '_id', 'submissionId', 'isSubmission', 'validFieldTypes', 'title'];
-			var old_fields = myForm.toObject().form_fields;
-			var new_form_fields = _.clone(myForm.toObject().form_fields);
-			new_form_fields.splice(0, 1);
-
-			myForm.form_fields = new_form_fields;
-
-			myForm.save(function(err, _form) {
-
-				should.not.exist(err);
-				should.exist(_form.form_fields);
-
-				var actual_fields = _.deepOmit(_form.toObject().form_fields, fieldPropertiesToOmit);
-				old_fields = _.deepOmit(old_fields, fieldPropertiesToOmit);
-
-				should.deepEqual(actual_fields, old_fields, 'old form_fields not equal to newly saved form_fields');
-				done();
-			});
-		});
-
-		it('should delete \'preserved\' form_fields whose submissions have been removed without any problems', function(done) {
-
-			var old_fields = myForm.toObject().form_fields;
-			old_fields.splice(0,1);
-			var new_form_fields = _.clone(myForm.toObject().form_fields);
-			new_form_fields.splice(0, 1);
-
-			myForm.form_fields = new_form_fields;
-
-			myForm.save(function(err, _form){
-				should.not.exist(err);
-				should.exist(_form.form_fields);
-				should.exist(old_fields);
-
-				var actual_fields = _.deepOmit(_form.toObject().form_fields, ['lastModified', 'created', '_id']);
-				old_fields = _.deepOmit(old_fields, ['lastModified', 'created', '_id']);
-
-				should.deepEqual(JSON.stringify(actual_fields), JSON.stringify(old_fields)); //'old form_fields not equal to newly saved form_fields');
-				done();
-			});
-		});
-
-		afterEach(function(done){
-			mySubmission.remove(function(){
-				done();
-			});
 		});
 	});
 

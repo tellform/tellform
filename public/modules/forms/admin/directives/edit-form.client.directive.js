@@ -1,4 +1,3 @@
-
 'use strict';
 
 angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormFields', '$uibModal',
@@ -17,14 +16,20 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                 */
         		var newField;
 
+                //Populate local scope with rootScope methods/variables
+                $scope.update = $rootScope.update;
+
 				//Setup UI-Sortable
 				$scope.sortableOptions = {
 					appendTo: '.dropzone',
-				    //helper: 'clone',
+				    items: '.sortable-fields',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
-					update: function(e, ui) {
+					stop: function(e, ui) {
                         $scope.update(false, $scope.myform, true, false, function(err){
+                        	if(err){
+                        		console.error(err);
+                        	}
 						});
 					},
 				};
@@ -37,22 +42,60 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						animation: true,
 						templateUrl: 'editFieldModal.html',
 						windowClass: 'edit-modal-window',
+						scope: $scope,
 						controller:  function($uibModalInstance, $scope) {
-							$scope.field = curr_field;
-							$scope.showLogicJump = false;
+							var fieldOptionsToString = function(){
+								if(!$scope.field.fieldOptions){
+									return '';
+								}
 
+								return $scope.field.fieldOptions.map(function(fieldOption){
+								    return fieldOption.option_value;
+								}).join('\n');
+							}
+
+							$scope.field = curr_field;
 							$scope.isEdit = isEdit;
+							$scope.options = {
+								isEdit: isEdit,
+								fieldOptionsString: fieldOptionsToString()
+							}
+
+							var stringToFieldOptions = function(fieldOptionsString){
+								var values = fieldOptionsString.split('\n');
+								var fieldOptions = [];
+								for(var i=0; i < values.length; i++){
+									fieldOptions.push({
+										option_value: values[i]
+									});
+								}
+
+								return fieldOptions;
+							}
+
+							$scope.$watch('options.fieldOptionsString', function(newVal, oldVal){
+								if(newVal !== oldVal){
+									$scope.field.fieldOptions = stringToFieldOptions(newVal);
+								}
+							});
 
 							// decides whether field options block will be shown (true for dropdown and radio fields)
-							$scope.showAddOptions = function (field){
-								if($scope.field.fieldType === 'dropdown' || $scope.field.fieldType === 'checkbox' || $scope.field.fieldType === 'radio'){
+							$scope.showListOptions = function () {
+								if($scope.field.fieldType === 'dropdown' || $scope.field.fieldType === 'radio'){
 									return true;
-								} else {
-									return false;
 								}
+								return false;
 							};
 
-							$scope.validShapes =  [
+							// decides whether field options block will be shown (true for rating fields)
+							$scope.showRatingOptions = function (){
+								if($scope.field.fieldType === 'rating'){
+									return true;
+								}
+								return false;
+							};
+
+							$scope.validShapes = [
 								'Heart',
 								'Star',
 								'thumbs-up',
@@ -68,42 +111,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								'Trash'
 							];
 
-							// add new option to the field
-							$scope.addOption = function(){
-								if($scope.field.fieldType === 'checkbox' || $scope.field.fieldType === 'dropdown' || $scope.field.fieldType === 'radio'){
-									if(!$scope.field.fieldOptions){
-										$scope.field.fieldOptions = [];
-									}
-
-									var lastOptionID = $scope.field.fieldOptions.length+1;
-
-									// new option's id
-
-									var newOption = {
-										'option_id' : Math.floor(100000*Math.random()),
-										'option_title' : 'Option '+lastOptionID,
-										'option_value' : 'Option ' +lastOptionID
-									};
-
-									// put new option into fieldOptions array
-									$scope.field.fieldOptions.push(newOption);
-								}
-							};
-
-							// delete particular option
-							$scope.deleteOption = function (option){
-								if($scope.field.fieldType === 'checkbox' || $scope.field.fieldType === 'dropdown' || $scope.field.fieldType === 'radio'){
-									for(var i = 0; i < $scope.field.fieldOptions.length; i++){
-										if($scope.field.fieldOptions[i].option_id === option.option_id){
-
-											$scope.field.fieldOptions.splice(i, 1);
-											break;
-										}
-									}
-								}
-							};
-
-							//Populate Name to Font-awesomeName Conversion Map
+							//Name to Font-Awesome Conversion Map
 							$scope.select2FA = {
 								'Heart': 'Heart',
 								'Star': 'Star',
@@ -120,17 +128,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 								'Trash': 'Trash Can'
 							};
 
-							// decides whether field options block will be shown (true for dropdown and radio fields)
-							$scope.showRatingOptions = function (){
-								if($scope.field.fieldType === 'rating'){
-									return true;
-								} else {
-									return false;
-								}
-							};
-
 							$scope.saveField = function(){
-								if($scope.isEdit){
+								if($scope.options.isEdit){
 									$scope.myform.form_fields[field_index] = $scope.field;
 								} else {
 									$scope.myform.form_fields.push(curr_field);
@@ -258,19 +257,6 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 					});
 				};
 
-
-                //Populate local scope with rootScope methods/variables
-                $scope.update = $rootScope.update;
-
-                /*
-                ** FormFields (ui-sortable) drag-and-drop configuration
-                */
-				$scope.dropzone = {
-					handle: '.handle',
-					containment: '.dropzoneContainer',
-					cursor: 'grabbing'
-				};
-
                 /*
                 **  Field CRUD Methods
                 */
@@ -294,7 +280,7 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
                         required: true,
                         disabled: false,
                         deletePreserved: false,
-						logicJump: {}
+						logicJump: {},
                     };
 
 					if(fieldType === 'rating'){
@@ -305,35 +291,8 @@ angular.module('forms').directive('editFormDirective', ['$rootScope', 'FormField
 						newField.fieldValue = 0;
 					}
 
-					if($scope.showAddOptions(newField)){
-						newField.fieldOptions = [];
-						newField.fieldOptions.push({
-							'option_id' : Math.floor(100000*Math.random()), //Generate pseudo-random option id
-							'option_title' : 'Option 0',
-							'option_value' : 'Option 0'
-						});
-					}
-
-					$scope.openEditModal(newField, false,  $scope.myform.form_fields.length);
+					$scope.openEditModal(newField, false, $scope.myform.form_fields.length);
                 };
-
-				// decides whether field options block will be shown (true for dropdown and radio fields)
-				$scope.showAddOptions = function (field){
-					if(field.fieldType === 'dropdown' || field.fieldType === 'checkbox' || field.fieldType === 'radio'){
-						return true;
-					} else {
-						return false;
-					}
-				};
-
-				// decides whether field options block will be shown (true for dropdown and radio fields)
-				$scope.showRatingOptions = function (field){
-					if(field.fieldType === 'rating'){
-						return true;
-					} else {
-						return false;
-					}
-				};
 
                 // Delete particular field on button click
                 $scope.deleteField = function (field_index) {

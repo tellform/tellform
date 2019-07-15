@@ -6,19 +6,16 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
     var userService = {
       getCurrent: function() {
       	var deferred = $q.defer();
-
       	$http.get('/users/me')
-    		  .success(function(response) {
-    		    deferred.resolve(response);
-    		  })
-    		  .error(function() {
+    		  .then(function(response) {
+    		    deferred.resolve(response.data);
+    		  }, function() {
     		    deferred.reject('User\'s session has expired');
     		  });
 
         return deferred.promise;
       },
       login: function(credentials) {
-
         var deferred = $q.defer();
         $http.post('/auth/signin', credentials).then(function(response) {
             deferred.resolve(response.data);
@@ -29,7 +26,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
       logout: function() {
-
         var deferred = $q.defer();
         $http.get('/auth/signout').then(function(response) {
           deferred.resolve(null);
@@ -40,7 +36,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
         return deferred.promise;
       },
       signup: function(credentials) {
-
         var deferred = $q.defer();
         $http.post('/auth/signup', credentials).then(function(response) {
           // If successful we assign the response to the global user model
@@ -53,7 +48,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       },
 
       resendVerifyEmail: function(_email) {
-
         var deferred = $q.defer();
         $http.post('/auth/verify', {email: _email}).then(function(response) {
           deferred.resolve(response.data);
@@ -65,7 +59,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       },
 
       validateVerifyToken: function(token) {
-
         //DAVID: TODO: The valid length of a token should somehow be linked to server config values
         //DAVID: TODO: SEMI-URGENT: Should we even be doing this?
         var validTokenRe = /^([A-Za-z0-9]{48})$/g;
@@ -82,7 +75,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
       },
 
       resetPassword: function(passwordDetails, token) {
-
         var deferred = $q.defer();
         $http.post('/auth/reset/'+token, passwordDetails).then(function(response) {
           deferred.resolve(response);
@@ -95,7 +87,6 @@ angular.module('users').factory('User', ['$window', '$q', '$timeout', '$http', '
 
       // Submit forgotten password account id
       askForPasswordReset: function(credentials) {
-
         var deferred = $q.defer();
         $http.post('/auth/forgot', credentials).then(function(response) {
           // Show user success message and clear form

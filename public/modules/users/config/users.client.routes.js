@@ -5,25 +5,26 @@ angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
 
 	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
-      var deferred = $q.defer();
-		
-      if (Auth.currentUser && Auth.currentUser.email) {
-        $timeout(deferred.resolve);
+    var deferred = $q.defer();
+
+	  	if (Auth.currentUser && Auth.currentUser.email) {
+        return;
       }
       else {
-        Auth.currentUser = User.getCurrent(
-			function() {
-			  Auth.login();
-			  $timeout(deferred.resolve());
-			},
-			function() {
-			  Auth.logout();
+        return User.getCurrent().then(
+			function(user) {
+				Auth.login(user);
+				return;
+				},
+				function() {
+					Auth.logout();
 			  $timeout(deferred.reject());
-			  $state.go('signin', {reload: true});
-			});
-      }
+					$state.go('signin', {reload: true});
+				return;
+				});
+      	}
 
-      return deferred.promise;
+
     };
 
 	var checkSignupDisabled = function($window, $timeout, $q) {
@@ -40,24 +41,19 @@ angular.module('users').config(['$stateProvider',
 	$stateProvider.
 		state('profile', {
 			resolve: {
-          		loggedin: checkLoggedin
+          		currentUser: ['$q', '$timeout', '$state', 'User', 'Auth', checkLoggedin]
         	},
 			url: '/settings/profile',
-			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
+			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html',
+			controller: 'SettingsController'
 		}).
 		state('password', {
 			resolve: {
-	          	loggedin: checkLoggedin
-	        },
+          		currentUser: ['$q', '$timeout', '$state', 'User', 'Auth', checkLoggedin]
+        	},
 			url: '/settings/password',
-			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
-		}).
-		state('accounts', {
-			resolve: {
-	          	loggedin: checkLoggedin
-	        },
-			url: '/settings/accounts',
-			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
+			templateUrl: 'modules/users/views/settings/change-password.client.view.html',
+			controller: 'SettingsController'
 		}).
 		state('signup', {
 			resolve: {

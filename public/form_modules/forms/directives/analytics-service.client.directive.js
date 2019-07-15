@@ -11,8 +11,7 @@
 	function SendVisitorData(Socket, $state) {
 
 		// Create a controller method for sending visitor data
-		function send(form, lastActiveIndex, timeElapsed) {
-
+		function send(form, lastActiveId, timeElapsed) {
 			var lang = window.navigator.userLanguage || window.navigator.language;
 			lang = lang.slice(0,2);
 
@@ -33,7 +32,7 @@
 				referrer: document.referrer,
 				isSubmitted: form.submitted,
 				formId: form._id,
-				lastActiveField: form.form_fields[lastActiveIndex]._id,
+				lastActiveField: lastActiveId,
 				timeElapsed: timeElapsed,
 				language: lang,
 				deviceType: deviceType,
@@ -49,7 +48,7 @@
 			if (!Socket.socket) {
 				Socket.connect();
 			}
-			
+
 			Socket.on('disconnect', function(){
 				Socket.connect();
 			});

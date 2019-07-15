@@ -16,6 +16,7 @@
 
 .form-item .title-row > .list-group-item-heading {
 	color: #34628a;
+	overflow-wrap: break-word;
 }
 
 .form-item:hover .title-row > .list-group-item-heading {

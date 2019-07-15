@@ -28,9 +28,8 @@ angular.module('view-form')
 		}
 		return 0;
 	};
-});
-
-angular.module('view-form').value('supportedFields', [
+})
+.value('supportedFields', [
 	'textfield',
 	'textarea',
 	'date',
@@ -44,7 +43,18 @@ angular.module('view-form').value('supportedFields', [
 	'yes_no',
 	'number',
 	'natural'
-]);
+])
+.constant('VIEW_FORM_URL', '/forms/:formId/render')
+.filter('indexToAlphabet', function(){
+	return function(index){
+		var char = String.fromCharCode(index + 65);
+		return char;
+	};
+})
 
-angular.module('view-form').constant('VIEW_FORM_URL', '/forms/:formId/render');
+//Angular-Scroll Settings
+angular.module('view-form').value('duScrollActiveClass', 'activeField')
+	.value('duScrollGreedy', true)
+	.value('duScrollOffset', 100)
+	.value('duScrollSpyWait', 0);
 

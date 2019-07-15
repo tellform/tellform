@@ -6,16 +6,30 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
 		//Configure Form Tab View
 		ADVANCED_SETTINGS: 'Advanced Settings',
-		FORM_NAME: 'Form Name',
-		FORM_STATUS: 'Form Status',
+		FORM_NAME: 'Your tellform is called',
+		FORM_STATUS: 'Status',
 		PUBLIC: 'Public',
 		PRIVATE: 'Private',
 		GA_TRACKING_CODE: 'Google Analytics Tracking Code',
-		DISPLAY_FOOTER: 'Display Form Footer?',
+		DISPLAY_FOOTER: 'Form Footer',
 		SAVE_CHANGES: 'Save Changes',
 		CANCEL: 'Cancel',
-		DISPLAY_START_PAGE: 'Display Start Page?',
-		DISPLAY_END_PAGE: 'Display Custom End Page?',
+		DISPLAY_START_PAGE: 'Start Page',
+		DISPLAY_END_PAGE: 'Custom End Page',
+		GENERAL_TAB: 'General',
+		SELF_NOTIFICATIONS_TAB: 'Self notifications',
+		RESPONDENT_NOTIFICATIONS_TAB: 'Respondent notifications',
+
+		SEND_NOTIFICATION_TO: 'Send to',
+		NO_EMAIL_FIELD_WARNING: 'Error: You need an email field in your form to send the email to your form respondent',
+		REPLY_TO: 'Reply to',
+		EMAIL_SUBJECT: 'Subject',
+		EMAIL_MESSAGE: 'Message',
+		ENABLE_RESPONDENT_NOTIFICATIONS: 'Respondent Notifications are currently',
+		ENABLE_SELF_NOTIFICATIONS: 'Self Notifications are currently',
+		TOGGLE_ENABLED: 'Enabled',
+		TOGGLE_DISABLED: 'Disabled',
+		ADD_VARIABLE_BUTTON: 'Add variable',
 
 		//List Forms View
 		CREATE_A_NEW_FORM: 'Create a new form',
@@ -35,6 +49,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		LOGIC_JUMP: 'Logic Jump',
 		SHOW_BUTTONS: 'Additional Buttons',
 		SAVE_START_PAGE: 'Save',
+		ADD_OPTIONS_PLACEHOLDER: 'Add one choice per line. Minumum of one choice is required',
 
 		//Admin Form View
 		ARE_YOU_SURE: 'Are you ABSOLUTELY sure?',
@@ -47,9 +62,12 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: 'Delete Form',
 		DELETE: 'Delete',
 		FORM: 'Form',
-		VIEW: 'View',
+		VIEW_MY_TELLFORM: 'View my tellform',
 		LIVE: 'Live',
 		PREVIEW: 'Preview',
+
+		//Share Tab
+		COPIED_LABEL: 'Copied',
 		COPY: 'Copy',
 		COPY_AND_PASTE: 'Copy and Paste this to add your TellForm to your website',
 		CHANGE_WIDTH_AND_HEIGHT: 'Change the width and height values to suit you best',
@@ -143,9 +161,9 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		//Admin Tabs
 		CREATE_TAB: 'Create',
 		DESIGN_TAB: 'Design',
-		CONFIGURE_TAB: 'Configure',
+		CONFIGURE_TAB: 'Form Settings',
 		ANALYZE_TAB: 'Analyze',
-    	SHARE_TAB: 'Share',
+    SHARE_TAB: 'Share',
 
 	    //Field Types
 	    SHORT_TEXT: 'Short Text',
@@ -153,7 +171,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	    MULTIPLE_CHOICE: 'Multiple Choice',
 	    DROPDOWN: 'Dropdown',
 	    DATE: 'Date',
-	    PARAGRAPH_T: 'Paragraph',
+	    PARAGRAPH_FIELD: 'Paragraph',
 	    YES_NO: 'Yes/No',
 	    LEGAL: 'Legal',
 	    RATING: 'Rating',

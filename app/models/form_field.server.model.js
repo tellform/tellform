@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	Schema = mongoose.Schema,
 	LogicJumpSchema = require('./logic_jump.server.model'),
-	tokgen = require('../libs/tokenGenerator');
+	tokgen = require('../libs/tokenGenerator'),
+	constants = require('../libs/constants');
 
 var FieldOptionSchema = new Schema({
 	option_id: {
@@ -34,21 +35,7 @@ var RatingFieldSchema = new Schema({
 	},
 	shape: {
 		type: String,
-		enum: [
-			'Heart',
-			'Star',
-			'thumbs-up',
-			'thumbs-down',
-			'Circle',
-			'Square',
-			'Check Circle',
-			'Smile Outlined',
-			'Hourglass',
-			'bell',
-			'Paper Plane',
-			'Comment',
-			'Trash'
-		]
+		enum: constants.ratingShapeTypes
 	},
 	validShapes: {
 		type: [String]
@@ -62,9 +49,6 @@ function BaseFieldSchema(){
 	Schema.apply(this, arguments);
 
 	this.add({
-		globalId: {
-			type: String,
-    	},
 		isSubmission: {
 			type: Boolean,
 			default: false
@@ -85,6 +69,7 @@ function BaseFieldSchema(){
 
 		ratingOptions: RatingFieldSchema,
 		fieldOptions: [FieldOptionSchema],
+
 		required: {
 			type: Boolean,
 			default: true
@@ -103,31 +88,12 @@ function BaseFieldSchema(){
 		},
 		fieldType: {
 			type: String,
-			enum: [
-				'textfield',
-				'date',
-				'email',
-				'link',
-				'legal',
-				'url',
-				'textarea',
-				'statement',
-				'welcome',
-				'thankyou',
-				'file',
-				'dropdown',
-				'scale',
-				'rating',
-				'radio',
-				'checkbox',
-				'hidden',
-				'yes_no',
-				'natural',
-				'stripe',
-				'number'
-			]
+			enum: constants.fieldTypes
 		},
-		fieldValue: Schema.Types.Mixed
+		fieldValue: {
+			type: Schema.Types.Mixed,
+			default: ''
+		}
 	});
 
 	this.plugin(timeStampPlugin, {
@@ -140,7 +106,7 @@ function BaseFieldSchema(){
 		this.validFieldTypes = mongoose.model('Field').schema.path('fieldType').enumValues;
 
 		if(this.fieldType === 'rating' && this.ratingOptions.validShapes.length === 0){
-			this.ratingOptions.validShapes = mongoose.model('RatingOptions').schema.path('shape').enumValues;
+			this.ratingOptions.validShapes = constants.ratingShapeTypes;
 		}
 
 		next();
@@ -162,18 +128,13 @@ FormFieldSchema.pre('validate', function(next) {
 			return(next(error));
 		}
 
-	}else{
+	} else {
 		//Setting default values for ratingOptions
-		if(!this.ratingOptions.steps){
+		if(!this.ratingOptions.steps) {
 			this.ratingOptions.steps = 10;
 		}
 		if(!this.ratingOptions.shape){
 			this.ratingOptions.shape = 'Star';
-		}
-
-		//Checking that the fieldValue is between 0 and ratingOptions.steps
-		if(this.fieldValue+0 > this.ratingOptions.steps || this.fieldValue+0 < 0){
-			this.fieldValue = 1;
 		}
 	}
 
@@ -183,19 +144,11 @@ FormFieldSchema.pre('validate', function(next) {
 		if(this.fieldOptions && this.fieldOptions.length > 0){
 			error.errors.ratingOptions = new mongoose.Error.ValidatorError({path:'fieldOptions', message: 'fieldOptions are only allowed for type dropdown, checkbox or radio fields.', type: 'notvalid', value: this.ratingOptions});
 			console.error(error);
-			return(next(error));
+			return next(error);
 		}
 	}
 
 	return next();
-});
-
-//LogicJump Save
-FormFieldSchema.pre('save', function(next) {
-	if(!this.globalId){
-		this.globalId = tokgen();
-	}
-	next();
 });
 
 //Submission fieldValue correction
@@ -203,7 +156,6 @@ FormFieldSchema.pre('save', function(next) {
 	if(this.fieldType === 'dropdown' && this.isSubmission){
 		this.fieldValue = this.fieldValue.option_value;
 	}
-
 	return next();
 });
 

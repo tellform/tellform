@@ -12,7 +12,8 @@ var errorHandler = require('../errors.server.controller'),
 	fs = require('fs'),
 	i18n = require('i18n'),
 	async = require('async'),
-	pug = require('pug');
+	pug = require('pug'),
+	helpers = require('../helpers.server.controller');
 
 var nev = require('email-verification')(mongoose);
 
@@ -60,7 +61,7 @@ config_nev();
 
 exports.validateVerificationToken = function(req, res){
 
-	const fn = pug.compileFile(__dirname + "/../../views/welcome.email.view.pug");
+	const fn = pug.compileFile(__dirname + '/../../views/welcome.email.view.pug');
 	var renderedHtml = fn(res.locals);
 
     var emailTemplate = {
@@ -83,7 +84,7 @@ exports.validateVerificationToken = function(req, res){
 };
 
 exports.resendVerificationEmail = function(req, res, next){
-	const fn = pug.compileFile(__dirname + "/../../views/verification.email.view.pug");
+	const fn = pug.compileFile(__dirname + '/../../views/verification.email.view.pug');
 	var renderedHtml = fn(res.locals);
 
 	var emailTemplate = {
@@ -117,7 +118,7 @@ exports.signup = function(req, res) {
 	var user = new User(req.body);
 
 	// Set language to visitor's language
-	user.language = req.cookies['userLang'];
+	user.language = req.cookies.userLang;
 
 	// Add missing user fields
 	user.provider = 'local';
@@ -125,7 +126,6 @@ exports.signup = function(req, res) {
 	// Then save the temporary user
 	nev.createTempUser(user, function (err, existingPersistentUser, newTempUser) {
 		if (err) {
-			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -133,7 +133,7 @@ exports.signup = function(req, res) {
 
 		// new user created
 		if (newTempUser) {
-			const fn = pug.compileFile(__dirname + "/../../views/verification.email.view.pug");
+			const fn = pug.compileFile(__dirname + '/../../views/verification.email.view.pug');
 			var renderedHtml = fn(res.locals);
 
 			var URL = newTempUser[nev.options.URLFieldName];
@@ -179,6 +179,8 @@ exports.signin = function(req, res, next) {
 				}
 
 				res.cookie('langCookie', user.language, { maxAge: 90000, httpOnly: true });
+				
+				user = helpers.removeSensitiveModelData('private_user', user.toJSON());
 				return res.json(user);
 			});
 		}
@@ -198,16 +200,12 @@ exports.signout = function(req, res) {
 
 /* Generate API Key for User */
 exports.generateAPIKey = function(req, res) {
-	if (!req.isAuthenticated()){
-		return res.status(400).send({
-			message: 'User is not Authorized'
-		});
-	}
-
 	User.findById(req.user.id)
 		.exec( function(err, user) {
 			if (err) {
-				return res.status(400).send(err);
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
 			}
 
 			if (!user) {
@@ -226,12 +224,8 @@ exports.generateAPIKey = function(req, res) {
 				}
 
 				var newUser = _user.toObject();
-				delete newUser.salt;
-				delete newUser.__v;
-				delete newUser.passwordHash;
-				delete newUser.provider;
 
-				return res.json(newUser);
+				return res.json({ id: newUser._id, apiKey: newUser.apiKey });
 			});
 
 		});

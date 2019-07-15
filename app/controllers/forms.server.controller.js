@@ -9,7 +9,14 @@ var mongoose = require('mongoose'),
 	FormSubmission = mongoose.model('FormSubmission'),
 	config = require('../../config/config'),
 	diff = require('deep-diff'),
-	_ = require('lodash');
+	_ = require('lodash'),
+	nodemailer = require('nodemailer'),
+	emailNotifications = require('../libs/send-email-notifications'),
+	constants = require('../libs/constants'),
+	helpers = require('./helpers.server.controller'),
+	async = require('async');
+
+var smtpTransport = nodemailer.createTransport(config.mailer.options);
 
 /**
  * Delete a forms submissions
@@ -28,17 +35,7 @@ exports.deleteSubmissions = function(req, res) {
 			return;
 		}
 
-		form.analytics.visitors = [];
-		form.save(function(formSaveErr){
-			if(formSaveErr){
-				res.status(400).send({
-					message: errorHandler.getErrorMessage(formSaveErr)
-				});
-				return;
-			}
-			res.status(200).send('Form submissions successfully deleted');
-
-		});
+		res.status(200).send('Form submissions successfully deleted');
 	});
 };
 
@@ -69,7 +66,54 @@ exports.createSubmission = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		res.status(200).send('Form submission successfully saved');
+		var form = req.body;
+		var formFieldDict = emailNotifications.createFieldDict(form.form_fields);
+
+		async.waterfall([
+		    function(callback) {
+		    	if (form.selfNotifications && form.selfNotifications.enabled) {
+		    		if(form.selfNotifications.fromField){
+		    			form.selfNotifications.fromEmails = formFieldDict[form.selfNotifications.fromField];
+		    		} else {
+		    			form.selfNotifications.fromEmails = config.mailer.options.from;
+		    		}
+
+					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, function(err){
+						if(err){
+							return callback({
+								message: 'Failure sending submission self-notification email'
+							});
+						}
+
+						callback();
+					});
+				} else {
+					callback();
+				}
+		    },
+		    function(callback) {
+		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
+
+					form.respondentNotifications.toEmails = formFieldDict[form.respondentNotifications.toField];
+					emailNotifications.send(form.respondentNotifications, formFieldDict, smtpTransport, function(err){
+						if(err){
+							return callback({
+								message: 'Failure sending submission respondent-notification email'
+							});
+						}
+
+						callback();
+					});
+				} else {
+					callback();
+				}
+		    }
+		], function (err) {
+			if(err){
+				return res.status(400).send(err);
+			}
+		    res.status(200).send('Form submission successfully saved');
+		});
 	});
 };
 
@@ -82,7 +126,7 @@ exports.listSubmissions = function(req, res) {
 	FormSubmission.find({ form: _form._id }).sort('created').lean().exec(function(err, _submissions) {
 		if (err) {
 			console.error(err);
-			res.status(500).send({
+			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
@@ -91,28 +135,182 @@ exports.listSubmissions = function(req, res) {
 };
 
 /**
+ * Get Visitor Analytics Data for a given Form
+ */
+exports.getVisitorData = function(req, res) {
+  var results = [];
+
+	Form.aggregate([
+	    {
+	        $match: {
+	            _id: mongoose.Types.ObjectId(req.form.id),
+	            admin: mongoose.Types.ObjectId(req.user.id)
+	        }
+	    },
+	    {
+	        $facet: {
+	            'deviceStatistics': [
+	                {
+	                    $unwind: '$analytics.visitors'
+	                },
+	                {
+	                    $project: {
+	                        _id: 0,
+	                        deviceType: '$analytics.visitors.deviceType',
+	                        SubmittedTimeElapsed: {
+	                            $cond: [
+	                                {
+	                                    $eq: ['$analytics.visitors.isSubmitted', true]
+	                                },
+	                                '$analytics.visitors.timeElapsed',
+	                                0
+	                            ]
+	                        },
+	                        SubmittedResponses: {
+	                            $cond: [
+	                                {
+	                                    $eq: ['$analytics.visitors.isSubmitted', true]
+	                                },
+	                                1,
+	                                0
+	                            ]
+	                        }
+	                    }
+	                },
+	                {
+	                    $group: {
+	                        _id: '$deviceType',
+	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
+	                        responses: { $sum: '$SubmittedResponses' },
+	                        visits: { $sum: 1 }
+	                    }
+	                },
+	                {
+	                    $project: {
+	                        total_time: '$total_time',
+	                        responses: '$responses',
+	                        visits: '$visits',
+	                        average_time: {
+	                        	$cond: [
+                    				{ $eq: [ '$responses', 0 ] },
+                    				0,
+                    				{ $divide: ['$total_time', '$responses'] }
+                    			]
+	                        },
+	                        conversion_rate: {
+	                            $multiply: [
+	                            	100,
+	                            	{
+                            			$cond: [
+                            				{ $eq: [ '$visits', 0 ] },
+                            				0,
+                            				{ $divide: ['$responses', '$visits'] }
+                            			]
+	                            	}
+	                            ]
+	                        }
+	                    }
+	                }
+	            ],
+	            'globalStatistics': [
+	                {
+	                    $unwind: '$analytics.visitors'
+	                },
+	                {
+	                    $project: {
+	                        _id: 0,
+	                        deviceType: '$analytics.visitors.deviceType',
+	                        SubmittedTimeElapsed: {
+	                            $cond: [
+	                                {
+	                                    $eq: ['$analytics.visitors.isSubmitted', true]
+	                                },
+	                                '$analytics.visitors.timeElapsed',
+	                                0
+	                            ]
+	                        },
+	                        SubmittedResponses: {
+	                            $cond: [
+	                                {
+	                                    $eq: ['$analytics.visitors.isSubmitted', true]
+	                                },
+	                                1,
+	                                0
+	                            ]
+	                        }
+	                    }
+	                },
+	                {
+	                    $group: {
+	                        _id: null,
+	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
+	                        responses: { $sum: '$SubmittedResponses' },
+	                        visits: { $sum: 1 }
+	                    }
+	                },
+	                {
+	                    $project: {
+	                        _id: 0,
+	                        total_time: '$total_time',
+	                        responses: '$responses',
+	                        visits: '$visits',
+	                        average_time: {
+	                            $cond: [
+                    				{ $eq: [ '$responses', 0 ] },
+                    				0,
+                    				{ $divide: ['$total_time', '$responses'] }
+                    			]
+	                        },
+	                        conversion_rate: {
+	                            $multiply: [
+	                            	100,
+	                            	{
+	                            		$cond: [
+                            				{ $eq: [ '$visits', 0 ] },
+                            				0,
+                            				{ $divide: ['$responses', '$visits'] }
+                            			]
+	                            	}
+	                            ]
+	                        }
+	                    }
+	                }
+	            ],
+	        }
+	    }
+	])
+    .cursor()
+    .exec()
+    .on('end', function() {
+      res.json(results);
+    })
+    .on('data', function(entry){
+      results.push(entry);
+	  });
+};
+
+/**
  * Create a new form
  */
 exports.create = function(req, res) {
-	
 	if(!req.body.form){
 		return res.status(400).send({
 			message: 'Invalid Input'
 		});
 	}
-	var form = new Form(req.body.form);
 
+	var form = new Form(req.body.form);
 	form.admin = req.user._id;
 
-	form.save(function(err) {
-		debugger;
+	form.save(function(err, createdForm) {
 		if (err) {
 			return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
 
-		return res.json(form);
+		createdForm = helpers.removeSensitiveModelData('private_form', createdForm.toJSON());
+		return res.json(createdForm);
 	});
 };
 
@@ -123,16 +321,14 @@ exports.read = function(req, res) {
 	if(!req.user || (req.form.admin.id !== req.user.id) ){
 		readForRender(req, res);
 	} else {
-			var newForm = req.form.toJSON();
-
-			if (req.userId) {
-				if(req.form.admin._id+'' === req.userId+''){
-					return res.json(newForm);
-				}
+			if(!req.form){
 				return res.status(404).send({
 					message: 'Form Does Not Exist'
 				});
 			}
+
+			var newForm = helpers.removeSensitiveModelData('private_form', req.form.toJSON());
+
 			return res.json(newForm);
 	}
 };
@@ -148,9 +344,7 @@ var readForRender = exports.readForRender = function(req, res) {
 		});
 	}
 
-	delete newForm.lastModified;
-	delete newForm.__v;
-	delete newForm.created;
+	newForm = helpers.removeSensitiveModelData('public_form', newForm);
 
 	if(newForm.startPage && !newForm.startPage.showStart){
 		delete newForm.startPage;
@@ -166,15 +360,12 @@ exports.update = function(req, res) {
 
     var form = req.form;
     var updatedForm = req.body.form;
-    if(form.form_fields === undefined){
-    	form.form_fields = [];
-    }
 
-    if(form.analytics === undefined){
+    if(!form.analytics && req.body.form.analytics){
     	form.analytics = {
     		visitors: [],
     		gaCode: ''
-    	}
+    	};
     }
 
 	if (req.body.changes) {
@@ -184,17 +375,21 @@ exports.update = function(req, res) {
 			diff.applyChange(form._doc, true, change);
 		});
 	} else {
+		if(!updatedForm){
+			res.status(400).send({
+				message: 'Updated Form is empty'
+			});
+		}
 
+		delete updatedForm.lastModified;
+	    delete updatedForm.created;
+	    delete updatedForm.id;
+	    delete updatedForm._id;
 	    delete updatedForm.__v;
-	    delete updatedForm.created; 
+
 		//Unless we have 'admin' privileges, updating the form's admin is disabled
 		if(updatedForm && req.user.roles.indexOf('admin') === -1) {
 			delete updatedForm.admin;
-		}
-
-		if(form.analytics === null){
-			form.analytics.visitors = [];
-			form.analytics.gaCode = '';
 		}
 
 		//Do this so we can create duplicate fields
@@ -214,6 +409,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			savedForm = helpers.removeSensitiveModelData('private_form', savedForm.toJSON());
 			res.json(savedForm);
 		}
 	});
@@ -245,24 +441,53 @@ exports.list = function(req, res) {
 
 	Form.find(searchObj)
 		.sort('-created')
-		.select('title language admin submissions isLive')
-		.populate('admin.username', 'admin._id')
+		.select('title language isLive')
 		.lean()
 		.exec(function(err, forms) {
 		if (err) {
-			res.status(400).send({
+			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			for(var i=0; i<forms.length; i++){
-				forms[i].numberOfResponses = 0;
-				if(forms[i].submissions){
-					forms[i].numberOfResponses = forms[i].submissions.length;
-					delete forms[i].submissions;
-				}
-			}
-			res.json(forms);
 		}
+
+		var form_ids = forms.map(function(form){
+			return form._id;
+		});
+
+		//Get number of submissions for each form
+		FormSubmission
+      .aggregate()
+      .match({
+        form: {
+          $in: form_ids
+        }
+      })
+      .group({
+        _id: '$form',
+        responses: { $sum: 1 }
+      })
+      .cursor()
+      .exec()
+      .on('end', function() {
+        forms = forms.map(function (form) {
+          if (!form.submissionNum) {
+            form.submissionNum = 0;
+          }
+
+          return helpers.removeSensitiveModelData('private_form', form);
+        });
+
+        res.json(forms);
+      })
+      .on('data', function(result){
+        forms = forms.map(function (form) {
+          if (_.isEqual(form._id, result._id)) {
+            form.submissionNum = result.responses;
+          }
+
+          return form;
+        });
+		  });
 	});
 };
 
@@ -275,7 +500,9 @@ exports.formByID = function(req, res, next, id) {
 			message: 'Form is invalid'
 		});
 	}
+
 	Form.findById(id)
+		.select('admin title language form_fields startPage endPage showFooter isLive design analytics.gaCode respondentNotifications selfNotifications')
 		.populate('admin')
 		.exec(function(err, form) {
 		if (err) {
@@ -287,12 +514,7 @@ exports.formByID = function(req, res, next, id) {
 		}
 		else {
 			//Remove sensitive information from User object
-			 var _form = form;
-                        _form.admin.password = null;
-                        _form.admin.salt = null;
-                        _form.provider = null;
-
-                        req.form = _form;
+			req.form = helpers.removeSensitiveModelData('private_form', form.toJSON());
 			return next();
 		}
 	});
@@ -309,7 +531,7 @@ exports.formByIDFast = function(req, res, next, id) {
 	}
 	Form.findById(id)
 		.lean()
-		.select('title language form_fields startPage endPage hideFooter isLive design analytics.gaCode')
+		.select('title language form_fields startPage endPage showFooter isLive design analytics.gaCode selfNotifications respondentNotifications')
 		.exec(function(err, form) {
 		if (err) {
 			return next(err);
@@ -320,13 +542,7 @@ exports.formByIDFast = function(req, res, next, id) {
 		}
 		else {
 			//Remove sensitive information from User object
-			var _form = form;
-			if(_form.admin){
-			_form.admin.password = null;
-			_form.admin.salt = null;
-			_form.provider = null;
-			}
-			req.form = _form;
+			req.form = helpers.removeSensitiveModelData('public_form', form);
 			return next();
 		}
 	});
@@ -334,11 +550,13 @@ exports.formByIDFast = function(req, res, next, id) {
 
 /**
  * Form authorization middleware
+ *
+ * reject access if the owner of the form is not the current user and the user is not an admin
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
-		res.status(403).send({
+	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') < 0) {
+		return res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});
 	}

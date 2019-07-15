@@ -4,19 +4,12 @@
 angular.module('forms').controller('AdminFormController', ['$rootScope', '$window', '$scope', '$stateParams', '$state', 'Forms', 'CurrentForm', '$http', '$uibModal', 'myForm', '$filter', '$translate',
     function($rootScope, $window, $scope, $stateParams, $state, Forms, CurrentForm, $http, $uibModal, myForm, $filter, $translate) {
 
-        //Set active tab to Create
-        $scope.activePill = 0;
-
-        $scope.copied = false;
-        $scope.onCopySuccess = function (e) {
-            $scope.copied = true;
-        };
-
         $scope = $rootScope;
         $scope.animationsEnabled = true;
         $scope.myform = myForm;
         $rootScope.saveInProgress = false;
         $scope.oldForm = _.cloneDeep($scope.myform);
+        $scope.designTabActive = false
 
         CurrentForm.setForm($scope.myform);
 
@@ -36,7 +29,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             $scope.actualFormURL = window.location.protocol + '//' + window.location.host + $scope.formURL;
         }
 
-
         var refreshFrame = $scope.refreshFrame = function(){
             if(document.getElementById('iframe')) {
                 document.getElementById('iframe').contentWindow.location.reload();
@@ -45,12 +37,58 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
 
         $scope.tabData = [
             {
+                heading: $filter('translate')('CREATE_TAB'),
+                route: 'viewForm.create',
+                active: false
+            },
+            {
                 heading: $filter('translate')('CONFIGURE_TAB'),
-                templateName:   'configure'
+                route: 'viewForm.configure.general',
+                active: false
+            },
+            {
+                heading: $filter('translate')('ANALYZE_TAB'),
+                route: 'viewForm.analyze',
+                active: false
+            },
+            {
+                heading: $filter('translate')('SHARE_TAB'),
+                route: 'viewForm.share.share_form',
+                active: false
+            },
+            {
+                heading: $filter('translate')('DESIGN_TAB'),
+                route: 'viewForm.design',
+                active: false
             }
         ];
 
-        $scope.designTabActive = false
+        $scope.go = function(tab){
+            var currParentState = $state.current.name.split('.').slice(0,2).join('.');
+            var tabParentState = tab.route.split('.').slice(0,2).join('.');
+
+            if(currParentState !== tabParentState && tabParentState !== 'viewForm.configure.general'){
+                $state.go(tab.route);
+            }
+        };
+
+        function setActiveTab() {
+            $scope.tabData.forEach(function(tab) {
+                var currentTabState = $state.current.name.split('.').slice(0,2).join('.');
+                var tabRouteState = tab.route.split('.').slice(0,2).join('.');
+                tab.active = (currentTabState === tabRouteState);
+
+                if(tab.active && tab.route === 'viewForm.design'){
+                    $scope.designTabActive = true;
+                } else {
+                    $scope.designTabActive = false;
+                }
+            });
+        }
+
+        setActiveTab();
+
+        $scope.$on("$stateChangeSuccess", setActiveTab());
 
         $scope.deactivateDesignTab = function(){
             $scope.designTabActive = false
@@ -77,7 +115,6 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
             $scope.deleteModal = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'formDeleteModal.html',
-                controller: 'AdminFormController',
                 resolve: {
                     myForm: function(){
                         return $scope.myform;
@@ -170,20 +207,9 @@ angular.module('forms').controller('AdminFormController', ['$rootScope', '$windo
                     if(dataToSend.analytics && dataToSend.analytics.visitors){
                         delete dataToSend.analytics.visitors;
                     }
-                    if(dataToSend.submissions){
-                        delete dataToSend.submissions;
-                    }
 
                     if(dataToSend.visible_form_fields){
                         delete dataToSend.visible_form_fields;
-                    }
-
-                     if(dataToSend.analytics){
-                        delete dataToSend.analytics.visitors;
-                        delete dataToSend.analytics.fields;
-                        delete dataToSend.analytics.submissions;
-                        delete dataToSend.analytics.views;
-                        delete dataToSend.analytics.conversionRate;
                     }
 
                     delete dataToSend.created;
