@@ -34,8 +34,6 @@ module.exports = function (io, socket) {
           throw new Error(errorHandler.getErrorMessage(err));
         }
 
-        console.log('update form to', form)
-
         if(cb){
           return cb();
         }
@@ -43,15 +41,12 @@ module.exports = function (io, socket) {
 	};
 
 	io.on('connection', function(current_socket) {
-	  console.log('CONNECTED CLIENT');
-
 		// a user has visited our page - add them to the visitorsData object
 		current_socket.on('form-visitor-data', function(data) {
 			visitorsData[current_socket.id] = data;
 			visitorsData[current_socket.id].socketId = current_socket.id;
 			visitorsData[current_socket.id].isSaved = false;
 
-			console.log('received data', data);
 			if (data.isSubmitted && !data.isSaved) {
 				visitorsData[current_socket.id].isSaved = true;
 				saveVisitorData(data, function() {

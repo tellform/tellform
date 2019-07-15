@@ -8,9 +8,10 @@ services:
     volumes:
       - "./data/mongo:/data"
   tellform:
-    build: .
-    volumes:
-      - ".:/opt/app"
+    image: ohmyform/ohmyform
+    #build: .
+    #volumes:
+    #  - ".:/opt/app"
     environment:
       CREATE_ADMIN: "TRUE"
       SOCKET_URL: 'localhost:5000'
@@ -20,6 +21,7 @@ services:
       REDIS_URL: redis://redis
       MAILER_SMTP_HOST: mail
       MAILER_SMTP_PORT: 1025
+    # command: grunt dev # override command to have livereloading on file change
     links:
       - mongo
       - redis

@@ -8,6 +8,9 @@ RUN apk add --no-cache git \
 	&& npm cache clean --force \
 	&& mkdir -p /opt/app/public/lib
 
+# to expose the public folder to other containers
+# VOLUME /opt/app
+
 WORKDIR /opt/app
 
 ## TODO: Find a method that's better than this for passing ENV's if possible.
@@ -38,9 +41,10 @@ ENV NODE_ENV=development \
     GOOGLE_ANALYTICS_ID="" \
     RAVEN_DSN=""
 
-COPY package.json bower.json .bowerrc app public config gruntfile.js server.js scripts ./
+# keep .dockerignore up to date
+COPY . .
 
-RUN npm install --only=production --quiet \
+RUN npm install --only=production \
     && bower install --allow-root -f \
     && grunt build
 
