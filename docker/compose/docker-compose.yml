@@ -8,9 +8,12 @@ services:
     volumes:
       - "./data/mongo:/data"
   tellform:
-    image: ohmyform/ohmyform
+    build: .
+    volumes:
+      - ".:/opt/app"
     environment:
       CREATE_ADMIN: "TRUE"
+      SOCKET_URL: 'localhost:5000'
       SOCKET_PORT: "5000"
       SOCKET_PORT_EXTERN_VISIBLE: "TRUE"
       MONGODB_URI: mongodb://mongo/tellform
@@ -30,3 +33,13 @@ services:
     image: mailhog/mailhog
     ports:
       - "5050:8025"
+  mongoexpress:
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+    ports:
+      - "5051:8081"
+    links:
+      - mongo
+    depends_on:
+      - mongo
