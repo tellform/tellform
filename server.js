@@ -80,7 +80,7 @@ if (process.env.CREATE_ADMIN === 'TRUE') {
 	});
 
 	return app;
-}
+};
 
 // To maintain backwards compatibility, run bootstrap when called as a file
 if(require.main === module) {

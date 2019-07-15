@@ -64,7 +64,7 @@ module.exports.removeRootDir = function(files, removeRoot, addRoot) {
  */
 module.exports.getBowerFormJSAssets = function() {
 	if(process.env.NODE_ENV === 'production'){
-		return ['/static/lib/angular/angular.min.js', '/static/dist/vendor.min.js', '/static/lib/angular-ui-date/src/date.js']
+		return ['/static/lib/angular/angular.min.js', '/static/dist/vendor.min.js', '/static/lib/angular-ui-date/src/date.js'];
 	}
 	return this.removeRootDir(minBowerFiles('**/**.js'), 'public/', 'static/');
 };

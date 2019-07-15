@@ -7,7 +7,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 
 		$scope.cancel = function(){
 			$scope.user = Auth.currentUser;
-		}
+		};
 
 		// Update a user profile
 		$scope.updateUserProfile = function(isValid) {

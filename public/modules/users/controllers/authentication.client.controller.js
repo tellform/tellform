@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$location', '$state', '$rootScope', 'User', 'Auth', '$translate', '$window',
-	function($scope, $location, $state, $rootScope, User, Auth, $translate, $window) {
+angular.module('users').controller('AuthenticationController', ['$scope', '$location', '$state', '$rootScope', 'User', 'Auth',
+	function($scope, $location, $state, $rootScope, User, Auth) {
 
 		//This helps us test the controller by allowing tests to inject their own scope variables
 		if(!$scope.credentials) $scope.credentials = {};

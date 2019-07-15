@@ -34,7 +34,7 @@ exports.deleteSubmissions = function(req, res) {
 			});
 			return;
 		}
-		
+
 		res.status(200).send('Form submissions successfully deleted');
 	});
 };
@@ -77,7 +77,7 @@ exports.createSubmission = function(req, res) {
 		    		} else {
 		    			form.selfNotifications.fromEmails = config.mailer.options.from;
 		    		}
-					
+
 					emailNotifications.send(form.selfNotifications, formFieldDict, smtpTransport, function(err){
 						if(err){
 							return callback({
@@ -89,7 +89,7 @@ exports.createSubmission = function(req, res) {
 					});
 				} else {
 					callback();
-				} 
+				}
 		    },
 		    function(callback) {
 		        if (form.respondentNotifications && form.respondentNotifications.enabled && form.respondentNotifications.toField) {
@@ -106,7 +106,7 @@ exports.createSubmission = function(req, res) {
 					});
 				} else {
 					callback();
-				} 
+				}
 		    }
 		], function (err) {
 			if(err){
@@ -138,10 +138,12 @@ exports.listSubmissions = function(req, res) {
  * Get Visitor Analytics Data for a given Form
  */
 exports.getVisitorData = function(req, res) {
+  var results = [];
+
 	Form.aggregate([
 	    {
 	        $match: {
-	            _id: mongoose.Types.ObjectId(req.params.formIdNoMiddleware),
+	            _id: mongoose.Types.ObjectId(req.form.id),
 	            admin: mongoose.Types.ObjectId(req.user.id)
 	        }
 	    },
@@ -156,26 +158,26 @@ exports.getVisitorData = function(req, res) {
 	                        _id: 0,
 	                        deviceType: '$analytics.visitors.deviceType',
 	                        SubmittedTimeElapsed: {
-	                            $cond: [ 
+	                            $cond: [
 	                                {
 	                                    $eq: ['$analytics.visitors.isSubmitted', true]
-	                                }, 
-	                                '$analytics.visitors.timeElapsed', 
+	                                },
+	                                '$analytics.visitors.timeElapsed',
 	                                0
 	                            ]
 	                        },
 	                        SubmittedResponses: {
-	                            $cond: [ 
+	                            $cond: [
 	                                {
 	                                    $eq: ['$analytics.visitors.isSubmitted', true]
-	                                }, 
-	                                1, 
+	                                },
+	                                1,
 	                                0
 	                            ]
 	                        }
 	                    }
 	                },
-	                { 
+	                {
 	                    $group: {
 	                        _id: '$deviceType',
 	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
@@ -189,21 +191,21 @@ exports.getVisitorData = function(req, res) {
 	                        responses: '$responses',
 	                        visits: '$visits',
 	                        average_time: {
-	                        	$cond: [ 
-                    				{ $eq: [ '$responses', 0 ] }, 
-                    				0, 
-                    				{ $divide: ['$total_time', '$responses'] } 
-                    			] 
+	                        	$cond: [
+                    				{ $eq: [ '$responses', 0 ] },
+                    				0,
+                    				{ $divide: ['$total_time', '$responses'] }
+                    			]
 	                        },
 	                        conversion_rate: {
 	                            $multiply: [
 	                            	100,
-	                            	{ 
-                            			$cond: [ 
-                            				{ $eq: [ '$visits', 0 ] }, 
-                            				0, 
-                            				{ $divide: ['$responses', '$visits'] } 
-                            			] 
+	                            	{
+                            			$cond: [
+                            				{ $eq: [ '$visits', 0 ] },
+                            				0,
+                            				{ $divide: ['$responses', '$visits'] }
+                            			]
 	                            	}
 	                            ]
 	                        }
@@ -219,26 +221,26 @@ exports.getVisitorData = function(req, res) {
 	                        _id: 0,
 	                        deviceType: '$analytics.visitors.deviceType',
 	                        SubmittedTimeElapsed: {
-	                            $cond: [ 
+	                            $cond: [
 	                                {
 	                                    $eq: ['$analytics.visitors.isSubmitted', true]
-	                                }, 
-	                                '$analytics.visitors.timeElapsed', 
+	                                },
+	                                '$analytics.visitors.timeElapsed',
 	                                0
 	                            ]
 	                        },
 	                        SubmittedResponses: {
-	                            $cond: [ 
+	                            $cond: [
 	                                {
 	                                    $eq: ['$analytics.visitors.isSubmitted', true]
-	                                }, 
-	                                1, 
+	                                },
+	                                1,
 	                                0
 	                            ]
 	                        }
 	                    }
 	                },
-	                { 
+	                {
 	                    $group: {
 	                        _id: null,
 	                        total_time: { $sum: '$SubmittedTimeElapsed'  },
@@ -253,21 +255,21 @@ exports.getVisitorData = function(req, res) {
 	                        responses: '$responses',
 	                        visits: '$visits',
 	                        average_time: {
-	                            $cond: [ 
-                    				{ $eq: [ '$responses', 0 ] }, 
-                    				0, 
-                    				{ $divide: ['$total_time', '$responses'] } 
-                    			] 
+	                            $cond: [
+                    				{ $eq: [ '$responses', 0 ] },
+                    				0,
+                    				{ $divide: ['$total_time', '$responses'] }
+                    			]
 	                        },
 	                        conversion_rate: {
 	                            $multiply: [
 	                            	100,
-	                            	{ 
-	                            		$cond: [ 
-                            				{ $eq: [ '$visits', 0 ] }, 
-                            				0, 
-                            				{ $divide: ['$responses', '$visits'] } 
-                            			] 
+	                            	{
+	                            		$cond: [
+                            				{ $eq: [ '$visits', 0 ] },
+                            				0,
+                            				{ $divide: ['$responses', '$visits'] }
+                            			]
 	                            	}
 	                            ]
 	                        }
@@ -276,16 +278,15 @@ exports.getVisitorData = function(req, res) {
 	            ],
 	        }
 	    }
-	], function(err, results){
-		if (err) {
-			console.error(err);
-			return res.status(500).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-
-		return res.json(results);
-	});
+	])
+    .cursor()
+    .exec()
+    .on('end', function() {
+      res.json(results);
+    })
+    .on('data', function(entry){
+      results.push(entry);
+	  });
 };
 
 /**
@@ -297,7 +298,7 @@ exports.create = function(req, res) {
 			message: 'Invalid Input'
 		});
 	}
-	
+
 	var form = new Form(req.body.form);
 	form.admin = req.user._id;
 
@@ -327,7 +328,7 @@ exports.read = function(req, res) {
 			}
 
 			var newForm = helpers.removeSensitiveModelData('private_form', req.form.toJSON());
-			
+
 			return res.json(newForm);
 	}
 };
@@ -343,7 +344,7 @@ var readForRender = exports.readForRender = function(req, res) {
 		});
 	}
 
-	newForm = helpers.removeSensitiveModelData('public_form', newForm.toJSON());
+	newForm = helpers.removeSensitiveModelData('public_form', newForm);
 
 	if(newForm.startPage && !newForm.startPage.showStart){
 		delete newForm.startPage;
@@ -380,8 +381,8 @@ exports.update = function(req, res) {
 			});
 		}
 
-		delete updatedForm.lastModified; 
-	    delete updatedForm.created; 
+		delete updatedForm.lastModified;
+	    delete updatedForm.created;
 	    delete updatedForm.id;
 	    delete updatedForm._id;
 	    delete updatedForm.__v;
@@ -448,53 +449,45 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		
+
 		var form_ids = forms.map(function(form){
 			return form._id;
 		});
 
 		//Get number of submissions for each form
-		FormSubmission.aggregate([
-		     {
-		        $match: {
-		        	form: {
-		        		$in: form_ids
-		        	}
-		        }
-		    },
-            { 
-                $group: {
-                    _id: '$form',
-                    responses: { $sum: 1 }
-                }
-            },
-		], function(err, results){
-			if (err) {
-				console.error(err);
-				return res.status(500).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			}
+		FormSubmission
+      .aggregate()
+      .match({
+        form: {
+          $in: form_ids
+        }
+      })
+      .group({
+        _id: '$form',
+        responses: { $sum: 1 }
+      })
+      .cursor()
+      .exec()
+      .on('end', function() {
+        forms = forms.map(function (form) {
+          if (!form.submissionNum) {
+            form.submissionNum = 0;
+          }
 
-			const result_ids = results.map(function(result){ 
-				return ''+result._id; 
-			});
-			
-			var currIndex = -1;
+          return helpers.removeSensitiveModelData('private_form', form);
+        });
 
-			for(var i=0; i<forms.length; i++){
-				forms[i] = helpers.removeSensitiveModelData('private_form', forms[i]);
+        res.json(forms);
+      })
+      .on('data', function(result){
+        forms = forms.map(function (form) {
+          if (_.isEqual(form._id, result._id)) {
+            form.submissionNum = result.responses;
+          }
 
-				currIndex = result_ids.indexOf(forms[i]._id);
-                if(currIndex > -1){
-					forms[i].submissionNum = results[currIndex].responses;
-				} else {
-					forms[i].submissionNum = 0;
-				}
-			}
-
-			res.json(forms);
-		});
+          return form;
+        });
+		  });
 	});
 };
 
@@ -557,11 +550,13 @@ exports.formByIDFast = function(req, res, next, id) {
 
 /**
  * Form authorization middleware
+ *
+ * reject access if the owner of the form is not the current user and the user is not an admin
  */
 exports.hasAuthorization = function(req, res, next) {
 	var form = req.form;
-	if (req.form.admin.id !== req.user.id || req.user.roles.indexOf('admin') > -1) {
-		res.status(403).send({
+	if (req.form.admin.id !== req.user.id && req.user.roles.indexOf('admin') < 0) {
+		return res.status(403).send({
 			message: 'User '+req.user.username+' is not authorized to edit Form: '+form.title
 		});
 	}

@@ -20,6 +20,7 @@
 			} else {
 				url = window.location.protocol + '//' + window.location.hostname;
 			}
+			url = url.replace(/^http/, 'ws');
 			service.socket = io(url, {'transports': ['websocket', 'polling']});
 		}
 

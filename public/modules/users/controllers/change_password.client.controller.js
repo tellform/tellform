@@ -2,13 +2,12 @@
 
 angular.module('users').controller('ChangePasswordController', ['$scope', '$rootScope', '$http', '$state', 'Users', 'Auth',
 	function($scope, $rootScope, $http, $state, Users, Auth) {
-
 		$scope.user = Auth.currentUser;
-		console.log($scope.user)
+		console.log($scope.user);
 
 		$scope.cancel = function(){
 			$scope.user = Auth.currentUser;
-		}
+		};
 
 		// Change user password
 		$scope.changeUserPassword = function() {
@@ -24,6 +23,5 @@ angular.module('users').controller('ChangePasswordController', ['$scope', '$root
 				$scope.error = response.message;
 			});
 		};
-		*/
 	}
 ]);

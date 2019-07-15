@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User', '$window',
-	function($scope, $stateParams, $state, User, $window) {
+angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$state', 'User',
+	function($scope, $stateParams, $state, User) {
 
 		$scope.error = '';
 		if(!$scope.forms) $scope.forms = {};

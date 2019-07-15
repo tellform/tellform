@@ -5,6 +5,7 @@ angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
 
 	var checkLoggedin = function($q, $timeout, $state, User, Auth) {
+    var deferred = $q.defer();
 
 	  	if (Auth.currentUser && Auth.currentUser.email) {
         return;
@@ -40,7 +41,7 @@ angular.module('users').config(['$stateProvider',
 	$stateProvider.
 		state('profile', {
 			resolve: {
-          		currentUser: ['$q', '$state', 'User', 'Auth', checkCurrentUser]
+          		currentUser: ['$q', '$timeout', '$state', 'User', 'Auth', checkLoggedin]
         	},
 			url: '/settings/profile',
 			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html',
@@ -48,7 +49,7 @@ angular.module('users').config(['$stateProvider',
 		}).
 		state('password', {
 			resolve: {
-          		currentUser: ['$q', '$state', 'User', 'Auth', checkCurrentUser]
+          		currentUser: ['$q', '$timeout', '$state', 'User', 'Auth', checkLoggedin]
         	},
 			url: '/settings/password',
 			templateUrl: 'modules/users/views/settings/change-password.client.view.html',

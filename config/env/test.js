@@ -3,10 +3,7 @@
 module.exports = {
 	baseUrl: '127.0.0.1:3001',
 	db: {
-		uri: 'mongodb://localhost/mean-test',
-		options: {
-			useMongoClient: true
-		}
+		uri: 'mongodb://localhost/mean-test'
 	},
 	port: 3001,
 	log: {

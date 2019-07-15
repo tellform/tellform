@@ -8,10 +8,7 @@ module.exports = {
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
 	db: {
-		uri: process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR  || '127.0.0.1') + '/mean',
-		options: {
-			useMongoClient: true
-		}
+		uri: process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://'+ (process.env.DB_PORT_27017_TCP_ADDR  || '127.0.0.1') + '/mean'
 	},
 	admin: {
 		email: process.env.ADMIN_EMAIL || 'admin@admin.com',
@@ -19,7 +16,7 @@ module.exports = {
 		password: process.env.ADMIN_PASSWORD || 'root',
 		roles: ['user', 'admin']
 	},
-	
+
 	redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
 
 	port: process.env.PORT || 3000,

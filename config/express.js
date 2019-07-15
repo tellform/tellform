@@ -76,7 +76,7 @@ module.exports = function(db) {
 
 	if(config.socketUrl){
 		app.locals.socketUrl = config.socketUrl;
-	} 
+	}
 
 	app.locals.bowerFormJSFiles = config.getBowerFormJSAssets();
 	app.locals.bowerJSFiles = config.getBowerJSAssets();
@@ -93,7 +93,7 @@ module.exports = function(db) {
 			var User = mongoose.model('User');
 			var subdomainPath = '/subdomain/';
 			var subdomains = req.subdomains;
-			
+
 			if (subdomains.slice(0, 4).join('.') + '' === '1.0.0.127') {
 				subdomains = subdomains.slice(4);
 			}
@@ -102,7 +102,7 @@ module.exports = function(db) {
 			if (!subdomains.length) {
 				return next();
 			}
-			
+
 			urlPath = url.parse(req.url).path.split('/');
 			if (urlPath.indexOf('static') > -1) {
 				urlPath.splice(1, 1);

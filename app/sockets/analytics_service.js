@@ -13,48 +13,45 @@ module.exports = function (io, socket) {
 	var visitorsData = {};
 
 	var saveVisitorData = function (data, socket, cb){
-		Form.findById(data.formId, function(err, form) {
-			if (err) {
-				console.error(err);
-				throw new Error(errorHandler.getErrorMessage(err));
-			}
+		Form.findByIdAndUpdate(
+		  data.formId,
+      {
+        $push: {
+          'analytics.visitors': {
+            socketId: data.socketId,
+            referrer: data.referrer,
+            timeElapsed: data.timeElapsed,
+            isSubmitted: data.isSubmitted,
+            language: data.language,
+            ipAddr: '',
+            deviceType: data.deviceType
+          }
+        }
+      },
+      function(err, form) {
+        if (err) {
+          console.error(err);
+          throw new Error(errorHandler.getErrorMessage(err));
+        }
 
-			var newVisitor = {
-				socketId: data.socketId,
-				referrer: data.referrer,
-				timeElapsed: data.timeElapsed,
-				isSubmitted: data.isSubmitted,
-				language: data.language,
-				ipAddr: '',
-				deviceType: data.deviceType
-			};
+        console.log('update form to', form)
 
-			form.analytics.visitors.push(newVisitor);
-
-
-				form.form_fields = form.form_fields.map(v => Object.assign({}, v, { fieldValue: null }));
-
-				form.save(function (formSaveErr) {
-					if (err) {
-						console.error(err);
-						throw new Error(errorHandler.getErrorMessage(formSaveErr));
-					}
-
-					if(cb){
-						return cb();
-					}
-				});
+        if(cb){
+          return cb();
+        }
 		});
 	};
 
 	io.on('connection', function(current_socket) {
+	  console.log('CONNECTED CLIENT');
+
 		// a user has visited our page - add them to the visitorsData object
 		current_socket.on('form-visitor-data', function(data) {
 			visitorsData[current_socket.id] = data;
 			visitorsData[current_socket.id].socketId = current_socket.id;
 			visitorsData[current_socket.id].isSaved = false;
 
-
+			console.log('received data', data);
 			if (data.isSubmitted && !data.isSaved) {
 				visitorsData[current_socket.id].isSaved = true;
 				saveVisitorData(data, function() {

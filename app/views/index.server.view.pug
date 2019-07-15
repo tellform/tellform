@@ -14,7 +14,7 @@ block content
 	//Embedding The signupDisabled Boolean
 	script(type='text/javascript').
 		var signupDisabled = !{signupDisabled};
-		var socketPort = false;     
+		var socketPort = false;
 		var socketUrl = false;
 		var subdomainsDisabled = !{subdomainsDisabled};
 		var locale = "en";
@@ -45,7 +45,7 @@ block content
 	script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js')
 
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.4/quill.min.js')
-	script(src='https://cdnjs.cloudflare.com/ajax/libs/ng-quill/3.5.1/ng-quill.js')
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/ng-quill/3.5.2/ng-quill.js')
 	script(src='https://unpkg.com/quill-placeholder-module@0.2.0/dist/placeholder-module.js')
 
 	//Application JavaScript Files
@@ -55,7 +55,7 @@ block content
 
 	if process.env.NODE_ENV === 'development'
 		script(type='text/javascript', src='http://#{request.hostname}:35729/livereload.js')
-	
+
 	script(src='https://cdn.ravenjs.com/2.3.0/angular/raven.min.js')
-	
+
 	script Raven.config('https://825fefd6b4ed4a4da199c1b832ca845c@sentry.tellform.com/2').install();

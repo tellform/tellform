@@ -14,6 +14,10 @@ module.exports = {
 		return dict;
 	},
 	removeSensitiveModelData: function(type, actual_object){
+	  if (typeof actual_object.toJSON === 'function') {
+      actual_object = actual_object.toJSON();
+    }
+
 		var object = _.cloneDeep(actual_object);
 
 		if(constants.privateFields.hasOwnProperty(type)) {

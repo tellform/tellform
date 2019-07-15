@@ -20,7 +20,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
             controller: function($document, $window, $scope){
                 var FORM_ACTION_ID = 'submit_field';
                 $scope.forms = {};
-                
+
                 var form_fields_count = $scope.myform.visible_form_fields.filter(function(field){
                     return field.fieldType !== 'statement';
                 }).length;
@@ -145,8 +145,8 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     if(!field_id && field_index === null)  {
                         return;
                     }
-                    
-                    if(field_id === FORM_ACTION_ID){ 
+
+                    if(field_id === FORM_ACTION_ID){
                         field_index = $scope.myform.visible_form_fields.length;
                     } else if(!field_id) {
                         field_id = $scope.myform.visible_form_fields[field_index]._id;
@@ -171,7 +171,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     if($scope.selected._id === field_id){
                         return;
                     }
-                    
+
                     $scope.selected._id = field_id;
                     $scope.selected.index = field_index;
 
@@ -199,7 +199,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                             //Handle case for dropdown input
                             angular.element('#'+field_id+'.selectize-input')[0].focus();
                         }
-                    }         
+                    }
                 };
 
                 $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
@@ -215,7 +215,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                     if($scope.selected && $scope.selected.index > -1){
                         if($scope.selected._id !== FORM_ACTION_ID){
                             var currField = $scope.myform.visible_form_fields[$scope.selected.index];
-                        
+
                             //Jump to logicJump's destination if it is true
                             if(currField.logicJump && currField.logicJump.jumpTo && evaluateLogicJump(currField)){
                                 $scope.setActiveField(currField.logicJump.jumpTo, null, true);
@@ -312,10 +312,10 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
 
                     form.timeElapsed = _timeElapsed;
                     form.percentageComplete = $filter('formValidity')($scope.myform) / $scope.myform.visible_form_fields.length * 100;
-                    delete form.endPage
-                    delete form.isLive
-                    delete form.provider
-                    delete form.startPage
+                    delete form.endPage;
+                    delete form.isLive;
+                    delete form.provider;
+                    delete form.startPage;
                     delete form.visible_form_fields;
                     delete form.analytics;
                     delete form.design;
@@ -332,7 +332,7 @@ angular.module('view-form').directive('submitFormDirective', ['$http', 'TimeCoun
                             .then(function (data, status) {
                                 $scope.myform.submitted = true;
                                 $scope.loading = false;
-                                SendVisitorData.send(form, $rootScope.getActiveField(), _timeElapsed);
+                                SendVisitorData.send($scope.myform, $rootScope.getActiveField(), _timeElapsed);
                             }, function (error) {
                                 $scope.loading = false;
                                 console.error(error);

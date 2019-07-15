@@ -12,7 +12,6 @@
 
 		// Create a controller method for sending visitor data
 		function send(form, lastActiveId, timeElapsed) {
-
 			var lang = window.navigator.userLanguage || window.navigator.language;
 			lang = lang.slice(0,2);
 
@@ -49,7 +48,7 @@
 			if (!Socket.socket) {
 				Socket.connect();
 			}
-			
+
 			Socket.on('disconnect', function(){
 				Socket.connect();
 			});

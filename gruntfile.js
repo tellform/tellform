@@ -143,7 +143,7 @@ module.exports = function(grunt) {
 			dev: {
 				script: 'server.js',
 				options: {
-					nodeArgs: ['--debug'],
+					nodeArgs: ['--inspect'],
 					ext: 'js,html',
 					watch: watchFiles.serverViews.concat(watchFiles.serverJS)
 				}
@@ -250,7 +250,7 @@ module.exports = function(grunt) {
 			},
 			main: {
 				options: {
-					module: 'TellForm.templates'
+					module: 'app.templates'
 				},
 				src: ['public/modules/**/views/**.html', 'public/modules/**/views/**/*.html', 'public/form_modules/forms/base/**/*.html'],
 				dest: 'public/dist/populate_template_cache.js'
@@ -297,7 +297,7 @@ module.exports = function(grunt) {
 
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'html2js:forms', 'concurrent:debug']);
-	
+
 	// Lint task(s).
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
