@@ -18,5 +18,6 @@
 	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_1": "Här är en speciell länk som kommer tillåta dig att återställa ditt lösenord. Vänligen notera att det kommer utgå om en timma för din säkerhet:",
 	"RESET_PASSWORD_REQUEST_EMAIL_LINK_TEXT": "Återställ Ditt Lösenord",
 	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_2": "Om du inte begärde detta, vänligen ignorera detta meddelande och ditt lösenord kommer att förbli oförändrat.",
-	"RESET_PASSWORD_CONFIRMATION_EMAIL_BODY_1": "RESET_PASSWORD_CONFIRMATION_EMAIL_BODY_1"
+	"RESET_PASSWORD_CONFIRMATION_EMAIL_BODY_1": "RESET_PASSWORD_CONFIRMATION_EMAIL_BODY_1",
+    "INVALID_SUB_DOMAIN": "Det gick inte att hitta underdomänen"
 }

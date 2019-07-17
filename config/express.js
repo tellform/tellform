@@ -87,6 +87,25 @@ module.exports = function(db) {
 	app.locals.formJSFiles = config.getFormJavaScriptAssets();
 	app.locals.cssFiles = config.getCSSAssets();
 
+  //Setup i18n
+  i18n.configure({
+    locales: supportedLanguages,
+    directory: __dirname + '/locales',
+    defaultLocale: 'en',
+    cookie: 'userLang'
+  });
+
+  app.use(i18n.init);
+
+  app.use(function(req, res, next) {
+    // express helper for natively supported engines
+    res.locals.__ = res.__ = function() {
+      return i18n.__.apply(req, arguments);
+    };
+
+    next();
+  });
+
 	app.use(function (req, res, next) {
 		var urlPath;
 		if(!config.subdomainsDisabled) {
@@ -133,13 +152,13 @@ module.exports = function(db) {
 					req.subdomains = null;
 					// Error page
 					return res.status(404).render('404', {
-						error: 'Page Does Not Exist'
+            custom: 'INVALID_SUB_DOMAIN'
 					});
 				}
 				if (user === null) {
 					// Error page
 					return res.status(404).render('404', {
-						error: 'Page Does Not Exist'
+            custom: 'INVALID_SUB_DOMAIN'
 					});
 				}
 
@@ -165,8 +184,8 @@ module.exports = function(db) {
 		}
 	});
 
-    //Setup Prerender.io
-    app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
+  //Setup Prerender.io
+  app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
 
 
 	// Passing the request url to environment locals
@@ -187,25 +206,6 @@ module.exports = function(db) {
 		// zlib option for compression level
 		level: 9
 	}));
-
-        //Setup i18n
-    i18n.configure({
-        locales: supportedLanguages,
-        directory: __dirname + '/locales',
-        defaultLocale: 'en',
-        cookie: 'userLang'
-    });
-
-    app.use(i18n.init);
-
-    app.use(function(req, res, next) {
-        // express helper for natively supported engines
-        res.locals.__ = res.__ = function() {
-            return i18n.__.apply(req, arguments);
-        };
-
-        next();
-    });
 
 	// Set template engine as defined in the config files
 	app.engine('server.view.pug', consolidate.pug);

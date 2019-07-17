@@ -17,5 +17,6 @@
 	"RESET_PASSWORD_CONFIRMATION_EMAIL_PARAGRAPH_1": "Este es un mensaje de cortesía para confirmar que su contraseña acaba de cambiarse",
 	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_1": "Aquí hay un enlace especial que le permitirá restablecer su contraseña. Tenga en cuenta que caducará en una hora para su protección:",
 	"RESET_PASSWORD_REQUEST_EMAIL_LINK_TEXT": "Restablecer su contraseña",
-	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_2": "Si no lo solicitó, ignore este correo electrónico y su contraseña no cambiará".
+	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_2": "Si no lo solicitó, ignore este correo electrónico y su contraseña no cambiará",
+    "INVALID_SUB_DOMAIN": "No se pudo encontrar el subdominio"
 }
