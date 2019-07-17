@@ -17,5 +17,6 @@
 	"RESET_PASSWORD_CONFIRMATION_EMAIL_PARAGRAPH_1": "Dies ist eine Höflichkeitsnachricht, um zu bestätigen, dass Ihr Passwort gerade geändert wurde.",
 	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_1": "Hier ist ein spezieller Link, mit dem Sie Ihr Passwort zurücksetzen können: Bitte beachten Sie, dass es innerhalb einer Stunde zu Ihrem Schutz abläuft:",
 	"RESET_PASSWORD_REQUEST_EMAIL_LINK_TEXT": "Passwort zurücksetzen",
-	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_2": "Falls Sie dies nicht gewünscht haben, ignorieren Sie bitte diese E-Mail und Ihr Passwort bleibt unverändert."
+	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_2": "Falls Sie dies nicht gewünscht haben, ignorieren Sie bitte diese E-Mail und Ihr Passwort bleibt unverändert.",
+	"INVALID_SUB_DOMAIN": "Subdomain nicht gefunden"
 }

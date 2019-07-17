@@ -18,5 +18,6 @@
 	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_1": "Here is a special link that will allow you to reset your password. Please note it will expire in one hour for your protection:",
 	"RESET_PASSWORD_REQUEST_EMAIL_LINK_TEXT": "Reset Your Password",
 	"RESET_PASSWORD_REQUEST_EMAIL_PARAGRAPH_2": "If you did not request this, please ignore this email and your password will remain unchanged.",
-	"RESET_PASSWORD_CONFIRMATION_EMAIL_BODY_1": "RESET_PASSWORD_CONFIRMATION_EMAIL_BODY_1"
+	"RESET_PASSWORD_CONFIRMATION_EMAIL_BODY_1": "RESET_PASSWORD_CONFIRMATION_EMAIL_BODY_1",
+    "INVALID_SUB_DOMAIN": "could not find subdomain"
 }
