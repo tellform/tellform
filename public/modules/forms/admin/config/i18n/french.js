@@ -5,7 +5,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
   	$translateProvider.translations('fr', {
     	// Configurer la vue de l'onglet Formulaire
 		ADVANCED_SETTINGS: 'Paramètres avancés',
-		FORM_NAME: "Votre tellform est appelé",
+		FORM_NAME: "Votre ohmyform est appelé",
 		FORM_STATUS: 'Statut',
 		PUBLIC: 'Public',
 		PRIVATE: "Privé",
@@ -62,17 +62,17 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: "Supprimer le formulaire",
 		DELETE: "Supprimer",
 		FORM: 'Formulaire',
-		VIEW_MY_TELLFORM: "Afficher ma forme",
+		VIEW_MY_OHMYFORM: "Afficher ma forme",
 		LIVE: "Live",
 		PREVIEW: 'Aperçu',
 
 		//Share Tab
 		COPIED_LABEL: 'Copié',
 		COPY: "Copier",
-		COPY_AND_PASTE: "Copiez et collez ceci pour ajouter votre TellForm à votre site Web",
+		COPY_AND_PASTE: "Copiez et collez ceci pour ajouter votre OhMyForm à votre site Web",
 		CHANGE_WIDTH_AND_HEIGHT: "Changez les valeurs de largeur et de hauteur pour mieux vous convenir",
 		POWERED_BY: "Alimenté par",
-		TELLFORM_URL: "Votre TellForm est disponible à cette URL",
+		OHMYFORM_URL: "Votre OhMyForm est disponible à cette URL",
 
 		// Modifier la vue de formulaire
 		DISABLED: "Désactivé",
@@ -187,7 +187,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_SUCCESS: 'Entrée de formulaire soumise avec succès!',
 		REVIEW: 'Réviser',
 		BACK_TO_FORM: "Revenir au formulaire",
-		EDIT_FORM: "Modifier ce TellForm",
+		EDIT_FORM: "Modifier ce OhMyForm",
 		ADVANCEMENT: '{{done}} sur {{total}} a répondu',
 		CONTINUE_FORM: "Continuer à se former",
 		REQUIRED: 'requis',

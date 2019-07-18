@@ -6,7 +6,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 
 		//Configure Form Tab View
 		ADVANCED_SETTINGS: 'Advanced Settings',
-		FORM_NAME: 'Your tellform is called',
+		FORM_NAME: 'Your ohmyform is called',
 		FORM_STATUS: 'Status',
 		PUBLIC: 'Public',
 		PRIVATE: 'Private',
@@ -62,17 +62,17 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: 'Delete Form',
 		DELETE: 'Delete',
 		FORM: 'Form',
-		VIEW_MY_TELLFORM: 'View my tellform',
+		VIEW_MY_OHMYFORM: 'View my ohmyform',
 		LIVE: 'Live',
 		PREVIEW: 'Preview',
 
 		//Share Tab
 		COPIED_LABEL: 'Copied',
 		COPY: 'Copy',
-		COPY_AND_PASTE: 'Copy and Paste this to add your TellForm to your website',
+		COPY_AND_PASTE: 'Copy and Paste this to add your OhMyForm to your website',
 		CHANGE_WIDTH_AND_HEIGHT: 'Change the width and height values to suit you best',
 		POWERED_BY: 'Powered by',
-		TELLFORM_URL: 'Your TellForm is permanently at this URL',
+		OHMYFORM_URL: 'Your OhMyForm is permanently at this URL',
 
 		//Edit Form View
 		DISABLED: 'Disabled',
@@ -187,7 +187,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	    FORM_SUCCESS: 'Form entry successfully submitted!',
 		REVIEW: 'Review',
 	    BACK_TO_FORM: 'Go back to Form',
-		EDIT_FORM: 'Edit this TellForm',
+		EDIT_FORM: 'Edit this OhMyForm',
 		ADVANCEMENT: '{{done}} out of {{total}} answered',
 		CONTINUE_FORM: 'Continue to Form',
 		REQUIRED: 'required',

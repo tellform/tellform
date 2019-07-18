@@ -19,7 +19,7 @@
 
         var sampleVisitors = [{
             socketId: '33b1f1dea0ce12fab9ed8739',
-            referrer: 'https://tellform.com/examples',
+            referrer: 'https://ohmyform.com/examples',
             lastActiveField: 'ed873933b0ce121f1deafab9',
             timeElapsed: 100000,
             isSubmitted: true,

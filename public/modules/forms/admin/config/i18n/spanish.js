@@ -5,7 +5,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	$translateProvider.translations('es', {
 		//Configure Form Tab View
 		ADVANCED_SETTINGS: 'Configuraciones avanzadas',
-		FORM_NAME: 'Tu tellform se llama',
+		FORM_NAME: 'Tu ohmyform se llama',
 		FORM_STATUS: 'Estado',
 		PUBLIC: 'Público',
 		PRIVATE: 'Privado',
@@ -19,7 +19,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		SELF_NOTIFICATIONS_TAB: 'Auto notificaciones',
 		RESPONDANT_NOTIFICATIONS_TAB: 'Notificaciones de los demandados',
 		GENERAL_TAB: 'Général',
-		
+
 		SEND_NOTIFICATION_TO: 'Enviar a',
 		NO_EMAIL_FIELD_WARNING: 'Error: necesita un campo de correo electrónico en su formulario para enviar el correo electrónico a su encuestado',
 		REPLY_TO: 'Responder a',
@@ -62,16 +62,16 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: 'Borrar formulario',
 		DELETE: 'Borrar',
 		FORM: 'Formulario',
-		VIEW_MY_TELLFORM: 'Ver mi tellform',
+		VIEW_MY_OHMYFORM: 'Ver mi ohmyform',
 		LIVE: 'Online',
 		PREVIEW: 'Vista previa',
-		
+
 		// Share Tab
 		COPIED_LABEL: 'Copiado',
 		COPY: 'Copiar',
-		COPY_AND_PASTE: 'Copiar y pegar esto para agregar su TellForm a su sitio web',
+		COPY_AND_PASTE: 'Copiar y pegar esto para agregar su OhMyForm a su sitio web',
 		POWERED_BY: 'Con la tecnlogía de',
-		TELLFORM_URL: 'Tu TellForm está en esta URL permanente',
+		OHMYFORM_URL: 'Tu OhMyForm está en esta URL permanente',
 
 		//Edit Form View
 		DISABLED: 'Deshabilitado',

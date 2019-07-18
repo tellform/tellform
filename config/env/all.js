@@ -3,7 +3,7 @@
 module.exports = {
 	app: {
 		google_analytics_id: process.env.GOOGLE_ANALYTICS_ID || '',
-		title: process.env.APP_NAME || 'TellForm',
+		title: process.env.APP_NAME || 'OhMyForm',
 		description: process.env.APP_DESC || 'Opensource form builder alternative to TypeForm',
 		keywords:  process.env.APP_KEYWORDS || 'typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs'
 	},
@@ -31,7 +31,7 @@ module.exports = {
 	tempUserCollection: 'temporary_users',
 
 	mailer: {
-		from: process.env.MAILER_FROM || 'testing@'+process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@tellform.com',
+		from: process.env.MAILER_FROM || 'testing@'+process.env.SPARKPOST_SANDBOX_DOMAIN || 'no-reply@ohmyform.com',
 		options: process.env.MAILER_SMTP_HOST ? { //Uses custom SMTP if MAILER_SMTP_HOST is set
 			host: process.env.MAILER_SMTP_HOST || '',
 			port: process.env.MAILER_SMTP_PORT || 465,

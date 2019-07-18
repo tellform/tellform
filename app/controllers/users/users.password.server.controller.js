@@ -114,7 +114,7 @@ exports.forgot = function(req, res) {
 	], function(err, obfuscatedEmail) {
 		if (err) {
 			return res.status(400).send({
-				message: 'Couldn\'t send reset password email due to internal server errors. Please contact support at team@tellform.com.'
+				message: 'Couldn\'t send reset password email due to internal server errors. Please contact support at team@ohmyform.com.'
 			});
 		} else {
 			return res.send({

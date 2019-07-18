@@ -3,9 +3,7 @@
 /**
  * Module dependencies.
  */
-var fs = require('fs'),
-	https = require('https'),
-	express = require('express'),
+const express = require('express'),
 	morgan = require('morgan'),
 	logger = require('./logger'),
 	bodyParser = require('body-parser'),
@@ -24,17 +22,6 @@ var fs = require('fs'),
 	i18n = require('i18n');
 
 var mongoose = require('mongoose');
-
-/**
- * Configure Socket.io
- */
-var configureSocketIO = function (app, db) {
-	// Load the Socket.io configuration
-	var server = require('./socket.io')(app, db);
-
-	// Return server object
-	return server;
-};
 
 var supportedLanguages = ['en', 'de', 'fr', 'it', 'es'];
 
@@ -101,6 +88,10 @@ module.exports = function(db) {
     // express helper for natively supported engines
     res.locals.__ = res.__ = function() {
       return i18n.__.apply(req, arguments);
+    };
+
+    res.locals.copyright = () => {
+      return '©OhMyForm '+(new Date().getFullYear());
     };
 
     next();
@@ -349,7 +340,7 @@ module.exports = function(db) {
 		});
 	});
 
-	app = configureSocketIO(app, db);
+	app = require('./socket.io')(app, db);
 
 	// Return Express server instance
 	return app;

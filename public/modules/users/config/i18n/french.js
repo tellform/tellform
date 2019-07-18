@@ -27,7 +27,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SAVE_PASSWORD_BTN: 'Enregistrer votre nouveau mot de passe',
 
 		SUCCESS_HEADER: 'Votre compte a été enregistré !',
-		SUCCESS_TEXT: 'Votre compte Tellform a été créé avec succès.',
+		SUCCESS_TEXT: 'Votre compte OhMyForm a été créé avec succès.',
 		VERIFICATION_EMAIL_SENT: 'Un email de verification a été envoyé à',
 		NOT_ACTIVATED_YET: 'Mais votre compte n\'est pas activé',
 		BEFORE_YOU_CONTINUE: 'Avant de continuer, vous devez valider votre adresse mail. Merci de vérifier votre boîte mail. Si vous ne l’avez pas reçu dans les prochaines 24h, contactez-nous à ',

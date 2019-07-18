@@ -16,13 +16,13 @@ var validateEmail = createRegexValidator(constants.regex.email, 'Please enter a 
 var validateUsername = createRegexValidator(constants.regex.username, 'Usernames can only contain alphanumeric characters and \'-\'');
 
 module.exports = {
-		asciiArt: 	"   _____    _ _______                   \n" + 
+		asciiArt: 	"   _____    _ _______                   \n" +
 					"  |_   _|  | | |  ___|                  \n" +
 					"    | | ___| | | |_ ___  _ __ _ __ ___  \n" +
 					"    | |/ _ \\ | |  _/ _ \\| '__| '_ ` _ \\ \n" +
 					"    | |  __/ | | || (_) | |  | | | | | |\n" +
 					"    \\_/\\___|_|_\\_| \\___/|_|  |_| |_| |_|\n",
-                                     
+
 
 		replaceENVQuestion: {
 			type: 'confirm',
@@ -35,14 +35,14 @@ module.exports = {
 			{
 				type: 'list',
 				name: 'NODE_ENV',
-				message: 'What mode do you want to run TellForm in?',
+				message: 'What mode do you want to run OhMyForm in?',
 				choices: ['development', 'production', 'test'],
 				default: 'development'
 			},
 			{
 				type: 'input',
 				name: 'APP_NAME',
-				message: 'What do you want to name your TellForm deployment?'
+				message: 'What do you want to name your OhMyForm deployment?'
 			},
 			{
 				type: 'input',
@@ -171,13 +171,13 @@ module.exports = {
 			{
 				type: 'input',
 				name: 'BASE_URL',
-				message: 'What is the (root) url your TellForm will be hosted at?',
+				message: 'What is the (root) url your OhMyForm will be hosted at?',
 				default: 'localhost'
 			},
 			{
 				type: 'input',
 				name: 'PORT',
-				message: 'What port should the TellForm server run on?',
+				message: 'What port should the OhMyForm server run on?',
 				default: '3000'
 			},
 			{

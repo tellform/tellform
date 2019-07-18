@@ -42,7 +42,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SAVE_PASSWORD_BTN: 'Spara Lösenord',
 
 		SUCCESS_HEADER: 'Registrering Framgånsrik',
-		SUCCESS_TEXT: 'Du har framgångsrikt registrerat ett konto på TellForm.',
+		SUCCESS_TEXT: 'Du har framgångsrikt registrerat ett konto på OhMyForm.',
 		VERIFICATION_EMAIL_SENT: 'Ett Verifieringsmeddelande har blivit Skickat',
 		VERIFICATION_EMAIL_SENT_TO: 'Ett verifieringsmeddelande har blivit skickat till',
 		NOT_ACTIVATED_YET: 'Men ditt konto är ännu inte aktiverat',

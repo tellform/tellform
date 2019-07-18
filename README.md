@@ -4,13 +4,13 @@
 <!-- TODO: Code Shelter maybe. -->
 <!-- [![Code Shelter](https://www.codeshelter.co/static/badges/badge-flat.svg)](https://www.codeshelter.co/) -->
 <!-- TODO: Travis CI maybe. -->
-<!-- [![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform) -->
+<!-- [![Build Status](https://travis-ci.org/ohmyform/ohmyform.svg?branch=master)](https://travis-ci.org/ohmyform/ohmyform) -->
 ![Project Status](https://img.shields.io/badge/status-0.2.1-green.svg)
 <!-- TODO: Codeacy maybe. -->
-<!-- [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade) -->
+<!-- [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/ohmyform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ohmyform/ohmyform&amp;utm_campaign=Badge_Grade) -->
 <!--
 Moving over to Discord so that I can manage things without hassle.
-[![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/ohmyform/Lobby.svg)](https://gitter.im/ohmyform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 -->
 [![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)](https://discord.gg/3jYMAYg)
 > An *open source alternative to TypeForm* that can create [stunning mobile-ready forms](https://ohmyform.com/examples) , surveys and questionnaires.
@@ -45,7 +45,7 @@ Moving over to Discord so that I can manage things without hassle.
 	- Embeddable Forms
 	- Forms as a Service API
 
-<!-- TODO: Determine roadmap for OhMyForm if it is to be different from TellForm's roadmap.
+<!-- TODO: Determine roadmap for OhMyForm if it is to be different from OhMyForm's roadmap.
 ### On the Roadmap (Tentative pending [refactor](https://github.com/ohmyform/ohmyform/pull/1))
 	- Implement encryption for all form data
 	- Add Typeform API integration
@@ -61,7 +61,7 @@ Moving over to Discord so that I can manage things without hassle.
 <!-- TODO: add a CONTRIBUTING.md.
 ## How to Contribute
 
-Please checkout our CONTRIBUTING.md on ways to contribute to TellForm. -->
+Please checkout our CONTRIBUTING.md on ways to contribute to OhMyForm. -->
 
 ## Quickstart
 

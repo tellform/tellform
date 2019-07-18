@@ -243,7 +243,7 @@ module.exports = function(grunt) {
 			},
 			forms: {
 				options: {
-					module: 'TellForm-Form.form_templates'
+					module: 'OhMyForm-Form.form_templates'
 				},
 				src: ['public/form_modules/**/views/**.html', 'public/form_modules/**/views/**/*.html'],
 				dest: 'public/dist/form_populate_template_cache.js'

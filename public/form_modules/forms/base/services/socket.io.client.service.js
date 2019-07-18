@@ -8,7 +8,7 @@
 			socket: null
 		};
 
-		// Connect to TellForm Socket.io server
+		// Connect to OhMyForm Socket.io server
 		function connect() {
 			var url = '';
 			if($window.socketUrl && $window.socketPort){

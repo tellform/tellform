@@ -9,7 +9,7 @@ module.exports = {
 
 		var mailOptions = {
 			replyTo: emailSettings.fromEmails,
-			from: 'noreply@tellform.com',
+			from: 'noreply@ohmyform.com',
 			cc: emailSettings.toEmails,
 			subject: parsedSubject,
 			html: parsedTemplate

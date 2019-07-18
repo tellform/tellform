@@ -5,7 +5,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 	$translateProvider.translations('de', {
 		// Konfigurieren der Formularregisterkarte
 		ADVANCED_SETTINGS: 'Erweiterte Einstellungen',
-		FORM_NAME: 'Ihr tellform heißt',
+		FORM_NAME: 'Ihr ohmyform heißt',
 		FORM_STATUS: 'Status',
 		PUBLIC: 'Öffentlich',
 		PRIVATE: 'Privat',
@@ -62,16 +62,16 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		DELETE_FORM_MD: 'Formular löschen',
 		DELETE: 'Löschen',
 		FORM: 'Formular',
-		VIEW_MY_TELLFORM: 'Mein tellform anzeigen',
+		VIEW_MY_OHMYFORM: 'Mein ohmyform anzeigen',
 		LIVE: 'Leben',
 		PREVIEW: 'Vorschau',
 
 		//Share Tab
 		COPIED_LABEL: 'Kopiert',
 		COPY: 'Kopieren',
-		COPY_AND_PASTE: 'Kopieren und einfügen, um Ihre TellForm auf Ihrer Website hinzuzufügen',
+		COPY_AND_PASTE: 'Kopieren und einfügen, um Ihre OhMyForm auf Ihrer Website hinzuzufügen',
 		POWERED_BY: 'Unterstützt von',
-		TELLFORM_URL: "Ihr TellForm ist dauerhaft unter dieser URL",
+		OHMYFORM_URL: "Ihr OhMyForm ist dauerhaft unter dieser URL",
 
 		// Formularansicht bearbeiten
 		DISABLED: 'Deaktiviert',
@@ -185,7 +185,7 @@ angular.module('forms').config(['$translateProvider', function ($translateProvid
 		FORM_SUCCESS: 'Formulareintrag erfolgreich gesendet!',
 		REVIEW: 'Überprüfung',
 		BACK_TO_FORM: 'Gehe zurück zu Formular',
-		EDIT_FORM: 'Bearbeiten Sie diese TellForm',
+		EDIT_FORM: 'Bearbeiten Sie diese OhMyForm',
 		ADVANCEMENT: '{{done}} von {{total}} wurde beantwortet',
 		CONTINUE_FORM: 'Weiter zum Formular',
 		REQUIRED: 'erforderlich',
