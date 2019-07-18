@@ -42,7 +42,7 @@ angular.module('users').config(['$translateProvider', function ($translateProvid
 		SAVE_PASSWORD_BTN: 'Save Password',
 
 		SUCCESS_HEADER: 'Signup Successful',
-		SUCCESS_TEXT: 'You’ve successfully registered an account at TellForm.',
+		SUCCESS_TEXT: 'You’ve successfully registered an account at OhMyForm.',
 		VERIFICATION_EMAIL_SENT: 'Verification Email has been Sent',
 		VERIFICATION_EMAIL_SENT_TO: 'A verification email has been sent to',
 		NOT_ACTIVATED_YET: 'But your account is not activated yet',

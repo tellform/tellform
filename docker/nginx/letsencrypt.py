@@ -12,7 +12,7 @@ command = [
     "-m", "{}@{}".format(os.environ["POSTMASTER"], os.environ["DOMAIN"]),
     "certonly", "--standalone",
     "--server", "https://acme-v02.api.letsencrypt.org/directory",
-    "--cert-name", "tellform",
+    "--cert-name", "ohmyform",
     "--preferred-challenges", "http", "--http-01-port", "8008",
     "--keep-until-expiring",
     "--rsa-key-size", "4096",

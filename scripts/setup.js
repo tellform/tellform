@@ -13,8 +13,8 @@ var	mongoose = require('mongoose'),
 	_ = require('lodash');
 
 var exitSuccess = function(cb) {
-	console.log(chalk.green('TellForm has been successfully setup'));
-	console.log(chalk.green('Have fun using TellForm!'));
+	console.log(chalk.green('OhMyForm has been successfully setup'));
+	console.log(chalk.green('Have fun using OhMyForm!'));
 
 	if(require.main === module){
 		process.exit(1);
@@ -72,7 +72,7 @@ var createOrUpdateAdminUser = function(username, email, password, cb){
 
 	var options = {
 		upsert: true,
-		new: true, 
+		new: true,
 		setDefaultsOnInsert: true
 	}
 
@@ -140,7 +140,7 @@ var createENVFile = function(cb) {
 		        } catch (fileErr) {
 					console.error(chalk.red(fileErr));
 					process.exit(-1);
-				}	
+				}
 
   				console.log(chalk.green('Successfully created .env file'));
 
@@ -150,7 +150,7 @@ var createENVFile = function(cb) {
 					}
 					exitSuccess(cb);
 				});
-				
+
 			});
 		});
 	});
@@ -159,7 +159,7 @@ var createENVFile = function(cb) {
 var checkENVAndRunSetup = function(cb) {
 	console.log(chalk.green(constants.asciiArt));
 	if(require.main === module){
-		console.log(chalk.green('Welcome to TellForm\'s Setup Tool'));
+		console.log(chalk.green('Welcome to OhMyForm\'s Setup Tool'));
 		console.log(chalk.green('Follow the prompts to begin.\n-------------------------------------------\n\n'));
 	}
 
@@ -175,8 +175,8 @@ var checkENVAndRunSetup = function(cb) {
 	} else {
 
 		if(require.main !== module){
-			console.log(chalk.green('Welcome to TellForm\'s Initial Setup\n'));
-			console.log(chalk.green('The following prompts will help you properly configure your TellForm instance.'));
+			console.log(chalk.green('Welcome to OhMyForm\'s Initial Setup\n'));
+			console.log(chalk.green('The following prompts will help you properly configure your OhMyForm instance.'));
 			console.log(chalk.green('If you want to run this tool after your inital setup, run `node scripts/setup.js`.\n---------------------------------------------------------------------\n\n'));
 		}
 		createENVFile();

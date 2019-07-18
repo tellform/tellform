@@ -13,7 +13,7 @@ module.exports = {
         // Uncomment to enable logging to a log on the file system
     },
 	mailer: {
-		from: process.env.MAILER_FROM || 'no-reply@tellform.com',
+		from: process.env.MAILER_FROM || 'no-reply@ohmyform.com',
 		options: process.env.MAILER_SMTP_HOST ? { //Uses custom SMTP if MAILER_SMTP_HOST is set
 			host: process.env.MAILER_SMTP_HOST || '',
 			port: process.env.MAILER_SMTP_PORT || 465,

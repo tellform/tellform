@@ -19,7 +19,7 @@ angular.module('forms').directive('shareFormDirective', ['$rootScope', '$transla
                 $scope.embedCode = "<iframe id='iframe' src='" + $scope.actualFormURL + "' style='width:100%;height:500px;'></iframe>"+
                                     "<div style='font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px;'>"+
                                         $translate.instant('POWERED_BY')+
-                                        "<a href='https://www.tellform.com' style='color: #999' target='_blank'>TellForm</a>"+
+                                        "<a href='https://www.ohmyform.com' style='color: #999' target='_blank'>OhMyForm</a>"+
                                     "</div>";
 
                 /* Tab Routing Logic */

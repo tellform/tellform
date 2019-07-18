@@ -6,8 +6,8 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 		FORM_SUCCESS: '¡El formulario ha sido enviado con éxito!',
 		REVIEW: 'Revisar',
 		BACK_TO_FORM: 'Regresar al formulario',
-		EDIT_FORM: 'Editar este TellForm',
-		CREATE_FORM: 'Crear este TellForm',
+		EDIT_FORM: 'Editar este OhMyForm',
+		CREATE_FORM: 'Crear este OhMyForm',
 		ADVANCEMENT: '{{done}} de {{total}} contestadas',
 		CONTINUE_FORM: 'Continuar al formulario',
 		REQUIRED: 'Información requerida',
@@ -33,13 +33,13 @@ angular.module('view-form').config(['$translateProvider', function ($translatePr
 		OPTION_PLACEHOLDER: 'Escriba o seleccione una opción',
 		ADD_NEW_LINE_INSTR: 'Presione MAYÚS + ENTRAR para agregar una nueva línea',
 	  	ERROR: 'Error',
-	  	
+
 	  	LOADING_LABEL: 'Cargando',
 	  	WAIT_LABEL: 'Espera',
 
 	  	FORM_404_HEADER: '404 - La forma no existe',
 	  	FORM_404_BODY: 'El formulario al que intenta acceder no existe. ¡Lo siento por eso!',
-	  	
+
 	  	FORM_UNAUTHORIZED_HEADER: 'Non autorizzato per accedere al modulo',
    		FORM_UNAUTHORIZED_BODY1: 'Il modulo che si sta tentando di accedere è attualmente privato e non accessibile in pubblico.',
    		FORM_UNAUTHORIZED_BODY2: 'Se sei il proprietario del modulo, puoi impostarlo su "Pubblico" nel pannello "Configurazione" nell\'amministratore di moduli.',

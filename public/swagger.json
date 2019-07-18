@@ -2,17 +2,17 @@
 	"swagger": "2.0",
 	"info": {
 		"version": "1.0.0",
-		"title": "TellForm API",
+		"title": "OhMyForm API",
 		"contact": {
-			"name": "TellForm Team",
-			"email": "team@tellform.com"
+			"name": "OhMyForm Team",
+			"email": "team@ohmyform.com"
 		}
 	},
 	"externalDocs": {
-		"description": "Find out how to host your own TellForm instance.",
-		"url": "https://github.com/tellform/tellform"
+		"description": "Find out how to host your own OhMyForm instance.",
+		"url": "https://github.com/ohmyform/ohmyform"
 	},
-	"host": "api.tellform.com",
+	"host": "api.ohmyform.com",
 	"basePath": "/",
 	"schemes": [
 		"http",

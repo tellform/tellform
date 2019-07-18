@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = {
-	baseUrl: process.env.BASE_URL || process.env.HEROKU_APP_NAME + '.herokuapp.com' || 'tellform.com',
+	baseUrl: process.env.BASE_URL || process.env.HEROKU_APP_NAME + '.herokuapp.com' || 'ohmyform.com',
 	db: {
 		uri: process.env.MONGODB_URI || process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_PORT_27017_TCP_ADDR || '127.0.0.1') + '/mean'
 	},
 	port: process.env.PORT || 5000,
-	socketUrl: process.env.SOCKET_URL || 'ws.tellform.com',
+	socketUrl: process.env.SOCKET_URL || 'ws.ohmyform.com',
 	socketPortExternallyVisible: (process.env.SOCKET_PORT_EXTERN_VISIBLE === 'TRUE' || !process.env.SOCKET_PORT_EXTERN_VISIBLE), //socketPortExternallyVisible set to true in production config by default
 	socketPort: process.env.SOCKET_PORT || 20523,
 	log: {
@@ -25,7 +25,7 @@ module.exports = {
     sessionCookie: {
 		secure: false,
 		maxAge:  24 * 60 * 60 * 1000, // 24 hours
-		domain: process.env.BASE_URL || '.tellform.com'
+		domain: process.env.BASE_URL || '.ohmyform.com'
 	},
 	assets: {
 		css: ['public/dist/application.min.css'],

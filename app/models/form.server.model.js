@@ -168,7 +168,7 @@ var FormSchema = new Schema({
 		},
 		subject: {
 			type: String,
-			default: 'Tellform: Thank you for filling out this TellForm'
+			default: 'OhMyForm: Thank you for filling out this OhMyForm'
 		},
 		htmlTemplate: {
 			type: String,
