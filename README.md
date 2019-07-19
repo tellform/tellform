@@ -12,6 +12,7 @@
 Moving over to Discord so that I can manage things without hassle.
 [![Gitter](https://badges.gitter.im/ohmyform/Lobby.svg)](https://gitter.im/ohmyform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 -->
+<!-- TODO: Get ohmyform.com/examples to have some. -->
 [![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)](https://discord.gg/3jYMAYg)
 > An *open source alternative to TypeForm* that can create [stunning mobile-ready forms](https://ohmyform.com/examples) , surveys and questionnaires.
 
