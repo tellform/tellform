@@ -6,15 +6,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {UsersModule} from "./users/users.module"
 import {FormsModule} from "./forms/forms.module"
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+    MongooseModule.forRoot('mongodb://localhost/ohmyform'),
     TerminusModule.forRootAsync({
       useClass: TerminusOptionsService,
     }),
     UsersModule,
     FormsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
