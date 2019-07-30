@@ -4,7 +4,7 @@ import { PasswordService } from "./password.service"
 import { JwtService } from '@nestjs/jwt';
 import { AuthUser } from "../interfaces/auth.user.interface"
 import { User } from "../../users/interfaces/user.interface"
-import {AuthJwt} from "../interfaces/auth.jwt.interface"
+import {AuthJwtDto} from "../dto/auth.jwt.dto"
 
 @Injectable()
 export class AuthService {
@@ -47,7 +47,7 @@ export class AuthService {
     };
   }
 
-  async createToken(user: AuthUser): Promise<AuthJwt> {
+  async createToken(user: AuthUser): Promise<AuthJwtDto> {
     const payload = {
       id: user.id,
       username: user.username,
