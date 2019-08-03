@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../../users/users.service';
+import { UserService } from '../../user/services/user.service';
 import { PasswordService } from "./password.service"
 import { JwtService } from '@nestjs/jwt';
 import { AuthUser } from "../interfaces/auth.user.interface"
-import { User } from "../../users/interfaces/user.interface"
-import {AuthJwtDto} from "../dto/auth.jwt.dto"
+import { User } from "../../user/models/user.model"
+import { AuthJwtDto } from "../dto/auth.jwt.dto"
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly usersService: UserService,
     private readonly passwordService: PasswordService,
     private readonly jwtService: JwtService
   ) {}
@@ -38,12 +38,12 @@ export class AuthService {
 
   private static setupAuthUser(user:User):AuthUser {
     return {
-      id: user.id,
+      id: user._id,
       username: user.username,
       email: user.email,
       roles: user.roles,
       created: user.created,
-      lastUpdated: user.lastUpdated
+      lastUpdated: user.lastModified
     };
   }
 

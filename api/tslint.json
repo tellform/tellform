@@ -49,6 +49,10 @@
         ],
         "one-variable-per-declaration": [
             false
+        ],
+        "whitespace": [
+            true,
+            "check-postbrace"
         ]
     },
     "rulesDirectory": []
