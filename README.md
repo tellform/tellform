@@ -178,15 +178,16 @@ TellForm's configuration is done with environment variables. To set an option fo
 
 ## Sponsors
 
+Further Sponsorships are no longer accepted.
+<!--
 Does your company use TellForm? Help keep the project bug-free and feature rich by [sponsoring the project](https://opencollective.com/tellform#sponsor).
-
 <a href="https://countable.ca" style="padding: 30px 0">
 	<img src="https://countable.ca/logo.cb446ab0.svg" height="30px">
-</a>
+</a> -->
 
 ## Backers
 
-Love our work and community? [Become a backer](https://opencollective.com/tellform).
+Love our work and community? <!--[Become a backer](https://opencollective.com/tellform).-->
 
 <a href="https://opencollective.com/elliot" target="_blank">
 	<img src="https://opencollective.com/proxy/images/?src=https%3A%2F%2Fd1ts43dypk8bqh.cloudfront.net%2Fv1%2Favatars%2F6fd61b2c-62b6-438a-9168-bab7ef1489b8" height= "64">
