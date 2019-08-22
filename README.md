@@ -5,22 +5,24 @@ DEPRECATION WARNING UNTIL FURTHER NOTICE.
 There are many oudated and vulnerable dependencies within this project and I recommend that you use this code repository for internal testing and development only.
 
 There were too many impassable hurdles to really continue forward at the pace that I was hoping with TellForm @leopere~ If you want to follow my progress on an alternative in the mean time check out https://OhMyForm.com or our Discord server.  We managed to get the base Docker image fixed before forking the code so you can give this a try however not much has changed at the moment.
-
+<!--
 [![Code Shelter](https://www.codeshelter.co/static/badges/badge-flat.svg)](https://www.codeshelter.co/)
 [![Build Status](https://travis-ci.org/tellform/tellform.svg?branch=master)](https://travis-ci.org/tellform/tellform)
 ![Project Status](https://img.shields.io/badge/status-2.1.0-green.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
-<!--
-Moving over to Discord so that I can manage things without hassle.
-[![Gitter](https://badges.gitter.im/tellform/Lobby.svg)](https://gitter.im/tellform/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 -->
+
+To Join the fork's community please follow this Discord Link here.
+
 ![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)
-> An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.
+<!--
+> An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.-->
 
+<!--
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/tellform/tellform/tree/master)
-
+-->
+<!--
 ## Table of Contents  
-
 - [Features](#features)
 - [How to Contribute](#how-to-contribute)
 - [Quickstart](#quickstart)
@@ -32,11 +34,8 @@ Moving over to Discord so that I can manage things without hassle.
 - [Backers](#backers)
 - [Contributors](#contributors)
 - [Mentions on the Web](#mentions-on-the-web)
-
 ## Features
-
 ### Currently following features are implemented:
-
 - Multi-Language Support
 - 11 possible question types
 - Editable start and end pages
@@ -46,7 +45,6 @@ Moving over to Discord so that I can manage things without hassle.
 - Embeddable Forms
 - Forms as a Service API
 - Deployable with Heroku and DockerHub
-
 ### On the Roadmap for v3.0.0
 - Implement encryption for all form data
 - Add Typeform API integration
@@ -55,37 +53,27 @@ Moving over to Discord so that I can manage things without hassle.
 - Add Stripe/Payment Form field
 - Add Custom Background and Dropdown Field Images
 - Add File Upload Form Field
-
 ## How to Contribute
-
 Please checkout our CONTRIBUTING.md on ways to contribute to TellForm.
-
 All contributors are eligible to get a free [TellForm Sticker](https://www.stickermule.com/marketplace/15987-tellform-round-sticker). All you have to do is submit a PR, get it accepted, email your address to team [at] tellform.com and we'll send you a sticker that you can proudly put on your laptop.
-
 ## Quickstart
-
 Before you start, make sure you have
 1. [Redis](https://redis.io/) installed and running at 127.0.0.1:6379
 2. [MongoDB](https://www.mongodb.com/) installed and running at 127.0.0.1:27017 (OR specify the host and port in config/env/all)
-
 Also make sure to install [DNS Masq](http://www.thekelleys.org.uk/dnsmasq/doc.html) or equivalent if running it locally on your computer (look at dns_masq_setup_osx for instructions on OSX)
-
 Install dependencies first.
 ```bash
 $ npm install
 $ bower install
 ```
-
 Setup environment.
 ```bash
 $ grunt build
 ```
-
 Create your user account
 ```bash
 $ node ./scripts/setup.js
 ```
-
 OR create your .env file
 ```
 GOOGLE_ANALYTICS_ID=yourGAID
@@ -93,103 +81,67 @@ PRERENDER_TOKEN=yourPrerender.ioToken
 COVERALLS_REPO_TOKEN=yourCoveralls.ioToken
 BASE_URL=localhost
 DSN_KEY=yourPrivateRavenKey
-
 # Mail config
 MAILER_EMAIL_ID=user@domain.com
 MAILER_PASSWORD=some-pass
 MAILER_FROM=user@domain.com
-
 # Use this for one of Nodemailer's pre-configured service providers
 MAILER_SERVICE_PROVIDER=SendGrid
-
 # Use these for a custom service provider
 # Note: MAILER_SMTP_HOST will override MAILER_SERVICE_PROVIDER
 MAILER_SMTP_HOST=smtp.domain.com
 MAILER_SMTP_PORT=465
 MAILER_SMTP_SECURE=TRUE
-
 ```
-
 Side note: ___Currently we are using Raven and Sentry [https://www.getsentry.com](https://www.getsentry.com) for error logging. To use it you must provide a valid private DSN key in your .env file and a public DSN key in app/views/layout.index.html___
-
 #### To run the development version:
-
 Set ```NODE_ENV=development``` in .env file
 ```$ grunt```
-
 #### To run the production version:
-
 Set ```NODE_ENV=production``` in .env file
 ```$ grunt```
-
 Your application should run on port 3000 or the port you specified in your .env file, so in your browser just go to [http://localhost:3000](http://localhost:3000)
-
 ## Deploying with Docker
-
 To deploy with docker, first install docker [here](https://docs.docker.com/engine/installation/).
-
 Then run follow these steps:
-
 ### Step 1: Clone the repo
-
 `$ git clone https://github.com/tellform/docker_files.git`
-
 ### Step 2: Setup TellForm Configuration
-
 Create your .env file by copying the .env.dist file included in the repo and changing it to suit your deployment.
-
 Important: You need to fill out all of the ENV variables in the "Mail Settings" section or your TellForm instance won't work.
-
 If you want to have https, make sure to change 'TLS_FLAVOR'
-
 ### Step 3: Start your TellForm instance
-
 `docker-compose up -d`
-
 TellForm should now be accessible on http://localhost
-
 ## Testing Your Application
 You can run the full test suite included with TellForm with the test task:
-
 ```
 $ grunt test
 ```
-
 This will run both the server-side tests (located in the app/tests/ directory) and the client-side tests (located in the public/modules/*/tests/).
-
 To execute only the server tests, run the test:server task:
-
 ```
 $ grunt test:server
 ```
-
 And to run only the client tests, run the test:client task:
-
 ```
 $ grunt test:client
 ```
-
 Currently the live example uses heroku github deployments. The Docker file is out of date and does not work. If someone wishes to get it working feel free to submit a pull request.
-
 To calculate your total test coverage with Istanbul, run the coverage task
 ```bash
 $ grunt coverage
 ```
-
 To calculate your server-side test coverage with Istanbul, run the coverage task
 ```bash
 $ grunt coverage:server
 ```
-
 To calculate your client-side test coverage with Istanbul, run the coverage task
 ```bash
 $ grunt coverage:client
 ```
-
 ## Configuration
-
 TellForm's configuration is done with environment variables. To set an option for TellForm, open/create your .env file and set add `ENV_VAR=somevalue` to set the ENV_VAR variable to the value `somevalue`.
-
 | Property                | Valid Values                                           | Default Value                                                        | Description                                                                                                           | Required?                                  |
 |-------------------------|--------------------------------------------------------|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
 | NODE_ENV                | "development", "production", "test" or "secure"        | development                                                          | Set which version of the app you want to run  (either secure/SSL, dev, prod or test)                                  | No                                         |
@@ -218,12 +170,10 @@ TellForm's configuration is done with environment variables. To set an option fo
 | APP_KEYWORDS            | A comma-seperated list of phrases/words                | typeform, pdfs, forms, opensource, formbuilder, google forms, nodejs | Sets the value of the <meta> description attribute.                                                                   | No                                         |
 | RAVEN_DSN               | A valid Sentry.io DSN                                  | N/A                                                                  | Set this to your Sentry.io Public DSN to enable remote logging                                                        | No                                         |
 | GOOGLE_ANALYTICS_ID     | A valid Google Analytics ID                            | N/A                                                                  | Set this to your GA id to enable GA tracking on your TellForm instance                                                | No                                         |
-
 ## Where to get help
-
 [Gitter Chat](https://gitter.im/tellform/Lobby)
-
 [Official Twitter](https://twitter.com/tellform_real)
+-->
 
 
 ## Sponsors
