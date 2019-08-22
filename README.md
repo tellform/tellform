@@ -12,9 +12,15 @@ There were too many impassable hurdles to really continue forward at the pace th
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3491e86eb7194308b8fc80711d736ede)](https://www.codacy.com/app/david-baldwin/tellform?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tellform/tellform&amp;utm_campaign=Badge_Grade)
 -->
 
-To Join the fork's community please follow this Discord Link here.
+To Join the fork's community please follow this Discord button here.
 
 ![Discord](https://img.shields.io/discord/595773457862492190.svg?label=Discord%20Chat)
+
+## Readme and Issues
+The README.md is still effectively in tact however it's all been commented out so that it's no longer visible on the main github repository page.  You may visit it by navigating through the repositories files themselves.  
+
+No new or old issues will be tended to so the Issues Board has been closed.  We don't recommend using this repositories codebase as its no longer maintained and is only intended for reference code.  If you wish to use the fork which should remain backwards compatible feel free to explore [https://ohmyform.com](https://ohmyform.com/) or its GitHub repository at [https://github.com/ohmyform/ohmyform/](https://github.com/ohmyform/ohmyform/) where the code base is started from TellForm we are planning on keeping it reverse compatible however the code is Sublicensed AGPL and is going to have a stable release prepared for the public hopefully but September 12th 2019.  It should be a drop in replacement for TellForm which should expand on the vision of TellForm but hopefully bring it all up to date.  
+
 <!--
 > An *opensource alternative to TypeForm* that can create [stunning mobile-ready forms](https://tellform.com/examples) , surveys and questionnaires.-->
 
