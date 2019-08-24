@@ -9,7 +9,7 @@
  <div class="row form-actions" style="padding-bottom:3em; padding-left: 1em; padding-right: 1em;">
     <p ng-repeat="button in pageData.buttons" class="text-center" style="display:inline;">
         <button class="btn btn-info" type="button" ng-style="{'background-color':button.bgColor, 'color':button.color}">
-            <a href="{{button.url}}" style="font-size: 1.6em; text-decoration: none; color: inherit;" >
+            <a ng-href="{{button.url}}" style="font-size: 1.6em; text-decoration: none; color: inherit;" >
                 {{button.text}}
             </a>
         </button>
