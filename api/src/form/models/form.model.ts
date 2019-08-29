@@ -1,4 +1,4 @@
-import {prop, Ref, Typegoose} from "typegoose"
+import {arrayProp, prop, Ref, Typegoose} from "typegoose"
 import {Analytics} from "./embedded/analytics"
 import {Field} from "./embedded/field"
 import {StartPage} from "./embedded/start.page"
@@ -8,12 +8,18 @@ import {RespondentNotifications} from "./embedded/respondent.notifications"
 import {Design} from "./embedded/design"
 import {User} from "../../user/models/user.model"
 
-export class Form extends Typegoose{
+export class Form extends Typegoose {
+  readonly _id: any;
+
   @prop({
     trim: true,
     required: 'Form Title cannot be blank'
   })
-  readonly firstName: string;
+  readonly title: string;
+
+  readonly created: any;
+
+  readonly lastModified: any;
 
   @prop({
     enum: ['en', 'fr', 'es', 'it', 'de'],
@@ -25,7 +31,8 @@ export class Form extends Typegoose{
   @prop()
   readonly analytics: Analytics;
 
-  @prop({
+  @arrayProp({
+    items: Field,
     default: []
   })
   readonly form_fields: Field[];

@@ -1,21 +1,18 @@
-import { Controller, Request, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from "../services/auth.service"
-import { AuthJwtDto } from "../dto/auth.jwt.dto"
-import {ApiBearerAuth, ApiImplicitBody, ApiImplicitQuery, ApiResponse, ApiUseTags} from "@nestjs/swagger"
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiUseTags } from "@nestjs/swagger"
+import { RegisterDto } from "../dto/register.dto"
+import {RegisterService} from "../services/register.service"
 
 @ApiUseTags('authentication')
 @Controller('auth')
 export class RegisterController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly registerService: RegisterService) {}
 
-  @ApiResponse({ status: 201, description: 'Successful registration.', type: AuthJwtDto})
-  @ApiImplicitQuery({name: 'email', type: String})
-  @ApiImplicitQuery({name: 'username', type: String})
-  @ApiImplicitQuery({name: 'password', type: String})
+  @ApiCreatedResponse({ description: 'Successful registration.'})
+  @ApiBadRequestResponse({})
   @Post('register')
-  async register(@Request() req): Promise<AuthJwtDto> {
-    // TODO
-    return null
+  async register(@Body() params: RegisterDto): Promise<void> {
+    await this.registerService.register(params.username, params.email, params.password)
   }
 }

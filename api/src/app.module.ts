@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { UserModule } from "./user/user.module"
 import { FormModule } from "./form/form.module"
 import { AuthModule } from './auth/auth.module';
+import { MailModule } from "./mail/mail.module"
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     FormModule,
     AuthModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
