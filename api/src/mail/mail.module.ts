@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import providers from './mail.providers'
 import exportList from './mail.exports'
+import { HandlebarsAdapter, MailerModule } from "@nest-modules/mailer"
 
 @Module({
-  imports: [],
+  imports: [
+  ],
   providers,
   exports: exportList,
 })

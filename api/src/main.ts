@@ -1,7 +1,8 @@
 import {NestFactory, Reflector} from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import {ClassSerializerInterceptor, ValidationPipe} from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import { useContainer } from "class-validator"
 const pkg = require('../package.json')
 
 async function bootstrap() {
@@ -9,6 +10,8 @@ async function bootstrap() {
 
   // app.enableCors({ origin: '*' });
   // app.getHttpAdapter().options('*', cors());
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.useGlobalPipes(new ValidationPipe({
     disableErrorMessages: false,

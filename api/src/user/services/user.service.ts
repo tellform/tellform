@@ -28,4 +28,13 @@ export class UserService {
   async findById(id: string): Promise<User> {
     return await this.userModel.findById(id).exec()
   }
+
+  async findOneBy(conditions): Promise<User> {
+    return await this.userModel.findOne(conditions).exec()
+  }
+
+  async save(user: User): Promise<User> {
+    let model = new this.userModel(user)
+    return await model.save()
+  }
 }

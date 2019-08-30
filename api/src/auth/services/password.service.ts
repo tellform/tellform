@@ -24,7 +24,7 @@ export class PasswordService {
     ).toString('base64');
   }
 
-  hash (password): Promise<String> {
+  hash (password): Promise<string> {
     return bcrypt.hash(password, 4)
   }
 }

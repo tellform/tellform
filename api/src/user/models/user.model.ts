@@ -1,7 +1,11 @@
-import {arrayProp, prop, Typegoose} from 'typegoose';
+import {arrayProp, pre, prop, Typegoose} from 'typegoose';
 import { IsString } from 'class-validator';
 import {Exclude} from "class-transformer"
 
+@pre<User>('save', (next) => {
+  this.lastModified = new Date()
+  next()
+})
 export class User extends Typegoose {
   @Exclude()
   readonly _id: string;
@@ -10,13 +14,13 @@ export class User extends Typegoose {
     trim: true,
     default: ''
   })
-  readonly firstName: string;
+  firstName: string;
 
   @prop({
     trim: true,
     default: ''
   })
-  readonly lastName: string;
+  lastName: string;
 
   @prop({
     trim: true,
@@ -28,7 +32,7 @@ export class User extends Typegoose {
     ],
     required: [true, 'Email is required']
   })
-  readonly email: string;
+  email: string;
 
   @prop({
     unique: true,
@@ -39,33 +43,33 @@ export class User extends Typegoose {
     ],
     required: [true, 'Username is required']
   })
-  readonly username: string;
+  username: string;
 
   @prop({
     default: ''
   })
-  readonly passwordHash: string;
+  passwordHash: string;
 
   @prop()
-  readonly salt: string;
+  salt: string;
 
   @prop({
     default: 'local'
   })
-  readonly provider: string;
+  provider: string;
 
   @arrayProp({
     items: String,
     enum: ['user', 'admin', 'superuser'],
     default: ['user']
   })
-  readonly roles: [string];
+  roles: [string];
 
   @prop({
     enum: ['en', 'fr', 'es', 'it', 'de'],
     default: 'en',
   })
-  readonly language: string;
+  language: string;
 
   @prop({
     default: Date.now
@@ -76,18 +80,18 @@ export class User extends Typegoose {
   readonly lastModified: Date;
 
   @prop()
-  readonly resetPasswordToken: string;
+  resetPasswordToken: string;
 
   @prop()
-  readonly resetPasswordExpires: Date;
+  resetPasswordExpires: Date;
 
   @prop()
-  readonly token: string;
+  token: string;
 
   @prop({
     unique: true,
     index: true,
     sparse: true
   })
-  readonly apiKey: string;
+  apiKey: string;
 }

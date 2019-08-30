@@ -34,5 +34,5 @@ export class RatingField {
   @arrayProp({
     items: String
   })
-  validShapes: [String];
+  validShapes: [string];
 }
