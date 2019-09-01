@@ -8,7 +8,16 @@
           id="username"
           v-model="username"
           trim
-          placeholder="Username or Email"
+          placeholder="Username"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label-for="email">
+        <b-form-input
+          id="email"
+          v-model="email"
+          trim
+          placeholder="Email"
         ></b-form-input>
       </b-form-group>
 
@@ -22,8 +31,10 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" block variant="primary">Login</b-button>
-      <nuxt-link to="/recover" class="recover">Forgot your password?</nuxt-link>
+      <b-button type="submit" block variant="primary">Register</b-button>
+      <nuxt-link to="/login" class="recover">
+        Already have an account? Sign in here
+      </nuxt-link>
     </b-form>
   </div>
 </template>
@@ -34,6 +45,7 @@ export default {
   data() {
     return {
       username: '',
+      email: '',
       password: ''
     }
   },
