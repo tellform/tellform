@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiImplicitQuery, ApiResponse, ApiUseTags } from "@nestjs/swagger"
 import { UserService } from "../services/user.service"
 import { UserDto } from "../dto/user.dto"
-import {FormDto} from "../../form/dto/form.dto"
+import { FindOneDto } from "../../core/dto/find.one.dto"
 
 @ApiUseTags('users')
 @ApiBearerAuth()
@@ -30,15 +30,15 @@ export class UserController {
   @ApiImplicitQuery({name: 'id', type: String})
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
-  async read(@Param('id') id): Promise<UserDto> {
-    return new UserDto(await this.userService.findById(id));
+  async read(@Param() params: FindOneDto): Promise<UserDto> {
+    return new UserDto(await this.userService.findById(params.id));
   }
 
   @ApiResponse({ status: 200, description: 'User Object', type: UserDto})
   @ApiImplicitQuery({name: 'id', type: String})
   @Put(':id')
   @UseGuards(AuthGuard('jwt'))
-  async update(@Param('id') id, @Request() req): Promise<UserDto> {
+  async update(@Param() params: FindOneDto, @Request() req): Promise<UserDto> {
     throw new NotImplementedException()
   }
 
@@ -47,7 +47,7 @@ export class UserController {
   @ApiImplicitQuery({name: 'id', type: String})
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  async delete(@Param('id') id): Promise<void> {
+  async delete(@Param() params: FindOneDto): Promise<void> {
     throw new NotImplementedException()
   }
 }

@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiImplicitQuery, ApiResponse, ApiUseTags } from "@nestjs/swagger"
 import { FormService } from "../services/form.service"
 import { FormDto } from "../dto/form.dto"
+import { FindOneDto } from "../../core/dto/find.one.dto"
 
 @ApiUseTags('forms')
 @ApiBearerAuth()
@@ -28,19 +29,19 @@ export class FormController {
   @ApiImplicitQuery({name: 'id', type: String})
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
-  async read(@Param('id') id): Promise<FormDto> {
-    return new FormDto(await this.formService.findById(id));
+  async read(@Param() params: FindOneDto): Promise<FormDto> {
+    return new FormDto(await this.formService.findById(params.id));
   }
 
   @Put(':id')
   @UseGuards(AuthGuard('jwt'))
-  async update(@Param('id') id, @Request() req): Promise<FormDto> {
+  async update(@Param() params: FindOneDto, @Request() req): Promise<FormDto> {
     throw new NotImplementedException()
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  async delete(@Param('id') id): Promise<void> {
+  async delete(@Param() params: FindOneDto): Promise<void> {
     throw new NotImplementedException()
   }
 }
