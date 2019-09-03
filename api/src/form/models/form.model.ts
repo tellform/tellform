@@ -17,8 +17,10 @@ export class Form extends Typegoose {
   })
   readonly title: string;
 
+  @prop()
   readonly created: any;
 
+  @prop()
   readonly lastModified: any;
 
   @prop({

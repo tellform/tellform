@@ -2,7 +2,7 @@
   <div>
     <img src="../assets/img/logo_white_small.png" alt="OhMyForm" />
 
-    <b-form class="box" @submit="submit">
+    <b-form class="box" @submit.prevent="submit">
       <b-form-group label-for="username">
         <b-form-input
           id="username"
@@ -22,6 +22,12 @@
         ></b-form-input>
       </b-form-group>
 
+      <b-form-group label-for="session">
+        <b-form-checkbox id="session" v-model="session">
+          Login only for current Tab
+        </b-form-checkbox>
+      </b-form-group>
+
       <b-button type="submit" block variant="primary">Login</b-button>
       <nuxt-link to="/recover" class="recover">Forgot your password?</nuxt-link>
     </b-form>
@@ -31,15 +37,28 @@
 <script>
 export default {
   layout: 'screen',
+  auth: 'guest',
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      session: true
     }
   },
   methods: {
-    submit() {
-      // TODO
+    async submit() {
+      try {
+        await this.$auth.loginWith('local', {
+          data: {
+            username: this.username,
+            password: this.password
+          }
+        })
+
+        this.$router.push('/admin')
+      } catch (e) {
+        // TODO failed login
+      }
     }
   }
 }
@@ -52,6 +71,15 @@ img {
 }
 .box {
   margin-top: 60px;
+  height: 400px;
+  padding-left: 8px;
+  padding-right: 8px;
+
+  /deep/ .custom-checkbox {
+    .custom-control-label {
+      color: #fff;
+    }
+  }
 }
 .recover {
   display: block;

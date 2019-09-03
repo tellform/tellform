@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiImplicitQuery, ApiResponse, ApiUseTags } from "@nestjs/swagger"
 import { UserService } from "../services/user.service"
 import { UserDto } from "../dto/user.dto"
+import {FormDto} from "../../form/dto/form.dto"
 
 @ApiUseTags('users')
 @ApiBearerAuth()
@@ -12,8 +13,10 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  async list(@Request() req): Promise<any> {
-    throw new NotImplementedException()
+  async list(@Request() req): Promise<UserDto[]> {
+    // TODO calculate total forms, add for pagination
+    const results = await this.userService.findBy({})
+    return results.map(form => new UserDto(form))
   }
 
   @ApiResponse({ status: 200, description: 'User Object', type: UserDto})

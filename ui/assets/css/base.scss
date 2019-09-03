@@ -1,7 +1,9 @@
 $accent: #fae596;
 $primary: #3fb0ac;
 
-html {
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+1html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
@@ -11,6 +13,23 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+}
+
+.bg-primary {
+  &.navbar-dark,
+  &.dark {
+    background-color: #173e43 !important;
+  }
+
+  &.dark {
+    a {
+      color: #dddfd4;
+
+      &:hover {
+        color: #fae596;
+      }
+    }
+  }
 }
 
 .btn-primary {

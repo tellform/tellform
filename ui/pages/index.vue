@@ -6,7 +6,8 @@
 
 <script>
 export default {
-  layout: 'screen'
+  layout: 'screen',
+  auth: 'guest'
 }
 </script>
 

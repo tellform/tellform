@@ -1,5 +1,5 @@
 <template>
-  <div class="screen">
+  <div class="screen bg-primary dark">
     <div class="content">
       <nuxt />
     </div>
@@ -16,7 +16,6 @@
 <style lang="scss" scoped>
 .screen {
   min-height: 100vh;
-  background: #173e43;
   display: flex;
   flex-direction: column;
 
@@ -33,13 +32,8 @@
     text-align: center;
 
     a {
-      color: #dddfd4;
       padding-right: 16px;
       padding-left: 16px;
-
-      &:hover {
-        color: #fae596;
-      }
     }
   }
 }

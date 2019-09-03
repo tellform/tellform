@@ -1,6 +1,6 @@
 <template>
   <div>
-    ADMIN
+    My Profile XD
   </div>
 </template>
 

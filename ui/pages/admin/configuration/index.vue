@@ -1,6 +1,6 @@
 <template>
   <div>
-    ADMIN
+    config XD
   </div>
 </template>
 

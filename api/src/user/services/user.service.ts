@@ -33,6 +33,10 @@ export class UserService {
     return await this.userModel.findOne(conditions).exec()
   }
 
+  async findBy(conditions): Promise<User[]> {
+    return await this.userModel.find(conditions).exec()
+  }
+
   async save(user: User): Promise<User> {
     let model = new this.userModel(user)
     return await model.save()

@@ -16,8 +16,36 @@ export default {
     link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }]
   },
 
+  proxy: {
+    '/api': { target: 'http://localhost:3000', pathRewrite: { '/api/': '/' } }
+  },
+
+  router: {
+    middleware: ['auth']
+  },
+
   server: {
     port: 3100
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/auth/login', method: 'post', propertyName: 'token.accessToken' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: false
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer'
+      }
+    },
+
+    redirect: {
+      login: '/login',
+      logout: '/',
+      home: '/admin'
+    }
   },
 
   /*
@@ -35,15 +63,18 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    '@/plugins/font-awesome.js',
+    '@/plugins/fab.js'
+  ],
 
   /*
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/auth',
+    '@nuxtjs/proxy',
     '@nuxtjs/axios',
-    // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt'
   ],
   /*

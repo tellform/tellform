@@ -2,38 +2,19 @@
   <div>
     <img src="../assets/img/logo_white_small.png" alt="OhMyForm" />
 
-    <b-form class="box" @submit="submit">
+    <b-form class="box" @submit.prevent="submit">
       <b-form-group label-for="username">
         <b-form-input
           id="username"
           v-model="username"
           trim
-          placeholder="Username"
+          placeholder="Username or Email"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group label-for="email">
-        <b-form-input
-          id="email"
-          v-model="email"
-          trim
-          placeholder="Email"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group label-for="password">
-        <b-form-input
-          id="password"
-          v-model="password"
-          type="password"
-          placeholder="Password"
-          trim
-        ></b-form-input>
-      </b-form-group>
-
-      <b-button type="submit" block variant="primary">Register</b-button>
+      <b-button type="submit" block variant="primary">Request Reset</b-button>
       <nuxt-link to="/login" class="recover">
-        Already have an account? Sign in here
+        Just remembered your password? Sign in here
       </nuxt-link>
     </b-form>
   </div>
@@ -45,14 +26,20 @@ export default {
   auth: 'guest',
   data() {
     return {
-      username: '',
-      email: '',
-      password: ''
+      username: ''
     }
   },
   methods: {
-    submit() {
-      // TODO
+    async submit() {
+      try {
+        await this.$axios.$post('/auth/recover', {
+          username: this.username
+        })
+
+        // TODO success
+      } catch (e) {
+        // TODO show error
+      }
     }
   }
 }
@@ -68,6 +55,12 @@ img {
   height: 400px;
   padding-left: 8px;
   padding-right: 8px;
+
+  /deep/ .custom-checkbox {
+    .custom-control-label {
+      color: #fff;
+    }
+  }
 }
 .recover {
   display: block;

@@ -13,8 +13,6 @@ export class RegisterService {
   ) {}
 
   async register (username: string, email: string, password: string): Promise<void> {
-    // TODO actually create user
-
     let user = new User()
     user.email = email
     user.username = username

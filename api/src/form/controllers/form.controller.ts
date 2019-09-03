@@ -12,9 +12,12 @@ export class FormController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  async list(@Request() req): Promise<any> {
-    throw new NotImplementedException()
+  async list(@Request() req): Promise<FormDto[]> {
+    // TODO calculate total forms, add for pagination
+    const results = await this.formService.findBy({})
+    return results.map(form => new FormDto(form))
   }
+
   @Post()
   @UseGuards(AuthGuard('jwt'))
   async create(@Request() req): Promise<FormDto> {
