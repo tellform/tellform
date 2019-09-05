@@ -7,7 +7,7 @@
 	"addons": ["mongolab", "sendgrid", "heroku-redis"],
 	"env": {
 		"SUBDOMAINS_DISABLED": {
-			"description": "Disable support for running subdomains. (This should be true if you are not using your own custom domain.",
+			"description": "Disable support for running subdomains. (This should be true if you are not using your own custom domain.)",
 			"value": "TRUE"
 		},
 		"ENABLE_CLUSTER_MODE": {
@@ -19,7 +19,8 @@
 			"value": "production"
 		},
 		"BASE_URL": {
-			"description": "The url of your heroku app."
+			"description": "The url of your heroku app.",
+			"required": false
 		},
 		"SOCKET_URL": {
 			"description": "Where you websockets will connect to (i.e. your heroku app url)"

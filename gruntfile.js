@@ -334,13 +334,14 @@ module.exports = function(grunt) {
 
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'html2js:main', 'html2js:forms', 'concurrent:debug']);
-	
+
 	// Lint task(s).
 	grunt.registerTask('lint', ['jshint', 'csslint', 'i18nlint:client', 'i18nlint:server']);
 	grunt.registerTask('lint:tests', ['jshint:allTests']);
 
 	// Build task(s).
 	grunt.registerTask('build', ['lint', 'loadConfig', 'cssmin', 'ngAnnotate', 'uglify', 'html2js:main', 'html2js:forms']);
+	grunt.registerTask('build:prod', ['loadConfig', 'cssmin', 'uglify', 'html2js:main', 'html2js:forms']);
 
 	//Setup task(s).
 	grunt.registerTask('setup', ['execute']);
