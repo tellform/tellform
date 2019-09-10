@@ -54,19 +54,17 @@ export class AuthService {
       scope: user.roles,
     };
     return {
-      token: {
-        accessToken: this.jwtService.sign(payload),
-        // TODO add refresh token invalidation uppon usage! They should only work once
-        refreshToken: this.jwtService.sign(
-          {
-            ...payload,
-            refresh: true
-          },
-          {
-            expiresIn: '30days',
-          }
-        ),
-      }
+      accessToken: this.jwtService.sign(payload),
+      // TODO add refresh token invalidation uppon usage! They should only work once
+      refreshToken: this.jwtService.sign(
+        {
+          ...payload,
+          refresh: true
+        },
+        {
+          expiresIn: '30days',
+        }
+      ),
     };
   }
 }

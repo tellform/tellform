@@ -32,7 +32,7 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/api/auth/login', method: 'post', propertyName: 'token.accessToken' },
+          login: { url: '/api/auth/login', method: 'post', propertyName: 'accessToken' },
           logout: { url: '/api/auth/logout', method: 'post' },
           user: false
         },
