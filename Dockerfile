@@ -2,7 +2,7 @@ FROM  node:10-alpine
 MAINTAINER OhMyForm <admin@ohmyform.com>
 
 # Install some needed packages
-RUN apk add --no-cache git \
+RUN apk add --no-cache git python \
 	&& rm -rf /tmp/* \
 	&& npm install --quiet -g grunt bower pm2 \
 	&& npm cache clean --force \
